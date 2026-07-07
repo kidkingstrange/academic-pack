@@ -11,6 +11,41 @@ let currentReference  = null;
 let currentVaId       = null;
 let currentPayMethod  = 'bank_transfer';
 let pollingTimer      = null;
+let pollStartedAt     = null;
+
+// ── Pending payment persistence ───────────────────────────────────────────────
+// Survives tab close / navigation, so a customer who transfers the money and
+// then closes the tab (or comes back later) can still resume verification
+// instead of losing the reference and never getting their welcome email.
+const PENDING_KEY = 'ac_pending_payment';
+
+function savePendingPayment(bankDetails) {
+  try {
+    localStorage.setItem(PENDING_KEY, JSON.stringify({
+      email: userEmail,
+      name: userName,
+      charge_id: currentChargeId,
+      reference: currentReference,
+      va_id: currentVaId,
+      payment_method: currentPayMethod,
+      bank_details: bankDetails,
+      saved_at: Date.now(),
+    }));
+  } catch (err) { /* localStorage unavailable — non-fatal */ }
+}
+
+function clearPendingPayment() {
+  try { localStorage.removeItem(PENDING_KEY); } catch (err) { /* ignore */ }
+}
+
+function loadPendingPayment() {
+  try {
+    const raw = localStorage.getItem(PENDING_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch (err) {
+    return null;
+  }
+}
 
 function openCheckout() {
   modal.classList.add('open');
@@ -105,19 +140,22 @@ form.addEventListener('submit', async (e) => {
 
     if (data.action === 'virtual_account') {
       // Bank Transfer — show virtual account with fee-inclusive amount
-      showBankDetails({
+      const bankDetails = {
         account_number: data.account_number,
         bank_name:      data.bank_name,
         amount:         data.amount_with_fee || data.amount,
         base_amount:    data.amount,
         expiry:         data.expiry,
         note:           data.note,
-      });
+      };
+      showBankDetails(bankDetails);
+      savePendingPayment(bankDetails);
       return;
     }
 
     // Legacy bank_transfer from charge flow
     showBankDetails(data);
+    savePendingPayment(data);
 
   } catch (err) {
     alert(err.message);
@@ -192,15 +230,29 @@ function showBankDetails(data) {
   bd.style.display = 'block';
 }
 
-// ── Polling — check every 10 seconds for up to ~3 minutes ────────────────────
+// ── Polling — tiered intervals for up to ~60 minutes (matches VA expiry) ─────
+// This is a convenience for instant feedback only. The webhook is the real
+// source of truth for granting access/sending the welcome email — see
+// process_webhook_payment() on the backend — so even if a customer closes the
+// tab mid-poll, their access isn't lost; the webhook completes it server-side.
+const POLL_MAX_ELAPSED_MS = 60 * 60 * 1000; // 60 minutes, matches VA expiry
+
+function pollDelayFor(elapsedMs) {
+  if (elapsedMs < 3 * 60 * 1000)  return 10000; // first 3 min:  every 10s
+  if (elapsedMs < 20 * 60 * 1000) return 30000; // next 17 min:  every 30s
+  return 60000;                                 // remainder:    every 60s
+}
+
 function startPolling() {
   document.getElementById('btn-check-payment').style.display = 'none';
   document.getElementById('poll-checking').style.display     = 'flex';
-  pollPayment(0);
+  pollStartedAt = Date.now();
+  pollPayment();
 }
 
-async function pollPayment(attempt) {
-  if (attempt > 18) { // ~3 minutes
+async function pollPayment() {
+  const elapsed = Date.now() - pollStartedAt;
+  if (elapsed > POLL_MAX_ELAPSED_MS) {
     document.getElementById('poll-checking').style.display     = 'none';
     document.getElementById('btn-check-payment').style.display = 'block';
     document.getElementById('btn-check-payment').textContent   = 'Check again ↺';
@@ -223,6 +275,7 @@ async function pollPayment(attempt) {
     const data = await res.json();
 
     if (data.success) {
+      clearPendingPayment();
       document.getElementById('payment-spinner').style.display = 'none';
       hideBankDetails();
       document.getElementById('payment-success').style.display = 'block';
@@ -231,12 +284,88 @@ async function pollPayment(attempt) {
       return;
     }
 
-    // Not confirmed yet — retry
-    pollingTimer = setTimeout(() => pollPayment(attempt + 1), 10000);
+    // Not confirmed yet — retry with backoff
+    pollingTimer = setTimeout(pollPayment, pollDelayFor(elapsed));
   } catch (err) {
-    pollingTimer = setTimeout(() => pollPayment(attempt + 1), 10000);
+    pollingTimer = setTimeout(pollPayment, pollDelayFor(elapsed));
   }
 }
+
+// ── Resume a pending payment on page load ────────────────────────────────────
+// Covers the customer who transferred the money, then closed the tab or
+// navigated away before tapping "I have made the transfer". Restores their
+// reference/email and offers to re-check status without re-filling the form.
+function showResumePaymentBanner(pending) {
+  if (document.getElementById('resume-payment-banner')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'resume-payment-banner';
+  banner.style.cssText = [
+    'position:fixed', 'top:0', 'left:0', 'right:0', 'z-index:2000',
+    'background:var(--ink)', 'color:#fff', 'padding:12px 16px',
+    'display:flex', 'align-items:center', 'justify-content:center',
+    'gap:12px', 'flex-wrap:wrap', 'text-align:center',
+    'box-shadow:0 4px 12px rgba(0,0,0,0.3)', 'font-size:0.9rem',
+  ].join(';');
+  banner.innerHTML = `
+    <span>You have a payment in progress for <strong>${pending.name || 'your order'}</strong>.</span>
+    <button class="btn btn-primary" id="resume-payment-btn" style="padding:6px 14px;">Check my payment status</button>
+    <button id="dismiss-resume-btn" style="background:none;border:none;color:var(--gold-l);cursor:pointer;text-decoration:underline;">Dismiss</button>
+  `;
+  document.body.prepend(banner);
+
+  document.getElementById('resume-payment-btn').addEventListener('click', () => {
+    userEmail        = pending.email;
+    userName         = pending.name;
+    currentChargeId  = pending.charge_id;
+    currentReference = pending.reference;
+    currentVaId      = pending.va_id;
+    currentPayMethod = pending.payment_method;
+
+    banner.remove();
+    resetCheckout();
+    openCheckout();
+    showStep(2);
+    document.getElementById('payment-spinner').style.display = 'none';
+    if (pending.bank_details) showBankDetails(pending.bank_details);
+    startPolling();
+  });
+
+  document.getElementById('dismiss-resume-btn').addEventListener('click', () => {
+    banner.remove();
+  });
+}
+
+(function resumePendingPaymentOnLoad() {
+  const pending = loadPendingPayment();
+  if (!pending || !pending.reference) return;
+
+  // Silently check once in the background — if the webhook already
+  // completed it, log the customer straight in with no banner at all.
+  fetch(`${API_BASE}/payments/verify`, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({
+      charge_id:      pending.charge_id,
+      va_id:          pending.va_id,
+      reference:      pending.reference,
+      email:          pending.email,
+      name:           pending.name,
+      payment_method: pending.payment_method,
+    }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        clearPendingPayment();
+        sessionStorage.setItem('ac_token', data.token);
+        window.location.href = '/welcome';
+        return;
+      }
+      showResumePaymentBanner(pending);
+    })
+    .catch(() => showResumePaymentBanner(pending));
+})();
 
 // ── Copy Account Number Helper ──────────────────────────────────────────────
 function copyAccountNumber(text, buttonEl) {

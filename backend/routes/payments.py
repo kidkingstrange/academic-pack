@@ -1,6 +1,9 @@
 """
 Payment routes — Flutterwave V4 bank transfer flow.
 """
+import base64
+import hashlib
+import hmac
 import uuid
 from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
@@ -597,13 +600,23 @@ async def flutterwave_webhook(
 ):
     """
     Asynchronous webhook endpoint for Flutterwave payment completion events.
-    Verifies verif-hash header against FLW_WEBHOOK_SECRET_HASH before processing.
+    Verifies the flutterwave-signature header (HMAC-SHA256 of the raw body,
+    keyed with FLW_WEBHOOK_SECRET_HASH) before processing.
     """
+    raw_body = await request.body()
+
     # 1. Signature Verification
     if settings.FLW_WEBHOOK_SECRET_HASH:
-        received_hash = request.headers.get("verif-hash")
-        if not received_hash or received_hash != settings.FLW_WEBHOOK_SECRET_HASH:
-            print("❌ Webhook unauthorized: Invalid or missing verif-hash signature")
+        received_signature = request.headers.get("flutterwave-signature")
+        expected_signature = base64.b64encode(
+            hmac.new(
+                settings.FLW_WEBHOOK_SECRET_HASH.encode(),
+                raw_body,
+                hashlib.sha256,
+            ).digest()
+        ).decode()
+        if not received_signature or not hmac.compare_digest(received_signature, expected_signature):
+            print("❌ Webhook unauthorized: Invalid or missing flutterwave-signature")
             raise HTTPException(status_code=401, detail="Invalid signature")
 
     # 2. Parse payload
