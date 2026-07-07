@@ -3,7 +3,7 @@ Payment routes — Flutterwave V4 bank transfer flow.
 """
 import uuid
 from datetime import datetime, timezone
-from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
 from bson import ObjectId
 from ..schemas.schemas import (
     PaymentInitRequest, PaymentInitResponse,
@@ -466,3 +466,152 @@ async def payment_callback(
     asyncio.create_task(send_welcome_email(name, email, email_magic_token, unsub_token))
 
     return RedirectResponse(f"/api/auth/magic?token={redirect_magic_token}&redirect=/welcome")
+
+
+# ── Webhook processing helper ───────────────────────────────────────────────
+async def process_webhook_payment(payload: dict, db):
+    data = payload.get("data", {})
+    ref = data.get("tx_ref")
+    if not ref:
+        print("⚠️ Webhook payload missing tx_ref")
+        return
+    
+    # Check if already processed
+    existing = await db.payments.find_one({"reference": ref, "status": "success"})
+    if existing:
+        print(f"ℹ️ Webhook: Payment {ref} already processed.")
+        return
+
+    # Find pending payment
+    pending = await db.pending_payments.find_one({"reference": ref})
+    if not pending:
+        # Check if it starts with our prefix to avoid processing random webhooks
+        if not str(ref).startswith("ACP-"):
+            print(f"⚠️ Webhook: Unknown non-ACP reference {ref}")
+            return
+        email = data.get("customer", {}).get("email")
+        name = data.get("customer", {}).get("name") or "Valued Customer"
+        amount_paid = float(data.get("amount", 2000))
+        charge_id = str(data.get("id"))
+    else:
+        email = pending.get("email")
+        name = pending.get("name")
+        amount_paid = pending.get("amount", 2000)
+        charge_id = pending.get("charge_id") or pending.get("va_id") or str(data.get("id"))
+
+    now = datetime.now(timezone.utc)
+
+    # 1. Create or get user
+    user = await db.users.find_one({"email": email.lower()})
+    if not user:
+        ins = await db.users.insert_one({
+            "name": name,
+            "email": email.lower(),
+            "role": "customer",
+            "created_at": now,
+            "last_login": now,
+            "is_active": True,
+            "purchased_products": ["all"],
+        })
+        user_id = ins.inserted_id
+    else:
+        user_id = user["_id"]
+        await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
+
+    # 2. Save payment record
+    await db.payments.insert_one({
+        "reference": ref,
+        "charge_id": charge_id,
+        "email": email.lower(),
+        "name": name,
+        "amount": amount_paid,
+        "currency": "NGN",
+        "gateway": "flutterwave",
+        "status": "success",
+        "gateway_response": data,
+        "verified_at": now,
+        "created_at": now,
+        "user_id": user_id,
+    })
+
+    # 3. Mark lead converted
+    await db.leads.update_one(
+        {"email": email.lower()},
+        {"$set": {"converted": True, "conversion_date": now}},
+    )
+
+    # 4. Create subscriber if not exists
+    existing_sub = await db.subscribers.find_one({"email": email.lower()})
+    unsub_token = ""
+    if not existing_sub:
+        import secrets
+        unsub_token = secrets.token_urlsafe(32)
+        sub_result = await db.subscribers.insert_one({
+            "name": name,
+            "email": email.lower(),
+            "subscribed_at": now,
+            "sequence_position": 0,
+            "next_send_at": now,
+            "is_active": True,
+            "tags": ["buyer"],
+            "payment_reference": ref,
+            "unsubscribe_token": unsub_token,
+        })
+        await enqueue_sequence_for_subscriber(sub_result.inserted_id, now)
+    else:
+        unsub_token = existing_sub.get("unsubscribe_token", "")
+
+    # 5. Issue magic token & welcome email
+    import secrets
+    from datetime import timedelta
+
+    magic_token = secrets.token_urlsafe(32)
+    await db.magic_links.insert_one({
+        "token": magic_token,
+        "user_id": user_id,
+        "purpose": "welcome",
+        "expires_at": now + timedelta(minutes=15),
+        "used": False,
+        "created_at": now
+    })
+
+    await send_welcome_email(name, email.lower(), magic_token, unsub_token)
+    print(f"✅ Webhook: Payment {ref} processed successfully. Welcome email sent.")
+
+
+# ── Webhook endpoint ──────────────────────────────────────────────────────────
+@router.post("/webhook")
+async def flutterwave_webhook(
+    request: Request,
+    background_tasks: BackgroundTasks,
+    db=Depends(get_db)
+):
+    """
+    Asynchronous webhook endpoint for Flutterwave payment completion events.
+    Verifies verif-hash header against FLW_WEBHOOK_SECRET_HASH before processing.
+    """
+    # 1. Signature Verification
+    if settings.FLW_WEBHOOK_SECRET_HASH:
+        received_hash = request.headers.get("verif-hash")
+        if not received_hash or received_hash != settings.FLW_WEBHOOK_SECRET_HASH:
+            print("❌ Webhook unauthorized: Invalid or missing verif-hash signature")
+            raise HTTPException(status_code=401, detail="Invalid signature")
+
+    # 2. Parse payload
+    try:
+        payload = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON payload")
+
+    event = payload.get("event")
+    data = payload.get("data", {})
+    status = data.get("status")
+
+    print(f"📥 Received Flutterwave webhook: event={event}, status={status}")
+
+    # 3. Handle successful charge events
+    if event == "charge.completed" and status == "successful":
+        background_tasks.add_task(process_webhook_payment, payload, db)
+
+    # Always return 200 OK immediately to acknowledge receipt
+    return {"status": "received"}

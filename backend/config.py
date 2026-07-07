@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     # ── Flutterwave V4 (replaces Paystack) ───────────────────────────
     FLW_CLIENT_ID: str = "your-flutterwave-client-id"
     FLW_CLIENT_SECRET: str = "your-flutterwave-client-secret"
+    FLW_WEBHOOK_SECRET_HASH: str = ""  # Set in Flutterwave Dashboard → Settings → Webhooks
     PRODUCT_PRICE_NAIRA: int = 2000   # ₦2,000 early-bird
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
 
