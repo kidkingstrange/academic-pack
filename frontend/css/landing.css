@@ -75,7 +75,7 @@
 .pain__text{font-size:1.15rem;color:var(--ink);line-height:1.6;font-weight:600;letter-spacing:-.2px}
 
 /* REFRAME SECTION */
-.reframe{padding:88px 0;background:linear-gradient(160deg,var(--ink),#0f1520);color:#fff}
+.reframe{padding:88px 0;background:linear-gradient(160deg,var(--ink),#0f1520);color:#fff;overflow:hidden}
 .reframe__inner{display:grid;grid-template-columns:1fr;gap:56px;align-items:center}
 .reframe__quote{font-family:'Clash Display',sans-serif;font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:600;color:var(--gold-l);line-height:1.3;padding-left:24px;border-left:4px solid var(--gold);margin-bottom:24px;letter-spacing:-.5px}
 .reframe__body{font-size:.98rem;color:rgba(255,255,255,.75);line-height:1.8;margin-bottom:20px}
@@ -438,10 +438,7 @@
     line-height: 1 !important;
     font-family: 'Clash Display', sans-serif !important;
   }
-  @keyframes pulseBeamMobile {
-    0% { transform: rotate(-3deg) scale(0.9); background-color: #ef4444; border-color: #ffb0b0; }
-    100% { transform: rotate(-1deg) scale(0.95); background-color: #f59e0b; border-color: #fff; }
-  }
+
 
   /* Mobile Secondary Grid */
   .mobile-secondary-grid {
@@ -561,6 +558,22 @@
   .urgency-bar__cta {
     font-size: 0.7rem !important;
     padding: 5px 12px !important;
+  }
+}
+
+/* Global Keyframe Animations (Outside of Media Queries) */
+@keyframes pulseBeamMobile {
+  0% {
+    transform: rotate(-3deg) scale(0.9);
+    background-color: #ef4444;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.45), 0 6px 12px rgba(0, 0, 0, 0.4);
+    border-color: #ffb0b0;
+  }
+  100% {
+    transform: rotate(-1deg) scale(1.02);
+    background-color: #f59e0b;
+    box-shadow: 0 0 40px rgba(245, 158, 11, 0.8), 0 12px 24px rgba(0, 0, 0, 0.5);
+    border-color: #fff;
   }
 }
 
