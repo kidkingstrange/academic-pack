@@ -5,12 +5,15 @@ Run with: uvicorn backend.main:app --reload --port 8000
 from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse, HTMLResponse, RedirectResponse
 from pathlib import Path
 from bson import ObjectId
 from pymongo import ReturnDocument
 from datetime import datetime, timezone
 import time
+from starlette.responses import Response
+from starlette.types import Scope
 
 from .config import get_settings
 from .database import connect_db, disconnect_db, get_db
@@ -37,6 +40,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ── Compression ───────────────────────────────────────────────────────────────
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
 # ── Security Headers Middleware ────────────────────────────────────────────────
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):
@@ -62,11 +68,21 @@ app.include_router(admin_router.router)
 app.include_router(community.router)
 
 # ── Static Files (Frontend) ───────────────────────────────────────────────────
+class CachedStaticFiles(StaticFiles):
+    def __init__(self, *args, cache_control: str = "public, max-age=86400", **kwargs):
+        super().__init__(*args, **kwargs)
+        self.cache_control = cache_control
+
+    async def get_response(self, path: str, scope: Scope) -> Response:
+        response = await super().get_response(path, scope)
+        response.headers["Cache-Control"] = self.cache_control
+        return response
+
 frontend_path = Path(__file__).parent.parent / "frontend"
 if frontend_path.exists():
-    app.mount("/assets", StaticFiles(directory=str(frontend_path / "assets")), name="assets")
-    app.mount("/css", StaticFiles(directory=str(frontend_path / "css")), name="css")
-    app.mount("/js", StaticFiles(directory=str(frontend_path / "js")), name="js")
+    app.mount("/assets", CachedStaticFiles(directory=str(frontend_path / "assets"), cache_control="public, max-age=86400"), name="assets")
+    app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=3600"), name="css")
+    app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=3600"), name="js")
 
 # ── SPA-style Page Routes ─────────────────────────────────────────────────────
 @app.get("/", include_in_schema=False)
