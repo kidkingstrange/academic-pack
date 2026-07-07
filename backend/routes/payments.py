@@ -12,6 +12,7 @@ from ..schemas.schemas import (
 from ..services.flutterwave import (
     get_flw_token, create_flw_customer,
     initiate_bank_transfer, verify_flw_charge,
+    create_virtual_account, verify_virtual_account,
 )
 from ..services.email_service import send_welcome_email
 from ..utils.security import create_access_token
@@ -68,10 +69,58 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         upsert=True,
     )
 
-    # ── Flutterwave: get token → customer → charge ────────────────────
+    # ── Flutterwave: get token → customer ────────────────────────────────
     try:
         token       = await get_flw_token()
         customer_id = await create_flw_customer(token, body.name, body.email.lower())
+    except Exception as e:
+        print(f"❌ FLW initiation error: {e}")
+        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+
+    payment_method = (body.payment_method or "pay_with_bank").strip().lower()
+
+    if payment_method == "bank_transfer":
+        # ── Virtual Account path ──────────────────────────────────────
+        try:
+            narration = f"{body.name} - Academic Comeback Package"
+            va_data = await create_virtual_account(
+                token, customer_id, amount_naira, reference, narration
+            )
+        except Exception as e:
+            print(f"❌ FLW virtual-account error: {e}")
+            raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+
+        va_id = va_data.get("id")
+        await db.pending_payments.update_one(
+            {"reference": reference},
+            {"$set": {
+                "reference":      reference,
+                "va_id":          va_id,
+                "charge_id":      None,
+                "payment_method": "bank_transfer",
+                "email":          body.email.lower(),
+                "name":           body.name,
+                "amount":         amount_naira,
+                "customer_id":    customer_id,
+                "created_at":     now,
+            }},
+            upsert=True,
+        )
+
+        return PaymentInitResponse(
+            reference=reference,
+            va_id=va_id,
+            action="virtual_account",
+            account_number=va_data.get("account_number", ""),
+            bank_name=va_data.get("account_bank_name", ""),
+            amount=amount_naira,
+            amount_with_fee=int(va_data.get("amount", amount_naira)),
+            expiry=va_data.get("account_expiration_datetime"),
+            note=va_data.get("note", "Transfer the exact amount shown. Account is valid for 60 minutes."),
+        )
+
+    # ── Pay with Bank path (existing behavior) ────────────────────────
+    try:
         redirect_url = f"{settings.APP_URL}/api/payments/callback"
         charge      = await initiate_bank_transfer(
             token, customer_id, amount_naira, reference, redirect_url
@@ -85,13 +134,15 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     await db.pending_payments.update_one(
         {"reference": reference},
         {"$set": {
-            "reference":   reference,
-            "charge_id":   charge_id,
-            "email":       body.email.lower(),
-            "name":        body.name,
-            "amount":      amount_naira,
-            "customer_id": customer_id,
-            "created_at":  now,
+            "reference":      reference,
+            "charge_id":      charge_id,
+            "va_id":          None,
+            "payment_method": "pay_with_bank",
+            "email":          body.email.lower(),
+            "name":           body.name,
+            "amount":         amount_naira,
+            "customer_id":    customer_id,
+            "created_at":     now,
         }},
         upsert=True,
     )
@@ -109,7 +160,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             amount=amount_naira,
         )
 
-    # Default: bank_transfer
+    # Default: bank_transfer (from charge)
     va = charge.get("payment_method_details", {}).get("bank_transfer", {})
     instruction = next_action.get("payment_instruction", {})
     return PaymentInitResponse(
@@ -137,26 +188,52 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
             return PaymentVerifyResponse(success=True, token=token)
 
-    # Verify with Flutterwave
-    try:
-        result = await verify_flw_charge(body.charge_id)
-    except Exception as e:
-        print(f"❌ FLW verify error: {e}")
-        return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
+    # Verify with Flutterwave — branch on payment method
+    payment_method = (body.payment_method or "pay_with_bank").strip().lower()
 
-    if result.get("status") != "success":
-        return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
+    if payment_method == "bank_transfer" and body.va_id:
+        # ── Virtual Account verification path ─────────────────────────
+        try:
+            result = await verify_virtual_account(body.va_id)
+        except Exception as e:
+            print(f"❌ FLW VA verify error: {e}")
+            return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
 
-    charge = result["data"]
-    charge_status = charge.get("status")
+        if result.get("status") != "success":
+            return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
 
-    if charge_status != "succeeded":
-        return PaymentVerifyResponse(
-            success=False,
-            message=f"Payment status: {charge_status}. Please complete the transfer and try again."
-        )
+        va_data = result["data"]
+        va_status = va_data.get("status")
 
-    amount_paid = charge.get("amount", 0)
+        if va_status != "completed":
+            return PaymentVerifyResponse(
+                success=False,
+                message=f"Payment status: {va_status}. Please complete the transfer and try again."
+            )
+
+        amount_paid = int(va_data.get("amount", 0))
+    else:
+        # ── Charge verification path (existing) ──────────────────────
+        try:
+            result = await verify_flw_charge(body.charge_id)
+        except Exception as e:
+            print(f"❌ FLW verify error: {e}")
+            return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
+
+        if result.get("status") != "success":
+            return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
+
+        charge = result["data"]
+        charge_status = charge.get("status")
+
+        if charge_status != "succeeded":
+            return PaymentVerifyResponse(
+                success=False,
+                message=f"Payment status: {charge_status}. Please complete the transfer and try again."
+            )
+
+        amount_paid = charge.get("amount", 0)
+
     now = datetime.now(timezone.utc)
 
     # ── 24-hour price enforcement ─────────────────────────────────────

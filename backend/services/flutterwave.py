@@ -149,3 +149,53 @@ async def verify_flw_charge(charge_id: str) -> Dict[str, Any]:
             timeout=15,
         )
         return resp.json()
+
+
+async def create_virtual_account(
+    token: str,
+    customer_id: str,
+    amount_naira: int,
+    reference: str,
+    narration: str,
+) -> Dict[str, Any]:
+    """
+    Create a dynamic virtual account for bank transfer payment.
+    Returns the full data dict with account_number, account_bank_name,
+    amount (includes 2% fee), account_expiration_datetime, etc.
+    """
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_API_BASE}/virtual-accounts",
+            headers={
+                "Authorization":     f"Bearer {token}",
+                "Content-Type":      "application/json",
+                "X-Trace-Id":        str(uuid.uuid4()),
+                "X-Idempotency-Key": reference,
+            },
+            json={
+                "reference":    reference,
+                "customer_id":  customer_id,
+                "amount":       amount_naira,
+                "currency":     "NGN",
+                "account_type": "dynamic",
+                "narration":    narration,
+            },
+            timeout=20,
+        )
+        data = resp.json()
+        if data.get("status") != "success":
+            raise Exception(f"FLW virtual-account error: {data}")
+        return data["data"]
+
+
+async def verify_virtual_account(va_id: str) -> Dict[str, Any]:
+    """Verify a virtual account payment by VA ID. Returns full API response."""
+    token = await get_flw_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{FLW_API_BASE}/virtual-accounts/{va_id}",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=15,
+        )
+        return resp.json()
+

@@ -500,6 +500,29 @@
             <input type="email" id="email" placeholder="your@email.com" required>
             <div class="field-error" id="email-error">Please enter a valid email</div>
           </div>
+
+          <div class="payment-method-selector">
+            <p class="pm-selector-label">Choose payment method</p>
+            <label class="payment-method-option selected" id="pm-bank-transfer">
+              <input type="radio" name="payment_method" value="bank_transfer" checked>
+              <div class="pm-icon"><i class="bi bi-bank2"></i></div>
+              <div class="pm-text">
+                <strong>Bank Transfer</strong>
+                <span>Get an account number &amp; transfer — no login needed</span>
+              </div>
+              <div class="pm-check"><i class="bi bi-check-circle-fill"></i></div>
+            </label>
+            <label class="payment-method-option" id="pm-pay-with-bank">
+              <input type="radio" name="payment_method" value="pay_with_bank">
+              <div class="pm-icon"><i class="bi bi-credit-card-2-front"></i></div>
+              <div class="pm-text">
+                <strong>Pay with Bank</strong>
+                <span>Instant — log in to authorize (requires bank login)</span>
+              </div>
+              <div class="pm-check"><i class="bi bi-check-circle-fill"></i></div>
+            </label>
+          </div>
+
           <button type="submit" class="modal__submit" id="submit-lead">
             Continue to Payment <i class="bi bi-arrow-right"></i>
           </button>
