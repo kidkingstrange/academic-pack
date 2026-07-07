@@ -7,19 +7,19 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="css/main.css">
 <style>
-  body { background: var(--surface); padding-bottom: 80px; }
-  .lib-header { background: var(--ink); color: #fff; padding: 40px 0; margin-bottom: 40px; }
-  .lib-header h1 { font-family: 'Fraunces', serif; font-size: 2rem; margin-bottom: 8px; }
-  .lib-header p { color: rgba(255,255,255,.7); }
+  body { background: var(--ink); color: #fff; padding-bottom: 80px; font-family: 'Manrope', sans-serif; }
+  .lib-header { background: var(--ink2); color: #fff; padding: 48px 0; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 48px; }
+  .lib-header h1 { font-family: 'Clash Display', sans-serif; font-size: 2.2rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.5px; }
+  .lib-header p { color: var(--gray-l); font-size: .95rem; }
   .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
-  .lib-card { background: #fff; border: 1px solid #e8e6e0; border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; transition: transform var(--transition); }
-  .lib-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--gold); }
-  .lib-card__title { font-size: 1.1rem; font-weight: 800; color: var(--ink); margin-bottom: 8px; line-height: 1.3; }
-  .lib-card__desc { font-size: .88rem; color: var(--text2); line-height: 1.6; margin-bottom: 20px; flex-grow: 1; }
-  .download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: var(--surface2); color: var(--ink); border: none; padding: 12px; border-radius: var(--radius); font-weight: 600; font-size: .9rem; cursor: pointer; transition: background var(--transition); }
-  .download-btn:hover { background: var(--gold); color: #fff; }
-  .loader-page { position: fixed; inset: 0; background: var(--surface); display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
-  .spinner { width: 40px; height: 40px; border: 3px solid #ddd; border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
+  .lib-card { background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: 28px 24px; display: flex; flex-direction: column; transition: all var(--transition); }
+  .lib-card:hover { transform: translateY(-4px); box-shadow: var(--gold-glow); border-color: var(--gold); }
+  .lib-card__title { font-family: 'Clash Display', sans-serif; font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 10px; line-height: 1.3; }
+  .lib-card__desc { font-size: .88rem; color: var(--gray-l); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
+  .download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); color: #fff; padding: 14px; border-radius: var(--radius); font-weight: 700; font-size: .9rem; cursor: pointer; transition: all var(--transition); }
+  .download-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: var(--ink); border-color: transparent; box-shadow: 0 4px 12px rgba(201,151,58,.25); }
+  .loader-page { position: fixed; inset: 0; background: var(--ink); display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
+  .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
@@ -27,7 +27,7 @@
 
 <div class="loader-page" id="loader">
   <div class="spinner"></div>
-  <p style="font-weight:600; color:var(--text2)">Loading your library...</p>
+  <p style="font-weight:600; color:var(--gray-l)">Loading your library...</p>
 </div>
 
 <header class="lib-header">

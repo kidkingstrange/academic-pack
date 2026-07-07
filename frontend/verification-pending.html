@@ -5,22 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Security Check — Academic Comeback</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="css/main.css">
 <style>
-  :root {
-    --ink: #0d0f14;
-    --ink2: #141722;
-    --gold: #c9973a;
-    --gold-l: #e6b75a;
-    --text: rgba(255, 255, 255, 0.9);
-    --text-muted: rgba(255, 255, 255, 0.6);
-    --radius: 16px;
-    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  }
-
   body {
     background-color: var(--ink);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,12 +23,12 @@
   .card {
     background-color: var(--ink2);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius);
-    padding: 48px 32px;
+    border-radius: var(--radius-lg);
+    padding: 48px 36px;
     max-width: 480px;
     width: 100%;
     text-align: center;
-    box-shadow: var(--shadow);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
   }
 
   .icon-container {
@@ -53,24 +43,30 @@
     margin: 0 auto 24px;
     font-size: 2.2rem;
     color: var(--gold);
+    box-shadow: var(--gold-glow);
   }
 
   h1 {
+    font-family: 'Clash Display', sans-serif;
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 600;
     margin: 0 0 12px;
     letter-spacing: -0.5px;
+    color: #fff;
   }
 
   p {
-    font-size: 1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
+    font-size: .95rem;
+    color: var(--gray-l);
+    line-height: 1.65;
     margin: 0 0 32px;
   }
 
-  .btn {
-    display: inline-block;
+  .btn-inbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     width: 100%;
     padding: 16px;
     background: linear-gradient(135deg, var(--gold), var(--gold-l));
@@ -79,21 +75,21 @@
     font-size: 1rem;
     text-decoration: none;
     border: none;
-    border-radius: 999px;
+    border-radius: var(--radius-full);
     cursor: pointer;
     box-shadow: 0 4px 20px rgba(201, 151, 58, 0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-sizing: border-box;
   }
 
-  .btn:hover {
+  .btn-inbox:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 28px rgba(201, 151, 58, 0.4);
   }
 
   .footer-note {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.3);
     margin-top: 24px;
   }
 </style>
@@ -107,8 +103,8 @@
   <h1>Security Check</h1>
   <p>We've detected that this magic access link is being opened from a new device or browser. For your security, a fresh login link has been sent to your purchase email.</p>
   
-  <a href="https://mail.google.com" target="_blank" class="btn">
-    Open Your Inbox
+  <a href="https://mail.google.com" target="_blank" class="btn-inbox">
+    <i class="bi bi-envelope-at-fill"></i> Open Your Inbox
   </a>
   
   <div class="footer-note">

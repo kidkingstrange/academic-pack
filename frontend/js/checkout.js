@@ -168,7 +168,12 @@ function showBankDetails(data) {
       </div>
       <div class="bank-detail-row">
         <span class="bank-detail-label">Account Number</span>
-        <strong class="bank-detail-value acct-number">${data.account_number || '—'}</strong>
+        <div style="display: flex; align-items: center; gap: 8px; position: relative;">
+          <strong class="bank-detail-value acct-number">${data.account_number || '—'}</strong>
+          <button class="copy-btn" onclick="event.stopPropagation(); copyAccountNumber('${data.account_number}', this)" title="Copy Account Number" style="background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; color: var(--gold-l); font-size: 1.1rem; transition: color 0.2s; outline: none;">
+            <i class="bi bi-copy"></i>
+          </button>
+        </div>
       </div>
       <div class="bank-detail-row">
         <span class="bank-detail-label">Amount</span>
@@ -230,5 +235,83 @@ async function pollPayment(attempt) {
     pollingTimer = setTimeout(() => pollPayment(attempt + 1), 10000);
   } catch (err) {
     pollingTimer = setTimeout(() => pollPayment(attempt + 1), 10000);
+  }
+}
+
+// ── Copy Account Number Helper ──────────────────────────────────────────────
+function copyAccountNumber(text, buttonEl) {
+  const cleanText = text.replace(/\D/g, '');
+  const icon = buttonEl.querySelector('i');
+  
+  function showSuccess() {
+    if (icon) {
+      icon.className = 'bi bi-check-lg';
+      icon.style.color = '#22c55e';
+    }
+    let tooltip = buttonEl.querySelector('.copy-tooltip');
+    if (!tooltip) {
+      tooltip = document.createElement('span');
+      tooltip.className = 'copy-tooltip';
+      tooltip.textContent = 'Copied!';
+      tooltip.style.position = 'absolute';
+      tooltip.style.right = '32px';
+      tooltip.style.background = 'var(--ink)';
+      tooltip.style.color = '#fff';
+      tooltip.style.padding = '4px 8px';
+      tooltip.style.borderRadius = '4px';
+      tooltip.style.fontSize = '0.75rem';
+      tooltip.style.border = '1px solid rgba(255,255,255,0.1)';
+      tooltip.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+      tooltip.style.pointerEvents = 'none';
+      tooltip.style.opacity = '0';
+      tooltip.style.transition = 'opacity 0.2s';
+      tooltip.style.whiteSpace = 'nowrap';
+      tooltip.style.zIndex = '100';
+      buttonEl.appendChild(tooltip);
+    }
+    setTimeout(() => { tooltip.style.opacity = '1'; }, 10);
+    
+    setTimeout(() => {
+      if (icon) {
+        icon.className = 'bi bi-copy';
+        icon.style.color = '';
+      }
+      if (tooltip) {
+        tooltip.style.opacity = '0';
+        setTimeout(() => tooltip.remove(), 200);
+      }
+    }, 2000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(cleanText)
+      .then(showSuccess)
+      .catch(err => {
+        console.error('Failed to copy using navigator.clipboard: ', err);
+        fallbackCopy(cleanText);
+      });
+  } else {
+    fallbackCopy(cleanText);
+  }
+
+  function fallbackCopy(val) {
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = val;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (successful) {
+        showSuccess();
+      } else {
+        alert('Could not copy. Please select and copy manually.');
+      }
+    } catch (err) {
+      console.error('Fallback copy failed: ', err);
+      alert('Could not copy. Please select and copy manually.');
+    }
   }
 }
