@@ -30,11 +30,27 @@
 <!-- Hero -->
 <section class="hero">
   <div class="container hero__grid">
-    <div class="hero__content" data-aos="fade-up">
+    <div class="hero__content">
       <div class="badge hero__eyebrow">📚 7-Book Educational Bundle</div>
       <h1 class="hero__headline">You don't need to study longer.<br><em>Stop forgetting what you read.</em></h1>
       <p class="hero__sub">You aren't failing because you're lazy. You're failing because nobody taught you how the brain retains complex information. Replace exhausting 8-hour study sessions with hyper-efficient learning loops and finally get the grades you deserve.</p>
       
+      <!-- MOBILE-ONLY HERO VISUAL FLOW -->
+      <div class="mobile-visual-flow">
+        <!-- Single Hero Visual: Flagship Book cover -->
+        <div class="mobile-flagship-cover">
+          <img src="assets/images/bookcover.webp" alt="Get Good at Hard Things">
+          <div class="hero__badge">Flagship Book</div>
+        </div>
+        
+        <!-- Mobile Price Badge -->
+        <div class="mobile-price-badge">
+          <span class="mobile-price-discount">90% OFF TODAY</span>
+          <span class="mobile-price-old">₦20,000</span>
+          <span class="mobile-price-new">₦2,000</span>
+        </div>
+      </div>
+
       <div class="hero__ctas">
         <button class="btn btn--gold btn--mega" onclick="openCheckout()">
           <span class="btn-mega__price"><del>₦20,000</del> → ₦2,000</span>
@@ -43,13 +59,37 @@
         </button>
         <div class="scarcity">🔥 <span id="scarcity-num">17</span> students bought this today</div>
       </div>
+
+      <!-- MOBILE-ONLY SECONDARY BOOKS GRID -->
+      <div class="mobile-secondary-grid">
+        <div class="mobile-secondary-grid__title">Also Includes These 4 Powerful Guides:</div>
+        <div class="mobile-book-grid">
+          <div class="mobile-book-card">
+            <img src="assets/images/bookcover1.webp" alt="How to Score High">
+            <div class="mobile-book-card__tag">Bonus #1</div>
+          </div>
+          <div class="mobile-book-card">
+            <img src="assets/images/bookcover2.webp" alt="Balance Academics">
+            <div class="mobile-book-card__tag">Bonus #2</div>
+          </div>
+          <div class="mobile-book-card">
+            <img src="assets/images/bookcover3.webp" alt="Results-Oriented Learning">
+            <div class="mobile-book-card__tag">Bonus #3</div>
+          </div>
+          <div class="mobile-book-card">
+            <img src="assets/images/bookcoverlandscape.webp" alt="Focus Template">
+            <div class="mobile-book-card__tag">Bonus #4</div>
+          </div>
+        </div>
+      </div>
+
       <div class="hero__trust">
         <div class="hero__trust-item"><i class="bi bi-check-circle-fill"></i> Instant Digital Delivery</div>
         <div class="hero__trust-item"><i class="bi bi-shield-lock-fill"></i> Secure Payment</div>
         <div class="hero__trust-item"><i class="bi bi-phone"></i> Read on Any Device</div>
       </div>
     </div>
-    <div class="hero__visual" data-aos="fade-up" data-aos-delay="200">
+    <div class="hero__visual">
       <div class="hero__books">
         <!-- Floating Price Badge -->
         <div class="hero__price-float">
@@ -538,6 +578,15 @@
   }
 })();
 </script>
+
+<!-- Sticky Bottom CTA Bar (Mobile Only) -->
+<div class="sticky-cta-bar">
+  <div class="sticky-cta-bar__price">
+    <span class="sticky-old">₦20,000</span>
+    <span class="sticky-new">₦2,000</span>
+  </div>
+  <button class="btn btn--gold sticky-cta-bar__btn" onclick="openCheckout()">Get It Now</button>
+</div>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="https://js.paystack.co/v2/inline.js"></script>
