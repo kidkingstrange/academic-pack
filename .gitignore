@@ -5,7 +5,7 @@ node_modules/
 .venv/
 venv/
 .DS_Store
-uploads/
-*.pdf
-/uploads/products/
-assets_backup/
+# Allow tracking product uploads
+!uploads/
+!uploads/products/
+!uploads/products/*.pdf
