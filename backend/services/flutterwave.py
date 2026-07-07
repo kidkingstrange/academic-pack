@@ -10,7 +10,7 @@ from ..config import get_settings
 
 settings = get_settings()
 
-FLW_API_BASE = "https://api.flutterwave.com"
+FLW_API_BASE = "https://f4bexperience.flutterwave.com"
 FLW_AUTH_URL = "https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token"
 
 # ── OAuth token cache ──────────────────────────────────────────────────────────
@@ -61,6 +61,27 @@ async def create_flw_customer(token: str, name: str, email: str) -> str:
         data = resp.json()
         if data.get("status") == "success":
             return data["data"]["id"]
+            
+        # Fallback if customer already exists
+        err_type = data.get("error", {}).get("type")
+        if err_type == "CUSTOMER_ALREADY_EXISTS" or "already exists" in str(data).lower():
+            search_resp = await client.post(
+                f"{FLW_API_BASE}/customers/search",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type":  "application/json",
+                },
+                json={"email": email},
+                timeout=15,
+            )
+            search_data = search_resp.json()
+            if search_data.get("status") == "success" and search_data.get("data"):
+                customers = search_data["data"]
+                if isinstance(customers, list) and len(customers) > 0:
+                    return customers[0]["id"]
+                elif isinstance(customers, dict) and "id" in customers:
+                    return customers["id"]
+                    
         raise Exception(f"FLW customer error: {data}")
 
 
@@ -85,7 +106,7 @@ async def initiate_bank_transfer(
                 "X-Trace-Id":        str(uuid.uuid4()),
                 "X-Idempotency-Key": reference + "-pm",
             },
-            json={"type": "bank_transfer"},
+            json={"type": "bank_account"},
             timeout=15,
         )
         pm_data = pm_resp.json()
