@@ -60,6 +60,7 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
         "library_url": f"{settings.APP_URL}/api/auth/magic?token={token}&redirect=/library",
         "whatsapp_url": settings.WHATSAPP_COMMUNITY_LINK,
         "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
         "unsubscribe_token": unsubscribe_token,
     })
     await send_email(email, f"🎉 Your Academic Comeback Package is ready, {name}!", html)
