@@ -1,7 +1,6 @@
 // Checkout Logic — Flutterwave V4 Bank Transfer
 // For local testing (Option 2): backend on :8000, frontend on :5500
-const API_BASE = 'http://127.0.0.1:8000/api';
-// For production (same server): const API_BASE = '/api';
+const API_BASE = '/api';
 
 const modal = document.getElementById('checkout-modal');
 const form  = document.getElementById('lead-form');
