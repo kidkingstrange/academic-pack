@@ -62,6 +62,12 @@ async def add_process_time(request: Request, call_next):
     return response
 
 # ── Routers ───────────────────────────────────────────────────────────────────
+@app.get("/api/diagnose-url")
+def diagnose_url():
+    from backend.config import get_settings
+    s = get_settings()
+    return {"APP_URL": s.APP_URL, "APP_ENV": s.APP_ENV}
+
 app.include_router(payments.router)
 app.include_router(library.router)
 app.include_router(admin_router.router)
