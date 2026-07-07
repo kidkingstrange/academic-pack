@@ -188,12 +188,12 @@ async def create_virtual_account(
         return data["data"]
 
 
-async def verify_virtual_account(va_id: str) -> Dict[str, Any]:
-    """Verify a virtual account payment by VA ID. Returns full API response."""
+async def verify_charges_by_reference(reference: str) -> Dict[str, Any]:
+    """Verify a virtual account payment by checking charges for its reference. Returns full API response."""
     token = await get_flw_token()
     async with httpx.AsyncClient() as client:
         resp = await client.get(
-            f"{FLW_API_BASE}/virtual-accounts/{va_id}",
+            f"{FLW_API_BASE}/charges?reference={reference}",
             headers={"Authorization": f"Bearer {token}"},
             timeout=15,
         )

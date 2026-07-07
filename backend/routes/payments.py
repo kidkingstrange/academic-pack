@@ -12,7 +12,7 @@ from ..schemas.schemas import (
 from ..services.flutterwave import (
     get_flw_token, create_flw_customer,
     initiate_bank_transfer, verify_flw_charge,
-    create_virtual_account, verify_virtual_account,
+    create_virtual_account, verify_charges_by_reference,
 )
 from ..services.email_service import send_welcome_email
 from ..utils.security import create_access_token
@@ -191,10 +191,10 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
     # Verify with Flutterwave — branch on payment method
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
 
-    if payment_method == "bank_transfer" and body.va_id:
+    if payment_method == "bank_transfer":
         # ── Virtual Account verification path ─────────────────────────
         try:
-            result = await verify_virtual_account(body.va_id)
+            result = await verify_charges_by_reference(body.reference)
         except Exception as e:
             print(f"❌ FLW VA verify error: {e}")
             return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
@@ -202,16 +202,25 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         if result.get("status") != "success":
             return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
 
-        va_data = result["data"]
-        va_status = va_data.get("status")
+        charges = result.get("data", [])
+        if not isinstance(charges, list):
+            charges = [charges] if charges else []
 
-        if va_status != "completed":
+        succeeded_charge = None
+        for chg in charges:
+            if chg.get("status") == "succeeded":
+                succeeded_charge = chg
+                break
+
+        if not succeeded_charge:
             return PaymentVerifyResponse(
                 success=False,
-                message=f"Payment status: {va_status}. Please complete the transfer and try again."
+                message="Payment not yet confirmed. Please complete the transfer and try again."
             )
 
-        amount_paid = int(va_data.get("amount", 0))
+        amount_paid = int(succeeded_charge.get("amount", 0))
+        # Keep gateway response reference matching expected shape
+        charge = succeeded_charge
     else:
         # ── Charge verification path (existing) ──────────────────────
         try:
