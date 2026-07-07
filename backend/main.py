@@ -111,43 +111,133 @@ async def health():
     return {"status": "ok", "app": settings.APP_NAME}
 
 @app.get("/api/auth/magic", include_in_schema=True)
-async def exchange_magic_token(token: str = "", redirect: str = "/welcome", db=Depends(get_db)):
+async def exchange_magic_token(
+    request: Request,
+    response: Response,
+    token: str = "",
+    redirect: str = "/welcome",
+    db=Depends(get_db)
+):
     """
-    Exchange a short-lived single-use magic link token for a session JWT.
-    Redirects to the target page with token delivered in the URL fragment (#token=...).
+    Exchange a reusable magic token for a session cookie and JWT.
+    Binds the magic link to a browser session on first use.
+    If accessed from a new device/browser, triggers a fresh email re-verification step.
     """
+    import secrets
+    import hashlib
+    from datetime import timedelta
+    from backend.services.email_service import send_welcome_email
+
     if not token:
         raise HTTPException(status_code=400, detail="Missing magic token")
 
     now = datetime.now(timezone.utc)
 
-    # Find and atomically mark used
-    result = await db.magic_links.find_one_and_update(
-        {
-            "token": token,
-            "used": False,
-            "expires_at": {"$gt": now}
-        },
-        {"$set": {"used": True}},
-        return_document=ReturnDocument.AFTER
-    )
+    # 1. Look up magic link in the database (active for 90 days, used check removed to support reuse)
+    magic_link = await db.magic_links.find_one({
+        "token": token,
+        "expires_at": {"$gt": now}
+    })
 
-    if not result:
-        raise HTTPException(status_code=403, detail="Invalid, expired, or already used magic link")
+    if not magic_link:
+        raise HTTPException(status_code=403, detail="Invalid or expired magic link")
 
-    user_id = str(result["user_id"])
+    user_id = str(magic_link["user_id"])
     user = await db.users.find_one({"_id": ObjectId(user_id)})
-    role = user.get("role", "customer") if user else "customer"
-    email = user.get("email", "") if user else ""
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
 
+    email = user["email"]
+    role = user.get("role", "customer")
+
+    # Log access for anomaly visibility
+    client_ip = request.client.host if request.client else "unknown"
+    user_agent = request.headers.get("user-agent", "unknown")
+    print(f"🔒 Magic link access: token={token}, user={email}, IP={client_ip}, UA={user_agent}, time={now}")
+
+    # 2. Check if browser already has a valid session cookie
+    session_cookie = request.cookies.get("ac_session")
+    session_verified = False
+    session_id = None
+
+    if session_cookie:
+        h = hashlib.sha256(session_cookie.encode()).hexdigest()
+        existing_session = await db.sessions.find_one({
+            "session_hash": h,
+            "magic_token": token,
+            "expires_at": {"$gt": now}
+        })
+        if existing_session:
+            session_verified = True
+            session_id = session_cookie
+
+    if not session_verified:
+        # Check if this magic token has been used to create an active session on any other device/browser
+        other_active_session = await db.sessions.find_one({
+            "magic_token": token,
+            "expires_at": {"$gt": now}
+        })
+
+        if other_active_session:
+            print(f"⚠️ Re-verification triggered: magic link {token} accessed from a new device/browser.")
+            
+            # Generate a new magic link token
+            new_magic_token = secrets.token_urlsafe(32)
+            await db.magic_links.insert_one({
+                "token": new_magic_token,
+                "user_id": ObjectId(user_id),
+                "purpose": "welcome",
+                "expires_at": now + timedelta(days=90),
+                "used": False,
+                "created_at": now
+            })
+
+            # Retrieve unsubscribe token
+            sub = await db.subscribers.find_one({"email": email.lower()})
+            unsub_token = sub.get("unsubscribe_token", "") if sub else ""
+
+            # Resend new magic link email
+            await send_welcome_email(user["name"], email.lower(), new_magic_token, unsub_token)
+            
+            # Redirect to the verification pending page
+            return RedirectResponse(url="/verification-pending.html")
+
+        # First use -> Create a new session and bind the cookie!
+        session_id = secrets.token_urlsafe(32)
+        session_hash = hashlib.sha256(session_id.encode()).hexdigest()
+        
+        await db.sessions.insert_one({
+            "session_hash": session_hash,
+            "user_id": ObjectId(user_id),
+            "magic_token": token,
+            "ip_address": client_ip,
+            "user_agent": user_agent,
+            "created_at": now,
+            "expires_at": now + timedelta(days=90)
+        })
+
+    # 3. Create access token for frontend compatibility (sessionStorage fallback)
     session_token = create_access_token({"sub": user_id, "email": email, "role": role})
 
     if redirect not in ["/welcome", "/library"]:
         redirect = "/welcome"
 
-    # Ensure redirect has no query/fragment to prevent injection, clean it up
     redirect_target = f"{redirect}#token={session_token}"
-    return RedirectResponse(url=redirect_target)
+    redirect_resp = RedirectResponse(url=redirect_target)
+    
+    # Always set/refresh session cookie on response if we have a valid session_id
+    if session_id:
+        redirect_resp.set_cookie(
+            key="ac_session",
+            value=session_id,
+            max_age=90 * 24 * 3600,
+            expires=90 * 24 * 3600,
+            path="/",
+            httponly=True,
+            secure=True if settings.APP_ENV == "production" else False,
+            samesite="lax"
+        )
+    return redirect_resp
 
 @app.get("/unsubscribe", response_class=HTMLResponse, include_in_schema=False)
 async def unsubscribe(token: str = "", db=Depends(get_db)):

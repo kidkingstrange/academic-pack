@@ -50,13 +50,15 @@
     window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
   }
   const token = sessionStorage.getItem('ac_token');
-  if (!token) window.location.href = '/';
 
   async function loadLibrary() {
     try {
-      const res = await fetch('/api/library', {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+      
+      const res = await fetch('/api/library', { headers });
       if (!res.ok) throw new Error('Unauthorized');
       
       const data = await res.json();
@@ -82,10 +84,12 @@
 
   async function downloadProduct(id) {
     try {
+      const headers = {};
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
       // 1. Get signed URL
-      const res = await fetch(`/api/library/sign/${id}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
+      const res = await fetch(`/api/library/sign/${id}`, { headers });
       if (!res.ok) throw new Error('Failed to generate download link');
       const data = await res.json();
       

@@ -342,7 +342,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         "token": magic_token,
         "user_id": user_id,
         "purpose": "welcome",
-        "expires_at": now + timedelta(minutes=15),
+        "expires_at": now + timedelta(days=90),
         "used": False,
         "created_at": now
     })
@@ -457,7 +457,7 @@ async def payment_callback(
         "token": email_magic_token,
         "user_id": user_id,
         "purpose": "welcome",
-        "expires_at": now + timedelta(minutes=15),
+        "expires_at": now + timedelta(days=90),
         "used": False,
         "created_at": now
     })
@@ -467,7 +467,7 @@ async def payment_callback(
         "token": redirect_magic_token,
         "user_id": user_id,
         "purpose": "welcome",
-        "expires_at": now + timedelta(minutes=15),
+        "expires_at": now + timedelta(days=90),
         "used": False,
         "created_at": now
     })
@@ -579,7 +579,7 @@ async def process_webhook_payment(payload: dict, db):
         "token": magic_token,
         "user_id": user_id,
         "purpose": "welcome",
-        "expires_at": now + timedelta(minutes=15),
+        "expires_at": now + timedelta(days=90),
         "used": False,
         "created_at": now
     })
