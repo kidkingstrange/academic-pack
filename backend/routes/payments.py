@@ -4,10 +4,10 @@ Payment routes — Flutterwave V4 bank transfer flow.
 import base64
 import hashlib
 import hmac
+import secrets
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
-from bson import ObjectId
 from ..schemas.schemas import (
     PaymentInitRequest, PaymentInitResponse,
     PaymentVerifyRequest, PaymentVerifyResponse,
@@ -17,11 +17,10 @@ from ..services.flutterwave import (
     initiate_bank_transfer, verify_flw_charge,
     create_virtual_account, verify_charges_by_reference,
 )
-from ..services.email_service import send_welcome_email
+from ..services.payment_completion import complete_payment
 from ..utils.security import create_access_token
 from ..database import get_db
 from ..config import get_settings
-from ..workers.email_scheduler import enqueue_sequence_for_subscriber
 
 router = APIRouter(prefix="/api/payments", tags=["payments"])
 settings = get_settings()
@@ -181,15 +180,33 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
 async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depends(get_db)):
     """
     Step 2: Frontend polls this after customer claims to have paid.
-    Verifies charge with Flutterwave, creates user, issues JWT.
+    Verifies charge with Flutterwave, then runs complete_payment() —
+    the same shared completion path used by the webhook and /callback.
     """
-    # Idempotency check
-    existing = await db.payments.find_one({"reference": body.reference, "status": "success"})
-    if existing:
-        user = await db.users.find_one({"email": body.email.lower()})
-        if user:
-            token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
-            return PaymentVerifyResponse(success=True, token=token)
+    # Fast path: already confirmed. Avoid re-hitting Flutterwave, but still
+    # self-heal via complete_payment() if the subscriber/email queue never
+    # got created (e.g. the webhook claimed the payment but died before
+    # reaching that step) — this is the exact gap that used to grant
+    # access without ever enrolling the customer.
+    existing_payment = await db.payments.find_one({"reference": body.reference, "status": "success"})
+    if existing_payment:
+        existing_sub = await db.subscribers.find_one({"email": body.email.lower()})
+        if existing_sub:
+            user = await db.users.find_one({"email": body.email.lower()})
+            if user:
+                token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
+                return PaymentVerifyResponse(success=True, token=token)
+        completion = await complete_payment(
+            db,
+            reference=body.reference,
+            email=body.email,
+            name=body.name,
+            amount=existing_payment.get("amount", 0),
+            charge_id=existing_payment.get("charge_id"),
+            gateway_response=existing_payment.get("gateway_response", {}),
+            ip_address=request.client.host,
+        )
+        return PaymentVerifyResponse(success=True, token=completion["token"])
 
     # Verify with Flutterwave — branch on payment method
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
@@ -273,87 +290,18 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
                         message="The 24-hour promotional price has expired. Standard price of ₦5,000 applies.",
                     )
 
-    # ── Create / update user ──────────────────────────────────────────
-    user = await db.users.find_one({"email": body.email.lower()})
-    if not user:
-        ins = await db.users.insert_one({
-            "name": body.name,
-            "email": body.email.lower(),
-            "role": "customer",
-            "created_at": now,
-            "last_login": now,
-            "is_active": True,
-            "purchased_products": ["all"],
-        })
-        user_id = ins.inserted_id
-    else:
-        user_id = user["_id"]
-        await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
-
-    # ── Save payment record ───────────────────────────────────────────
-    await db.payments.insert_one({
-        "reference": body.reference,
-        "charge_id": body.charge_id,
-        "email": body.email.lower(),
-        "name": body.name,
-        "amount": amount_paid,
-        "currency": "NGN",
-        "gateway": "flutterwave",
-        "status": "success",
-        "gateway_response": charge,
-        "verified_at": now,
-        "created_at": now,
-        "user_id": user_id,
-        "ip_address": request.client.host,
-    })
-
-    # ── Mark lead converted ───────────────────────────────────────────
-    await db.leads.update_one(
-        {"email": body.email.lower()},
-        {"$set": {"converted": True, "conversion_date": now}},
+    completion = await complete_payment(
+        db,
+        reference=body.reference,
+        email=body.email,
+        name=body.name,
+        amount=amount_paid,
+        charge_id=body.charge_id,
+        gateway_response=charge,
+        ip_address=request.client.host,
     )
 
-    # ── Subscriber + email sequence ───────────────────────────────────
-    existing_sub = await db.subscribers.find_one({"email": body.email.lower()})
-    unsub_token = ""
-    if not existing_sub:
-        import asyncio
-        import secrets
-        unsub_token = secrets.token_urlsafe(32)
-        sub_result = await db.subscribers.insert_one({
-            "name": body.name,
-            "email": body.email.lower(),
-            "subscribed_at": now,
-            "sequence_position": 0,
-            "next_send_at": now,
-            "is_active": True,
-            "tags": ["buyer"],
-            "payment_reference": body.reference,
-            "unsubscribe_token": unsub_token,
-        })
-        asyncio.create_task(enqueue_sequence_for_subscriber(sub_result.inserted_id, now))
-    else:
-        unsub_token = existing_sub.get("unsubscribe_token", "")
-
-    # ── Issue JWT + send welcome email ────────────────────────────────
-    import asyncio
-    import secrets
-    from datetime import timedelta
-    
-    magic_token = secrets.token_urlsafe(32)
-    await db.magic_links.insert_one({
-        "token": magic_token,
-        "user_id": user_id,
-        "purpose": "welcome",
-        "expires_at": now + timedelta(days=90),
-        "used": False,
-        "created_at": now
-    })
-    
-    jwt_token = create_access_token({"sub": str(user_id), "email": body.email.lower(), "role": "customer"})
-    asyncio.create_task(send_welcome_email(body.name, body.email.lower(), magic_token, unsub_token))
-
-    return PaymentVerifyResponse(success=True, token=jwt_token)
+    return PaymentVerifyResponse(success=True, token=completion["token"])
 
 
 @router.get("/callback")
@@ -395,87 +343,28 @@ async def payment_callback(
     name  = pending["name"]
     now   = datetime.now(timezone.utc)
 
-    # Check if already processed
-    existing = await db.payments.find_one({"reference": ref, "status": "success"})
-    if existing:
-        user = await db.users.find_one({"email": email})
-        if user:
-            token = create_access_token({"sub": str(user["_id"]), "email": email, "role": "customer"})
-            return RedirectResponse(f"/welcome?token={token}")
+    completion = await complete_payment(
+        db,
+        reference=ref,
+        email=email,
+        name=name,
+        amount=charge.get("amount", 0),
+        charge_id=charge_id,
+        gateway_response=charge,
+        ip_address=request.client.host,
+    )
 
-    # Create user
-    ins = await db.users.insert_one({
-        "name": name,
-        "email": email,
-        "role": "customer",
-        "created_at": now,
-        "last_login": now,
-        "is_active": True,
-        "purchased_products": ["all"],
-    })
-    user_id = ins.inserted_id
-
-    await db.payments.insert_one({
-        "reference": ref,
-        "charge_id": charge_id,
-        "email": email,
-        "name": name,
-        "amount": charge.get("amount", 0),
-        "currency": "NGN",
-        "gateway": "flutterwave",
-        "status": "success",
-        "gateway_response": charge,
-        "verified_at": now,
-        "created_at": now,
-        "user_id": user_id,
-    })
-
-    # Create subscriber if not exists
-    existing_sub = await db.subscribers.find_one({"email": email.lower()})
-    unsub_token = ""
-    if not existing_sub:
-        import secrets
-        unsub_token = secrets.token_urlsafe(32)
-        sub_result = await db.subscribers.insert_one({
-            "name": name,
-            "email": email.lower(),
-            "subscribed_at": now,
-            "sequence_position": 0,
-            "next_send_at": now,
-            "is_active": True,
-            "tags": ["buyer"],
-            "payment_reference": ref,
-            "unsubscribe_token": unsub_token,
-        })
-        asyncio.create_task(enqueue_sequence_for_subscriber(sub_result.inserted_id, now))
-    else:
-        unsub_token = existing_sub.get("unsubscribe_token", "")
-
-    import asyncio
-    import secrets
-    from datetime import timedelta
-
-    email_magic_token = secrets.token_urlsafe(32)
-    await db.magic_links.insert_one({
-        "token": email_magic_token,
-        "user_id": user_id,
-        "purpose": "welcome",
-        "expires_at": now + timedelta(days=90),
-        "used": False,
-        "created_at": now
-    })
-
+    # Separate, short-lived magic link purely for this immediate browser
+    # handoff — distinct from the one emailed in the welcome message.
     redirect_magic_token = secrets.token_urlsafe(32)
     await db.magic_links.insert_one({
         "token": redirect_magic_token,
-        "user_id": user_id,
+        "user_id": completion["user_id"],
         "purpose": "welcome",
         "expires_at": now + timedelta(days=90),
         "used": False,
-        "created_at": now
+        "created_at": now,
     })
-
-    asyncio.create_task(send_welcome_email(name, email, email_magic_token, unsub_token))
 
     return RedirectResponse(f"/api/auth/magic?token={redirect_magic_token}&redirect=/welcome")
 
@@ -486,12 +375,6 @@ async def process_webhook_payment(payload: dict, db):
     ref = data.get("tx_ref")
     if not ref:
         print("⚠️ Webhook payload missing tx_ref")
-        return
-    
-    # Check if already processed
-    existing = await db.payments.find_one({"reference": ref, "status": "success"})
-    if existing:
-        print(f"ℹ️ Webhook: Payment {ref} already processed.")
         return
 
     # Find pending payment
@@ -511,84 +394,24 @@ async def process_webhook_payment(payload: dict, db):
         amount_paid = pending.get("amount", 2000)
         charge_id = pending.get("charge_id") or pending.get("va_id") or str(data.get("id"))
 
-    now = datetime.now(timezone.utc)
+    if not email:
+        print(f"⚠️ Webhook: Missing customer email for {ref}")
+        return
 
-    # 1. Create or get user
-    user = await db.users.find_one({"email": email.lower()})
-    if not user:
-        ins = await db.users.insert_one({
-            "name": name,
-            "email": email.lower(),
-            "role": "customer",
-            "created_at": now,
-            "last_login": now,
-            "is_active": True,
-            "purchased_products": ["all"],
-        })
-        user_id = ins.inserted_id
-    else:
-        user_id = user["_id"]
-        await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
-
-    # 2. Save payment record
-    await db.payments.insert_one({
-        "reference": ref,
-        "charge_id": charge_id,
-        "email": email.lower(),
-        "name": name,
-        "amount": amount_paid,
-        "currency": "NGN",
-        "gateway": "flutterwave",
-        "status": "success",
-        "gateway_response": data,
-        "verified_at": now,
-        "created_at": now,
-        "user_id": user_id,
-    })
-
-    # 3. Mark lead converted
-    await db.leads.update_one(
-        {"email": email.lower()},
-        {"$set": {"converted": True, "conversion_date": now}},
+    # complete_payment() is idempotent — if this reference was already
+    # claimed (e.g. by the frontend poll), this call still checks and
+    # backfills a missing subscriber/email-queue instead of silently
+    # returning early like the old pre-check here used to.
+    await complete_payment(
+        db,
+        reference=ref,
+        email=email,
+        name=name,
+        amount=amount_paid,
+        charge_id=charge_id,
+        gateway_response=data,
     )
-
-    # 4. Create subscriber if not exists
-    existing_sub = await db.subscribers.find_one({"email": email.lower()})
-    unsub_token = ""
-    if not existing_sub:
-        import secrets
-        unsub_token = secrets.token_urlsafe(32)
-        sub_result = await db.subscribers.insert_one({
-            "name": name,
-            "email": email.lower(),
-            "subscribed_at": now,
-            "sequence_position": 0,
-            "next_send_at": now,
-            "is_active": True,
-            "tags": ["buyer"],
-            "payment_reference": ref,
-            "unsubscribe_token": unsub_token,
-        })
-        await enqueue_sequence_for_subscriber(sub_result.inserted_id, now)
-    else:
-        unsub_token = existing_sub.get("unsubscribe_token", "")
-
-    # 5. Issue magic token & welcome email
-    import secrets
-    from datetime import timedelta
-
-    magic_token = secrets.token_urlsafe(32)
-    await db.magic_links.insert_one({
-        "token": magic_token,
-        "user_id": user_id,
-        "purpose": "welcome",
-        "expires_at": now + timedelta(days=90),
-        "used": False,
-        "created_at": now
-    })
-
-    await send_welcome_email(name, email.lower(), magic_token, unsub_token)
-    print(f"✅ Webhook: Payment {ref} processed successfully. Welcome email sent.")
+    print(f"✅ Webhook: Payment {ref} processed (completion verified/backfilled).")
 
 
 # ── Webhook endpoint ──────────────────────────────────────────────────────────

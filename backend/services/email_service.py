@@ -76,4 +76,4 @@ async def send_sequence_email(name: str, email: str, template_name: str, subject
         **context
     }
     html = render_template(f"sequence/{template_name}", merged)
-    await send_email(email, subject, html)
+    return await send_email(email, subject, html)
