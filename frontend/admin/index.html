@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login — Academic Comeback</title>
+<link rel="stylesheet" href="../css/main.css">
+<style>
+  body { background: var(--surface); display: flex; align-items: center; justify-content: center; height: 100vh; }
+  .login-box { background: #fff; padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow); width: 100%; max-width: 400px; }
+  .login-box h2 { font-family: 'Fraunces', serif; margin-bottom: 24px; color: var(--ink); text-align: center; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: 8px; }
+  .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+  .form-group input:focus { border-color: var(--gold); }
+  .error { color: var(--red); font-size: .85rem; margin-bottom: 16px; text-align: center; display: none; }
+</style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Admin Access</h2>
+  <div class="error" id="error-msg">Invalid credentials</div>
+  <form id="login-form">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" required>
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" required>
+    </div>
+    <button type="submit" class="btn btn--gold btn--full" id="submit-btn">Login</button>
+  </form>
+</div>
+
+<script>
+  if(sessionStorage.getItem('admin_token')) window.location.href = '/admin/dashboard';
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    const err = document.getElementById('error-msg');
+    
+    btn.disabled = true;
+    btn.textContent = 'Authenticating...';
+    err.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value
+        })
+      });
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Login failed');
+      
+      sessionStorage.setItem('admin_token', data.access_token);
+      window.location.href = '/admin/dashboard';
+    } catch (error) {
+      err.textContent = error.message;
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Login';
+    }
+  });
+</script>
+</body>
+</html>

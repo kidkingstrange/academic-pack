@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block subject %}Academic Comeback{% endblock %}</title>
+</head>
+<body style="margin:0;padding:0;background:#f5f4f0;font-family:'Segoe UI',Arial,sans-serif">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f4f0;padding:32px 16px">
+  <tr><td align="center">
+    <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08)">
+      <!-- Header -->
+      <tr><td style="background:linear-gradient(135deg,#0d0f14,#161922);padding:24px 32px;text-align:center">
+        <p style="color:#d4a63a;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;margin:0 0 4px">Scale Group</p>
+        <p style="color:#fff;margin:0;font-size:17px;font-weight:600">The First Class Project</p>
+      </td></tr>
+      <!-- Body -->
+      <tr><td style="padding:28px 28px 20px">
+        {% block content %}{% endblock %}
+      </td></tr>
+      <!-- Footer -->
+      <tr><td style="background:#faf9f7;padding:20px 28px;text-align:center;border-top:1px solid #eee">
+        <p style="color:#999;font-size:11px;margin:0 0 6px">You're receiving this because you joined the Academic Comeback community.</p>
+        <p style="color:#bbb;font-size:10px;margin:0">
+          <a href="{{ app_url }}/unsubscribe?token={{ unsubscribe_token }}" style="color:#d4a63a;text-decoration:none">Unsubscribe</a> · © 2026 Itoya David / Scale Group
+        </p>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
+</body>
+</html>

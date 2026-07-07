@@ -1,0 +1,101 @@
+"""
+Pydantic v2 schemas for request/response validation.
+"""
+from pydantic import BaseModel, EmailStr, Field
+from typing import Optional, List
+from datetime import datetime
+
+
+# ─── Lead ────────────────────────────────────────────────────────────────────
+class LeadCreate(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+
+
+class LeadResponse(BaseModel):
+    id: str
+    name: str
+    email: str
+    created_at: datetime
+
+
+# ─── Payment ──────────────────────────────────────────────────────────────────
+class PaymentInitRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    client_expiry: Optional[float] = None  # ms timestamp from frontend
+
+
+class PaymentInitResponse(BaseModel):
+    """
+    Flutterwave bank-transfer response — shows virtual account to customer.
+    """
+    reference: str
+    charge_id: str
+    action: str = "bank_transfer"       # or "redirect" for 3DS
+    redirect_url: Optional[str] = None  # used when action == "redirect"
+    account_number: Optional[str] = None
+    bank_name: Optional[str] = None
+    amount: int
+    note: Optional[str] = None
+
+
+class PaymentVerifyRequest(BaseModel):
+    charge_id: str
+    reference: str
+    email: EmailStr
+    name: str = Field(..., min_length=2, max_length=100)
+
+
+class PaymentVerifyResponse(BaseModel):
+    success: bool
+    token: Optional[str] = None
+    message: Optional[str] = None
+
+
+# ─── Auth ─────────────────────────────────────────────────────────────────────
+class AdminLoginRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(..., min_length=6)
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+# ─── Library / Products ──────────────────────────────────────────────────────
+class ProductPublic(BaseModel):
+    id: str
+    title: str
+    description: str
+    thumbnail: Optional[str] = None
+    order: int
+
+
+class LibraryResponse(BaseModel):
+    products: List[ProductPublic]
+    user_name: str
+
+
+# ─── Download ─────────────────────────────────────────────────────────────────
+class DownloadSignResponse(BaseModel):
+    signed_url: str
+    expires_in: int  # seconds
+
+
+# ─── Subscriber ───────────────────────────────────────────────────────────────
+class SubscriberCreate(BaseModel):
+    name: str
+    email: EmailStr
+
+
+# ─── Admin Analytics ──────────────────────────────────────────────────────────
+class AnalyticsSummary(BaseModel):
+    total_sales: int
+    total_revenue: float
+    total_leads: int
+    conversion_rate: float
+    total_subscribers: int
+    pending_emails: int
+    downloads_today: int

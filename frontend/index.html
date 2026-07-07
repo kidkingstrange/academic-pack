@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Academic Comeback Package — Stop Studying Harder. Start Learning Smarter.</title>
+<meta name="description" content="A complete digital educational package for students who study hard but still fail. Learn effective learning systems today.">
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="css/landing.css?v=2">
+</head>
+<body>
+
+<!-- Urgency Bar -->
+<div class="urgency-bar" id="urgency-bar">
+  <div class="urgency-bar__inner">
+    <span class="urgency-bar__text">🚨 <strong>LIMITED OFFER:</strong> 90% Discount Expires In: <strong id="countdown">24:00:00</strong></span>
+    <button class="urgency-bar__cta" onclick="openCheckout()">GET IT NOW — ₦2,000 <i class="bi bi-arrow-right"></i></button>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href="/" class="nav__brand">SCALE GROUP</a>
+    <button class="btn btn--gold nav__cta" onclick="openCheckout()">Get The Package</button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__content" data-aos="fade-up">
+      <div class="badge hero__eyebrow">📚 7-Book Educational Bundle</div>
+      <h1 class="hero__headline">You don't need to study longer.<br><em>Stop forgetting what you read.</em></h1>
+      <p class="hero__sub">You aren't failing because you're lazy. You're failing because nobody taught you how the brain retains complex information. Replace exhausting 8-hour study sessions with hyper-efficient learning loops and finally get the grades you deserve.</p>
+      
+      <div class="hero__ctas">
+        <button class="btn btn--gold btn--mega" onclick="openCheckout()">
+          <span class="btn-mega__price"><del>₦20,000</del> → ₦2,000</span>
+          GET THE COMPLETE PACKAGE NOW
+          <i class="bi bi-arrow-right"></i>
+        </button>
+        <div class="scarcity">🔥 <span id="scarcity-num">17</span> students bought this today</div>
+      </div>
+      <div class="hero__trust">
+        <div class="hero__trust-item"><i class="bi bi-check-circle-fill"></i> Instant Digital Delivery</div>
+        <div class="hero__trust-item"><i class="bi bi-shield-lock-fill"></i> Secure Payment</div>
+        <div class="hero__trust-item"><i class="bi bi-phone"></i> Read on Any Device</div>
+      </div>
+    </div>
+    <div class="hero__visual" data-aos="fade-up" data-aos-delay="200">
+      <div class="hero__books">
+        <!-- Floating Price Badge -->
+        <div class="hero__price-float">
+          <div class="discount-badge">90% OFF TODAY</div>
+          <div class="old-price">₦20,000</div>
+          <div class="new-price">₦2,000</div>
+        </div>
+        <div class="hero__book hero__book--b1"><img src="assets/images/bookcover3.png" alt="Bonus Book"></div>
+        <div class="hero__book hero__book--b2"><img src="assets/images/bookcoverlandscape.png" alt="Bonus Book"></div>
+        <div class="hero__book hero__book--b3"><img src="assets/images/bookcover1.png" alt="Bonus Book"></div>
+        <div class="hero__book hero__book--b4"><img src="assets/images/bookcover2.png" alt="Bonus Book"></div>
+        
+        <div class="hero__book hero__book--main">
+          <img src="assets/images/bookcover.png" alt="Get Good at Hard Things">
+          <div class="hero__badge">Flagship Book</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pain Section -->
+<section class="pain">
+  <div class="container container--sm">
+    <div class="pain__header" data-aos="fade-up">
+      <span class="section-label">The Problem</span>
+      <h2 class="section-title">Sound familiar?</h2>
+      <p class="section-sub" style="margin: 0 auto;">If any of these hit home, this package was made for you.</p>
+    </div>
+    <div class="pain__grid">
+      <div class="pain__item" data-aos="fade-up" data-aos-delay="100">
+        <div class="pain__x"><i class="bi bi-x"></i></div>
+        <div class="pain__text">You study for hours and still blank out in the exam.</div>
+      </div>
+      <div class="pain__item" data-aos="fade-up" data-aos-delay="150">
+        <div class="pain__x"><i class="bi bi-x"></i></div>
+        <div class="pain__text">You reread your notes all night and retain almost nothing.</div>
+      </div>
+      <div class="pain__item" data-aos="fade-up" data-aos-delay="200">
+        <div class="pain__x"><i class="bi bi-x"></i></div>
+        <div class="pain__text">You feel like you're always falling behind no matter how hard you try.</div>
+      </div>
+      <div class="pain__item" data-aos="fade-up" data-aos-delay="250">
+        <div class="pain__x"><i class="bi bi-x"></i></div>
+        <div class="pain__text">You watch other students excel and wonder what they're doing differently.</div>
+      </div>
+      <div class="pain__item" data-aos="fade-up" data-aos-delay="300">
+        <div class="pain__x"><i class="bi bi-x"></i></div>
+        <div class="pain__text">You sit down to read and lose focus after just 15 minutes.</div>
+      </div>
+      <div class="pain__item" data-aos="fade-up" data-aos-delay="350">
+        <div class="pain__x"><i class="bi bi-x"></i></div>
+        <div class="pain__text">You've started feeling like you're just not "academically smart".</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Reframe Section -->
+<section class="reframe">
+  <div class="container">
+    <div class="reframe__inner">
+      <div data-aos="fade-right">
+        <div class="reframe__quote">
+          "Maybe you are not actually bad at learning. Maybe nobody taught you how to learn effectively."
+        </div>
+        <p class="reframe__body">
+          Most students confuse "reading" with "studying". They use passive methods like rereading and highlighting that feel productive but produce terrible results.<br><br>
+          Intelligence isn't the problem. The problem is a lack of effective learning systems. When you fix the system, the results follow automatically.
+        </p>
+      </div>
+      <div class="reframe__pillars" data-aos="fade-left">
+        <div class="reframe__pillar">
+          <div class="reframe__pillar-icon">🧠</div>
+          <h4>Active Retrieval</h4>
+          <p>Learn how to force your brain to remember information during exams.</p>
+        </div>
+        <div class="reframe__pillar">
+          <div class="reframe__pillar-icon">🎯</div>
+          <h4>Deep Focus</h4>
+          <p>Techniques to study for 90 minutes straight without distraction.</p>
+        </div>
+        <div class="reframe__pillar">
+          <div class="reframe__pillar-icon">⏳</div>
+          <h4>Spaced Repetition</h4>
+          <p>The scientifically proven way to never forget what you read.</p>
+        </div>
+        <div class="reframe__pillar">
+          <div class="reframe__pillar-icon">📈</div>
+          <h4>Exam Strategy</h4>
+          <p>How to actually answer questions to get maximum marks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Product Showcase -->
+<section class="showcase">
+  <div class="container">
+    <div class="showcase__header" data-aos="fade-up">
+      <span class="section-label">The Solution</span>
+      <h2 class="section-title">The Academic Comeback Package</h2>
+      <p class="section-sub" style="margin: 0 auto;">7 complete digital resources to transform your academic performance.</p>
+      <div class="showcase__price-pill">
+        <span style="background: #ef4444; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;">90% Off Today</span>
+        <span class="old">₦20,000</span>
+        <span class="new">₦2,000</span>
+      </div>
+    </div>
+    <div class="products-grid">
+      <!-- 1 -->
+      <div class="product-card product-card--featured" data-aos="fade-up" data-aos-delay="100">
+        <div class="product-card__img"><img src="assets/images/bookcover.png" alt="Get Good at Hard Things"></div>
+        <div class="product-card__body">
+          <div class="product-card__tag">Flagship Book</div>
+          <h3 class="product-card__title">Get Good at Hard Things</h3>
+          <p class="product-card__desc">The core system. Learn how to train your brain to do difficult academic work, master active recall, and study efficiently.</p>
+        </div>
+      </div>
+      <!-- 2 -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="product-card__img"><img src="assets/images/bookcover1.png" alt="How to Score High"></div>
+        <div class="product-card__body">
+          <div class="product-card__tag">Bonus #1</div>
+          <h3 class="product-card__title">How to Score High in Any Exam</h3>
+          <p class="product-card__desc">Proven exam hall strategies that top students use to maximize their grades, even when they don't know all the answers.</p>
+        </div>
+      </div>
+      <!-- 3 -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="product-card__img"><img src="assets/images/bookcover2.png" alt="Balance Academics"></div>
+        <div class="product-card__body">
+          <div class="product-card__tag">Bonus #2</div>
+          <h3 class="product-card__title">Balance Academics & Business</h3>
+          <p class="product-card__desc">A practical framework for students who run side hustles and need to maintain high grades simultaneously.</p>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="product-card__img"><img src="assets/images/bookcover3.png" alt="Results-Oriented Learning"></div>
+        <div class="product-card__body">
+          <div class="product-card__tag">Bonus #3</div>
+          <h3 class="product-card__title">Results-Oriented Learning</h3>
+          <p class="product-card__desc">Stop studying just to feel busy. Learn how to study specifically for results and retention.</p>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="product-card__img"><img src="assets/images/bookcoverlandscape.png" alt="Focus Template"></div>
+        <div class="product-card__body">
+          <div class="product-card__tag">Bonus #4</div>
+          <h3 class="product-card__title">Focus Template</h3>
+          <p class="product-card__desc">A printable/digital template to structure your study sessions, eliminate distractions, and achieve deep work.</p>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="product-card" data-aos="fade-up" data-aos-delay="600">
+        <div class="product-card__img" style="background: linear-gradient(135deg, #1e293b, #0f172a); display:flex; align-items:center; justify-content:center;"><i class="bi bi-calendar-check" style="font-size:4rem;color:#e3b55a"></i></div>
+        <div class="product-card__body">
+          <div class="product-card__tag">Bonus #5</div>
+          <h3 class="product-card__title">Study Tracker</h3>
+          <p class="product-card__desc">A structured system to track what you study daily and stay consistent throughout the semester.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Value Stack -->
+<section class="value-stack">
+  <div class="container container--sm">
+    <div class="value-stack__header" data-aos="fade-up">
+      <h2 class="section-title">What you're getting today</h2>
+      <div style="background: rgba(201,151,58,0.1); border: 1px solid rgba(201,151,58,0.3); border-radius: var(--radius); padding: 24px; margin-top: 24px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <h4 style="color: var(--ink); font-family: 'Clash Display', sans-serif; font-size: 1.15rem; margin-bottom: 10px;">Why is this only ₦2,000?</h4>
+        <p style="color: var(--text2); font-size: 0.95rem; line-height: 1.6;">Normally, this exact curriculum is reserved for my private mentorship students paying ₦20,000+. But I am on a mission to build the largest community of high-performing students. By giving you my best frameworks for less than the price of a fast-food meal, I know you'll get results—and when you do, you'll want to join my inner circle. My loss is your immediate gain.</p>
+      </div>
+    </div>
+    <div class="value-table" data-aos="fade-up" data-aos-delay="100">
+      <div class="value-table__row">
+        <div class="value-table__label"><i class="bi bi-book"></i> Get Good at Hard Things</div>
+        <div class="value-table__price">₦6,000 Value</div>
+      </div>
+      <div class="value-table__row">
+        <div class="value-table__label"><i class="bi bi-file-earmark-pdf"></i> How to Score High in Any Exam</div>
+        <div class="value-table__price">₦3,000 Value</div>
+      </div>
+      <div class="value-table__row">
+        <div class="value-table__label"><i class="bi bi-file-earmark-pdf"></i> Balance Academics & Business</div>
+        <div class="value-table__price">₦3,000 Value</div>
+      </div>
+      <div class="value-table__row">
+        <div class="value-table__label"><i class="bi bi-file-earmark-pdf"></i> Results-Oriented Learning</div>
+        <div class="value-table__price">₦2,000 Value</div>
+      </div>
+      <div class="value-table__row">
+        <div class="value-table__label"><i class="bi bi-file-earmark-pdf"></i> Exam Survival Guide</div>
+        <div class="value-table__price">₦2,000 Value</div>
+      </div>
+      <div class="value-table__row">
+        <div class="value-table__label"><i class="bi bi-ui-checks"></i> Focus Template + Study Tracker</div>
+        <div class="value-table__price">₦4,000 Value</div>
+      </div>
+      <div class="value-table__row value-table__row--total">
+        <div class="value-table__label">Total Value</div>
+        <div class="value-table__price">₦20,000</div>
+      </div>
+      <div class="value-table__row value-table__row--final">
+        <div class="value-table__label">Today's Price</div>
+        <div class="value-table__price">₦2,000</div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:32px" data-aos="fade-up" data-aos-delay="200">
+      <button class="btn btn--gold btn--full" onclick="openCheckout()">Get The Complete Package Now</button>
+      <p style="color: #ef4444; font-size: 0.85rem; font-weight: 700; margin-top: 16px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.5;">⚠️ WARNING: Because this package includes community access, we limit daily entries to prevent spam. After 24 hours, the price reverts to ₦20,000.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container container--sm">
+    <div class="testimonials__header" data-aos="fade-up">
+      <span class="section-label">Proof</span>
+      <h2 class="section-title">Real results from real students</h2>
+    </div>
+    
+    <div class="testi-screenshots" data-aos="fade-up" data-aos-delay="100">
+      <div class="testi-screenshot"><img src="assets/images/test1.png" alt="Testimonial"></div>
+      <div class="testi-screenshot"><img src="assets/images/test2.png" alt="Testimonial"></div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"I was carrying two Cs and a D going into my second semester. I didn't even read the whole package—I just applied the Active Retrieval framework from Chapter 2. <strong>By the time results came out, my CGPA went from 2.8 to 3.4.</strong> I honestly didn't think it was possible that fast."</p>
+        <div class="testi-card__author">200L Student</div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"I actually study LESS now. I used to do 6-hour night classes and retain nothing. <strong>Now I do two 90-minute focused blocks using the Focus Template, and I'm top of my class.</strong> This system actually works."</p>
+        <div class="testi-card__author">300L Medicine Student</div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"One major thing the book helped me with was a mindset shift. Previously, when I tried to recall what I read but couldn't, I would feel frustrated. Now I see recall as an exercise for my brain. <strong>This change has really helped me study faster and retain information better.</strong>"</p>
+        <div class="testi-card__author">G., 300L UI Student</div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"What hit me was the chapter on passive studying. I used to read the same page four or five times and wonder why nothing was sticking. This book explained exactly why that happens and gave me methods that actually work. My exam performance this semester was the best I've ever had."</p>
+        <div class="testi-card__author">300L Student</div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"I run a small business and I was failing academically because I couldn't manage both. The balance book gave me a structure I could actually follow. Last semester I made profit and still finished with a 4.1 GPA. The bundle for 2k is almost embarrassing — it should cost more."</p>
+        <div class="testi-card__author">400L Student</div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"I have always been the type to read from morning to night before exams and still underperform. After going through the Exam Survival Guide, I understood for the first time that I was confusing busyness with actual preparation. My last exam season was completely different. Calmer, more focused, better results."</p>
+        <div class="testi-card__author">200L Student</div>
+      </div>
+      <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="testi-card__quote-mark">"</div>
+        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+        <p class="testi-card__text">"The Focus Template alone is worth the 2k. I used to sit down to study and spend the first 45 minutes just getting distracted. Now I have a system. I know exactly what I'm doing before I open a single textbook. My study sessions went from 4 scattered hours to 90 focused minutes that actually produce results."</p>
+        <div class="testi-card__author">300L Student</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mid-Page CTA -->
+<section class="mid-cta">
+  <div class="container" data-aos="fade-up">
+    <div class="mid-cta__glow"></div>
+    <div class="mid-cta__badge">⚡ LIMITED TIME — 90% OFF</div>
+    <h2 class="mid-cta__headline">Your Academic Comeback<br><em>Starts Right Here.</em></h2>
+    <p class="mid-cta__sub">7 books. Proven frameworks. Instant delivery. Everything you need to stop struggling and start dominating — for less than the price of a meal.</p>
+    <div class="mid-cta__price-row">
+      <span class="mid-cta__old">₦20,000</span>
+      <span class="mid-cta__arrow">→</span>
+      <span class="mid-cta__new">₦2,000</span>
+    </div>
+    <button class="btn btn--gold btn--mega" onclick="openCheckout()">
+      YES — I WANT THE COMPLETE PACKAGE
+      <i class="bi bi-arrow-right"></i>
+    </button>
+    <div class="mid-cta__trust">
+      <span><i class="bi bi-shield-lock-fill"></i> Secure Checkout</span>
+      <span><i class="bi bi-lightning-fill"></i> Instant Access</span>
+      <span><i class="bi bi-arrow-repeat"></i> Lifetime Updates</span>
+    </div>
+  </div>
+</section>
+
+<!-- Author -->
+<section class="author">
+  <div class="container container--sm author__inner" data-aos="fade-up">
+    <div class="author__img-wrap">
+      <img src="assets/images/profileimg.jpg" alt="Itoya David" class="author__photo">
+    </div>
+    <div>
+      <h2 class="author__name">Itoya David</h2>
+      <p class="author__role">Founder, Scale Group</p>
+      <p class="author__bio">I finished my first year with a perfect CGPA — all As, no Bs. Over time, I've read hundreds of books on learning, performance, and academic psychology. I built Scale Group to help students grow. This package distills everything that actually works into one practical system.</p>
+      <div class="author__creds">
+        <div class="author__cred"><i class="bi bi-mortarboard-fill"></i> First Class Mentor</div>
+        <div class="author__cred"><i class="bi bi-people-fill"></i> Over 3,000 lives improved systematically</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WhatsApp Community -->
+<section class="community" id="community">
+  <div class="container" data-aos="fade-up">
+    <div class="community__inner">
+      <div class="community__icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+      <h2 class="community__headline">Join Our Free WhatsApp Community</h2>
+      <p class="community__sub">Connect with students mastering their academics. Get weekly study tips, exam strategies, and accountability — completely free.</p>
+      <form class="community__form" id="community-form">
+        <div class="community__input-wrap">
+          <i class="bi bi-envelope"></i>
+          <input type="email" id="community-email" placeholder="Enter your email address" required>
+        </div>
+        <button type="submit" class="btn btn--whatsapp" id="community-submit">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Join WhatsApp Community
+        </button>
+      </form>
+      <div class="community__success" id="community-success" style="display:none">
+        <div class="check-circle" style="margin-bottom:12px"><i class="bi bi-check-lg" style="color:#25D366;font-size:2rem"></i></div>
+        <p style="font-weight:600;color:#fff;font-size:1.1rem;margin-bottom:8px">You're in! 🎉</p>
+        <p style="color:rgba(255,255,255,.7);font-size:.9rem">Redirecting you to the community...</p>
+      </div>
+      <div class="community__trust">
+        <span><i class="bi bi-shield-check"></i> 100% Free</span>
+        <span><i class="bi bi-bell-fill"></i> Weekly study tips</span>
+        <span><i class="bi bi-people-fill"></i> Active community</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="final-cta">
+  <div class="container" data-aos="fade-up">
+    
+    <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 40px 24px; max-width: 600px; margin: 0 auto 48px; text-align: left;">
+      <h3 style="font-family: 'Clash Display', sans-serif; font-size: 1.5rem; color: var(--gold-l); margin-bottom: 20px;">You Have Two Choices Right Now:</h3>
+      <p style="color: #fff; line-height: 1.7; margin-bottom: 16px;"><strong>Choice 1:</strong> Keep doing what you're doing. Keep rereading notes, blanking out in exam halls, and feeling like you aren't smart enough.</p>
+      <p style="color: #fff; line-height: 1.7; margin-bottom: 16px;"><strong>Choice 2:</strong> Invest ₦2,000 (less than a cheap lunch) to install a proven, step-by-step academic system that forces your brain to retain information and secures your GPA.</p>
+      <p style="color: rgba(255,255,255,0.6); font-style: italic;">The choice is obvious. Make it.</p>
+    </div>
+
+    <h2 class="final-cta__headline">Stop Guessing.<br><em>Start Dominating Exams.</em></h2>
+    <p class="final-cta__sub">You are 60 seconds away from unlocking the exact frameworks used by First-Class graduates. <strong>The 90% discount window is closing.</strong></p>
+    <button class="btn btn--gold btn--full" onclick="openCheckout()">
+      Unlock The Complete Package Now
+      <i class="bi bi-arrow-right"></i>
+    </button>
+    <p class="final-cta__price">🔒 Secure Paystack Checkout • Instant Access • Only <strong>₦2,000</strong></p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__brand">SCALE GROUP</div>
+    <p class="footer__copy">© 2025 Itoya David. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Checkout Modal -->
+<div class="modal-overlay" id="checkout-modal">
+  <div class="modal">
+    <button class="modal__close" onclick="closeCheckout()"><i class="bi bi-x-lg"></i></button>
+    <div class="modal__body">
+      
+      <!-- Step 1 -->
+      <div class="modal__step active" id="step1">
+        <div class="modal__progress">
+          <div class="modal__progress-dot active"></div>
+          <div class="modal__progress-dot"></div>
+        </div>
+        <h3 class="modal__title">Get The Package</h3>
+        <p class="modal__sub">Enter your details. We'll send your download links to this email.</p>
+        
+        <form id="lead-form">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="e.g. Chidi Okafor" required>
+            <div class="field-error" id="name-error">Please enter your name</div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="your@email.com" required>
+            <div class="field-error" id="email-error">Please enter a valid email</div>
+          </div>
+          <button type="submit" class="modal__submit" id="submit-lead">
+            Continue to Payment <i class="bi bi-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Step 2: Processing -->
+      <div class="modal__step" id="step2">
+        <div class="modal__progress">
+          <div class="modal__progress-dot done"></div>
+          <div class="modal__progress-dot active"></div>
+        </div>
+        <div class="modal__spinner" id="payment-spinner">
+          <div class="spin"></div>
+          <p style="margin-top:16px;font-weight:600;color:var(--ink)">Processing payment...</p>
+          <p style="font-size:13px;color:var(--text2)">Please don't close this window.</p>
+        </div>
+        <div class="modal__success" id="payment-success">
+          <div class="check-circle"><i class="bi bi-check-lg" style="color:#16a34a"></i></div>
+          <h3 class="modal__title">Payment Confirmed!</h3>
+          <p class="modal__sub">Redirecting you to the welcome page...</p>
+        </div>
+        <div class="modal__error" id="payment-error">
+          <div class="err-circle"><i class="bi bi-x-lg" style="color:#dc2626"></i></div>
+          <h3 class="modal__title">Payment Failed</h3>
+          <p class="modal__sub" id="payment-error-msg">Something went wrong.</p>
+          <button class="btn btn--gold" onclick="resetCheckout()" style="width:100%">Try Again</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Community Email Script -->
+<script>
+(function() {
+  const form = document.getElementById('community-form');
+  const emailInput = document.getElementById('community-email');
+  const submitBtn = document.getElementById('community-submit');
+  const successDiv = document.getElementById('community-success');
+  const WHATSAPP_LINK = 'https://chat.whatsapp.com/HLtfMHU31JXGCvVZUbLSoT';
+
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email = emailInput.value.trim().toLowerCase();
+      if (!email || !email.includes('@')) return;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<div class="spin" style="width:20px;height:20px;border-width:2px"></div> Joining...';
+
+      try {
+        const res = await fetch('/api/community/join', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          form.style.display = 'none';
+          successDiv.style.display = 'block';
+          setTimeout(() => { window.open(WHATSAPP_LINK, '_blank'); }, 1500);
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Join WhatsApp Community';
+          alert(data.detail || 'Something went wrong. Try again.');
+        }
+      } catch(err) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Join WhatsApp Community';
+        alert('Connection error. Please try again.');
+      }
+    });
+  }
+})();
+</script>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://js.paystack.co/v2/inline.js"></script>
+<script src="js/main.js"></script>
+<script src="js/checkout.js"></script>
+<script>AOS.init({ once: true, offset: 50, duration: 600 });</script>
+</body>
+</html>

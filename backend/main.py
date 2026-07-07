@@ -1,0 +1,229 @@
+"""
+FastAPI application entry point.
+Run with: uvicorn backend.main:app --reload --port 8000
+"""
+from fastapi import FastAPI, Request, Depends, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse, JSONResponse, HTMLResponse, RedirectResponse
+from pathlib import Path
+from bson import ObjectId
+from pymongo import ReturnDocument
+from datetime import datetime, timezone
+import time
+
+from .config import get_settings
+from .database import connect_db, disconnect_db, get_db
+from .routes import payments, library, admin as admin_router, community
+from .workers.email_scheduler import start_scheduler, stop_scheduler
+from .utils.security import create_access_token
+
+settings = get_settings()
+
+app = FastAPI(
+    title="Academic Comeback API",
+    version="1.0.0",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json",
+)
+
+# ── CORS ──────────────────────────────────────────────────────────────────────
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins_list,
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
+
+# ── Security Headers Middleware ────────────────────────────────────────────────
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    return response
+
+# ── Request Timing ────────────────────────────────────────────────────────────
+@app.middleware("http")
+async def add_process_time(request: Request, call_next):
+    start = time.time()
+    response = await call_next(request)
+    response.headers["X-Process-Time"] = str(time.time() - start)
+    return response
+
+# ── Routers ───────────────────────────────────────────────────────────────────
+app.include_router(payments.router)
+app.include_router(library.router)
+app.include_router(admin_router.router)
+app.include_router(community.router)
+
+# ── Static Files (Frontend) ───────────────────────────────────────────────────
+frontend_path = Path(__file__).parent.parent / "frontend"
+if frontend_path.exists():
+    app.mount("/assets", StaticFiles(directory=str(frontend_path / "assets")), name="assets")
+    app.mount("/css", StaticFiles(directory=str(frontend_path / "css")), name="css")
+    app.mount("/js", StaticFiles(directory=str(frontend_path / "js")), name="js")
+
+# ── SPA-style Page Routes ─────────────────────────────────────────────────────
+@app.get("/", include_in_schema=False)
+async def serve_index():
+    return FileResponse(str(frontend_path / "index.html"))
+
+@app.get("/welcome", include_in_schema=False)
+async def serve_welcome():
+    return FileResponse(str(frontend_path / "welcome.html"))
+
+@app.get("/library", include_in_schema=False)
+async def serve_library():
+    return FileResponse(str(frontend_path / "library.html"))
+
+@app.get("/admin", include_in_schema=False)
+async def serve_admin():
+    return FileResponse(str(frontend_path / "admin" / "index.html"))
+
+@app.get("/admin/dashboard", include_in_schema=False)
+async def serve_dashboard():
+    return FileResponse(str(frontend_path / "admin" / "dashboard.html"))
+
+# ── Health Check ──────────────────────────────────────────────────────────────
+@app.get("/api/health")
+async def health():
+    return {"status": "ok", "app": settings.APP_NAME}
+
+@app.get("/api/auth/magic", include_in_schema=True)
+async def exchange_magic_token(token: str = "", redirect: str = "/welcome", db=Depends(get_db)):
+    """
+    Exchange a short-lived single-use magic link token for a session JWT.
+    Redirects to the target page with token delivered in the URL fragment (#token=...).
+    """
+    if not token:
+        raise HTTPException(status_code=400, detail="Missing magic token")
+
+    now = datetime.now(timezone.utc)
+
+    # Find and atomically mark used
+    result = await db.magic_links.find_one_and_update(
+        {
+            "token": token,
+            "used": False,
+            "expires_at": {"$gt": now}
+        },
+        {"$set": {"used": True}},
+        return_document=ReturnDocument.AFTER
+    )
+
+    if not result:
+        raise HTTPException(status_code=403, detail="Invalid, expired, or already used magic link")
+
+    user_id = str(result["user_id"])
+    user = await db.users.find_one({"_id": ObjectId(user_id)})
+    role = user.get("role", "customer") if user else "customer"
+    email = user.get("email", "") if user else ""
+
+    session_token = create_access_token({"sub": user_id, "email": email, "role": role})
+
+    if redirect not in ["/welcome", "/library"]:
+        redirect = "/welcome"
+
+    # Ensure redirect has no query/fragment to prevent injection, clean it up
+    redirect_target = f"{redirect}#token={session_token}"
+    return RedirectResponse(url=redirect_target)
+
+@app.get("/unsubscribe", response_class=HTMLResponse, include_in_schema=False)
+async def unsubscribe(token: str = "", db=Depends(get_db)):
+    """
+    Unsubscribe from all email sequences using unsubscribe token.
+    Generic response returned for both valid and invalid tokens.
+    """
+    if db is not None and token:
+        await db.subscribers.update_one(
+            {"unsubscribe_token": token},
+            {"$set": {"is_active": False}}
+        )
+
+    html_content = """
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsubscribed — Academic Comeback</title>
+    <style>
+        body {
+            background-color: #0d0f14;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 480px;
+            padding: 40px 24px;
+            background: linear-gradient(135deg, #161922, #0d0f14);
+            border-radius: 16px;
+            border: 1px solid rgba(212, 166, 58, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .icon {
+            font-size: 3rem;
+            color: #d4a63a;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin: 0 0 12px 0;
+            font-weight: 700;
+        }
+        p {
+            color: #aaa;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0 0 24px 0;
+        }
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #d4a63a, #e8bf5a);
+            color: #0d0f14;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+    </head>
+    <body>
+    <div class="container">
+        <div class="icon">✓</div>
+        <h1>You've been unsubscribed</h1>
+        <p>We've removed your email address from our automated learning sequence. You will no longer receive these curriculum emails.</p>
+        <a href="/" class="btn">Return Home</a>
+    </div>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content, status_code=200)
+
+# ── Lifecycle ─────────────────────────────────────────────────────────────────
+@app.on_event("startup")
+async def startup():
+    await connect_db()
+    start_scheduler()
+    print(f"🚀 {settings.APP_NAME} API started")
+
+@app.on_event("shutdown")
+async def shutdown():
+    stop_scheduler()
+    await disconnect_db()

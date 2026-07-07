@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block subject %}🎉 Your Academic Comeback Package is ready, {{ name }}!{% endblock %}
+{% block content %}
+<p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  Welcome to the <strong>Academic Comeback Package</strong>. Your payment went through and your materials are ready.
+</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 24px">
+  I built this package because I believe most students aren't failing because they're unintelligent. They're failing because nobody ever taught them <em>how</em> to learn effectively. That ends today.
+</p>
+
+<!-- CTA -->
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px">
+  <tr><td align="center">
+    <a href="{{ library_url }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:700;font-size:15px;padding:14px 32px;border-radius:50px;text-decoration:none">
+      Access Your Library →
+    </a>
+  </td></tr>
+</table>
+
+<p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 16px">
+  Inside, you'll find all 7 resources. Start with <strong>"Get Good at Hard Things"</strong> — it's the core system everything else builds on.
+</p>
+
+<!-- WhatsApp Join -->
+<table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2);border-radius:12px;padding:20px;margin:0 0 24px">
+  <tr><td style="padding:16px;text-align:center">
+    <p style="font-weight:700;color:#333;margin:0 0 8px;font-size:15px">Join 500+ students in our community</p>
+    <p style="color:#666;font-size:13px;margin:0 0 14px">Weekly study tips, accountability, and direct access to me.</p>
+    <a href="{{ whatsapp_url }}" style="display:inline-block;background:#25D366;color:#fff;font-weight:700;font-size:14px;padding:12px 28px;border-radius:50px;text-decoration:none">
+      Join WhatsApp Community →
+    </a>
+  </td></tr>
+</table>
+
+<p style="font-size:14px;color:#999;line-height:1.7;margin:0">
+  Over the next 26 weeks, you'll receive structured emails to help you apply everything in this package. Keep an eye on your inbox.
+</p>
+
+<p style="font-size:15px;color:#333;margin:24px 0 0">
+  — Itoya David<br>
+  <span style="color:#999;font-size:13px">Founder, Scale Group · First Class Graduate</span>
+</p>
+{% endblock %}

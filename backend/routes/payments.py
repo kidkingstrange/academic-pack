@@ -1,0 +1,391 @@
+"""
+Payment routes — Flutterwave V4 bank transfer flow.
+"""
+import uuid
+from datetime import datetime, timezone
+from fastapi import APIRouter, HTTPException, Request, Depends
+from bson import ObjectId
+from ..schemas.schemas import (
+    PaymentInitRequest, PaymentInitResponse,
+    PaymentVerifyRequest, PaymentVerifyResponse,
+)
+from ..services.flutterwave import (
+    get_flw_token, create_flw_customer,
+    initiate_bank_transfer, verify_flw_charge,
+)
+from ..services.email_service import send_welcome_email
+from ..utils.security import create_access_token
+from ..database import get_db
+from ..config import get_settings
+from ..workers.email_scheduler import enqueue_sequence_for_subscriber
+
+router = APIRouter(prefix="/api/payments", tags=["payments"])
+settings = get_settings()
+
+
+@router.post("/initialize", response_model=PaymentInitResponse)
+async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(get_db)):
+    """
+    Step 1: Determine price, create Flutterwave customer,
+    initiate bank-transfer charge, return virtual account details.
+    """
+    reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+    amount_naira = settings.PRODUCT_PRICE_NAIRA
+    now = datetime.now(timezone.utc)
+
+    # ── Server-side 24-hour price check ──────────────────────────────
+    existing_lead = await db.leads.find_one({"email": body.email.lower()})
+    is_expired = False
+    if existing_lead:
+        created_at = existing_lead.get("created_at")
+        if created_at:
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=timezone.utc)
+            if (now - created_at).total_seconds() > 24 * 3600:
+                is_expired = True
+    else:
+        if body.client_expiry:
+            if body.client_expiry < now.timestamp() * 1000:
+                is_expired = True
+
+    if is_expired:
+        amount_naira = settings.PRODUCT_PRICE_LATE_NAIRA
+
+    # ── Upsert lead ───────────────────────────────────────────────────
+    await db.leads.update_one(
+        {"email": body.email.lower()},
+        {
+            "$set": {
+                "name": body.name,
+                "email": body.email.lower(),
+                "source": "landing_page",
+                "ip_address": request.client.host,
+                "converted": False,
+                "price_offered": amount_naira,
+            },
+            "$setOnInsert": {"created_at": now},
+        },
+        upsert=True,
+    )
+
+    # ── Flutterwave: get token → customer → charge ────────────────────
+    try:
+        token       = await get_flw_token()
+        customer_id = await create_flw_customer(token, body.name, body.email.lower())
+        redirect_url = f"{settings.APP_URL}/api/payments/callback"
+        charge      = await initiate_bank_transfer(
+            token, customer_id, amount_naira, reference, redirect_url
+        )
+    except Exception as e:
+        print(f"❌ FLW initiation error: {e}")
+        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+
+    # ── Save pending order ────────────────────────────────────────────
+    charge_id = charge.get("id")
+    await db.pending_payments.update_one(
+        {"reference": reference},
+        {"$set": {
+            "reference":   reference,
+            "charge_id":   charge_id,
+            "email":       body.email.lower(),
+            "name":        body.name,
+            "amount":      amount_naira,
+            "customer_id": customer_id,
+            "created_at":  now,
+        }},
+        upsert=True,
+    )
+
+    # ── Determine action and return ───────────────────────────────────
+    next_action = charge.get("next_action", {})
+    action_type = next_action.get("type")
+
+    if action_type == "redirect_url":
+        return PaymentInitResponse(
+            reference=reference,
+            charge_id=charge_id,
+            action="redirect",
+            redirect_url=next_action["redirect_url"]["url"],
+            amount=amount_naira,
+        )
+
+    # Default: bank_transfer
+    va = charge.get("payment_method_details", {}).get("bank_transfer", {})
+    instruction = next_action.get("payment_instruction", {})
+    return PaymentInitResponse(
+        reference=reference,
+        charge_id=charge_id,
+        action="bank_transfer",
+        account_number=va.get("account_number", ""),
+        bank_name=va.get("bank_name", ""),
+        amount=amount_naira,
+        note=instruction.get("note", "Transfer the exact amount. Account is valid for 30 minutes."),
+    )
+
+
+@router.post("/verify", response_model=PaymentVerifyResponse)
+async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depends(get_db)):
+    """
+    Step 2: Frontend polls this after customer claims to have paid.
+    Verifies charge with Flutterwave, creates user, issues JWT.
+    """
+    # Idempotency check
+    existing = await db.payments.find_one({"reference": body.reference, "status": "success"})
+    if existing:
+        user = await db.users.find_one({"email": body.email.lower()})
+        if user:
+            token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
+            return PaymentVerifyResponse(success=True, token=token)
+
+    # Verify with Flutterwave
+    try:
+        result = await verify_flw_charge(body.charge_id)
+    except Exception as e:
+        print(f"❌ FLW verify error: {e}")
+        return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
+
+    if result.get("status") != "success":
+        return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
+
+    charge = result["data"]
+    charge_status = charge.get("status")
+
+    if charge_status != "succeeded":
+        return PaymentVerifyResponse(
+            success=False,
+            message=f"Payment status: {charge_status}. Please complete the transfer and try again."
+        )
+
+    amount_paid = charge.get("amount", 0)
+    now = datetime.now(timezone.utc)
+
+    # ── 24-hour price enforcement ─────────────────────────────────────
+    lead = await db.leads.find_one({"email": body.email.lower()})
+    if lead:
+        created_at = lead.get("created_at")
+        if created_at:
+            if created_at.tzinfo is None:
+                created_at = created_at.replace(tzinfo=timezone.utc)
+            if (now - created_at).total_seconds() > 24 * 3600:
+                if amount_paid < settings.PRODUCT_PRICE_LATE_NAIRA:
+                    await db.payments.update_one(
+                        {"reference": body.reference},
+                        {"$set": {
+                            "reference": body.reference,
+                            "email": body.email.lower(),
+                            "status": "failed",
+                            "created_at": now,
+                            "failure_reason": "Promo expired — paid ₦2,000 instead of ₦5,000",
+                        }},
+                        upsert=True,
+                    )
+                    return PaymentVerifyResponse(
+                        success=False,
+                        message="The 24-hour promotional price has expired. Standard price of ₦5,000 applies.",
+                    )
+
+    # ── Create / update user ──────────────────────────────────────────
+    user = await db.users.find_one({"email": body.email.lower()})
+    if not user:
+        ins = await db.users.insert_one({
+            "name": body.name,
+            "email": body.email.lower(),
+            "role": "customer",
+            "created_at": now,
+            "last_login": now,
+            "is_active": True,
+            "purchased_products": ["all"],
+        })
+        user_id = ins.inserted_id
+    else:
+        user_id = user["_id"]
+        await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
+
+    # ── Save payment record ───────────────────────────────────────────
+    await db.payments.insert_one({
+        "reference": body.reference,
+        "charge_id": body.charge_id,
+        "email": body.email.lower(),
+        "name": body.name,
+        "amount": amount_paid,
+        "currency": "NGN",
+        "gateway": "flutterwave",
+        "status": "success",
+        "gateway_response": charge,
+        "verified_at": now,
+        "created_at": now,
+        "user_id": user_id,
+        "ip_address": request.client.host,
+    })
+
+    # ── Mark lead converted ───────────────────────────────────────────
+    await db.leads.update_one(
+        {"email": body.email.lower()},
+        {"$set": {"converted": True, "conversion_date": now}},
+    )
+
+    # ── Subscriber + email sequence ───────────────────────────────────
+    existing_sub = await db.subscribers.find_one({"email": body.email.lower()})
+    unsub_token = ""
+    if not existing_sub:
+        import asyncio
+        import secrets
+        unsub_token = secrets.token_urlsafe(32)
+        sub_result = await db.subscribers.insert_one({
+            "name": body.name,
+            "email": body.email.lower(),
+            "subscribed_at": now,
+            "sequence_position": 0,
+            "next_send_at": now,
+            "is_active": True,
+            "tags": ["buyer"],
+            "payment_reference": body.reference,
+            "unsubscribe_token": unsub_token,
+        })
+        asyncio.create_task(enqueue_sequence_for_subscriber(sub_result.inserted_id, now))
+    else:
+        unsub_token = existing_sub.get("unsubscribe_token", "")
+
+    # ── Issue JWT + send welcome email ────────────────────────────────
+    import asyncio
+    import secrets
+    from datetime import timedelta
+    
+    magic_token = secrets.token_urlsafe(32)
+    await db.magic_links.insert_one({
+        "token": magic_token,
+        "user_id": user_id,
+        "purpose": "welcome",
+        "expires_at": now + timedelta(minutes=15),
+        "used": False,
+        "created_at": now
+    })
+    
+    jwt_token = create_access_token({"sub": str(user_id), "email": body.email.lower(), "role": "customer"})
+    asyncio.create_task(send_welcome_email(body.name, body.email.lower(), magic_token, unsub_token))
+
+    return PaymentVerifyResponse(success=True, token=jwt_token)
+
+
+@router.get("/callback")
+async def payment_callback(
+    request: Request,
+    status: str = "",
+    tx_ref: str = "",
+    reference: str = "",
+    db=Depends(get_db),
+):
+    """
+    Flutterwave redirects here after 3DS/redirect payments.
+    Looks up the pending order and redirects to welcome page with token.
+    """
+    from fastapi.responses import RedirectResponse
+
+    ref = tx_ref or reference
+    if not ref:
+        return RedirectResponse("/?error=missing_reference")
+
+    pending = await db.pending_payments.find_one({"reference": ref})
+    if not pending:
+        return RedirectResponse("/?error=order_not_found")
+
+    charge_id = pending.get("charge_id")
+    if not charge_id:
+        return RedirectResponse("/?error=charge_not_found")
+
+    try:
+        result = await verify_flw_charge(charge_id)
+        charge = result.get("data", {})
+    except Exception:
+        return RedirectResponse("/?error=verify_failed")
+
+    if charge.get("status") != "succeeded":
+        return RedirectResponse("/?error=payment_not_confirmed")
+
+    email = pending["email"]
+    name  = pending["name"]
+    now   = datetime.now(timezone.utc)
+
+    # Check if already processed
+    existing = await db.payments.find_one({"reference": ref, "status": "success"})
+    if existing:
+        user = await db.users.find_one({"email": email})
+        if user:
+            token = create_access_token({"sub": str(user["_id"]), "email": email, "role": "customer"})
+            return RedirectResponse(f"/welcome?token={token}")
+
+    # Create user
+    ins = await db.users.insert_one({
+        "name": name,
+        "email": email,
+        "role": "customer",
+        "created_at": now,
+        "last_login": now,
+        "is_active": True,
+        "purchased_products": ["all"],
+    })
+    user_id = ins.inserted_id
+
+    await db.payments.insert_one({
+        "reference": ref,
+        "charge_id": charge_id,
+        "email": email,
+        "name": name,
+        "amount": charge.get("amount", 0),
+        "currency": "NGN",
+        "gateway": "flutterwave",
+        "status": "success",
+        "gateway_response": charge,
+        "verified_at": now,
+        "created_at": now,
+        "user_id": user_id,
+    })
+
+    # Create subscriber if not exists
+    existing_sub = await db.subscribers.find_one({"email": email.lower()})
+    unsub_token = ""
+    if not existing_sub:
+        import secrets
+        unsub_token = secrets.token_urlsafe(32)
+        sub_result = await db.subscribers.insert_one({
+            "name": name,
+            "email": email.lower(),
+            "subscribed_at": now,
+            "sequence_position": 0,
+            "next_send_at": now,
+            "is_active": True,
+            "tags": ["buyer"],
+            "payment_reference": ref,
+            "unsubscribe_token": unsub_token,
+        })
+        asyncio.create_task(enqueue_sequence_for_subscriber(sub_result.inserted_id, now))
+    else:
+        unsub_token = existing_sub.get("unsubscribe_token", "")
+
+    import asyncio
+    import secrets
+    from datetime import timedelta
+
+    email_magic_token = secrets.token_urlsafe(32)
+    await db.magic_links.insert_one({
+        "token": email_magic_token,
+        "user_id": user_id,
+        "purpose": "welcome",
+        "expires_at": now + timedelta(minutes=15),
+        "used": False,
+        "created_at": now
+    })
+
+    redirect_magic_token = secrets.token_urlsafe(32)
+    await db.magic_links.insert_one({
+        "token": redirect_magic_token,
+        "user_id": user_id,
+        "purpose": "welcome",
+        "expires_at": now + timedelta(minutes=15),
+        "used": False,
+        "created_at": now
+    })
+
+    asyncio.create_task(send_welcome_email(name, email, email_magic_token, unsub_token))
+
+    return RedirectResponse(f"/api/auth/magic?token={redirect_magic_token}&redirect=/welcome")

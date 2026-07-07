@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0c0e12;--ink2:#1a1d24;--ink3:#252833;
+  --surface:#f7f6f2;--surface2:#eeece6;--white:#ffffff;
+  --gold:#c9973a;--gold-l:#e3b55a;--gold-d:#a87830;
+  --green:#22c55e;--red:#ef4444;
+  --gray:#64748b;--gray-l:#94a3b8;--gray-ll:#cbd5e1;
+  --text:#1e2028;--text2:#475569;
+  --radius:12px;--radius-lg:20px;--radius-xl:28px;--radius-full:999px;
+  --shadow-sm:0 2px 8px rgba(0,0,0,.06);
+  --shadow:0 4px 20px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
+  --gold-glow:0 0 40px rgba(201,151,58,.18);
+  --transition:.22s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Manrope',sans-serif;color:var(--text);background:var(--surface);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* ── Container ── */
+.container{width:100%;max-width:1100px;margin:0 auto;padding:0 24px}
+.container--sm{max-width:760px}
+.container--xs{max-width:560px}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:1rem;padding:16px 36px;border-radius:var(--radius-full);border:none;transition:var(--transition);cursor:pointer;white-space:nowrap}
+.btn--gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--ink);box-shadow:0 4px 24px rgba(201,151,58,.3)}
+.btn--gold:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(201,151,58,.4)}
+.btn--outline{background:transparent;border:2px solid rgba(255,255,255,.2);color:#fff}
+.btn--outline:hover{background:rgba(255,255,255,.08)}
+.btn--green{background:#25d366;color:#fff;box-shadow:0 4px 20px rgba(37,211,102,.25)}
+.btn--green:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.35)}
+.btn--full{width:100%;max-width:440px}
+.btn svg,.btn i{flex-shrink:0;font-size:1.1em}
+
+/* ── Badge ── */
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,151,58,.12);border:1px solid rgba(201,151,58,.25);color:var(--gold-l);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:var(--radius-full);letter-spacing:.8px;text-transform:uppercase}
+
+/* ── Section titles ── */
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
+.section-title{font-family:'Clash Display',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.18;color:var(--ink);letter-spacing:-.5px}
+.section-title--light{color:#fff}
+.section-sub{font-size:1rem;color:var(--text2);line-height:1.7;max-width:540px}
+
+/* ── AOS reset ── */
+[data-aos]{opacity:0;transition-property:opacity,transform}
+[data-aos].aos-animate{opacity:1}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:4px}
+
+/* ── Bank Transfer Panel (Flutterwave) ─────────────────────────────────────── */
+.bank-details-panel { margin-top: 16px; }
+.bank-details-card {
+  background: #f9f8f5;
+  border: 1.5px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 20px 18px;
+}
+.bank-details-title { font-size: .9rem; color: #555; margin-bottom: 14px; }
+.bank-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #efefef;
+}
+.bank-detail-row:last-of-type { border-bottom: none; }
+.bank-detail-label { font-size: .8rem; color: #9ca3af; }
+.bank-detail-value { font-size: .92rem; }
+.acct-number { letter-spacing: 1.5px; font-size: 1.05rem; }
+.gold { color: #d4a63a; }
+.bank-details-note { font-size: .78rem; color: #9ca3af; margin: 12px 0 16px; line-height: 1.5; }
+.poll-checking {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .85rem;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+.mini-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid #e5e5e5;
+  border-top-color: #d4a63a;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  flex-shrink: 0;
+}
+.btn-check-payment {
+  width: 100%;
+  padding: 13px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: .95rem;
+  cursor: pointer;
+  border: none;
+}
