@@ -86,7 +86,8 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         try:
             narration = f"{body.name} - Academic Comeback Package"
             va_data = await create_virtual_account(
-                token, customer_id, amount_naira, reference, narration
+                token, customer_id, amount_naira, reference, narration,
+                bank_code=settings.FLW_VIRTUAL_ACCOUNT_BANK_CODE,
             )
         except Exception as e:
             print(f"❌ FLW virtual-account error: {e}")

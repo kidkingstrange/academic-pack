@@ -157,12 +157,24 @@ async def create_virtual_account(
     amount_naira: int,
     reference: str,
     narration: str,
+    bank_code: str = None,
 ) -> Dict[str, Any]:
     """
     Create a dynamic virtual account for bank transfer payment.
     Returns the full data dict with account_number, account_bank_name,
     amount (includes 2% fee), account_expiration_datetime, etc.
     """
+    payload = {
+        "reference":    reference,
+        "customer_id":  customer_id,
+        "amount":       amount_naira,
+        "currency":     "NGN",
+        "account_type": "dynamic",
+        "narration":    narration,
+    }
+    if bank_code:
+        payload["bank_code"] = bank_code
+
     async with httpx.AsyncClient() as client:
         resp = await client.post(
             f"{FLW_API_BASE}/virtual-accounts",
@@ -172,14 +184,7 @@ async def create_virtual_account(
                 "X-Trace-Id":        str(uuid.uuid4()),
                 "X-Idempotency-Key": reference,
             },
-            json={
-                "reference":    reference,
-                "customer_id":  customer_id,
-                "amount":       amount_naira,
-                "currency":     "NGN",
-                "account_type": "dynamic",
-                "narration":    narration,
-            },
+            json=payload,
             timeout=20,
         )
         data = resp.json()
