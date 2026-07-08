@@ -1,6 +1,7 @@
 """
 Email service — send via SMTP using Jinja2 templates.
 """
+import asyncio
 import re
 import html
 import smtplib
@@ -34,33 +35,50 @@ def render_template(template_name: str, context: dict) -> str:
     return tpl.render(**context)
 
 
+SMTP_TIMEOUT_SECONDS = 15
+
+
+def _send_sync(to_email: str, subject: str, html_body: str) -> None:
+    """Blocking SMTP send — must only ever run in a worker thread, never
+    directly on the asyncio event loop (see send_email())."""
+    msg = MIMEMultipart("alternative")
+    msg["From"] = settings.FROM_EMAIL
+    msg["To"] = to_email
+    msg["Subject"] = subject
+
+    # Attach plain text part first, then HTML part for standard alternative MIME compliance
+    plain_text = html_to_text(html_body)
+    msg.attach(MIMEText(plain_text, "plain"))
+    msg.attach(MIMEText(html_body, "html"))
+
+    context = ssl.create_default_context()
+
+    if settings.SMTP_PORT == 465:
+        # SSL connection
+        with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, context=context, timeout=SMTP_TIMEOUT_SECONDS) as server:
+            server.login(settings.SMTP_USER, settings.SMTP_PASS)
+            server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
+    else:
+        # STARTTLS connection (port 587)
+        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=SMTP_TIMEOUT_SECONDS) as server:
+            server.ehlo()
+            server.starttls(context=context)
+            server.login(settings.SMTP_USER, settings.SMTP_PASS)
+            server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
+
+
 async def send_email(to_email: str, subject: str, html_body: str) -> tuple:
-    """Send an email via SMTP. Returns (success: bool, error_message: str|None)."""
+    """Send an email via SMTP. Returns (success: bool, error_message: str|None).
+
+    Runs the actual send in a worker thread via asyncio.to_thread(), not
+    directly on the event loop — smtplib is blocking, and a single hung
+    SMTP connection previously froze the entire server (every request,
+    not just email sends) since nothing else could run on the one event
+    loop while it waited. The timeout above is a second layer, in case a
+    connection hangs somewhere smtplib's own timeout doesn't cover.
+    """
     try:
-        msg = MIMEMultipart("alternative")
-        msg["From"] = settings.FROM_EMAIL
-        msg["To"] = to_email
-        msg["Subject"] = subject
-        
-        # Attach plain text part first, then HTML part for standard alternative MIME compliance
-        plain_text = html_to_text(html_body)
-        msg.attach(MIMEText(plain_text, "plain"))
-        msg.attach(MIMEText(html_body, "html"))
-
-        context = ssl.create_default_context()
-
-        if settings.SMTP_PORT == 465:
-            # SSL connection
-            with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, context=context) as server:
-                server.login(settings.SMTP_USER, settings.SMTP_PASS)
-                server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
-        else:
-            # STARTTLS connection (port 587)
-            with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT) as server:
-                server.ehlo()
-                server.starttls(context=context)
-                server.login(settings.SMTP_USER, settings.SMTP_PASS)
-                server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
+        await asyncio.to_thread(_send_sync, to_email, subject, html_body)
         return (True, None)
     except Exception as e:
         error_msg = f"{type(e).__name__}: {e}"
