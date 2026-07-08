@@ -424,24 +424,51 @@ async def flutterwave_webhook(
 ):
     """
     Asynchronous webhook endpoint for Flutterwave payment completion events.
-    Verifies the flutterwave-signature header (HMAC-SHA256 of the raw body,
-    keyed with FLW_WEBHOOK_SECRET_HASH) before processing.
+    Verifies the verif-hash header (plain text secret hash) or flutterwave-signature.
     """
     raw_body = await request.body()
+    received_hash = request.headers.get("verif-hash")
+    received_signature = request.headers.get("flutterwave-signature")
+
+    # Log incoming webhook request for diagnostic purposes
+    body_text = ""
+    try:
+        body_text = raw_body.decode("utf-8")
+    except Exception as e:
+        body_text = f"Error decoding body: {e}"
+
+    log_entry = {
+        "received_at": datetime.now(timezone.utc),
+        "headers": {k: v for k, v in request.headers.items() if k.lower() != "authorization"},
+        "body": body_text,
+        "verif_hash_received": received_hash,
+        "verif_hash_expected": settings.FLW_WEBHOOK_SECRET_HASH,
+        "signature_received": received_signature,
+        "ip": request.client.host if request.client else "unknown"
+    }
+    
+    try:
+        await db.webhook_logs.insert_one(log_entry)
+    except Exception as db_err:
+        print(f"❌ Failed to write webhook log to DB: {db_err}")
 
     # 1. Signature Verification
     if settings.FLW_WEBHOOK_SECRET_HASH:
-        received_signature = request.headers.get("flutterwave-signature")
-        expected_signature = base64.b64encode(
-            hmac.new(
-                settings.FLW_WEBHOOK_SECRET_HASH.encode(),
-                raw_body,
-                hashlib.sha256,
-            ).digest()
-        ).decode()
-        if not received_signature or not hmac.compare_digest(received_signature, expected_signature):
-            print("❌ Webhook unauthorized: Invalid or missing flutterwave-signature")
-            raise HTTPException(status_code=401, detail="Invalid signature")
+        # Standard Flutterwave plain text hash verification
+        if received_hash and hmac.compare_digest(received_hash, settings.FLW_WEBHOOK_SECRET_HASH):
+            pass
+        else:
+            # Fallback to cryptographic signature verification
+            expected_signature = base64.b64encode(
+                hmac.new(
+                    settings.FLW_WEBHOOK_SECRET_HASH.encode(),
+                    raw_body,
+                    hashlib.sha256,
+                ).digest()
+            ).decode()
+            if not received_signature or not hmac.compare_digest(received_signature, expected_signature):
+                print(f"❌ Webhook unauthorized: Invalid signature or verif-hash (received_hash={received_hash})")
+                raise HTTPException(status_code=401, detail="Invalid signature")
 
     # 2. Parse payload
     try:
