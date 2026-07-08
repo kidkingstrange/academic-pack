@@ -64,4 +64,8 @@ class Settings(BaseSettings):
 
 @lru_cache()
 def get_settings() -> Settings:
-    return Settings()
+    s = Settings()
+    for name, value in list(s.__dict__.items()):
+        if isinstance(value, str):
+            setattr(s, name, value.strip())
+    return s
