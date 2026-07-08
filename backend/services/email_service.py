@@ -1,6 +1,8 @@
 """
 Email service — send via SMTP using Jinja2 templates.
 """
+import re
+import html
 import smtplib
 import ssl
 from email.mime.text import MIMEText
@@ -19,6 +21,14 @@ env = Environment(
 )
 
 
+def html_to_text(html_content: str) -> str:
+    """Strip tags and convert html body to plain text for spam filter compliance."""
+    text = re.sub(r"<(style|script)[^>]*?>.*?</\1>", "", html_content, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r"<[^>]*?>", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return html.unescape(text)
+
+
 def render_template(template_name: str, context: dict) -> str:
     tpl = env.get_template(template_name)
     return tpl.render(**context)
@@ -31,6 +41,10 @@ async def send_email(to_email: str, subject: str, html_body: str) -> tuple:
         msg["From"] = settings.FROM_EMAIL
         msg["To"] = to_email
         msg["Subject"] = subject
+        
+        # Attach plain text part first, then HTML part for standard alternative MIME compliance
+        plain_text = html_to_text(html_body)
+        msg.attach(MIMEText(plain_text, "plain"))
         msg.attach(MIMEText(html_body, "html"))
 
         context = ssl.create_default_context()
