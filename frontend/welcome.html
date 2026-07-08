@@ -22,7 +22,7 @@
     sessionStorage.setItem('ac_token', hashToken);
     window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
   }
-  if(!sessionStorage.getItem('ac_token')) window.location.href = '/';
+  if(!sessionStorage.getItem('ac_token') && localStorage.getItem('ac_purchased') !== 'true') window.location.href = '/';
 </script>
 <!-- Meta Pixel Code -->
 <script>
@@ -63,9 +63,14 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     </a>
   </div>
   
-  <button onclick="window.location.href='/library'" class="btn btn--gold btn--full">
-    Continue to Library <i class="bi bi-arrow-right"></i>
-  </button>
+  <a id="library-btn" href="/library" class="btn btn--gold btn--full" style="text-decoration:none">
+    Access Your Library <i class="bi bi-arrow-right"></i>
+  </a>
+  <script>
+    // Use the magic link for direct, email-independent library access
+    const magicLink = localStorage.getItem('ac_magic_link');
+    if (magicLink) document.getElementById('library-btn').href = magicLink;
+  </script>
 </div>
 
 </body>

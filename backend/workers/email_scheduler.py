@@ -130,9 +130,10 @@ async def process_email_queue():
     for item in pending:
         try:
             kind = item.get("kind", "sequence")
+            error_msg = None
 
             if kind == "welcome":
-                success = await send_welcome_email(
+                success, error_msg = await send_welcome_email(
                     name=item["name"],
                     email=item["email"],
                     token=item["magic_token"],
@@ -147,7 +148,7 @@ async def process_email_queue():
                     )
                     continue
 
-                success = await send_sequence_email(
+                success, error_msg = await send_sequence_email(
                     name=subscriber["name"],
                     email=subscriber["email"],
                     template_name=item["template"],
@@ -171,7 +172,8 @@ async def process_email_queue():
                 next_status = "failed" if next_retry >= 3 else "retry"
                 await db.email_queue.update_one(
                     {"_id": item["_id"]},
-                    {"$inc": {"retry_count": 1}, "$set": {"status": next_status}}
+                    {"$inc": {"retry_count": 1},
+                     "$set": {"status": next_status, "error": error_msg, "last_attempt_at": now}}
                 )
         except Exception as e:
             print(f"Email worker error for {item.get('email')}: {e}")
@@ -179,7 +181,7 @@ async def process_email_queue():
             next_status = "failed" if next_retry >= 3 else "retry"
             await db.email_queue.update_one(
                 {"_id": item["_id"]},
-                {"$inc": {"retry_count": 1}, "$set": {"error": str(e), "status": next_status}}
+                {"$inc": {"retry_count": 1}, "$set": {"error": str(e), "status": next_status, "last_attempt_at": now}}
             )
 
 

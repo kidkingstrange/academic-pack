@@ -24,8 +24,8 @@ def render_template(template_name: str, context: dict) -> str:
     return tpl.render(**context)
 
 
-async def send_email(to_email: str, subject: str, html_body: str) -> bool:
-    """Send an email via SMTP. Supports both SSL (465) and STARTTLS (587)."""
+async def send_email(to_email: str, subject: str, html_body: str) -> tuple:
+    """Send an email via SMTP. Returns (success: bool, error_message: str|None)."""
     try:
         msg = MIMEMultipart("alternative")
         msg["From"] = settings.FROM_EMAIL
@@ -47,10 +47,11 @@ async def send_email(to_email: str, subject: str, html_body: str) -> bool:
                 server.starttls(context=context)
                 server.login(settings.SMTP_USER, settings.SMTP_PASS)
                 server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
-        return True
+        return (True, None)
     except Exception as e:
-        print(f"📧 Email error: {e}")
-        return False
+        error_msg = f"{type(e).__name__}: {e}"
+        print(f"📧 Email error to {to_email}: {error_msg}")
+        return (False, error_msg)
 
 
 async def send_welcome_email(name: str, email: str, token: str, unsubscribe_token: str = ""):

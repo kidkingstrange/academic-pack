@@ -122,6 +122,7 @@ async def complete_payment(
     # Only send once: either this call claimed the payment, or it found
     # the payment already claimed but the subscriber missing (the exact
     # gap this refactor closes).
+    magic_token = None
     queued_email = False
     if claimed or subscriber_created:
         magic_token = secrets.token_urlsafe(32)
@@ -150,6 +151,14 @@ async def complete_payment(
             "error": None,
         })
         queued_email = True
+    else:
+        # Already completed — look up existing magic token for this user
+        existing_link = await db.magic_links.find_one(
+            {"user_id": user_id, "purpose": "welcome"},
+            sort=[("created_at", -1)],
+        )
+        if existing_link:
+            magic_token = existing_link["token"]
 
     if queued_email or subscriber_created:
         # Attempt immediately (welcome email and/or first drip email);
@@ -158,4 +167,4 @@ async def complete_payment(
         asyncio.create_task(process_email_queue())
 
     jwt_token = create_access_token({"sub": str(user_id), "email": email, "role": "customer"})
-    return {"user_id": user_id, "token": jwt_token, "already_completed": not claimed}
+    return {"user_id": user_id, "token": jwt_token, "magic_token": magic_token, "already_completed": not claimed}

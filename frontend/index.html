@@ -634,5 +634,32 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <script src="js/main.js?v=2"></script>
 <script src="js/checkout.js?v=6"></script>
 <script>AOS.init({ once: true, offset: 50, duration: 600 });</script>
+
+<!-- Returning customer CTA swap -->
+<script>
+(function() {
+  if (localStorage.getItem('ac_purchased') !== 'true') return;
+  const magicLink = localStorage.getItem('ac_magic_link') || '/library';
+
+  // Swap all checkout CTA buttons
+  document.querySelectorAll('[onclick="openCheckout()"]').forEach(function(btn) {
+    btn.textContent = 'Access Your Library →';
+    btn.removeAttribute('onclick');
+    btn.style.cursor = 'pointer';
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.location.href = magicLink;
+    });
+  });
+
+  // Hide urgency bar for returning customers
+  var bar = document.getElementById('urgency-bar');
+  if (bar) bar.style.display = 'none';
+
+  // Hide mobile sticky CTA bar
+  var stickyBar = document.querySelector('.sticky-cta-bar');
+  if (stickyBar) stickyBar.style.display = 'none';
+})();
+</script>
 </body>
 </html>

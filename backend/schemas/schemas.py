@@ -56,6 +56,7 @@ class PaymentVerifyRequest(BaseModel):
 class PaymentVerifyResponse(BaseModel):
     success: bool
     token: Optional[str] = None
+    magic_link: Optional[str] = None
     message: Optional[str] = None
 
 

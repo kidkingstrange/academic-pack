@@ -280,6 +280,9 @@ async function pollPayment() {
       hideBankDetails();
       document.getElementById('payment-success').style.display = 'block';
       sessionStorage.setItem('ac_token', data.token);
+      // Persist access — survives tab close, unlike sessionStorage
+      if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
+      localStorage.setItem('ac_purchased', 'true');
       setTimeout(() => { window.location.href = '/welcome'; }, 1500);
       return;
     }

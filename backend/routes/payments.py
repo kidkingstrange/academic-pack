@@ -196,7 +196,13 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             user = await db.users.find_one({"email": body.email.lower()})
             if user:
                 token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
-                return PaymentVerifyResponse(success=True, token=token)
+                # Look up existing magic link for direct library access
+                existing_link = await db.magic_links.find_one(
+                    {"user_id": user["_id"], "purpose": "welcome"},
+                    sort=[("created_at", -1)],
+                )
+                ml = f"{settings.APP_URL}/api/auth/magic?token={existing_link['token']}&redirect=/library" if existing_link else None
+                return PaymentVerifyResponse(success=True, token=token, magic_link=ml)
         completion = await complete_payment(
             db,
             reference=body.reference,
@@ -208,7 +214,8 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             completed_via="polling",
             ip_address=request.client.host,
         )
-        return PaymentVerifyResponse(success=True, token=completion["token"])
+        ml = f"{settings.APP_URL}/api/auth/magic?token={completion['magic_token']}&redirect=/library" if completion.get("magic_token") else None
+        return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml)
 
     # Verify with Flutterwave — branch on payment method
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
@@ -304,7 +311,8 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         ip_address=request.client.host,
     )
 
-    return PaymentVerifyResponse(success=True, token=completion["token"])
+    ml = f"{settings.APP_URL}/api/auth/magic?token={completion['magic_token']}&redirect=/library" if completion.get("magic_token") else None
+    return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml)
 
 
 @router.get("/callback")
