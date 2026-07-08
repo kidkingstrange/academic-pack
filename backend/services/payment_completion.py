@@ -7,6 +7,7 @@ reconciliation — must call complete_payment() so a customer always gets
 the full sequence: user, payment record, subscriber, all 52 queued emails,
 welcome email, and a session token. No caller re-implements these steps.
 """
+import asyncio
 import secrets
 from datetime import datetime, timedelta, timezone
 
@@ -125,7 +126,11 @@ async def complete_payment(
             "used": False,
             "created_at": now,
         })
-        await send_welcome_email(name, email, magic_token, unsub_token)
+        # Fire-and-forget: the SMTP round trip must not delay the
+        # caller's response (the customer's "payment confirmed" moment).
+        # user/payment/subscriber/queue are already durably written above,
+        # so a dropped send here only means a resend, never a lost record.
+        asyncio.create_task(send_welcome_email(name, email, magic_token, unsub_token))
 
     jwt_token = create_access_token({"sub": str(user_id), "email": email, "role": "customer"})
     return {"user_id": user_id, "token": jwt_token, "already_completed": not claimed}

@@ -208,8 +208,12 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
         await db.email_queue.insert_many(queue_items)
         print(f"📧 Queued {len(queue_items)} emails for {sub['email']}")
         # The first email (day_offset=0) is due immediately — send it now
-        # instead of waiting for the next 5-minute scheduler tick.
-        await process_email_queue()
+        # instead of waiting for the next 5-minute scheduler tick. Fire and
+        # forget: this scans/sends for ALL due subscribers, not just this
+        # one, so awaiting it here would block the caller's HTTP response
+        # (the customer's "payment confirmed" moment) on other people's
+        # SMTP sends.
+        asyncio.create_task(process_email_queue())
 
 
 def start_scheduler():
