@@ -63,7 +63,7 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
         "app_url": settings.APP_URL,
         "unsubscribe_token": unsubscribe_token,
     })
-    await send_email(email, f"🎉 Your Academic Comeback Package is ready, {name}!", html)
+    return await send_email(email, f"🎉 Your Academic Comeback Package is ready, {name}!", html)
 
 
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):

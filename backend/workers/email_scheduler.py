@@ -2,11 +2,10 @@
 APScheduler-based email worker.
 Runs inside FastAPI process — processes email queue every 5 minutes.
 """
-import asyncio
 from datetime import datetime, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
-from ..services.email_service import send_sequence_email
+from ..services.email_service import send_sequence_email, send_welcome_email
 
 scheduler = AsyncIOScheduler()
 
@@ -130,32 +129,43 @@ async def process_email_queue():
 
     for item in pending:
         try:
-            subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
-            if not subscriber or not subscriber.get("is_active"):
-                await db.email_queue.update_one(
-                    {"_id": item["_id"]},
-                    {"$set": {"status": "skipped"}}
-                )
-                continue
+            kind = item.get("kind", "sequence")
 
-            success = await send_sequence_email(
-                name=subscriber["name"],
-                email=subscriber["email"],
-                template_name=item["template"],
-                subject=item["subject"],
-                unsubscribe_token=subscriber.get("unsubscribe_token", ""),
-            )
+            if kind == "welcome":
+                success = await send_welcome_email(
+                    name=item["name"],
+                    email=item["email"],
+                    token=item["magic_token"],
+                    unsubscribe_token=item.get("unsubscribe_token", ""),
+                )
+            else:
+                subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
+                if not subscriber or not subscriber.get("is_active"):
+                    await db.email_queue.update_one(
+                        {"_id": item["_id"]},
+                        {"$set": {"status": "skipped"}}
+                    )
+                    continue
+
+                success = await send_sequence_email(
+                    name=subscriber["name"],
+                    email=subscriber["email"],
+                    template_name=item["template"],
+                    subject=item["subject"],
+                    unsubscribe_token=subscriber.get("unsubscribe_token", ""),
+                )
 
             if success:
                 await db.email_queue.update_one(
                     {"_id": item["_id"]},
                     {"$set": {"status": "sent", "sent_at": now}}
                 )
-                # Advance subscriber position
-                await db.subscribers.update_one(
-                    {"_id": subscriber["_id"]},
-                    {"$inc": {"sequence_position": 1}}
-                )
+                if kind != "welcome":
+                    # Advance subscriber position
+                    await db.subscribers.update_one(
+                        {"_id": item["subscriber_id"]},
+                        {"$inc": {"sequence_position": 1}}
+                    )
             else:
                 next_retry = item.get("retry_count", 0) + 1
                 next_status = "failed" if next_retry >= 3 else "retry"
@@ -192,6 +202,7 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
         from datetime import timedelta
         scheduled = subscribed_at + timedelta(days=day_offset)
         queue_items.append({
+            "kind": "sequence",
             "subscriber_id": sub["_id"],
             "email": sub["email"],
             "subject": subject,
@@ -207,13 +218,9 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
     if queue_items:
         await db.email_queue.insert_many(queue_items)
         print(f"📧 Queued {len(queue_items)} emails for {sub['email']}")
-        # The first email (day_offset=0) is due immediately — send it now
-        # instead of waiting for the next 5-minute scheduler tick. Fire and
-        # forget: this scans/sends for ALL due subscribers, not just this
-        # one, so awaiting it here would block the caller's HTTP response
-        # (the customer's "payment confirmed" moment) on other people's
-        # SMTP sends.
-        asyncio.create_task(process_email_queue())
+        # The first email (day_offset=0) is due immediately. The caller
+        # (complete_payment) triggers one process_email_queue() pass after
+        # this AND the welcome email are both queued, so it isn't done here.
 
 
 def start_scheduler():

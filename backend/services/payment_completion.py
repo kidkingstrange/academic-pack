@@ -13,9 +13,8 @@ from datetime import datetime, timedelta, timezone
 
 from pymongo.errors import DuplicateKeyError
 
-from .email_service import send_welcome_email
 from ..utils.security import create_access_token
-from ..workers.email_scheduler import enqueue_sequence_for_subscriber
+from ..workers.email_scheduler import enqueue_sequence_for_subscriber, process_email_queue
 
 
 async def complete_payment(
@@ -116,6 +115,7 @@ async def complete_payment(
     # Only send once: either this call claimed the payment, or it found
     # the payment already claimed but the subscriber missing (the exact
     # gap this refactor closes).
+    queued_email = False
     if claimed or subscriber_created:
         magic_token = secrets.token_urlsafe(32)
         await db.magic_links.insert_one({
@@ -126,11 +126,29 @@ async def complete_payment(
             "used": False,
             "created_at": now,
         })
-        # Fire-and-forget: the SMTP round trip must not delay the
-        # caller's response (the customer's "payment confirmed" moment).
-        # user/payment/subscriber/queue are already durably written above,
-        # so a dropped send here only means a resend, never a lost record.
-        asyncio.create_task(send_welcome_email(name, email, magic_token, unsub_token))
+        # Tracked the same way as sequence emails, so a transient SMTP
+        # failure gets automatically retried by the 5-minute scheduler
+        # instead of silently vanishing with no record it ever failed.
+        await db.email_queue.insert_one({
+            "kind": "welcome",
+            "user_id": user_id,
+            "email": email,
+            "name": name,
+            "magic_token": magic_token,
+            "unsubscribe_token": unsub_token,
+            "scheduled_at": now,
+            "status": "pending",
+            "retry_count": 0,
+            "sent_at": None,
+            "error": None,
+        })
+        queued_email = True
+
+    if queued_email or subscriber_created:
+        # Attempt immediately (welcome email and/or first drip email);
+        # fire-and-forget so the SMTP round trip never delays the
+        # caller's response — the scheduler retries anything left pending.
+        asyncio.create_task(process_email_queue())
 
     jwt_token = create_access_token({"sub": str(user_id), "email": email, "role": "customer"})
     return {"user_id": user_id, "token": jwt_token, "already_completed": not claimed}
