@@ -476,14 +476,17 @@ async def flutterwave_webhook(
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid JSON payload")
 
-    event = payload.get("event")
+    # Flutterwave V4 sends the event type under "type", not "event", and
+    # the charge status is "succeeded", not "successful" — both wrong
+    # before, so this condition was never true for any real webhook.
+    event = payload.get("type")
     data = payload.get("data", {})
     status = data.get("status")
 
-    print(f"📥 Received Flutterwave webhook: event={event}, status={status}")
+    print(f"📥 Received Flutterwave webhook: type={event}, status={status}")
 
     # 3. Handle successful charge events
-    if event == "charge.completed" and status == "successful":
+    if event == "charge.completed" and status == "succeeded":
         background_tasks.add_task(process_webhook_payment, payload, db)
 
     # Always return 200 OK immediately to acknowledge receipt
