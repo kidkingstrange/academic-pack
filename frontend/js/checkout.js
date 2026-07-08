@@ -238,7 +238,7 @@ function showBankDetails(data) {
 const POLL_MAX_ELAPSED_MS = 60 * 60 * 1000; // 60 minutes, matches VA expiry
 
 function pollDelayFor(elapsedMs) {
-  if (elapsedMs < 3 * 60 * 1000)  return 10000; // first 3 min:  every 10s
+  if (elapsedMs < 3 * 60 * 1000)  return 5000;  // first 3 min:  every 5s
   if (elapsedMs < 20 * 60 * 1000) return 30000; // next 17 min:  every 30s
   return 60000;                                 // remainder:    every 60s
 }

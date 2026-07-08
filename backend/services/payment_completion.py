@@ -26,6 +26,7 @@ async def complete_payment(
     amount,
     charge_id,
     gateway_response: dict,
+    completed_via: str,
     ip_address: str = None,
 ) -> dict:
     """
@@ -34,6 +35,10 @@ async def complete_payment(
     — the payments.reference unique index is the atomic claim, and the
     subscriber/email-queue check below runs regardless of who wins that
     race, so neither step can be skipped.
+
+    completed_via records which path won the atomic claim ("webhook",
+    "polling", "callback", "manual_reconciliation") — set once, at insert
+    time, never overwritten by a later caller that finds it already claimed.
 
     Returns {"user_id": ObjectId, "token": str, "already_completed": bool}.
     """
@@ -58,10 +63,12 @@ async def complete_payment(
             "verified_at": now,
             "created_at": now,
             "ip_address": ip_address,
+            "completed_via": completed_via,
         })
         claimed = True
     except DuplicateKeyError:
         claimed = False
+    print(f"⏱ [complete_payment] ref={reference} claimed={claimed} via={completed_via} at={now.isoformat()}")
 
     # ── Create or get the user ─────────────────────────────────────────
     user = await db.users.find_one({"email": email})

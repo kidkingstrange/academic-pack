@@ -205,6 +205,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             amount=existing_payment.get("amount", 0),
             charge_id=existing_payment.get("charge_id"),
             gateway_response=existing_payment.get("gateway_response", {}),
+            completed_via="polling",
             ip_address=request.client.host,
         )
         return PaymentVerifyResponse(success=True, token=completion["token"])
@@ -299,6 +300,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         amount=amount_paid,
         charge_id=body.charge_id,
         gateway_response=charge,
+        completed_via="polling",
         ip_address=request.client.host,
     )
 
@@ -352,6 +354,7 @@ async def payment_callback(
         amount=charge.get("amount", 0),
         charge_id=charge_id,
         gateway_response=charge,
+        completed_via="callback",
         ip_address=request.client.host,
     )
 
@@ -372,8 +375,10 @@ async def payment_callback(
 
 # ── Webhook processing helper ───────────────────────────────────────────────
 async def process_webhook_payment(payload: dict, db):
+    t_start = datetime.now(timezone.utc)
     data = payload.get("data", {})
     ref = data.get("tx_ref")
+    print(f"⏱ [webhook] start ref={ref} at={t_start.isoformat()}")
     if not ref:
         print("⚠️ Webhook payload missing tx_ref")
         return
@@ -411,8 +416,11 @@ async def process_webhook_payment(payload: dict, db):
         amount=amount_paid,
         charge_id=charge_id,
         gateway_response=data,
+        completed_via="webhook",
     )
-    print(f"✅ Webhook: Payment {ref} processed (completion verified/backfilled).")
+    t_end = datetime.now(timezone.utc)
+    print(f"✅ Webhook: Payment {ref} processed (completion verified/backfilled). "
+          f"⏱ [webhook] end ref={ref} at={t_end.isoformat()} elapsed={(t_end - t_start).total_seconds():.3f}s")
 
 
 # ── Webhook endpoint ──────────────────────────────────────────────────────────
