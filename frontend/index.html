@@ -15,8 +15,8 @@
 <!-- Urgency Bar -->
 <div class="urgency-bar" id="urgency-bar">
   <div class="urgency-bar__inner">
-    <span class="urgency-bar__text">🚨 <strong>LIMITED OFFER:</strong> 90% Discount Expires In: <strong id="countdown">24:00:00</strong></span>
-    <button class="urgency-bar__cta" onclick="openCheckout()">GET IT NOW — ₦2,000 <i class="bi bi-arrow-right"></i></button>
+    <span class="urgency-bar__text" id="urgency-bar-text">🚨 <strong>LIMITED OFFER:</strong> 90% Discount Expires In: <strong id="countdown">24:00:00</strong></span>
+    <button class="urgency-bar__cta" onclick="openCheckout()">GET IT NOW — <span class="price-current">₦2,000</span> <i class="bi bi-arrow-right"></i></button>
   </div>
 </div>
 
@@ -46,15 +46,15 @@
         
         <!-- Mobile Price Badge -->
         <div class="mobile-price-badge">
-          <span class="mobile-price-discount">90% OFF TODAY</span>
+          <span class="mobile-price-discount price-urgency-badge">90% OFF TODAY</span>
           <span class="mobile-price-old">₦20,000</span>
-          <span class="mobile-price-new">₦2,000</span>
+          <span class="mobile-price-new price-current">₦2,000</span>
         </div>
       </div>
 
       <div class="hero__ctas">
         <button class="btn btn--gold btn--mega" onclick="openCheckout()">
-          <span class="btn-mega__price"><del>₦20,000</del> → ₦2,000</span>
+          <span class="btn-mega__price"><del>₦20,000</del> → <span class="price-current">₦2,000</span></span>
           GET THE COMPLETE PACKAGE NOW
           <i class="bi bi-arrow-right"></i>
         </button>
@@ -94,9 +94,9 @@
       <div class="hero__books">
         <!-- Floating Price Badge -->
         <div class="hero__price-float">
-          <div class="discount-badge">90% OFF TODAY</div>
+          <div class="discount-badge price-urgency-badge">90% OFF TODAY</div>
           <div class="old-price">₦20,000</div>
-          <div class="new-price">₦2,000</div>
+          <div class="new-price price-current">₦2,000</div>
         </div>
         <div class="hero__book hero__book--b1"><img src="assets/images/bookcover3.webp" alt="Bonus Book"></div>
         <div class="hero__book hero__book--b2"><img src="assets/images/bookcoverlandscape.webp" alt="Bonus Book"></div>
@@ -196,9 +196,9 @@
       <h2 class="section-title">The Academic Comeback Package</h2>
       <p class="section-sub" style="margin: 0 auto;">7 complete digital resources to transform your academic performance.</p>
       <div class="showcase__price-pill">
-        <span style="background: #ef4444; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;">90% Off Today</span>
+        <span class="price-urgency-badge" style="background: #ef4444; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; letter-spacing: 0.5px;">90% Off Today</span>
         <span class="old">₦20,000</span>
-        <span class="new">₦2,000</span>
+        <span class="new price-current">₦2,000</span>
       </div>
     </div>
     <div class="products-grid">
@@ -266,7 +266,7 @@
     <div class="value-stack__header" data-aos="fade-up">
       <h2 class="section-title">What you're getting today</h2>
       <div style="background: rgba(201,151,58,0.1); border: 1px solid rgba(201,151,58,0.3); border-radius: var(--radius); padding: 24px; margin-top: 24px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto;">
-        <h4 style="color: var(--ink); font-family: 'Clash Display', sans-serif; font-size: 1.15rem; margin-bottom: 10px;">Why is this only ₦2,000?</h4>
+        <h4 style="color: var(--ink); font-family: 'Clash Display', sans-serif; font-size: 1.15rem; margin-bottom: 10px;">Why is this only <span class="price-current">₦2,000</span>?</h4>
         <p style="color: var(--text2); font-size: 0.95rem; line-height: 1.6;">Normally, this exact curriculum is reserved for my private mentorship students paying ₦20,000+. But I am on a mission to build the largest community of high-performing students. By giving you my best frameworks for less than the price of a fast-food meal, I know you'll get results—and when you do, you'll want to join my inner circle. My loss is your immediate gain.</p>
       </div>
     </div>
@@ -301,12 +301,12 @@
       </div>
       <div class="value-table__row value-table__row--final">
         <div class="value-table__label">Today's Price</div>
-        <div class="value-table__price">₦2,000</div>
+        <div class="value-table__price price-current">₦2,000</div>
       </div>
     </div>
     <div style="text-align:center; margin-top:32px" data-aos="fade-up" data-aos-delay="200">
       <button class="btn btn--gold btn--full" onclick="openCheckout()">Get The Complete Package Now</button>
-      <p style="color: #ef4444; font-size: 0.85rem; font-weight: 700; margin-top: 16px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.5;">⚠️ WARNING: Because this package includes community access, we limit daily entries to prevent spam. After 24 hours, the price reverts to ₦20,000.</p>
+      <p style="color: #ef4444; font-size: 0.85rem; font-weight: 700; margin-top: 16px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.5;">⚠️ WARNING: Because this package includes community access, we limit daily entries to prevent spam. After 24 hours, the price reverts to ₦5,000.</p>
     </div>
   </div>
 </section>
@@ -375,13 +375,13 @@
 <section class="mid-cta">
   <div class="container" data-aos="fade-up">
     <div class="mid-cta__glow"></div>
-    <div class="mid-cta__badge">⚡ LIMITED TIME — 90% OFF</div>
+    <div class="mid-cta__badge price-urgency-badge">⚡ LIMITED TIME — 90% OFF</div>
     <h2 class="mid-cta__headline">Your Academic Comeback<br><em>Starts Right Here.</em></h2>
     <p class="mid-cta__sub">7 books. Proven frameworks. Instant delivery. Everything you need to stop struggling and start dominating — for less than the price of a meal.</p>
     <div class="mid-cta__price-row">
       <span class="mid-cta__old">₦20,000</span>
       <span class="mid-cta__arrow">→</span>
-      <span class="mid-cta__new">₦2,000</span>
+      <span class="mid-cta__new price-current">₦2,000</span>
     </div>
     <button class="btn btn--gold btn--mega" onclick="openCheckout()">
       YES — I WANT THE COMPLETE PACKAGE
@@ -453,17 +453,17 @@
     <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 40px 24px; max-width: 600px; margin: 0 auto 48px; text-align: left;">
       <h3 style="font-family: 'Clash Display', sans-serif; font-size: 1.5rem; color: var(--gold-l); margin-bottom: 20px;">You Have Two Choices Right Now:</h3>
       <p style="color: #fff; line-height: 1.7; margin-bottom: 16px;"><strong>Choice 1:</strong> Keep doing what you're doing. Keep rereading notes, blanking out in exam halls, and feeling like you aren't smart enough.</p>
-      <p style="color: #fff; line-height: 1.7; margin-bottom: 16px;"><strong>Choice 2:</strong> Invest ₦2,000 (less than a cheap lunch) to install a proven, step-by-step academic system that forces your brain to retain information and secures your GPA.</p>
+      <p style="color: #fff; line-height: 1.7; margin-bottom: 16px;"><strong>Choice 2:</strong> Invest <span class="price-current">₦2,000</span> (less than a cheap lunch) to install a proven, step-by-step academic system that forces your brain to retain information and secures your GPA.</p>
       <p style="color: rgba(255,255,255,0.6); font-style: italic;">The choice is obvious. Make it.</p>
     </div>
 
     <h2 class="final-cta__headline">Stop Guessing.<br><em>Start Dominating Exams.</em></h2>
-    <p class="final-cta__sub">You are 60 seconds away from unlocking the exact frameworks used by First-Class graduates. <strong>The 90% discount window is closing.</strong></p>
+    <p class="final-cta__sub">You are 60 seconds away from unlocking the exact frameworks used by First-Class graduates. <strong class="price-urgency-badge">The 90% discount window is closing.</strong></p>
     <button class="btn btn--gold btn--full" onclick="openCheckout()">
       Unlock The Complete Package Now
       <i class="bi bi-arrow-right"></i>
     </button>
-    <p class="final-cta__price">🔒 Secure Paystack Checkout • Instant Access • Only <strong>₦2,000</strong></p>
+    <p class="final-cta__price">🔒 Secure Paystack Checkout • Instant Access • Only <strong class="price-current">₦2,000</strong></p>
   </div>
 </section>
 
@@ -607,14 +607,14 @@
 <div class="sticky-cta-bar">
   <div class="sticky-cta-bar__price">
     <span class="sticky-old">₦20,000</span>
-    <span class="sticky-new">₦2,000</span>
+    <span class="sticky-new price-current">₦2,000</span>
   </div>
   <button class="btn btn--gold sticky-cta-bar__btn" onclick="openCheckout()">Get It Now</button>
 </div>
 
 <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 <script src="https://js.paystack.co/v2/inline.js"></script>
-<script src="js/main.js"></script>
+<script src="js/main.js?v=2"></script>
 <script src="js/checkout.js?v=6"></script>
 <script>AOS.init({ once: true, offset: 50, duration: 600 });</script>
 </body>

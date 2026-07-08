@@ -10,7 +10,9 @@
 .urgency-bar__cta:hover{transform:scale(1.06);box-shadow:0 4px 16px rgba(0,0,0,.3);background:#fcd34d;color:#7f1d1d}
 .urgency-bar__cta i{font-size:.85em}
 @keyframes urgencyCTAPulse{0%,100%{box-shadow:0 2px 10px rgba(0,0,0,.2)}50%{box-shadow:0 2px 20px rgba(255,255,255,.5)}}
-.urgency-bar--expired{background:#7f1d1d}
+.urgency-bar--expired{background:var(--ink2);border-bottom:2px solid var(--gold)}
+.urgency-bar__expired-notice{width:100%;text-align:center;padding:12px 20px;font-size:.88rem;line-height:1.5;font-weight:600;color:#fff;display:flex;align-items:center;justify-content:center}
+.urgency-bar__expired-notice strong{color:var(--gold-l);font-weight:800;margin:0 4px}
 
 /* NAVBAR */
 .nav{background:var(--ink);padding:16px 0;position:relative;z-index:100}

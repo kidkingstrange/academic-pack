@@ -14,13 +14,28 @@
     if (!el) return;
     const diff = expiry - Date.now();
     if (diff <= 0) {
-      el.textContent = '0:00:00';
-      if (bar) bar.classList.add('urgency-bar--expired');
+      if (bar) {
+        bar.classList.add('urgency-bar--expired');
+        if (!bar.querySelector('.urgency-bar__expired-notice')) {
+          bar.innerHTML = `
+            <div class="urgency-bar__expired-notice">
+              <span>💡 <strong>Your 24-hour early-bird window has ended.</strong> The package is now available at the standard price of <strong>₦5,000</strong>. Thank you for your understanding — the full value of all 7 books is still yours the moment you order.</span>
+            </div>
+          `;
+        }
+      }
       
-      // Update prices on page if expired
-      document.querySelectorAll('.new').forEach(n => n.textContent = '₦5,000');
-      document.querySelectorAll('.value-table__row--final .value-table__price').forEach(n => n.textContent = '₦5,000');
-      document.querySelectorAll('.final-cta__price strong').forEach(n => n.textContent = '₦5,000');
+      // Update all current price displays to standard price
+      document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
+      
+      // Update all discount badges and labels from 90% to 75%
+      document.querySelectorAll('.price-urgency-badge').forEach(n => {
+        if (n.textContent.includes('window is closing')) {
+          n.innerHTML = 'The 90% discount window has closed.';
+        } else {
+          n.innerHTML = n.innerHTML.replace(/90%/g, '75%');
+        }
+      });
       return;
     }
     const h = Math.floor(diff / 3600000);
