@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block subject %}A quicker way back into your library, {{ name }}{% endblock %}
+{% block content %}
+<p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  Just a quick note — we've improved your access experience. Click below to jump straight back into your library, no need to check your inbox again next time.
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 8px">
+  <tr><td align="center">
+    <a href="{{ library_url }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:700;font-size:15px;padding:14px 32px;border-radius:50px;text-decoration:none">
+      Access Your Library →
+    </a>
+  </td></tr>
+</table>
+
+<p style="font-size:13px;color:#999;line-height:1.6;margin:16px 0 0">
+  Everything you already have access to is unchanged — this is just a faster way in.
+</p>
+{% endblock %}

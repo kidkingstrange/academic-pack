@@ -99,6 +99,20 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
     return await send_email(email, f"🎉 Your Academic Comeback Package is ready, {name}!", html)
 
 
+async def send_library_access_update_email(name: str, email: str, token: str, unsubscribe_token: str = ""):
+    """One-time notice for pre-existing customers: a fresh magic link that,
+    once clicked, sets the in-browser 'already purchased' flag so future
+    visits show 'Access Your Library' instead of 'Get The Package'."""
+    html = render_template("library_access_update.html", {
+        "name": name,
+        "library_url": f"{settings.APP_URL}/api/auth/magic?token={token}&redirect=/library",
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+        "unsubscribe_token": unsubscribe_token,
+    })
+    return await send_email(email, f"A quicker way back into your library, {name}", html)
+
+
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):
     """Send a scheduled sequence email."""
     merged = {
