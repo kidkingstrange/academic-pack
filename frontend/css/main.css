@@ -104,6 +104,14 @@ button{font-family:inherit;cursor:pointer}
   line-height: 1.5;
   margin: 0;
 }
+.poll-checking__tip {
+  font-size: .76rem;
+  font-weight: 500;
+  color: var(--gray-l);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
 .mini-spinner {
   width: 18px; height: 18px;
   border: 2px solid rgba(255,255,255,.1);

@@ -225,6 +225,7 @@ function showBankDetails(data) {
           <span id="poll-status-text">Checking for your payment...</span>
         </div>
         <p class="poll-checking__warning">⚠️ Please don't close this tab or refresh — we're confirming your payment and preparing your library.</p>
+        <p class="poll-checking__tip">📧 Once confirmed, check your inbox — and your spam/junk folder too, just in case — for an email from The Scale Conference (thescaleconference.com).</p>
       </div>
       <button class="btn btn-primary btn-check-payment" id="btn-check-payment" onclick="startPolling()">
         I have made the transfer ✓
