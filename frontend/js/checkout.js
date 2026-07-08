@@ -220,8 +220,11 @@ function showBankDetails(data) {
       ${expiryNote}
       <p class="bank-details-note">${data.note || 'Account is valid for 60 minutes. Transfer the exact amount.'}</p>
       <div id="poll-checking" style="display:none" class="poll-checking">
-        <div class="mini-spinner"></div>
-        <span>Checking for your payment...</span>
+        <div class="poll-checking__status-row">
+          <div class="mini-spinner"></div>
+          <span id="poll-status-text">Checking for your payment...</span>
+        </div>
+        <p class="poll-checking__warning">⚠️ Please don't close this tab or refresh — we're confirming your payment and preparing your library.</p>
       </div>
       <button class="btn btn-primary btn-check-payment" id="btn-check-payment" onclick="startPolling()">
         I have made the transfer ✓
@@ -243,9 +246,53 @@ function pollDelayFor(elapsedMs) {
   return 60000;                                 // remainder:    every 60s
 }
 
+// ── Rotating status messages — purely cosmetic, reduces perceived wait ──────
+const POLL_STATUS_MESSAGES = [
+  "Confirming your transfer...",
+  "Unlocking your library...",
+  "Waking up your study system...",
+  "Gathering your 7 books...",
+  "Brewing academic excellence...",
+  "Assembling your comeback kit...",
+  "Sharpening pencils...",
+  "Dusting off the textbooks...",
+  "Prepping your first-class materials...",
+  "Loading brain fuel...",
+  "Stacking the study stairs...",
+  "Syncing with the grind...",
+  "Packing your mentorship pass...",
+  "Queueing up your 26-week journey...",
+  "Charging your motivation...",
+  "Fetching 'Get Good at Hard Things'...",
+  "Building your study fortress...",
+  "Warming up the welcome committee...",
+  "Tuning your focus frequency...",
+  "Locking in your discipline...",
+  "Preparing your academic glow-up...",
+  "Almost there — greatness takes a second...",
+];
+let statusRotationTimer = null;
+
+function startStatusRotation() {
+  const el = document.getElementById('poll-status-text');
+  if (!el) return;
+  let i = 0;
+  el.textContent = POLL_STATUS_MESSAGES[0];
+  stopStatusRotation();
+  statusRotationTimer = setInterval(() => {
+    i = (i + 1) % POLL_STATUS_MESSAGES.length;
+    el.textContent = POLL_STATUS_MESSAGES[i];
+  }, 2500);
+}
+
+function stopStatusRotation() {
+  if (statusRotationTimer) { clearInterval(statusRotationTimer); statusRotationTimer = null; }
+}
+
 function startPolling() {
   document.getElementById('btn-check-payment').style.display = 'none';
   document.getElementById('poll-checking').style.display     = 'flex';
+  startStatusRotation();
   pollStartedAt = Date.now();
   pollPayment();
 }
@@ -253,6 +300,7 @@ function startPolling() {
 async function pollPayment() {
   const elapsed = Date.now() - pollStartedAt;
   if (elapsed > POLL_MAX_ELAPSED_MS) {
+    stopStatusRotation();
     document.getElementById('poll-checking').style.display     = 'none';
     document.getElementById('btn-check-payment').style.display = 'block';
     document.getElementById('btn-check-payment').textContent   = 'Check again ↺';
@@ -275,6 +323,7 @@ async function pollPayment() {
     const data = await res.json();
 
     if (data.success) {
+      stopStatusRotation();
       clearPendingPayment();
       document.getElementById('payment-spinner').style.display = 'none';
       hideBankDetails();
