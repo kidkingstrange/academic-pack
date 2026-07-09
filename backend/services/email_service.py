@@ -35,7 +35,7 @@ def render_template(template_name: str, context: dict) -> str:
     return tpl.render(**context)
 
 
-SMTP_TIMEOUT_SECONDS = 15
+SMTP_TIMEOUT_SECONDS = 30
 
 
 def _send_sync(to_email: str, subject: str, html_body: str) -> None:
