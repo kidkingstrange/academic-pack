@@ -20,6 +20,7 @@ from .database import connect_db, disconnect_db, get_db
 from .routes import payments, library, admin as admin_router, community
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
+from .utils.error_pages import expired_link_page
 
 settings = get_settings()
 
@@ -140,7 +141,13 @@ async def exchange_magic_token(
     })
 
     if not magic_link:
-        raise HTTPException(status_code=403, detail="Invalid or expired magic link")
+        return expired_link_page(
+            "This link is invalid or has expired. If you haven't accessed your library yet, "
+            "check your welcome email for the correct link, or contact support.",
+            heading="Link expired",
+            cta_text="Go to Homepage",
+            cta_href="/",
+        )
 
     user_id = str(magic_link["user_id"])
     user = await db.users.find_one({"_id": ObjectId(user_id)})

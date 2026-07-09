@@ -18,6 +18,9 @@
   .lib-card__desc { font-size: .88rem; color: var(--gray-l); line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
   .download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); color: #fff; padding: 14px; border-radius: var(--radius); font-weight: 700; font-size: .9rem; cursor: pointer; transition: all var(--transition); }
   .download-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: var(--ink); border-color: transparent; box-shadow: 0 4px 12px rgba(201,151,58,.25); }
+  .download-btn:disabled { opacity: .7; cursor: default; }
+  .download-btn--ready { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: var(--ink); border-color: transparent; animation: readyPulse 1.4s ease-in-out infinite; }
+  @keyframes readyPulse { 0%,100% { box-shadow: 0 0 0 rgba(201,151,58,.4); } 50% { box-shadow: 0 0 0 6px rgba(201,151,58,0); } }
   .loader-page { position: fixed; inset: 0; background: var(--ink); display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
   .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -86,12 +89,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
         <div class="lib-card">
           <h3 class="lib-card__title">${p.title}</h3>
           <p class="lib-card__desc">${p.description}</p>
-          <button class="download-btn" onclick="downloadProduct('${p.id}')">
+          <button class="download-btn" data-product-id="${p.id}" data-state="idle">
             <i class="bi bi-download"></i> Download PDF
           </button>
         </div>
       `).join('');
-      
+
       document.getElementById('loader').style.display = 'none';
     } catch (err) {
       sessionStorage.removeItem('ac_token');
@@ -99,24 +102,61 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     }
   }
 
-  async function downloadProduct(id) {
-    try {
-      const headers = {};
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+  // Two-step, click-gated download.
+  //
+  // In-app browsers (Facebook/Instagram) silently prefetch links before the
+  // user taps them — a plain <a href> or an automatic window.open() to the
+  // signed file URL gets hit by that prefetch, burning the single-use
+  // download token before the customer's real tap ever happens.
+  //
+  // Fix: step 1 (a real click) only signs a token and swaps the button to a
+  // "ready" state. Step 2 — a SEPARATE, genuine click on the same button —
+  // is what actually navigates to the file URL. Prefetchers execute
+  // automatic GET navigations but never dispatch real click events, so
+  // they can advance a button to "ready" at worst; they cannot trigger the
+  // actual file request that consumes the token.
+  document.getElementById('products-grid').addEventListener('click', async (e) => {
+    const btn = e.target.closest('.download-btn');
+    if (!btn || btn.disabled) return;
+
+    if (btn.dataset.state === 'idle') {
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Preparing...';
+      try {
+        const headers = {};
+        if (token) headers['Authorization'] = `Bearer ${token}`;
+        const res = await fetch(`/api/library/sign/${btn.dataset.productId}`, { headers });
+        if (!res.ok) throw new Error('Failed to generate download link');
+        const data = await res.json();
+
+        btn.dataset.signedUrl = data.signed_url;
+        btn.dataset.state = 'ready';
+        btn.disabled = false;
+        btn.classList.add('download-btn--ready');
+        btn.innerHTML = '<i class="bi bi-download"></i> Tap to Download';
+      } catch (err) {
+        btn.disabled = false;
+        btn.innerHTML = original;
+        alert(err.message);
       }
-      // 1. Get signed URL
-      const res = await fetch(`/api/library/sign/${id}`, { headers });
-      if (!res.ok) throw new Error('Failed to generate download link');
-      const data = await res.json();
-      
-      // 2. Open signed URL in new tab to trigger download
-      window.open(data.signed_url, '_blank');
-      
-    } catch (err) {
-      alert(err.message);
+      return;
     }
-  }
+
+    if (btn.dataset.state === 'ready') {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Downloading...';
+      window.location.href = btn.dataset.signedUrl;
+      // Restore to a fresh idle state in case the browser stays on this
+      // page after the download starts (most mobile browsers do).
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.dataset.state = 'idle';
+        btn.classList.remove('download-btn--ready');
+        btn.innerHTML = '<i class="bi bi-download"></i> Download PDF';
+      }, 4000);
+    }
+  });
 
   loadLibrary();
 </script>

@@ -9,6 +9,7 @@ from fastapi.responses import FileResponse
 from bson import ObjectId
 from ..middleware.auth import get_current_user
 from ..utils.security import create_download_token, verify_token
+from ..utils.error_pages import expired_link_page
 from ..database import get_db
 from ..config import get_settings
 
@@ -77,16 +78,26 @@ async def download_file(signed_token: str, db=Depends(get_db)):
     """Serve a protected PDF file using a signed token."""
     payload = verify_token(signed_token)
     if not payload or payload.get("type") != "download":
-        raise HTTPException(status_code=403, detail="Invalid or expired download link")
+        return expired_link_page(
+            "This download link is invalid or has expired. Return to your library and click "
+            "Download again for a fresh link.",
+        )
 
     jti = payload.get("jti")
     if not jti:
-        raise HTTPException(status_code=403, detail="Invalid token structure")
+        return expired_link_page(
+            "This download link is invalid or has expired. Return to your library and click "
+            "Download again for a fresh link.",
+        )
 
     # Check if this token has already been used
     already_used = await db.used_tokens.find_one({"jti": jti})
     if already_used:
-        raise HTTPException(status_code=403, detail="This download link has already been used.")
+        return expired_link_page(
+            "This link has already been used. If you haven't downloaded this book yet, return "
+            "to your library and click Download again for a fresh link.",
+            heading="Link already used",
+        )
 
     # Mark token as used immediately before serving the file
     await db.used_tokens.insert_one({
