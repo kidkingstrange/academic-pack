@@ -650,8 +650,11 @@
    .form-group/.scarcity directly rather than re-declaring parallel rules. */
 .exit-overlay{position:fixed;inset:0;background:rgba(12,14,18,.8);backdrop-filter:blur(8px);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease}
 .exit-overlay.open{opacity:1;visibility:visible}
-.exit-card{background:var(--ink2);border:1px solid rgba(201,151,58,.15);border-radius:var(--radius-xl);max-width:420px;width:100%;padding:44px 32px 36px;text-align:center;position:relative;transform:translateY(30px) scale(.96);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:0 24px 60px rgba(0,0,0,.6),var(--gold-glow)}
+.exit-card{background:linear-gradient(160deg,#0c0e14 0%,#131826 55%,#0f1520 100%);border:1px solid rgba(201,151,58,.15);border-radius:var(--radius-xl);max-width:420px;width:100%;padding:44px 32px 36px;text-align:center;position:relative;overflow:hidden;transform:translateY(30px) scale(.96);transition:transform .4s cubic-bezier(.4,0,.2,1);box-shadow:0 24px 60px rgba(0,0,0,.6),var(--gold-glow)}
 .exit-overlay.open .exit-card{transform:translateY(0) scale(1)}
+.exit-card::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:380px;height:380px;background:radial-gradient(circle,rgba(201,151,58,.14) 0%,rgba(201,151,58,.04) 45%,transparent 70%);pointer-events:none}
+.exit-card #exit-form-state,.exit-card #exit-success-state{position:relative;z-index:1}
+.exit-card .modal__title em{color:var(--gold);font-style:normal}
 .exit-card .scarcity{justify-content:center;margin:0 0 20px}
 .exit-card .modal__title{margin-top:4px}
 .exit-card form{margin-bottom:16px}
