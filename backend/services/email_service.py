@@ -90,7 +90,12 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
     """Send welcome + download access email after successful payment."""
     html = render_template("welcome.html", {
         "name": name,
-        "library_url": f"{settings.APP_URL}/api/auth/magic?token={token}&redirect=/library",
+        # Points at the click-gated intermediate page, not directly at the
+        # magic-link exchange — see frontend/access.html for why: in-app
+        # browsers prefetch links in emails before a real tap, and the
+        # actual exchange endpoint has real server-side session-binding
+        # side effects that a prefetch shouldn't be able to trigger.
+        "library_url": f"{settings.APP_URL}/access?token={token}&redirect=/library",
         "whatsapp_url": settings.WHATSAPP_COMMUNITY_LINK,
         "app_name": settings.APP_NAME,
         "app_url": settings.APP_URL,
@@ -105,7 +110,12 @@ async def send_library_access_update_email(name: str, email: str, token: str, un
     visits show 'Access Your Library' instead of 'Get The Package'."""
     html = render_template("library_access_update.html", {
         "name": name,
-        "library_url": f"{settings.APP_URL}/api/auth/magic?token={token}&redirect=/library",
+        # Points at the click-gated intermediate page, not directly at the
+        # magic-link exchange — see frontend/access.html for why: in-app
+        # browsers prefetch links in emails before a real tap, and the
+        # actual exchange endpoint has real server-side session-binding
+        # side effects that a prefetch shouldn't be able to trigger.
+        "library_url": f"{settings.APP_URL}/access?token={token}&redirect=/library",
         "app_name": settings.APP_NAME,
         "app_url": settings.APP_URL,
         "unsubscribe_token": unsubscribe_token,

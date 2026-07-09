@@ -98,6 +98,11 @@ async def serve_welcome():
 async def serve_library():
     return FileResponse(str(frontend_path / "library.html"))
 
+@app.get("/access", include_in_schema=False)
+async def serve_access():
+    # Click-gated intermediate landing page — see frontend/access.html for why.
+    return FileResponse(str(frontend_path / "access.html"))
+
 @app.get("/admin", include_in_schema=False)
 async def serve_admin():
     return FileResponse(str(frontend_path / "admin" / "index.html"))
