@@ -103,6 +103,14 @@ async def serve_access():
     # Click-gated intermediate landing page — see frontend/access.html for why.
     return FileResponse(str(frontend_path / "access.html"))
 
+@app.get("/verification-pending.html", include_in_schema=False)
+async def serve_verification_pending():
+    # exchange_magic_token()'s "new device/browser" branch redirects here.
+    # The file existed and was committed, but never had a route — any real
+    # hit to that branch 404'd instead of showing the "check your email"
+    # message.
+    return FileResponse(str(frontend_path / "verification-pending.html"))
+
 @app.get("/admin", include_in_schema=False)
 async def serve_admin():
     return FileResponse(str(frontend_path / "admin" / "index.html"))
