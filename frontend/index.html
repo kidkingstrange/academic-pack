@@ -635,6 +635,122 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <script src="js/checkout.js?v=7"></script>
 <script>AOS.init({ once: true, offset: 50, duration: 600 });</script>
 
+<!-- Exit-Intent Popup -->
+<div class="exit-overlay" id="exit-popup">
+  <div class="exit-card">
+    <button class="exit-card__close" id="exit-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+    <span class="exit-card__emoji">👋</span>
+    <h2 class="exit-card__headline">Wait — before you go…</h2>
+    <div class="exit-card__social-proof">
+      <div class="exit-card__avatars">
+        <span>AO</span><span>IF</span><span>KD</span><span>TE</span>
+      </div>
+      <span class="exit-card__member-count">500+ students already inside</span>
+    </div>
+    <p class="exit-card__sub">Join <strong>500+ students</strong> getting free weekly study tips, exam strategies, and direct support in our WhatsApp community.</p>
+    <a href="https://chat.whatsapp.com/HLtfMHU31JXGCvVZUbLSoT" target="_blank" rel="noopener" class="exit-card__cta" id="exit-cta">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Join Free Community →
+    </a>
+    <button class="exit-card__dismiss" id="exit-dismiss">No thanks, I'll pass</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  // ── Guard: skip if already shown this session ──
+  if (sessionStorage.getItem('ac_exit_shown')) return;
+
+  // ── Guard: skip if already purchased or community-joined ──
+  if (localStorage.getItem('ac_purchased') === 'true') return;
+
+  var overlay = document.getElementById('exit-popup');
+  var fired = false;
+
+  function isCheckoutOpen() {
+    var m = document.getElementById('checkout-modal');
+    return m && m.classList.contains('open');
+  }
+
+  function showPopup() {
+    if (fired) return;
+    if (isCheckoutOpen()) return;
+    if (sessionStorage.getItem('ac_exit_shown')) return;
+    fired = true;
+    sessionStorage.setItem('ac_exit_shown', '1');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hidePopup() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Close buttons
+  document.getElementById('exit-close').addEventListener('click', hidePopup);
+  document.getElementById('exit-dismiss').addEventListener('click', hidePopup);
+  // Click on CTA also closes (link opens in new tab)
+  document.getElementById('exit-cta').addEventListener('click', function() {
+    hidePopup();
+  });
+  // Click outside card dismisses
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) hidePopup();
+  });
+
+  // ── Desktop: mouse exit-intent detection ──
+  var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  if (!isMobile) {
+    var lastY = null;
+    var armed = false;
+    // Don't arm until visitor has been on page for 3 seconds (avoid
+    // triggering on initial mouse-enters-from-top-of-viewport movements)
+    setTimeout(function() { armed = true; }, 3000);
+
+    document.addEventListener('mousemove', function(e) {
+      if (!armed || fired) return;
+      // Detect rapid upward movement toward the top edge
+      if (lastY !== null && e.clientY < 20 && (lastY - e.clientY) > 5) {
+        showPopup();
+      }
+      lastY = e.clientY;
+    });
+  }
+
+  // ── Mobile: back-button interception via History API ──
+  if (isMobile) {
+    // Push a dummy state so we can intercept the first "back"
+    // Wait until page is settled to avoid conflicts with other pushState users
+    setTimeout(function() {
+      if (fired) return;
+      history.pushState({ exitIntent: true }, '');
+
+      window.addEventListener('popstate', function onPop(e) {
+        if (fired) {
+          // Already shown — let the back navigate normally
+          window.removeEventListener('popstate', onPop);
+          return;
+        }
+        if (isCheckoutOpen()) {
+          // Don't compete with checkout — let default behavior proceed
+          window.removeEventListener('popstate', onPop);
+          return;
+        }
+        // Show popup instead of navigating away
+        showPopup();
+        // Push state again so the page doesn't actually go back
+        history.pushState({ exitIntent: true }, '');
+        // Remove listener — only intercept once
+        window.removeEventListener('popstate', onPop);
+      });
+    }, 2000);
+  }
+})();
+</script>
+
+
 <!-- Returning customer CTA swap -->
 <script>
 (function() {
