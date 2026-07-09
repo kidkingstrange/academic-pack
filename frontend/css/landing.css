@@ -669,4 +669,12 @@
 .exit-card__avatars span:nth-child(3){background:#f59e0b}
 .exit-card__avatars span:nth-child(4){background:#10b981}
 .exit-card__member-count{font-size:.8rem;color:var(--gray-l);font-weight:500}
+.exit-card__form{margin-bottom:16px}
+.exit-card__input-row{display:flex;gap:8px;align-items:stretch}
+.exit-card__input{flex:1;padding:14px 16px;border:1px solid rgba(255,255,255,.12);border-radius:12px;font-size:.92rem;font-family:inherit;outline:none;background:rgba(255,255,255,.06);color:#fff;transition:border-color .2s ease,background .2s ease;min-width:0}
+.exit-card__input::placeholder{color:rgba(255,255,255,.3)}
+.exit-card__input:focus{border-color:var(--gold);background:rgba(255,255,255,.09);box-shadow:0 0 0 3px rgba(201,151,58,.12)}
+.exit-card__error{color:var(--red);font-size:.78rem;margin-top:8px;text-align:left}
+@media(max-width:420px){.exit-card__input-row{flex-direction:column}.exit-card__cta{width:100%}}
+
 
