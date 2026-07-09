@@ -121,11 +121,29 @@ async def process_email_queue():
     if db is None:
         return
     now = datetime.now(timezone.utc)
-    pending = await db.email_queue.find({
-        "status": {"$in": ["pending", "retry"]},
-        "scheduled_at": {"$lte": now},
-        "retry_count": {"$lt": 3},
-    }).limit(50).to_list(50)
+
+    # Atomically claim each item before processing (status -> "sending").
+    # A plain find() here would let two overlapping calls to this function
+    # (the immediate on-signup trigger racing the 5-minute scheduler tick,
+    # or two manual invocations) both read the same "pending"/"retry" item
+    # before either finishes its await on the SMTP send, double-processing
+    # it — real, observed symptom: sequence_position incremented twice for
+    # one actually-sent email. find_one_and_update is atomic at the DB
+    # level, so only one caller can ever claim a given item.
+    pending = []
+    while len(pending) < 50:
+        item = await db.email_queue.find_one_and_update(
+            {
+                "status": {"$in": ["pending", "retry"]},
+                "scheduled_at": {"$lte": now},
+                "retry_count": {"$lt": 3},
+            },
+            {"$set": {"status": "sending"}},
+            sort=[("scheduled_at", 1)],
+        )
+        if not item:
+            break
+        pending.append(item)
 
     for item in pending:
         try:
