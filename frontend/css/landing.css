@@ -373,10 +373,38 @@
     margin-bottom: 16px !important;
   }
   .btn--mega {
-    font-size: 1.1rem !important;
-    padding: 16px 24px !important;
+    font-size: 1rem !important;
+    padding: 16px 20px !important;
     width: 100% !important;
     max-width: 100% !important;
+    white-space: normal !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0.3px !important;
+    box-sizing: border-box !important;
+  }
+  .mid-cta__badge {
+    font-size: 0.72rem !important;
+    padding: 6px 14px !important;
+    white-space: normal !important;
+    text-align: center !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .mid-cta__price-row {
+    gap: 10px !important;
+    flex-wrap: wrap !important;
+  }
+  .mid-cta__old {
+    font-size: 1.3rem !important;
+  }
+  .mid-cta__arrow {
+    font-size: 1.1rem !important;
+  }
+  .mid-cta__new {
+    font-size: 2rem !important;
+  }
+  .reframe__pillars {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
   }
   .hero__trust {
     justify-content: center !important;
@@ -585,6 +613,18 @@
   .urgency-bar__cta {
     font-size: 0.7rem !important;
     padding: 5px 12px !important;
+  }
+  .btn--mega {
+    font-size: 0.9rem !important;
+    padding: 14px 16px !important;
+  }
+  .btn-mega__price {
+    font-size: 0.78rem !important;
+  }
+  .mid-cta__badge {
+    font-size: 0.66rem !important;
+    padding: 5px 12px !important;
+    letter-spacing: 0.5px !important;
   }
 }
 
