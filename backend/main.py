@@ -21,6 +21,7 @@ from .routes import payments, library, admin as admin_router, community, affilia
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
+from .middleware.auth import require_admin
 
 settings = get_settings()
 
@@ -127,6 +128,97 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
         return RedirectResponse(url=f"/?ref={normalized}")
     # Unknown/inactive code — fail gracefully, no error shown to the visitor.
     return RedirectResponse(url="/")
+
+@app.get("/api/_debug/flw-diagnostic", include_in_schema=False)
+async def flw_diagnostic(current_user=Depends(require_admin)):
+    """
+    TEMPORARY, admin-gated — systematic diagnosis of the sandbox
+    /customers 403. Reveals credential SHAPE (length, edges, whitespace)
+    never the raw secret values, and returns FLW's real responses for
+    /banks and /customers side by side so we can tell whether the 403
+    is specific to /customers or affects the whole sandbox account.
+    Remove after the investigation concludes — not meant to ship
+    long-term. Gated behind require_admin since it returns partial
+    credential shape + raw upstream API responses.
+    """
+    import base64
+    import json as jsonlib
+    import uuid as uuidlib
+    import httpx
+    from .services.flutterwave import get_flw_token, FLW_API_BASE
+
+    report = {}
+
+    report["client_id_len"] = len(settings.FLW_CLIENT_ID)
+    report["client_id_edges"] = f"{settings.FLW_CLIENT_ID[:4]}...{settings.FLW_CLIENT_ID[-4:]}" if len(settings.FLW_CLIENT_ID) >= 8 else "too short"
+    report["client_id_has_whitespace"] = settings.FLW_CLIENT_ID != settings.FLW_CLIENT_ID.strip()
+    report["client_secret_len"] = len(settings.FLW_CLIENT_SECRET)
+    report["client_secret_has_whitespace"] = settings.FLW_CLIENT_SECRET != settings.FLW_CLIENT_SECRET.strip()
+
+    try:
+        token = await get_flw_token()
+        report["token_acquired"] = True
+        parts = token.split(".")
+        if len(parts) == 3:
+            payload_b64 = parts[1] + "=" * (-len(parts[1]) % 4)
+            payload = jsonlib.loads(base64.urlsafe_b64decode(payload_b64))
+            safe_keys = {"scope", "aud", "iss", "azp", "exp", "iat", "typ", "environment", "mode", "realm_access", "resource_access", "allowed-origins"}
+            report["token_claims"] = {k: v for k, v in payload.items() if k in safe_keys}
+        else:
+            report["token_claims"] = "not a 3-part JWT — opaque token, cannot inspect claims"
+    except Exception as e:
+        report["token_acquired"] = False
+        report["token_error"] = str(e)
+        return report
+
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.get(
+                f"{FLW_API_BASE}/banks",
+                headers={"Authorization": f"Bearer {token}", "X-Trace-Id": str(uuidlib.uuid4())},
+                params={"country": "NG"},
+                timeout=15,
+            )
+            report["banks_status_code"] = resp.status_code
+            report["banks_response"] = resp.json()
+    except Exception as e:
+        report["banks_error"] = str(e)
+
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"{FLW_API_BASE}/customers",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type": "application/json",
+                    "X-Trace-Id": str(uuidlib.uuid4()),
+                },
+                json={"email": "flw-diagnostic-test@example.com", "name": {"first": "Diagnostic", "last": "Test"}},
+                timeout=15,
+            )
+            report["customers_full_body_status_code"] = resp.status_code
+            report["customers_full_body_response"] = resp.json()
+    except Exception as e:
+        report["customers_full_body_error"] = str(e)
+
+    try:
+        async with httpx.AsyncClient() as client:
+            resp = await client.post(
+                f"{FLW_API_BASE}/customers",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Content-Type": "application/json",
+                    "X-Trace-Id": str(uuidlib.uuid4()),
+                },
+                json={"email": "flw-diagnostic-test2@example.com"},
+                timeout=15,
+            )
+            report["customers_minimal_body_status_code"] = resp.status_code
+            report["customers_minimal_body_response"] = resp.json()
+    except Exception as e:
+        report["customers_minimal_body_error"] = str(e)
+
+    return report
 
 @app.get("/verification-pending.html", include_in_schema=False)
 async def serve_verification_pending():
