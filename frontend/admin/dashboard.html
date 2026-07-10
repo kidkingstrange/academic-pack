@@ -40,6 +40,12 @@
   .affiliate-form button { padding: 10px 20px; background: var(--gold); color: var(--ink); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
   .affiliate-form .form-err { color: #dc2626; font-size: .82rem; width: 100%; }
   code.aff-code { background: rgba(201,151,58,.12); color: var(--gold-d); padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+
+  .aff-link-cell { display: flex; align-items: center; gap: 6px; }
+  .aff-link-text { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: .78rem; color: var(--text2); }
+  .copy-btn { background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; color: var(--gold-d); font-size: 1rem; transition: color .2s; position: relative; flex-shrink: 0; }
+  .copy-btn:hover { color: var(--gold); }
+  .copy-tooltip { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: .72rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .2s; z-index: 100; }
 </style>
 </head>
 <body>
@@ -220,18 +226,28 @@
       tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">No affiliates yet</td></tr>';
       return;
     }
-    tbody.innerHTML = data.affiliates.map(a => `
+    tbody.innerHTML = data.affiliates.map(a => {
+      const fullLink = `${window.location.origin}/r/${a.code}`;
+      return `
       <tr>
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
         <td><code class="aff-code">${a.code}</code></td>
         <td>${a.name}</td>
         <td>${a.email}</td>
-        <td style="font-family:monospace;font-size:.78rem">/r/${a.code}</td>
+        <td>
+          <div class="aff-link-cell">
+            <span class="aff-link-text" title="${fullLink}">${fullLink}</span>
+            <button class="copy-btn" onclick="copyToClipboard('${fullLink}', this)" title="Copy link">
+              <i class="bi bi-copy"></i>
+            </button>
+          </div>
+        </td>
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>
         <td>₦${(a.revenue || 0).toLocaleString()}</td>
       </tr>
-    `).join('');
+    `;
+    }).join('');
   }
 
   document.getElementById('affiliate-form').addEventListener('submit', async (e) => {
@@ -251,6 +267,55 @@
       errDiv.style.display = 'block';
     }
   });
+
+  // ── Copy-to-clipboard helper (same pattern as the checkout account-number
+  // copy button in js/checkout.js, generalized for a plain string) ──
+  function copyToClipboard(text, buttonEl) {
+    const icon = buttonEl.querySelector('i');
+
+    function showSuccess() {
+      if (icon) { icon.className = 'bi bi-check-lg'; icon.style.color = '#22c55e'; }
+      let tooltip = buttonEl.querySelector('.copy-tooltip');
+      if (!tooltip) {
+        tooltip = document.createElement('span');
+        tooltip.className = 'copy-tooltip';
+        tooltip.textContent = 'Copied!';
+        buttonEl.appendChild(tooltip);
+      }
+      setTimeout(() => { tooltip.style.opacity = '1'; }, 10);
+      setTimeout(() => {
+        if (icon) { icon.className = 'bi bi-copy'; icon.style.color = ''; }
+        if (tooltip) {
+          tooltip.style.opacity = '0';
+          setTimeout(() => tooltip.remove(), 200);
+        }
+      }, 2000);
+    }
+
+    function fallbackCopy(val) {
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = val;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (successful) showSuccess();
+        else alert('Could not copy. Please select and copy manually.');
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
+        alert('Could not copy. Please select and copy manually.');
+      }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  }
 
   // Init
   loadDashboard();
