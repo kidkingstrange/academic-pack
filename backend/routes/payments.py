@@ -77,7 +77,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         customer_id = await create_flw_customer(token, body.name, body.email.lower())
     except Exception as e:
         print(f"❌ FLW initiation error: {e}")
-        raise HTTPException(status_code=502, detail=f"TEMP-DEBUG initiation: {e}")
+        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
 
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
 
@@ -91,7 +91,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             )
         except Exception as e:
             print(f"❌ FLW virtual-account error: {e}")
-            raise HTTPException(status_code=502, detail=f"TEMP-DEBUG virtual-account: {e}")
+            raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
 
         va_id = va_data.get("id")
         await db.pending_payments.update_one(
