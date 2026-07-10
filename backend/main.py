@@ -98,19 +98,6 @@ async def serve_welcome():
 async def serve_library():
     return FileResponse(str(frontend_path / "library.html"))
 
-@app.get("/access", include_in_schema=False)
-async def serve_access():
-    # Click-gated intermediate landing page — see frontend/access.html for why.
-    return FileResponse(str(frontend_path / "access.html"))
-
-@app.get("/verification-pending.html", include_in_schema=False)
-async def serve_verification_pending():
-    # exchange_magic_token()'s "new device/browser" branch redirects here.
-    # The file existed and was committed, but never had a route — any real
-    # hit to that branch 404'd instead of showing the "check your email"
-    # message.
-    return FileResponse(str(frontend_path / "verification-pending.html"))
-
 @app.get("/admin", include_in_schema=False)
 async def serve_admin():
     return FileResponse(str(frontend_path / "admin" / "index.html"))
@@ -133,31 +120,40 @@ async def exchange_magic_token(
     db=Depends(get_db)
 ):
     """
-    Exchange a reusable magic token for a session cookie and JWT.
-    Binds the magic link to a browser session on first use.
-    If accessed from a new device/browser, triggers a fresh email re-verification step.
+    Exchange a durable, per-customer magic token for a session cookie and
+    JWT. Reusable indefinitely by design: any number of devices/browsers
+    can use the same token any number of times, forever, and it never
+    expires.
+
+    This replaces an earlier single-device-binding scheme that treated a
+    second device using the same link as suspicious and forced a
+    re-verification email. That logic was the actual cause of the
+    persistent Facebook/Instagram in-app-browser bug: the prefetching bot
+    became "device #1" the moment the email was scanned, which locked the
+    real customer's own device out as "device #2" and sent them into a
+    resend loop. A durable, reusable token makes a prefetch harmless — it
+    just creates one extra, unused session row, nothing more.
     """
     import secrets
     import hashlib
     from datetime import timedelta
-    from backend.services.email_service import send_welcome_email
 
     if not token:
         raise HTTPException(status_code=400, detail="Missing magic token")
 
     now = datetime.now(timezone.utc)
 
-    # 1. Look up magic link in the database (active for 90 days, used check removed to support reuse)
-    magic_link = await db.magic_links.find_one({
-        "token": token,
-        "expires_at": {"$gt": now}
-    })
+    # No expiry filter — this link does not expire. Existing rows already
+    # in the database from before this change automatically become
+    # permanently valid again too, so past customers regain access with
+    # no migration needed.
+    magic_link = await db.magic_links.find_one({"token": token})
 
     if not magic_link:
         return expired_link_page(
-            "This link is invalid or has expired. If you haven't accessed your library yet, "
+            "This link is invalid. If you haven't accessed your library yet, "
             "check your welcome email for the correct link, or contact support.",
-            heading="Link expired",
+            heading="Link not found",
             cta_text="Go to Homepage",
             cta_href="/",
         )
@@ -170,14 +166,16 @@ async def exchange_magic_token(
     email = user["email"]
     role = user.get("role", "customer")
 
-    # Log access for anomaly visibility
+    # Log access for anomaly visibility — informational only, never blocks.
     client_ip = request.client.host if request.client else "unknown"
     user_agent = request.headers.get("user-agent", "unknown")
-    print(f"🔒 Magic link access: token={token}, user={email}, IP={client_ip}, UA={user_agent}, time={now}")
+    print(f"🔓 Magic link access: token={token}, user={email}, IP={client_ip}, UA={user_agent}, time={now}")
 
-    # 2. Check if browser already has a valid session cookie
+    # Reuse a session already bound to this exact browser + token if one
+    # exists; otherwise bind a new one for this device. No check against
+    # sessions on other devices — the whole point is that any number of
+    # devices can hold a valid session for the same token simultaneously.
     session_cookie = request.cookies.get("ac_session")
-    session_verified = False
     session_id = None
 
     if session_cookie:
@@ -188,44 +186,11 @@ async def exchange_magic_token(
             "expires_at": {"$gt": now}
         })
         if existing_session:
-            session_verified = True
             session_id = session_cookie
 
-    if not session_verified:
-        # Check if this magic token has been used to create an active session on any other device/browser
-        other_active_session = await db.sessions.find_one({
-            "magic_token": token,
-            "expires_at": {"$gt": now}
-        })
-
-        if other_active_session:
-            print(f"⚠️ Re-verification triggered: magic link {token} accessed from a new device/browser.")
-            
-            # Generate a new magic link token
-            new_magic_token = secrets.token_urlsafe(32)
-            await db.magic_links.insert_one({
-                "token": new_magic_token,
-                "user_id": ObjectId(user_id),
-                "purpose": "welcome",
-                "expires_at": now + timedelta(days=90),
-                "used": False,
-                "created_at": now
-            })
-
-            # Retrieve unsubscribe token
-            sub = await db.subscribers.find_one({"email": email.lower()})
-            unsub_token = sub.get("unsubscribe_token", "") if sub else ""
-
-            # Resend new magic link email
-            await send_welcome_email(user["name"], email.lower(), new_magic_token, unsub_token)
-            
-            # Redirect to the verification pending page
-            return RedirectResponse(url="/verification-pending.html")
-
-        # First use -> Create a new session and bind the cookie!
+    if not session_id:
         session_id = secrets.token_urlsafe(32)
         session_hash = hashlib.sha256(session_id.encode()).hexdigest()
-        
         await db.sessions.insert_one({
             "session_hash": session_hash,
             "user_id": ObjectId(user_id),
@@ -236,7 +201,7 @@ async def exchange_magic_token(
             "expires_at": now + timedelta(days=90)
         })
 
-    # 3. Create access token for frontend compatibility (sessionStorage fallback)
+    # Create access token for frontend compatibility (sessionStorage fallback)
     session_token = create_access_token({"sub": user_id, "email": email, "role": role})
 
     if redirect not in ["/welcome", "/library"]:
@@ -244,19 +209,17 @@ async def exchange_magic_token(
 
     redirect_target = f"{redirect}#token={session_token}"
     redirect_resp = RedirectResponse(url=redirect_target)
-    
-    # Always set/refresh session cookie on response if we have a valid session_id
-    if session_id:
-        redirect_resp.set_cookie(
-            key="ac_session",
-            value=session_id,
-            max_age=90 * 24 * 3600,
-            expires=90 * 24 * 3600,
-            path="/",
-            httponly=True,
-            secure=True if settings.APP_ENV == "production" else False,
-            samesite="lax"
-        )
+
+    redirect_resp.set_cookie(
+        key="ac_session",
+        value=session_id,
+        max_age=90 * 24 * 3600,
+        expires=90 * 24 * 3600,
+        path="/",
+        httponly=True,
+        secure=True if settings.APP_ENV == "production" else False,
+        samesite="lax"
+    )
     return redirect_resp
 
 @app.get("/unsubscribe", response_class=HTMLResponse, include_in_schema=False)
