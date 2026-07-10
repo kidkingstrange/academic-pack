@@ -25,6 +25,7 @@ class PaymentInitRequest(BaseModel):
     email: EmailStr
     client_expiry: Optional[float] = None  # ms timestamp from frontend
     payment_method: Optional[str] = "pay_with_bank"  # "pay_with_bank" | "bank_transfer"
+    referral_code: Optional[str] = None
 
 
 class PaymentInitResponse(BaseModel):
@@ -106,3 +107,22 @@ class AnalyticsSummary(BaseModel):
     total_subscribers: int
     pending_emails: int
     downloads_today: int
+
+
+# ─── Affiliates ───────────────────────────────────────────────────────────────
+class AffiliateCreateRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    code: Optional[str] = Field(None, min_length=3, max_length=20)
+
+
+class AffiliateResponse(BaseModel):
+    id: str
+    code: str
+    name: str
+    email: str
+    active: bool
+    created_at: datetime
+    clicks: int = 0
+    conversions: int = 0
+    revenue: float = 0

@@ -33,6 +33,13 @@
   .status-badge { padding: 4px 10px; border-radius: 50px; font-size: .75rem; font-weight: 700; }
   .status-badge.success { background: rgba(34,197,94,.15); color: #16a34a; }
   .status-badge.failed { background: rgba(239,68,68,.15); color: #dc2626; }
+
+  .affiliate-form { background: #fff; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-sm); margin-bottom: 24px; display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+  .affiliate-form label { display: block; font-size: .78rem; color: var(--text2); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
+  .affiliate-form input { padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: .9rem; font-family: inherit; }
+  .affiliate-form button { padding: 10px 20px; background: var(--gold); color: var(--ink); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+  .affiliate-form .form-err { color: #dc2626; font-size: .82rem; width: 100%; }
+  code.aff-code { background: rgba(201,151,58,.12); color: var(--gold-d); padding: 3px 8px; border-radius: 6px; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -42,6 +49,7 @@
   <a class="nav-item active" onclick="switchTab('dashboard')"><i class="bi bi-grid-fill"></i> Dashboard</a>
   <a class="nav-item" onclick="switchTab('sales')"><i class="bi bi-credit-card-fill"></i> Sales</a>
   <a class="nav-item" onclick="switchTab('customers')"><i class="bi bi-people-fill"></i> Customers</a>
+  <a class="nav-item" onclick="switchTab('affiliates')"><i class="bi bi-people-fill"></i> Affiliates</a>
   <a class="nav-item" onclick="logout()" style="margin-top:auto; position:absolute; bottom:24px; width:100%"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>
 
@@ -83,6 +91,33 @@
       <tbody><!-- Injected --></tbody>
     </table>
   </div>
+
+  <!-- Affiliates -->
+  <div id="tab-affiliates" class="section">
+    <div class="header"><h1>Affiliates</h1></div>
+
+    <form class="affiliate-form" id="affiliate-form">
+      <div>
+        <label for="aff-name">Name</label>
+        <input type="text" id="aff-name" placeholder="e.g. Chidi Okafor" required>
+      </div>
+      <div>
+        <label for="aff-email">Email</label>
+        <input type="email" id="aff-email" placeholder="affiliate@email.com" required>
+      </div>
+      <div>
+        <label for="aff-code">Code (optional)</label>
+        <input type="text" id="aff-code" placeholder="auto-generated if blank">
+      </div>
+      <button type="submit">Create Affiliate</button>
+      <div class="form-err" id="aff-err" style="display:none"></div>
+    </form>
+
+    <table id="affiliates-table">
+      <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Email</th><th>Link</th><th>Clicks</th><th>Conversions</th><th>Revenue</th></tr></thead>
+      <tbody><!-- Injected --></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
@@ -103,6 +138,7 @@
     
     if(tabId === 'sales') loadSales();
     if(tabId === 'customers') loadCustomers();
+    if(tabId === 'affiliates') loadAffiliates();
   }
 
   async function apiCall(endpoint) {
@@ -111,6 +147,18 @@
     });
     if(res.status === 401 || res.status === 403) logout();
     return await res.json();
+  }
+
+  async function apiPost(endpoint, body) {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if(res.status === 401 || res.status === 403) logout();
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.detail || 'Request failed');
+    return data;
   }
 
   async function loadDashboard() {
@@ -164,6 +212,45 @@
       </tr>
     `).join('');
   }
+
+  async function loadAffiliates() {
+    const data = await apiCall('/api/admin/affiliates');
+    const tbody = document.querySelector('#affiliates-table tbody');
+    if (!data.affiliates || data.affiliates.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">No affiliates yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.affiliates.map(a => `
+      <tr>
+        <td>${new Date(a.created_at).toLocaleDateString()}</td>
+        <td><code class="aff-code">${a.code}</code></td>
+        <td>${a.name}</td>
+        <td>${a.email}</td>
+        <td style="font-family:monospace;font-size:.78rem">/r/${a.code}</td>
+        <td>${a.clicks}</td>
+        <td>${a.conversions}</td>
+        <td>₦${(a.revenue || 0).toLocaleString()}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('affiliate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const errDiv = document.getElementById('aff-err');
+    errDiv.style.display = 'none';
+    const name = document.getElementById('aff-name').value.trim();
+    const email = document.getElementById('aff-email').value.trim();
+    const code = document.getElementById('aff-code').value.trim();
+
+    try {
+      await apiPost('/api/admin/affiliates', { name, email, code: code || null });
+      document.getElementById('affiliate-form').reset();
+      loadAffiliates();
+    } catch (err) {
+      errDiv.textContent = err.message;
+      errDiv.style.display = 'block';
+    }
+  });
 
   // Init
   loadDashboard();

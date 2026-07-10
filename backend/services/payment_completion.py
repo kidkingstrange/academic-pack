@@ -70,6 +70,28 @@ async def complete_payment(
         claimed = False
     print(f"⏱ [complete_payment] ref={reference} claimed={claimed} via={completed_via} at={now.isoformat()}")
 
+    # ── Referral attribution ────────────────────────────────────────────
+    # Only recorded on the winning claim — a retry/race that finds the
+    # payment already claimed must not double-count the same sale against
+    # the affiliate. referred_by was captured at checkout time (see
+    # routes/payments.py) and lives on the matching pending_payments doc.
+    if claimed:
+        pending = await db.pending_payments.find_one({"reference": reference})
+        referred_by = pending.get("referred_by") if pending else None
+        if referred_by:
+            try:
+                await db.referrals.insert_one({
+                    "reference": reference,
+                    "affiliate_code": referred_by,
+                    "email": email,
+                    "name": name,
+                    "amount": amount,
+                    "created_at": now,
+                    "payout_status": "unpaid",
+                })
+            except DuplicateKeyError:
+                pass
+
     # ── Create or get the user ─────────────────────────────────────────
     user = await db.users.find_one({"email": email})
     if not user:

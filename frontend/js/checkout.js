@@ -111,6 +111,7 @@ form.addEventListener('submit', async (e) => {
 
   try {
     const clientExpiry = localStorage.getItem('ac_expiry');
+    const referralCode = localStorage.getItem('ac_referral_code');
     const res = await fetch(`${API_BASE}/payments/initialize`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -119,6 +120,7 @@ form.addEventListener('submit', async (e) => {
         email:          userEmail,
         client_expiry:  clientExpiry ? Number(clientExpiry) : null,
         payment_method: currentPayMethod,
+        referral_code:  referralCode || null,
       }),
     });
 

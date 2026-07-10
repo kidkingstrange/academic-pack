@@ -54,18 +54,35 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     if is_expired:
         amount_naira = settings.PRODUCT_PRICE_LATE_NAIRA
 
+    # ── Resolve referral code (if any) against known, active affiliates ──
+    # Invalid/unknown codes are silently ignored rather than erroring the
+    # checkout — attribution is a nice-to-have, never a purchase blocker.
+    referred_by = None
+    if body.referral_code:
+        candidate = body.referral_code.strip().upper()
+        if candidate:
+            affiliate = await db.affiliates.find_one({"code": candidate, "active": True})
+            if affiliate:
+                referred_by = candidate
+
     # ── Upsert lead ───────────────────────────────────────────────────
+    lead_set = {
+        "name": body.name,
+        "email": body.email.lower(),
+        "source": "landing_page",
+        "ip_address": request.client.host,
+        "converted": False,
+        "price_offered": amount_naira,
+    }
+    if referred_by:
+        # Only set when present — an existing lead's prior attribution
+        # shouldn't be clobbered by a later visit with no referral code.
+        lead_set["referred_by"] = referred_by
+
     await db.leads.update_one(
         {"email": body.email.lower()},
         {
-            "$set": {
-                "name": body.name,
-                "email": body.email.lower(),
-                "source": "landing_page",
-                "ip_address": request.client.host,
-                "converted": False,
-                "price_offered": amount_naira,
-            },
+            "$set": lead_set,
             "$setOnInsert": {"created_at": now},
         },
         upsert=True,
@@ -106,6 +123,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                 "amount":         amount_naira,
                 "customer_id":    customer_id,
                 "created_at":     now,
+                "referred_by":    referred_by,
             }},
             upsert=True,
         )
@@ -146,6 +164,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "amount":         amount_naira,
             "customer_id":    customer_id,
             "created_at":     now,
+            "referred_by":    referred_by,
         }},
         upsert=True,
     )
