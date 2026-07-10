@@ -123,6 +123,20 @@ async def send_library_access_update_email(name: str, email: str, token: str, un
     return await send_email(email, f"A quicker way back into your library, {name}", html)
 
 
+async def send_durable_link_update_email(name: str, email: str, token: str, unsubscribe_token: str = ""):
+    """One-time backfill notice: every past customer gets a fresh durable,
+    non-expiring, reusable library link, following the single-device
+    magic-link fix (see backend/main.py's exchange_magic_token)."""
+    html = render_template("durable_link_update.html", {
+        "name": name,
+        "library_url": f"{settings.APP_URL}/api/auth/magic?token={token}&redirect=/library",
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+        "unsubscribe_token": unsubscribe_token,
+    })
+    return await send_email(email, f"Your permanent library link, {name}", html)
+
+
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):
     """Send a scheduled sequence email."""
     merged = {
