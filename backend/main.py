@@ -17,7 +17,7 @@ from starlette.types import Scope
 
 from .config import get_settings
 from .database import connect_db, disconnect_db, get_db
-from .routes import payments, library, admin as admin_router, community, affiliates
+from .routes import payments, library, admin as admin_router, community, affiliates, affiliate_public
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
@@ -68,6 +68,7 @@ app.include_router(library.router)
 app.include_router(admin_router.router)
 app.include_router(community.router)
 app.include_router(affiliates.router)
+app.include_router(affiliate_public.router)
 
 # ── Static Files (Frontend) ───────────────────────────────────────────────────
 class CachedStaticFiles(StaticFiles):
@@ -103,6 +104,10 @@ async def serve_library():
 async def serve_access():
     # Click-gated intermediate landing page — see frontend/access.html for why.
     return FileResponse(str(frontend_path / "access.html"))
+
+@app.get("/affiliate/register", include_in_schema=False)
+async def serve_affiliate_register():
+    return FileResponse(str(frontend_path / "affiliate-register.html"))
 
 @app.get("/r/{code}", include_in_schema=False)
 async def track_referral(code: str, request: Request, db=Depends(get_db)):

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Become an Affiliate — Scale Group</title>
+<meta name="description" content="Join the Scale Group affiliate program — get your referral link and start earning.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="css/main.css?v=4">
+<link rel="stylesheet" href="css/landing.css?v=4">
+<style>
+  body { background: linear-gradient(160deg,var(--ink) 0%,#0f1320 60%,#131826 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
+  .aff-card { background: linear-gradient(160deg,#0c0e14 0%,#131826 55%,#0f1520 100%); border: 1px solid rgba(201,151,58,.15); border-radius: var(--radius-xl); max-width: 480px; width: 100%; padding: 44px 36px; box-shadow: 0 24px 60px rgba(0,0,0,.6), var(--gold-glow); position: relative; overflow: hidden; }
+  .aff-card::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 380px; height: 380px; background: radial-gradient(circle, rgba(201,151,58,.14) 0%, rgba(201,151,58,.04) 45%, transparent 70%); pointer-events: none; }
+  .aff-card > * { position: relative; z-index: 1; }
+  .icon-wrap { width: 64px; height: 64px; background: rgba(201,151,58,.1); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 20px; box-shadow: var(--gold-glow); border: 1px solid rgba(201,151,58,.2); }
+  h1.aff-title { font-family: 'Clash Display', sans-serif; font-size: 1.8rem; font-weight: 600; color: #fff; text-align: center; margin-bottom: 8px; letter-spacing: -.5px; }
+  .aff-sub { font-size: .95rem; color: var(--gray-l); text-align: center; line-height: 1.7; margin-bottom: 28px; }
+  .aff-select { width: 100%; padding: 14px 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; font-size: .96rem; font-family: inherit; outline: none; background: rgba(255,255,255,.05); color: #fff; transition: all var(--transition); }
+  .aff-select:focus { border-color: var(--gold); background: rgba(255,255,255,.08); box-shadow: 0 0 0 3px rgba(201,151,58,.15); }
+  textarea.aff-textarea { width: 100%; padding: 14px 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; font-size: .92rem; font-family: inherit; outline: none; background: rgba(255,255,255,.05); color: #fff; resize: vertical; min-height: 72px; transition: all var(--transition); }
+  textarea.aff-textarea:focus { border-color: var(--gold); background: rgba(255,255,255,.08); box-shadow: 0 0 0 3px rgba(201,151,58,.15); }
+  textarea.aff-textarea::placeholder { color: rgba(255,255,255,.3); }
+  .aff-optional-tag { font-size: .72rem; color: rgba(255,255,255,.35); text-transform: none; letter-spacing: 0; font-weight: 500; }
+  .aff-submit-err { color: var(--red); font-size: .82rem; margin-top: 6px; text-align: center; display: none; }
+
+  /* Confirmation state */
+  #aff-success { display: none; text-align: center; }
+  .aff-link-row { display: flex; align-items: stretch; gap: 8px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 12px 14px; margin: 20px 0 24px; }
+  .aff-link-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: .82rem; color: var(--gold-l); text-align: left; align-self: center; }
+  .copy-btn { background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; color: var(--gold-d); font-size: 1.1rem; transition: color .2s; position: relative; flex-shrink: 0; }
+  .copy-btn:hover { color: var(--gold); }
+  .copy-tooltip { position: absolute; top: -32px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: .72rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .2s; z-index: 100; }
+</style>
+</head>
+<body>
+
+<div class="aff-card">
+  <!-- Form state -->
+  <div id="aff-form-state">
+    <div class="icon-wrap"><i class="bi bi-megaphone-fill"></i></div>
+    <h1 class="aff-title">Become an Affiliate</h1>
+    <p class="aff-sub">Get your referral link and start earning when people you refer join the Academic Comeback Package.</p>
+
+    <form id="aff-register-form" autocomplete="off">
+      <div class="form-group">
+        <label for="aff-name">Full Name</label>
+        <input type="text" id="aff-name" placeholder="e.g. Chidi Okafor" required>
+      </div>
+      <div class="form-group">
+        <label for="aff-email">Email Address</label>
+        <input type="email" id="aff-email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="aff-bank">Bank</label>
+        <select id="aff-bank" class="aff-select" required>
+          <option value="" disabled selected>Loading banks…</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="aff-account">Account Number</label>
+        <input type="text" id="aff-account" placeholder="10-digit account number" inputmode="numeric" maxlength="10" required>
+      </div>
+      <div class="form-group">
+        <label for="aff-promo">How do you plan to promote? <span class="aff-optional-tag">(optional)</span></label>
+        <textarea id="aff-promo" class="aff-textarea" placeholder="e.g. Instagram @handle, ~5k followers, student-focused content"></textarea>
+      </div>
+
+      <button type="submit" class="modal__submit" id="aff-submit-btn">Get My Referral Link →</button>
+      <p class="aff-submit-err" id="aff-submit-err"></p>
+    </form>
+  </div>
+
+  <!-- Success state -->
+  <div id="aff-success">
+    <div class="icon-wrap"><i class="bi bi-check-lg"></i></div>
+    <h1 class="aff-title">You're in!</h1>
+    <p class="aff-sub">Your referral link is live — start sharing it now. We've also emailed it to you.</p>
+    <div class="aff-link-row">
+      <span class="aff-link-value" id="aff-link-text"></span>
+      <button class="copy-btn" id="aff-copy-btn" title="Copy link"><i class="bi bi-copy"></i></button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const API_BASE = '/api';
+  const bankSelect = document.getElementById('aff-bank');
+  const form = document.getElementById('aff-register-form');
+  const submitBtn = document.getElementById('aff-submit-btn');
+  const errEl = document.getElementById('aff-submit-err');
+
+  // ── Load banks for the dropdown ──────────────────────────────────────
+  (async function loadBanks() {
+    try {
+      const res = await fetch(`${API_BASE}/affiliates/banks`);
+      const data = await res.json();
+      if (!res.ok || !data.banks || !data.banks.length) throw new Error('empty');
+
+      bankSelect.innerHTML = '<option value="" disabled selected>Select your bank</option>' +
+        data.banks.map(b => `<option value="${b.code}" data-bank-name="${b.name}">${b.name}</option>`).join('');
+    } catch (err) {
+      bankSelect.innerHTML = '<option value="" disabled selected>Could not load bank list — refresh to retry</option>';
+    }
+  })();
+
+  // ── Submit ────────────────────────────────────────────────────────────
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errEl.style.display = 'none';
+
+    const name = document.getElementById('aff-name').value.trim();
+    const email = document.getElementById('aff-email').value.trim();
+    const accountNumber = document.getElementById('aff-account').value.trim();
+    const promo = document.getElementById('aff-promo').value.trim();
+    const selectedOption = bankSelect.options[bankSelect.selectedIndex];
+    const bankCode = bankSelect.value;
+    const bankName = selectedOption ? selectedOption.dataset.bankName : '';
+
+    if (!bankCode) {
+      errEl.textContent = 'Please select your bank.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (!/^\d{10}$/.test(accountNumber)) {
+      errEl.textContent = 'Account number must be exactly 10 digits.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Registering…';
+
+    try {
+      const res = await fetch(`${API_BASE}/affiliates/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email,
+          bank_account_number: accountNumber,
+          bank_code: bankCode,
+          bank_name: bankName,
+          promotion_info: promo || null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Registration failed');
+
+      document.getElementById('aff-form-state').style.display = 'none';
+      const successEl = document.getElementById('aff-success');
+      successEl.style.display = 'block';
+      const linkText = document.getElementById('aff-link-text');
+      linkText.textContent = data.referral_link;
+      linkText.title = data.referral_link;
+      document.getElementById('aff-copy-btn').addEventListener('click', function() {
+        copyToClipboard(data.referral_link, this);
+      });
+    } catch (err) {
+      errEl.textContent = err.message;
+      errEl.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Get My Referral Link →';
+    }
+  });
+
+  // ── Copy-to-clipboard (same pattern used in js/checkout.js and the
+  // admin dashboard's Affiliates tab) ──
+  window.copyToClipboard = function(text, buttonEl) {
+    const icon = buttonEl.querySelector('i');
+
+    function showSuccess() {
+      if (icon) { icon.className = 'bi bi-check-lg'; icon.style.color = '#22c55e'; }
+      let tooltip = buttonEl.querySelector('.copy-tooltip');
+      if (!tooltip) {
+        tooltip = document.createElement('span');
+        tooltip.className = 'copy-tooltip';
+        tooltip.textContent = 'Copied!';
+        buttonEl.appendChild(tooltip);
+      }
+      setTimeout(() => { tooltip.style.opacity = '1'; }, 10);
+      setTimeout(() => {
+        if (icon) { icon.className = 'bi bi-copy'; icon.style.color = ''; }
+        if (tooltip) {
+          tooltip.style.opacity = '0';
+          setTimeout(() => tooltip.remove(), 200);
+        }
+      }, 2000);
+    }
+
+    function fallbackCopy(val) {
+      try {
+        const textarea = document.createElement('textarea');
+        textarea.value = val;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (successful) showSuccess();
+        else alert('Could not copy. Please select and copy manually.');
+      } catch (err) {
+        alert('Could not copy. Please select and copy manually.');
+      }
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
+    } else {
+      fallbackCopy(text);
+    }
+  };
+})();
+</script>
+</body>
+</html>

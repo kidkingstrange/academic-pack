@@ -123,6 +123,19 @@ async def send_library_access_update_email(name: str, email: str, token: str, un
     return await send_email(email, f"A quicker way back into your library, {name}", html)
 
 
+async def send_affiliate_welcome_email(name: str, email: str, code: str, referral_link: str):
+    """Send an affiliate their referral link/code right after self-registration."""
+    html = render_template("affiliate_welcome.html", {
+        "name": name,
+        "code": code,
+        "referral_link": referral_link,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+        "unsubscribe_token": "",
+    })
+    return await send_email(email, f"You're in — here's your referral link, {name}", html)
+
+
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):
     """Send a scheduled sequence email."""
     merged = {

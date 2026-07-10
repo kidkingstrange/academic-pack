@@ -116,12 +116,22 @@ class AffiliateCreateRequest(BaseModel):
     code: Optional[str] = Field(None, min_length=3, max_length=20)
 
 
+class AffiliateRegisterRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    bank_account_number: str = Field(..., pattern=r"^\d{10}$")
+    bank_code: str = Field(..., min_length=1, max_length=20)
+    bank_name: str = Field(..., min_length=1, max_length=100)
+    promotion_info: Optional[str] = Field(None, max_length=500)
+
+
 class AffiliateResponse(BaseModel):
     id: str
     code: str
     name: str
     email: str
     active: bool
+    source: str = "admin_created"
     created_at: datetime
     clicks: int = 0
     conversions: int = 0

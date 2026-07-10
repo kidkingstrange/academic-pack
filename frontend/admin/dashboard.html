@@ -40,6 +40,11 @@
   .affiliate-form button { padding: 10px 20px; background: var(--gold); color: var(--ink); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
   .affiliate-form .form-err { color: #dc2626; font-size: .82rem; width: 100%; }
   code.aff-code { background: rgba(201,151,58,.12); color: var(--gold-d); padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+  .source-badge { padding: 3px 9px; border-radius: 50px; font-size: .7rem; font-weight: 700; white-space: nowrap; }
+  .source-badge.admin { background: rgba(100,116,139,.15); color: #475569; }
+  .source-badge.self { background: rgba(59,130,246,.12); color: #2563eb; }
+  .deactivate-btn { background: rgba(239,68,68,.1); color: #dc2626; border: 1px solid rgba(239,68,68,.25); padding: 5px 12px; border-radius: 6px; font-size: .78rem; font-weight: 700; cursor: pointer; }
+  .deactivate-btn:hover { background: rgba(239,68,68,.18); }
 
   .aff-link-cell { display: flex; align-items: center; gap: 6px; }
   .aff-link-text { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: .78rem; color: var(--text2); }
@@ -120,7 +125,7 @@
     </form>
 
     <table id="affiliates-table">
-      <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Email</th><th>Link</th><th>Clicks</th><th>Conversions</th><th>Revenue</th></tr></thead>
+      <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Email</th><th>Source</th><th>Link</th><th>Clicks</th><th>Conversions</th><th>Revenue</th><th>Status</th></tr></thead>
       <tbody><!-- Injected --></tbody>
     </table>
   </div>
@@ -223,17 +228,25 @@
     const data = await apiCall('/api/admin/affiliates');
     const tbody = document.querySelector('#affiliates-table tbody');
     if (!data.affiliates || data.affiliates.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center">No affiliates yet</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center">No affiliates yet</td></tr>';
       return;
     }
     tbody.innerHTML = data.affiliates.map(a => {
       const fullLink = `${window.location.origin}/r/${a.code}`;
+      const isSelf = a.source === 'self_registered';
+      const sourceBadge = isSelf
+        ? '<span class="source-badge self">Self-registered</span>'
+        : '<span class="source-badge admin">Admin-created</span>';
+      const statusCell = a.active
+        ? `<button class="deactivate-btn" onclick="deactivateAffiliate('${a.id}')">Deactivate</button>`
+        : '<span class="status-badge failed">Inactive</span>';
       return `
       <tr>
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
         <td><code class="aff-code">${a.code}</code></td>
         <td>${a.name}</td>
         <td>${a.email}</td>
+        <td>${sourceBadge}</td>
         <td>
           <div class="aff-link-cell">
             <span class="aff-link-text" title="${fullLink}">${fullLink}</span>
@@ -245,9 +258,20 @@
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>
         <td>₦${(a.revenue || 0).toLocaleString()}</td>
+        <td>${statusCell}</td>
       </tr>
     `;
     }).join('');
+  }
+
+  async function deactivateAffiliate(id) {
+    if (!confirm('Deactivate this affiliate? Their link will stop tracking new clicks immediately. Any unpaid conversions already on record will be flagged for manual review, not deleted.')) return;
+    try {
+      await apiPost(`/api/admin/affiliates/${id}/deactivate`, {});
+      loadAffiliates();
+    } catch (err) {
+      alert(err.message || 'Could not deactivate affiliate.');
+    }
   }
 
   document.getElementById('affiliate-form').addEventListener('submit', async (e) => {

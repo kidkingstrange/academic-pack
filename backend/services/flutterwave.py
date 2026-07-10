@@ -193,6 +193,26 @@ async def create_virtual_account(
         return data["data"]
 
 
+async def list_banks(token: str, country: str = "NG") -> list:
+    """Bank list for a country — populates the affiliate registration
+    form's bank dropdown so payout account details are captured against
+    a real bank_code/bank_name pair rather than free-typed text."""
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{FLW_API_BASE}/banks",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "X-Trace-Id":    str(uuid.uuid4()),
+            },
+            params={"country": country},
+            timeout=15,
+        )
+        data = resp.json()
+        if data.get("status") != "success":
+            raise Exception(f"FLW banks error: {data}")
+        return data.get("data", [])
+
+
 async def verify_charges_by_reference(reference: str) -> Dict[str, Any]:
     """Verify a virtual account payment by checking charges for its reference. Returns full API response."""
     token = await get_flw_token()
