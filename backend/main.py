@@ -145,7 +145,7 @@ async def flw_diagnostic(current_user=Depends(require_admin)):
     import json as jsonlib
     import uuid as uuidlib
     import httpx
-    from .services.flutterwave import get_flw_token, FLW_API_BASE
+    from .services.flutterwave import FLW_API_BASE, FLW_AUTH_URL
 
     report = {}
 
@@ -156,16 +156,34 @@ async def flw_diagnostic(current_user=Depends(require_admin)):
     report["client_secret_has_whitespace"] = settings.FLW_CLIENT_SECRET != settings.FLW_CLIENT_SECRET.strip()
 
     try:
-        token = await get_flw_token()
-        report["token_acquired"] = True
-        parts = token.split(".")
-        if len(parts) == 3:
-            payload_b64 = parts[1] + "=" * (-len(parts[1]) % 4)
-            payload = jsonlib.loads(base64.urlsafe_b64decode(payload_b64))
-            safe_keys = {"scope", "aud", "iss", "azp", "exp", "iat", "typ", "environment", "mode", "realm_access", "resource_access", "allowed-origins"}
-            report["token_claims"] = {k: v for k, v in payload.items() if k in safe_keys}
+        async with httpx.AsyncClient() as client:
+            token_resp = await client.post(
+                FLW_AUTH_URL,
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+                data={
+                    "client_id": settings.FLW_CLIENT_ID,
+                    "client_secret": settings.FLW_CLIENT_SECRET,
+                    "grant_type": "client_credentials",
+                },
+                timeout=15,
+            )
+        token_data = token_resp.json()
+        report["token_status_code"] = token_resp.status_code
+        # Top-level OAuth response fields — NOT the raw access_token itself.
+        report["token_response_fields"] = {k: v for k, v in token_data.items() if k != "access_token"}
+        token = token_data.get("access_token")
+        report["token_acquired"] = bool(token)
+        if token:
+            parts = token.split(".")
+            if len(parts) == 3:
+                payload_b64 = parts[1] + "=" * (-len(parts[1]) % 4)
+                payload = jsonlib.loads(base64.urlsafe_b64decode(payload_b64))
+                safe_keys = {"scope", "aud", "iss", "azp", "exp", "iat", "typ", "environment", "mode", "realm_access", "resource_access", "allowed-origins"}
+                report["token_jwt_claims"] = {k: v for k, v in payload.items() if k in safe_keys}
+            else:
+                report["token_jwt_claims"] = "not a 3-part JWT — opaque token, cannot inspect claims"
         else:
-            report["token_claims"] = "not a 3-part JWT — opaque token, cannot inspect claims"
+            return report
     except Exception as e:
         report["token_acquired"] = False
         report["token_error"] = str(e)
