@@ -13,6 +13,14 @@ settings = get_settings()
 FLW_API_BASE = "https://f4bexperience.flutterwave.com"
 FLW_AUTH_URL = "https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token"
 
+# The Transfers/Transfer-Recipients OpenAPI reference pages on
+# developer.flutterwave.com list ONLY this host in their "servers" array,
+# labeled "Dev server" — no separate production host is documented there.
+# Kept as its own constant rather than reused from FLW_API_BASE because
+# that's unconfirmed: it may be sandbox-only. Must be re-verified against
+# real docs/support before this is ever pointed at a live payout run.
+FLW_TRANSFERS_API_BASE = "https://developersandbox-api.flutterwave.com"
+
 # ── OAuth token cache ──────────────────────────────────────────────────────────
 _flw_token: str = None
 _flw_token_expiry: float = 0
@@ -211,6 +219,82 @@ async def list_banks(token: str, country: str = "NG") -> list:
         if data.get("status") != "success":
             raise Exception(f"FLW banks error: {data}")
         return data.get("data", [])
+
+
+async def create_transfer_recipient(
+    token: str,
+    account_number: str,
+    bank_code: str,
+    first_name: str = None,
+    last_name: str = None,
+) -> str:
+    """
+    Create a Flutterwave transfer recipient for a Nigerian bank account.
+    Meant to be called once per affiliate — the returned recipient_id is
+    stored on the affiliate record and reused for every future payout,
+    never recreated.
+    """
+    payload = {
+        "type": "bank_ngn",
+        "bank": {"account_number": account_number, "code": bank_code},
+    }
+    if first_name or last_name:
+        payload["name"] = {"first": first_name or "", "last": last_name or ""}
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_TRANSFERS_API_BASE}/transfers/recipients",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type":  "application/json",
+                "X-Trace-Id":    str(uuid.uuid4()),
+            },
+            json=payload,
+            timeout=15,
+        )
+        data = resp.json()
+        if data.get("status") != "success":
+            raise Exception(f"FLW recipient error: {data}")
+        return data["data"]["id"]
+
+
+async def create_transfer(
+    token: str,
+    recipient_id: str,
+    amount_naira: float,
+    reference: str,
+    narration: str,
+) -> Dict[str, Any]:
+    """
+    Execute a real transfer to a previously-created recipient. Returns the
+    full raw API response — deliberately does NOT raise on a "failed"
+    transfer, since that's a normal per-line-item outcome the payout
+    batch loop needs to record and continue past, not something that
+    should abort processing the rest of the batch.
+    """
+    payload = {
+        "action": "instant",
+        "payment_instruction": {
+            "recipient_id":     recipient_id,
+            "source_currency":  "NGN",
+            "amount": {"value": amount_naira, "applies_to": "destination_currency"},
+        },
+        "reference": reference,
+        "narration": narration,
+    }
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_TRANSFERS_API_BASE}/transfers",
+            headers={
+                "Authorization":     f"Bearer {token}",
+                "Content-Type":      "application/json",
+                "X-Trace-Id":        str(uuid.uuid4()),
+                "X-Idempotency-Key": reference,
+            },
+            json=payload,
+            timeout=20,
+        )
+        return resp.json()
 
 
 async def verify_charges_by_reference(reference: str) -> Dict[str, Any]:

@@ -105,6 +105,13 @@ async def deactivate_affiliate(
     is sufficient — no other code path needs to change. Existing unpaid
     conversions are flagged for manual review, never deleted, and any
     future payout run should skip anything not still "unpaid".
+
+    Also flags anything already "batched" — staged into a payout batch
+    that hasn't been confirmed yet — not just "unpaid". confirm_payout_
+    batch() re-checks each line item's referrals are still "batched" at
+    confirmation time, so this closes the gap where a batch was generated
+    before the affiliate was deactivated: that line item gets skipped
+    instead of silently paying out.
     """
     try:
         affiliate = await db.affiliates.find_one({"_id": ObjectId(affiliate_id)})
@@ -119,7 +126,7 @@ async def deactivate_affiliate(
         {"$set": {"active": False, "deactivated_at": now}},
     )
     flagged = await db.referrals.update_many(
-        {"affiliate_code": affiliate["code"], "payout_status": "unpaid"},
+        {"affiliate_code": affiliate["code"], "payout_status": {"$in": ["unpaid", "batched"]}},
         {"$set": {"payout_status": "flagged_for_review", "flagged_at": now}},
     )
     return {"success": True, "flagged_conversions": flagged.modified_count}

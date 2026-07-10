@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
 from ..services.email_service import send_sequence_email, send_welcome_email, send_affiliate_welcome_email
+from ..services.payout_service import generate_weekly_payout_batch
 
 scheduler = AsyncIOScheduler()
 
@@ -250,12 +251,30 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
         # this AND the welcome email are both queued, so it isn't done here.
 
 
+async def run_weekly_payout_batch_job():
+    """Scheduled wrapper — generation only, never touches the Transfers
+    API. Confirmation is a separate, admin-triggered action."""
+    db = database.get_db()
+    if db is None:
+        return
+    batch = await generate_weekly_payout_batch(db)
+    if batch:
+        print(f"💰 Generated payout batch {batch['batch_id']} — {len(batch['line_items'])} affiliates, ₦{batch['total_amount']:,.2f} total, awaiting admin confirmation")
+
+
 def start_scheduler():
     scheduler.add_job(
         process_email_queue,
         "interval",
         minutes=5,
         id="email_queue_processor",
+        replace_existing=True,
+    )
+    scheduler.add_job(
+        run_weekly_payout_batch_job,
+        "interval",
+        weeks=1,
+        id="weekly_payout_batch",
         replace_existing=True,
     )
     scheduler.start()

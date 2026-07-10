@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     FLW_VIRTUAL_ACCOUNT_BANK_CODE: str = "035"  # Wema Bank — issuing bank for dynamic virtual accounts
     PRODUCT_PRICE_NAIRA: int = 2000   # ₦2,000 early-bird
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
+    AFFILIATE_COMMISSION_PERCENT: float = 50.0  # % of the sale price paid out per referred conversion
 
     # ── SMTP ──────────────────────────────────────────────────────────
     SMTP_HOST: str = "smtp.gmail.com"

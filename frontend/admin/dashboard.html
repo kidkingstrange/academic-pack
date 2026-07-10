@@ -51,6 +51,26 @@
   .copy-btn { background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; color: var(--gold-d); font-size: 1rem; transition: color .2s; position: relative; flex-shrink: 0; }
   .copy-btn:hover { color: var(--gold); }
   .copy-tooltip { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: .72rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .2s; z-index: 100; }
+
+  .payout-toolbar { display: flex; justify-content: flex-end; margin-bottom: 20px; }
+  .btn-secondary { padding: 10px 18px; background: #fff; border: 1px solid #ddd; border-radius: 8px; font-weight: 600; font-size: .88rem; cursor: pointer; }
+  .btn-secondary:hover { background: #f5f5f5; }
+  .payout-batch { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow-sm); margin-bottom: 24px; overflow: hidden; }
+  .payout-batch__header { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid #eee; }
+  .payout-batch__header h3 { font-size: 1rem; margin: 0; }
+  .payout-batch__header .meta { font-size: .8rem; color: var(--text2); margin-top: 2px; }
+  .batch-status-badge { padding: 4px 12px; border-radius: 50px; font-size: .75rem; font-weight: 700; }
+  .batch-status-badge.pending_confirmation { background: rgba(201,151,58,.15); color: var(--gold-d); }
+  .batch-status-badge.completed { background: rgba(34,197,94,.15); color: #16a34a; }
+  .batch-status-badge.completed_with_errors { background: rgba(239,68,68,.15); color: #dc2626; }
+  .confirm-payout-btn { background: linear-gradient(135deg,var(--gold),var(--gold-l)); color: var(--ink); border: none; padding: 10px 20px; border-radius: 8px; font-weight: 800; cursor: pointer; }
+  .confirm-payout-btn:disabled { opacity: .6; cursor: not-allowed; }
+  .payout-total-row td { font-weight: 800; border-top: 2px solid #eee; }
+  .transfer-status-tag { font-size: .74rem; font-weight: 700; padding: 3px 9px; border-radius: 50px; }
+  .transfer-status-tag.success { background: rgba(34,197,94,.15); color: #16a34a; }
+  .transfer-status-tag.failed, .transfer-status-tag.skipped { background: rgba(239,68,68,.15); color: #dc2626; }
+  .transfer-status-tag.pending { background: rgba(100,116,139,.15); color: #475569; }
+  .payout-summary { padding: 14px 20px; font-size: .88rem; background: rgba(250,250,250,1); border-top: 1px solid #eee; }
 </style>
 </head>
 <body>
@@ -61,6 +81,7 @@
   <a class="nav-item" onclick="switchTab('sales')"><i class="bi bi-credit-card-fill"></i> Sales</a>
   <a class="nav-item" onclick="switchTab('customers')"><i class="bi bi-people-fill"></i> Customers</a>
   <a class="nav-item" onclick="switchTab('affiliates')"><i class="bi bi-people-fill"></i> Affiliates</a>
+  <a class="nav-item" onclick="switchTab('payouts')"><i class="bi bi-cash-coin"></i> Payouts</a>
   <a class="nav-item" onclick="logout()" style="margin-top:auto; position:absolute; bottom:24px; width:100%"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>
 
@@ -129,6 +150,15 @@
       <tbody><!-- Injected --></tbody>
     </table>
   </div>
+
+  <!-- Payouts -->
+  <div id="tab-payouts" class="section">
+    <div class="header"><h1>Payouts</h1></div>
+    <div class="payout-toolbar">
+      <button class="btn-secondary" id="generate-batch-btn" onclick="generateBatchNow()">Generate Batch Now</button>
+    </div>
+    <div id="payouts-container"><!-- Injected --></div>
+  </div>
 </div>
 
 <script>
@@ -150,6 +180,7 @@
     if(tabId === 'sales') loadSales();
     if(tabId === 'customers') loadCustomers();
     if(tabId === 'affiliates') loadAffiliates();
+    if(tabId === 'payouts') loadPayouts();
   }
 
   async function apiCall(endpoint) {
@@ -291,6 +322,87 @@
       errDiv.style.display = 'block';
     }
   });
+
+  async function generateBatchNow() {
+    const btn = document.getElementById('generate-batch-btn');
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+    try {
+      const data = await apiPost('/api/admin/payouts/generate-batch', {});
+      if (!data.created) {
+        alert(data.message || 'No unpaid conversions — no batch generated.');
+      }
+      await loadPayouts();
+    } catch (err) {
+      alert(err.message || 'Could not generate batch.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generate Batch Now';
+    }
+  }
+
+  async function loadPayouts() {
+    const data = await apiCall('/api/admin/payouts/batches');
+    const container = document.getElementById('payouts-container');
+    if (!data.batches || data.batches.length === 0) {
+      container.innerHTML = '<p style="color:var(--text2)">No payout batches yet.</p>';
+      return;
+    }
+
+    container.innerHTML = data.batches.map(b => {
+      const statusLabel = b.status.replace(/_/g, ' ');
+      const isPending = b.status === 'pending_confirmation';
+      const rows = b.line_items.map(item => `
+        <tr>
+          <td>${item.affiliate_name}</td>
+          <td>${item.bank_name || ''} ${item.bank_account_number}</td>
+          <td>₦${(item.amount || 0).toLocaleString()}</td>
+          <td><span class="transfer-status-tag ${item.transfer_status}">${item.transfer_status}</span>${item.transfer_error ? ` <span style="color:#dc2626;font-size:.78rem">${item.transfer_error}</span>` : ''}</td>
+        </tr>
+      `).join('');
+
+      return `
+      <div class="payout-batch">
+        <div class="payout-batch__header">
+          <div>
+            <h3>${b.batch_id}</h3>
+            <div class="meta">Created ${new Date(b.created_at).toLocaleString()}${b.confirmed_at ? ` · Confirmed ${new Date(b.confirmed_at).toLocaleString()} by ${b.confirmed_by || 'admin'}` : ''}</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px">
+            <span class="batch-status-badge ${b.status}">${statusLabel}</span>
+            ${isPending ? `<button class="confirm-payout-btn" onclick="confirmBatch('${b.batch_id}', this)">Confirm and Send All Payouts</button>` : ''}
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Affiliate</th><th>Bank Account</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody>
+            ${rows}
+            <tr class="payout-total-row"><td colspan="2">Total</td><td>₦${(b.total_amount || 0).toLocaleString()}</td><td></td></tr>
+          </tbody>
+        </table>
+        <div class="payout-summary" id="batch-summary-${b.batch_id}"></div>
+      </div>
+    `;
+    }).join('');
+  }
+
+  async function confirmBatch(batchId, buttonEl) {
+    if (!confirm(`Send real Transfers API payouts for batch ${batchId}? This cannot be undone.`)) return;
+    buttonEl.disabled = true;
+    buttonEl.textContent = 'Processing…';
+    try {
+      const result = await apiPost(`/api/admin/payouts/${batchId}/confirm`, {});
+      await loadPayouts();
+      const summaryEl = document.getElementById(`batch-summary-${batchId}`);
+      if (summaryEl) {
+        summaryEl.textContent = `${result.succeeded} succeeded, ${result.failed} failed (of ${result.total_line_items} total).`;
+      }
+    } catch (err) {
+      alert(err.message || 'Could not confirm batch.');
+      buttonEl.disabled = false;
+      buttonEl.textContent = 'Confirm and Send All Payouts';
+    }
+  }
 
   // ── Copy-to-clipboard helper (same pattern as the checkout account-number
   // copy button in js/checkout.js, generalized for a plain string) ──

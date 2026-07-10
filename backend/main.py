@@ -17,7 +17,7 @@ from starlette.types import Scope
 
 from .config import get_settings
 from .database import connect_db, disconnect_db, get_db
-from .routes import payments, library, admin as admin_router, community, affiliates, affiliate_public
+from .routes import payments, library, admin as admin_router, community, affiliates, affiliate_public, payouts
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
@@ -69,6 +69,7 @@ app.include_router(admin_router.router)
 app.include_router(community.router)
 app.include_router(affiliates.router)
 app.include_router(affiliate_public.router)
+app.include_router(payouts.router)
 
 # ── Static Files (Frontend) ───────────────────────────────────────────────────
 class CachedStaticFiles(StaticFiles):
