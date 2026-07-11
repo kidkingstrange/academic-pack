@@ -131,13 +131,29 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
     normalized = code.strip().upper()
     affiliate = await db.affiliates.find_one({"code": normalized, "active": True})
     if affiliate:
-        await db.referral_clicks.insert_one({
-            "affiliate_code": normalized,
-            "ip_address": request.client.host if request.client else None,
-            "user_agent": request.headers.get("user-agent", "unknown"),
-            "referrer": request.headers.get("referer", ""),
-            "created_at": datetime.now(timezone.utc),
-        })
+        client_ip = request.client.host if request.client else None
+        
+        # Click deduplication: check for click from same IP in the last 24 hours
+        should_log_click = True
+        if client_ip:
+            from datetime import timedelta
+            one_day_ago = datetime.now(timezone.utc) - timedelta(hours=24)
+            recent_click = await db.referral_clicks.find_one({
+                "affiliate_code": normalized,
+                "ip_address": client_ip,
+                "created_at": {"$gte": one_day_ago}
+            })
+            if recent_click:
+                should_log_click = False
+
+        if should_log_click:
+            await db.referral_clicks.insert_one({
+                "affiliate_code": normalized,
+                "ip_address": client_ip,
+                "user_agent": request.headers.get("user-agent", "unknown"),
+                "referrer": request.headers.get("referer", ""),
+                "created_at": datetime.now(timezone.utc),
+            })
         return RedirectResponse(url=f"/?ref={normalized}")
     return RedirectResponse(url="/")
 

@@ -28,13 +28,26 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 <script>
 // ── Affiliate referral capture ──────────────────────────────────────────
-// /r/CODE (backend) redirects here as /?ref=CODE. Persist to localStorage
+// /r/CODE (backend) redirects here as /?ref=CODE. Persist to localStorage and cookie
 // so it survives across the browsing session up to checkout, same pattern
 // as ac_expiry/ac_purchased elsewhere on this page.
 (function() {
+  function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax; Secure";
+  }
   var ref = new URLSearchParams(window.location.search).get('ref');
   if (ref) {
-    try { localStorage.setItem('ac_referral_code', ref.trim().toUpperCase()); } catch (err) { /* ignore */ }
+    try {
+      var code = ref.trim().toUpperCase();
+      localStorage.setItem('ac_referral_code', code);
+      setCookie('ac_referral_code', code, 30);
+    } catch (err) { /* ignore */ }
   }
 })();
 </script>
@@ -735,10 +748,21 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     exitError.style.display = 'none';
 
     try {
+      function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+      }
+      var referralCode = localStorage.getItem('ac_referral_code') || getCookie('ac_referral_code');
       var res = await fetch('/api/community/join', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email }),
+        body: JSON.stringify({ email: email, referral_code: referralCode || null }),
       });
       var data = await res.json();
 

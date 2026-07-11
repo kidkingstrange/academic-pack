@@ -45,10 +45,18 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         if candidate:
             affiliate = await db.affiliates.find_one({"code": candidate, "active": True})
             if affiliate:
-                referred_by = candidate
+                # Prevent self-referral: check email and IP address
+                client_ip = request.client.host if request.client else None
+                if affiliate["email"] != body.email.lower() and (not client_ip or affiliate.get("registration_ip") != client_ip):
+                    referred_by = candidate
 
     # ── Server-side 24-hour price check ──────────────────────────────
     existing_lead = await db.leads.find_one({"email": body.email.lower()})
+    
+    # Fallback to previously stored referral code from leads collection if request doesn't provide one
+    if not referred_by and existing_lead and existing_lead.get("referred_by"):
+        referred_by = existing_lead["referred_by"]
+
     is_expired = False
     if existing_lead:
         created_at = existing_lead.get("created_at")
@@ -66,17 +74,21 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         amount_naira = settings.PRODUCT_PRICE_LATE_NAIRA
 
     # ── Upsert lead ───────────────────────────────────────────────────
+    lead_set = {
+        "name": body.name,
+        "email": body.email.lower(),
+        "source": "landing_page",
+        "ip_address": request.client.host if request.client else None,
+        "converted": False,
+        "price_offered": amount_naira,
+    }
+    if referred_by:
+        lead_set["referred_by"] = referred_by
+
     await db.leads.update_one(
         {"email": body.email.lower()},
         {
-            "$set": {
-                "name": body.name,
-                "email": body.email.lower(),
-                "source": "landing_page",
-                "ip_address": request.client.host,
-                "converted": False,
-                "price_offered": amount_naira,
-            },
+            "$set": lead_set,
             "$setOnInsert": {"created_at": now},
         },
         upsert=True,

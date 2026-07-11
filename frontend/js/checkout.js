@@ -134,8 +134,18 @@ form.addEventListener('submit', async (e) => {
   btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
 
   try {
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
     const clientExpiry = localStorage.getItem('ac_expiry');
-    const referralCode = localStorage.getItem('ac_referral_code');
+    const referralCode = localStorage.getItem('ac_referral_code') || getCookie('ac_referral_code');
     const res = await fetch(`${API_BASE}/payments/initialize`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
