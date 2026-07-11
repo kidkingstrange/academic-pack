@@ -62,12 +62,15 @@
     background: radial-gradient(circle, rgba(201,151,58,.12) 0%, rgba(201,151,58,.03) 45%, transparent 70%);
     pointer-events: none;
   }
+  /* Exact values from .modal__close (landing.css) — that stylesheet
+     isn't loaded on this page, so the numbers are reproduced here
+     rather than the class being shared, but they must match exactly. */
   .survey-card__close {
     position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
+    top: 18px;
+    right: 18px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     background: rgba(255,255,255,.06);
     border: none;
@@ -75,8 +78,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: .85rem;
-    color: rgba(255,255,255,.6);
+    font-size: .92rem;
+    color: rgba(255,255,255,.7);
     transition: all var(--transition);
     z-index: 10;
   }
@@ -193,22 +196,15 @@
   .survey-skip-btn:hover {
     color: rgba(255,255,255,.6);
   }
+  /* Only sizing is overridden here — background, color, box-shadow, and
+     hover all come from .btn--gold (main.css) unchanged, so the gradient
+     + glow are pixel-identical to every other primary gold CTA on the
+     site, not a re-invented approximation of it. */
   .survey-submit-btn {
     flex-shrink: 0;
     padding: 12px 24px;
     font-size: .88rem;
-    font-weight: 800;
-    border-radius: var(--radius-full);
-    background: linear-gradient(135deg, var(--gold), var(--gold-l));
-    color: var(--ink);
-    border: none;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 4px 16px rgba(201,151,58,.25);
-  }
-  .survey-submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(201,151,58,.35);
+    font-weight: 800; /* matches .modal__submit's weight for this same primary-pill-CTA role */
   }
   .survey-submit-btn:disabled {
     opacity: 0.6;
