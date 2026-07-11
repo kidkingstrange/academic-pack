@@ -67,6 +67,25 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
 
+  // ── Device-local convenience fallback ────────────────────────────────
+  // NOT an exchange or session mechanism — the durable library token
+  // itself remains the single source of truth. This just stops the
+  // browser from "forgetting" a customer who navigates to a bare
+  // /library (bookmark, typed URL, browser history) after already
+  // proving access once on this device via their real emailed link.
+  // If neither a URL token nor a remembered one exists, this silently
+  // falls through to the normal "Access Link Required" message below.
+  const STORAGE_KEY = 'ac_library_token';
+  let redirectingWithStoredToken = false;
+  if (!token) {
+    let stored = null;
+    try { stored = localStorage.getItem(STORAGE_KEY); } catch (err) { /* localStorage unavailable */ }
+    if (stored) {
+      redirectingWithStoredToken = true;
+      window.location.replace('/library?token=' + encodeURIComponent(stored));
+    }
+  }
+
   function showAccessError() {
     document.getElementById('loader').style.display = 'none';
     const header = document.querySelector('.lib-header');
@@ -92,7 +111,11 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     try {
       const res = await fetch(`/api/library?token=${encodeURIComponent(token)}`);
       if (!res.ok) throw new Error('Unauthorized');
-      
+
+      // Only remembered on a genuinely successful load — never cache a
+      // token that turned out to be invalid.
+      try { localStorage.setItem(STORAGE_KEY, token); } catch (err) { /* ignore */ }
+
       const data = await res.json();
       document.getElementById('user-name').textContent = `Welcome, ${data.user_name.split(' ')[0]}`;
       
@@ -184,7 +207,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     }
   });
 
-  loadLibrary();
+  // If a redirect with the remembered token just fired above, don't also
+  // run loadLibrary() with token=null in this same tick — that would
+  // briefly flash "Access Link Required" right before navigation completes.
+  if (!redirectingWithStoredToken) {
+    loadLibrary();
+  }
 </script>
 </body>
 </html>
