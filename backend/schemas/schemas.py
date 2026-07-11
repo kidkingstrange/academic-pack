@@ -25,6 +25,7 @@ class PaymentInitRequest(BaseModel):
     email: EmailStr
     client_expiry: Optional[float] = None  # ms timestamp from frontend
     payment_method: Optional[str] = "pay_with_bank"  # "pay_with_bank" | "bank_transfer"
+    referral_code: Optional[str] = None  # captured from /r/CODE via localStorage at checkout
 
 
 class PaymentInitResponse(BaseModel):
@@ -107,3 +108,25 @@ class AnalyticsSummary(BaseModel):
     total_subscribers: int
     pending_emails: int
     downloads_today: int
+
+
+# ─── Affiliates ───────────────────────────────────────────────────────────────
+# Tracking only — no payout automation. commission_percent is set per
+# affiliate (not a single global rate) and can be edited by the admin at
+# any time; each recorded conversion locks in the rate that applied at
+# that moment (see services/payment_completion.py), so a later rate edit
+# never retroactively changes what a past sale owes.
+class AffiliateCreateRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    code: Optional[str] = Field(None, min_length=3, max_length=20)
+    commission_percent: Optional[float] = Field(None, ge=0, le=100)
+
+
+class AffiliateRegisterRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+
+
+class AffiliateCommissionUpdateRequest(BaseModel):
+    commission_percent: float = Field(..., ge=0, le=100)

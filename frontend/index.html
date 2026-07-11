@@ -26,6 +26,18 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+<script>
+// ── Affiliate referral capture ──────────────────────────────────────────
+// /r/CODE (backend) redirects here as /?ref=CODE. Persist to localStorage
+// so it survives across the browsing session up to checkout, same pattern
+// as ac_expiry/ac_purchased elsewhere on this page.
+(function() {
+  var ref = new URLSearchParams(window.location.search).get('ref');
+  if (ref) {
+    try { localStorage.setItem('ac_referral_code', ref.trim().toUpperCase()); } catch (err) { /* ignore */ }
+  }
+})();
+</script>
 </head>
 <body>
 

@@ -5,7 +5,7 @@ Runs inside FastAPI process — processes email queue every 5 minutes.
 from datetime import datetime, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
-from ..services.email_service import send_sequence_email, send_welcome_email
+from ..services.email_service import send_sequence_email, send_welcome_email, send_affiliate_welcome_email
 
 scheduler = AsyncIOScheduler()
 
@@ -157,6 +157,14 @@ async def process_email_queue():
                     token=item.get("access_token") or item.get("magic_token"),
                     unsubscribe_token=item.get("unsubscribe_token", ""),
                 )
+            elif kind == "affiliate_welcome":
+                success, error_msg = await send_affiliate_welcome_email(
+                    name=item["name"],
+                    email=item["email"],
+                    code=item["code"],
+                    referral_link=item["referral_link"],
+                    dashboard_link=item.get("dashboard_link", ""),
+                )
             else:
                 subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
                 if not subscriber or not subscriber.get("is_active"):
@@ -179,7 +187,7 @@ async def process_email_queue():
                     {"_id": item["_id"]},
                     {"$set": {"status": "sent", "sent_at": now}}
                 )
-                if kind != "welcome":
+                if kind not in ("welcome", "affiliate_welcome"):
                     # Advance subscriber position
                     await db.subscribers.update_one(
                         {"_id": item["subscriber_id"]},
