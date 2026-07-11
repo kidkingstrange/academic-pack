@@ -154,7 +154,7 @@ async def process_email_queue():
                 success, error_msg = await send_welcome_email(
                     name=item["name"],
                     email=item["email"],
-                    token=item["magic_token"],
+                    token=item.get("access_token") or item.get("magic_token"),
                     unsubscribe_token=item.get("unsubscribe_token", ""),
                 )
             else:

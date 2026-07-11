@@ -64,21 +64,33 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </main>
 
 <script>
-  if (window.location.hash.startsWith('#token=')) {
-    const hashToken = window.location.hash.substring(7);
-    sessionStorage.setItem('ac_token', hashToken);
-    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+
+  function showAccessError() {
+    document.getElementById('loader').style.display = 'none';
+    const header = document.querySelector('.lib-header');
+    if (header) header.style.display = 'none';
+    const main = document.querySelector('main.container');
+    if (main) {
+      main.innerHTML = `
+        <div style="max-width: 500px; margin: 80px auto; padding: 40px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+          <div style="font-size: 3rem; color: #ffbc00; margin-bottom: 20px;"><i class="bi bi-shield-lock"></i></div>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 16px;">Access Link Required</h2>
+          <p style="color: var(--gray-l); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">Please use the direct library access link sent to your email after purchase. If you just purchased, wait a few seconds and check your inbox (and spam folder) for your welcome email.</p>
+          <a href="/" class="btn btn--gold" style="display: inline-block; text-decoration: none; width: 100%; text-align: center;">Go to Homepage</a>
+        </div>
+      `;
+    }
   }
-  const token = sessionStorage.getItem('ac_token');
 
   async function loadLibrary() {
+    if (!token) {
+      showAccessError();
+      return;
+    }
     try {
-      const headers = {};
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-      
-      const res = await fetch('/api/library', { headers });
+      const res = await fetch(`/api/library?token=${encodeURIComponent(token)}`);
       if (!res.ok) throw new Error('Unauthorized');
       
       const data = await res.json();
@@ -97,8 +109,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
       document.getElementById('loader').style.display = 'none';
     } catch (err) {
-      sessionStorage.removeItem('ac_token');
-      window.location.href = '/';
+      showAccessError();
     }
   }
 
@@ -133,9 +144,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       btn.disabled = true;
       btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Preparing...';
       try {
-        const headers = {};
-        if (token) headers['Authorization'] = `Bearer ${token}`;
-        const res = await fetch(`/api/library/sign/${productId}`, { headers });
+        const res = await fetch(`/api/library/sign/${productId}?token=${encodeURIComponent(token)}`);
         if (!res.ok) throw new Error('Failed to generate download link');
         const data = await res.json();
 

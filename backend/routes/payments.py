@@ -196,12 +196,8 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             user = await db.users.find_one({"email": body.email.lower()})
             if user:
                 token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
-                # Look up existing magic link for direct library access
-                existing_link = await db.magic_links.find_one(
-                    {"user_id": user["_id"], "purpose": "welcome"},
-                    sort=[("created_at", -1)],
-                )
-                ml = f"{settings.APP_URL}/api/auth/magic?token={existing_link['token']}&redirect=/library" if existing_link else None
+                access_token = user.get("library_access_token")
+                ml = f"{settings.APP_URL}/library?token={access_token}" if access_token else None
                 return PaymentVerifyResponse(success=True, token=token, magic_link=ml)
         completion = await complete_payment(
             db,
@@ -214,7 +210,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             completed_via="polling",
             ip_address=request.client.host,
         )
-        ml = f"{settings.APP_URL}/api/auth/magic?token={completion['magic_token']}&redirect=/library" if completion.get("magic_token") else None
+        ml = f"{settings.APP_URL}/library?token={completion['magic_token']}" if completion.get("magic_token") else None
         return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml)
 
     # Verify with Flutterwave — branch on payment method
@@ -311,7 +307,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         ip_address=request.client.host,
     )
 
-    ml = f"{settings.APP_URL}/api/auth/magic?token={completion['magic_token']}&redirect=/library" if completion.get("magic_token") else None
+    ml = f"{settings.APP_URL}/library?token={completion['magic_token']}" if completion.get("magic_token") else None
     return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml)
 
 
@@ -366,19 +362,9 @@ async def payment_callback(
         ip_address=request.client.host,
     )
 
-    # Separate, short-lived magic link purely for this immediate browser
-    # handoff — distinct from the one emailed in the welcome message.
-    redirect_magic_token = secrets.token_urlsafe(32)
-    await db.magic_links.insert_one({
-        "token": redirect_magic_token,
-        "user_id": completion["user_id"],
-        "purpose": "welcome",
-        "expires_at": now + timedelta(days=90),
-        "used": False,
-        "created_at": now,
-    })
-
-    return RedirectResponse(f"/api/auth/magic?token={redirect_magic_token}&redirect=/welcome")
+    user = await db.users.find_one({"_id": completion["user_id"]})
+    access_token = user.get("library_access_token") if user else completion.get("magic_token")
+    return RedirectResponse(f"/welcome?token={access_token}")
 
 
 # ── Webhook processing helper ───────────────────────────────────────────────

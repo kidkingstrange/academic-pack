@@ -72,6 +72,7 @@ async def complete_payment(
 
     # ── Create or get the user ─────────────────────────────────────────
     user = await db.users.find_one({"email": email})
+    access_token = secrets.token_urlsafe(32)
     if not user:
         ins = await db.users.insert_one({
             "name": name,
@@ -81,11 +82,17 @@ async def complete_payment(
             "last_login": now,
             "is_active": True,
             "purchased_products": ["all"],
+            "library_access_token": access_token,
         })
         user_id = ins.inserted_id
     else:
         user_id = user["_id"]
-        await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
+        access_token = user.get("library_access_token")
+        if not access_token:
+            access_token = secrets.token_urlsafe(32)
+            await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now, "library_access_token": access_token}})
+        else:
+            await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
 
     if claimed:
         await db.payments.update_one({"reference": reference}, {"$set": {"user_id": user_id}})
@@ -118,22 +125,12 @@ async def complete_payment(
         unsub_token = existing_sub.get("unsubscribe_token", "")
         subscriber_created = False
 
-    # ── Magic link + welcome email ─────────────────────────────────────
+    # ── Welcome email ──────────────────────────────────────────────────
     # Only send once: either this call claimed the payment, or it found
     # the payment already claimed but the subscriber missing (the exact
     # gap this refactor closes).
-    magic_token = None
     queued_email = False
     if claimed or subscriber_created:
-        magic_token = secrets.token_urlsafe(32)
-        await db.magic_links.insert_one({
-            "token": magic_token,
-            "user_id": user_id,
-            "purpose": "welcome",
-            "expires_at": now + timedelta(days=90),
-            "used": False,
-            "created_at": now,
-        })
         # Tracked the same way as sequence emails, so a transient SMTP
         # failure gets automatically retried by the 5-minute scheduler
         # instead of silently vanishing with no record it ever failed.
@@ -142,7 +139,7 @@ async def complete_payment(
             "user_id": user_id,
             "email": email,
             "name": name,
-            "magic_token": magic_token,
+            "access_token": access_token,
             "unsubscribe_token": unsub_token,
             "scheduled_at": now,
             "status": "pending",
@@ -151,14 +148,6 @@ async def complete_payment(
             "error": None,
         })
         queued_email = True
-    else:
-        # Already completed — look up existing magic token for this user
-        existing_link = await db.magic_links.find_one(
-            {"user_id": user_id, "purpose": "welcome"},
-            sort=[("created_at", -1)],
-        )
-        if existing_link:
-            magic_token = existing_link["token"]
 
     if queued_email or subscriber_created:
         # Attempt immediately (welcome email and/or first drip email);
@@ -167,4 +156,4 @@ async def complete_payment(
         asyncio.create_task(process_email_queue())
 
     jwt_token = create_access_token({"sub": str(user_id), "email": email, "role": "customer"})
-    return {"user_id": user_id, "token": jwt_token, "magic_token": magic_token, "already_completed": not claimed}
+    return {"user_id": user_id, "token": jwt_token, "magic_token": access_token, "already_completed": not claimed}

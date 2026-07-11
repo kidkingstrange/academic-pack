@@ -38,7 +38,7 @@ async def connect_db():
         await db.downloads.create_index([("user_id", 1), ("product_id", 1)])
         await db.used_tokens.create_index("jti", unique=True)
         await db.pending_payments.create_index("reference", unique=True)
-        await db.magic_links.create_index("token", unique=True)
+        await db.users.create_index("library_access_token", unique=True, sparse=True)
         await db.sessions.create_index("session_hash", unique=True)
         print("✅ MongoDB connected")
     except Exception as e:

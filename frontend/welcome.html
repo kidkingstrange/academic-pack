@@ -18,12 +18,16 @@
   .inbox-tip { font-size: .85rem; color: var(--gray-l); margin: 0 0 28px; line-height: 1.6; }
 </style>
 <script>
-  if (window.location.hash.startsWith('#token=')) {
-    const hashToken = window.location.hash.substring(7);
-    sessionStorage.setItem('ac_token', hashToken);
-    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+  const urlParams = new URLSearchParams(window.location.search);
+  const token = urlParams.get('token');
+  if (token) {
+    localStorage.setItem('ac_purchased', 'true');
+    localStorage.setItem('ac_magic_link', '/library?token=' + token);
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
-  if(!sessionStorage.getItem('ac_token') && localStorage.getItem('ac_purchased') !== 'true') window.location.href = '/';
+  if (localStorage.getItem('ac_purchased') !== 'true') {
+    window.location.href = '/';
+  }
 </script>
 <!-- Meta Pixel Code -->
 <script>
