@@ -17,7 +17,10 @@ from starlette.types import Scope
 
 from .config import get_settings
 from .database import connect_db, disconnect_db, get_db
-from .routes import payments, library, admin as admin_router, community
+from .routes import (
+    payments, library, admin as admin_router, community,
+    affiliates, affiliate_public, affiliate_dashboard,
+)
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
@@ -67,6 +70,9 @@ app.include_router(payments.router)
 app.include_router(library.router)
 app.include_router(admin_router.router)
 app.include_router(community.router)
+app.include_router(affiliates.router)
+app.include_router(affiliate_public.router)
+app.include_router(affiliate_dashboard.router)
 
 # ── Static Files (Frontend) ───────────────────────────────────────────────────
 class CachedStaticFiles(StaticFiles):
@@ -105,6 +111,35 @@ async def serve_admin():
 @app.get("/admin/dashboard", include_in_schema=False)
 async def serve_dashboard():
     return FileResponse(str(frontend_path / "admin" / "dashboard.html"))
+
+@app.get("/affiliate/register", include_in_schema=False)
+async def serve_affiliate_register():
+    return FileResponse(str(frontend_path / "affiliate-register.html"))
+
+@app.get("/affiliate/dashboard", include_in_schema=False)
+async def serve_affiliate_dashboard():
+    return FileResponse(str(frontend_path / "affiliate-dashboard.html"))
+
+@app.get("/r/{code}", include_in_schema=False)
+async def track_referral(code: str, request: Request, db=Depends(get_db)):
+    """
+    Affiliate referral link — logs the click, then redirects into the
+    normal landing-page flow with ?ref= so checkout can attach it later.
+    Unknown/inactive codes fail gracefully to the homepage with no error
+    shown to the visitor — attribution is a nice-to-have, never a gate.
+    """
+    normalized = code.strip().upper()
+    affiliate = await db.affiliates.find_one({"code": normalized, "active": True})
+    if affiliate:
+        await db.referral_clicks.insert_one({
+            "affiliate_code": normalized,
+            "ip_address": request.client.host if request.client else None,
+            "user_agent": request.headers.get("user-agent", "unknown"),
+            "referrer": request.headers.get("referer", ""),
+            "created_at": datetime.now(timezone.utc),
+        })
+        return RedirectResponse(url=f"/?ref={normalized}")
+    return RedirectResponse(url="/")
 
 # ── Health Check ──────────────────────────────────────────────────────────────
 @app.get("/api/health")

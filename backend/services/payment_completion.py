@@ -102,6 +102,37 @@ async def complete_payment(
             {"$set": {"converted": True, "conversion_date": now}},
         )
 
+        # ── Referral attribution ────────────────────────────────────────
+        # Only recorded on the winning claim — a retry/race that finds the
+        # payment already claimed must not double-count the same sale
+        # against the affiliate. referred_by was captured at checkout time
+        # (see routes/payments.py) and lives on the matching
+        # pending_payments doc. The commission rate is locked in at the
+        # affiliate's *current* rate at this exact moment — a later edit
+        # to their rate never retroactively changes what this sale owes.
+        pending = await db.pending_payments.find_one({"reference": reference})
+        referred_by = pending.get("referred_by") if pending else None
+        if referred_by:
+            affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
+            if affiliate:
+                rate = affiliate.get("commission_percent", 0) or 0
+                commission_amount = round(amount * rate / 100, 2)
+                try:
+                    await db.referrals.insert_one({
+                        "reference": reference,
+                        "affiliate_code": referred_by,
+                        "email": email,
+                        "name": name,
+                        "amount": amount,
+                        "commission_rate": rate,
+                        "commission_amount": commission_amount,
+                        "commission_status": "unpaid",
+                        "paid_at": None,
+                        "created_at": now,
+                    })
+                except DuplicateKeyError:
+                    pass
+
         # Server-side conversion confirmation — fires exactly once per
         # real payment (guarded by `claimed`, same as everything else in
         # this block), independent of whether the customer's browser ever

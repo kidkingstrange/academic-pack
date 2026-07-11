@@ -36,6 +36,17 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     amount_naira = settings.PRODUCT_PRICE_NAIRA
     now = datetime.now(timezone.utc)
 
+    # ── Resolve referral code (if any) against known, active affiliates ──
+    # Invalid/unknown codes are silently ignored rather than erroring the
+    # checkout — attribution is a nice-to-have, never a purchase blocker.
+    referred_by = None
+    if body.referral_code:
+        candidate = body.referral_code.strip().upper()
+        if candidate:
+            affiliate = await db.affiliates.find_one({"code": candidate, "active": True})
+            if affiliate:
+                referred_by = candidate
+
     # ── Server-side 24-hour price check ──────────────────────────────
     existing_lead = await db.leads.find_one({"email": body.email.lower()})
     is_expired = False
@@ -106,6 +117,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                 "amount":         amount_naira,
                 "customer_id":    customer_id,
                 "created_at":     now,
+                "referred_by":    referred_by,
             }},
             upsert=True,
         )
@@ -146,6 +158,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "amount":         amount_naira,
             "customer_id":    customer_id,
             "created_at":     now,
+            "referred_by":    referred_by,
         }},
         upsert=True,
     )

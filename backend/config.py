@@ -60,6 +60,12 @@ class Settings(BaseSettings):
     UPLOADS_DIR: str = "uploads/products"
     MAX_FILE_SIZE_MB: int = 50
 
+    # ── Affiliates ────────────────────────────────────────────────────
+    # Each affiliate's real rate lives on their own document (admin-
+    # editable per affiliate) — this is only the starting value applied
+    # when a new affiliate is created with no explicit rate given.
+    AFFILIATE_DEFAULT_COMMISSION_PERCENT: float = 20.0
+
     @property
     def cors_origins_list(self) -> List[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",")]
