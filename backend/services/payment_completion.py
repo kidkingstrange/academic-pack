@@ -15,6 +15,7 @@ from pymongo.errors import DuplicateKeyError
 
 from ..utils.security import create_access_token
 from ..workers.email_scheduler import enqueue_sequence_for_subscriber, process_email_queue
+from .meta_capi import send_purchase_event
 
 
 async def complete_payment(
@@ -100,6 +101,22 @@ async def complete_payment(
             {"email": email},
             {"$set": {"converted": True, "conversion_date": now}},
         )
+
+        # Server-side conversion confirmation — fires exactly once per
+        # real payment (guarded by `claimed`, same as everything else in
+        # this block), independent of whether the customer's browser ever
+        # runs the client-side Pixel fire in checkout.js. Same event_id
+        # (reference) as that client-side fire, so Meta deduplicates them
+        # into one conversion rather than counting twice. No-ops safely if
+        # FB_CAPI_ACCESS_TOKEN isn't configured.
+        capi_result = await send_purchase_event(
+            email=email, amount=amount, reference=reference, ip_address=ip_address,
+        )
+        await db.payments.update_one({"reference": reference}, {"$set": {"capi_result": capi_result}})
+        if capi_result.get("sent"):
+            print(f"✅ Meta CAPI Purchase event sent for {reference}")
+        else:
+            print(f"⚠️ Meta CAPI Purchase event not sent for {reference}: {capi_result.get('reason')}")
 
     # ── Subscriber + 52-email queue ────────────────────────────────────
     # This is the safety net: run regardless of `claimed`, so a payment

@@ -33,6 +33,14 @@ class Settings(BaseSettings):
     PRODUCT_PRICE_NAIRA: int = 2000   # ₦2,000 early-bird
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
 
+    # ── Meta Conversions API (server-side Purchase event) ────────────
+    # Same Pixel ID already used client-side in index.html/welcome.html.
+    # FB_CAPI_ACCESS_TOKEN is blank by default — meta_capi.py no-ops
+    # safely until this is set in Render (Events Manager → this Pixel →
+    # Settings → Conversions API → Generate access token).
+    FB_PIXEL_ID: str = "1033231049261122"
+    FB_CAPI_ACCESS_TOKEN: str = ""
+
     # ── SMTP ──────────────────────────────────────────────────────────
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 587
