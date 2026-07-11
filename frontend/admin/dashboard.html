@@ -42,6 +42,7 @@
   <a class="nav-item active" onclick="switchTab('dashboard')"><i class="bi bi-grid-fill"></i> Dashboard</a>
   <a class="nav-item" onclick="switchTab('sales')"><i class="bi bi-credit-card-fill"></i> Sales</a>
   <a class="nav-item" onclick="switchTab('customers')"><i class="bi bi-people-fill"></i> Customers</a>
+  <a class="nav-item" onclick="switchTab('survey')"><i class="bi bi-chat-square-text-fill"></i> Survey Responses</a>
   <a class="nav-item" onclick="logout()" style="margin-top:auto; position:absolute; bottom:24px; width:100%"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </div>
 
@@ -83,6 +84,15 @@
       <tbody><!-- Injected --></tbody>
     </table>
   </div>
+
+  <!-- Survey Responses -->
+  <div id="tab-survey" class="section">
+    <div class="header"><h1>Survey Responses</h1></div>
+    <table id="survey-table">
+      <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Why they bought</th><th>Who it's for</th><th>How they heard</th><th>Comments</th></tr></thead>
+      <tbody><!-- Injected --></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
@@ -103,6 +113,7 @@
     
     if(tabId === 'sales') loadSales();
     if(tabId === 'customers') loadCustomers();
+    if(tabId === 'survey') loadSurveyResponses();
   }
 
   async function apiCall(endpoint) {
@@ -163,6 +174,29 @@
         <td>${c.role}</td>
       </tr>
     `).join('');
+  }
+
+  async function loadSurveyResponses() {
+    const data = await apiCall('/api/admin/survey-responses');
+    const tbody = document.querySelector('#survey-table tbody');
+    if (!data.responses || data.responses.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">No survey responses yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.responses.map(r => {
+      const a = r.answers || {};
+      return `
+      <tr>
+        <td>${new Date(r.submitted_at).toLocaleDateString()}</td>
+        <td>${r.name || ''}</td>
+        <td>${r.email || ''}</td>
+        <td>${a.reason || '—'}</td>
+        <td>${a.for_whom || '—'}</td>
+        <td>${a.source || '—'}</td>
+        <td>${a.other_comments || '—'}</td>
+      </tr>
+    `;
+    }).join('');
   }
 
   // Init

@@ -122,6 +122,20 @@ async def list_subscribers(
     return {"subscribers": subs, "total": total, "page": page}
 
 
+@router.get("/survey-responses")
+async def list_survey_responses(
+    page: int = 1, limit: int = 20,
+    current_user=Depends(require_admin), db=Depends(get_db)
+):
+    skip = (page - 1) * limit
+    responses = await db.survey_responses.find({}).sort("submitted_at", -1).skip(skip).limit(limit).to_list(limit)
+    total = await db.survey_responses.count_documents({})
+    for r in responses:
+        r["id"] = str(r.pop("_id"))
+        r["user_id"] = str(r["user_id"])
+    return {"responses": responses, "total": total, "page": page}
+
+
 @router.get("/email-queue")
 async def get_email_queue(
     status: str = None, page: int = 1, limit: int = 20,

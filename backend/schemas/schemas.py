@@ -107,3 +107,9 @@ class AnalyticsSummary(BaseModel):
     total_subscribers: int
     pending_emails: int
     downloads_today: int
+
+
+# ─── Post-purchase survey ─────────────────────────────────────────────────────
+class SurveyResponseRequest(BaseModel):
+    token: str  # library_access_token — same identification as /api/library
+    answers: dict = {}
