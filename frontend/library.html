@@ -28,25 +28,193 @@
   /* ── Post-purchase survey — small dismissible card, never a blocker.
      No backdrop, no dimming of the page, no interaction required before
      the customer can keep using their library. ── */
-  .survey-card { position: fixed; bottom: 24px; right: 24px; max-width: 380px; width: calc(100% - 48px); background: var(--ink2); border: 1px solid rgba(201,151,58,.15); border-radius: var(--radius-lg); padding: 24px; box-shadow: 0 24px 60px rgba(0,0,0,.5); z-index: 500; }
-  .survey-card__close { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.06); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: .82rem; color: rgba(255,255,255,.6); transition: all var(--transition); }
-  .survey-card__close:hover { background: rgba(255,255,255,.15); color: #fff; }
-  .survey-card__title { font-family: 'Clash Display', sans-serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 4px; padding-right: 30px; }
-  .survey-card__sub { font-size: .82rem; color: var(--gray-l); margin-bottom: 18px; }
-  .survey-q { margin-bottom: 16px; }
-  .survey-q__label { display: block; font-size: .82rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
-  .survey-q__optional { font-weight: 400; color: rgba(255,255,255,.35); }
-  .survey-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .survey-chip { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); color: var(--gray-l); font-size: .78rem; font-weight: 600; padding: 7px 14px; border-radius: var(--radius-full); cursor: pointer; transition: all .18s ease; font-family: inherit; }
-  .survey-chip:hover { border-color: var(--gold); color: #fff; }
-  .survey-chip--selected { background: linear-gradient(135deg,var(--gold),var(--gold-l)); border-color: transparent; color: var(--ink); }
-  .survey-textarea { width: 100%; padding: 10px 12px; border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); font-size: .84rem; font-family: inherit; background: rgba(255,255,255,.05); color: #fff; resize: vertical; outline: none; transition: all var(--transition); }
-  .survey-textarea:focus { border-color: var(--gold); background: rgba(255,255,255,.08); box-shadow: 0 0 0 3px rgba(201,151,58,.15); }
-  .survey-textarea::placeholder { color: rgba(255,255,255,.3); }
-  .survey-card__actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
-  .survey-skip-btn { background: none; border: none; color: rgba(255,255,255,.4); font-size: .84rem; font-weight: 600; cursor: pointer; padding: 10px 6px; font-family: inherit; transition: color .2s ease; }
-  .survey-skip-btn:hover { color: rgba(255,255,255,.7); }
-  .survey-submit-btn { flex-shrink: 0; padding: 10px 22px; font-size: .85rem; }
+  .survey-card {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    max-width: 390px;
+    width: calc(100% - 48px);
+    background: linear-gradient(160deg, #0c0e14 0%, #131826 55%, #0f1520 100%);
+    border: 1px solid rgba(201,151,58,.15);
+    border-radius: var(--radius-xl);
+    padding: 36px 28px 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.6), var(--gold-glow);
+    z-index: 2000;
+    overflow: hidden;
+    transform: translateY(30px) scale(.96);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .35s ease, visibility .35s ease;
+  }
+  .survey-card.open {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+  .survey-card::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(201,151,58,.12) 0%, rgba(201,151,58,.03) 45%, transparent 70%);
+    pointer-events: none;
+  }
+  .survey-card__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .85rem;
+    color: rgba(255,255,255,.6);
+    transition: all var(--transition);
+    z-index: 10;
+  }
+  .survey-card__close:hover {
+    background: rgba(255,255,255,.15);
+    color: #fff;
+  }
+  .survey-card__title {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+    padding-right: 30px;
+    letter-spacing: -.5px;
+    position: relative;
+    z-index: 1;
+  }
+  .survey-card__sub {
+    font-size: .86rem;
+    color: var(--gray-l);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+  .survey-q {
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .survey-q__label {
+    display: block;
+    font-size: .82rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.9);
+    margin-bottom: 8px;
+  }
+  .survey-q__optional {
+    font-weight: 400;
+    color: rgba(255,255,255,.35);
+  }
+  .survey-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .survey-chip {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(201,151,58,0.06);
+    border: 1px solid rgba(201,151,58,0.18);
+    color: var(--gray-l);
+    font-size: .76rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all .2s ease;
+    font-family: inherit;
+  }
+  .survey-chip:hover {
+    border-color: var(--gold);
+    color: #fff;
+    background: rgba(201,151,58,0.12);
+  }
+  .survey-chip--selected {
+    background: linear-gradient(135deg, var(--gold), var(--gold-l));
+    border-color: transparent;
+    color: var(--ink);
+    box-shadow: 0 4px 12px rgba(201,151,58,0.2);
+  }
+  .survey-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 12px;
+    font-size: .88rem;
+    font-family: inherit;
+    background: rgba(255,255,255,.04);
+    color: #fff;
+    resize: vertical;
+    outline: none;
+    transition: all var(--transition);
+  }
+  .survey-textarea:focus {
+    border-color: var(--gold);
+    background: rgba(255,255,255,.08);
+    box-shadow: 0 0 0 3px rgba(201,151,58,.15);
+  }
+  .survey-textarea::placeholder {
+    color: rgba(255,255,255,.3);
+  }
+  .survey-card__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .survey-skip-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,.35);
+    font-size: .84rem;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: color .2s ease;
+    font-family: inherit;
+    font-weight: 500;
+  }
+  .survey-skip-btn:hover {
+    color: rgba(255,255,255,.6);
+  }
+  .survey-submit-btn {
+    flex-shrink: 0;
+    padding: 12px 24px;
+    font-size: .88rem;
+    font-weight: 800;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--gold), var(--gold-l));
+    color: var(--ink);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 16px rgba(201,151,58,.25);
+  }
+  .survey-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201,151,58,.35);
+  }
+  .survey-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
   @media(max-width:480px) {
     .survey-card { left: 12px; right: 12px; bottom: 12px; width: auto; max-width: none; max-height: 80vh; overflow-y: auto; }
   }
@@ -92,7 +260,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <!-- Post-purchase survey — optional, dismissible, never blocks access.
      Hidden by default; shown (at most once, ever) after the library has
      already loaded successfully. -->
-<div class="survey-card" id="survey-card" style="display:none">
+<div class="survey-card" id="survey-card">
   <button class="survey-card__close" id="survey-close" aria-label="Close"><i class="bi bi-x-lg"></i></button>
   <h3 class="survey-card__title">Quick question</h3>
   <p class="survey-card__sub">Optional — takes 20 seconds, helps us improve.</p>
@@ -133,7 +301,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   </div>
 
   <div class="survey-card__actions">
-    <button type="button" class="survey-skip-btn" id="survey-skip">Skip</button>
+    <button type="button" class="survey-skip-btn" id="survey-skip">No thanks, I'll pass</button>
     <button type="button" class="btn btn--gold survey-submit-btn" id="survey-submit">Submit →</button>
   </div>
 </div>
@@ -227,12 +395,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     } catch (err) {
       return; // localStorage unavailable — safest to just not show it
     }
-    setTimeout(() => { card.style.display = 'block'; }, 1500);
+    setTimeout(() => { card.classList.add('open'); }, 1500);
   }
 
   function hideSurvey() {
     const card = document.getElementById('survey-card');
-    if (card) card.style.display = 'none';
+    if (card) card.classList.remove('open');
     try { localStorage.setItem(SURVEY_SHOWN_KEY, '1'); } catch (err) { /* ignore */ }
   }
 
