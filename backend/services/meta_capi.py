@@ -42,7 +42,13 @@ async def send_purchase_event(
     amount,
     reference: str,
     ip_address: str = None,
+    test_event_code: str = None,
 ) -> dict:
+    """
+    test_event_code routes the event into Meta's Test Events tab instead
+    of real conversion reporting — pass it only when manually verifying
+    a token/pixel pairing works, never from complete_payment() itself.
+    """
     if not settings.FB_CAPI_ACCESS_TOKEN:
         return {"sent": False, "reason": "FB_CAPI_ACCESS_TOKEN not configured"}
 
@@ -63,6 +69,8 @@ async def send_purchase_event(
             },
         }],
     }
+    if test_event_code:
+        payload["test_event_code"] = test_event_code
 
     url = f"{FB_GRAPH_API_BASE}/{settings.FB_PIXEL_ID}/events"
     try:
