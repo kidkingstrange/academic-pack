@@ -58,6 +58,7 @@ class PaymentVerifyResponse(BaseModel):
     token: Optional[str] = None
     magic_link: Optional[str] = None
     message: Optional[str] = None
+    amount: Optional[float] = None
 
 
 # ─── Auth ─────────────────────────────────────────────────────────────────────

@@ -198,7 +198,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
                 token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
                 access_token = user.get("library_access_token")
                 ml = f"{settings.APP_URL}/library?token={access_token}" if access_token else None
-                return PaymentVerifyResponse(success=True, token=token, magic_link=ml)
+                return PaymentVerifyResponse(success=True, token=token, magic_link=ml, amount=existing_payment.get("amount", 0))
         completion = await complete_payment(
             db,
             reference=body.reference,
@@ -211,7 +211,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             ip_address=request.client.host,
         )
         ml = f"{settings.APP_URL}/library?token={completion['magic_token']}" if completion.get("magic_token") else None
-        return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml)
+        return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, amount=existing_payment.get("amount", 0))
 
     # Verify with Flutterwave — branch on payment method
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
@@ -308,7 +308,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
     )
 
     ml = f"{settings.APP_URL}/library?token={completion['magic_token']}" if completion.get("magic_token") else None
-    return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml)
+    return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, amount=amount_paid)
 
 
 @router.get("/callback")

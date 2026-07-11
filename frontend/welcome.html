@@ -47,11 +47,13 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-<!-- Meta Pixel Purchase Event -->
-<script>
-  fbq('track', 'Purchase', {value: 2000.00, currency: 'NGN'});
-</script>
-<!-- End Meta Pixel Purchase Event -->
+<!-- Meta Pixel Purchase event intentionally NOT here. It used to fire
+     unconditionally on every load of this page — including someone just
+     navigating to /welcome?token=anything, or a real customer revisiting
+     later — with a hardcoded ₦2,000 value regardless of what was actually
+     charged. It now fires exactly once, in js/checkout.js, at the moment
+     /api/payments/verify genuinely confirms a payment succeeded, with the
+     real charged amount and an eventID tied to the payment reference. -->
 </head>
 <body>
 

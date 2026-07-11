@@ -47,6 +47,30 @@ function loadPendingPayment() {
   }
 }
 
+// ── Meta Pixel Purchase — fired ONLY from here, ONLY on a genuine
+// success:true response from /api/payments/verify, never from a page
+// load. Both real completion paths (the active poll loop below, and the
+// silent resume-on-load check for a customer who closed the tab) call
+// this, so a purchase is reported exactly once regardless of which path
+// actually receives the confirmation.
+//
+// Two layers of duplicate protection: a per-reference localStorage flag
+// (this browser will never fire the same reference twice) and Meta's own
+// eventID-based dedup (same reference fired from a different device/
+// session within Meta's window is still deduplicated on their side).
+function fireVerifiedPurchase(reference, amount) {
+  if (!reference) return;
+  const guardKey = 'ac_purchase_fired_' + reference;
+  try {
+    if (localStorage.getItem(guardKey)) return;
+    localStorage.setItem(guardKey, '1');
+  } catch (err) { /* localStorage unavailable — fire anyway, best effort */ }
+
+  if (typeof fbq === 'function') {
+    fbq('track', 'Purchase', { value: Number(amount) || 0, currency: 'NGN' }, { eventID: reference });
+  }
+}
+
 function openCheckout() {
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -329,6 +353,7 @@ async function pollPayment() {
       document.getElementById('payment-spinner').style.display = 'none';
       hideBankDetails();
       document.getElementById('payment-success').style.display = 'block';
+      fireVerifiedPurchase(currentReference, data.amount);
       sessionStorage.setItem('ac_token', data.token);
       // Persist access — survives tab close, unlike sessionStorage
       if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
@@ -411,6 +436,7 @@ function showResumePaymentBanner(pending) {
     .then(data => {
       if (data.success) {
         clearPendingPayment();
+        fireVerifiedPurchase(pending.reference, data.amount);
         sessionStorage.setItem('ac_token', data.token);
         window.location.href = '/welcome';
         return;
