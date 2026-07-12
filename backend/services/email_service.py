@@ -86,8 +86,14 @@ async def send_email(to_email: str, subject: str, html_body: str) -> tuple:
         return (False, error_msg)
 
 
-async def send_welcome_email(name: str, email: str, token: str, unsubscribe_token: str = ""):
-    """Send welcome + download access email after successful payment."""
+async def send_welcome_email(name: str, email: str, token: str, unsubscribe_token: str = "", delayed: bool = False):
+    """Send welcome + download access email after successful payment.
+
+    delayed=True adds a brief, honest acknowledgment of a delivery delay —
+    used only for the one-time recovery resend of emails that failed
+    before the email-queue concurrency fix; never set on a normal
+    first-attempt send.
+    """
     html = render_template("welcome.html", {
         "name": name,
         "library_url": f"{settings.APP_URL}/library?token={token}",
@@ -95,8 +101,14 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
         "app_name": settings.APP_NAME,
         "app_url": settings.APP_URL,
         "unsubscribe_token": unsubscribe_token,
+        "delayed": delayed,
     })
-    return await send_email(email, f"🎉 Your Academic Comeback Package is ready, {name}!", html)
+    subject = (
+        f"Sorry for the wait — your Academic Comeback Package is ready, {name}!"
+        if delayed else
+        f"🎉 Your Academic Comeback Package is ready, {name}!"
+    )
+    return await send_email(email, subject, html)
 
 
 async def send_affiliate_welcome_email(name: str, email: str, code: str, referral_link: str, dashboard_link: str):
