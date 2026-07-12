@@ -3,6 +3,12 @@
 {% block content %}
 <p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
 
+{% if delayed %}
+<p style="font-size:14px;color:#7a5c1e;line-height:1.7;margin:0 0 20px;background:rgba(201,151,58,0.08);border-left:3px solid #d4a63a;padding:14px 16px;border-radius:4px">
+  Quick note: a technical issue on our end delayed this email — sorry for the wait. Your payment went through right away and your access has been ready this whole time; you just couldn't reach it until now. Thanks for your patience.
+</p>
+{% endif %}
+
 <p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
   Welcome to the <strong>Academic Comeback Package</strong>. Your payment went through and your materials are ready.
 </p>

@@ -174,6 +174,7 @@ async def process_email_queue():
                         email=item["email"],
                         token=item.get("access_token") or item.get("magic_token"),
                         unsubscribe_token=item.get("unsubscribe_token", ""),
+                        delayed=item.get("delayed_resend", False),
                     )
                 elif kind == "affiliate_welcome":
                     success, error_msg = await send_affiliate_welcome_email(
