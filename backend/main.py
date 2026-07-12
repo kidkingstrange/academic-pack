@@ -23,6 +23,7 @@ from .routes import (
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
+from .middleware.auth import require_admin
 from .utils.error_pages import expired_link_page
 
 settings = get_settings()
@@ -145,6 +146,52 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "app": settings.APP_NAME}
+
+
+# ── TEMPORARY: SMTP connectivity diagnostic ────────────────────────────────────
+# Attempts a real SMTP connection from inside THIS live environment, timing
+# each stage — the only way to see whether outbound delivery actually works
+# from here, as opposed to from a developer's laptop (which can succeed even
+# when this environment's egress to the same host is blocked, rate-limited,
+# or slow). Admin-gated so it isn't publicly probeable. Delete this route
+# once the live welcome-email delivery failures are diagnosed and resolved.
+@app.get("/api/_debug/smtp-diagnostic", include_in_schema=False)
+async def smtp_diagnostic(current_user=Depends(require_admin)):
+    import smtplib
+    import socket
+    import ssl
+
+    result = {"host": settings.SMTP_HOST, "port": settings.SMTP_PORT}
+    t0 = time.time()
+
+    try:
+        addr_info = socket.getaddrinfo(settings.SMTP_HOST, settings.SMTP_PORT)
+        result["dns_resolved"] = True
+        result["dns_time_s"] = round(time.time() - t0, 3)
+        result["resolved_ip"] = addr_info[0][4][0]
+    except Exception as e:
+        result["dns_resolved"] = False
+        result["dns_error"] = f"{type(e).__name__}: {e}"
+        result["total_time_s"] = round(time.time() - t0, 3)
+        return result
+
+    t1 = time.time()
+    try:
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, context=context, timeout=15) as server:
+            result["connected"] = True
+            result["connect_time_s"] = round(time.time() - t1, 3)
+            t2 = time.time()
+            server.login(settings.SMTP_USER, settings.SMTP_PASS)
+            result["login_success"] = True
+            result["login_time_s"] = round(time.time() - t2, 3)
+    except Exception as e:
+        result.setdefault("connected", False)
+        result["error"] = f"{type(e).__name__}: {e}"
+        result["failed_after_s"] = round(time.time() - t1, 3)
+
+    result["total_time_s"] = round(time.time() - t0, 3)
+    return result
 
 
 @app.get("/unsubscribe", response_class=HTMLResponse, include_in_schema=False)
