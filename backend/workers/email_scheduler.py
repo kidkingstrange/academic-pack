@@ -2,12 +2,23 @@
 APScheduler-based email worker.
 Runs inside FastAPI process — processes email queue every 5 minutes.
 """
+import asyncio
 from datetime import datetime, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
 from ..services.email_service import send_sequence_email, send_welcome_email, send_affiliate_welcome_email
 
 scheduler = AsyncIOScheduler()
+
+# Serializes process_email_queue() across overlapping trigger sources — the
+# 5-minute scheduler tick and the immediate asyncio.create_task() fired on
+# every payment/affiliate-registration completion. Without this, two
+# invocations can each open their own SMTP connection at the same instant;
+# confirmed in production via pairs of "sequence"/"welcome" failures sharing
+# the exact same last_attempt_at millisecond (PrivateEmail rejecting/stalling
+# concurrent connections from the same account). This lock makes an
+# overlapping call wait for the current run to finish rather than racing it.
+_email_queue_lock = asyncio.Lock()
 
 # ─── 52-Email Curriculum Sequence ─────────────────────────────────────────────
 # Organised as a structured transformation journey across 9 phases.
@@ -116,99 +127,106 @@ async def process_email_queue():
     """
     Process pending emails from the queue.
     Called every 5 minutes by the scheduler.
+
+    Serialized by _email_queue_lock (see module docstring above it) — an
+    overlapping call blocks here until the current run finishes, instead of
+    opening a second concurrent batch of SMTP connections.
     """
-    db = database.get_db()
-    if db is None:
-        return
-    now = datetime.now(timezone.utc)
+    async with _email_queue_lock:
+        db = database.get_db()
+        if db is None:
+            return
+        now = datetime.now(timezone.utc)
 
-    # Atomically claim each item before processing (status -> "sending").
-    # A plain find() here would let two overlapping calls to this function
-    # (the immediate on-signup trigger racing the 5-minute scheduler tick,
-    # or two manual invocations) both read the same "pending"/"retry" item
-    # before either finishes its await on the SMTP send, double-processing
-    # it — real, observed symptom: sequence_position incremented twice for
-    # one actually-sent email. find_one_and_update is atomic at the DB
-    # level, so only one caller can ever claim a given item.
-    pending = []
-    while len(pending) < 50:
-        item = await db.email_queue.find_one_and_update(
-            {
-                "status": {"$in": ["pending", "retry"]},
-                "scheduled_at": {"$lte": now},
-                "retry_count": {"$lt": 3},
-            },
-            {"$set": {"status": "sending"}},
-            sort=[("scheduled_at", 1)],
-        )
-        if not item:
-            break
-        pending.append(item)
+        # Atomically claim each item before processing (status -> "sending").
+        # A plain find() here would let two overlapping calls to this function
+        # (the immediate on-signup trigger racing the 5-minute scheduler tick,
+        # or two manual invocations) both read the same "pending"/"retry" item
+        # before either finishes its await on the SMTP send, double-processing
+        # it — real, observed symptom: sequence_position incremented twice for
+        # one actually-sent email. find_one_and_update is atomic at the DB
+        # level, so only one caller can ever claim a given item. The lock
+        # above now also prevents two runs' items from being sent concurrently
+        # in the first place.
+        pending = []
+        while len(pending) < 50:
+            item = await db.email_queue.find_one_and_update(
+                {
+                    "status": {"$in": ["pending", "retry"]},
+                    "scheduled_at": {"$lte": now},
+                    "retry_count": {"$lt": 3},
+                },
+                {"$set": {"status": "sending"}},
+                sort=[("scheduled_at", 1)],
+            )
+            if not item:
+                break
+            pending.append(item)
 
-    for item in pending:
-        try:
-            kind = item.get("kind", "sequence")
-            error_msg = None
+        for item in pending:
+            try:
+                kind = item.get("kind", "sequence")
+                error_msg = None
 
-            if kind == "welcome":
-                success, error_msg = await send_welcome_email(
-                    name=item["name"],
-                    email=item["email"],
-                    token=item.get("access_token") or item.get("magic_token"),
-                    unsubscribe_token=item.get("unsubscribe_token", ""),
-                )
-            elif kind == "affiliate_welcome":
-                success, error_msg = await send_affiliate_welcome_email(
-                    name=item["name"],
-                    email=item["email"],
-                    code=item["code"],
-                    referral_link=item["referral_link"],
-                    dashboard_link=item.get("dashboard_link", ""),
-                )
-            else:
-                subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
-                if not subscriber or not subscriber.get("is_active"):
+                if kind == "welcome":
+                    success, error_msg = await send_welcome_email(
+                        name=item["name"],
+                        email=item["email"],
+                        token=item.get("access_token") or item.get("magic_token"),
+                        unsubscribe_token=item.get("unsubscribe_token", ""),
+                    )
+                elif kind == "affiliate_welcome":
+                    success, error_msg = await send_affiliate_welcome_email(
+                        name=item["name"],
+                        email=item["email"],
+                        code=item["code"],
+                        referral_link=item["referral_link"],
+                        dashboard_link=item.get("dashboard_link", ""),
+                    )
+                else:
+                    subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
+                    if not subscriber or not subscriber.get("is_active"):
+                        await db.email_queue.update_one(
+                            {"_id": item["_id"]},
+                            {"$set": {"status": "skipped"}}
+                        )
+                        continue
+
+                    success, error_msg = await send_sequence_email(
+                        name=subscriber["name"],
+                        email=subscriber["email"],
+                        template_name=item["template"],
+                        subject=item["subject"],
+                        unsubscribe_token=subscriber.get("unsubscribe_token", ""),
+                    )
+
+                if success:
                     await db.email_queue.update_one(
                         {"_id": item["_id"]},
-                        {"$set": {"status": "skipped"}}
+                        {"$set": {"status": "sent", "sent_at": now}}
                     )
-                    continue
-
-                success, error_msg = await send_sequence_email(
-                    name=subscriber["name"],
-                    email=subscriber["email"],
-                    template_name=item["template"],
-                    subject=item["subject"],
-                    unsubscribe_token=subscriber.get("unsubscribe_token", ""),
-                )
-
-            if success:
-                await db.email_queue.update_one(
-                    {"_id": item["_id"]},
-                    {"$set": {"status": "sent", "sent_at": now}}
-                )
-                if kind not in ("welcome", "affiliate_welcome"):
-                    # Advance subscriber position
-                    await db.subscribers.update_one(
-                        {"_id": item["subscriber_id"]},
-                        {"$inc": {"sequence_position": 1}}
+                    if kind not in ("welcome", "affiliate_welcome"):
+                        # Advance subscriber position
+                        await db.subscribers.update_one(
+                            {"_id": item["subscriber_id"]},
+                            {"$inc": {"sequence_position": 1}}
+                        )
+                else:
+                    next_retry = item.get("retry_count", 0) + 1
+                    next_status = "failed" if next_retry >= 3 else "retry"
+                    await db.email_queue.update_one(
+                        {"_id": item["_id"]},
+                        {"$inc": {"retry_count": 1},
+                         "$set": {"status": next_status, "error": error_msg, "last_attempt_at": now}}
                     )
-            else:
+            except Exception as e:
+                print(f"Email worker error for {item.get('email')}: {e}")
                 next_retry = item.get("retry_count", 0) + 1
                 next_status = "failed" if next_retry >= 3 else "retry"
                 await db.email_queue.update_one(
                     {"_id": item["_id"]},
-                    {"$inc": {"retry_count": 1},
-                     "$set": {"status": next_status, "error": error_msg, "last_attempt_at": now}}
+                    {"$inc": {"retry_count": 1}, "$set": {"error": str(e), "status": next_status, "last_attempt_at": now}}
                 )
-        except Exception as e:
-            print(f"Email worker error for {item.get('email')}: {e}")
-            next_retry = item.get("retry_count", 0) + 1
-            next_status = "failed" if next_retry >= 3 else "retry"
-            await db.email_queue.update_one(
-                {"_id": item["_id"]},
-                {"$inc": {"retry_count": 1}, "$set": {"error": str(e), "status": next_status, "last_attempt_at": now}}
-            )
 
 
 async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime):
