@@ -106,21 +106,16 @@ async def download_file(signed_token: str, db=Depends(get_db)):
             "Download again for a fresh link.",
         )
 
-    # Check if this token has already been used
-    already_used = await db.used_tokens.find_one({"jti": jti})
-    if already_used:
-        return expired_link_page(
-            "This link has already been used. If you haven't downloaded this book yet, return "
-            "to your library and click Download again for a fresh link.",
-            heading="Link already used",
-        )
-
-    # Mark token as used immediately before serving the file
-    await db.used_tokens.insert_one({
-        "jti": jti,
-        "used_at": datetime.now(timezone.utc)
-    })
-
+    # Single-use blocking removed: on a slow/flaky mobile connection, a
+    # stalled download's automatic browser retry hit this same signed URL
+    # a second time — but the token was marked "used" the instant serving
+    # started, before the file ever finished transferring, so the retry
+    # (the customer's own browser, not a leaked link) got permanently
+    # locked out. This token has no separate time-based expiry (see
+    # create_download_token), so removing the single-use gate means a
+    # signed download link now remains valid indefinitely rather than for
+    # one serve — an accepted tradeoff to stop legitimate customers being
+    # falsely locked out of a book they already paid for.
     product_id = payload.get("product_id")
     product = await db.products.find_one({"_id": ObjectId(product_id)})
     if not product:
