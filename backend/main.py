@@ -19,7 +19,7 @@ from .config import get_settings
 from .database import connect_db, disconnect_db, get_db
 from .routes import (
     payments, library, admin as admin_router, community,
-    affiliates, affiliate_public, affiliate_dashboard,
+    affiliates, affiliate_public, affiliate_dashboard, tracking,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .utils.security import create_access_token
@@ -74,7 +74,13 @@ app.include_router(affiliates.router)
 app.include_router(affiliate_public.router)
 app.include_router(affiliate_dashboard.router)
 app.include_router(tracking.router)
-app.include_router(admin_analytics.router)
+# admin_analytics.router intentionally NOT wired up — it duplicates the
+# /api/admin/analytics/* endpoints now built directly in routes/admin.py,
+# and additionally bakes in a tier-badge system, a ranked leaderboard,
+# hardcoded fake AI-insight text, and some hardcoded placeholder numbers
+# (avg_cart_value, upsell_rate) — all explicitly out of scope. Left as a
+# dormant file rather than deleted, pending an explicit call on whether to
+# remove it entirely.
 
 # ── Static Files (Frontend) ───────────────────────────────────────────────────
 class CachedStaticFiles(StaticFiles):

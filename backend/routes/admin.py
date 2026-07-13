@@ -2,6 +2,7 @@
 Admin routes — login, customers, payments, analytics, product upload.
 All routes require admin JWT.
 """
+import asyncio
 import os, shutil
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -100,6 +101,234 @@ async def get_analytics(period: str = "all", current_user=Depends(require_admin)
         "downloads_today": downloads_today,
         "recent_sales": recent_sales,
     }
+
+
+# ── Dashboard tab data endpoints ────────────────────────────────────────────
+# These back the 4 tabs in the rebuilt admin dashboard UI (frontend/admin/
+# dashboard.html). The UI was rewritten to call these paths at some point
+# without these routes ever being built — every tab 404'd. Reuses the same
+# aggregation logic already proven in the routes above / routes/affiliates.py
+# rather than inventing new logic.
+@router.get("/analytics/overview")
+async def get_analytics_overview(period: str = "all", current_user=Depends(require_admin), db=Depends(get_db)):
+    now = datetime.now(timezone.utc)
+    start_date = None
+    end_date = None
+    if period == "today":
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elif period == "yesterday":
+        start_date = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = start_date + timedelta(days=1)
+    elif period == "7days":
+        start_date = now - timedelta(days=7)
+    elif period == "30days":
+        start_date = now - timedelta(days=30)
+    elif period == "this_month":
+        start_date = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+
+    match_query = {"status": "success"}
+    lead_query = {}
+    if start_date:
+        match_query["verified_at"] = {"$gte": start_date}
+        lead_query["created_at"] = {"$gte": start_date}
+    if end_date:
+        match_query.setdefault("verified_at", {})["$lt"] = end_date
+        lead_query.setdefault("created_at", {})["$lt"] = end_date
+
+    total_sales = await db.payments.count_documents(match_query)
+    total_leads = await db.leads.count_documents(lead_query)
+    conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
+
+    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
+    rev_result = await db.payments.aggregate(pipeline).to_list(1)
+    total_revenue = rev_result[0]["total"] if rev_result else 0
+    aov = (total_revenue / total_sales) if total_sales > 0 else 0
+
+    # Fixed rollup windows — independent of the period selector, since these
+    # are labeled as specific windows (Today/Week/Month), not filtered views.
+    async def revenue_since(since):
+        pipe = [{"$match": {"status": "success", "verified_at": {"$gte": since}}},
+                {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
+        result = await db.payments.aggregate(pipe).to_list(1)
+        return result[0]["total"] if result else 0
+
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = now - timedelta(days=7)
+    month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    today_revenue = await revenue_since(today_start)
+    week_revenue = await revenue_since(week_start)
+    month_revenue = await revenue_since(month_start)
+
+    # Commission owed across all affiliates — tracking only, no automation.
+    owed_pipeline = [
+        {"$group": {
+            "_id": None,
+            "earned": {"$sum": "$commission_amount"},
+            "paid": {"$sum": {"$cond": [{"$eq": ["$commission_status", "paid"]}, "$commission_amount", 0]}},
+        }}
+    ]
+    owed_result = await db.referrals.aggregate(owed_pipeline).to_list(1)
+    commission_owed = (owed_result[0]["earned"] - owed_result[0]["paid"]) if owed_result else 0
+
+    # 30-day daily revenue trend for the chart — a real aggregation, not AI.
+    thirty_days_ago = now - timedelta(days=30)
+    trend_pipeline = [
+        {"$match": {"status": "success", "verified_at": {"$gte": thirty_days_ago}}},
+        {"$group": {
+            "_id": {"$dateToString": {"format": "%Y-%m-%d", "date": "$verified_at"}},
+            "revenue": {"$sum": "$amount"},
+        }},
+        {"$sort": {"_id": 1}},
+    ]
+    daily_trends = await db.payments.aggregate(trend_pipeline).to_list(31)
+
+    recent_transactions = await db.payments.find(
+        match_query, {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1, "status": 1}
+    ).sort("verified_at", -1).limit(10).to_list(10)
+
+    recent_leads = await db.leads.find(
+        lead_query, {"_id": 0, "email": 1, "source": 1, "created_at": 1}
+    ).sort("created_at", -1).limit(10).to_list(10)
+
+    return {
+        "total_revenue": total_revenue,
+        "today_revenue": today_revenue,
+        "week_revenue": week_revenue,
+        "month_revenue": month_revenue,
+        "total_sales": total_sales,
+        "aov": round(aov, 2),
+        "conversion_rate": round(conversion_rate, 1),
+        "pending_payouts": commission_owed,
+        # No AI-generated insights — out of scope. Kept as an empty list so
+        # the frontend's existing render call doesn't error; the panel
+        # itself is a Phase 1 design decision (keep/remove), not this fix.
+        "ai_insights": [],
+        "daily_trends": daily_trends,
+        "recent_transactions": recent_transactions,
+        "recent_leads": recent_leads,
+    }
+
+
+@router.get("/analytics/sales")
+async def get_analytics_sales(period: str = "all", current_user=Depends(require_admin), db=Depends(get_db)):
+    now = datetime.now(timezone.utc)
+    query = {}
+    if period == "today":
+        query["created_at"] = {"$gte": now.replace(hour=0, minute=0, second=0, microsecond=0)}
+    elif period == "yesterday":
+        y_start = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        query["created_at"] = {"$gte": y_start, "$lt": y_start + timedelta(days=1)}
+    elif period == "7days":
+        query["created_at"] = {"$gte": now - timedelta(days=7)}
+    elif period == "30days":
+        query["created_at"] = {"$gte": now - timedelta(days=30)}
+    elif period == "this_month":
+        query["created_at"] = {"$gte": now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)}
+
+    transactions = await db.payments.find(
+        query, {"gateway_response": 0}
+    ).sort("created_at", -1).limit(500).to_list(500)
+    for t in transactions:
+        t["id"] = str(t.pop("_id"))
+        if "user_id" in t and t["user_id"]:
+            t["user_id"] = str(t["user_id"])
+
+    return {"transactions": transactions}
+
+
+@router.get("/analytics/customers")
+async def get_analytics_customers(search: str = "", current_user=Depends(require_admin), db=Depends(get_db)):
+    query = {"role": "customer"}
+    if search:
+        query["$or"] = [
+            {"name": {"$regex": search, "$options": "i"}},
+            {"email": {"$regex": search, "$options": "i"}},
+        ]
+    customers = await db.users.find(query, {"password_hash": 0}).sort("created_at", -1).limit(500).to_list(500)
+    total = len(customers)
+
+    out = []
+    repeat_count = 0
+    total_spent_all = 0
+    for c in customers:
+        email = c["email"]
+        payments = await db.payments.find(
+            {"email": email, "status": "success"}, {"_id": 0, "amount": 1}
+        ).to_list(1000)
+        total_spent = sum(p.get("amount", 0) or 0 for p in payments)
+        total_spent_all += total_spent
+        if len(payments) > 1:
+            repeat_count += 1
+        out.append({
+            "created_at": c["created_at"],
+            "name": c.get("name", ""),
+            "email": email,
+            "total_spent": total_spent,
+            "purchases_count": len(payments),
+        })
+
+    repeat_purchase_rate = round((repeat_count / total * 100), 1) if total > 0 else 0
+    avg_clv = round((total_spent_all / total), 2) if total > 0 else 0
+
+    return {
+        "total": total,
+        "repeat_purchase_rate": repeat_purchase_rate,
+        "avg_clv": avg_clv,
+        "customers": out,
+    }
+
+
+@router.get("/analytics/affiliates")
+async def get_analytics_affiliates(current_user=Depends(require_admin), db=Depends(get_db)):
+    """Same aggregation as GET /api/admin/affiliates (routes/affiliates.py),
+    reused here rather than duplicated logic drifting — backs the
+    Affiliates Engine tab, which was calling a path that never existed."""
+    affiliates = await db.affiliates.find({}).sort("created_at", -1).to_list(500)
+
+    click_counts = {
+        row["_id"]: row["count"]
+        for row in await db.referral_clicks.aggregate([
+            {"$group": {"_id": "$affiliate_code", "count": {"$sum": 1}}}
+        ]).to_list(500)
+    }
+    referral_stats = {
+        row["_id"]: row
+        for row in await db.referrals.aggregate([
+            {"$group": {
+                "_id": "$affiliate_code",
+                "conversions": {"$sum": 1},
+                "revenue": {"$sum": "$amount"},
+                "commission_earned": {"$sum": "$commission_amount"},
+                "commission_paid": {
+                    "$sum": {"$cond": [{"$eq": ["$commission_status", "paid"]}, "$commission_amount", 0]}
+                },
+            }}
+        ]).to_list(500)
+    }
+
+    out = []
+    for a in affiliates:
+        code = a["code"]
+        stats = referral_stats.get(code, {})
+        earned = stats.get("commission_earned", 0) or 0
+        paid = stats.get("commission_paid", 0) or 0
+        out.append({
+            "id": str(a["_id"]),
+            "code": code,
+            "name": a["name"],
+            "email": a["email"],
+            "active": a.get("active", True),
+            "source": a.get("source", "admin_created"),
+            "commission_percent": a.get("commission_percent", 0),
+            "created_at": a["created_at"],
+            "clicks": click_counts.get(code, 0),
+            "conversions": stats.get("conversions", 0),
+            "revenue": stats.get("revenue", 0) or 0,
+            "commission_earned": earned,
+            "commission_paid": paid,
+            "commission_owed": earned - paid,
+        })
+    return {"affiliates": out}
 
 
 @router.get("/customers")
@@ -238,7 +467,7 @@ async def get_sale_details(reference: str, current_user=Depends(require_admin), 
         referral["id"] = str(referral.pop("_id"))
 
     # Email Queue Delivery History
-    emails = await db.email_queue.find({"recipient": email}).sort("scheduled_at", -1).to_list(20)
+    emails = await db.email_queue.find({"email": email}).sort("scheduled_at", -1).to_list(20)
     for e in emails:
         e["id"] = str(e.pop("_id"))
         e["subscriber_id"] = str(e.get("subscriber_id", ""))
@@ -278,21 +507,23 @@ async def resend_sale_welcome_email(reference: str, current_user=Depends(require
     name = payment.get("name", "Valued Customer")
 
     user = await db.users.find_one({"email": email})
-    token = user.get("library_access_token") if user else "LIBRARY_TOKEN"
+    token = user.get("library_access_token") if user else None
+    if not token:
+        raise HTTPException(status_code=409, detail="Customer has no library access token yet — payment may not be fully completed.")
 
-    # Queue a high-priority welcome email entry in email_queue
     sub = await db.subscribers.find_one({"email": email})
-    sub_id = sub["_id"] if sub else None
+    unsub_token = sub.get("unsubscribe_token", "") if sub else ""
 
+    # Same document shape complete_payment() inserts for a real "welcome"
+    # email (see services/payment_completion.py) — matching it exactly so
+    # this resend is indistinguishable from a normal one to the scheduler.
     welcome_item = {
         "kind": "welcome",
-        "subscriber_id": sub_id,
-        "recipient": email,
+        "user_id": user["_id"] if user else None,
         "email": email,
         "name": name,
         "access_token": token,
-        "subject": "Access Granted: The Complete Academic Comeback Package 🎓",
-        "template": "welcome.html",
+        "unsubscribe_token": unsub_token,
         "scheduled_at": datetime.now(timezone.utc),
         "status": "pending",
         "retry_count": 0,
@@ -301,9 +532,13 @@ async def resend_sale_welcome_email(reference: str, current_user=Depends(require
     }
     await db.email_queue.insert_one(welcome_item)
 
-    # Fire processing pass in background
-    from ..workers.email_scheduler import trigger_email_queue_processing
-    trigger_email_queue_processing()
+    # Fire-and-forget immediate processing attempt — same pattern used
+    # everywhere else in this app (see payment_completion.py,
+    # affiliate_public.py) rather than waiting for the 5-minute scheduler
+    # tick. process_email_queue() is already lock-protected against
+    # overlapping with the scheduler's own tick.
+    from ..workers.email_scheduler import process_email_queue
+    asyncio.create_task(process_email_queue())
 
     return {"status": "ok", "message": f"Welcome email queued for re-delivery to {email}"}
 
@@ -346,7 +581,7 @@ async def get_customer_profile(email: str, current_user=Depends(require_admin), 
         d["id"] = str(d.pop("_id"))
 
     # Email Delivery Logs
-    emails = await db.email_queue.find({"recipient": email_clean}).sort("scheduled_at", -1).to_list(50)
+    emails = await db.email_queue.find({"email": email_clean}).sort("scheduled_at", -1).to_list(50)
     for e in emails:
         e["id"] = str(e.pop("_id"))
 
