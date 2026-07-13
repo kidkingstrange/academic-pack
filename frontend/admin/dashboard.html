@@ -587,7 +587,7 @@
       dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
       sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
       customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
-      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner leaderboards, pending payout batch approvals, and referral links' }
+      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -625,7 +625,7 @@
       <div class="kpi-card"><div class="kpi-title">Total Sales</div><div class="kpi-val">${data.total_sales}</div></div>
       <div class="kpi-card"><div class="kpi-title">Avg Order Value</div><div class="kpi-val">${money(data.aov)}</div></div>
       <div class="kpi-card"><div class="kpi-title">Conversion Rate</div><div class="kpi-val gold">${data.conversion_rate}%</div></div>
-      <div class="kpi-card"><div class="kpi-title">Pending Payouts</div><div class="kpi-val gold">${money(data.pending_payouts)}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Commission Owed</div><div class="kpi-val gold">${money(data.pending_payouts)}</div></div>
     `;
     document.getElementById('dash-kpi-grid').innerHTML = kpiHTML;
 
@@ -786,6 +786,7 @@
 
     document.getElementById('cust-kpi-total').textContent = data.total;
     document.getElementById('cust-kpi-repeat').textContent = `${data.repeat_purchase_rate}%`;
+    document.getElementById('cust-kpi-clv').textContent = money(data.avg_clv);
 
     const tbody = document.querySelector('#table-customers-roster tbody');
     tbody.innerHTML = (data.customers || []).map(c => `
@@ -859,7 +860,7 @@
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
         <td><code>${a.code}</code></td>
         <td style="font-weight:600">${a.name}</td>
-        <td><span class="status-pill pending">${a.badge}</span></td>
+        <td><span class="status-pill pending">${a.badge || '—'}</span></td>
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>
         <td>${money(a.revenue)}</td>
