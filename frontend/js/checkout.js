@@ -58,6 +58,25 @@ function loadPendingPayment() {
 // (this browser will never fire the same reference twice) and Meta's own
 // eventID-based dedup (same reference fired from a different device/
 // session within Meta's window is still deduplicated on their side).
+function trackTelemetry(eventName, extra = {}) {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const refCode = getCookie('ac_ref') || localStorage.getItem('ac_ref') || params.get('ref') || null;
+    const utmSource = params.get('utm_source') || null;
+    fetch('/api/tracking/event', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: eventName,
+        referral_code: refCode,
+        utm_source: utmSource,
+        url: window.location.href,
+        ...extra
+      })
+    }).catch(() => {});
+  } catch (e) {}
+}
+
 function fireVerifiedPurchase(reference, amount) {
   if (!reference) return;
   const guardKey = 'ac_purchase_fired_' + reference;
@@ -69,11 +88,13 @@ function fireVerifiedPurchase(reference, amount) {
   if (typeof fbq === 'function') {
     fbq('track', 'Purchase', { value: Number(amount) || 0, currency: 'NGN' }, { eventID: reference });
   }
+  trackTelemetry('payment_completed', { reference, amount });
 }
 
 function openCheckout() {
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+  trackTelemetry('checkout_view');
 }
 
 function closeCheckout() {

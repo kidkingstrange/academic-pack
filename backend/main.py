@@ -73,6 +73,8 @@ app.include_router(community.router)
 app.include_router(affiliates.router)
 app.include_router(affiliate_public.router)
 app.include_router(affiliate_dashboard.router)
+app.include_router(tracking.router)
+app.include_router(admin_analytics.router)
 
 # ── Static Files (Frontend) ───────────────────────────────────────────────────
 class CachedStaticFiles(StaticFiles):

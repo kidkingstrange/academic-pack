@@ -842,5 +842,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   if (stickyBar) stickyBar.style.display = 'none';
 })();
 </script>
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    if (typeof trackTelemetry === 'function') {
+      trackTelemetry('landing_view');
+    }
+  });
+</script>
 </body>
 </html>
