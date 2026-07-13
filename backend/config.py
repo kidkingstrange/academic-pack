@@ -79,6 +79,13 @@ class Settings(BaseSettings):
 @lru_cache()
 def get_settings() -> Settings:
     s = Settings()
+    
+    # Render environment variable fallback to prevent misconfigured APP_URL
+    import os
+    render_url = os.environ.get("RENDER_EXTERNAL_URL")
+    if render_url:
+        s.APP_URL = render_url.rstrip("/")
+
     for name, value in list(s.__dict__.items()):
         if isinstance(value, str):
             setattr(s, name, value.strip())

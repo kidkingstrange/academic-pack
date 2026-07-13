@@ -154,7 +154,10 @@ async def process_email_queue():
                 {
                     "status": {"$in": ["pending", "retry"]},
                     "scheduled_at": {"$lte": now},
-                    "retry_count": {"$lt": 3},
+                    "$or": [
+                        {"retry_count": {"$lt": 3}},
+                        {"kind": {"$in": ["welcome", "affiliate_welcome"]}, "retry_count": {"$lt": 10}}
+                    ]
                 },
                 {"$set": {"status": "sending"}},
                 sort=[("scheduled_at", 1)],
@@ -214,16 +217,18 @@ async def process_email_queue():
                         )
                 else:
                     next_retry = item.get("retry_count", 0) + 1
-                    next_status = "failed" if next_retry >= 3 else "retry"
+                    max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome") else 3
+                    next_status = "failed" if next_retry >= max_retries else "retry"
                     await db.email_queue.update_one(
                         {"_id": item["_id"]},
                         {"$inc": {"retry_count": 1},
                          "$set": {"status": next_status, "error": error_msg, "last_attempt_at": now}}
-                    )
+                     )
             except Exception as e:
                 print(f"Email worker error for {item.get('email')}: {e}")
                 next_retry = item.get("retry_count", 0) + 1
-                next_status = "failed" if next_retry >= 3 else "retry"
+                max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome") else 3
+                next_status = "failed" if next_retry >= max_retries else "retry"
                 await db.email_queue.update_one(
                     {"_id": item["_id"]},
                     {"$inc": {"retry_count": 1}, "$set": {"error": str(e), "status": next_status, "last_attempt_at": now}}
