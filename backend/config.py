@@ -43,7 +43,7 @@ class Settings(BaseSettings):
 
     # ── SMTP ──────────────────────────────────────────────────────────
     SMTP_HOST: str = "smtp.gmail.com"
-    SMTP_PORT: int = 587
+    SMTP_PORT: int = 465
     SMTP_USER: str = "your@gmail.com"
     SMTP_PASS: str = "your-app-password"
     FROM_EMAIL: str = "Itoya David <your@gmail.com>"
