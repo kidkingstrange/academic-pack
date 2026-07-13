@@ -36,15 +36,44 @@ async def admin_login(body: AdminLoginRequest, db=Depends(get_db)):
 
 
 @router.get("/analytics")
-async def get_analytics(current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_analytics(period: str = "all", current_user=Depends(require_admin), db=Depends(get_db)):
     """Dashboard summary analytics."""
-    total_sales = await db.payments.count_documents({"status": "success"})
-    total_leads = await db.leads.count_documents({})
-    total_subscribers = await db.subscribers.count_documents({"is_active": True})
+    now = datetime.now(timezone.utc)
+    start_date = None
+    end_date = None
+
+    if period == "today":
+        start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    elif period == "yesterday":
+        start_date = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
+        end_date = start_date + timedelta(days=1)
+    elif period == "7days":
+        start_date = now - timedelta(days=7)
+    elif period == "30days":
+        start_date = now - timedelta(days=30)
+
+    # Base match queries
+    match_query = {"status": "success"}
+    lead_query = {}
+    sub_query = {"is_active": True}
+
+    if start_date:
+        match_query["verified_at"] = {"$gte": start_date}
+        lead_query["created_at"] = {"$gte": start_date}
+        sub_query["subscribed_at"] = {"$gte": start_date}
+
+    if end_date:
+        match_query.setdefault("verified_at", {})["$lt"] = end_date
+        lead_query.setdefault("created_at", {})["$lt"] = end_date
+        sub_query.setdefault("subscribed_at", {})["$lt"] = end_date
+
+    total_sales = await db.payments.count_documents(match_query)
+    total_leads = await db.leads.count_documents(lead_query)
+    total_subscribers = await db.subscribers.count_documents(sub_query)
     pending_emails = await db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}})
 
     # Revenue
-    pipeline = [{"$match": {"status": "success"}}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
+    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
     rev_result = await db.payments.aggregate(pipeline).to_list(1)
     total_revenue = rev_result[0]["total"] if rev_result else 0
 
@@ -52,13 +81,12 @@ async def get_analytics(current_user=Depends(require_admin), db=Depends(get_db))
     conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
 
     # Downloads today
-    today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     downloads_today = await db.downloads.count_documents({"downloaded_at": {"$gte": today_start}})
 
-    # Recent sales (last 30 days)
-    thirty_days_ago = datetime.now(timezone.utc) - timedelta(days=30)
+    # Recent sales (using match_query)
     recent_sales = await db.payments.find(
-        {"status": "success", "verified_at": {"$gte": thirty_days_ago}},
+        match_query,
         {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1}
     ).sort("verified_at", -1).limit(10).to_list(10)
 

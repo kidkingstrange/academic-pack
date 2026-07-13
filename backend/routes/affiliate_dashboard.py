@@ -39,6 +39,8 @@ async def get_my_stats(token: str, db=Depends(get_db)):
             "amount": r.get("amount", 0),
             "commission_amount": r.get("commission_amount", 0),
             "status": r.get("commission_status", "unpaid"),
+            "customer_name": r.get("name", "Anonymous"),
+            "customer_email": r.get("email", ""),
         }
         for r in referrals
     ]
