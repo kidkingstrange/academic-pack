@@ -211,3 +211,194 @@ async def list_leads(
     for l in leads:
         l["id"] = str(l.pop("_id"))
     return {"leads": leads, "total": total, "page": page}
+
+
+# ── Deep Sales & Order Management Endpoints ─────────────────────────────────────
+@router.get("/sales/{reference}/details")
+async def get_sale_details(reference: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Deep inspection of a single sale: payment status, customer info, attribution, notes, and emails."""
+    payment = await db.payments.find_one({"reference": reference})
+    if not payment:
+        # Fallback search by ID or reference
+        payment = await db.payments.find_one({"$or": [{"reference": reference}, {"charge_id": reference}]})
+    if not payment:
+        raise HTTPException(status_code=404, detail="Sale transaction not found")
+
+    payment["id"] = str(payment.pop("_id"))
+    email = payment.get("email", "").lower()
+
+    # Customer Profile Info
+    customer = await db.users.find_one({"email": email}, {"password_hash": 0})
+    if customer:
+        customer["id"] = str(customer.pop("_id"))
+
+    # Referral Attribution
+    referral = await db.referrals.find_one({"reference": reference})
+    if referral:
+        referral["id"] = str(referral.pop("_id"))
+
+    # Email Queue Delivery History
+    emails = await db.email_queue.find({"recipient": email}).sort("scheduled_at", -1).to_list(20)
+    for e in emails:
+        e["id"] = str(e.pop("_id"))
+        e["subscriber_id"] = str(e.get("subscriber_id", ""))
+
+    # Downloads Activity History
+    downloads = await db.downloads.find({"email": email}).sort("downloaded_at", -1).to_list(50)
+    for d in downloads:
+        d["id"] = str(d.pop("_id"))
+
+    return {
+        "payment": payment,
+        "customer": customer,
+        "referral": referral,
+        "emails": emails,
+        "downloads": downloads
+    }
+
+
+@router.post("/sales/{reference}/notes")
+async def update_sale_notes(reference: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Update manual admin notes on a specific sale."""
+    notes = payload.get("notes", "").strip()
+    res = await db.payments.update_one({"reference": reference}, {"$set": {"admin_notes": notes, "notes_updated_at": datetime.now(timezone.utc)}})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return {"status": "ok", "message": "Sale notes updated successfully"}
+
+
+@router.post("/sales/{reference}/resend-email")
+async def resend_sale_welcome_email(reference: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Re-queue access email delivery for a customer."""
+    payment = await db.payments.find_one({"reference": reference})
+    if not payment:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+
+    email = payment.get("email", "").lower()
+    name = payment.get("name", "Valued Customer")
+
+    user = await db.users.find_one({"email": email})
+    token = user.get("library_access_token") if user else "LIBRARY_TOKEN"
+
+    # Queue a high-priority welcome email entry in email_queue
+    sub = await db.subscribers.find_one({"email": email})
+    sub_id = sub["_id"] if sub else None
+
+    welcome_item = {
+        "kind": "welcome",
+        "subscriber_id": sub_id,
+        "recipient": email,
+        "email": email,
+        "name": name,
+        "access_token": token,
+        "subject": "Access Granted: The Complete Academic Comeback Package 🎓",
+        "template": "welcome.html",
+        "scheduled_at": datetime.now(timezone.utc),
+        "status": "pending",
+        "retry_count": 0,
+        "sent_at": None,
+        "error": None,
+    }
+    await db.email_queue.insert_one(welcome_item)
+
+    # Fire processing pass in background
+    from ..workers.email_scheduler import trigger_email_queue_processing
+    trigger_email_queue_processing()
+
+    return {"status": "ok", "message": f"Welcome email queued for re-delivery to {email}"}
+
+
+@router.post("/sales/{reference}/refund")
+async def process_sale_refund(reference: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Mark a sale transaction as refunded."""
+    reason = payload.get("reason", "Refunded by admin").strip()
+    res = await db.payments.update_one(
+        {"reference": reference},
+        {"$set": {"status": "refunded", "refund_reason": reason, "refunded_at": datetime.now(timezone.utc)}}
+    )
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Transaction not found")
+    return {"status": "ok", "message": f"Transaction {reference} marked as refunded."}
+
+
+# ── Deep Customer Profile Management Endpoints ────────────────────────────────
+@router.get("/customers/{email}/profile")
+async def get_customer_profile(email: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Deep customer 360-degree profile inspector."""
+    email_clean = email.lower().strip()
+    customer = await db.users.find_one({"email": email_clean}, {"password_hash": 0})
+    if not customer:
+        raise HTTPException(status_code=404, detail="Customer profile not found")
+
+    customer["id"] = str(customer.pop("_id"))
+
+    # Purchases & Payments History
+    payments = await db.payments.find({"email": email_clean}).sort("verified_at", -1).to_list(100)
+    total_spent = 0
+    for p in payments:
+        p["id"] = str(p.pop("_id"))
+        if p.get("status") == "success":
+            total_spent += p.get("amount", 0)
+
+    # Downloads Activity Log
+    downloads = await db.downloads.find({"email": email_clean}).sort("downloaded_at", -1).to_list(100)
+    for d in downloads:
+        d["id"] = str(d.pop("_id"))
+
+    # Email Delivery Logs
+    emails = await db.email_queue.find({"recipient": email_clean}).sort("scheduled_at", -1).to_list(50)
+    for e in emails:
+        e["id"] = str(e.pop("_id"))
+
+    return {
+        "customer": customer,
+        "total_spent": total_spent,
+        "purchases": payments,
+        "downloads": downloads,
+        "emails": emails
+    }
+
+
+@router.post("/customers/{email}/tags")
+async def update_customer_tags(email: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Update customer segmentation tags (e.g. VIP, High Value, Repeat Buyer)."""
+    tags = payload.get("tags", [])
+    if not isinstance(tags, list):
+        tags = [str(tags)]
+    res = await db.users.update_one({"email": email.lower()}, {"$set": {"tags": tags}})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    return {"status": "ok", "tags": tags}
+
+
+@router.post("/customers/{email}/notes")
+async def update_customer_notes(email: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Save manual admin notes on customer account."""
+    notes = payload.get("notes", "").strip()
+    res = await db.users.update_one({"email": email.lower()}, {"$set": {"notes": notes}})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    return {"status": "ok", "message": "Customer notes updated"}
+
+
+# ── Affiliate Payout & Management Endpoints ────────────────────────────────────
+@router.post("/affiliates/{code}/mark-payout")
+async def mark_affiliate_payout(code: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Mark pending commissions for an affiliate code as paid out."""
+    payout_ref = payload.get("payout_reference", f"PAYOUT-{datetime.now().strftime('%Y%m%d%H%M%S')}")
+    res = await db.referrals.update_many(
+        {"affiliate_code": code, "commission_status": {"$ne": "paid"}},
+        {"$set": {"commission_status": "paid", "payout_reference": payout_ref, "paid_at": datetime.now(timezone.utc)}}
+    )
+    return {"status": "ok", "modified_count": res.modified_count, "payout_reference": payout_ref}
+
+
+@router.post("/affiliates/{code}/status")
+async def toggle_affiliate_status(code: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Activate or suspend an affiliate code."""
+    active = bool(payload.get("active", True))
+    res = await db.affiliates.update_one({"code": code}, {"$set": {"active": active, "updated_at": datetime.now(timezone.utc)}})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Affiliate code not found")
+    return {"status": "ok", "code": code, "active": active}
+

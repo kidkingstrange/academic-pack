@@ -154,6 +154,26 @@ async def get_executive_overview(
     ]
     daily_trends = await db.payments.aggregate(daily_pipeline).to_list(31)
 
+    # Executive AI Insights Generation
+    ai_insights = [
+        f"🚀 Revenue velocity growth is up {rev_growth_pct}% compared to the previous period.",
+        f"💡 Average Order Value stands solid at ₦{aov:,.2f}.",
+        f"📊 Checkout conversion rate is performing at {conversion_rate}% across all traffic channels.",
+        f"🤝 Affiliate network has generated ₦{top_affiliate_earnings:,.2f} for top partners.",
+        f"⚡ Lead conversion pipeline has captured {total_leads} qualified prospective buyers."
+    ]
+
+    # Recent Activity Feeds for Central Command Center
+    recent_transactions = await db.payments.find({}, {"gateway_response": 0}).sort("created_at", -1).limit(6).to_list(6)
+    for r in recent_transactions:
+        r["id"] = str(r.pop("_id"))
+        if "verified_at" in r and r["verified_at"]:
+            r["verified_at"] = r["verified_at"].isoformat() if hasattr(r["verified_at"], "isoformat") else str(r["verified_at"])
+
+    recent_leads = await db.leads.find({}).sort("created_at", -1).limit(6).to_list(6)
+    for l in recent_leads:
+        l["id"] = str(l.pop("_id"))
+
     return {
         "total_revenue": total_revenue,
         "today_revenue": today_revenue,
@@ -175,7 +195,10 @@ async def get_executive_overview(
         "funnel_conversion": funnel_conversion,
         "active_affiliates": active_affiliates,
         "top_affiliate_earnings": top_affiliate_earnings,
-        "daily_trends": daily_trends
+        "daily_trends": daily_trends,
+        "ai_insights": ai_insights,
+        "recent_transactions": recent_transactions,
+        "recent_leads": recent_leads
     }
 
 
