@@ -4,35 +4,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scale Admin — Unified Executive Command Center</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="/css/main.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
+  /* This page reuses the site's established dark navy/gold tokens directly
+     from main.css (--ink, --ink2, --ink3, --gold, --gold-l, --gray-l,
+     --radius-lg, --gold-glow, --transition, --green, --red) rather than
+     declaring its own palette. Only genuinely new layout aliases (sidebar/
+     card surface names) are declared here, and each one just points at an
+     existing token — never a new color. */
   :root {
-    --bg-body: #0b0f19;
-    --bg-sidebar: #0f172a;
-    --bg-card: #141c2e;
-    --bg-card-hover: #1e293b;
+    --bg-sidebar: var(--ink);
+    --bg-card: var(--ink2);
+    --bg-card-hover: var(--ink3);
     --border-color: rgba(255, 255, 255, 0.08);
-    --gold: #d4af37;
-    --gold-light: #f3e5ab;
-    --gold-glow: 0 0 20px rgba(212, 175, 55, 0.2);
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-    --green: #22c55e;
-    --red: #ef4444;
-    --blue: #3b82f6;
-    --purple: #a855f7;
-    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: var(--bg-body);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
     display: flex;
     min-height: 100vh;
     overflow-x: hidden;
@@ -61,27 +54,27 @@
   .brand-logo {
     width: 36px;
     height: 36px;
-    background: linear-gradient(135deg, var(--gold), #b38f24);
+    background: linear-gradient(135deg, var(--gold), var(--gold-l));
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0b0f19;
+    color: var(--ink);
     font-weight: 800;
     font-size: 1.2rem;
     box-shadow: var(--gold-glow);
   }
   .brand-text {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Clash Display', sans-serif;
     font-size: 1.1rem;
-    font-weight: 800;
+    font-weight: 600;
     color: #fff;
     letter-spacing: -0.3px;
   }
   .brand-badge {
     font-size: 0.65rem;
-    background: rgba(212, 175, 55, 0.15);
-    color: var(--gold-light);
+    background: rgba(201,151,58,.15);
+    color: var(--gold-l);
     padding: 2px 6px;
     border-radius: 4px;
     font-weight: 700;
@@ -91,7 +84,7 @@
     font-size: 0.68rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--gray-l);
     letter-spacing: 1px;
     padding: 12px;
   }
@@ -100,7 +93,7 @@
     align-items: center;
     gap: 12px;
     padding: 12px 14px;
-    color: var(--text-muted);
+    color: var(--gray-l);
     border-radius: 10px;
     cursor: pointer;
     font-size: 0.9rem;
@@ -115,8 +108,8 @@
     color: #fff;
   }
   .nav-item.active {
-    background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), transparent);
-    color: var(--gold-light);
+    background: linear-gradient(90deg, rgba(201,151,58,.15), transparent);
+    color: var(--gold-l);
     border-left: 3px solid var(--gold);
   }
 
@@ -130,7 +123,7 @@
   }
 
   .top-header {
-    background: rgba(15, 23, 42, 0.85);
+    background: rgba(26, 29, 36, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
     padding: 18px 36px;
@@ -142,14 +135,14 @@
     z-index: 90;
   }
   .header-title h1 {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Clash Display', sans-serif;
     font-size: 1.35rem;
-    font-weight: 800;
+    font-weight: 600;
     color: #fff;
   }
   .header-sub {
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: var(--gray-l);
     margin-top: 2px;
   }
   .header-actions {
@@ -168,16 +161,20 @@
     font-weight: 600;
     outline: none;
     transition: var(--transition);
+    font-family: 'Manrope', sans-serif;
   }
   .period-select:hover, .input-control:focus { border-color: var(--gold); }
 
+  /* Value-identical to .btn/.btn--gold (main.css) — same class names kept
+     here (not renamed to btn/btn--gold) since many rows are built from JS
+     template strings, but every property below matches exactly. */
   .btn-action {
-    background: linear-gradient(135deg, var(--gold), #b38f24);
-    color: #0b0f19;
+    background: linear-gradient(135deg, var(--gold), var(--gold-l));
+    color: var(--ink);
     font-weight: 700;
     font-size: 0.85rem;
     padding: 10px 18px;
-    border-radius: 10px;
+    border-radius: var(--radius-full);
     border: none;
     cursor: pointer;
     display: inline-flex;
@@ -185,17 +182,19 @@
     gap: 8px;
     transition: var(--transition);
     text-decoration: none;
+    box-shadow: 0 4px 24px rgba(201,151,58,.3);
   }
   .btn-action:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--gold-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 36px rgba(201,151,58,.4);
   }
   .btn-secondary {
     background: rgba(255,255,255,0.06);
     color: #fff;
     border: 1px solid var(--border-color);
+    box-shadow: none;
   }
-  .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); transform: none; box-shadow: none; }
 
   .content-body { padding: 36px; }
   .section { display: none; }
@@ -211,43 +210,44 @@
   .kpi-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     padding: 20px;
     transition: var(--transition);
   }
   .kpi-card:hover {
-    border-color: rgba(212, 175, 55, 0.4);
+    border-color: rgba(201,151,58,.4);
     transform: translateY(-2px);
   }
   .kpi-title {
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--gray-l);
     letter-spacing: 0.5px;
     margin-bottom: 8px;
   }
   .kpi-val {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Clash Display', sans-serif;
     font-size: 1.55rem;
-    font-weight: 800;
+    font-weight: 600;
     color: #fff;
   }
-  .kpi-val.gold { color: var(--gold-light); }
+  .kpi-val.gold { color: var(--gold-l); }
 
-  /* AI Insights Cards */
+  /* AI Insights panel — kept as a structural element (see routes/admin.py:
+     ai_insights is always []), reskinned to established tokens only. */
   .ai-insights-box {
-    background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(15, 23, 42, 0.8));
-    border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(201,151,58,.08), rgba(26,29,36,.8));
+    border: 1px solid rgba(201,151,58,.3);
+    border-radius: var(--radius-lg);
     padding: 20px 24px;
     margin-bottom: 32px;
   }
   .ai-title {
-    font-family: 'Manrope', sans-serif;
-    font-weight: 700;
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 600;
     font-size: 1rem;
-    color: var(--gold-light);
+    color: var(--gold-l);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -257,14 +257,13 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-
   }
   .ai-item {
     font-size: 0.85rem;
     color: rgba(255,255,255,0.85);
     background: rgba(0,0,0,0.2);
     padding: 10px 14px;
-    border-radius: 8px;
+    border-radius: var(--radius);
     border-left: 3px solid var(--gold);
   }
 
@@ -272,7 +271,7 @@
   .filter-bar {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: var(--radius-lg);
     padding: 16px 20px;
     display: flex;
     gap: 14px;
@@ -282,11 +281,13 @@
   }
   .filter-bar .input-control { flex: 1; min-width: 200px; }
 
-  /* ── Table Components ──────────────────────────────────────────────────────── */
+  /* ── Table Components ─────────────────────────────────────────────────────────
+     Matches the dark table treatment already established in
+     affiliate-dashboard.html (same background/radius/border/header style). */
   .data-table-container {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     margin-bottom: 32px;
   }
@@ -301,8 +302,7 @@
     font-size: 0.86rem;
   }
   table.data-table th {
-    background: rgba(15, 23, 42, 0.7);
-    color: var(--text-muted);
+    color: var(--gray-l);
     font-weight: 700;
     font-size: 0.74rem;
     text-transform: uppercase;
@@ -312,21 +312,25 @@
 
   .status-pill {
     padding: 4px 10px;
-    border-radius: 50px;
+    border-radius: var(--radius-full);
     font-size: 0.72rem;
     font-weight: 700;
     display: inline-block;
   }
   .status-pill.success { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-  .status-pill.pending { background: rgba(212, 175, 55, 0.15); color: var(--gold-light); }
+  .status-pill.pending { background: rgba(201,151,58,.15); color: var(--gold-l); }
   .status-pill.failed, .status-pill.refunded { background: rgba(239, 68, 68, 0.15); color: var(--red); }
 
-  /* ── Slide-Out Drawer Component ───────────────────────────────────────────── */
+  /* ── Slide-Out Drawer Component ────────────────────────────────────────────
+     Skinned like .modal-overlay/.modal (landing.css) — same backdrop blur,
+     surface color, and box-shadow — sliding from the right instead of up
+     from the bottom, since this drawer serves a different, already-approved
+     inspector interaction rather than the checkout flow. */
   .drawer-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(4px);
+    background: rgba(12,14,18,.8);
+    backdrop-filter: blur(8px);
     z-index: 200;
     opacity: 0;
     pointer-events: none;
@@ -339,12 +343,12 @@
     top: 0; right: 0; bottom: 0;
     width: 520px;
     max-width: 100vw;
-    background: #0f172a;
+    background: var(--ink2);
     border-left: 1px solid var(--border-color);
-    box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    box-shadow: 0 24px 60px rgba(0,0,0,.6);
     z-index: 210;
     transform: translateX(100%);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
   }
@@ -357,9 +361,20 @@
     justify-content: space-between;
     align-items: center;
   }
-  .drawer-header h3 { font-family: 'Manrope', sans-serif; font-size: 1.2rem; font-weight: 800; color: #fff; }
-  .drawer-close { background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
-  .drawer-close:hover { color: #fff; }
+  .drawer-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.2rem; font-weight: 600; color: #fff; }
+  /* Exact values from .modal__close (landing.css). */
+  .drawer-close {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.06);
+    border: none;
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,.7);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all var(--transition);
+  }
+  .drawer-close:hover { background: rgba(255,255,255,.15); color: #fff; }
 
   .drawer-body {
     padding: 28px;
@@ -375,7 +390,7 @@
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--gold-light);
+    color: var(--gold-l);
     letter-spacing: 0.5px;
     margin-bottom: 12px;
   }
@@ -385,10 +400,11 @@
     gap: 14px;
     font-size: 0.85rem;
   }
-  .detail-label { color: var(--text-muted); font-size: 0.78rem; }
+  .detail-label { color: var(--gray-l); font-size: 0.78rem; }
   .detail-val { color: #fff; font-weight: 600; margin-top: 2px; word-break: break-all; }
 
-  /* Leaderboard Podium */
+  /* Leaderboard Podium — reskinned to established tokens only; whether to
+     keep this feature at all remains an open decision flagged separately. */
   .podium-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -398,10 +414,11 @@
   .podium-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 24px;
     text-align: center;
   }
+  .podium-card h3 { font-family: 'Clash Display', sans-serif; font-weight: 600; }
   .podium-card.rank-1 { border-color: var(--gold); box-shadow: var(--gold-glow); }
 </style>
 </head>
@@ -463,7 +480,7 @@
 
       <!-- Charts & Feeds -->
       <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; padding:24px; margin-bottom:32px">
-        <div style="font-family:'Manrope',sans-serif; font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:16px">30-Day Revenue & Sales Velocity</div>
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:16px">30-Day Revenue & Sales Velocity</div>
         <div style="height:300px"><canvas id="chart-dash-trend"></canvas></div>
       </div>
 
@@ -535,7 +552,7 @@
 
       <div class="data-table-container">
         <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
-          <div style="font-family:'Manrope',sans-serif; font-size:1.1rem; font-weight:700; color:#fff">Affiliate Performance Roster</div>
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Affiliate Performance Roster</div>
         </div>
         <table class="data-table" id="table-affiliates-roster">
           <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Tier</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
@@ -639,7 +656,7 @@
       type: 'line',
       data: {
         labels: (data.daily_trends || []).map(t => t._id),
-        datasets: [{ label: 'Revenue (₦)', data: (data.daily_trends || []).map(t => t.revenue), borderColor: '#d4af37', backgroundColor: 'rgba(212, 175, 55, 0.1)', fill: true, tension: 0.3 }]
+        datasets: [{ label: 'Revenue (₦)', data: (data.daily_trends || []).map(t => t.revenue), borderColor: '#c9973a', backgroundColor: 'rgba(201, 151, 58, 0.1)', fill: true, tension: 0.3 }]
       },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } } }
     });
