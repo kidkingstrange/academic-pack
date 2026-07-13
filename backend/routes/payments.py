@@ -222,6 +222,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             gateway_response=existing_payment.get("gateway_response", {}),
             completed_via="polling",
             ip_address=request.client.host,
+            payment_method=body.payment_method,
         )
         ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
         return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, amount=existing_payment.get("amount", 0))
@@ -318,6 +319,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         gateway_response=charge,
         completed_via="polling",
         ip_address=request.client.host,
+        payment_method=payment_method,
     )
 
     ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
@@ -373,6 +375,7 @@ async def payment_callback(
         gateway_response=charge,
         completed_via="callback",
         ip_address=request.client.host,
+        payment_method=pending.get("payment_method", "pay_with_bank"),
     )
 
     user = await db.users.find_one({"_id": completion["user_id"]})
@@ -401,11 +404,13 @@ async def process_webhook_payment(payload: dict, db):
         name = data.get("customer", {}).get("name") or "Valued Customer"
         amount_paid = float(data.get("amount", 2000))
         charge_id = str(data.get("id"))
+        payment_method = None
     else:
         email = pending.get("email")
         name = pending.get("name")
         amount_paid = pending.get("amount", 2000)
         charge_id = pending.get("charge_id") or pending.get("va_id") or str(data.get("id"))
+        payment_method = pending.get("payment_method")
 
     if not email:
         print(f"⚠️ Webhook: Missing customer email for {ref}")
@@ -424,6 +429,7 @@ async def process_webhook_payment(payload: dict, db):
         charge_id=charge_id,
         gateway_response=data,
         completed_via="webhook",
+        payment_method=payment_method,
     )
     t_end = datetime.now(timezone.utc)
     print(f"✅ Webhook: Payment {ref} processed (completion verified/backfilled). "

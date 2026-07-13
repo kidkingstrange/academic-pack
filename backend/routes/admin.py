@@ -210,10 +210,29 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
 
 
 @router.get("/analytics/sales")
-async def get_analytics_sales(period: str = "all", current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_analytics_sales(
+    period: str = "all",
+    start_date: str = None,
+    end_date: str = None,
+    current_user=Depends(require_admin), db=Depends(get_db),
+):
+    """
+    start_date/end_date (ISO "YYYY-MM-DD") give a genuine arbitrary date
+    range — e.g. reconciling a specific week — and take precedence over
+    the period presets when provided, since presets alone can't answer
+    "show me sales between the 3rd and the 10th".
+    """
     now = datetime.now(timezone.utc)
     query = {}
-    if period == "today":
+
+    if start_date or end_date:
+        date_filter = {}
+        if start_date:
+            date_filter["$gte"] = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        if end_date:
+            date_filter["$lt"] = datetime.strptime(end_date, "%Y-%m-%d").replace(tzinfo=timezone.utc) + timedelta(days=1)
+        query["created_at"] = date_filter
+    elif period == "today":
         query["created_at"] = {"$gte": now.replace(hour=0, minute=0, second=0, microsecond=0)}
     elif period == "yesterday":
         y_start = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
@@ -237,13 +256,25 @@ async def get_analytics_sales(period: str = "all", current_user=Depends(require_
 
 
 @router.get("/analytics/customers")
-async def get_analytics_customers(search: str = "", current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_analytics_customers(
+    search: str = "",
+    start_date: str = None,
+    end_date: str = None,
+    current_user=Depends(require_admin), db=Depends(get_db),
+):
     query = {"role": "customer"}
     if search:
         query["$or"] = [
             {"name": {"$regex": search, "$options": "i"}},
             {"email": {"$regex": search, "$options": "i"}},
         ]
+    if start_date or end_date:
+        date_filter = {}
+        if start_date:
+            date_filter["$gte"] = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        if end_date:
+            date_filter["$lt"] = datetime.strptime(end_date, "%Y-%m-%d").replace(tzinfo=timezone.utc) + timedelta(days=1)
+        query["created_at"] = date_filter
     customers = await db.users.find(query, {"password_hash": 0}).sort("created_at", -1).limit(500).to_list(500)
     total = len(customers)
 
@@ -454,10 +485,13 @@ async def get_sale_details(reference: str, current_user=Depends(require_admin), 
         raise HTTPException(status_code=404, detail="Sale transaction not found")
 
     payment["id"] = str(payment.pop("_id"))
+    if payment.get("user_id"):
+        payment["user_id"] = str(payment["user_id"])
     email = payment.get("email", "").lower()
 
     # Customer Profile Info
     customer = await db.users.find_one({"email": email}, {"password_hash": 0})
+    customer_id = customer["_id"] if customer else None
     if customer:
         customer["id"] = str(customer.pop("_id"))
 
@@ -470,12 +504,20 @@ async def get_sale_details(reference: str, current_user=Depends(require_admin), 
     emails = await db.email_queue.find({"email": email}).sort("scheduled_at", -1).to_list(20)
     for e in emails:
         e["id"] = str(e.pop("_id"))
-        e["subscriber_id"] = str(e.get("subscriber_id", ""))
+        if e.get("subscriber_id"):
+            e["subscriber_id"] = str(e["subscriber_id"])
+        if e.get("user_id"):
+            e["user_id"] = str(e["user_id"])
 
-    # Downloads Activity History
-    downloads = await db.downloads.find({"email": email}).sort("downloaded_at", -1).to_list(50)
-    for d in downloads:
-        d["id"] = str(d.pop("_id"))
+    # Downloads Activity History — downloads are keyed by user_id, not email
+    downloads = []
+    if customer_id:
+        downloads = await db.downloads.find({"user_id": customer_id}).sort("downloaded_at", -1).to_list(50)
+        for d in downloads:
+            d["id"] = str(d.pop("_id"))
+            d["user_id"] = str(d["user_id"])
+            if d.get("product_id"):
+                d["product_id"] = str(d["product_id"])
 
     return {
         "payment": payment,
@@ -565,6 +607,7 @@ async def get_customer_profile(email: str, current_user=Depends(require_admin), 
     if not customer:
         raise HTTPException(status_code=404, detail="Customer profile not found")
 
+    customer_id = customer["_id"]
     customer["id"] = str(customer.pop("_id"))
 
     # Purchases & Payments History
@@ -572,18 +615,27 @@ async def get_customer_profile(email: str, current_user=Depends(require_admin), 
     total_spent = 0
     for p in payments:
         p["id"] = str(p.pop("_id"))
+        if p.get("user_id"):
+            p["user_id"] = str(p["user_id"])
         if p.get("status") == "success":
             total_spent += p.get("amount", 0)
 
-    # Downloads Activity Log
-    downloads = await db.downloads.find({"email": email_clean}).sort("downloaded_at", -1).to_list(100)
+    # Downloads Activity Log — downloads are keyed by user_id, not email
+    downloads = await db.downloads.find({"user_id": customer_id}).sort("downloaded_at", -1).to_list(100)
     for d in downloads:
         d["id"] = str(d.pop("_id"))
+        d["user_id"] = str(d["user_id"])
+        if d.get("product_id"):
+            d["product_id"] = str(d["product_id"])
 
     # Email Delivery Logs
     emails = await db.email_queue.find({"email": email_clean}).sort("scheduled_at", -1).to_list(50)
     for e in emails:
         e["id"] = str(e.pop("_id"))
+        if e.get("subscriber_id"):
+            e["subscriber_id"] = str(e["subscriber_id"])
+        if e.get("user_id"):
+            e["user_id"] = str(e["user_id"])
 
     return {
         "customer": customer,
