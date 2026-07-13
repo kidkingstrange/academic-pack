@@ -29,6 +29,7 @@ async def complete_payment(
     gateway_response: dict,
     completed_via: str,
     ip_address: str = None,
+    payment_method: str = None,
 ) -> dict:
     """
     Idempotently complete a confirmed payment. Safe to call more than once
@@ -59,6 +60,7 @@ async def complete_payment(
             "amount": amount,
             "currency": "NGN",
             "gateway": "flutterwave",
+            "payment_method": payment_method,
             "status": "success",
             "gateway_response": gateway_response,
             "verified_at": now,

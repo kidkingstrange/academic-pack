@@ -513,12 +513,19 @@
           <option value="failed">Failed</option>
           <option value="refunded">Refunded</option>
         </select>
+        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">From
+          <input type="date" class="input-control" id="sales-date-from" onchange="loadSalesView()" style="padding:9px 12px">
+        </label>
+        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">To
+          <input type="date" class="input-control" id="sales-date-to" onchange="loadSalesView()" style="padding:9px 12px">
+        </label>
+        <button class="btn-action btn-secondary" id="sales-date-clear" onclick="clearSalesDateRange()" style="display:none">Clear dates</button>
         <button class="btn-action btn-secondary" onclick="exportSalesCSV()"><i class="bi bi-download"></i> Export CSV</button>
       </div>
 
       <div class="data-table-container">
         <table class="data-table" id="table-sales-management">
-          <thead><tr><th>Verified At</th><th>Reference</th><th>Customer</th><th>Email</th><th>Amount</th><th>Gateway</th><th>Status</th><th>Action</th></tr></thead>
+          <thead><tr><th>Verified At</th><th>Reference</th><th>Customer</th><th>Email</th><th>Amount</th><th>Method</th><th>Gateway</th><th>Status</th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -534,6 +541,13 @@
 
       <div class="filter-bar">
         <input type="text" class="input-control" id="cust-search" placeholder="Search customer name, email..." oninput="loadCustomersView()">
+        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">Joined from
+          <input type="date" class="input-control" id="cust-date-from" onchange="loadCustomersView()" style="padding:9px 12px">
+        </label>
+        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">to
+          <input type="date" class="input-control" id="cust-date-to" onchange="loadCustomersView()" style="padding:9px 12px">
+        </label>
+        <button class="btn-action btn-secondary" id="cust-date-clear" onclick="clearCustDateRange()" style="display:none">Clear dates</button>
       </div>
 
       <div class="data-table-container">
@@ -617,7 +631,7 @@
   function refreshCurrentView() {
     const period = document.getElementById('period-select').value;
     if(currentView === 'dashboard') loadDashboardView(period);
-    if(currentView === 'sales') loadSalesView(period);
+    if(currentView === 'sales') loadSalesView();
     if(currentView === 'customers') loadCustomersView();
     if(currentView === 'affiliates') loadAffiliatesView();
   }
@@ -682,10 +696,37 @@
   }
 
   // ── 2. SALES MANAGEMENT VIEW ──────────────────────────────────────────────
-  async function loadSalesView(period) {
-    const data = await apiCall(`/api/admin/analytics/sales?period=${period}`);
+  function formatPaymentMethod(method) {
+    if (method === 'bank_transfer') return 'Bank Transfer';
+    if (method === 'pay_with_bank') return 'Pay with Bank';
+    return '—';
+  }
+
+  function clearSalesDateRange() {
+    document.getElementById('sales-date-from').value = '';
+    document.getElementById('sales-date-to').value = '';
+    loadSalesView();
+  }
+
+  async function loadSalesView() {
+    const from = document.getElementById('sales-date-from').value;
+    const to = document.getElementById('sales-date-to').value;
+    document.getElementById('sales-date-clear').style.display = (from || to) ? 'inline-flex' : 'none';
+
+    let url;
+    if (from || to) {
+      const params = new URLSearchParams();
+      if (from) params.set('start_date', from);
+      if (to) params.set('end_date', to);
+      url = `/api/admin/analytics/sales?${params.toString()}`;
+    } else {
+      const period = document.getElementById('period-select').value;
+      url = `/api/admin/analytics/sales?period=${period}`;
+    }
+
+    const data = await apiCall(url);
     allSalesData = data.transactions || [];
-    renderSalesTable(allSalesData);
+    filterSales();
   }
 
   function filterSales() {
@@ -710,6 +751,7 @@
         <td style="font-weight:600">${s.name}</td>
         <td>${s.email}</td>
         <td style="color:var(--gold-light);font-weight:700">${money(s.amount)}</td>
+        <td>${formatPaymentMethod(s.payment_method)}</td>
         <td style="text-transform:capitalize">${s.gateway || 'Flutterwave'}</td>
         <td><span class="status-pill ${s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed')}">${s.status}</span></td>
         <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectSale('${s.reference}')">Inspect →</button></td>
@@ -731,7 +773,8 @@
           <div><div class="detail-label">Status</div><div class="detail-val"><span class="status-pill ${p.status === 'success' ? 'success' : 'pending'}">${p.status}</span></div></div>
           <div><div class="detail-label">Amount</div><div class="detail-val" style="color:var(--gold-light);font-size:1.1rem">${money(p.amount)}</div></div>
           <div><div class="detail-label">Provider</div><div class="detail-val">${p.gateway || 'Flutterwave'}</div></div>
-          <div><div class="detail-label">Verified At</div><div class="detail-val">${p.verified_at ? new Date(p.verified_at).toLocaleString() : 'Pending'}</div></div>
+          <div><div class="detail-label">Payment Method</div><div class="detail-val">${formatPaymentMethod(p.payment_method)}</div></div>
+          <div style="grid-column:span 2"><div class="detail-label">Verified At</div><div class="detail-val">${p.verified_at ? new Date(p.verified_at).toLocaleString() : 'Pending'}</div></div>
         </div>
       </div>
 
@@ -786,9 +829,9 @@
   }
 
   function exportSalesCSV() {
-    let csv = 'Date,Reference,Name,Email,Amount,Status,Gateway\n';
+    let csv = 'Date,Reference,Name,Email,Amount,Status,Method,Gateway\n';
     allSalesData.forEach(s => {
-      csv += `"${s.verified_at || ''}","${s.reference}","${s.name}","${s.email}",${s.amount},"${s.status}","${s.gateway || 'flutterwave'}"\n`;
+      csv += `"${s.verified_at || ''}","${s.reference}","${s.name}","${s.email}",${s.amount},"${s.status}","${formatPaymentMethod(s.payment_method)}","${s.gateway || 'flutterwave'}"\n`;
     });
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
@@ -797,9 +840,23 @@
   }
 
   // ── 3. CUSTOMER MANAGEMENT VIEW ───────────────────────────────────────────
+  function clearCustDateRange() {
+    document.getElementById('cust-date-from').value = '';
+    document.getElementById('cust-date-to').value = '';
+    loadCustomersView();
+  }
+
   async function loadCustomersView() {
     const search = document.getElementById('cust-search').value;
-    const data = await apiCall(`/api/admin/analytics/customers?search=${encodeURIComponent(search || '')}`);
+    const from = document.getElementById('cust-date-from').value;
+    const to = document.getElementById('cust-date-to').value;
+    document.getElementById('cust-date-clear').style.display = (from || to) ? 'inline-flex' : 'none';
+
+    const params = new URLSearchParams();
+    params.set('search', search || '');
+    if (from) params.set('start_date', from);
+    if (to) params.set('end_date', to);
+    const data = await apiCall(`/api/admin/analytics/customers?${params.toString()}`);
 
     document.getElementById('cust-kpi-total').textContent = data.total;
     document.getElementById('cust-kpi-repeat').textContent = `${data.repeat_purchase_rate}%`;
