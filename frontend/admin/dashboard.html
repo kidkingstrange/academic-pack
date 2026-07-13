@@ -403,23 +403,9 @@
   .detail-label { color: var(--gray-l); font-size: 0.78rem; }
   .detail-val { color: #fff; font-weight: 600; margin-top: 2px; word-break: break-all; }
 
-  /* Leaderboard Podium — reskinned to established tokens only; whether to
-     keep this feature at all remains an open decision flagged separately. */
-  .podium-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-  .podium-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    text-align: center;
-  }
-  .podium-card h3 { font-family: 'Clash Display', sans-serif; font-weight: 600; }
-  .podium-card.rank-1 { border-color: var(--gold); box-shadow: var(--gold-glow); }
+  .rate-cell { display: flex; align-items: center; gap: 6px; }
+  .rate-edit-btn { background: none; border: none; color: var(--gold-l); cursor: pointer; font-size: .85rem; padding: 2px 4px; }
+  .rate-edit-btn:hover { color: var(--gold); }
 </style>
 </head>
 <body>
@@ -560,8 +546,15 @@
 
     <!-- ── VIEW 4: AFFILIATE ENGINE (Growth & Payouts) ─────────────────────── -->
     <div id="view-affiliates" class="section">
-      <div class="podium-grid" id="aff-podium">
-        <!-- Injected Top 3 -->
+      <div class="filter-bar">
+        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:8px">Sort by
+          <select class="period-select" id="aff-sort" onchange="renderAffiliatesTable()">
+            <option value="created">Newest</option>
+            <option value="revenue">Revenue (highest first)</option>
+            <option value="owed">Commission Owed (highest first)</option>
+            <option value="clicks">Clicks (highest first)</option>
+          </select>
+        </label>
       </div>
 
       <div class="data-table-container">
@@ -569,7 +562,7 @@
           <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Affiliate Performance Roster</div>
         </div>
         <table class="data-table" id="table-affiliates-roster">
-          <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Tier</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -895,7 +888,7 @@
         <div class="drawer-section-title">Purchase History (${(data.purchases || []).length})</div>
         ${(data.purchases || []).map(p => `
           <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between">
-            <div><div style="font-weight:700">${p.reference}</div><div style="font-size:0.75rem;color:var(--text-muted)">${new Date(p.verified_at || p.created_at).toLocaleDateString()}</div></div>
+            <div><div style="font-weight:700">${p.reference}</div><div style="font-size:0.75rem;color:var(--gray-l)">${new Date(p.verified_at || p.created_at).toLocaleDateString()}</div></div>
             <div style="text-align:right"><div style="color:var(--gold-light);font-weight:700">${money(p.amount)}</div><span class="status-pill success">${p.status}</span></div>
           </div>
         `).join('')}
@@ -904,7 +897,7 @@
       <div class="drawer-section">
         <div class="drawer-section-title">Book Downloads History (${(data.downloads || []).length})</div>
         ${(data.downloads || []).map(d => `
-          <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:6px">
+          <div style="font-size:0.8rem;color:var(--gray-l);margin-bottom:6px">
             <i class="bi bi-file-earmark-pdf"></i> Downloaded PDF on ${new Date(d.downloaded_at).toLocaleString()}
           </div>
         `).join('')}
@@ -914,44 +907,70 @@
   }
 
   // ── 4. AFFILIATES ENGINE VIEW ──────────────────────────────────────────────
+  let allAffiliatesData = [];
+
   async function loadAffiliatesView() {
     const data = await apiCall('/api/admin/analytics/affiliates');
-    const affs = data.affiliates || [];
+    allAffiliatesData = data.affiliates || [];
+    renderAffiliatesTable();
+  }
 
-    // Top 3 Podium
-    document.getElementById('aff-podium').innerHTML = affs.slice(0, 3).map((a, i) => `
-      <div class="podium-card rank-${i+1}">
-        <div style="font-size:0.75rem;font-weight:800;color:var(--gold-light)">RANK #${i+1}</div>
-        <h3 style="font-size:1.1rem;color:#fff;margin:6px 0">${a.name}</h3>
-        <p style="font-size:0.8rem;color:var(--text-muted)">Code: <code>${a.code}</code></p>
-        <div style="font-size:1.3rem;font-weight:800;color:var(--gold-light);margin-top:8px">${money(a.revenue)}</div>
-      </div>
-    `).join('');
+  function renderAffiliatesTable() {
+    const sortBy = document.getElementById('aff-sort').value;
+    const affs = [...allAffiliatesData].sort((a, b) => {
+      if (sortBy === 'revenue') return (b.revenue || 0) - (a.revenue || 0);
+      if (sortBy === 'owed') return (b.commission_owed || 0) - (a.commission_owed || 0);
+      if (sortBy === 'clicks') return (b.clicks || 0) - (a.clicks || 0);
+      return new Date(b.created_at) - new Date(a.created_at);
+    });
 
     const tbody = document.querySelector('#table-affiliates-roster tbody');
+    if (affs.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center">No affiliates yet</td></tr>';
+      return;
+    }
     tbody.innerHTML = affs.map(a => `
       <tr>
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
         <td><code>${a.code}</code></td>
         <td style="font-weight:600">${a.name}</td>
-        <td><span class="status-pill pending">${a.badge || '—'}</span></td>
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>
         <td>${money(a.revenue)}</td>
+        <td>
+          <div class="rate-cell">
+            ${a.commission_percent}%
+            <button class="rate-edit-btn" onclick="editCommissionRate('${a.id}', ${a.commission_percent})" title="Edit rate"><i class="bi bi-pencil-square"></i></button>
+          </div>
+        </td>
         <td>${money(a.commission_earned)}</td>
         <td>${money(a.commission_paid)}</td>
         <td style="color:var(--gold-light);font-weight:800">${money(a.commission_owed)}</td>
         <td>
-          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="markPayout('${a.code}')">Payout Owed</button>` : `<span style="font-size:0.75rem;color:var(--text-muted)">Settled</span>`}
+          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="markPayout('${a.id}', '${a.name.replace(/'/g, "\\'")}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
         </td>
       </tr>
     `).join('');
   }
 
-  async function markPayout(code) {
-    if(!confirm(`Mark all pending payouts for affiliate code ${code} as PAID?`)) return;
-    await apiCall(`/api/admin/affiliates/${code}/mark-payout`, 'POST', {});
-    alert(`Commissions marked as paid for ${code}!`);
+  async function editCommissionRate(affiliateId, currentRate) {
+    const input = prompt('New commission percentage for this affiliate:', currentRate);
+    if (input === null) return;
+    const value = Number(input);
+    if (isNaN(value) || value < 0 || value > 100) {
+      alert('Please enter a number between 0 and 100.');
+      return;
+    }
+    await apiCall(`/api/admin/affiliates/${affiliateId}/commission`, 'PATCH', { commission_percent: value });
+    loadAffiliatesView();
+  }
+
+  async function markPayout(affiliateId, name) {
+    if(!confirm(`Mark all outstanding commission for ${name} as paid?\n\nOnly do this after you've actually sent them the money yourself — this just logs it as settled, it does not send any money.`)) return;
+    const result = await apiCall(`/api/admin/affiliates/${affiliateId}/mark-paid`, 'POST', {});
+    if (result.amount_marked_paid > 0) {
+      alert(`Marked ${money(result.amount_marked_paid)} as paid for ${name}.`);
+    }
     loadAffiliatesView();
   }
 
