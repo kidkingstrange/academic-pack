@@ -121,7 +121,7 @@ async def list_customers(
 
 @router.get("/payments")
 async def list_payments(
-    page: int = 1, limit: int = 20,
+    page: int = 1, limit: int = 200,
     current_user=Depends(require_admin), db=Depends(get_db)
 ):
     skip = (page - 1) * limit

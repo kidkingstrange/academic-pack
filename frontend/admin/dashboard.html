@@ -487,6 +487,15 @@
           <div style="height:260px"><canvas id="chart-sales-gateways"></canvas></div>
         </div>
       </div>
+      <div class="data-table-container">
+        <div style="padding: 20px 24px 12px; font-family:'Manrope',sans-serif; font-size:1.1rem; font-weight:700; color:#fff; display:flex; justify-content:space-between; align-items:center;">
+          <span>All Sales & Transactions (<span id="sales-count-badge">0</span>)</span>
+        </div>
+        <table class="data-table" id="table-sales">
+          <thead><tr><th>Date</th><th>Reference</th><th>Name</th><th>Email</th><th>Amount</th><th>Gateway</th><th>Status</th></tr></thead>
+          <tbody><!-- Injected --></tbody>
+        </table>
+      </div>
     </div>
 
     <!-- 4. Customer Analytics -->
@@ -725,6 +734,27 @@
       },
       options: { responsive: true, maintainAspectRatio: false }
     });
+
+    // Populate All Sales Table
+    const tbody = document.querySelector('#table-sales tbody');
+    const txs = data.transactions || [];
+    const badgeEl = document.getElementById('sales-count-badge');
+    if(badgeEl) badgeEl.textContent = txs.length;
+    tbody.innerHTML = txs.map(t => {
+      const dt = t.verified_at || t.created_at;
+      const dStr = dt ? new Date(dt).toLocaleDateString() : 'N/A';
+      return `
+        <tr>
+          <td>${dStr}</td>
+          <td><code>${t.reference || 'N/A'}</code></td>
+          <td style="font-weight:600">${t.name || 'Valued Customer'}</td>
+          <td>${t.email || ''}</td>
+          <td style="color:var(--gold-light);font-weight:700">${money(t.amount)}</td>
+          <td style="text-transform:capitalize">${t.gateway || 'flutterwave'}</td>
+          <td><span class="status-pill ${t.status === 'success' ? 'success' : (t.status === 'pending' ? 'pending' : 'failed')}">${t.status}</span></td>
+        </tr>
+      `;
+    }).join('');
   }
 
   // 4. Customer Analytics

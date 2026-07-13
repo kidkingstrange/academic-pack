@@ -108,11 +108,17 @@ async def serve_library():
 
 @app.get("/admin", include_in_schema=False)
 async def serve_admin():
-    return FileResponse(str(frontend_path / "admin" / "index.html"))
+    return FileResponse(
+        str(frontend_path / "admin" / "index.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/admin/dashboard", include_in_schema=False)
 async def serve_dashboard():
-    return FileResponse(str(frontend_path / "admin" / "dashboard.html"))
+    return FileResponse(
+        str(frontend_path / "admin" / "dashboard.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/affiliate/register", include_in_schema=False)
 async def serve_affiliate_register():

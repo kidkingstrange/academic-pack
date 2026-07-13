@@ -289,6 +289,17 @@ async def get_sales_analytics(
         }}
     ]).to_list(10)
 
+    # All transactions roster list
+    tx_docs = await db.payments.find(match_query, {"gateway_response": 0}).sort("created_at", -1).to_list(500)
+    transactions = []
+    for tx in tx_docs:
+        tx["id"] = str(tx.pop("_id"))
+        if "verified_at" in tx and tx["verified_at"]:
+            tx["verified_at"] = tx["verified_at"].isoformat() if hasattr(tx["verified_at"], "isoformat") else str(tx["verified_at"])
+        if "created_at" in tx and tx["created_at"]:
+            tx["created_at"] = tx["created_at"].isoformat() if hasattr(tx["created_at"], "isoformat") else str(tx["created_at"])
+        transactions.append(tx)
+
     return {
         "status_counts": {
             "successful": successful,
@@ -299,7 +310,8 @@ async def get_sales_analytics(
         },
         "payment_methods": by_gateway,
         "avg_cart_value": 2000.0,
-        "upsell_rate": 0.0
+        "upsell_rate": 0.0,
+        "transactions": transactions
     }
 
 
