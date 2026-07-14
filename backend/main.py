@@ -152,7 +152,7 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
             "referrer": request.headers.get("referer", ""),
             "created_at": datetime.now(timezone.utc),
         })
-        return RedirectResponse(url=f"/?ref={normalized}")
+        return RedirectResponse(url=f"/?ref={normalized}&price=5000")
     return RedirectResponse(url="/")
 
 # ── Health Check ──────────────────────────────────────────────────────────────

@@ -62,7 +62,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             if body.client_expiry < now.timestamp() * 1000:
                 is_expired = True
 
-    if is_expired:
+    if is_expired or referred_by:
         amount_naira = settings.PRODUCT_PRICE_LATE_NAIRA
 
     # ── Upsert lead ───────────────────────────────────────────────────
