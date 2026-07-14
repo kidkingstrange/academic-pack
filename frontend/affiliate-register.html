@@ -167,6 +167,32 @@
   let filteredBanks = [];
   let activeIndex = -1;
 
+  // Plain substring matching misses common real-world searches: the live
+  // Flutterwave names are spaced/full ("Citi Bank", "Safe Haven MFB",
+  // "Guaranty Trust Bank") while people type them squashed or abbreviated
+  // ("citibank", "safehaven", "gtb"). Normalize away spacing/punctuation
+  // for the match, and alias the handful of genuine abbreviations that
+  // aren't just spacing differences.
+  const BANK_ALIASES = {
+    gtb: 'guarantytrust',
+    gtbank: 'guarantytrust',
+    uba: 'unitedbankforafrica',
+    fcmb: 'firstcitymonument',
+  };
+  function normalize(s) {
+    return s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+  function bankMatches(bank, rawQuery) {
+    const q = rawQuery.toLowerCase().trim();
+    if (!q) return false;
+    if (bank.name.toLowerCase().includes(q)) return true;
+    const normQ = normalize(q);
+    const normName = normalize(bank.name);
+    if (normName.includes(normQ)) return true;
+    const aliasTarget = BANK_ALIASES[normQ];
+    return !!(aliasTarget && normName.includes(aliasTarget));
+  }
+
   // Bank list sourced from our own backend (Flutterwave), not Paystack's
   // public API — the bank `code` values must match what /resolve-bank
   // expects, and this app authenticates with Flutterwave everywhere else.
@@ -216,7 +242,7 @@
       renderSuggestions();
       return;
     }
-    filteredBanks = allBanks.filter(b => b.name.toLowerCase().includes(q)).slice(0, 40);
+    filteredBanks = allBanks.filter(b => bankMatches(b, q)).slice(0, 40);
     activeIndex = -1;
     renderSuggestions();
   });
