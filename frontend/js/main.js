@@ -1,14 +1,24 @@
 // Countdown Timer & Price Controller
 (function() {
   const KEY = 'ac_expiry';
-  let expiry = localStorage.getItem(KEY);
   const urlParams = new URLSearchParams(window.location.search);
   const isAffiliateRef = urlParams.has('ref') || urlParams.get('price') === '5000';
 
   if (isAffiliateRef) {
-    expiry = Date.now() - 1000;
-    localStorage.setItem(KEY, expiry);
-  } else if (!expiry || isNaN(Number(expiry))) {
+    // Hide urgency bar and 24-hour warning text for affiliate referral links
+    const bar = document.getElementById('urgency-bar');
+    if (bar) bar.style.display = 'none';
+
+    document.querySelectorAll('.price-warning-notice').forEach(el => el.style.display = 'none');
+    document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
+    document.querySelectorAll('.price-urgency-badge').forEach(n => {
+      n.style.display = 'none';
+    });
+    return;
+  }
+
+  let expiry = localStorage.getItem(KEY);
+  if (!expiry || isNaN(Number(expiry))) {
     expiry = Date.now() + 24 * 60 * 60 * 1000;
     localStorage.setItem(KEY, expiry);
   }
