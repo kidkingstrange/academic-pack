@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block subject %}Ready to share your link, {{ name }}?{% endblock %}
+{% block content %}
+<p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  You grabbed your promo materials a few days ago — just a quick reminder that your referral link is live and ready whenever you are.
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(201,151,58,0.06);border:1px solid rgba(201,151,58,0.25);border-radius:12px;padding:20px;margin:0 0 20px">
+  <tr><td style="padding:16px;text-align:center">
+    <p style="color:#666;font-size:13px;margin:0 0 14px;word-break:break-all">{{ referral_link }}</p>
+    <a href="{{ referral_link }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:700;font-size:14px;padding:12px 28px;border-radius:50px;text-decoration:none">
+      View Your Link →
+    </a>
+  </td></tr>
+</table>
+
+<p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 16px">
+  No pressure — just didn't want your materials to go to waste. Share it whenever it feels right.
+</p>
+
+<p style="font-size:15px;color:#333;margin:24px 0 0">
+  — Itoya David<br>
+  <span style="color:#999;font-size:13px">Founder, Scale Group · First Class Graduate</span>
+</p>
+{% endblock %}

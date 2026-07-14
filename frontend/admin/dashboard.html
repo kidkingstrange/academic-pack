@@ -547,6 +547,29 @@
 
     <!-- ── VIEW 4: AFFILIATE ENGINE (Growth & Payouts) ─────────────────────── -->
     <div id="view-affiliates" class="section">
+      <div style="margin-bottom:20px">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:14px">Affiliate Program Health</div>
+        <div class="kpi-grid" style="margin-bottom:20px">
+          <div class="kpi-card"><div class="kpi-title">Monthly Active Affiliates</div><div class="kpi-val gold" id="health-maa">0</div></div>
+          <div class="kpi-card"><div class="kpi-title">Activation Rate</div><div class="kpi-val" id="health-activation">0%</div></div>
+          <div class="kpi-card"><div class="kpi-title">Total Registered</div><div class="kpi-val" id="health-registered">0</div></div>
+          <div class="kpi-card"><div class="kpi-title">Revenue Concentration (Top 20%)</div><div class="kpi-val" id="health-concentration">0%</div></div>
+          <div class="kpi-card"><div class="kpi-title">Retention Rate</div><div class="kpi-val" id="health-retention">—</div></div>
+          <div class="kpi-card"><div class="kpi-title">Avg. Time to First Sale</div><div class="kpi-val" id="health-ttfs">—</div></div>
+        </div>
+        <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; padding:24px; margin-bottom:24px">
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:16px">MAA Trend (Last 6 Months)</div>
+          <div style="height:220px"><canvas id="chart-maa-trend"></canvas></div>
+        </div>
+        <div class="data-table-container">
+          <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Never Activated — Needs a Nudge</div>
+          <table class="data-table" id="table-never-activated">
+            <thead><tr><th>Registered</th><th>Code</th><th>Name</th><th>Email</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="filter-bar">
         <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:8px">Sort by
           <select class="period-select" id="aff-sort" onchange="renderAffiliatesTable()">
@@ -637,6 +660,7 @@
   let currentView = 'dashboard';
   let allSalesData = [];
   let chartTrend = null;
+  let chartMaaTrend = null;
 
   function logout() {
     sessionStorage.removeItem('admin_token');
@@ -963,6 +987,45 @@
     const data = await apiCall('/api/admin/analytics/affiliates');
     allAffiliatesData = data.affiliates || [];
     renderAffiliatesTable();
+    loadAffiliateHealth();
+  }
+
+  async function loadAffiliateHealth() {
+    const h = await apiCall('/api/admin/analytics/affiliate-health');
+    if (!h || h.detail) return;
+
+    document.getElementById('health-maa').textContent = h.maa_current;
+    document.getElementById('health-activation').textContent = `${h.activation_rate}%`;
+    document.getElementById('health-registered').textContent = h.total_registered;
+    document.getElementById('health-concentration').textContent = h.revenue_concentration_top20 == null ? '—' : `${h.revenue_concentration_top20}%`;
+    document.getElementById('health-retention').textContent = h.retention_rate == null ? '—' : `${h.retention_rate}%`;
+    document.getElementById('health-ttfs').textContent = h.avg_time_to_first_sale_days == null ? '—' : `${h.avg_time_to_first_sale_days}d`;
+
+    const ctx = document.getElementById('chart-maa-trend');
+    if (chartMaaTrend) chartMaaTrend.destroy();
+    chartMaaTrend = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: (h.maa_trend || []).map(t => t.month),
+        datasets: [{ label: 'Monthly Active Affiliates', data: (h.maa_trend || []).map(t => t.maa), borderColor: '#c9973a', backgroundColor: 'rgba(201, 151, 58, 0.1)', fill: true, tension: 0.3 }],
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } } },
+    });
+
+    const tbody = document.querySelector('#table-never-activated tbody');
+    const list = h.never_activated || [];
+    if (list.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Every registered affiliate has activated</td></tr>';
+    } else {
+      tbody.innerHTML = list.map(a => `
+        <tr>
+          <td>${new Date(a.created_at).toLocaleDateString()}</td>
+          <td style="font-weight:700;color:var(--gold-light)">${a.code}</td>
+          <td>${a.name}</td>
+          <td>${a.email}</td>
+        </tr>
+      `).join('');
+    }
   }
 
   function renderAffiliatesTable() {

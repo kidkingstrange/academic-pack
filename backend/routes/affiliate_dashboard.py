@@ -7,11 +7,16 @@ Returns only what an affiliate needs to see about themselves: their own
 clicks, conversions, revenue, commission rate, and what's been paid vs
 still owed. No other affiliate's data is ever reachable through this.
 """
+from datetime import datetime, timezone
+
 from fastapi import APIRouter, Depends, HTTPException
 
+from ..config import get_settings
 from ..database import get_db
+from ..services.marketing_assets import get_asset, list_assets_for_affiliate
 
 router = APIRouter(prefix="/api/affiliate", tags=["affiliate-dashboard"])
+settings = get_settings()
 
 
 @router.get("/me")
@@ -103,3 +108,38 @@ async def update_my_bank_details(token: str, body: dict, db=Depends(get_db)):
         "account_number": account_number,
         "account_name": account_name,
     }
+
+
+@router.get("/marketing-assets")
+async def get_marketing_assets(token: str, db=Depends(get_db)):
+    affiliate = await db.affiliates.find_one({"dashboard_token": token})
+    if not affiliate:
+        raise HTTPException(status_code=401, detail="Invalid dashboard link")
+
+    referral_link = f"{settings.APP_URL}/r/{affiliate['code']}"
+    return {"assets": list_assets_for_affiliate(referral_link)}
+
+
+@router.post("/marketing-assets/log-download")
+async def log_marketing_asset_download(token: str, body: dict, db=Depends(get_db)):
+    """
+    Records a download event — counts toward "activated" status (see
+    services/affiliate_health_service.py) and starts the 3-day nudge
+    clock (workers/affiliate_nudge_scheduler.py) if they never click
+    their own link afterward.
+    """
+    affiliate = await db.affiliates.find_one({"dashboard_token": token})
+    if not affiliate:
+        raise HTTPException(status_code=401, detail="Invalid dashboard link")
+
+    asset_name = (body.get("asset_name") or "").strip()
+    if not get_asset(asset_name):
+        raise HTTPException(status_code=400, detail="Unknown asset")
+
+    await db.marketing_asset_downloads.insert_one({
+        "affiliate_code": affiliate["code"],
+        "asset_name": asset_name,
+        "downloaded_at": datetime.now(timezone.utc),
+        "nudge_sent": False,
+    })
+    return {"status": "ok"}
