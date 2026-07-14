@@ -402,11 +402,11 @@ def prepare_covers():
 
     source_images = BASE_DIR / "frontend" / "assets" / "images"
     image_mapping = [
-        ("bookcoverlandscape.webp", "01_ACADEMIC_COMEBACK_BUNDLE_LANDSCAPE.png"),
-        ("bookcover.webp", "02_GET_GOOD_AT_HARD_THINGS.png"),
-        ("bookcover1.webp", "03_HOW_TO_SCORE_HIGH_IN_ANY_EXAM.png"),
-        ("bookcover2.webp", "04_HOW_TO_BALANCE_ACADEMICS_AND_YOUR_BUSINESS.png"),
-        ("bookcover3.webp", "05_RESULTS_ORIENTED_LEARNING_SYSTEM.png"),
+        ("bookcoverlandscape.webp", "Complete Academic Comeback Bundle (Landscape Cover).png"),
+        ("bookcover1.webp", "How To Score High In Any Exam (Book Cover).png"),
+        ("bookcover.webp", "Get Good At Hard Things (Book Cover).png"),
+        ("bookcover2.webp", "How To Balance Academics and Business (Book Cover).png"),
+        ("bookcover3.webp", "Results-Oriented Learning System (Book Cover).png"),
     ]
     
     for src_name, dest_name in image_mapping:
