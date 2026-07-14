@@ -378,10 +378,10 @@ async function pollPayment() {
       document.getElementById('payment-success').style.display = 'block';
       fireVerifiedPurchase(currentReference, data.amount);
       sessionStorage.setItem('ac_token', data.token);
-      // Persist access — survives tab close, unlike sessionStorage
       if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
       localStorage.setItem('ac_purchased', 'true');
-      setTimeout(() => { window.location.href = '/welcome'; }, 1500);
+      const targetUrl = data.token ? `/welcome?token=${encodeURIComponent(data.token)}` : '/welcome';
+      setTimeout(() => { window.location.href = targetUrl; }, 1500);
       return;
     }
 
@@ -461,7 +461,10 @@ function showResumePaymentBanner(pending) {
         clearPendingPayment();
         fireVerifiedPurchase(pending.reference, data.amount);
         sessionStorage.setItem('ac_token', data.token);
-        window.location.href = '/welcome';
+        if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
+        localStorage.setItem('ac_purchased', 'true');
+        const targetUrl = data.token ? `/welcome?token=${encodeURIComponent(data.token)}` : '/welcome';
+        window.location.href = targetUrl;
         return;
       }
       showResumePaymentBanner(pending);
