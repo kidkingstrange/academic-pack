@@ -46,6 +46,9 @@ async def connect_db():
         await db.referral_clicks.create_index([("affiliate_code", 1), ("created_at", -1)])
         await db.referrals.create_index("reference", unique=True)
         await db.referrals.create_index([("affiliate_code", 1), ("commission_status", 1)])
+        await db.payout_batches.create_index([("created_at", -1)])
+        await db.payout_batches.create_index([("status", 1)])
+        await db.settlement_withdrawals.create_index([("created_at", -1)])
         print("✅ MongoDB connected")
     except Exception as e:
         print(f"⚠️ Warning: Could not connect to MongoDB ({e}). Running in UI-only mode.")

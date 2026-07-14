@@ -72,19 +72,28 @@ async def update_my_bank_details(token: str, body: dict, db=Depends(get_db)):
         raise HTTPException(status_code=401, detail="Invalid dashboard link")
 
     bank_name = (body.get("bank_name") or "").strip()
+    bank_code = (body.get("bank_code") or "").strip()
     account_number = (body.get("account_number") or "").strip()
     account_name = (body.get("account_name") or "").strip()
 
     if not bank_name or not account_number or not account_name:
         raise HTTPException(status_code=400, detail="Bank name, account number, and account name are required")
 
+    update_fields = {
+        "bank_name": bank_name,
+        "account_number": account_number,
+        "account_name": account_name,
+    }
+    # bank_code is only sent by the combobox-driven registration form, not
+    # the older plain-text bank-name prompt still used here — only touch
+    # it when actually provided, so that flow doesn't silently wipe a
+    # previously-verified code the payout system depends on.
+    if bank_code:
+        update_fields["bank_code"] = bank_code
+
     await db.affiliates.update_one(
         {"_id": affiliate["_id"]},
-        {"$set": {
-            "bank_name": bank_name,
-            "account_number": account_number,
-            "account_name": account_name,
-        }}
+        {"$set": update_fields}
     )
 
     return {

@@ -66,6 +66,15 @@ class Settings(BaseSettings):
     # when a new affiliate is created with no explicit rate given.
     AFFILIATE_DEFAULT_COMMISSION_PERCENT: float = 60.0
 
+    # ── Settlement (your own payout destination) ─────────────────────
+    # Used only by the periodic "withdraw my share" transfer, once the
+    # Flutterwave account is switched to manual settlement (funds
+    # accumulate in the payout balance instead of auto-hitting your
+    # personal bank). Never exposed in any dashboard response.
+    SETTLEMENT_BANK_CODE: str = ""
+    SETTLEMENT_ACCOUNT_NUMBER: str = ""
+    SETTLEMENT_ACCOUNT_NAME: str = ""
+
     @property
     def cors_origins_list(self) -> List[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",")]

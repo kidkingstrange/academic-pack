@@ -20,8 +20,10 @@ from .database import connect_db, disconnect_db, get_db
 from .routes import (
     payments, library, admin as admin_router, community,
     affiliates, affiliate_public, affiliate_dashboard, tracking,
+    admin_payouts,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
+from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
 
@@ -74,6 +76,7 @@ app.include_router(affiliates.router)
 app.include_router(affiliate_public.router)
 app.include_router(affiliate_dashboard.router)
 app.include_router(tracking.router)
+app.include_router(admin_payouts.router)
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
 # and additionally bakes in a tier-badge system, a ranked leaderboard,
@@ -267,9 +270,11 @@ async def unsubscribe(token: str = "", db=Depends(get_db)):
 async def startup():
     await connect_db()
     start_scheduler()
+    start_payout_scheduler()
     print(f"🚀 {settings.APP_NAME} API started")
 
 @app.on_event("shutdown")
 async def shutdown():
     stop_scheduler()
+    stop_payout_scheduler()
     await disconnect_db()
