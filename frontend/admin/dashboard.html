@@ -560,6 +560,9 @@
       <div class="data-table-container">
         <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
           <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Affiliate Performance Roster</div>
+          <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateAffiliateModal()">
+            <i class="bi bi-person-plus-fill"></i> + Add New Affiliate
+          </button>
         </div>
         <table class="data-table" id="table-affiliates-roster">
           <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
@@ -972,6 +975,54 @@
       alert(`Marked ${money(result.amount_marked_paid)} as paid for ${name}.`);
     }
     loadAffiliatesView();
+  }
+
+  function openCreateAffiliateModal() {
+    document.getElementById('drawer-title').textContent = 'Add New Affiliate Partner';
+    document.getElementById('drawer-content').innerHTML = `
+      <form onsubmit="submitCreateAffiliate(event)">
+        <div class="drawer-section">
+          <div class="drawer-section-title">Partner Details</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <div class="detail-label" style="margin-bottom:6px">Full Name</div>
+              <input type="text" id="aff-create-name" class="input-control" style="width:100%" placeholder="e.g. Victor Smith" required>
+            </div>
+            <div>
+              <div class="detail-label" style="margin-bottom:6px">Email Address</div>
+              <input type="email" id="aff-create-email" class="input-control" style="width:100%" placeholder="e.g. victor@example.com" required>
+            </div>
+            <div>
+              <div class="detail-label" style="margin-bottom:6px">Custom Referral Code (Optional)</div>
+              <input type="text" id="aff-create-code" class="input-control" style="width:100%" placeholder="e.g. VICS20 (leave blank to auto-generate)">
+            </div>
+            <div>
+              <div class="detail-label" style="margin-bottom:6px">Commission Rate (%)</div>
+              <input type="number" id="aff-create-rate" class="input-control" style="width:100%" value="50" min="0" max="100" step="0.5" required>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-action" style="width:100%;justify-content:center;margin-top:10px"><i class="bi bi-person-check-fill"></i> Create Affiliate Partner</button>
+      </form>
+    `;
+    openDrawer();
+  }
+
+  async function submitCreateAffiliate(e) {
+    e.preventDefault();
+    const name = document.getElementById('aff-create-name').value.trim();
+    const email = document.getElementById('aff-create-email').value.trim();
+    const code = document.getElementById('aff-create-code').value.trim() || undefined;
+    const commission_percent = Number(document.getElementById('aff-create-rate').value) || 50.0;
+
+    const res = await apiCall('/api/admin/affiliates', 'POST', { name, email, code, commission_percent });
+    if (res.code) {
+      alert(`✅ Affiliate '${res.name}' created successfully!\n\nReferral Code: ${res.code}\nCommission Rate: ${res.commission_percent}%`);
+      closeDrawer();
+      loadAffiliatesView();
+    } else {
+      alert(`❌ Error: ${res.detail || 'Could not create affiliate'}`);
+    }
   }
 
   // ── Drawer Open/Close ──────────────────────────────────────────────────────
