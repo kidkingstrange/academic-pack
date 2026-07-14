@@ -137,6 +137,18 @@ async def send_affiliate_nudge_email(name: str, email: str, referral_link: str):
     return await send_email(email, f"Ready to share your link, {name}?", html)
 
 
+async def send_checkout_recovery_email(name: str, email: str):
+    """One-time reminder for a lead who started checkout but never
+    completed payment. Sent exactly once per lead — see
+    workers/checkout_recovery_scheduler.py."""
+    html = render_template("checkout_recovery.html", {
+        "name": name,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    return await send_email(email, f"Still want the Academic Comeback Package, {name}?", html)
+
+
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):
     """Send a scheduled sequence email."""
     merged = {

@@ -8,6 +8,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
 from ..services.email_service import (
     send_sequence_email, send_welcome_email, send_affiliate_welcome_email, send_affiliate_nudge_email,
+    send_checkout_recovery_email,
 )
 
 scheduler = AsyncIOScheduler()
@@ -158,7 +159,7 @@ async def process_email_queue():
                     "scheduled_at": {"$lte": now},
                     "$or": [
                         {"retry_count": {"$lt": 3}},
-                        {"kind": {"$in": ["welcome", "affiliate_welcome", "affiliate_nudge"]}, "retry_count": {"$lt": 10}}
+                        {"kind": {"$in": ["welcome", "affiliate_welcome", "affiliate_nudge", "checkout_recovery"]}, "retry_count": {"$lt": 10}}
                     ]
                 },
                 {"$set": {"status": "sending"}},
@@ -195,6 +196,11 @@ async def process_email_queue():
                         email=item["email"],
                         referral_link=item["referral_link"],
                     )
+                elif kind == "checkout_recovery":
+                    success, error_msg = await send_checkout_recovery_email(
+                        name=item["name"],
+                        email=item["email"],
+                    )
                 else:
                     subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
                     if not subscriber or not subscriber.get("is_active"):
@@ -217,7 +223,7 @@ async def process_email_queue():
                         {"_id": item["_id"]},
                         {"$set": {"status": "sent", "sent_at": now}}
                     )
-                    if kind not in ("welcome", "affiliate_welcome", "affiliate_nudge"):
+                    if kind not in ("welcome", "affiliate_welcome", "affiliate_nudge", "checkout_recovery"):
                         # Advance subscriber position
                         await db.subscribers.update_one(
                             {"_id": item["subscriber_id"]},
@@ -225,7 +231,7 @@ async def process_email_queue():
                         )
                 else:
                     next_retry = item.get("retry_count", 0) + 1
-                    max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge") else 3
+                    max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge", "checkout_recovery") else 3
                     next_status = "failed" if next_retry >= max_retries else "retry"
                     await db.email_queue.update_one(
                         {"_id": item["_id"]},
@@ -235,7 +241,7 @@ async def process_email_queue():
             except Exception as e:
                 print(f"Email worker error for {item.get('email')}: {e}")
                 next_retry = item.get("retry_count", 0) + 1
-                max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge") else 3
+                max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge", "checkout_recovery") else 3
                 next_status = "failed" if next_retry >= max_retries else "retry"
                 await db.email_queue.update_one(
                     {"_id": item["_id"]},

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block subject %}Still want the Academic Comeback Package, {{ name }}?{% endblock %}
+{% block content %}
+<p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  Looks like you started checking out for the Academic Comeback Package but didn't finish the payment. No stress — your spot's still there whenever you're ready.
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(201,151,58,0.06);border:1px solid rgba(201,151,58,0.25);border-radius:12px;padding:20px;margin:0 0 20px">
+  <tr><td style="padding:16px;text-align:center">
+    <a href="{{ app_url }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:700;font-size:14px;padding:12px 28px;border-radius:50px;text-decoration:none">
+      Complete Your Purchase →
+    </a>
+  </td></tr>
+</table>
+
+<p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 16px">
+  If you ran into an issue with the bank transfer or changed your mind, just reply to this email and let me know — happy to help.
+</p>
+
+<p style="font-size:15px;color:#333;margin:24px 0 0">
+  — Itoya David<br>
+  <span style="color:#999;font-size:13px">Founder, Scale Group · First Class Graduate</span>
+</p>
+{% endblock %}
