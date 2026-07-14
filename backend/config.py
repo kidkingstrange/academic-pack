@@ -41,6 +41,14 @@ class Settings(BaseSettings):
     FB_PIXEL_ID: str = "1033231049261122"
     FB_CAPI_ACCESS_TOKEN: str = ""
 
+    # ── Meta Conversions API (server-side CompleteRegistration event) ──
+    # Separate pixel from the main funnel above — the one added to
+    # affiliate-register.html's <head>. Same no-ops-if-blank pattern:
+    # FB_AFFILIATE_CAPI_ACCESS_TOKEN comes from Events Manager → this
+    # Pixel → Settings → Conversions API → Generate access token.
+    FB_AFFILIATE_PIXEL_ID: str = "1075823608450969"
+    FB_AFFILIATE_CAPI_ACCESS_TOKEN: str = ""
+
     # ── SMTP ──────────────────────────────────────────────────────────
     SMTP_HOST: str = "smtp.gmail.com"
     SMTP_PORT: int = 465

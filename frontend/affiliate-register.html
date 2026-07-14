@@ -358,6 +358,24 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
 
   acctNumInput.addEventListener('input', checkAccountDetails);
 
+  // Client-side Meta Pixel fire — same eventID (the affiliate code) as
+  // the server-side Conversions API fire in affiliate_public.py, so
+  // Meta deduplicates the two into one true conversion. This is the
+  // fragile half (ad blockers, Safari ITP, in-app browsers can all
+  // silently drop it) — the server-side fire is the one that survives.
+  function fireCompleteRegistration(code) {
+    if (!code) return;
+    const guardKey = 'ac_aff_reg_fired_' + code;
+    try {
+      if (localStorage.getItem(guardKey)) return;
+      localStorage.setItem(guardKey, '1');
+    } catch (err) { /* localStorage unavailable — fire anyway, best effort */ }
+
+    if (typeof fbq === 'function') {
+      fbq('track', 'CompleteRegistration', {}, { eventID: code });
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errEl.style.display = 'none';
@@ -393,6 +411,8 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Registration failed');
+
+      fireCompleteRegistration(data.code);
 
       document.getElementById('aff-form-state').style.display = 'none';
       const successEl = document.getElementById('aff-success');
