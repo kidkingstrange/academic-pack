@@ -124,6 +124,19 @@ async def send_affiliate_welcome_email(name: str, email: str, code: str, referra
     return await send_email(email, f"You're in — here's your referral link, {name}", html)
 
 
+async def send_affiliate_nudge_email(name: str, email: str, referral_link: str):
+    """One-time reminder for an affiliate who downloaded marketing
+    materials but hasn't clicked their own link within 3 days. Sent
+    exactly once per affiliate — see workers/affiliate_nudge_scheduler.py."""
+    html = render_template("affiliate_nudge.html", {
+        "name": name,
+        "referral_link": referral_link,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    return await send_email(email, f"Ready to share your link, {name}?", html)
+
+
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):
     """Send a scheduled sequence email."""
     merged = {

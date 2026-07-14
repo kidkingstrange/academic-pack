@@ -13,6 +13,7 @@ from ..utils.security import verify_password, hash_password, create_access_token
 from ..database import get_db
 from ..config import get_settings
 from ..schemas.schemas import AdminLoginRequest, TokenResponse
+from ..services.affiliate_health_service import compute_affiliate_health
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 settings = get_settings()
@@ -360,6 +361,16 @@ async def get_analytics_affiliates(current_user=Depends(require_admin), db=Depen
             "commission_owed": earned - paid,
         })
     return {"affiliates": out}
+
+
+@router.get("/analytics/affiliate-health")
+async def get_affiliate_health(current_user=Depends(require_admin), db=Depends(get_db)):
+    """
+    Affiliate Program Health summary — MAA (primary metric), activation
+    rate, revenue concentration, retention, and the never-activated list
+    (the actionable "these people need a nudge" view).
+    """
+    return await compute_affiliate_health(db)
 
 
 @router.get("/customers")

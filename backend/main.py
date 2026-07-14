@@ -24,6 +24,7 @@ from .routes import (
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
+from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
 
@@ -271,10 +272,12 @@ async def startup():
     await connect_db()
     start_scheduler()
     start_payout_scheduler()
+    start_nudge_scheduler()
     print(f"🚀 {settings.APP_NAME} API started")
 
 @app.on_event("shutdown")
 async def shutdown():
     stop_scheduler()
     stop_payout_scheduler()
+    stop_nudge_scheduler()
     await disconnect_db()
