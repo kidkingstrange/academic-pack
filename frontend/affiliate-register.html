@@ -348,6 +348,7 @@
     const name = document.getElementById('aff-name').value.trim();
     const email = document.getElementById('aff-email').value.trim();
     const bankName = bankInput.value.trim();
+    const bankCode = bankCodeInput.value;
     const accountNum = document.getElementById('aff-acct-num').value.trim().replace(/\D/g, '');
     const accountName = document.getElementById('aff-acct-name').value.trim();
 
@@ -368,6 +369,7 @@
           name,
           email,
           bank_name: bankName,
+          bank_code: bankCode,
           account_number: accountNum,
           account_name: accountName
         }),

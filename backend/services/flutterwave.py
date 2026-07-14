@@ -246,3 +246,70 @@ async def resolve_account_number(account_number: str, bank_code: str) -> Dict[st
         )
         return resp.json()
 
+
+async def get_ngn_balance() -> Dict[str, Any]:
+    """
+    Read-only check of the NGN payout balance. Safe to call any time —
+    doesn't move money. Used before sending a payout batch (confirm
+    balance covers the total) and to compute what's available for the
+    "withdraw my share" transfer.
+    Returns {"status", "message", "data": {"currency", "available_balance"}}.
+    """
+    token = await get_flw_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{FLW_API_BASE}/wallets/balances/NGN",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "X-Trace-Id": str(uuid.uuid4()),
+            },
+            timeout=15,
+        )
+        return resp.json()
+
+
+async def create_transfer(
+    bank_code: str,
+    account_number: str,
+    amount_naira: float,
+    reference: str,
+    narration: str,
+) -> Dict[str, Any]:
+    """
+    Send money from the Flutterwave NGN payout balance to a Nigerian bank
+    account — this one actually moves money, unlike every other function
+    in this file. Confirmed against Flutterwave's official docs (Bank
+    Account Transfers guide): recipient bank details are embedded
+    directly in the request, no separate recipient/sender registration
+    needed for a same-currency NGN->NGN payout.
+
+    reference must be unique per transfer — Flutterwave treats it as an
+    idempotency key, so a retried call with the same reference is safe
+    (won't double-send).
+    """
+    token = await get_flw_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_API_BASE}/transfers",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "X-Trace-Id": str(uuid.uuid4()),
+                "X-Idempotency-Key": reference,
+            },
+            json={
+                "action": "instant",
+                "type": "bank",
+                "reference": reference,
+                "narration": narration,
+                "payment_instruction": {
+                    "amount": {"value": amount_naira, "applies_to": "destination_currency"},
+                    "source_currency": "NGN",
+                    "destination_currency": "NGN",
+                    "recipient": {"bank": {"code": bank_code, "account_number": account_number}},
+                },
+            },
+            timeout=20,
+        )
+        return resp.json()
+

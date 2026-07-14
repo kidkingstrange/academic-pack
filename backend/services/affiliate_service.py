@@ -3,9 +3,6 @@ Shared affiliate-creation path for both entry points — the admin-created
 flow (routes/affiliates.py) and the public self-registration flow
 (routes/affiliate_public.py) — so code generation, uniqueness handling,
 and the record shape can never silently diverge between the two.
-
-This system tracks money owed; it never moves money. There is no bank
-account, Transfers API, or payout batching anywhere in this file.
 """
 import random
 import secrets
@@ -35,6 +32,7 @@ async def create_affiliate_record(
     commission_percent: float = None,
     registration_ip: str = None,
     bank_name: str = None,
+    bank_code: str = None,
     account_number: str = None,
     account_name: str = None,
 ) -> dict:
@@ -67,6 +65,7 @@ async def create_affiliate_record(
         "name": name,
         "email": email,
         "bank_name": (bank_name or "").strip(),
+        "bank_code": (bank_code or "").strip(),
         "account_number": (account_number or "").strip(),
         "account_name": (account_name or "").strip(),
         "active": True,
