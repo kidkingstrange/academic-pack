@@ -63,20 +63,24 @@
   tick();
 })();
 
-// Scarcity Counter
+// Live Real-Time Buyer Counter (Fetches actual sales count from database)
 (function() {
   const el = document.getElementById('scarcity-num');
   if (!el) return;
-  let count = Math.floor(Math.random() * 8) + 14; 
-  el.textContent = count;
-  
-  function schedule() {
-    const delay = (Math.random() * 3 + 6) * 60 * 1000;
-    setTimeout(() => {
-      count++;
-      el.textContent = count;
-      schedule();
-    }, delay);
+
+  async function updateLiveSalesCount() {
+    try {
+      const res = await fetch('/api/public/sales-count');
+      const data = await res.json();
+      if (data && typeof data.sales_count === 'number') {
+        el.textContent = data.sales_count;
+      }
+    } catch (e) {
+      /* ignore transient network errors */
+    }
   }
-  schedule();
+
+  updateLiveSalesCount();
+  // Refresh live count every 30 seconds
+  setInterval(updateLiveSalesCount, 30000);
 })();

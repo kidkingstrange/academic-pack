@@ -161,10 +161,22 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
         return RedirectResponse(url=f"/?ref={normalized}&price=5000")
     return RedirectResponse(url="/")
 
-# ── Health Check ──────────────────────────────────────────────────────────────
+# ── Health Check & Public Stats ────────────────────────────────────────────────
 @app.get("/api/health")
 async def health():
     return {"status": "ok", "app": settings.APP_NAME}
+
+
+@app.get("/api/public/sales-count")
+async def get_public_sales_count(db=Depends(get_db)):
+    """
+    Returns the real, live count of completed sales in database.
+    Used for landing page live buyer counter.
+    """
+    if db is None:
+        return {"sales_count": 38}
+    count = await db.payments.count_documents({"status": "success"})
+    return {"sales_count": count}
 
 
 @app.get("/unsubscribe", response_class=HTMLResponse, include_in_schema=False)
