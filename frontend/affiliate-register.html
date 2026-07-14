@@ -28,6 +28,9 @@
   .copy-btn:hover { color: var(--gold); }
   .copy-tooltip { position: absolute; top: -32px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: .72rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .2s; z-index: 100; }
   .aff-dashboard-note { font-size: .78rem; color: rgba(255,255,255,.35); margin-top: 20px; line-height: 1.6; }
+  .aff-bank-option:hover { background: rgba(201,151,58,.12) !important; }
+  #aff-bank-suggestions::-webkit-scrollbar { width: 8px; }
+  #aff-bank-suggestions::-webkit-scrollbar-thumb { background: rgba(201,151,58,.3); border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -51,57 +54,11 @@
 
       <div style="margin:20px 0 12px; font-size:.82rem; font-weight:700; color:var(--gold-l); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,.08); padding-bottom:6px">Payout Bank Details</div>
 
-      <div class="form-group">
+      <div class="form-group" style="position:relative;">
         <label for="aff-bank-name">Bank Name</label>
-        <select id="aff-bank-name" style="width:100%; padding:14px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:12px; color:#fff; font-size:.95rem; font-family:inherit; outline:none;" required>
-          <option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>
-          <option value="Access Bank" style="background:var(--ink); color:#fff">Access Bank</option>
-          <option value="Access Bank (Diamond)" style="background:var(--ink); color:#fff">Access Bank (Diamond)</option>
-          <option value="ALAT by Wema" style="background:var(--ink); color:#fff">ALAT by Wema</option>
-          <option value="Amju Unique MFB" style="background:var(--ink); color:#fff">Amju Unique MFB</option>
-          <option value="Carbon" style="background:var(--ink); color:#fff">Carbon</option>
-          <option value="Citibank Nigeria" style="background:var(--ink); color:#fff">Citibank Nigeria</option>
-          <option value="Ecobank Nigeria" style="background:var(--ink); color:#fff">Ecobank Nigeria</option>
-          <option value="FairMoney MFB" style="background:var(--ink); color:#fff">FairMoney MFB</option>
-          <option value="Fidelity Bank" style="background:var(--ink); color:#fff">Fidelity Bank</option>
-          <option value="First Bank of Nigeria" style="background:var(--ink); color:#fff">First Bank of Nigeria</option>
-          <option value="First City Monument Bank (FCMB)" style="background:var(--ink); color:#fff">First City Monument Bank (FCMB)</option>
-          <option value="Globus Bank" style="background:var(--ink); color:#fff">Globus Bank</option>
-          <option value="Guaranty Trust Bank (GTBank)" style="background:var(--ink); color:#fff">GTBank (Guaranty Trust Bank)</option>
-          <option value="Hasal Microfinance Bank" style="background:var(--ink); color:#fff">Hasal Microfinance Bank</option>
-          <option value="Heritage Bank" style="background:var(--ink); color:#fff">Heritage Bank</option>
-          <option value="Hope PSBank" style="background:var(--ink); color:#fff">Hope PSBank</option>
-          <option value="Jaiz Bank" style="background:var(--ink); color:#fff">Jaiz Bank</option>
-          <option value="Keystone Bank" style="background:var(--ink); color:#fff">Keystone Bank</option>
-          <option value="Kuda Bank" style="background:var(--ink); color:#fff">Kuda Bank</option>
-          <option value="Lotus Bank" style="background:var(--ink); color:#fff">Lotus Bank</option>
-          <option value="Moniepoint Microfinance Bank" style="background:var(--ink); color:#fff">Moniepoint Microfinance Bank</option>
-          <option value="Nova Merchant Bank" style="background:var(--ink); color:#fff">Nova Merchant Bank</option>
-          <option value="OPay" style="background:var(--ink); color:#fff">OPay</option>
-          <option value="Palmpay" style="background:var(--ink); color:#fff">Palmpay</option>
-          <option value="Parallex Bank" style="background:var(--ink); color:#fff">Parallex Bank</option>
-          <option value="Parkway Readypash" style="background:var(--ink); color:#fff">Parkway Readypash</option>
-          <option value="Paycom (OPay)" style="background:var(--ink); color:#fff">Paycom (OPay)</option>
-          <option value="Polaris Bank" style="background:var(--ink); color:#fff">Polaris Bank</option>
-          <option value="PremiumTrust Bank" style="background:var(--ink); color:#fff">PremiumTrust Bank</option>
-          <option value="Providus Bank" style="background:var(--ink); color:#fff">Providus Bank</option>
-          <option value="Rubies Bank" style="background:var(--ink); color:#fff">Rubies Bank</option>
-          <option value="SafeHaven MFB" style="background:var(--ink); color:#fff">SafeHaven MFB</option>
-          <option value="Sparkle Bank" style="background:var(--ink); color:#fff">Sparkle Bank</option>
-          <option value="Stanbic IBTC Bank" style="background:var(--ink); color:#fff">Stanbic IBTC Bank</option>
-          <option value="Standard Chartered Bank" style="background:var(--ink); color:#fff">Standard Chartered Bank</option>
-          <option value="Sterling Bank" style="background:var(--ink); color:#fff">Sterling Bank</option>
-          <option value="SunTrust Bank" style="background:var(--ink); color:#fff">SunTrust Bank</option>
-          <option value="TAJBank" style="background:var(--ink); color:#fff">TAJBank</option>
-          <option value="Titan Trust Bank" style="background:var(--ink); color:#fff">Titan Trust Bank</option>
-          <option value="Union Bank of Nigeria" style="background:var(--ink); color:#fff">Union Bank of Nigeria</option>
-          <option value="United Bank for Africa (UBA)" style="background:var(--ink); color:#fff">United Bank for Africa (UBA)</option>
-          <option value="Unity Bank" style="background:var(--ink); color:#fff">Unity Bank</option>
-          <option value="VFD Microfinance Bank (VBank)" style="background:var(--ink); color:#fff">VFD Microfinance Bank (VBank)</option>
-          <option value="Wema Bank" style="background:var(--ink); color:#fff">Wema Bank</option>
-          <option value="Zenith Bank" style="background:var(--ink); color:#fff">Zenith Bank</option>
-          <option value="Other Bank" style="background:var(--ink); color:#fff">Other Commercial / Microfinance Bank</option>
-        </select>
+        <input type="text" id="aff-bank-name" placeholder="Start typing your bank name..." autocomplete="off" style="width:100%; padding:14px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:12px; color:#fff; font-size:.95rem; font-family:inherit; outline:none;" required>
+        <input type="hidden" id="aff-bank-code">
+        <div id="aff-bank-suggestions" style="display:none; position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:20; background:var(--ink); border:1px solid rgba(201,151,58,.25); border-radius:12px; max-height:240px; overflow-y:auto; box-shadow:0 16px 36px rgba(0,0,0,.55);"></div>
       </div>
 
       <div class="form-group">
@@ -149,10 +106,92 @@
   const errEl = document.getElementById('aff-submit-err');
   const acctNumInput = document.getElementById('aff-acct-num');
   const acctNameInput = document.getElementById('aff-acct-name');
-  const bankSelect = document.getElementById('aff-bank-name');
+  const bankInput = document.getElementById('aff-bank-name');
+  const bankCodeInput = document.getElementById('aff-bank-code');
+  const bankSuggestions = document.getElementById('aff-bank-suggestions');
   const statusDiv = document.getElementById('aff-acct-status');
 
   let isAccountVerified = false;
+
+  // Static fallback (no bank codes — same as before the live Flutterwave
+  // list loads) so the field is still usable if the fetch below is slow
+  // or fails outright.
+  let allBanks = [
+    { name: 'Access Bank', code: '' },
+    { name: 'Access Bank (Diamond)', code: '' },
+    { name: 'ALAT by Wema', code: '' },
+    { name: 'Amju Unique MFB', code: '' },
+    { name: 'Carbon', code: '' },
+    { name: 'Citibank Nigeria', code: '' },
+    { name: 'Ecobank Nigeria', code: '' },
+    { name: 'FairMoney MFB', code: '' },
+    { name: 'Fidelity Bank', code: '' },
+    { name: 'First Bank of Nigeria', code: '' },
+    { name: 'First City Monument Bank (FCMB)', code: '' },
+    { name: 'Globus Bank', code: '' },
+    { name: 'Guaranty Trust Bank (GTBank)', code: '' },
+    { name: 'Hasal Microfinance Bank', code: '' },
+    { name: 'Heritage Bank', code: '' },
+    { name: 'Hope PSBank', code: '' },
+    { name: 'Jaiz Bank', code: '' },
+    { name: 'Keystone Bank', code: '' },
+    { name: 'Kuda Bank', code: '' },
+    { name: 'Lotus Bank', code: '' },
+    { name: 'Moniepoint Microfinance Bank', code: '' },
+    { name: 'Nova Merchant Bank', code: '' },
+    { name: 'OPay', code: '' },
+    { name: 'Palmpay', code: '' },
+    { name: 'Parallex Bank', code: '' },
+    { name: 'Parkway Readypash', code: '' },
+    { name: 'Paycom (OPay)', code: '' },
+    { name: 'Polaris Bank', code: '' },
+    { name: 'PremiumTrust Bank', code: '' },
+    { name: 'Providus Bank', code: '' },
+    { name: 'Rubies Bank', code: '' },
+    { name: 'SafeHaven MFB', code: '' },
+    { name: 'Sparkle Bank', code: '' },
+    { name: 'Stanbic IBTC Bank', code: '' },
+    { name: 'Standard Chartered Bank', code: '' },
+    { name: 'Sterling Bank', code: '' },
+    { name: 'SunTrust Bank', code: '' },
+    { name: 'TAJBank', code: '' },
+    { name: 'Titan Trust Bank', code: '' },
+    { name: 'Union Bank of Nigeria', code: '' },
+    { name: 'United Bank for Africa (UBA)', code: '' },
+    { name: 'Unity Bank', code: '' },
+    { name: 'VFD Microfinance Bank (VBank)', code: '' },
+    { name: 'Wema Bank', code: '' },
+    { name: 'Zenith Bank', code: '' },
+    { name: 'Other Commercial / Microfinance Bank', code: '' },
+  ];
+  let filteredBanks = [];
+  let activeIndex = -1;
+
+  // Plain substring matching misses common real-world searches: the live
+  // Flutterwave names are spaced/full ("Citi Bank", "Safe Haven MFB",
+  // "Guaranty Trust Bank") while people type them squashed or abbreviated
+  // ("citibank", "safehaven", "gtb"). Normalize away spacing/punctuation
+  // for the match, and alias the handful of genuine abbreviations that
+  // aren't just spacing differences.
+  const BANK_ALIASES = {
+    gtb: 'guarantytrust',
+    gtbank: 'guarantytrust',
+    uba: 'unitedbankforafrica',
+    fcmb: 'firstcitymonument',
+  };
+  function normalize(s) {
+    return s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+  function bankMatches(bank, rawQuery) {
+    const q = rawQuery.toLowerCase().trim();
+    if (!q) return false;
+    if (bank.name.toLowerCase().includes(q)) return true;
+    const normQ = normalize(q);
+    const normName = normalize(bank.name);
+    if (normName.includes(normQ)) return true;
+    const aliasTarget = BANK_ALIASES[normQ];
+    return !!(aliasTarget && normName.includes(aliasTarget));
+  }
 
   // Bank list sourced from our own backend (Flutterwave), not Paystack's
   // public API — the bank `code` values must match what /resolve-bank
@@ -163,16 +202,92 @@
       const json = await res.json();
       if (Array.isArray(json.banks) && json.banks.length > 0) {
         const sortedBanks = [...json.banks].sort((a, b) => a.name.localeCompare(b.name));
-
-        bankSelect.innerHTML = '<option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>' +
-          sortedBanks.map(b => `<option value="${b.name.replace(/"/g, '&quot;')}" data-code="${b.code}" style="background:var(--ink); color:#fff">${b.name}</option>`).join('') +
-          '<option value="Other Bank" data-code="" style="background:var(--ink); color:#fff">Other Commercial / Microfinance Bank</option>';
+        allBanks = sortedBanks.map(b => ({ name: b.name, code: b.code }))
+          .concat([{ name: 'Other Commercial / Microfinance Bank', code: '' }]);
       }
     } catch (e) {
       // Seamlessly keep static fallback list
     }
   }
   loadFullNigerianBanks();
+
+  // ── Type-ahead bank search — replaces the old 700+ option <select> ──
+  function renderSuggestions() {
+    if (!filteredBanks.length) {
+      bankSuggestions.style.display = 'none';
+      bankSuggestions.innerHTML = '';
+      return;
+    }
+    bankSuggestions.innerHTML = filteredBanks.map((b, i) => `
+      <div class="aff-bank-option" data-idx="${i}" style="padding:11px 16px; cursor:pointer; color:#fff; font-size:.9rem; ${i === activeIndex ? 'background:rgba(201,151,58,.18);' : ''}">${b.name}</div>
+    `).join('');
+    bankSuggestions.style.display = 'block';
+  }
+
+  function selectBank(bank) {
+    bankInput.value = bank.name;
+    bankCodeInput.value = bank.code || '';
+    bankSuggestions.style.display = 'none';
+    filteredBanks = [];
+    activeIndex = -1;
+    checkAccountDetails();
+  }
+
+  bankInput.addEventListener('input', () => {
+    bankCodeInput.value = '';
+    isAccountVerified = false;
+    const q = bankInput.value.trim().toLowerCase();
+    if (!q) {
+      filteredBanks = [];
+      renderSuggestions();
+      return;
+    }
+    filteredBanks = allBanks.filter(b => bankMatches(b, q)).slice(0, 40);
+    activeIndex = -1;
+    renderSuggestions();
+  });
+
+  bankInput.addEventListener('focus', () => {
+    if (bankInput.value.trim()) bankInput.dispatchEvent(new Event('input'));
+  });
+
+  bankInput.addEventListener('keydown', (e) => {
+    if (bankSuggestions.style.display === 'none' || !filteredBanks.length) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = Math.min(activeIndex + 1, filteredBanks.length - 1);
+      renderSuggestions();
+      const activeEl = bankSuggestions.querySelector(`[data-idx="${activeIndex}"]`);
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = Math.max(activeIndex - 1, 0);
+      renderSuggestions();
+      const activeEl = bankSuggestions.querySelector(`[data-idx="${activeIndex}"]`);
+      if (activeEl) activeEl.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      if (activeIndex >= 0 && filteredBanks[activeIndex]) {
+        e.preventDefault();
+        selectBank(filteredBanks[activeIndex]);
+      }
+    } else if (e.key === 'Escape') {
+      bankSuggestions.style.display = 'none';
+    }
+  });
+
+  bankSuggestions.addEventListener('mousedown', (e) => {
+    const opt = e.target.closest('.aff-bank-option');
+    if (!opt) return;
+    e.preventDefault();
+    const idx = parseInt(opt.getAttribute('data-idx'), 10);
+    selectBank(filteredBanks[idx]);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('#aff-bank-name') && !e.target.closest('#aff-bank-suggestions')) {
+      bankSuggestions.style.display = 'none';
+    }
+  });
 
   // NUBAN Account Resolution Failsafe
   async function checkAccountDetails() {
@@ -185,8 +300,7 @@
       return;
     }
 
-    const selectedOpt = bankSelect.options[bankSelect.selectedIndex];
-    const bankCode = selectedOpt ? selectedOpt.getAttribute('data-code') : '';
+    const bankCode = bankCodeInput.value;
     if (!bankCode) {
       statusDiv.style.display = 'block';
       statusDiv.style.background = 'rgba(239, 68, 68, 0.15)';
@@ -226,7 +340,6 @@
   }
 
   acctNumInput.addEventListener('input', checkAccountDetails);
-  bankSelect.addEventListener('change', checkAccountDetails);
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -234,7 +347,7 @@
 
     const name = document.getElementById('aff-name').value.trim();
     const email = document.getElementById('aff-email').value.trim();
-    const bankName = document.getElementById('aff-bank-name').value;
+    const bankName = bankInput.value.trim();
     const accountNum = document.getElementById('aff-acct-num').value.trim().replace(/\D/g, '');
     const accountName = document.getElementById('aff-acct-name').value.trim();
 
