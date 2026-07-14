@@ -318,8 +318,12 @@
     display: inline-block;
   }
   .status-pill.success { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-  .status-pill.pending { background: rgba(201,151,58,.15); color: var(--gold-l); }
-  .status-pill.failed, .status-pill.refunded { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+  .status-pill.pending, .status-pill.warning { background: rgba(201,151,58,.15); color: var(--gold-l); }
+  .status-pill.failed, .status-pill.refunded, .status-pill.danger { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+  .status-pill.neutral { background: rgba(148,163,184,.15); color: var(--gray-l); }
+  .kind-badge { padding: 3px 9px; border-radius: var(--radius-full); font-size: 0.68rem; font-weight: 700; display: inline-block; }
+  .kind-badge.urgent { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+  .kind-badge.normal { background: rgba(255,255,255,0.08); color: var(--gray-l); }
 
   /* ── Slide-Out Drawer Component ────────────────────────────────────────────
      Skinned like .modal-overlay/.modal (landing.css) — same backdrop blur,
@@ -426,6 +430,7 @@
   <a class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</a>
   <a class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</a>
   <a class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</a>
+  <a class="nav-item" onclick="switchSection('email-delivery')"><i class="bi bi-envelope-check"></i> Email Delivery</a>
 
   <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </aside>
@@ -637,6 +642,73 @@
       </div>
     </div>
 
+    <!-- ── VIEW 6: EMAIL DELIVERY (Proactive Failure Tracking) ──────────────── -->
+    <div id="view-email-delivery" class="section">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Sent (24h)</div><div class="kpi-val" id="ed-kpi-sent24h">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Sent (7d)</div><div class="kpi-val" id="ed-kpi-sent7d">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Sent (30d)</div><div class="kpi-val" id="ed-kpi-sent30d">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Currently Failed</div><div class="kpi-val" id="ed-kpi-failed" style="color:var(--red)">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Currently Retrying</div><div class="kpi-val gold" id="ed-kpi-retrying">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Pending / Scheduled</div><div class="kpi-val" id="ed-kpi-pending">0</div></div>
+      </div>
+
+      <div id="ed-welcome-alert" style="display:none; background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.35); border-radius:var(--radius-lg); padding:16px 20px; margin-bottom:28px; color:var(--red); font-weight:700; font-size:0.92rem;">
+        <i class="bi bi-exclamation-triangle-fill"></i> <span id="ed-welcome-alert-text"></span> — these block real customers from reaching their product.
+      </div>
+
+      <div class="data-table-container" style="padding:20px 24px; margin-bottom:28px">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:14px">Search Customer Email History</div>
+        <div style="display:flex; gap:10px;">
+          <input type="text" class="input-control" id="ed-search-input" placeholder="Search by customer email or name..." style="flex:1" onkeydown="if(event.key==='Enter') searchEmailDeliveryCustomer()">
+          <button class="btn-action" onclick="searchEmailDeliveryCustomer()"><i class="bi bi-search"></i> Search</button>
+        </div>
+        <div id="ed-customer-results" style="margin-top:20px; display:none">
+          <table class="data-table" id="table-ed-customer">
+            <thead><tr><th>Email</th><th>Sent/Scheduled</th><th>Sent At</th><th>Retries</th><th>Status</th><th>Error</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 4px">
+            <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-customer-pageinfo"></span>
+            <div style="display:flex; gap:8px">
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryCustomer(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryCustomer(1)">Next <i class="bi bi-chevron-right"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-table-container" style="margin-bottom:28px">
+        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Currently Failed <span style="color:var(--gray-l); font-weight:500; font-size:0.8rem">— oldest first</span></div>
+        <table class="data-table" id="table-ed-failed">
+          <thead><tr><th>Type</th><th>Customer</th><th>Email</th><th>Last Attempt</th><th>Days Stuck</th><th>Retries</th><th>Error</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px">
+          <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-failed-pageinfo"></span>
+          <div style="display:flex; gap:8px">
+            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryFailed(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryFailed(1)">Next <i class="bi bi-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-table-container">
+        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Currently Retrying <span style="color:var(--gray-l); font-weight:500; font-size:0.8rem">— problems building before they become permanent</span></div>
+        <table class="data-table" id="table-ed-retrying">
+          <thead><tr><th>Type</th><th>Customer</th><th>Email</th><th>Last Attempt</th><th>Days Stuck</th><th>Retries</th><th>Error</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px">
+          <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-retrying-pageinfo"></span>
+          <div style="display:flex; gap:8px">
+            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryRetrying(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryRetrying(1)">Next <i class="bi bi-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -682,7 +754,8 @@
       sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
       customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
       affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
-      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' }
+      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
+      'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -699,6 +772,7 @@
     if(currentView === 'customers') loadCustomersView();
     if(currentView === 'affiliates') loadAffiliatesView();
     if(currentView === 'payouts') loadPayoutsView();
+    if(currentView === 'email-delivery') loadEmailDeliveryView();
   }
 
   async function apiCall(endpoint, method = 'GET', body = null) {
@@ -1290,6 +1364,151 @@
       alert(`⚠️ Withdrawal failed: ${res.error || 'Unknown error'}`);
     }
     loadPayoutsView();
+  }
+
+  // ── 6. EMAIL DELIVERY VIEW ─────────────────────────────────────────────────
+  let edFailedPage = 1, edFailedPages = 1;
+  let edRetryingPage = 1, edRetryingPages = 1;
+  let edCustomerPage = 1, edCustomerPages = 1, edCustomerQuery = '';
+
+  async function loadEmailDeliveryView() {
+    const overview = await apiCall('/api/admin/email-delivery/overview');
+    if (!overview || overview.detail) return;
+
+    document.getElementById('ed-kpi-sent24h').textContent = overview.sent_24h;
+    document.getElementById('ed-kpi-sent7d').textContent = overview.sent_7d;
+    document.getElementById('ed-kpi-sent30d').textContent = overview.sent_30d;
+    document.getElementById('ed-kpi-failed').textContent = overview.failed_total;
+    document.getElementById('ed-kpi-retrying').textContent = overview.retrying_total;
+    document.getElementById('ed-kpi-pending').textContent = overview.pending_total;
+
+    const alertBox = document.getElementById('ed-welcome-alert');
+    if (overview.failed_welcome > 0) {
+      alertBox.style.display = 'block';
+      document.getElementById('ed-welcome-alert-text').textContent =
+        `${overview.failed_welcome} welcome email${overview.failed_welcome === 1 ? '' : 's'} currently failed`;
+    } else {
+      alertBox.style.display = 'none';
+    }
+
+    edFailedPage = 1; edRetryingPage = 1;
+    await loadEmailDeliveryFailed();
+    await loadEmailDeliveryRetrying();
+  }
+
+  function edKindBadge(item) {
+    const cls = item.kind === 'welcome' ? 'urgent' : 'normal';
+    return `<span class="kind-badge ${cls}">${item.label}</span>`;
+  }
+
+  function edStatusPill(item) {
+    const sv = item.status_view || { tone: 'neutral', label: item.status };
+    return `<span class="status-pill ${sv.tone}">${sv.label}</span>`;
+  }
+
+  function edTimeText(iso) {
+    if (!iso) return '—';
+    return new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  async function loadEmailDeliveryFailed() {
+    const data = await apiCall(`/api/admin/email-delivery/failed?page=${edFailedPage}&limit=25`);
+    if (!data) return;
+    edFailedPages = data.pages;
+    const tbody = document.querySelector('#table-ed-failed tbody');
+    if (data.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">Nothing currently failed</td></tr>';
+    } else {
+      tbody.innerHTML = data.items.map(i => `
+        <tr>
+          <td>${edKindBadge(i)}</td>
+          <td>${i.name || '—'}</td>
+          <td>${i.email}</td>
+          <td>${edTimeText(i.last_attempt_at || i.scheduled_at)}</td>
+          <td style="font-weight:700; color:${i.days_stuck > 3 ? 'var(--red)' : 'var(--gray-l)'}">${i.days_stuck != null ? i.days_stuck + 'd' : '—'}</td>
+          <td>${i.retry_count}</td>
+          <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.78rem; color:var(--gray-l)" title="${(i.error || '').replace(/"/g, '&quot;')}">${i.error || '—'}</td>
+        </tr>
+      `).join('');
+    }
+    document.getElementById('ed-failed-pageinfo').textContent = `Page ${edFailedPage} of ${edFailedPages} (${data.total} total)`;
+  }
+
+  async function loadEmailDeliveryRetrying() {
+    const data = await apiCall(`/api/admin/email-delivery/retrying?page=${edRetryingPage}&limit=25`);
+    if (!data) return;
+    edRetryingPages = data.pages;
+    const tbody = document.querySelector('#table-ed-retrying tbody');
+    if (data.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">Nothing currently retrying</td></tr>';
+    } else {
+      tbody.innerHTML = data.items.map(i => `
+        <tr>
+          <td>${edKindBadge(i)}</td>
+          <td>${i.name || '—'}</td>
+          <td>${i.email}</td>
+          <td>${edTimeText(i.last_attempt_at || i.scheduled_at)}</td>
+          <td>${i.days_stuck != null ? i.days_stuck + 'd' : '—'}</td>
+          <td>${i.retry_count}</td>
+          <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.78rem; color:var(--gray-l)" title="${(i.error || '').replace(/"/g, '&quot;')}">${i.error || '—'}</td>
+        </tr>
+      `).join('');
+    }
+    document.getElementById('ed-retrying-pageinfo').textContent = `Page ${edRetryingPage} of ${edRetryingPages} (${data.total} total)`;
+  }
+
+  function pageEmailDeliveryFailed(delta) {
+    const next = edFailedPage + delta;
+    if (next < 1 || next > edFailedPages) return;
+    edFailedPage = next;
+    loadEmailDeliveryFailed();
+  }
+
+  function pageEmailDeliveryRetrying(delta) {
+    const next = edRetryingPage + delta;
+    if (next < 1 || next > edRetryingPages) return;
+    edRetryingPage = next;
+    loadEmailDeliveryRetrying();
+  }
+
+  function searchEmailDeliveryCustomer() {
+    edCustomerQuery = document.getElementById('ed-search-input').value.trim();
+    edCustomerPage = 1;
+    if (!edCustomerQuery) {
+      document.getElementById('ed-customer-results').style.display = 'none';
+      return;
+    }
+    loadEmailDeliveryCustomer();
+  }
+
+  async function loadEmailDeliveryCustomer() {
+    const data = await apiCall(`/api/admin/email-delivery/customer?query=${encodeURIComponent(edCustomerQuery)}&page=${edCustomerPage}&limit=50`);
+    if (!data) return;
+    edCustomerPages = data.pages;
+    document.getElementById('ed-customer-results').style.display = 'block';
+    const tbody = document.querySelector('#table-ed-customer tbody');
+    if (data.items.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">No emails found for this search</td></tr>';
+    } else {
+      tbody.innerHTML = data.items.map(i => `
+        <tr>
+          <td>${i.email}</td>
+          <td>${i.label}</td>
+          <td>${edTimeText(i.sent_at)}</td>
+          <td>${i.retry_count}</td>
+          <td>${edStatusPill(i)}</td>
+          <td style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.78rem; color:var(--gray-l)" title="${(i.error || '').replace(/"/g, '&quot;')}">${i.error || '—'}</td>
+        </tr>
+      `).join('');
+    }
+    document.getElementById('ed-customer-pageinfo').textContent = `Page ${edCustomerPage} of ${edCustomerPages} (${data.total} total)`;
+  }
+
+  function pageEmailDeliveryCustomer(delta) {
+    const next = edCustomerPage + delta;
+    if (next < 1 || next > edCustomerPages) return;
+    edCustomerPage = next;
+    loadEmailDeliveryCustomer();
   }
 
   // ── Drawer Open/Close ──────────────────────────────────────────────────────

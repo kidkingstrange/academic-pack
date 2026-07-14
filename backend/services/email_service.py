@@ -137,6 +137,42 @@ async def send_affiliate_nudge_email(name: str, email: str, referral_link: str):
     return await send_email(email, f"Ready to share your link, {name}?", html)
 
 
+async def send_welcome_failure_alert_email(failed_count: int, window_hours: int, failures: list):
+    """
+    Internal ops alert to ADMIN_EMAIL — not customer-facing, so no
+    branded base.html template, just a plain readable summary. Fired by
+    workers/email_delivery_alert_scheduler.py when failed welcome
+    emails cross WELCOME_FAILURE_ALERT_THRESHOLD within a rolling
+    window, so a systemic problem (like the SMTP concurrency bug) gets
+    caught within a day instead of silently accumulating for weeks.
+    """
+    rows = "".join(
+        f"<tr><td style='padding:6px 10px;border-bottom:1px solid #eee'>{html.escape(f['email'] or '')}</td>"
+        f"<td style='padding:6px 10px;border-bottom:1px solid #eee'>{html.escape(f['name'] or '')}</td>"
+        f"<td style='padding:6px 10px;border-bottom:1px solid #eee'>{html.escape(f['error'] or '')}</td></tr>"
+        for f in failures
+    )
+    html_body = f"""
+    <div style="font-family:Arial,sans-serif;font-size:14px;color:#222">
+      <p><strong>{failed_count} welcome emails have failed</strong> in the last {window_hours} hours.
+      This usually means a systemic problem (SMTP, a bad template, a config issue) rather than isolated failures —
+      each one blocks a paying customer from reaching their product.</p>
+      <table style="border-collapse:collapse;width:100%;margin-top:12px">
+        <tr style="background:#f5f4f0;text-align:left">
+          <th style="padding:6px 10px">Email</th><th style="padding:6px 10px">Name</th><th style="padding:6px 10px">Error</th>
+        </tr>
+        {rows}
+      </table>
+      <p style="margin-top:16px">Check the Email Delivery tab in the admin dashboard for the full picture.</p>
+    </div>
+    """
+    return await send_email(
+        settings.ADMIN_EMAIL,
+        f"⚠️ {failed_count} welcome emails failed in the last {window_hours}h",
+        html_body,
+    )
+
+
 async def send_sequence_email(name: str, email: str, template_name: str, subject: str, unsubscribe_token: str = "", context: dict = {}):
     """Send a scheduled sequence email."""
     merged = {
