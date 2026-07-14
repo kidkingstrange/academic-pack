@@ -204,3 +204,45 @@ async def verify_charges_by_reference(reference: str) -> Dict[str, Any]:
         )
         return resp.json()
 
+
+async def list_banks(country: str = "NG") -> list:
+    """List banks for a country. Returns [{id, code, name}, ...]."""
+    token = await get_flw_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{FLW_API_BASE}/banks?country={country}",
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=15,
+        )
+        data = resp.json()
+        if data.get("status") != "success":
+            raise Exception(f"FLW banks list error: {data}")
+        return data["data"]
+
+
+async def resolve_account_number(account_number: str, bank_code: str) -> Dict[str, Any]:
+    """
+    Resolve a NUBAN account number to its holder's name via Flutterwave's
+    own bank-account-lookup endpoint — used instead of introducing a
+    second payment provider (Paystack) for this one feature, since this
+    whole app already authenticates with Flutterwave everywhere else.
+
+    Confirmed request/response shape both empirically (live sandbox call)
+    and against Flutterwave's official docs:
+    POST /banks/account-resolve {"currency": "NGN", "account": {"code", "number"}}
+    -> {"status": "success", "data": {"bank_code", "account_number", "account_name"}}
+    """
+    token = await get_flw_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_API_BASE}/banks/account-resolve",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "X-Trace-Id": str(uuid.uuid4()),
+            },
+            json={"currency": "NGN", "account": {"code": bank_code, "number": account_number}},
+            timeout=15,
+        )
+        return resp.json()
+

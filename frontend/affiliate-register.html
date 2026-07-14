@@ -154,16 +154,16 @@
 
   let isAccountVerified = false;
 
-  // Fetch full live list of all 180+ Nigerian banks from Paystack public API
+  // Bank list sourced from our own backend (Flutterwave), not Paystack's
+  // public API — the bank `code` values must match what /resolve-bank
+  // expects, and this app authenticates with Flutterwave everywhere else.
   async function loadFullNigerianBanks() {
     try {
-      const res = await fetch('https://api.paystack.co/bank?country=nigeria');
+      const res = await fetch(`${API_BASE}/affiliates/banks`);
       const json = await res.json();
-      if (json.status && Array.isArray(json.data) && json.data.length > 0) {
-        const sortedBanks = json.data
-          .filter(b => b.active !== false)
-          .sort((a, b) => a.name.localeCompare(b.name));
-        
+      if (Array.isArray(json.banks) && json.banks.length > 0) {
+        const sortedBanks = [...json.banks].sort((a, b) => a.name.localeCompare(b.name));
+
         bankSelect.innerHTML = '<option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>' +
           sortedBanks.map(b => `<option value="${b.name.replace(/"/g, '&quot;')}" data-code="${b.code}" style="background:var(--ink); color:#fff">${b.name}</option>`).join('') +
           '<option value="Other Bank" data-code="" style="background:var(--ink); color:#fff">Other Commercial / Microfinance Bank</option>';

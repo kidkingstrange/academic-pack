@@ -82,11 +82,31 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
     }
 
 
+@router.get("/banks")
+async def get_banks():
+    """
+    Bank list for the registration form's dropdown. Sourced from
+    Flutterwave (not Paystack's public API) so the bank `code` values
+    returned here are guaranteed to match what /resolve-bank expects —
+    this app authenticates with Flutterwave everywhere else already.
+    """
+    from ..services.flutterwave import list_banks
+    try:
+        banks = await list_banks("NG")
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Could not load bank list: {e}")
+    return {"banks": [{"code": b["code"], "name": b["name"]} for b in banks]}
+
+
 @router.get("/resolve-bank")
 async def resolve_bank_account(account_number: str, bank_code: str):
     """
-    Public live validation endpoint for affiliate registration & bank updates.
-    Queries Paystack NIBSS API to resolve 10-digit NUBAN account number & holder name.
+    Public live validation endpoint for affiliate registration & bank
+    updates. Queries Flutterwave's own bank-account-lookup endpoint to
+    resolve a 10-digit NUBAN account number to its holder's name — not
+    Paystack, since this app already authenticates with Flutterwave
+    everywhere else and introducing a second payment provider for just
+    this one feature isn't worth the extra vendor dependency.
     """
     clean_acc = "".join(filter(str.isdigit, account_number))
     if len(clean_acc) != 10:
@@ -94,13 +114,13 @@ async def resolve_bank_account(account_number: str, bank_code: str):
     if not bank_code:
         raise HTTPException(status_code=400, detail="Please select a bank first")
 
-    from ..services.paystack import resolve_account_number
+    from ..services.flutterwave import resolve_account_number
     res = await resolve_account_number(clean_acc, bank_code)
-    
-    if not res.get("status"):
+
+    if res.get("status") != "success":
         msg = res.get("message") or "Could not verify account number at selected bank"
         raise HTTPException(status_code=422, detail=msg)
-        
+
     data = res.get("data", {})
     return {
         "status": True,
