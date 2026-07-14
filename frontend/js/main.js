@@ -63,9 +63,10 @@
   tick();
 })();
 
-// Live Real-Time Buyer Counter (Fetches actual sales count from database)
+// Live Real-Time Buyer Counter (Displays ONLY when live sales reach 500+)
 (function() {
   const el = document.getElementById('scarcity-num');
+  const container = document.getElementById('scarcity-container') || (el ? el.closest('.scarcity') : null);
   if (!el) return;
 
   async function updateLiveSalesCount() {
@@ -73,7 +74,12 @@
       const res = await fetch('/api/public/sales-count');
       const data = await res.json();
       if (data && typeof data.sales_count === 'number') {
-        el.textContent = data.sales_count;
+        const count = data.sales_count;
+        el.textContent = count;
+        // Only show live buyer counter once total verified sales reach 500+
+        if (container) {
+          container.style.display = (count >= 500) ? 'flex' : 'none';
+        }
       }
     } catch (e) {
       /* ignore transient network errors */
