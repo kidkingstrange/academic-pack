@@ -8,6 +8,23 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="/css/main.css?v=4">
 <link rel="stylesheet" href="/css/landing.css?v=4">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1075823608450969');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <style>
   body { background: linear-gradient(160deg,var(--ink) 0%,#0f1320 60%,#131826 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
   .aff-card { background: linear-gradient(160deg,#0c0e14 0%,#131826 55%,#0f1520 100%); border: 1px solid rgba(201,151,58,.15); border-radius: var(--radius-xl); max-width: 480px; width: 100%; padding: 44px 36px; box-shadow: 0 24px 60px rgba(0,0,0,.6), var(--gold-glow); position: relative; overflow: hidden; }
@@ -341,6 +358,24 @@
 
   acctNumInput.addEventListener('input', checkAccountDetails);
 
+  // Client-side Meta Pixel fire — same eventID (the affiliate code) as
+  // the server-side Conversions API fire in affiliate_public.py, so
+  // Meta deduplicates the two into one true conversion. This is the
+  // fragile half (ad blockers, Safari ITP, in-app browsers can all
+  // silently drop it) — the server-side fire is the one that survives.
+  function fireCompleteRegistration(code) {
+    if (!code) return;
+    const guardKey = 'ac_aff_reg_fired_' + code;
+    try {
+      if (localStorage.getItem(guardKey)) return;
+      localStorage.setItem(guardKey, '1');
+    } catch (err) { /* localStorage unavailable — fire anyway, best effort */ }
+
+    if (typeof fbq === 'function') {
+      fbq('track', 'CompleteRegistration', {}, { eventID: code });
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errEl.style.display = 'none';
@@ -376,6 +411,8 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Registration failed');
+
+      fireCompleteRegistration(data.code);
 
       document.getElementById('aff-form-state').style.display = 'none';
       const successEl = document.getElementById('aff-success');

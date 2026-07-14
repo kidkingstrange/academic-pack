@@ -15,6 +15,7 @@ from ..database import get_db
 from ..config import get_settings
 from ..schemas.schemas import AffiliateRegisterRequest
 from ..services.affiliate_service import create_affiliate_record
+from ..services.meta_capi import send_complete_registration_event
 from ..workers.email_scheduler import process_email_queue
 
 router = APIRouter(prefix="/api/affiliates", tags=["affiliates-public"])
@@ -52,6 +53,22 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
 
     referral_link = f"{settings.APP_URL}/r/{affiliate['code']}"
     dashboard_link = f"{settings.APP_URL}/affiliate/dashboard?token={affiliate['dashboard_token']}"
+
+    # Server-side conversion confirmation — fires exactly once per real
+    # registration, independent of whether the affiliate's browser ever
+    # runs the client-side Pixel fire in affiliate-register.html (in-app
+    # browsers on WhatsApp/Instagram routinely block or mangle it). Same
+    # event_id (code) as that client-side fire, so Meta deduplicates them
+    # into one true conversion. No-ops safely if
+    # FB_AFFILIATE_CAPI_ACCESS_TOKEN isn't configured.
+    capi_result = await send_complete_registration_event(
+        email=affiliate["email"], code=affiliate["code"], ip_address=ip,
+    )
+    await db.affiliates.update_one({"code": affiliate["code"]}, {"$set": {"capi_result": capi_result}})
+    if capi_result.get("sent"):
+        print(f"✅ Meta CAPI CompleteRegistration event sent for {affiliate['code']}")
+    else:
+        print(f"⚠️ Meta CAPI CompleteRegistration event not sent for {affiliate['code']}: {capi_result.get('reason')}")
 
     # Queue the confirmation email — same retry-safe pattern as every
     # other transactional email in this app (see complete_payment()):
