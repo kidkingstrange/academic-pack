@@ -107,6 +107,7 @@
       <div class="form-group">
         <label for="aff-acct-num">10-Digit Account Number</label>
         <input type="text" id="aff-acct-num" placeholder="e.g. 0123456789" maxlength="10" pattern="[0-9]{10}" required>
+        <div id="aff-acct-status" style="display:none; font-size:0.83rem; margin-top:6px; padding:6px 10px; border-radius:6px; font-weight:600;"></div>
       </div>
 
       <div class="form-group">
@@ -146,6 +147,12 @@
   const form = document.getElementById('aff-register-form');
   const submitBtn = document.getElementById('aff-submit-btn');
   const errEl = document.getElementById('aff-submit-err');
+  const acctNumInput = document.getElementById('aff-acct-num');
+  const acctNameInput = document.getElementById('aff-acct-name');
+  const bankSelect = document.getElementById('aff-bank-name');
+  const statusDiv = document.getElementById('aff-acct-status');
+
+  let isAccountVerified = false;
 
   // Fetch full live list of all 180+ Nigerian banks from Paystack public API
   async function loadFullNigerianBanks() {
@@ -153,20 +160,73 @@
       const res = await fetch('https://api.paystack.co/bank?country=nigeria');
       const json = await res.json();
       if (json.status && Array.isArray(json.data) && json.data.length > 0) {
-        const select = document.getElementById('aff-bank-name');
         const sortedBanks = json.data
           .filter(b => b.active !== false)
           .sort((a, b) => a.name.localeCompare(b.name));
         
-        select.innerHTML = '<option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>' +
-          sortedBanks.map(b => `<option value="${b.name.replace(/"/g, '&quot;')}" style="background:var(--ink); color:#fff">${b.name}</option>`).join('') +
-          '<option value="Other Bank" style="background:var(--ink); color:#fff">Other Commercial / Microfinance Bank</option>';
+        bankSelect.innerHTML = '<option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>' +
+          sortedBanks.map(b => `<option value="${b.name.replace(/"/g, '&quot;')}" data-code="${b.code}" style="background:var(--ink); color:#fff">${b.name}</option>`).join('') +
+          '<option value="Other Bank" data-code="" style="background:var(--ink); color:#fff">Other Commercial / Microfinance Bank</option>';
       }
     } catch (e) {
       // Seamlessly keep static fallback list
     }
   }
   loadFullNigerianBanks();
+
+  // NUBAN Account Resolution Failsafe
+  async function checkAccountDetails() {
+    const rawVal = acctNumInput.value.replace(/\D/g, '');
+    acctNumInput.value = rawVal;
+    statusDiv.style.display = 'none';
+
+    if (rawVal.length !== 10) {
+      isAccountVerified = false;
+      return;
+    }
+
+    const selectedOpt = bankSelect.options[bankSelect.selectedIndex];
+    const bankCode = selectedOpt ? selectedOpt.getAttribute('data-code') : '';
+    if (!bankCode) {
+      statusDiv.style.display = 'block';
+      statusDiv.style.background = 'rgba(239, 68, 68, 0.15)';
+      statusDiv.style.color = '#f87171';
+      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+      statusDiv.innerHTML = '⚠️ Please select your bank above first';
+      isAccountVerified = false;
+      return;
+    }
+
+    statusDiv.style.display = 'block';
+    statusDiv.style.background = 'rgba(201, 151, 58, 0.15)';
+    statusDiv.style.color = 'var(--gold-l)';
+    statusDiv.style.border = '1px solid rgba(201, 151, 58, 0.3)';
+    statusDiv.innerHTML = '⏱ Verifying account with NIBSS...';
+
+    try {
+      const res = await fetch(`${API_BASE}/affiliates/resolve-bank?account_number=${rawVal}&bank_code=${bankCode}`);
+      const data = await res.json();
+      if (!res.ok || !data.status) {
+        throw new Error(data.detail || 'Invalid account number for selected bank');
+      }
+      
+      statusDiv.style.background = 'rgba(34, 197, 94, 0.15)';
+      statusDiv.style.color = '#4ade80';
+      statusDiv.style.border = '1px solid rgba(34, 197, 94, 0.3)';
+      statusDiv.innerHTML = `✅ Account Verified: <strong>${data.account_name}</strong>`;
+      acctNameInput.value = data.account_name;
+      isAccountVerified = true;
+    } catch (err) {
+      statusDiv.style.background = 'rgba(239, 68, 68, 0.15)';
+      statusDiv.style.color = '#f87171';
+      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+      statusDiv.innerHTML = `❌ ${err.message || 'Invalid account number for selected bank'}`;
+      isAccountVerified = false;
+    }
+  }
+
+  acctNumInput.addEventListener('input', checkAccountDetails);
+  bankSelect.addEventListener('change', checkAccountDetails);
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -175,8 +235,14 @@
     const name = document.getElementById('aff-name').value.trim();
     const email = document.getElementById('aff-email').value.trim();
     const bankName = document.getElementById('aff-bank-name').value;
-    const accountNum = document.getElementById('aff-acct-num').value.trim();
+    const accountNum = document.getElementById('aff-acct-num').value.trim().replace(/\D/g, '');
     const accountName = document.getElementById('aff-acct-name').value.trim();
+
+    if (accountNum.length !== 10) {
+      errEl.textContent = 'Account number must be exactly 10 digits.';
+      errEl.style.display = 'block';
+      return;
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Registering…';

@@ -58,3 +58,15 @@ def verify_webhook_signature(body: bytes, signature: str) -> bool:
         hashlib.sha512,
     ).hexdigest()
     return hmac.compare_digest(expected, signature)
+
+
+async def resolve_account_number(account_number: str, bank_code: str) -> Dict[str, Any]:
+    """Resolve a NUBAN account number to verify account holder name via Paystack NIBSS API."""
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{PAYSTACK_BASE}/bank/resolve",
+            params={"account_number": account_number, "bank_code": bank_code},
+            headers={"Authorization": f"Bearer {settings.PAYSTACK_SECRET_KEY}"},
+            timeout=15,
+        )
+        return resp.json()
