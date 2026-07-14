@@ -395,16 +395,18 @@ content_faq = [
 ]
 
 def prepare_covers():
+    # Clear existing files in COVERS_DIR to remove old bad filenames
+    for old_file in COVERS_DIR.glob("*"):
+        if old_file.is_file():
+            old_file.unlink()
+
     source_images = BASE_DIR / "frontend" / "assets" / "images"
     image_mapping = [
-        ("bookcoverlandscape.webp", "00_COMPLETE_BUNDLE_MOCKUP_LANDSCAPE.png"),
-        ("bookcover.webp", "01_HOW_TO_SCORE_HIGH_IN_ANY_EXAM_COVER.png"),
-        ("bookcover1.webp", "02_GET_GOOD_AT_HARD_THINGS_COVER.png"),
-        ("bookcover2.webp", "03_RESULTS_ORIENTED_LEARNING_SYSTEM_COVER.png"),
-        ("bookcover3.webp", "04_HOW_TO_BALANCE_ACADEMICS_AND_BUSINESS_COVER.png"),
-        ("bookcoverlandscape.webp", "05_EXAM_SURVIVAL_AND_PRESSURE_MANAGEMENT_COVER.png"),
-        ("bookcover1.webp", "06_DEEP_FOCUS_AND_ATTENTION_TEMPLATE_COVER.png"),
-        ("bookcover2.webp", "07_30_DAY_STUDY_TRACKER_COVER.png"),
+        ("bookcoverlandscape.webp", "01_ACADEMIC_COMEBACK_BUNDLE_LANDSCAPE.png"),
+        ("bookcover.webp", "02_GET_GOOD_AT_HARD_THINGS.png"),
+        ("bookcover1.webp", "03_HOW_TO_SCORE_HIGH_IN_ANY_EXAM.png"),
+        ("bookcover2.webp", "04_HOW_TO_BALANCE_ACADEMICS_AND_YOUR_BUSINESS.png"),
+        ("bookcover3.webp", "05_RESULTS_ORIENTED_LEARNING_SYSTEM.png"),
     ]
     
     for src_name, dest_name in image_mapping:
@@ -423,12 +425,16 @@ def main():
     print("GENERATING OFFICIAL AFFILIATE RESOURCE PACKAGE")
     print("=" * 80)
 
+    # Clean old files in OUTPUT_DIR
+    for pdf in OUTPUT_DIR.glob("*.pdf"):
+        pdf.unlink()
+
     # 1. Start Here
     build_pdf("1. START HERE.pdf", "1. START HERE", "Essential Welcome & Onboarding Guide for Affiliates", content_start_here)
     build_markdown("1. START HERE.pdf", "1. START HERE — Essential Welcome Guide", content_start_here)
 
     # 2. About The Package
-    build_pdf("2. ABOUT THE ACADEMIC COMEBACK PACKAGE.pdf", "2. ABOUT THE PACKAGE", "Detailed Product Breakdown & Module Guide", content_about)
+    build_pdf("2. ABOUT THE ACADEMIC COMEBACK PACKAGE.pdf", "2. ABOUT THE ACADEMIC COMEBACK PACKAGE", "Detailed Product Breakdown & Module Guide", content_about)
     build_markdown("2. ABOUT THE ACADEMIC COMEBACK PACKAGE.pdf", "2. ABOUT THE ACADEMIC COMEBACK PACKAGE", content_about)
 
     # 3. Product Covers
@@ -450,10 +456,19 @@ def main():
     build_pdf("7. FREQUENTLY ASKED QUESTIONS.pdf", "7. FREQUENTLY ASKED QUESTIONS", "Complete Partner & Product FAQ Guide", content_faq)
     build_markdown("7. FREQUENTLY ASKED QUESTIONS.pdf", "7. FREQUENTLY ASKED QUESTIONS", content_faq)
 
-    # Create Zip File for single download
+    # Move docs_markdown outside of OUTPUT_DIR temporarily before zipping so ZIP is clean
+    temp_md_storage = BASE_DIR / "docs_markdown_temp"
+    if DOCS_MD_DIR.exists():
+        shutil.move(str(DOCS_MD_DIR), str(temp_md_storage))
+
+    # Create Zip File for single download containing ONLY the 7 core items
     archive_path = BASE_DIR / "frontend" / "assets" / "Academic_Comeback_Package_Affiliate_Resource_Folder.zip"
     shutil.make_archive(str(archive_path).replace('.zip', ''), 'zip', OUTPUT_DIR)
-    print(f"📦 Created Zip Package: {archive_path.name}")
+    print(f"📦 Created Clean Zip Package: {archive_path.name}")
+
+    # Restore docs_markdown directory back into OUTPUT_DIR
+    if temp_md_storage.exists():
+        shutil.move(str(temp_md_storage), str(DOCS_MD_DIR))
 
     print("=" * 80)
     print("ALL AFFILIATE RESOURCE FILES CREATED SUCCESSFULLY!")
