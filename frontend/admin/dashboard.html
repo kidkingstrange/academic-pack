@@ -425,6 +425,7 @@
   <a class="nav-item" onclick="switchSection('sales')"><i class="bi bi-credit-card-2-front"></i> Sales Management</a>
   <a class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</a>
   <a class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</a>
+  <a class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</a>
 
   <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </aside>
@@ -571,6 +572,48 @@
       </div>
     </div>
 
+    <!-- ── VIEW 5: PAYOUTS (Biweekly Batches + Settlement) ──────────────────── -->
+    <div id="view-payouts" class="section">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Flutterwave Balance</div><div class="kpi-val" id="payout-kpi-balance">₦0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Reserved for Affiliates</div><div class="kpi-val" id="payout-kpi-reserved">₦0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Available to Withdraw</div><div class="kpi-val gold" id="payout-kpi-available">₦0</div></div>
+      </div>
+
+      <div class="data-table-container" style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; margin-bottom:32px">
+        <div>
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Your Settlement</div>
+          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Pull your share out of the Flutterwave payout balance — never automatic, always your call</div>
+        </div>
+        <button class="btn-action" onclick="openWithdrawModal()"><i class="bi bi-bank"></i> Withdraw My Share</button>
+      </div>
+
+      <div class="data-table-container">
+        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
+          <div>
+            <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Pending Payout Batch</div>
+            <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px" id="payout-pending-sub">No batch pending</div>
+          </div>
+          <div style="display:flex; gap:10px">
+            <button class="btn-action btn-secondary" onclick="buildBatchNow()"><i class="bi bi-arrow-repeat"></i> Build Batch Now</button>
+            <button class="btn-action" id="payout-approve-btn" style="display:none" onclick="approvePendingBatch()"><i class="bi bi-send-check-fill"></i> Approve &amp; Send</button>
+          </div>
+        </div>
+        <table class="data-table" id="table-payout-pending">
+          <thead><tr><th>Affiliate</th><th>Bank</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="data-table-container">
+        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Batch History</div>
+        <table class="data-table" id="table-payout-history">
+          <thead><tr><th>Created</th><th>Status</th><th>Affiliates</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -614,7 +657,8 @@
       dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
       sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
       customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
-      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' }
+      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
+      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -630,6 +674,7 @@
     if(currentView === 'sales') loadSalesView();
     if(currentView === 'customers') loadCustomersView();
     if(currentView === 'affiliates') loadAffiliatesView();
+    if(currentView === 'payouts') loadPayoutsView();
   }
 
   async function apiCall(endpoint, method = 'GET', body = null) {
@@ -911,6 +956,8 @@
 
   // ── 4. AFFILIATES ENGINE VIEW ──────────────────────────────────────────────
   let allAffiliatesData = [];
+  let payoutBatches = [];
+  let pendingBatch = null;
 
   async function loadAffiliatesView() {
     const data = await apiCall('/api/admin/analytics/affiliates');
@@ -1027,6 +1074,159 @@
     } else {
       alert(`❌ Error: ${res.detail || 'Could not create affiliate'}`);
     }
+  }
+
+  // ── 5. PAYOUTS VIEW ────────────────────────────────────────────────────────
+  async function loadPayoutsView() {
+    const [settlement, batchesResp] = await Promise.all([
+      apiCall('/api/admin/payouts/settlement'),
+      apiCall('/api/admin/payouts/batches?limit=20'),
+    ]);
+
+    if (!settlement.detail) {
+      document.getElementById('payout-kpi-balance').textContent = money(settlement.flutterwave_balance);
+      document.getElementById('payout-kpi-reserved').textContent = money(settlement.reserved_for_affiliates);
+      document.getElementById('payout-kpi-available').textContent = money(settlement.available_to_withdraw);
+    }
+
+    payoutBatches = batchesResp.batches || [];
+    pendingBatch = payoutBatches.find(b => b.status === 'pending_approval' || b.status === 'failed_partial') || null;
+
+    renderPendingBatch();
+    renderBatchHistory();
+  }
+
+  function payoutItemStatusPill(status) {
+    const map = {
+      pending: ['pending', 'Pending'],
+      success: ['success', 'Sent'],
+      failed: ['failed', 'Failed'],
+      blocked_missing_bank_code: ['failed', 'Missing Bank Code'],
+    };
+    const [cls, label] = map[status] || ['pending', status];
+    return `<span class="status-pill ${cls}">${label}</span>`;
+  }
+
+  function batchStatusPill(status) {
+    const map = {
+      pending_approval: ['pending', 'Pending Approval'],
+      sending: ['pending', 'Sending'],
+      completed: ['success', 'Completed'],
+      failed_partial: ['failed', 'Partially Failed'],
+    };
+    const [cls, label] = map[status] || ['pending', status];
+    return `<span class="status-pill ${cls}">${label}</span>`;
+  }
+
+  function renderPendingBatch() {
+    const sub = document.getElementById('payout-pending-sub');
+    const approveBtn = document.getElementById('payout-approve-btn');
+    const tbody = document.querySelector('#table-payout-pending tbody');
+
+    if (!pendingBatch) {
+      sub.textContent = 'No batch pending';
+      approveBtn.style.display = 'none';
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nothing pending right now</td></tr>';
+      return;
+    }
+
+    sub.textContent = `${money(pendingBatch.total_amount)} across ${pendingBatch.items.length} affiliate(s) — status: ${pendingBatch.status}`;
+    approveBtn.style.display = 'inline-flex';
+
+    tbody.innerHTML = pendingBatch.items.map(i => `
+      <tr>
+        <td style="font-weight:600">${i.affiliate_name}<div style="font-size:0.75rem;color:var(--gray-l)">${i.affiliate_code}</div></td>
+        <td>
+          <div style="font-weight:600;font-size:0.82rem;color:#fff">${i.bank_name || '<span style="color:var(--gray-l)">Not set</span>'}</div>
+          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${i.account_number || ''}</div>
+        </td>
+        <td style="font-weight:700">${money(i.amount)}</td>
+        <td>${payoutItemStatusPill(i.transfer_status)}</td>
+      </tr>
+    `).join('');
+  }
+
+  function renderBatchHistory() {
+    const tbody = document.querySelector('#table-payout-history tbody');
+    if (payoutBatches.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">No batches yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = payoutBatches.map(b => `
+      <tr>
+        <td>${new Date(b.created_at).toLocaleDateString()}</td>
+        <td>${batchStatusPill(b.status)}</td>
+        <td>${b.items.length}</td>
+        <td style="font-weight:700">${money(b.total_amount)}</td>
+      </tr>
+    `).join('');
+  }
+
+  async function buildBatchNow() {
+    if (pendingBatch) {
+      alert('There is already a pending batch. Approve or resolve it before building a new one.');
+      return;
+    }
+    const res = await apiCall('/api/admin/payouts/build-now', 'POST', {});
+    if (res.batch) {
+      alert(`Batch built: ${money(res.batch.total_amount)} across ${res.batch.items.length} affiliate(s). Review it below before approving.`);
+    } else {
+      alert(res.message || 'Nothing currently owed to any affiliate.');
+    }
+    loadPayoutsView();
+  }
+
+  async function approvePendingBatch() {
+    if (!pendingBatch) return;
+    const sendable = pendingBatch.items.filter(i => i.transfer_status === 'pending' || i.transfer_status === 'failed');
+    const sendableTotal = sendable.reduce((sum, i) => sum + i.amount, 0);
+    const confirmMsg = `This sends REAL MONEY via Flutterwave to ${sendable.length} affiliate(s), totaling ${money(sendableTotal)}.\n\nThis cannot be undone. Continue?`;
+    if (!confirm(confirmMsg)) return;
+
+    const result = await apiCall(`/api/admin/payouts/batches/${pendingBatch.id}/approve`, 'POST', {});
+    if (result.detail) {
+      alert(`❌ ${result.detail}`);
+    } else {
+      const succeeded = result.items.filter(i => i.transfer_status === 'success').length;
+      const failed = result.items.filter(i => i.transfer_status === 'failed' || i.transfer_status === 'blocked_missing_bank_code').length;
+      alert(`Batch sent.\n\n✅ ${succeeded} succeeded${failed > 0 ? `\n⚠️ ${failed} failed/blocked — check the batch below for details` : ''}`);
+    }
+    loadPayoutsView();
+  }
+
+  function openWithdrawModal() {
+    const available = document.getElementById('payout-kpi-available').textContent;
+    document.getElementById('drawer-title').textContent = 'Withdraw My Share';
+    document.getElementById('drawer-content').innerHTML = `
+      <form onsubmit="submitWithdraw(event)">
+        <div class="drawer-section">
+          <div class="drawer-section-title">Settlement Transfer</div>
+          <div style="font-size:0.85rem; color:var(--gray-l); margin-bottom:14px">Available to withdraw: <strong style="color:var(--gold-l)">${available}</strong></div>
+          <div class="detail-label" style="margin-bottom:6px">Amount (₦)</div>
+          <input type="number" id="withdraw-amount" class="input-control" style="width:100%" min="1" step="0.01" required>
+        </div>
+        <button type="submit" class="btn-action" style="width:100%;justify-content:center"><i class="bi bi-bank"></i> Send to My Bank Account</button>
+      </form>
+    `;
+    openDrawer();
+  }
+
+  async function submitWithdraw(e) {
+    e.preventDefault();
+    const amount = Number(document.getElementById('withdraw-amount').value);
+    if (!amount || amount <= 0) { alert('Enter a valid amount'); return; }
+    if (!confirm(`Transfer ${money(amount)} to your settlement bank account now?\n\nThis sends real money and cannot be undone.`)) return;
+
+    const res = await apiCall('/api/admin/payouts/settlement/withdraw', 'POST', { amount });
+    if (res.detail) {
+      alert(`❌ ${res.detail}`);
+    } else if (res.status === 'success') {
+      alert(`✅ Withdrawal sent: ${money(res.amount)}`);
+      closeDrawer();
+    } else {
+      alert(`⚠️ Withdrawal failed: ${res.error || 'Unknown error'}`);
+    }
+    loadPayoutsView();
   }
 
   // ── Drawer Open/Close ──────────────────────────────────────────────────────
