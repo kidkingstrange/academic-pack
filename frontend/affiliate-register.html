@@ -147,6 +147,27 @@
   const submitBtn = document.getElementById('aff-submit-btn');
   const errEl = document.getElementById('aff-submit-err');
 
+  // Fetch full live list of all 180+ Nigerian banks from Paystack public API
+  async function loadFullNigerianBanks() {
+    try {
+      const res = await fetch('https://api.paystack.co/bank?country=nigeria');
+      const json = await res.json();
+      if (json.status && Array.isArray(json.data) && json.data.length > 0) {
+        const select = document.getElementById('aff-bank-name');
+        const sortedBanks = json.data
+          .filter(b => b.active !== false)
+          .sort((a, b) => a.name.localeCompare(b.name));
+        
+        select.innerHTML = '<option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>' +
+          sortedBanks.map(b => `<option value="${b.name.replace(/"/g, '&quot;')}" style="background:var(--ink); color:#fff">${b.name}</option>`).join('') +
+          '<option value="Other Bank" style="background:var(--ink); color:#fff">Other Commercial / Microfinance Bank</option>';
+      }
+    } catch (e) {
+      // Seamlessly keep static fallback list
+    }
+  }
+  loadFullNigerianBanks();
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errEl.style.display = 'none';

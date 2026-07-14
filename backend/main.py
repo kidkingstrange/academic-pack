@@ -128,11 +128,17 @@ async def serve_dashboard():
 
 @app.get("/affiliate/register", include_in_schema=False)
 async def serve_affiliate_register():
-    return FileResponse(str(frontend_path / "affiliate-register.html"))
+    return FileResponse(
+        str(frontend_path / "affiliate-register.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/affiliate/dashboard", include_in_schema=False)
 async def serve_affiliate_dashboard():
-    return FileResponse(str(frontend_path / "affiliate-dashboard.html"))
+    return FileResponse(
+        str(frontend_path / "affiliate-dashboard.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/r/{code}", include_in_schema=False)
 async def track_referral(code: str, request: Request, db=Depends(get_db)):
