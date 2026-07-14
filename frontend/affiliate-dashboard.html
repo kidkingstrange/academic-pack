@@ -67,6 +67,16 @@
     <div class="stat-card"><h3>Still Owed</h3><div class="val gold" id="stat-owed">₦0</div></div>
   </div>
 
+  <div style="background:var(--ink2); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); padding:24px; margin-bottom:40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+    <div>
+      <div style="font-size:.76rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:.8px; font-weight:700; margin-bottom:6px;">Your Payout Bank Account</div>
+      <div style="font-size:1.1rem; font-weight:700; color:#fff;" id="bank-acct-display">Loading bank details...</div>
+    </div>
+    <button onclick="editMyBankDetails()" style="background:rgba(201,151,58,.15); border:1px solid rgba(201,151,58,.3); color:var(--gold-l); font-size:.82rem; font-weight:700; padding:8px 18px; border-radius:var(--radius-full); cursor:pointer; transition:all .2s;">
+      <i class="bi bi-pencil-square"></i> Update Bank Details
+    </button>
+  </div>
+
   <div class="sales-section">
     <h2>Your Sales</h2>
     <table id="sales-table">
@@ -119,6 +129,11 @@
       document.getElementById('stat-earned').textContent = money(data.commission_earned);
       document.getElementById('stat-paid').textContent = money(data.commission_paid);
       document.getElementById('stat-owed').textContent = money(data.commission_owed);
+
+      const bankText = (data.bank_name && data.account_number)
+        ? `${data.bank_name} • ${data.account_number} (${data.account_name || data.name})`
+        : '⚠️ No bank details configured yet — click update to add yours';
+      document.getElementById('bank-acct-display').textContent = bankText;
 
       const tbody = document.querySelector('#sales-table tbody');
       if (!data.sales || data.sales.length === 0) {
@@ -180,6 +195,29 @@
       navigator.clipboard.writeText(text).then(showSuccess).catch(() => fallbackCopy(text));
     } else {
       fallbackCopy(text);
+    }
+  }
+
+  async function editMyBankDetails() {
+    const bank_name = prompt('Enter your Bank Name (e.g. Access Bank, GTBank, Kuda, Zenith, OPay):');
+    if (!bank_name) return;
+    const account_number = prompt('Enter your 10-Digit Account Number:');
+    if (!account_number) return;
+    const account_name = prompt('Enter the Account Name (Full name on your bank account):');
+    if (!account_name) return;
+
+    try {
+      const res = await fetch(`/api/affiliate/bank-details?token=${encodeURIComponent(token)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bank_name, account_number, account_name })
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.detail || 'Could not save bank details');
+      alert('✅ Bank details saved successfully!');
+      loadDashboard();
+    } catch(err) {
+      alert(`❌ Error: ${err.message || err}`);
     }
   }
 

@@ -49,6 +49,41 @@
         <input type="email" id="aff-email" placeholder="your@email.com" required>
       </div>
 
+      <div style="margin:20px 0 12px; font-size:.82rem; font-weight:700; color:var(--gold-l); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,.08); padding-bottom:6px">Payout Bank Details</div>
+
+      <div class="form-group">
+        <label for="aff-bank-name">Bank Name</label>
+        <select id="aff-bank-name" style="width:100%; padding:14px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:12px; color:#fff; font-size:.95rem; font-family:inherit; outline:none;" required>
+          <option value="" disabled selected style="background:var(--ink); color:#888">Select Bank...</option>
+          <option value="Access Bank" style="background:var(--ink); color:#fff">Access Bank</option>
+          <option value="GTBank (Guaranty Trust Bank)" style="background:var(--ink); color:#fff">GTBank (Guaranty Trust)</option>
+          <option value="Kuda Bank" style="background:var(--ink); color:#fff">Kuda Bank</option>
+          <option value="OPay" style="background:var(--ink); color:#fff">OPay</option>
+          <option value="Palmpay" style="background:var(--ink); color:#fff">Palmpay</option>
+          <option value="Zenith Bank" style="background:var(--ink); color:#fff">Zenith Bank</option>
+          <option value="First Bank of Nigeria" style="background:var(--ink); color:#fff">First Bank</option>
+          <option value="United Bank for Africa (UBA)" style="background:var(--ink); color:#fff">UBA (United Bank for Africa)</option>
+          <option value="Moniepoint Microfinance Bank" style="background:var(--ink); color:#fff">Moniepoint</option>
+          <option value="Fidelity Bank" style="background:var(--ink); color:#fff">Fidelity Bank</option>
+          <option value="FCMB (First City Monument Bank)" style="background:var(--ink); color:#fff">FCMB</option>
+          <option value="Stanbic IBTC Bank" style="background:var(--ink); color:#fff">Stanbic IBTC</option>
+          <option value="Sterling Bank" style="background:var(--ink); color:#fff">Sterling Bank</option>
+          <option value="Union Bank" style="background:var(--ink); color:#fff">Union Bank</option>
+          <option value="Wema Bank (ALAT)" style="background:var(--ink); color:#fff">Wema Bank (ALAT)</option>
+          <option value="Other Bank" style="background:var(--ink); color:#fff">Other Bank</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="aff-acct-num">10-Digit Account Number</label>
+        <input type="text" id="aff-acct-num" placeholder="e.g. 0123456789" maxlength="10" pattern="[0-9]{10}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="aff-acct-name">Account Name (Full name on bank account)</label>
+        <input type="text" id="aff-acct-name" placeholder="e.g. Chidi Okafor" required>
+      </div>
+
       <button type="submit" class="modal__submit" id="aff-submit-btn">Get My Referral Link →</button>
       <p class="aff-submit-err" id="aff-submit-err"></p>
     </form>
@@ -88,6 +123,9 @@
 
     const name = document.getElementById('aff-name').value.trim();
     const email = document.getElementById('aff-email').value.trim();
+    const bankName = document.getElementById('aff-bank-name').value;
+    const accountNum = document.getElementById('aff-acct-num').value.trim();
+    const accountName = document.getElementById('aff-acct-name').value.trim();
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Registering…';
@@ -96,7 +134,13 @@
       const res = await fetch(`${API_BASE}/affiliates/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({
+          name,
+          email,
+          bank_name: bankName,
+          account_number: accountNum,
+          account_name: accountName
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || 'Registration failed');

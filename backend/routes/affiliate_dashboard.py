@@ -48,6 +48,10 @@ async def get_my_stats(token: str, db=Depends(get_db)):
     return {
         "code": code,
         "name": affiliate["name"],
+        "email": affiliate.get("email", ""),
+        "bank_name": affiliate.get("bank_name", ""),
+        "account_number": affiliate.get("account_number", ""),
+        "account_name": affiliate.get("account_name", ""),
         "active": affiliate.get("active", True),
         "commission_percent": affiliate.get("commission_percent", 0),
         "clicks": clicks,
@@ -57,4 +61,35 @@ async def get_my_stats(token: str, db=Depends(get_db)):
         "commission_paid": commission_paid,
         "commission_owed": commission_earned - commission_paid,
         "sales": sales,
+    }
+
+
+@router.post("/bank-details")
+async def update_my_bank_details(token: str, body: dict, db=Depends(get_db)):
+    affiliate = await db.affiliates.find_one({"dashboard_token": token})
+    if not affiliate:
+        raise HTTPException(status_code=401, detail="Invalid dashboard link")
+
+    bank_name = (body.get("bank_name") or "").strip()
+    account_number = (body.get("account_number") or "").strip()
+    account_name = (body.get("account_name") or "").strip()
+
+    if not bank_name or not account_number or not account_name:
+        raise HTTPException(status_code=400, detail="Bank name, account number, and account name are required")
+
+    await db.affiliates.update_one(
+        {"_id": affiliate["_id"]},
+        {"$set": {
+            "bank_name": bank_name,
+            "account_number": account_number,
+            "account_name": account_name,
+        }}
+    )
+
+    return {
+        "status": "ok",
+        "message": "Bank details updated successfully",
+        "bank_name": bank_name,
+        "account_number": account_number,
+        "account_name": account_name,
     }

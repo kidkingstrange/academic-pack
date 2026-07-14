@@ -42,7 +42,8 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
     try:
         affiliate = await create_affiliate_record(
             db, name=body.name, email=body.email, source="self_registered",
-            registration_ip=ip,
+            registration_ip=ip, bank_name=body.bank_name, account_number=body.account_number,
+            account_name=body.account_name,
         )
     except ValueError as e:
         if str(e) == "duplicate_email":

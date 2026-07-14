@@ -34,6 +34,9 @@ async def create_affiliate_record(
     code: str = None,
     commission_percent: float = None,
     registration_ip: str = None,
+    bank_name: str = None,
+    account_number: str = None,
+    account_name: str = None,
 ) -> dict:
     """
     Insert a new affiliate. Raises ValueError("duplicate_email") or
@@ -63,6 +66,9 @@ async def create_affiliate_record(
         "code": resolved_code,
         "name": name,
         "email": email,
+        "bank_name": (bank_name or "").strip(),
+        "account_number": (account_number or "").strip(),
+        "account_name": (account_name or "").strip(),
         "active": True,
         "source": source,
         "commission_percent": resolved_commission,

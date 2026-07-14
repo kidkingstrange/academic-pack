@@ -565,7 +565,7 @@
           </button>
         </div>
         <table class="data-table" id="table-affiliates-roster">
-          <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Payout Bank Account</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -933,24 +933,28 @@
       return;
     }
     tbody.innerHTML = affs.map(a => `
-      <tr>
+      <tr onclick="inspectAffiliate('${a.id}')">
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
-        <td><code>${a.code}</code></td>
-        <td style="font-weight:600">${a.name}</td>
+        <td style="font-weight:700;color:var(--gold-light)">${a.code}</td>
+        <td style="font-weight:600">${a.name}<div style="font-size:0.75rem;color:var(--gray-l)">${a.email}</div></td>
+        <td>
+          <div style="font-weight:600;font-size:0.82rem;color:#fff">${a.bank_name || '<span style="color:var(--gray-l)">Not provided</span>'}</div>
+          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${a.account_number ? a.account_number + ' (' + (a.account_name || a.name) + ')' : ''}</div>
+        </td>
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>
         <td>${money(a.revenue)}</td>
         <td>
           <div class="rate-cell">
             ${a.commission_percent}%
-            <button class="rate-edit-btn" onclick="editCommissionRate('${a.id}', ${a.commission_percent})" title="Edit rate"><i class="bi bi-pencil-square"></i></button>
+            <button class="rate-edit-btn" onclick="event.stopPropagation(); editCommissionRate('${a.id}', ${a.commission_percent})" title="Edit rate"><i class="bi bi-pencil-square"></i></button>
           </div>
         </td>
         <td>${money(a.commission_earned)}</td>
         <td>${money(a.commission_paid)}</td>
         <td style="color:var(--gold-light);font-weight:800">${money(a.commission_owed)}</td>
         <td>
-          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="markPayout('${a.id}', '${a.name.replace(/'/g, "\\'")}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
+          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); markPayout('${a.id}', '${a.name.replace(/'/g, "\\'")}', '${(a.bank_name || '').replace(/'/g, "\\'")}', '${a.account_number || ''}', '${(a.account_name || '').replace(/'/g, "\\'")}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
         </td>
       </tr>
     `).join('');
