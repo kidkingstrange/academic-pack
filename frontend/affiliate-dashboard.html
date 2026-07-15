@@ -49,6 +49,8 @@
   .caption-card { background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: 18px 20px; margin-bottom: 16px; }
   .caption-card .label { font-size: .86rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
   .caption-card .text { font-size: .85rem; color: var(--gray-l); line-height: 1.6; white-space: pre-wrap; margin-bottom: 14px; }
+  .resource-card { transition: all var(--transition); }
+  .resource-card:hover { border-color: var(--gold) !important; box-shadow: var(--gold-glow); }
 </style>
 </head>
 <body>
@@ -78,6 +80,40 @@
     <a href="/assets/Academic_Comeback_Package_Affiliate_Resource_Folder.zip" download class="btn btn--gold" style="text-decoration:none; padding:10px 20px; font-size:0.88rem; font-weight:700; white-space:nowrap;">
       <i class="bi bi-file-earmark-zip-fill"></i> Download Resources (.ZIP)
     </a>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+    <!-- Video Materials Card -->
+    <div style="background: var(--ink2); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; transition: all var(--transition);" class="resource-card">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <div style="width: 36px; height: 36px; background: rgba(201, 151, 58, 0.1); color: var(--gold-l); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 1px solid rgba(201, 151, 58, 0.2);">
+            <i class="bi bi-play-btn-fill"></i>
+          </div>
+          <h3 style="font-family: 'Clash Display', sans-serif; font-size: 1.05rem; font-weight: 600; color: #fff; margin: 0;">Video Marketing Materials</h3>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--gray-l); line-height: 1.5; margin-bottom: 20px; margin-top: 8px;">Get high-converting vertical video ads, reel mockups, and script video files to promote on social channels.</p>
+      </div>
+      <a href="#" id="video-materials-btn" target="_blank" class="btn btn--gold" style="text-decoration: none; text-align: center; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px;">
+        Download Video Marketing Materials <i class="bi bi-arrow-right"></i>
+      </a>
+    </div>
+
+    <!-- WhatsApp Community Card -->
+    <div style="background: var(--ink2); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-lg); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; transition: all var(--transition);" class="resource-card">
+      <div>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+          <div style="width: 36px; height: 36px; background: rgba(37, 211, 102, 0.1); color: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 1px solid rgba(37, 211, 102, 0.2);">
+            <i class="bi bi-whatsapp"></i>
+          </div>
+          <h3 style="font-family: 'Clash Display', sans-serif; font-size: 1.05rem; font-weight: 600; color: #fff; margin: 0;">Join the Affiliate Community</h3>
+        </div>
+        <p style="font-size: 0.85rem; color: var(--gray-l); line-height: 1.5; margin-bottom: 20px; margin-top: 8px;">Connect with other top affiliates, get immediate program updates, conversion tips, and direct manager support.</p>
+      </div>
+      <a href="#" id="whatsapp-community-btn" target="_blank" class="btn" style="background: #25D366; border: 1px solid #25D366; color: #fff; text-decoration: none; text-align: center; font-size: 0.85rem; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px;">
+        Join the Affiliate Community <i class="bi bi-whatsapp"></i>
+      </a>
+    </div>
   </div>
 
   <div class="stats-grid">
@@ -163,6 +199,27 @@
         ? `${data.bank_name} • ${data.account_number} (${data.account_name || data.name})`
         : '⚠️ No bank details configured yet — click update to add yours';
       document.getElementById('bank-acct-display').textContent = bankText;
+
+      // Populate Google Drive and WhatsApp community links
+      const videoMaterialsBtn = document.getElementById('video-materials-btn');
+      if (data.video_materials_link) {
+        videoMaterialsBtn.href = data.video_materials_link;
+      }
+      const whatsappCommunityBtn = document.getElementById('whatsapp-community-btn');
+      if (data.whatsapp_affiliate_link) {
+        whatsappCommunityBtn.href = data.whatsapp_affiliate_link;
+      }
+
+      // Log video materials clicks (counts as activation signal)
+      videoMaterialsBtn.addEventListener('click', async function() {
+        try {
+          await fetch(`/api/affiliate/video-click?token=${encodeURIComponent(token)}`, {
+            method: 'POST'
+          });
+        } catch (err) {
+          // non-critical — do not block the redirection
+        }
+      });
 
       const tbody = document.querySelector('#sales-table tbody');
       if (!data.sales || data.sales.length === 0) {

@@ -67,6 +67,8 @@ async def get_my_stats(token: str, db=Depends(get_db)):
         "commission_paid": commission_paid,
         "commission_owed": commission_earned - commission_paid,
         "sales": sales,
+        "video_materials_link": settings.AFFILIATE_VIDEO_MATERIALS_LINK,
+        "whatsapp_affiliate_link": settings.WHATSAPP_AFFILIATE_LINK,
     }
 
 
@@ -140,6 +142,27 @@ async def log_marketing_asset_download(token: str, body: dict, db=Depends(get_db
         "affiliate_code": affiliate["code"],
         "asset_name": asset_name,
         "downloaded_at": datetime.now(timezone.utc),
+        "nudge_sent": False,
+    })
+    return {"status": "ok"}
+
+
+@router.post("/video-click")
+async def log_marketing_video_click(token: str, db=Depends(get_db)):
+    """
+    Records a video click event — counts toward "activated" status (see
+    services/affiliate_health_service.py) and starts the 3-day nudge
+    clock (workers/affiliate_nudge_scheduler.py) if they never click
+    their own link afterward.
+    """
+    affiliate = await db.affiliates.find_one({"dashboard_token": token})
+    if not affiliate:
+        raise HTTPException(status_code=401, detail="Invalid dashboard link")
+
+    await db.marketing_video_clicks.insert_one({
+        "affiliate_id": affiliate["_id"],
+        "affiliate_code": affiliate["code"],
+        "clicked_at": datetime.now(timezone.utc),
         "nudge_sent": False,
     })
     return {"status": "ok"}

@@ -23,15 +23,26 @@ async def run_nudge_check():
     now = datetime.now(timezone.utc)
     cutoff = now - timedelta(days=3)
 
-    candidates = await db.marketing_asset_downloads.find({
+    downloads = await db.marketing_asset_downloads.find({
         "downloaded_at": {"$lte": cutoff},
         "nudge_sent": {"$ne": True},
     }).to_list(1000)
 
+    video_clicks = await db.marketing_video_clicks.find({
+        "clicked_at": {"$lte": cutoff},
+        "nudge_sent": {"$ne": True},
+    }).to_list(1000)
+
+    candidates = []
+    for d in downloads:
+        candidates.append({"code": d["affiliate_code"]})
+    for v in video_clicks:
+        candidates.append({"code": v["affiliate_code"]})
+
     seen_codes = set()
     queued = 0
     for c in candidates:
-        code = c["affiliate_code"]
+        code = c["code"]
         if code in seen_codes:
             continue
         seen_codes.add(code)
@@ -41,11 +52,17 @@ async def run_nudge_check():
             await db.marketing_asset_downloads.update_many(
                 {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
             )
+            await db.marketing_video_clicks.update_many(
+                {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
+            )
             continue
 
         affiliate = await db.affiliates.find_one({"code": code})
         if not affiliate:
             await db.marketing_asset_downloads.update_many(
+                {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
+            )
+            await db.marketing_video_clicks.update_many(
                 {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
             )
             continue
@@ -63,6 +80,9 @@ async def run_nudge_check():
             "error": None,
         })
         await db.marketing_asset_downloads.update_many(
+            {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
+        )
+        await db.marketing_video_clicks.update_many(
             {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
         )
         queued += 1

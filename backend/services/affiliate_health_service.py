@@ -47,7 +47,8 @@ async def compute_affiliate_health(db) -> dict:
     all_click_codes = set(await db.referral_clicks.distinct("affiliate_code"))
     all_referral_codes = set(await db.referrals.distinct("affiliate_code"))
     all_download_codes = set(await db.marketing_asset_downloads.distinct("affiliate_code"))
-    activated_codes = all_click_codes | all_referral_codes | all_download_codes
+    all_video_click_codes = set(await db.marketing_video_clicks.distinct("affiliate_code"))
+    activated_codes = all_click_codes | all_referral_codes | all_download_codes | all_video_click_codes
     activation_rate = round(100 * len(activated_codes) / total_registered, 1) if total_registered else 0.0
 
     # ── MAA (trailing 30 days) + 6-month trend ─────────────────────────

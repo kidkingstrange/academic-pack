@@ -51,6 +51,9 @@ async def connect_db():
         await db.settlement_withdrawals.create_index([("created_at", -1)])
         await db.marketing_asset_downloads.create_index([("affiliate_code", 1), ("downloaded_at", -1)])
         await db.marketing_asset_downloads.create_index([("downloaded_at", 1), ("nudge_sent", 1)])
+        await db.marketing_video_clicks.create_index([("affiliate_id", 1), ("clicked_at", -1)])
+        await db.marketing_video_clicks.create_index([("affiliate_code", 1), ("clicked_at", -1)])
+        await db.marketing_video_clicks.create_index([("clicked_at", 1), ("nudge_sent", 1)])
         print("✅ MongoDB connected")
     except Exception as e:
         print(f"⚠️ Warning: Could not connect to MongoDB ({e}). Running in UI-only mode.")
