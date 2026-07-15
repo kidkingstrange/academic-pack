@@ -15,21 +15,27 @@ MARKETING_ASSETS = [
         "url": "/assets/images/bookcoverlandscape.webp",
     },
     {
-        "name": "banner_cover_1",
+        "name": "banner_cover_get_good",
         "type": "banner",
-        "label": "Book Cover — Study System",
+        "label": "Book Cover — Get Good at Hard Things",
+        "url": "/assets/images/bookcover.webp",
+    },
+    {
+        "name": "banner_cover_score_high",
+        "type": "banner",
+        "label": "Book Cover — How to Score High in Any Exam",
         "url": "/assets/images/bookcover1.webp",
     },
     {
-        "name": "banner_cover_2",
+        "name": "banner_cover_balance",
         "type": "banner",
-        "label": "Book Cover — Exam Mastery",
+        "label": "Book Cover — How to Balance Academics and Your Business",
         "url": "/assets/images/bookcover2.webp",
     },
     {
-        "name": "banner_cover_3",
+        "name": "banner_cover_results_oriented",
         "type": "banner",
-        "label": "Book Cover — Focus & Discipline",
+        "label": "Book Cover — Results-Oriented Learning System",
         "url": "/assets/images/bookcover3.webp",
     },
     {
