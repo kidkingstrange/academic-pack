@@ -3,7 +3,7 @@ APScheduler-based email worker.
 Runs inside FastAPI process — processes email queue every 5 minutes.
 """
 import asyncio
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
 from ..services.email_service import (
@@ -11,6 +11,22 @@ from ..services.email_service import (
 )
 
 scheduler = AsyncIOScheduler()
+
+
+def _backoff_minutes(retry_count: int) -> int:
+    """
+    Exponential backoff between retry attempts, capped at 24h. Before
+    this, a failed item just got re-tried on the very next 5-minute
+    scheduler tick regardless of how many times it had already failed —
+    fine for a one-off blip, but it means all 10 retries burn through in
+    under an hour. On 2026-07-13/15, delivery broke for ~40 hours
+    straight and every email caught in that window permanently failed
+    within its first ~50 minutes, long before the underlying problem
+    had any real chance to clear. Formula: 10, 20, 40, 80, 160, 320,
+    640, 1280, 1440(capped), 1440(capped) minutes across 10 retries —
+    spreads them across roughly 3.75 days instead of ~50 minutes.
+    """
+    return min(5 * (2 ** retry_count), 24 * 60)
 
 # Serializes process_email_queue() across overlapping trigger sources — the
 # 5-minute scheduler tick and the immediate asyncio.create_task() fired on
@@ -227,19 +243,24 @@ async def process_email_queue():
                     next_retry = item.get("retry_count", 0) + 1
                     max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge") else 3
                     next_status = "failed" if next_retry >= max_retries else "retry"
+                    update_fields = {"status": next_status, "error": error_msg, "last_attempt_at": now}
+                    if next_status == "retry":
+                        update_fields["scheduled_at"] = now + timedelta(minutes=_backoff_minutes(next_retry))
                     await db.email_queue.update_one(
                         {"_id": item["_id"]},
-                        {"$inc": {"retry_count": 1},
-                         "$set": {"status": next_status, "error": error_msg, "last_attempt_at": now}}
+                        {"$inc": {"retry_count": 1}, "$set": update_fields}
                      )
             except Exception as e:
                 print(f"Email worker error for {item.get('email')}: {e}")
                 next_retry = item.get("retry_count", 0) + 1
                 max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge") else 3
                 next_status = "failed" if next_retry >= max_retries else "retry"
+                update_fields = {"error": str(e), "status": next_status, "last_attempt_at": now}
+                if next_status == "retry":
+                    update_fields["scheduled_at"] = now + timedelta(minutes=_backoff_minutes(next_retry))
                 await db.email_queue.update_one(
                     {"_id": item["_id"]},
-                    {"$inc": {"retry_count": 1}, "$set": {"error": str(e), "status": next_status, "last_attempt_at": now}}
+                    {"$inc": {"retry_count": 1}, "$set": update_fields}
                 )
 
 
@@ -259,7 +280,6 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
 
     queue_items = []
     for position, (day_offset, subject, template) in enumerate(EMAIL_SEQUENCE, 1):
-        from datetime import timedelta
         scheduled = subscribed_at + timedelta(days=day_offset)
         queue_items.append({
             "kind": "sequence",
