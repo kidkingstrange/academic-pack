@@ -73,8 +73,8 @@ class Settings(BaseSettings):
     # editable per affiliate) — this is only the starting value applied
     # when a new affiliate is created with no explicit rate given.
     AFFILIATE_DEFAULT_COMMISSION_PERCENT: float = 60.0
-    AFFILIATE_VIDEO_MATERIALS_LINK: str = ""
-    WHATSAPP_AFFILIATE_LINK: str = ""
+    AFFILIATE_VIDEO_MATERIALS_LINK: str = "https://drive.google.com/drive/folders/1vBqbAgBzUdgEZTcJmJMDLN0MHOd26LfM?usp=sharing"
+    WHATSAPP_AFFILIATE_LINK: str = "https://chat.whatsapp.com/GT4EVPIhwQa4DJsXZRbxql?s=cl&p=i&ilr=4"
 
     # ── Settlement (your own payout destination) ─────────────────────
     # Used only by the periodic "withdraw my share" transfer, once the
