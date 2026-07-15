@@ -268,6 +268,32 @@ async def get_ngn_balance() -> Dict[str, Any]:
         return resp.json()
 
 
+async def create_transfer_recipient(bank_code: str, account_number: str) -> Dict[str, Any]:
+    """
+    Register a bank account as a transfer recipient — a real, empirically-
+    confirmed prerequisite for create_transfer() below. The "Bank Account
+    Transfers" guide's example (bank details embedded directly in the
+    transfer request) looked simpler and matched official docs, but the
+    live API rejected it with "payment_instruction.recipient_id must not
+    be null" on the very first real transfer attempt — this two-step
+    flow (register recipient, then reference its id) is what the API
+    actually requires.
+    """
+    token = await get_flw_token()
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_API_BASE}/transfers/recipients",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "X-Trace-Id": str(uuid.uuid4()),
+            },
+            json={"type": "bank_ngn", "bank": {"account_number": account_number, "code": bank_code}},
+            timeout=15,
+        )
+        return resp.json()
+
+
 async def create_transfer(
     bank_code: str,
     account_number: str,
@@ -278,16 +304,22 @@ async def create_transfer(
     """
     Send money from the Flutterwave NGN payout balance to a Nigerian bank
     account — this one actually moves money, unlike every other function
-    in this file. Confirmed against Flutterwave's official docs (Bank
-    Account Transfers guide): recipient bank details are embedded
-    directly in the request, no separate recipient/sender registration
-    needed for a same-currency NGN->NGN payout.
+    in this file. Registers a transfer recipient first (see
+    create_transfer_recipient() above), then creates the transfer
+    referencing that recipient's id — confirmed empirically against the
+    live API after the embedded-bank-details approach was rejected.
 
     reference must be unique per transfer — Flutterwave treats it as an
     idempotency key, so a retried call with the same reference is safe
     (won't double-send).
     """
     token = await get_flw_token()
+
+    recipient_resp = await create_transfer_recipient(bank_code, account_number)
+    if recipient_resp.get("status") != "success":
+        return {"status": "failed", "error": {"message": f"Could not register transfer recipient: {recipient_resp}"}}
+    recipient_id = recipient_resp["data"]["id"]
+
     async with httpx.AsyncClient() as client:
         resp = await client.post(
             f"{FLW_API_BASE}/transfers",
@@ -306,7 +338,7 @@ async def create_transfer(
                     "amount": {"value": amount_naira, "applies_to": "destination_currency"},
                     "source_currency": "NGN",
                     "destination_currency": "NGN",
-                    "recipient": {"bank": {"code": bank_code, "account_number": account_number}},
+                    "recipient_id": recipient_id,
                 },
             },
             timeout=20,
