@@ -6,6 +6,7 @@ import re
 import html
 import smtplib
 import ssl
+import threading
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from pathlib import Path
@@ -37,6 +38,55 @@ def render_template(template_name: str, context: dict) -> str:
 
 SMTP_TIMEOUT_SECONDS = 30
 
+# ── Persistent SMTP connection ──────────────────────────────────────────────
+# A burst of ~13 near-simultaneous signups on 2026-07-13 preceded welcome-
+# email delivery breaking almost completely for the following ~40 hours
+# (near-zero successful sends, everything else timing out). The likely
+# trigger: this module used to open a brand-new connection AND log in fresh
+# for every single email, even when processing many in one
+# process_email_queue() batch — exactly the connection/login burst pattern
+# mail providers throttle. Now one connection is opened per batch and reused
+# across every item in it, validated with NOOP before each send and
+# transparently reconnected if it's gone stale. process_email_queue() already
+# serializes all sends via _email_queue_lock, so this reuse is safe without
+# additional locking, but _smtp_lock guards against any future caller that
+# might send outside that path.
+_smtp_connection = None
+_smtp_lock = threading.Lock()
+
+
+def _open_smtp_connection():
+    context = ssl.create_default_context()
+    if settings.SMTP_PORT == 465:
+        conn = smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, context=context, timeout=SMTP_TIMEOUT_SECONDS)
+    else:
+        conn = smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=SMTP_TIMEOUT_SECONDS)
+        conn.ehlo()
+        conn.starttls(context=context)
+    conn.login(settings.SMTP_USER, settings.SMTP_PASS)
+    return conn
+
+
+def _get_smtp_connection():
+    """Returns a live SMTP connection, reusing the existing one if it still
+    answers NOOP, otherwise closing it and logging in fresh exactly once."""
+    global _smtp_connection
+    if _smtp_connection is not None:
+        try:
+            status = _smtp_connection.noop()[0]
+            if status == 250:
+                return _smtp_connection
+        except Exception:
+            pass
+        try:
+            _smtp_connection.close()
+        except Exception:
+            pass
+        _smtp_connection = None
+
+    _smtp_connection = _open_smtp_connection()
+    return _smtp_connection
+
 
 def _send_sync(to_email: str, subject: str, html_body: str) -> None:
     """Blocking SMTP send — must only ever run in a worker thread, never
@@ -51,19 +101,21 @@ def _send_sync(to_email: str, subject: str, html_body: str) -> None:
     msg.attach(MIMEText(plain_text, "plain"))
     msg.attach(MIMEText(html_body, "html"))
 
-    context = ssl.create_default_context()
-
-    if settings.SMTP_PORT == 465:
-        # SSL connection
-        with smtplib.SMTP_SSL(settings.SMTP_HOST, settings.SMTP_PORT, context=context, timeout=SMTP_TIMEOUT_SECONDS) as server:
-            server.login(settings.SMTP_USER, settings.SMTP_PASS)
+    with _smtp_lock:
+        try:
+            server = _get_smtp_connection()
             server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
-    else:
-        # STARTTLS connection (port 587)
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=SMTP_TIMEOUT_SECONDS) as server:
-            server.ehlo()
-            server.starttls(context=context)
-            server.login(settings.SMTP_USER, settings.SMTP_PASS)
+        except Exception:
+            # The reused connection may have died mid-batch (server-side
+            # idle timeout, network blip) — drop it and retry once with a
+            # fresh login rather than failing this send outright.
+            global _smtp_connection
+            try:
+                _smtp_connection.close()
+            except Exception:
+                pass
+            _smtp_connection = None
+            server = _get_smtp_connection()
             server.sendmail(settings.SMTP_USER, to_email, msg.as_string())
 
 
