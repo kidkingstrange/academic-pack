@@ -20,7 +20,7 @@ from .database import connect_db, disconnect_db, get_db
 from .routes import (
     payments, library, admin as admin_router, community,
     affiliates, affiliate_public, affiliate_dashboard, tracking,
-    admin_payouts,
+    admin_payouts, sales as sales_router,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
@@ -78,6 +78,7 @@ app.include_router(affiliate_public.router)
 app.include_router(affiliate_dashboard.router)
 app.include_router(tracking.router)
 app.include_router(admin_payouts.router)
+app.include_router(sales_router.router)
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
 # and additionally bakes in a tier-badge system, a ranked leaderboard,
@@ -141,6 +142,20 @@ async def serve_affiliate_register():
 async def serve_affiliate_dashboard():
     return FileResponse(
         str(frontend_path / "affiliate-dashboard.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/sales", include_in_schema=False)
+async def serve_sales_login():
+    return FileResponse(
+        str(frontend_path / "sales" / "login.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/sales/dashboard", include_in_schema=False)
+async def serve_sales_dashboard():
+    return FileResponse(
+        str(frontend_path / "sales" / "dashboard.html"),
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
 
