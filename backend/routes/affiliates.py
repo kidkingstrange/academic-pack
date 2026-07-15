@@ -118,6 +118,9 @@ async def list_affiliates(current_user=Depends(require_admin), db=Depends(get_db
             "commission_earned": earned,
             "commission_paid": paid,
             "commission_owed": earned - paid,
+            "bank_name": a.get("bank_name", ""),
+            "account_number": a.get("account_number", ""),
+            "account_name": a.get("account_name", ""),
         })
     return {"affiliates": out}
 
