@@ -10,7 +10,11 @@ from ..config import get_settings
 
 settings = get_settings()
 
-FLW_API_BASE = "https://f4bexperience.flutterwave.com"
+if settings.APP_ENV == "production":
+    FLW_API_BASE = "https://f4bexperience.flutterwave.com"
+else:
+    FLW_API_BASE = "https://developersandbox-api.flutterwave.com"
+
 FLW_AUTH_URL = "https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token"
 
 # ── OAuth token cache ──────────────────────────────────────────────────────────
@@ -137,6 +141,125 @@ async def initiate_bank_transfer(
         if chg_data.get("status") != "success":
             raise Exception(f"FLW charge error: {chg_data}")
         return chg_data["data"]
+
+
+async def initiate_card_payment(
+    token: str,
+    customer_id: str,
+    amount_naira: int,
+    reference: str,
+    redirect_url: str,
+    card_number: str,
+    cvv: str,
+    expiry_month: str,
+    expiry_year: str,
+    cardholder_name: str,
+) -> Dict[str, Any]:
+    """
+    Create a card payment method and initiate a charge.
+    Encrypts card parameters using AES-256-GCM as required by V4 Experience.
+    """
+    encryption_key = settings.FLW_ENCRYPTION_SECRET
+    if not encryption_key:
+        raise Exception("FLW_ENCRYPTION_SECRET is not configured in settings")
+
+    # Generate 12-char nonce (6 hex bytes)
+    nonce = secrets.token_hex(6)
+
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+    import base64
+
+    key_bytes = base64.b64decode(encryption_key)
+    aesgcm = AESGCM(key_bytes)
+    nonce_bytes = nonce.encode('utf-8')
+
+    enc_number = base64.b64encode(aesgcm.encrypt(nonce_bytes, card_number.strip().replace(" ", "").encode('utf-8'), None)).decode('utf-8')
+    enc_month = base64.b64encode(aesgcm.encrypt(nonce_bytes, expiry_month.strip().encode('utf-8'), None)).decode('utf-8')
+    enc_year = base64.b64encode(aesgcm.encrypt(nonce_bytes, expiry_year.strip().encode('utf-8'), None)).decode('utf-8')
+    enc_cvv = base64.b64encode(aesgcm.encrypt(nonce_bytes, cvv.strip().encode('utf-8'), None)).decode('utf-8')
+
+    async with httpx.AsyncClient() as client:
+        # Create card payment method
+        pm_resp = await client.post(
+            f"{FLW_API_BASE}/payment-methods",
+            headers={
+                "Authorization":     f"Bearer {token}",
+                "Content-Type":      "application/json",
+                "X-Trace-Id":        str(uuid.uuid4()),
+                "X-Idempotency-Key": reference + "-pm-card",
+            },
+            json={
+                "type": "card",
+                "card": {
+                    "nonce": nonce,
+                    "encrypted_card_number": enc_number,
+                    "encrypted_expiry_month": enc_month,
+                    "encrypted_expiry_year": enc_year,
+                    "encrypted_cvv": enc_cvv,
+                    "cardholder_name": cardholder_name.strip()
+                }
+            },
+            timeout=15,
+        )
+        pm_data = pm_resp.json()
+        if pm_data.get("status") != "success":
+            raise Exception(f"FLW card payment-method error: {pm_data}")
+        payment_method_id = pm_data["data"]["id"]
+
+        # Create charge
+        chg_resp = await client.post(
+            f"{FLW_API_BASE}/charges",
+            headers={
+                "Authorization":     f"Bearer {token}",
+                "Content-Type":      "application/json",
+                "X-Trace-Id":        str(uuid.uuid4()),
+                "X-Idempotency-Key": reference,
+            },
+            json={
+                "reference":         reference,
+                "currency":          "NGN",
+                "amount":            amount_naira,
+                "customer_id":       customer_id,
+                "payment_method_id": payment_method_id,
+                "redirect_url":      redirect_url,
+            },
+            timeout=15,
+        )
+        chg_data = chg_resp.json()
+        if chg_data.get("status") != "success":
+            raise Exception(f"FLW card charge error: {chg_data}")
+        return chg_data["data"]
+
+
+async def charge_token(
+    token: str,
+    card_token: str,
+    amount_naira: int,
+    email: str,
+    reference: str,
+) -> Dict[str, Any]:
+    """
+    Charge a saved card token for recurring billing.
+    Uses the V4 Experience production endpoint /tokenized-charges.
+    """
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{FLW_API_BASE}/tokenized-charges",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "X-Trace-Id": str(uuid.uuid4()),
+            },
+            json={
+                "token": card_token,
+                "currency": "NGN",
+                "amount": amount_naira,
+                "email": email.lower(),
+                "tx_ref": reference
+            },
+            timeout=20,
+        )
+        return resp.json()
 
 
 async def verify_flw_charge(charge_id: str) -> Dict[str, Any]:

@@ -28,6 +28,7 @@ class Settings(BaseSettings):
     # ── Flutterwave V4 (replaces Paystack) ───────────────────────────
     FLW_CLIENT_ID: str = "your-flutterwave-client-id"
     FLW_CLIENT_SECRET: str = "your-flutterwave-client-secret"
+    FLW_ENCRYPTION_SECRET: str = ""
     FLW_WEBHOOK_SECRET_HASH: str = ""  # Set in Flutterwave Dashboard → Settings → Webhooks
     FLW_VIRTUAL_ACCOUNT_BANK_CODE: str = "035"  # Wema Bank — issuing bank for dynamic virtual accounts
     PRODUCT_PRICE_NAIRA: int = 2000   # ₦2,000 early-bird
