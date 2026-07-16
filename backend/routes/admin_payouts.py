@@ -28,10 +28,77 @@ def _serialize_batch(batch: dict) -> dict:
     return batch
 
 
+async def sync_pending_batch(db, batch: dict) -> dict:
+    """Dynamically sync a pending/failed_partial batch with current unpaid referrals to ensure up-to-date figures."""
+    if batch["status"] not in ("pending_approval", "failed_partial"):
+        return batch
+
+    # Fetch all unpaid referrals in the system
+    referrals = await db.referrals.find({"commission_status": "unpaid"}).to_list(10000)
+    
+    by_affiliate = {}
+    for r in referrals:
+        by_affiliate.setdefault(r["affiliate_code"], []).append(r)
+
+    items = []
+    total_amount = 0.0
+    existing_items_map = {i["affiliate_code"]: i for i in batch.get("items", [])}
+
+    for code, refs in by_affiliate.items():
+        affiliate = await db.affiliates.find_one({"code": code})
+        if not affiliate:
+            continue
+
+        amount = round(sum(r.get("commission_amount", 0) or 0 for r in refs), 2)
+        bank_code = (affiliate.get("bank_code") or "").strip()
+        
+        existing = existing_items_map.get(code)
+        if existing and existing.get("amount") == amount:
+            transfer_status = existing.get("transfer_status", "pending")
+            flw_transfer_id = existing.get("flw_transfer_id")
+            error = existing.get("error")
+        else:
+            transfer_status = "pending" if bank_code else "blocked_missing_bank_code"
+            flw_transfer_id = None
+            error = None
+
+        items.append({
+            "affiliate_code": code,
+            "affiliate_name": affiliate.get("name", ""),
+            "bank_name": affiliate.get("bank_name", ""),
+            "bank_code": bank_code,
+            "account_number": affiliate.get("account_number", ""),
+            "account_name": affiliate.get("account_name", ""),
+            "amount": amount,
+            "referral_ids": [r["_id"] for r in refs],
+            "transfer_status": transfer_status,
+            "flw_transfer_id": flw_transfer_id,
+            "error": error,
+        })
+        total_amount += amount
+
+    # Update the batch document in MongoDB
+    await db.payout_batches.update_one(
+        {"_id": batch["_id"]},
+        {"$set": {
+            "items": items,
+            "total_amount": round(total_amount, 2)
+        }}
+    )
+    batch["items"] = items
+    batch["total_amount"] = round(total_amount, 2)
+    return batch
+
+
 @router.get("/batches")
 async def list_batches(limit: int = 20, current_user=Depends(require_admin), db=Depends(get_db)):
     batches = await db.payout_batches.find().sort("created_at", -1).to_list(limit)
-    return {"batches": [_serialize_batch(b) for b in batches]}
+    synced_batches = []
+    for b in batches:
+        if b["status"] in ("pending_approval", "failed_partial"):
+            b = await sync_pending_batch(db, b)
+        synced_batches.append(_serialize_batch(b))
+    return {"batches": synced_batches}
 
 
 @router.get("/batches/{batch_id}")
@@ -39,6 +106,8 @@ async def get_batch(batch_id: str, current_user=Depends(require_admin), db=Depen
     batch = await db.payout_batches.find_one({"_id": ObjectId(batch_id)})
     if not batch:
         raise HTTPException(status_code=404, detail="Batch not found")
+    if batch["status"] in ("pending_approval", "failed_partial"):
+        batch = await sync_pending_batch(db, batch)
     return _serialize_batch(batch)
 
 
@@ -64,6 +133,9 @@ async def approve_batch(batch_id: str, current_user=Depends(require_admin), db=D
     the response reflects exactly what succeeded, failed, or was blocked.
     """
     try:
+        batch = await db.payout_batches.find_one({"_id": ObjectId(batch_id)})
+        if batch and batch["status"] in ("pending_approval", "failed_partial"):
+            await sync_pending_batch(db, batch)
         batch = await send_batch(db, batch_id)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

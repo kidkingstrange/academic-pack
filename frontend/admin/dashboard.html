@@ -698,13 +698,44 @@
 
   function money(n) { return '₦' + Number(n || 0).toLocaleString(); }
 
+  // Scroll Position Persistence
+  function saveScrollPosition() {
+    sessionStorage.setItem('scroll_y', window.scrollY);
+    sessionStorage.setItem('scroll_tab', currentView);
+  }
+  window.addEventListener('scroll', saveScrollPosition);
+  window.addEventListener('beforeunload', saveScrollPosition);
+
+  function restoreScrollPosition(viewId) {
+    const savedTab = sessionStorage.getItem('scroll_tab');
+    if (savedTab === viewId) {
+      const savedY = sessionStorage.getItem('scroll_y');
+      if (savedY) {
+        window.scrollTo(0, parseInt(savedY, 10));
+        // Clear saved scroll once restored to allow free navigation
+        sessionStorage.removeItem('scroll_y');
+        sessionStorage.removeItem('scroll_tab');
+      }
+    }
+  }
+
   function switchSection(viewId) {
     currentView = viewId;
+    history.replaceState(null, '', '?tab=' + viewId);
+
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
     document.getElementById('view-' + viewId).classList.add('active');
-    event.currentTarget.classList.add('active');
+    
+    // Set active class on sidebar items
+    const sidebarLink = Array.from(document.querySelectorAll('.sidebar .nav-item')).find(n => {
+      const onclickAttr = n.getAttribute('onclick') || '';
+      return onclickAttr.includes(`'${viewId}'`) || onclickAttr.includes(`"${viewId}"`);
+    });
+    if (sidebarLink) {
+      sidebarLink.classList.add('active');
+    }
 
     const titles = {
       dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
@@ -789,6 +820,8 @@
         <td style="text-transform:capitalize">${l.source || 'Organic'}</td>
       </tr>
     `).join('');
+
+    restoreScrollPosition('dashboard');
   }
 
   // ── 2. SALES MANAGEMENT VIEW ──────────────────────────────────────────────
@@ -853,6 +886,7 @@
         <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectSale('${s.reference}')">Inspect →</button></td>
       </tr>
     `).join('');
+    restoreScrollPosition('sales');
   }
 
   async function inspectSale(ref) {
@@ -969,6 +1003,7 @@
         <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectCustomer('${c.email}')">Profile →</button></td>
       </tr>
     `).join('');
+    restoreScrollPosition('customers');
   }
 
   async function inspectCustomer(email) {
@@ -1057,6 +1092,7 @@
         </tr>
       `).join('');
     }
+    restoreScrollPosition('affiliates');
   }
 
   function renderAffiliatesTable() {
@@ -1188,6 +1224,7 @@
 
     renderPendingBatch();
     renderBatchHistory();
+    restoreScrollPosition('payouts');
   }
 
   function payoutItemStatusPill(status) {
@@ -1412,6 +1449,7 @@
         </tr>
       `;
     }).join('');
+    restoreScrollPosition('subscriptions');
   }
 
   async function adminCancelSubscription(subId, customerName, offerName) {
@@ -1428,7 +1466,39 @@
   }
 
   // Initial Load
-  loadDashboardView('all');
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialTab = urlParams.get('tab') || 'dashboard';
+  currentView = initialTab;
+  
+  // Set active class on view sections
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  const targetSection = document.getElementById('view-' + initialTab);
+  if (targetSection) targetSection.classList.add('active');
+  
+  // Set active class on sidebar items
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const sidebarLink = Array.from(document.querySelectorAll('.sidebar .nav-item')).find(n => {
+    const onclickAttr = n.getAttribute('onclick') || '';
+    return onclickAttr.includes(`'${initialTab}'`) || onclickAttr.includes(`"${initialTab}"`);
+  });
+  if (sidebarLink) {
+    sidebarLink.classList.add('active');
+  }
+
+  // Update page header titles
+  const titles = {
+    dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
+    sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
+    customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
+    affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
+    payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
+    subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' }
+  };
+  const meta = titles[initialTab] || { title: 'Admin Suite', sub: '' };
+  document.getElementById('page-title').textContent = meta.title;
+  document.getElementById('page-sub').textContent = meta.sub;
+
+  refreshCurrentView();
 </script>
 </body>
 </html>
