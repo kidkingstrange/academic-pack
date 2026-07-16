@@ -13,6 +13,7 @@ from ..utils.security import verify_password, hash_password, create_access_token
 from ..database import get_db
 from ..config import get_settings
 from typing import Optional, List
+from pydantic import BaseModel, EmailStr
 from ..schemas.schemas import AdminLoginRequest, TokenResponse
 from ..services.affiliate_health_service import compute_affiliate_health
 
@@ -769,4 +770,76 @@ async def admin_get_subscriptions_kpis(
         "past_due_count": past_due_count,
         "cancelled_count": cancelled_count
     }
+
+
+# ── Schemas for Team Member Management ──────────────────────────────────────────
+class SalesRepCreateRequest(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
+
+class SalesRepPasswordRequest(BaseModel):
+    password: str
+
+# ── Endpoints for Team Member Management ────────────────────────────────────────
+@router.get("/sales-reps")
+async def list_sales_reps(current_user=Depends(require_admin), db=Depends(get_db)):
+    reps = await db.sales_reps.find({}).sort("created_at", -1).to_list(1000)
+    out = []
+    for r in reps:
+        # Leads count
+        leads_count = await db.sales_leads.count_documents({"sales_rep_id": r["_id"]})
+        # Subscriptions count
+        subs_count = await db.subscriptions.count_documents({"sales_rep_id": r["_id"]})
+        out.append({
+            "id": str(r["_id"]),
+            "name": r.get("name", ""),
+            "email": r.get("email", ""),
+            "active": r.get("active", True),
+            "created_at": r.get("created_at"),
+            "leads_count": leads_count,
+            "subs_count": subs_count
+        })
+    return {"sales_reps": out}
+
+@router.post("/sales-reps")
+async def create_sales_rep(body: SalesRepCreateRequest, current_user=Depends(require_admin), db=Depends(get_db)):
+    existing = await db.sales_reps.find_one({"email": body.email.lower()})
+    if existing:
+        raise HTTPException(status_code=400, detail="Team member already exists")
+    
+    rep = {
+        "name": body.name,
+        "email": body.email.lower(),
+        "password_hash": hash_password(body.password),
+        "created_at": datetime.now(timezone.utc),
+        "active": True
+    }
+    await db.sales_reps.insert_one(rep)
+    return {"status": "ok", "message": "Team member registered successfully"}
+
+@router.post("/sales-reps/{rep_id}/status")
+async def toggle_sales_rep_status(rep_id: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
+    active = bool(payload.get("active", True))
+    res = await db.sales_reps.update_one({"_id": ObjectId(rep_id)}, {"$set": {"active": active}})
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Team member not found")
+    return {"status": "ok", "active": active}
+
+@router.post("/sales-reps/{rep_id}/password")
+async def change_sales_rep_password(rep_id: str, body: SalesRepPasswordRequest, current_user=Depends(require_admin), db=Depends(get_db)):
+    res = await db.sales_reps.update_one(
+        {"_id": ObjectId(rep_id)},
+        {"$set": {"password_hash": hash_password(body.password)}}
+    )
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Team member not found")
+    return {"status": "ok", "message": "Password updated successfully"}
+
+@router.delete("/sales-reps/{rep_id}")
+async def delete_sales_rep(rep_id: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    res = await db.sales_reps.delete_one({"_id": ObjectId(rep_id)})
+    if res.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Team member not found")
+    return {"status": "ok", "message": "Team member deleted"}
 
