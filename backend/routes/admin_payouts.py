@@ -40,12 +40,17 @@ async def sync_pending_batch(db, batch: dict) -> dict:
     for r in referrals:
         by_affiliate.setdefault(r["affiliate_code"], []).append(r)
 
+    # Bulk fetch all required affiliates at once to eliminate N+1 loop
+    codes = list(by_affiliate.keys())
+    affiliates_list = await db.affiliates.find({"code": {"$in": codes}}).to_list(len(codes))
+    affiliates_map = {a["code"]: a for a in affiliates_list}
+
     items = []
     total_amount = 0.0
     existing_items_map = {i["affiliate_code"]: i for i in batch.get("items", [])}
 
     for code, refs in by_affiliate.items():
-        affiliate = await db.affiliates.find_one({"code": code})
+        affiliate = affiliates_map.get(code)
         if not affiliate:
             continue
 

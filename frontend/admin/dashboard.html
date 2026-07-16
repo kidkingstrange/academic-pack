@@ -541,12 +541,12 @@
       </div>
 
       <div class="filter-bar">
-        <input type="text" class="input-control" id="cust-search" placeholder="Search customer name, email..." oninput="loadCustomersView()">
+        <input type="text" class="input-control" id="cust-search" placeholder="Search customer name, email..." oninput="handleCustSearch()">
         <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">Joined from
-          <input type="date" class="input-control" id="cust-date-from" onchange="loadCustomersView()" style="padding:9px 12px">
+          <input type="date" class="input-control" id="cust-date-from" onchange="loadCustomersView(1)" style="padding:9px 12px">
         </label>
         <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">to
-          <input type="date" class="input-control" id="cust-date-to" onchange="loadCustomersView()" style="padding:9px 12px">
+          <input type="date" class="input-control" id="cust-date-to" onchange="loadCustomersView(1)" style="padding:9px 12px">
         </label>
         <button class="btn-action btn-secondary" id="cust-date-clear" onclick="clearCustDateRange()" style="display:none">Clear dates</button>
       </div>
@@ -556,6 +556,7 @@
           <thead><tr><th>Joined</th><th>Name</th><th>Email</th><th>Total Spent</th><th>Orders</th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
+        <div id="cust-pagination"></div>
       </div>
     </div>
 
@@ -713,7 +714,7 @@
         <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
           <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Subscriber Sequence Status</div>
           <div style="display:flex;gap:10px;align-items:center">
-            <input type="text" class="input-control" id="seq-search" placeholder="Search name or email..." oninput="filterSeqTable()" style="height:36px;font-size:0.82rem;width:220px">
+            <input type="text" class="input-control" id="seq-search" placeholder="Search name or email..." oninput="handleSeqSearch()" style="height:36px;font-size:0.82rem;width:220px">
             <button class="btn-action btn-secondary" style="padding:8px 16px;font-size:0.82rem" onclick="loadSequenceView()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
           </div>
         </div>
@@ -732,6 +733,7 @@
           </tr></thead>
           <tbody id="tbody-sequence"></tbody>
         </table>
+        <div id="seq-pagination"></div>
       </div>
     </div>
 
@@ -842,6 +844,23 @@
     const res = await fetch(endpoint, opts);
     if(res.status === 401 || res.status === 403) logout();
     return await res.json();
+  }
+
+  function renderPagination(container, current, total, onPageChangeName) {
+    if (!container) return;
+    if (total <= 1) {
+      container.innerHTML = '';
+      return;
+    }
+    container.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:16px 24px; border-top:1px solid var(--border-color); font-size:0.82rem; color:var(--text-muted); width:100%">
+        <div>Page <strong>${current}</strong> of <strong>${total}</strong></div>
+        <div style="display:flex; gap:8px">
+          <button class="btn-action btn-secondary" style="padding:6px 12px; font-size:0.8rem; cursor:pointer" ${current <= 1 ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''} onclick="${onPageChangeName}(${current - 1})"><i class="bi bi-chevron-left"></i> Prev</button>
+          <button class="btn-action btn-secondary" style="padding:6px 12px; font-size:0.8rem; cursor:pointer" ${current >= total ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''} onclick="${onPageChangeName}(${current + 1})">Next <i class="bi bi-chevron-right"></i></button>
+        </div>
+      </div>
+    `;
   }
 
   // ── 1. DASHBOARD VIEW ──────────────────────────────────────────────────────
@@ -1080,13 +1099,25 @@
   }
 
   // ── 3. CUSTOMER MANAGEMENT VIEW ───────────────────────────────────────────
+  let custCurrentPage = 1;
+  let custTotalPages = 1;
+  let custSearchTimeout = null;
+
   function clearCustDateRange() {
     document.getElementById('cust-date-from').value = '';
     document.getElementById('cust-date-to').value = '';
-    loadCustomersView();
+    loadCustomersView(1);
   }
 
-  async function loadCustomersView() {
+  function handleCustSearch() {
+    clearTimeout(custSearchTimeout);
+    custSearchTimeout = setTimeout(() => {
+      loadCustomersView(1);
+    }, 300);
+  }
+
+  async function loadCustomersView(page = 1) {
+    custCurrentPage = page;
     const search = document.getElementById('cust-search').value;
     const from = document.getElementById('cust-date-from').value;
     const to = document.getElementById('cust-date-to').value;
@@ -1094,6 +1125,8 @@
 
     const params = new URLSearchParams();
     params.set('search', search || '');
+    params.set('page', custCurrentPage);
+    params.set('limit', 20);
     if (from) params.set('start_date', from);
     if (to) params.set('end_date', to);
     const data = await apiCall(`/api/admin/analytics/customers?${params.toString()}`);
@@ -1103,6 +1136,12 @@
     document.getElementById('cust-kpi-clv').textContent = money(data.avg_clv);
 
     const tbody = document.querySelector('#table-customers-roster tbody');
+    if (!data.customers || !data.customers.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px">No customer accounts matched criteria.</td></tr>';
+      document.getElementById('cust-pagination').innerHTML = '';
+      return;
+    }
+    
     tbody.innerHTML = (data.customers || []).map(c => `
       <tr onclick="inspectCustomer('${c.email}')">
         <td>${new Date(c.created_at).toLocaleDateString()}</td>
@@ -1113,6 +1152,9 @@
         <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectCustomer('${c.email}')">Profile →</button></td>
       </tr>
     `).join('');
+
+    custTotalPages = data.pages || 1;
+    renderPagination(document.getElementById('cust-pagination'), custCurrentPage, custTotalPages, 'loadCustomersView');
     restoreScrollPosition('customers');
   }
 
@@ -1784,6 +1826,9 @@
 
   // ── EMAIL SEQUENCE VIEW ────────────────────────────────────────────────────
   let allSeqData = [];
+  let seqCurrentPage = 1;
+  let seqTotalPages = 1;
+  let seqSearchTimeout = null;
 
   function safeDate(str) {
     if (!str) return null;
@@ -1796,15 +1841,27 @@
     return isNaN(d.getTime()) ? null : d;
   }
 
-  async function loadSequenceView() {
+  function handleSeqSearch() {
+    clearTimeout(seqSearchTimeout);
+    seqSearchTimeout = setTimeout(() => {
+      loadSequenceView(1);
+    }, 300);
+  }
+
+  async function loadSequenceView(page = 1) {
+    seqCurrentPage = page;
+    const search = document.getElementById('seq-search').value || '';
     try {
       const [overview, subsResp] = await Promise.all([
         apiCall('/api/admin/sequence/overview'),
-        apiCall('/api/admin/sequence/subscribers')
+        apiCall(`/api/admin/sequence/subscribers?page=${seqCurrentPage}&limit=20&search=${encodeURIComponent(search)}`)
       ]);
       allSeqData = subsResp.subscribers || [];
       renderSeqKPIs(overview);
       renderSeqTable(allSeqData);
+
+      seqTotalPages = subsResp.pages || 1;
+      renderPagination(document.getElementById('seq-pagination'), seqCurrentPage, seqTotalPages, 'loadSequenceView');
     } catch (err) {
       console.error("Error loading sequence view:", err);
     }

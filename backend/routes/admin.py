@@ -263,6 +263,8 @@ async def get_analytics_customers(
     search: str = "",
     start_date: str = None,
     end_date: str = None,
+    page: int = 1,
+    limit: int = 20,
     current_user=Depends(require_admin), db=Depends(get_db),
 ):
     query = {"role": "customer"}
@@ -278,37 +280,63 @@ async def get_analytics_customers(
         if end_date:
             date_filter["$lt"] = datetime.strptime(end_date, "%Y-%m-%d").replace(tzinfo=timezone.utc) + timedelta(days=1)
         query["created_at"] = date_filter
-    customers = await db.users.find(query, {"password_hash": 0}).sort("created_at", -1).limit(500).to_list(500)
-    total = len(customers)
+
+    # Fetch all matching emails to compute aggregates globally in one pass
+    all_matching = await db.users.find(query, {"email": 1}).to_list(100000)
+    emails = [u["email"] for u in all_matching]
+    total = len(emails)
+
+    if not emails:
+        return {
+            "total": 0,
+            "repeat_purchase_rate": 0,
+            "avg_clv": 0,
+            "customers": [],
+            "page": page,
+            "pages": 0
+        }
+
+    # Bulk query to count/sum payments for all matched users
+    pipeline = [
+        {"$match": {"email": {"$in": emails}, "status": "success"}},
+        {"$group": {
+            "_id": "$email",
+            "total_spent": {"$sum": "$amount"},
+            "purchases_count": {"$sum": 1}
+        }}
+    ]
+    payments_results = await db.payments.aggregate(pipeline).to_list(None)
+    payments_map = {r["_id"]: r for r in payments_results}
+
+    # Calculate global metrics
+    total_spent_all = sum(r["total_spent"] for r in payments_results)
+    repeat_count = sum(1 for r in payments_results if r["purchases_count"] > 1)
+    repeat_purchase_rate = round((repeat_count / total * 100), 1)
+    avg_clv = round((total_spent_all / total), 2)
+
+    # Fetch paginated list
+    skip = (page - 1) * limit
+    customers = await db.users.find(query, {"password_hash": 0}).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
 
     out = []
-    repeat_count = 0
-    total_spent_all = 0
     for c in customers:
         email = c["email"]
-        payments = await db.payments.find(
-            {"email": email, "status": "success"}, {"_id": 0, "amount": 1}
-        ).to_list(1000)
-        total_spent = sum(p.get("amount", 0) or 0 for p in payments)
-        total_spent_all += total_spent
-        if len(payments) > 1:
-            repeat_count += 1
+        stats = payments_map.get(email, {"total_spent": 0, "purchases_count": 0})
         out.append({
             "created_at": c["created_at"],
             "name": c.get("name", ""),
             "email": email,
-            "total_spent": total_spent,
-            "purchases_count": len(payments),
+            "total_spent": stats.get("total_spent", 0),
+            "purchases_count": stats.get("purchases_count", 0),
         })
-
-    repeat_purchase_rate = round((repeat_count / total * 100), 1) if total > 0 else 0
-    avg_clv = round((total_spent_all / total), 2) if total > 0 else 0
 
     return {
         "total": total,
         "repeat_purchase_rate": repeat_purchase_rate,
         "avg_clv": avg_clv,
         "customers": out,
+        "page": page,
+        "pages": -(-total // limit)
     }
 
 
@@ -945,13 +973,25 @@ async def get_sequence_overview(current_user=Depends(require_admin), db=Depends(
     )
     last_sent_at = last_sent_doc["sent_at"].isoformat() if last_sent_doc and last_sent_doc.get("sent_at") else None
 
-    subs = await db.subscribers.find({"is_active": True}, {"subscribed_at": 1}).to_list(500)
+    # Fetch all active subscriber metadata in bulk to avoid N+1 queries
+    subs = await db.subscribers.find({"is_active": True}, {"subscribed_at": 1}).to_list(100000)
+    sub_ids = [s["_id"] for s in subs]
+
+    # Bulk fetch sent counts for active subscribers
+    pipeline = [
+        {"$match": {"subscriber_id": {"$in": sub_ids}, "kind": "sequence", "status": "sent"}},
+        {"$group": {"_id": "$subscriber_id", "sent_count": {"$sum": 1}}}
+    ]
+    sent_results = await db.email_queue.aggregate(pipeline).to_list(None)
+    sent_map = {str(r["_id"]): r["sent_count"] for r in sent_results}
+
     stage_distribution = {}
     subscribers_behind = 0
     for sub in subs:
         correct = _correct_seq_position(sub.get("subscribed_at"), now)
         stage_distribution[correct] = stage_distribution.get(correct, 0) + 1
-        actual = await db.email_queue.count_documents({"subscriber_id": sub["_id"], "kind": "sequence", "status": "sent"})
+        
+        actual = sent_map.get(str(sub["_id"]), 0)
         if actual < correct:
             subscribers_behind += 1
 
@@ -984,17 +1024,51 @@ async def get_sequence_overview(current_user=Depends(require_admin), db=Depends(
 
 
 @router.get("/sequence/subscribers")
-async def get_sequence_subscribers(current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_sequence_subscribers(
+    page: int = 1,
+    limit: int = 20,
+    search: str = "",
+    current_user=Depends(require_admin), db=Depends(get_db)
+):
     """Per-subscriber sequence status table."""
     now = datetime.now(timezone.utc)
-    subs = await db.subscribers.find({"is_active": True}).sort("subscribed_at", -1).to_list(500)
+    
+    query = {"is_active": True}
+    if search:
+        query["$or"] = [
+            {"name": {"$regex": search, "$options": "i"}},
+            {"email": {"$regex": search, "$options": "i"}},
+        ]
+
+    total = await db.subscribers.count_documents(query)
+    skip = (page - 1) * limit
+    subs = await db.subscribers.find(query).sort("subscribed_at", -1).skip(skip).limit(limit).to_list(limit)
+
+    # Bulk query count of sent/failed emails for just the 20 page subscribers
+    sub_ids = [s["_id"] for s in subs]
+    counts_pipeline = [
+        {"$match": {"subscriber_id": {"$in": sub_ids}, "kind": "sequence", "status": {"$in": ["sent", "failed"]}}},
+        {"$group": {
+            "_id": "$subscriber_id",
+            "sent_count": {"$sum": {"$cond": [{"$eq": ["$status", "sent"]}, 1, 0]}},
+            "failed_count": {"$sum": {"$cond": [{"$eq": ["$status", "failed"]}, 1, 0]}}
+        }}
+    ]
+    counts_results = await db.email_queue.aggregate(counts_pipeline).to_list(None)
+    counts_map = {str(r["_id"]): r for r in counts_results}
+
     result = []
     for sub in subs:
         sub_id = sub["_id"]
+        sub_id_str = str(sub_id)
         subscribed_at = sub.get("subscribed_at")
         correct_pos = _correct_seq_position(subscribed_at, now)
-        actually_sent = await db.email_queue.count_documents({"subscriber_id": sub_id, "kind": "sequence", "status": "sent"})
-        failed_count = await db.email_queue.count_documents({"subscriber_id": sub_id, "kind": "sequence", "status": "failed"})
+        
+        stats = counts_map.get(sub_id_str, {"sent_count": 0, "failed_count": 0})
+        actually_sent = stats["sent_count"]
+        failed_count = stats["failed_count"]
+
+        # Loop queries only run 20 times due to pagination limit, which is fast and O(1)
         last_sent_doc = await db.email_queue.find_one(
             {"subscriber_id": sub_id, "kind": "sequence", "status": "sent"}, sort=[("sent_at", -1)]
         )
@@ -1020,7 +1094,7 @@ async def get_sequence_subscribers(current_user=Depends(require_admin), db=Depen
             sa = subscribed_at if subscribed_at.tzinfo else subscribed_at.replace(tzinfo=timezone.utc)
             days_elapsed = round((now - sa).total_seconds() / 86400, 1)
         result.append({
-            "subscriber_id": str(sub_id),
+            "subscriber_id": sub_id_str,
             "name": sub.get("name", ""),
             "email": sub.get("email", ""),
             "subscribed_at": subscribed_at.isoformat() if subscribed_at else None,
@@ -1038,7 +1112,12 @@ async def get_sequence_subscribers(current_user=Depends(require_admin), db=Depen
             "last_sent_at": last_sent_doc["sent_at"].isoformat() if last_sent_doc and last_sent_doc.get("sent_at") else None,
             "last_email_number": last_sent_doc.get("sequence_number") if last_sent_doc else None,
         })
-    return {"subscribers": result, "total": len(result)}
+    return {
+        "subscribers": result,
+        "total": total,
+        "page": page,
+        "pages": -(-total // limit)
+    }
 
 
 @router.get("/sequence/subscriber/{email_addr}")
