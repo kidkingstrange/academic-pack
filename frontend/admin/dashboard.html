@@ -1883,9 +1883,9 @@
         </tbody>
       </table>
     `;
-    document.getElementById('drawer-overlay').classList.add('active');
-    document.querySelector('.drawer-panel').classList.add('active');
+    openDrawer();
   }
+
 
   async function seqResend(email) {
     if (!confirm(`Re-queue the next failed sequence email for ${email}? It will send within 5 minutes.`)) return;
