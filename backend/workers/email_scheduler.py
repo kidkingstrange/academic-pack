@@ -242,10 +242,7 @@ async def process_email_queue():
                 {
                     "status": {"$in": ["pending", "retry"]},
                     "scheduled_at": {"$lte": now},
-                    "$or": [
-                        {"retry_count": {"$lt": 3}},
-                        {"kind": {"$in": ["welcome", "affiliate_welcome", "affiliate_nudge"]}, "retry_count": {"$lt": 10}}
-                    ]
+                    "retry_count": {"$lt": 10}
                 },
                 {"$set": {"status": "sending"}},
                 sort=[("scheduled_at", 1)],
