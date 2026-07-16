@@ -153,6 +153,13 @@ async def serve_sales_login():
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
 
+@app.get("/sales/register", include_in_schema=False)
+async def serve_sales_register():
+    return FileResponse(
+        str(frontend_path / "sales" / "register.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
 @app.get("/sales/dashboard", include_in_schema=False)
 async def serve_sales_dashboard():
     return FileResponse(

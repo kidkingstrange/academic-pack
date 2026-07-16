@@ -676,9 +676,14 @@
       <div class="data-table-container">
         <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
           <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Team Performance Roster</div>
-          <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateTeamMemberModal()">
-            <i class="bi bi-person-plus-fill"></i> + Add Team Member
-          </button>
+          <div style="display:flex; gap:10px">
+            <button class="btn-action btn-secondary" style="padding:8px 16px; font-size:0.82rem;" onclick="copySelfRegistrationLink()">
+              <i class="bi bi-link-45deg"></i> Copy Registration Link
+            </button>
+            <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateTeamMemberModal()">
+              <i class="bi bi-person-plus-fill"></i> + Add Team Member
+            </button>
+          </div>
         </div>
         <table class="data-table" id="table-team-roster">
           <thead><tr><th>Created</th><th>Name</th><th>Email</th><th>Status</th><th>Leads Generated</th><th>Subscriptions Sold</th><th>Actions</th></tr></thead>
@@ -1640,6 +1645,22 @@
     } else {
       alert(res.detail || 'Could not delete team member.');
     }
+  }
+
+  function copySelfRegistrationLink() {
+    const link = window.location.origin + '/sales/register';
+    navigator.clipboard.writeText(link).then(() => {
+      alert('Self-registration link copied to clipboard:\n' + link);
+    }).catch(err => {
+      // Fallback
+      const input = document.createElement('input');
+      input.value = link;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand('copy');
+      document.body.removeChild(input);
+      alert('Self-registration link copied to clipboard:\n' + link);
+    });
   }
 
   // Initial Load
