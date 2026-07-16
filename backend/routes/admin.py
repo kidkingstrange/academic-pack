@@ -12,6 +12,7 @@ from ..middleware.auth import require_admin
 from ..utils.security import verify_password, hash_password, create_access_token
 from ..database import get_db
 from ..config import get_settings
+from typing import Optional, List
 from ..schemas.schemas import AdminLoginRequest, TokenResponse
 from ..services.affiliate_health_service import compute_affiliate_health
 
@@ -702,4 +703,70 @@ async def toggle_affiliate_status(code: str, payload: dict, current_user=Depends
     if res.matched_count == 0:
         raise HTTPException(status_code=404, detail="Affiliate code not found")
     return {"status": "ok", "code": code, "active": active}
+
+
+# ── Subscriptions Administration ──────────────────────────────────────────────
+@router.get("/subscriptions")
+async def admin_get_subscriptions(
+    search: Optional[str] = None,
+    status: Optional[str] = None,
+    current_user=Depends(require_admin),
+    db=Depends(get_db)
+):
+    query = {}
+    if status:
+        query["status"] = status
+    if search:
+        query["$or"] = [
+            {"customer_name": {"$regex": search, "$options": "i"}},
+            {"customer_email": {"$regex": search, "$options": "i"}}
+        ]
+
+    subs = await db.subscriptions.find(query).sort("created_at", -1).to_list(100)
+    
+    # Resolve offer names and prices
+    resolved_subs = []
+    for sub in subs:
+        offer = await db.offers.find_one({"_id": sub["offer_id"]})
+        resolved_subs.append({
+            "id": str(sub["_id"]),
+            "customer_name": sub["customer_name"],
+            "customer_email": sub["customer_email"],
+            "customer_phone": sub.get("customer_phone", ""),
+            "status": sub["status"],
+            "card_last4": sub.get("card_last4", "••••"),
+            "card_brand": sub.get("card_brand", "Card"),
+            "next_charge_date": sub["next_charge_date"].isoformat() if sub.get("next_charge_date") else None,
+            "created_at": sub["created_at"].isoformat() if sub.get("created_at") else None,
+            "offer_name": offer["name"] if offer else "Unknown Plan",
+            "offer_price": offer["price"] if offer else 0
+        })
+
+    return resolved_subs
+
+
+@router.get("/subscriptions/kpis")
+async def admin_get_subscriptions_kpis(
+    current_user=Depends(require_admin),
+    db=Depends(get_db)
+):
+    active_count = await db.subscriptions.count_documents({"status": "active"})
+    past_due_count = await db.subscriptions.count_documents({"status": "past_due"})
+    cancelled_count = await db.subscriptions.count_documents({"status": "cancelled"})
+
+    # Compute MRR
+    # Sum of price of all active and past_due subscriptions
+    mrr = 0
+    subs = await db.subscriptions.find({"status": {"$in": ["active", "past_due"]}}).to_list(1000)
+    for sub in subs:
+        offer = await db.offers.find_one({"_id": sub["offer_id"]})
+        if offer:
+            mrr += offer["price"]
+
+    return {
+        "mrr": mrr,
+        "active_count": active_count,
+        "past_due_count": past_due_count,
+        "cancelled_count": cancelled_count
+    }
 

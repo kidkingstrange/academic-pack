@@ -426,6 +426,7 @@
   <a class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</a>
   <a class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</a>
   <a class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</a>
+  <a class="nav-item" onclick="switchSection('subscriptions')"><i class="bi bi-calendar2-check"></i> Subscriptions</a>
 
   <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </aside>
@@ -637,6 +638,33 @@
       </div>
     </div>
 
+    <!-- ── VIEW 6: SUBSCRIPTIONS (Command & KPI Center) ────────────────── -->
+    <div id="view-subscriptions" class="section">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Monthly Recurring Revenue (MRR)</div><div class="kpi-val gold" id="sub-kpi-mrr">₦0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Active Subscriptions</div><div class="kpi-val" id="sub-kpi-active" style="color:var(--green)">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Past Due Subscriptions</div><div class="kpi-val" id="sub-kpi-past-due" style="color:var(--gold-l)">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Cancelled Subscriptions</div><div class="kpi-val" id="sub-kpi-cancelled" style="color:var(--red)">0</div></div>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" class="input-control" id="subscriptions-search" placeholder="Search subscriber email, name..." oninput="filterSubscriptions()">
+        <select class="period-select" id="subscriptions-status-filter" onchange="filterSubscriptions()">
+          <option value="">All Statuses</option>
+          <option value="active">Active</option>
+          <option value="past_due">Past Due</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="data-table-container">
+        <table class="data-table" id="table-subscriptions">
+          <thead><tr><th>Subscriber</th><th>Plan</th><th>Price</th><th>Card</th><th>Next Bill Date</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -682,7 +710,8 @@
       sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
       customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
       affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
-      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' }
+      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
+      subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -699,6 +728,7 @@
     if(currentView === 'customers') loadCustomersView();
     if(currentView === 'affiliates') loadAffiliatesView();
     if(currentView === 'payouts') loadPayoutsView();
+    if(currentView === 'subscriptions') loadSubscriptionsView();
   }
 
   async function apiCall(endpoint, method = 'GET', body = null) {
@@ -1295,6 +1325,89 @@
   // ── Drawer Open/Close ──────────────────────────────────────────────────────
   function openDrawer() { document.getElementById('drawer-overlay').classList.add('open'); }
   function closeDrawer() { document.getElementById('drawer-overlay').classList.remove('open'); }
+
+  // ── 6. SUBSCRIPTIONS VIEW ──────────────────────────────────────────────────
+  let allSubscriptions = [];
+
+  async function loadSubscriptionsView() {
+    // 1. Fetch KPIs
+    const kpis = await apiCall('/api/admin/subscriptions/kpis');
+    if (kpis) {
+      document.getElementById('sub-kpi-mrr').textContent = money(kpis.mrr);
+      document.getElementById('sub-kpi-active').textContent = kpis.active_count;
+      document.getElementById('sub-kpi-past-due').textContent = kpis.past_due_count;
+      document.getElementById('sub-kpi-cancelled').textContent = kpis.cancelled_count;
+    }
+
+    // 2. Fetch subscriptions list
+    const search = document.getElementById('subscriptions-search').value.trim();
+    const status = document.getElementById('subscriptions-status-filter').value;
+    
+    let url = '/api/admin/subscriptions';
+    const params = [];
+    if (search) params.push(`search=${encodeURIComponent(search)}`);
+    if (status) params.push(`status=${encodeURIComponent(status)}`);
+    if (params.length > 0) {
+      url += '?' + params.join('&');
+    }
+
+    allSubscriptions = await apiCall(url) || [];
+    renderSubscriptionsTable();
+  }
+
+  function filterSubscriptions() {
+    loadSubscriptionsView();
+  }
+
+  function renderSubscriptionsTable() {
+    const tbody = document.querySelector('#table-subscriptions tbody');
+    if (!tbody) return;
+    if (allSubscriptions.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-l)">No subscriptions found matching the filters.</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = allSubscriptions.map(s => {
+      const createdStr = s.created_at ? new Date(s.created_at).toLocaleDateString() : 'N/A';
+      const nextBillStr = s.next_charge_date ? new Date(s.next_charge_date).toLocaleDateString() : 'N/A';
+      
+      let statusClass = 'pending';
+      if (s.status === 'active') statusClass = 'success';
+      if (s.status === 'cancelled') statusClass = 'failed';
+
+      const showCancelBtn = s.status === 'active' || s.status === 'past_due';
+
+      return `
+        <tr>
+          <td style="font-weight:600">
+            ${s.customer_name}
+            <div style="font-size:0.75rem;color:var(--gray-l)">${s.customer_email}</div>
+          </td>
+          <td>${s.offer_name}</td>
+          <td style="font-weight:700">${money(s.offer_price)}</td>
+          <td style="font-size:0.8rem;font-family:monospace">${s.card_brand} (•••• ${s.card_last4})</td>
+          <td>${nextBillStr}</td>
+          <td><span class="status-pill ${statusClass}">${s.status.replace('_', ' ')}</span></td>
+          <td>
+            ${showCancelBtn ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem;background:linear-gradient(135deg, var(--red), #ef4444);box-shadow:none" onclick="adminCancelSubscription('${s.id}', '${s.customer_name.replace(/'/g, "\\'")}', '${s.offer_name.replace(/'/g, "\\'")}')">Cancel</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">N/A</span>`}
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  async function adminCancelSubscription(subId, customerName, offerName) {
+    if (!confirm(`Are you absolutely sure you want to cancel the subscription to ${offerName} for ${customerName}?\n\nThis will immediately terminate the subscription, and no future automated billing charges will be processed.`)) {
+      return;
+    }
+    const res = await apiCall(`/api/sales/subscriptions/${subId}/admin-cancel`, 'POST', {});
+    if (res.status === 'ok') {
+      alert(`Successfully cancelled subscription to ${offerName} for ${customerName}.`);
+    } else {
+      alert(res.detail || 'Could not cancel subscription.');
+    }
+    loadSubscriptionsView();
+  }
 
   // Initial Load
   loadDashboardView('all');
