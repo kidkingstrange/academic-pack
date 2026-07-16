@@ -1118,44 +1118,49 @@
 
   async function loadCustomersView(page = 1) {
     custCurrentPage = page;
-    const search = document.getElementById('cust-search').value;
-    const from = document.getElementById('cust-date-from').value;
-    const to = document.getElementById('cust-date-to').value;
-    document.getElementById('cust-date-clear').style.display = (from || to) ? 'inline-flex' : 'none';
+    try {
+      const search = document.getElementById('cust-search').value;
+      const from = document.getElementById('cust-date-from').value;
+      const to = document.getElementById('cust-date-to').value;
+      document.getElementById('cust-date-clear').style.display = (from || to) ? 'inline-flex' : 'none';
 
-    const params = new URLSearchParams();
-    params.set('search', search || '');
-    params.set('page', custCurrentPage);
-    params.set('limit', 20);
-    if (from) params.set('start_date', from);
-    if (to) params.set('end_date', to);
-    const data = await apiCall(`/api/admin/analytics/customers?${params.toString()}`);
+      const params = new URLSearchParams();
+      params.set('search', search || '');
+      params.set('page', custCurrentPage);
+      params.set('limit', 20);
+      if (from) params.set('start_date', from);
+      if (to) params.set('end_date', to);
+      const data = await apiCall(`/api/admin/analytics/customers?${params.toString()}`);
 
-    document.getElementById('cust-kpi-total').textContent = data.total;
-    document.getElementById('cust-kpi-repeat').textContent = `${data.repeat_purchase_rate}%`;
-    document.getElementById('cust-kpi-clv').textContent = money(data.avg_clv);
+      document.getElementById('cust-kpi-total').textContent = data.total;
+      document.getElementById('cust-kpi-repeat').textContent = `${data.repeat_purchase_rate}%`;
+      document.getElementById('cust-kpi-clv').textContent = money(data.avg_clv);
 
-    const tbody = document.querySelector('#table-customers-roster tbody');
-    if (!data.customers || !data.customers.length) {
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px">No customer accounts matched criteria.</td></tr>';
-      document.getElementById('cust-pagination').innerHTML = '';
-      return;
+      const tbody = document.querySelector('#table-customers-roster tbody');
+      if (!data.customers || !data.customers.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px">No customer accounts matched criteria.</td></tr>';
+        document.getElementById('cust-pagination').innerHTML = '';
+        return;
+      }
+      
+      tbody.innerHTML = (data.customers || []).map(c => `
+        <tr onclick="inspectCustomer('${c.email}')">
+          <td>${new Date(c.created_at).toLocaleDateString()}</td>
+          <td style="font-weight:600">${c.name}</td>
+          <td>${c.email}</td>
+          <td style="color:var(--gold-light);font-weight:700">${money(c.total_spent)}</td>
+          <td>${c.purchases_count}</td>
+          <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectCustomer('${c.email}')">Profile →</button></td>
+        </tr>
+      `).join('');
+
+      custTotalPages = data.pages || 1;
+      renderPagination(document.getElementById('cust-pagination'), custCurrentPage, custTotalPages, 'loadCustomersView');
+      restoreScrollPosition('customers');
+    } catch (err) {
+      alert("Error loading customers view: " + err.message + "\nStack: " + err.stack);
+      console.error("Error loading customers view:", err);
     }
-    
-    tbody.innerHTML = (data.customers || []).map(c => `
-      <tr onclick="inspectCustomer('${c.email}')">
-        <td>${new Date(c.created_at).toLocaleDateString()}</td>
-        <td style="font-weight:600">${c.name}</td>
-        <td>${c.email}</td>
-        <td style="color:var(--gold-light);font-weight:700">${money(c.total_spent)}</td>
-        <td>${c.purchases_count}</td>
-        <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectCustomer('${c.email}')">Profile →</button></td>
-      </tr>
-    `).join('');
-
-    custTotalPages = data.pages || 1;
-    renderPagination(document.getElementById('cust-pagination'), custCurrentPage, custTotalPages, 'loadCustomersView');
-    restoreScrollPosition('customers');
   }
 
   async function inspectCustomer(email) {
@@ -1850,8 +1855,9 @@
 
   async function loadSequenceView(page = 1) {
     seqCurrentPage = page;
-    const search = document.getElementById('seq-search').value || '';
     try {
+      const searchEl = document.getElementById('seq-search');
+      const search = searchEl ? searchEl.value : '';
       const [overview, subsResp] = await Promise.all([
         apiCall('/api/admin/sequence/overview'),
         apiCall(`/api/admin/sequence/subscribers?page=${seqCurrentPage}&limit=20&search=${encodeURIComponent(search)}`)
@@ -1863,6 +1869,7 @@
       seqTotalPages = subsResp.pages || 1;
       renderPagination(document.getElementById('seq-pagination'), seqCurrentPage, seqTotalPages, 'loadSequenceView');
     } catch (err) {
+      alert("Error loading sequence view: " + err.message + "\nStack: " + err.stack);
       console.error("Error loading sequence view:", err);
     }
   }
