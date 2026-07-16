@@ -167,6 +167,13 @@ async def serve_sales_checkout():
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
 
+@app.get("/sales/cancel", include_in_schema=False)
+async def serve_sales_cancel():
+    return FileResponse(
+        str(frontend_path / "sales" / "cancel.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
 @app.get("/r/{code}", include_in_schema=False)
 async def track_referral(code: str, request: Request, db=Depends(get_db)):
     """

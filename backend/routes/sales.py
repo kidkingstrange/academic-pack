@@ -6,11 +6,12 @@ from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
 from ..database import get_db
 from ..config import get_settings
-from ..middleware.auth import require_sales_rep
+from ..middleware.auth import require_sales_rep, require_admin
 from ..utils.security import verify_password, hash_password, create_access_token
 from ..services.flutterwave import (
     create_flw_customer, get_flw_token, initiate_card_payment, verify_flw_charge
 )
+from ..services.email_service import send_email
 
 router = APIRouter(prefix="/api/sales", tags=["sales"])
 settings = get_settings()
@@ -52,6 +53,12 @@ class CheckoutPayRequest(BaseModel):
 
 class CheckoutVerifyRequest(BaseModel):
     reference: str
+
+class CancelRequest(BaseModel):
+    email: EmailStr
+
+class CancelConfirmRequest(BaseModel):
+    token: str
 
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 @router.post("/register")
@@ -394,3 +401,151 @@ async def verify_checkout_payment(body: CheckoutVerifyRequest, db=Depends(get_db
         await db.one_time_purchases.insert_one(purchase)
 
     return {"success": True, "message": "Payment processed and subscription activated successfully"}
+
+
+# ─── Cancellation Endpoints ──────────────────────────────────────────────────
+@router.post("/subscriptions/request-cancel")
+async def request_subscription_cancel(body: CancelRequest, db=Depends(get_db)):
+    sub = await db.subscriptions.find_one({
+        "customer_email": body.email.lower(),
+        "status": {"$in": ["active", "past_due"]}
+    })
+    if not sub:
+        raise HTTPException(
+            status_code=404,
+            detail="No active or past-due subscription found for this email address"
+        )
+
+    offer = await db.offers.find_one({"_id": sub["offer_id"]})
+    offer_name = offer["name"] if offer else "Your Subscription"
+
+    cancel_token = secrets.token_urlsafe(24)
+    expiry = datetime.now(timezone.utc) + timedelta(hours=1)
+
+    await db.subscriptions.update_one(
+        {"_id": sub["_id"]},
+        {"$set": {
+            "cancellation_token": cancel_token,
+            "cancellation_token_expiry": expiry
+        }}
+    )
+
+    cancel_link = f"{settings.APP_URL}/sales/cancel?token={cancel_token}"
+
+    email_html = f"""
+    <h2>Subscription Cancellation Request</h2>
+    <p>Hello {sub['customer_name']},</p>
+    <p>We received a request to cancel your subscription for <strong>{offer_name}</strong>.</p>
+    <p>To confirm and complete your cancellation, please click the secure link below (valid for 1 hour):</p>
+    <p><a href="{cancel_link}" style="display:inline-block;background-color:#dc2626;color:#ffffff;padding:12px 24px;border-radius:30px;text-decoration:none;font-weight:bold">Confirm Subscription Cancellation &rarr;</a></p>
+    <br>
+    <p><em>If you did not request this, you can safely ignore this email. Your subscription remains active.</em></p>
+    """
+    await send_email(sub["customer_email"], "Cancel Your Subscription Request", email_html)
+    return {"status": "ok", "message": "Cancellation confirmation email sent"}
+
+
+@router.get("/subscriptions/cancel-info")
+async def get_cancel_info(token: str, db=Depends(get_db)):
+    now = datetime.now(timezone.utc)
+    sub = await db.subscriptions.find_one({
+        "cancellation_token": token,
+        "cancellation_token_expiry": {"$gt": now}
+    })
+    if not sub:
+        raise HTTPException(
+            status_code=400,
+            detail="Cancellation link is invalid or has expired. Please request a new link."
+        )
+
+    offer = await db.offers.find_one({"_id": sub["offer_id"]})
+    if not offer:
+        raise HTTPException(status_code=404, detail="Offer details not found")
+
+    return {
+        "customer_name": sub["customer_name"],
+        "customer_email": sub["customer_email"],
+        "offer_name": offer["name"],
+        "offer_price": offer["price"],
+        "status": sub["status"]
+    }
+
+
+@router.post("/subscriptions/cancel-confirm")
+async def confirm_subscription_cancel(body: CancelConfirmRequest, db=Depends(get_db)):
+    now = datetime.now(timezone.utc)
+    sub = await db.subscriptions.find_one({
+        "cancellation_token": body.token,
+        "cancellation_token_expiry": {"$gt": now}
+    })
+    if not sub:
+        raise HTTPException(
+            status_code=400,
+            detail="Cancellation link is invalid or has expired. Please request a new link."
+        )
+
+    offer = await db.offers.find_one({"_id": sub["offer_id"]})
+    offer_name = offer["name"] if offer else "Your Subscription"
+
+    # Update subscription status to cancelled and clear cancellation token
+    await db.subscriptions.update_one(
+        {"_id": sub["_id"]},
+        {
+            "$set": {
+                "status": "cancelled",
+                "cancelled_at": now,
+                "updated_at": now
+            },
+            "$unset": {
+                "cancellation_token": "",
+                "cancellation_token_expiry": ""
+            }
+        }
+    )
+
+    email_html = f"""
+    <h2>Subscription Cancelled</h2>
+    <p>Hello {sub['customer_name']},</p>
+    <p>Your subscription for <strong>{offer_name}</strong> has been cancelled successfully as requested.</p>
+    <p>You will not be billed again. Thank you for your time with us!</p>
+    """
+    await send_email(sub["customer_email"], f"Subscription Cancelled: {offer_name}", email_html)
+    return {"status": "ok", "message": "Subscription cancelled successfully"}
+
+
+@router.post("/subscriptions/{subscription_id}/admin-cancel")
+async def admin_cancel_subscription(subscription_id: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    try:
+        sub_oid = ObjectId(subscription_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid subscription ID format")
+
+    sub = await db.subscriptions.find_one({"_id": sub_oid})
+    if not sub:
+        raise HTTPException(status_code=404, detail="Subscription not found")
+
+    if sub["status"] == "cancelled":
+        return {"status": "ok", "message": "Subscription is already cancelled"}
+
+    offer = await db.offers.find_one({"_id": sub["offer_id"]})
+    offer_name = offer["name"] if offer else "Your Subscription"
+
+    now = datetime.now(timezone.utc)
+    await db.subscriptions.update_one(
+        {"_id": sub_oid},
+        {"$set": {
+            "status": "cancelled",
+            "cancelled_at": now,
+            "updated_at": now,
+            "cancelled_by": "admin"
+        }}
+    )
+
+    email_html = f"""
+    <h2>Subscription Cancelled by Administrator</h2>
+    <p>Hello {sub['customer_name']},</p>
+    <p>An administrator has cancelled your active subscription for <strong>{offer_name}</strong>.</p>
+    <p>No further charges will be made. If you have questions, please contact support.</p>
+    """
+    await send_email(sub["customer_email"], f"Subscription Cancelled: {offer_name}", email_html)
+    return {"status": "ok", "message": "Subscription successfully cancelled by administrator"}
