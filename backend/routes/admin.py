@@ -843,3 +843,247 @@ async def delete_sales_rep(rep_id: str, current_user=Depends(require_admin), db=
         raise HTTPException(status_code=404, detail="Team member not found")
     return {"status": "ok", "message": "Team member deleted"}
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# EMAIL SEQUENCE MONITORING ENDPOINTS
+# ─────────────────────────────────────────────────────────────────────────────
+
+_SEQ_DAY_OFFSETS = [
+    0, 3, 7, 10, 14, 17, 21, 24, 28, 31, 35, 38,
+    42, 45, 49, 52, 56, 59, 63, 66, 70, 73, 77, 80,
+    84, 87, 91, 94, 98, 101, 105, 108, 112, 115, 119, 122,
+    126, 129, 133, 136, 140, 143, 147, 150, 154, 157, 161, 164,
+    168, 171, 175, 178,
+]
+
+_SEQ_SUBJECTS = [
+    "You're not lazy — you just don't have the right system yet",
+    "The top student in your class isn't smarter than you",
+    "Your grades reflect your habits — not your potential",
+    "Two students. Same exam. The only difference is what they believe about it.",
+    "Every great performer you admire was once a beginner who found the right method",
+    "The curiosity you had as a child didn't disappear — it was buried",
+    "Your brain doesn't record like a camera — it builds like a scaffold",
+    "Barbara Oakley couldn't do maths. Then she learned how the brain actually changes.",
+    "You've been studying the wrong way (and it feels productive)",
+    "If studying feels comfortable, something is probably wrong.",
+    "Your brain processes visuals 60,000x faster than text. You're studying the slow way.",
+    "You're not bad at remembering. You're bad at reviewing. Different problem.",
+    "The most powerful study technique has been proven for 100+ years. You're not using it.",
+    "One technique mastered beats ten techniques practised",
+    "Your notes aren't the problem — what you do after is",
+    "The real reason you can't focus when you study",
+    "This student studied 4 hours a day and outscored the 12-hour grinders",
+    "There's a point where more studying actively destroys your performance.",
+    "You're not multitasking — you're just switching fast and paying the cost",
+    "Your mind wanders 47% of the time. Here's what to do about it.",
+    "Every unfinished task in your head is quietly draining your focus",
+    "Flow is not luck. It has trigger conditions — and you can set them.",
+    "You have the same 24 hours as every top student. Here's what they do differently.",
+    "The world's smartest people use checklists. Here's why you should too.",
+    "Motivation is the spark. You can't run an engine on sparks.",
+    "You don't need more discipline — you need a smaller starting point",
+    "It's not a discipline problem. It's a design problem.",
+    "The gap between average and excellent isn't talent — it's one habit",
+    "One habit. Twenty minutes. Every week. The results are remarkable.",
+    'Every Monday is "the new start." At what point does the pattern become the problem?',
+    "You already know what you should be doing. That's not the problem.",
+    "Your grades are built in the moments nobody sees",
+    "Working hard on the wrong things is worse than not working at all",
+    "Stop blaming yourself for your grades. Fix the system upstream.",
+    "The best student in the room isn't the hardest worker — they're the most strategic",
+    "MIT in 12 months — and what it reveals about how you're wasting yours",
+    "The most powerful career question applies to your academic life right now",
+    '"Balance" is not about doing everything equally. Here\'s what it actually means.',
+    "Exam anxiety has nothing to do with the exam",
+    "The most pressure-proof students aren't fearless — they're prepared differently",
+    "There's a kind of suffering nobody talks about — slow, invisible progress",
+    "You won't notice it happening. Then one day you'll be unrecognisable.",
+    "The most powerful motivation isn't external. It's a clear picture of who you're becoming.",
+    "What you do in the next 90 days will still matter in 2031.",
+    "A mentor doesn't do the work for you — they show you which work matters",
+    "Michael Jordan had a coach. What makes you think you should do this alone?",
+    "He was three failed courses in and considering dropping out. Six months later:",
+    "The decision to not decide is itself a decision. And it has a price.",
+    "I'm not going to sell you. I'm going to tell you the truth about why this exists.",
+    "Let me show you what the before and after actually looks like.",
+    "The argument against investing in yourself is made by the version of you that benefits least.",
+    "One question left.",
+]
+
+
+def _correct_seq_position(subscribed_at, now):
+    if subscribed_at is None:
+        return 0
+    if subscribed_at.tzinfo is None:
+        subscribed_at = subscribed_at.replace(tzinfo=timezone.utc)
+    days_elapsed = (now - subscribed_at).total_seconds() / 86400
+    pos = 0
+    for i, offset in enumerate(_SEQ_DAY_OFFSETS):
+        if days_elapsed >= offset:
+            pos = i + 1
+        else:
+            break
+    return min(pos, 52)
+
+
+@router.get("/sequence/overview")
+async def get_sequence_overview(current_user=Depends(require_admin), db=Depends(get_db)):
+    """Aggregate health KPIs for the 52-email curriculum sequence."""
+    now = datetime.now(timezone.utc)
+    total_enrolled = await db.subscribers.count_documents({"is_active": True})
+    total_sent = await db.email_queue.count_documents({"kind": "sequence", "status": "sent"})
+    total_pending = await db.email_queue.count_documents({"kind": "sequence", "status": "pending"})
+    total_failed = await db.email_queue.count_documents({"kind": "sequence", "status": "failed"})
+    total_retry = await db.email_queue.count_documents({"kind": "sequence", "status": "retry"})
+    stuck_sending = await db.email_queue.count_documents({"status": "sending"})
+    overdue_count = await db.email_queue.count_documents({
+        "kind": "sequence", "status": {"$in": ["pending", "retry"]}, "scheduled_at": {"$lte": now}
+    })
+    last_sent_doc = await db.email_queue.find_one(
+        {"kind": "sequence", "status": "sent"}, sort=[("sent_at", -1)]
+    )
+    last_sent_at = last_sent_doc["sent_at"].isoformat() if last_sent_doc and last_sent_doc.get("sent_at") else None
+
+    subs = await db.subscribers.find({"is_active": True}, {"subscribed_at": 1}).to_list(500)
+    stage_distribution = {}
+    subscribers_behind = 0
+    for sub in subs:
+        correct = _correct_seq_position(sub.get("subscribed_at"), now)
+        stage_distribution[correct] = stage_distribution.get(correct, 0) + 1
+        actual = await db.email_queue.count_documents({"subscriber_id": sub["_id"], "kind": "sequence", "status": "sent"})
+        if actual < correct:
+            subscribers_behind += 1
+
+    stage_list = []
+    for pos in sorted(stage_distribution.keys()):
+        stage_list.append({
+            "email_number": pos,
+            "count": stage_distribution[pos],
+            "day_offset": _SEQ_DAY_OFFSETS[pos - 1] if 1 <= pos <= 52 else None,
+            "subject_preview": _SEQ_SUBJECTS[pos - 1][:70] if 1 <= pos <= 52 else "—",
+        })
+
+    return {
+        "total_enrolled": total_enrolled,
+        "total_sent": total_sent,
+        "total_pending": total_pending,
+        "total_failed": total_failed,
+        "total_retry": total_retry,
+        "overdue_count": overdue_count,
+        "stuck_sending_count": stuck_sending,
+        "subscribers_behind": subscribers_behind,
+        "last_sent_at": last_sent_at,
+        "stage_distribution": stage_list,
+        "health_status": (
+            "critical" if stuck_sending > 0 or total_failed > 10
+            else "degraded" if subscribers_behind > 3 or total_failed > 0
+            else "healthy"
+        ),
+    }
+
+
+@router.get("/sequence/subscribers")
+async def get_sequence_subscribers(current_user=Depends(require_admin), db=Depends(get_db)):
+    """Per-subscriber sequence status table."""
+    now = datetime.now(timezone.utc)
+    subs = await db.subscribers.find({"is_active": True}).sort("subscribed_at", -1).to_list(500)
+    result = []
+    for sub in subs:
+        sub_id = sub["_id"]
+        subscribed_at = sub.get("subscribed_at")
+        correct_pos = _correct_seq_position(subscribed_at, now)
+        actually_sent = await db.email_queue.count_documents({"subscriber_id": sub_id, "kind": "sequence", "status": "sent"})
+        failed_count = await db.email_queue.count_documents({"subscriber_id": sub_id, "kind": "sequence", "status": "failed"})
+        last_sent_doc = await db.email_queue.find_one(
+            {"subscriber_id": sub_id, "kind": "sequence", "status": "sent"}, sort=[("sent_at", -1)]
+        )
+        next_doc = await db.email_queue.find_one(
+            {"subscriber_id": sub_id, "kind": "sequence", "status": {"$in": ["pending", "retry"]}},
+            sort=[("scheduled_at", 1)]
+        )
+        next_due = None
+        next_seq_num = None
+        next_subject = None
+        is_overdue = False
+        if next_doc:
+            nd = next_doc.get("scheduled_at")
+            if nd:
+                nd_aware = nd if nd.tzinfo else nd.replace(tzinfo=timezone.utc)
+                next_due = nd_aware.isoformat()
+                is_overdue = nd_aware <= now
+            next_seq_num = next_doc.get("sequence_number")
+            if next_seq_num and 1 <= next_seq_num <= 52:
+                next_subject = _SEQ_SUBJECTS[next_seq_num - 1]
+        days_elapsed = 0
+        if subscribed_at:
+            sa = subscribed_at if subscribed_at.tzinfo else subscribed_at.replace(tzinfo=timezone.utc)
+            days_elapsed = round((now - sa).total_seconds() / 86400, 1)
+        result.append({
+            "subscriber_id": str(sub_id),
+            "name": sub.get("name", ""),
+            "email": sub.get("email", ""),
+            "subscribed_at": subscribed_at.isoformat() if subscribed_at else None,
+            "days_enrolled": days_elapsed,
+            "correct_position": correct_pos,
+            "emails_sent": actually_sent,
+            "emails_behind": max(0, correct_pos - actually_sent),
+            "failed_count": failed_count,
+            "next_email_number": next_seq_num,
+            "next_subject": next_subject,
+            "next_due_at": next_due,
+            "is_overdue": is_overdue,
+            "is_behind": actually_sent < correct_pos,
+            "status": ("overdue" if is_overdue else "behind" if actually_sent < correct_pos else "completed" if actually_sent >= 52 else "on_track"),
+            "last_sent_at": last_sent_doc["sent_at"].isoformat() if last_sent_doc and last_sent_doc.get("sent_at") else None,
+            "last_email_number": last_sent_doc.get("sequence_number") if last_sent_doc else None,
+        })
+    return {"subscribers": result, "total": len(result)}
+
+
+@router.get("/sequence/subscriber/{email_addr}")
+async def get_subscriber_sequence_history(email_addr: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Full send history for one subscriber — every item in the queue."""
+    sub = await db.subscribers.find_one({"email": email_addr.lower()})
+    if not sub:
+        raise HTTPException(status_code=404, detail="Subscriber not found")
+    items = await db.email_queue.find({"subscriber_id": sub["_id"], "kind": "sequence"}, sort=[("sequence_number", 1)]).to_list(60)
+    now = datetime.now(timezone.utc)
+    history = []
+    for item in items:
+        sa = item.get("scheduled_at")
+        se = item.get("sent_at")
+        history.append({
+            "sequence_number": item.get("sequence_number"),
+            "subject": item.get("subject", ""),
+            "template": item.get("template", ""),
+            "status": item.get("status"),
+            "scheduled_at": sa.isoformat() if sa else None,
+            "sent_at": se.isoformat() if se else None,
+            "retry_count": item.get("retry_count", 0),
+            "error": item.get("error"),
+        })
+    return {
+        "subscriber": {"name": sub.get("name"), "email": sub.get("email"), "subscribed_at": sub["subscribed_at"].isoformat() if sub.get("subscribed_at") else None, "correct_position": _correct_seq_position(sub.get("subscribed_at"), now)},
+        "history": history, "total": len(history),
+    }
+
+
+@router.post("/sequence/resend/{email_addr}")
+async def resend_subscriber_sequence_email(email_addr: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Manually reschedule the next failed/stuck sequence email for a subscriber."""
+    sub = await db.subscribers.find_one({"email": email_addr.lower()})
+    if not sub:
+        raise HTTPException(status_code=404, detail="Subscriber not found")
+    now = datetime.now(timezone.utc)
+    stuck = await db.email_queue.find_one(
+        {"subscriber_id": sub["_id"], "kind": "sequence", "status": {"$in": ["failed", "retry"]}},
+        sort=[("sequence_number", 1)]
+    )
+    if not stuck:
+        return {"status": "ok", "message": "No failed or stuck sequence emails found for this subscriber"}
+    await db.email_queue.update_one(
+        {"_id": stuck["_id"]},
+        {"$set": {"status": "pending", "retry_count": 0, "error": None, "scheduled_at": now}}
+    )
+    return {"status": "ok", "message": f"Re-queued sequence email #{stuck.get('sequence_number')} for {email_addr}. Will send within 5 minutes."}

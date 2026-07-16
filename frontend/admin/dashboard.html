@@ -428,6 +428,7 @@
   <a class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</a>
   <a class="nav-item" onclick="switchSection('subscriptions')"><i class="bi bi-calendar2-check"></i> Subscriptions</a>
   <a class="nav-item" onclick="switchSection('team')"><i class="bi bi-person-badge"></i> Team Members</a>
+  <a class="nav-item" onclick="switchSection('sequence')"><i class="bi bi-envelope-check"></i> Email Sequence</a>
 
   <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </aside>
@@ -703,6 +704,37 @@
       </div>
     </div>
 
+    <!-- ── EMAIL SEQUENCE VIEW ─────────────────────────────────────────── -->
+    <div id="view-sequence" class="section">
+      <!-- Health KPI Row -->
+      <div id="seq-kpi-row" class="kpi-row" style="margin-bottom:20px"></div>
+
+      <div class="data-table-container">
+        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Subscriber Sequence Status</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <input type="text" class="input-control" id="seq-search" placeholder="Search name or email..." oninput="filterSeqTable()" style="height:36px;font-size:0.82rem;width:220px">
+            <button class="btn-action btn-secondary" style="padding:8px 16px;font-size:0.82rem" onclick="loadSequenceView()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+          </div>
+        </div>
+        <table class="data-table" id="table-sequence">
+          <thead><tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Days Enrolled</th>
+            <th>Correct #</th>
+            <th>Sent</th>
+            <th>Behind</th>
+            <th>Next Email</th>
+            <th>Next Due</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody id="tbody-sequence"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -781,7 +813,8 @@
       affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
       payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
       subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' },
-      team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' }
+      team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
+      sequence: { title: '52-Email Curriculum Sequence', sub: 'Track each subscriber\'s position in the automated email journey — see who is on-track, behind, or needs a manual resend' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -800,6 +833,7 @@
     if(currentView === 'payouts') loadPayoutsView();
     if(currentView === 'subscriptions') loadSubscriptionsView();
     if(currentView === 'team') loadTeamView();
+    if(currentView === 'sequence') loadSequenceView();
   }
 
   async function apiCall(endpoint, method = 'GET', body = null) {
@@ -1739,13 +1773,127 @@
     affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
     payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
     subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' },
-    team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' }
+    team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
+    sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend" }
   };
   const meta = titles[initialTab] || { title: 'Admin Suite', sub: '' };
   document.getElementById('page-title').textContent = meta.title;
   document.getElementById('page-sub').textContent = meta.sub;
 
   refreshCurrentView();
+
+  // ── EMAIL SEQUENCE VIEW ────────────────────────────────────────────────────
+  let allSeqData = [];
+
+  async function loadSequenceView() {
+    const [overview, subsResp] = await Promise.all([
+      apiCall('/api/admin/sequence/overview'),
+      apiCall('/api/admin/sequence/subscribers')
+    ]);
+    allSeqData = subsResp.subscribers || [];
+    renderSeqKPIs(overview);
+    renderSeqTable(allSeqData);
+  }
+
+  function renderSeqKPIs(d) {
+    const statusColor = d.health_status === 'healthy' ? 'var(--green)' : d.health_status === 'degraded' ? 'var(--gold)' : 'var(--red)';
+    const statusIcon = d.health_status === 'healthy' ? '✅' : d.health_status === 'degraded' ? '⚠️' : '🚨';
+    const lastSent = d.last_sent_at ? new Date(d.last_sent_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : 'Never';
+    document.getElementById('seq-kpi-row').innerHTML = `
+      <div class="kpi-card"><div class="kpi-title">Health</div><div class="kpi-val" style="color:${statusColor};font-size:1rem">${statusIcon} ${d.health_status}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Enrolled</div><div class="kpi-val gold">${d.total_enrolled}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Sequence Emails Sent</div><div class="kpi-val" style="color:var(--green)">${d.total_sent}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Failed</div><div class="kpi-val" style="color:${d.total_failed > 0 ? 'var(--red)' : 'var(--green)'}">${d.total_failed}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Behind Schedule</div><div class="kpi-val" style="color:${d.subscribers_behind > 0 ? 'var(--gold)' : 'var(--green)'}">${d.subscribers_behind}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Stuck in Sending</div><div class="kpi-val" style="color:${d.stuck_sending_count > 0 ? 'var(--red)' : 'var(--green)'}">${d.stuck_sending_count}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Last Email Sent</div><div class="kpi-val" style="font-size:0.88rem">${lastSent}</div></div>
+    `;
+  }
+
+  function renderSeqTable(subscribers) {
+    const tbody = document.getElementById('tbody-sequence');
+    if (!subscribers.length) { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted);padding:32px">No subscribers enrolled.</td></tr>'; return; }
+    tbody.innerHTML = subscribers.map(s => {
+      const statusBadge = {
+        'on_track': '<span style="background:rgba(16,185,129,0.15);color:#10b981;padding:2px 10px;border-radius:20px;font-size:0.75rem">On Track</span>',
+        'completed': '<span style="background:rgba(212,166,58,0.15);color:var(--gold);padding:2px 10px;border-radius:20px;font-size:0.75rem">Completed</span>',
+        'behind': '<span style="background:rgba(234,179,8,0.15);color:#eab308;padding:2px 10px;border-radius:20px;font-size:0.75rem">Behind</span>',
+        'overdue': '<span style="background:rgba(239,68,68,0.15);color:#ef4444;padding:2px 10px;border-radius:20px;font-size:0.75rem">⚠ Overdue</span>',
+      }[s.status] || s.status;
+      const nextDue = s.next_due_at ? new Date(s.next_due_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+      const nextLabel = s.next_email_number ? `#${s.next_email_number}` : '—';
+      const behindColor = s.emails_behind > 0 ? 'color:var(--gold)' : '';
+      return `<tr${s.is_overdue ? ' style="background:rgba(239,68,68,0.04)"' : ''}>
+        <td>${s.name}</td>
+        <td style="font-size:0.82rem">${s.email}</td>
+        <td>${s.days_enrolled}d</td>
+        <td>#${s.correct_position}</td>
+        <td>${s.emails_sent}</td>
+        <td style="${behindColor}">${s.emails_behind > 0 ? s.emails_behind : '—'}</td>
+        <td>${nextLabel}</td>
+        <td style="font-size:0.8rem">${nextDue}</td>
+        <td>${statusBadge}</td>
+        <td>
+          <button class="btn-action btn-secondary" style="padding:3px 10px;font-size:0.75rem" onclick="openSeqHistory('${s.email}')">History</button>
+          ${s.failed_count > 0 ? `<button class="btn-action" style="padding:3px 10px;font-size:0.75rem;margin-left:4px" onclick="seqResend('${s.email}')">Resend</button>` : ''}
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  function filterSeqTable() {
+    const q = (document.getElementById('seq-search').value || '').toLowerCase();
+    const filtered = allSeqData.filter(s => s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q));
+    renderSeqTable(filtered);
+  }
+
+  async function openSeqHistory(email) {
+    const data = await apiCall('/api/admin/sequence/subscriber/' + encodeURIComponent(email));
+    const sub = data.subscriber;
+    const history = data.history || [];
+    const statusChip = (status) => ({
+      sent: '<span style="color:#10b981">✔ Sent</span>',
+      pending: '<span style="color:var(--text-muted)">⏳ Pending</span>',
+      retry: '<span style="color:var(--gold)">↻ Retry</span>',
+      failed: '<span style="color:#ef4444">✘ Failed</span>',
+      skipped: '<span style="color:var(--text-muted)">– Skipped</span>',
+      superseded: '<span style="color:var(--text-muted)">↷ Superseded</span>',
+      sending: '<span style="color:var(--gold)">⟳ Sending</span>',
+    })[status] || status;
+
+    document.getElementById('drawer-title').textContent = `Sequence History — ${sub.name}`;
+    document.getElementById('drawer-content').innerHTML = `
+      <div style="margin-bottom:16px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border-color)">
+        <div style="font-size:0.82rem;color:var(--text-muted)">${sub.email} · Enrolled ${sub.subscribed_at ? new Date(sub.subscribed_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '?'} · Correct position: #${sub.correct_position}</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+        <thead><tr style="border-bottom:1px solid var(--border-color);color:var(--text-muted)">
+          <th style="padding:6px 8px;text-align:left">#</th>
+          <th style="padding:6px 8px;text-align:left">Subject</th>
+          <th style="padding:6px 8px;text-align:center">Status</th>
+          <th style="padding:6px 8px;text-align:left">Sent At</th>
+        </tr></thead>
+        <tbody>
+          ${history.map(h => `<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+            <td style="padding:6px 8px;color:var(--text-muted)">${h.sequence_number}</td>
+            <td style="padding:6px 8px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${h.subject}">${h.subject}</td>
+            <td style="padding:6px 8px;text-align:center">${statusChip(h.status)}</td>
+            <td style="padding:6px 8px;color:var(--text-muted)">${h.sent_at ? new Date(h.sent_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : (h.scheduled_at ? '⏳ due ' + new Date(h.scheduled_at).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '—')}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    `;
+    document.getElementById('drawer-overlay').classList.add('active');
+    document.querySelector('.drawer-panel').classList.add('active');
+  }
+
+  async function seqResend(email) {
+    if (!confirm(`Re-queue the next failed sequence email for ${email}? It will send within 5 minutes.`)) return;
+    const data = await apiCall('/api/admin/sequence/resend/' + encodeURIComponent(email), 'POST');
+    alert(data.message || 'Done');
+    loadSequenceView();
+  }
+
 </script>
 </body>
 </html>

@@ -13,6 +13,76 @@ from ..services.email_service import (
 scheduler = AsyncIOScheduler()
 
 
+async def rescue_stuck_sending_items():
+    """
+    Reset any items left in 'sending' status back to 'pending'.
+
+    'sending' is a transient, in-flight status set atomically as the scheduler
+    claims an item. If the server process is killed or restarted mid-send (Render
+    deploy, crash, OOM kill), those items are stranded in 'sending' forever —
+    the next scheduler run only queries for 'pending'/'retry', so they become
+    permanently invisible without this rescue. This function MUST run before the
+    scheduler starts processing, and is safe to re-run at any time (if an item
+    was genuinely mid-send, the actual send likely failed anyway and the retry
+    system will handle it normally from 'pending').
+    """
+    db = database.get_db()
+    if db is None:
+        return
+    from datetime import datetime, timezone
+    result = await db.email_queue.update_many(
+        {"status": "sending"},
+        {"$set": {
+            "status": "pending",
+            "error": "rescued_from_sending_on_server_restart",
+            "last_attempt_at": datetime.now(timezone.utc)
+        }}
+    )
+    if result.modified_count:
+        print(f"⚠️ Email scheduler: rescued {result.modified_count} items stuck in 'sending' state — server was restarted mid-send")
+    else:
+        print("✅ Email scheduler: no stuck 'sending' items found on startup")
+
+
+async def check_email_health():
+    """
+    Periodic health check: logs a warning if no emails have been sent in the
+    last 2 hours. Runs every hour via the scheduler. This is a lightweight
+    early-warning system — if the scheduler silently stops, you'll see this
+    alert in your server logs within 1 hour rather than days later.
+    """
+    db = database.get_db()
+    if db is None:
+        return
+    from datetime import datetime, timezone, timedelta
+    now = datetime.now(timezone.utc)
+    two_hours_ago = now - timedelta(hours=2)
+
+    # Count pending items that are due but haven't been processed
+    overdue_count = await db.email_queue.count_documents({
+        "status": {"$in": ["pending", "retry"]},
+        "scheduled_at": {"$lte": now}
+    })
+
+    # Count recently sent items
+    recent_sent = await db.email_queue.count_documents({
+        "status": "sent",
+        "sent_at": {"$gte": two_hours_ago}
+    })
+
+    # Count items stuck in sending (another server-restart symptom)
+    stuck_sending = await db.email_queue.count_documents({"status": "sending"})
+
+    if stuck_sending > 0:
+        print(f"🚨 EMAIL HEALTH: {stuck_sending} items STUCK IN SENDING — possible server restart mid-send. Run rescue_stuck_sending_items().")
+    elif overdue_count > 0 and recent_sent == 0:
+        print(f"🚨 EMAIL HEALTH WARNING: {overdue_count} emails are due but NONE sent in last 2 hours. Scheduler may be dead or SMTP is down.")
+    elif overdue_count > 10:
+        print(f"⚠️ EMAIL HEALTH: {overdue_count} overdue emails in queue. Recent sent: {recent_sent} in last 2h.")
+    else:
+        print(f"✅ EMAIL HEALTH OK: {recent_sent} sent in last 2h, {overdue_count} overdue")
+
+
 def _backoff_minutes(retry_count: int) -> int:
     """
     Exponential backoff between retry attempts, capped at 24h. Before
@@ -241,7 +311,10 @@ async def process_email_queue():
                         )
                 else:
                     next_retry = item.get("retry_count", 0) + 1
-                    max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge") else 3
+                    # All email kinds now get 10 retries with exponential backoff —
+                    # the previous limit of 3 for sequence emails meant a 40h SMTP
+                    # outage permanently killed every email in under 1 hour.
+                    max_retries = 10
                     next_status = "failed" if next_retry >= max_retries else "retry"
                     update_fields = {"status": next_status, "error": error_msg, "last_attempt_at": now}
                     if next_status == "retry":
@@ -253,7 +326,7 @@ async def process_email_queue():
             except Exception as e:
                 print(f"Email worker error for {item.get('email')}: {e}")
                 next_retry = item.get("retry_count", 0) + 1
-                max_retries = 10 if item.get("kind") in ("welcome", "affiliate_welcome", "affiliate_nudge") else 3
+                max_retries = 10  # uniform across all email kinds
                 next_status = "failed" if next_retry >= max_retries else "retry"
                 update_fields = {"error": str(e), "status": next_status, "last_attempt_at": now}
                 if next_status == "retry":
@@ -304,6 +377,7 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
 
 
 def start_scheduler():
+    # Process email queue every 5 minutes
     scheduler.add_job(
         process_email_queue,
         "interval",
@@ -311,8 +385,23 @@ def start_scheduler():
         id="email_queue_processor",
         replace_existing=True,
     )
+    # Hourly health check: logs warning if emails are overdue or stuck
+    scheduler.add_job(
+        check_email_health,
+        "interval",
+        hours=1,
+        id="email_health_check",
+        replace_existing=True,
+    )
+    # Startup dead-letter rescue: reset any 'sending' items orphaned by server restart
+    scheduler.add_job(
+        rescue_stuck_sending_items,
+        "date",  # run once, immediately on startup
+        id="startup_rescue",
+        replace_existing=True,
+    )
     scheduler.start()
-    print("⏰ Email scheduler started")
+    print("⏰ Email scheduler started (with startup rescue + hourly health check)")
 
 
 def stop_scheduler():
