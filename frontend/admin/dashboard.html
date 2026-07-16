@@ -455,6 +455,17 @@
 
     <!-- ── VIEW 1: DASHBOARD (Central Command Center) ────────────────────────── -->
     <div id="view-dashboard" class="section active">
+
+      <!-- ── Delivery Health Alert Banner ── -->
+      <div id="delivery-alert-banner" style="display:none; background:linear-gradient(135deg,rgba(220,38,38,0.18),rgba(185,28,28,0.12)); border:1px solid rgba(239,68,68,0.45); border-radius:14px; padding:18px 24px; margin-bottom:24px; display:flex; align-items:center; gap:16px; flex-wrap:wrap">
+        <div style="font-size:1.6rem">🚨</div>
+        <div style="flex:1; min-width:220px">
+          <div style="font-weight:700; color:#f87171; font-size:1rem; margin-bottom:4px">Access Email Delivery Failure</div>
+          <div style="color:#fca5a5; font-size:0.88rem" id="delivery-alert-text">Some customers paid but never received their access link.</div>
+        </div>
+        <button onclick="switchSection('sales')" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.5); color:#f87171; padding:9px 18px; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.85rem; white-space:nowrap">View & Resend →</button>
+      </div>
+
       <div class="kpi-grid" id="dash-kpi-grid">
         <!-- Dynamically rendered -->
       </div>
@@ -812,8 +823,20 @@
       <div class="kpi-card"><div class="kpi-title">Avg Order Value</div><div class="kpi-val">${money(data.aov)}</div></div>
       <div class="kpi-card"><div class="kpi-title">Conversion Rate</div><div class="kpi-val gold">${data.conversion_rate}%</div></div>
       <div class="kpi-card"><div class="kpi-title">Commission Owed</div><div class="kpi-val gold">${money(data.pending_payouts)}</div></div>
+      ${(data.customers_without_access || 0) > 0 ? `<div class="kpi-card" style="border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.06)"><div class="kpi-title" style="color:#f87171">⚠️ No Access Email Sent</div><div class="kpi-val" style="color:#f87171">${data.customers_without_access}</div></div>` : '<div class="kpi-card" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.05)"><div class="kpi-title" style="color:#86efac">✅ Email Delivery Health</div><div class="kpi-val" style="color:#86efac; font-size:1.1rem">All Good</div></div>'}
     `;
     document.getElementById('dash-kpi-grid').innerHTML = kpiHTML;
+
+    // Delivery alert banner
+    const banner = document.getElementById('delivery-alert-banner');
+    const badCount = data.customers_without_access || 0;
+    if (badCount > 0) {
+      banner.style.display = 'flex';
+      document.getElementById('delivery-alert-text').textContent =
+        `${badCount} customer${badCount > 1 ? 's' : ''} paid but ${badCount > 1 ? 'have' : 'has'} NOT received their access email yet. Go to Sales → use the Resend button on each affected row.`;
+    } else {
+      banner.style.display = 'none';
+    }
 
     // AI Insights
     document.getElementById('ai-insights-list').innerHTML = (data.ai_insights || []).map(i => `<div class="ai-item">${i}</div>`).join('');
@@ -901,8 +924,21 @@
 
   function renderSalesTable(sales) {
     const tbody = document.querySelector('#table-sales-management tbody');
-    tbody.innerHTML = sales.map(s => `
-      <tr onclick="inspectSale('${s.reference}')">
+    tbody.innerHTML = sales.map(s => {
+      const isSuccessRow = s.status === 'success';
+      const emailOk = !isSuccessRow || s.email_sent !== false;
+      const needsResend = isSuccessRow && !emailOk;
+      const rowStyle = needsResend ? 'background:rgba(245,158,11,0.06); border-left:3px solid rgba(245,158,11,0.5)' : '';
+      const emailBadge = isSuccessRow
+        ? (emailOk
+            ? '<span style="background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600">✓ Sent</span>'
+            : '<span style="background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600">⚠ No Email</span>')
+        : '';
+      const actionBtn = needsResend
+        ? `<button class="btn-action btn-secondary" style="padding:3px 9px;font-size:0.73rem;color:#fbbf24;border-color:rgba(245,158,11,0.4)" onclick="event.stopPropagation(); resendWelcomeEmail('${s.reference}')">Resend ↗</button>`
+        : `<button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectSale('${s.reference}')">Inspect →</button>`;
+      return `
+      <tr onclick="inspectSale('${s.reference}')" style="${rowStyle}">
         <td>${s.verified_at ? new Date(s.verified_at).toLocaleDateString() : (s.created_at ? new Date(s.created_at).toLocaleDateString() : 'N/A')}</td>
         <td><code>${s.reference}</code></td>
         <td style="font-weight:600">${s.name}</td>
@@ -910,12 +946,13 @@
         <td style="color:var(--gold-light);font-weight:700">${money(s.amount)}</td>
         <td>${formatPaymentMethod(s.payment_method)}</td>
         <td style="text-transform:capitalize">${s.gateway || 'Flutterwave'}</td>
-        <td><span class="status-pill ${s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed')}">${s.status}</span></td>
-        <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectSale('${s.reference}')">Inspect →</button></td>
-      </tr>
-    `).join('');
+        <td><span class="status-pill ${s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed')}">${s.status}</span>&nbsp;${emailBadge}</td>
+        <td>${actionBtn}</td>
+      </tr>`;
+    }).join('');
     restoreScrollPosition('sales');
   }
+
 
   async function inspectSale(ref) {
     const details = await apiCall(`/api/admin/sales/${ref}/details`);
@@ -974,8 +1011,19 @@
   }
 
   async function resendWelcomeEmail(ref) {
-    const res = await apiCall(`/api/admin/sales/${ref}/resend-email`, 'POST');
-    alert(res.message || 'Access email re-queued!');
+    const btn = event.target;
+    const origText = btn.textContent;
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try {
+      const res = await apiCall(`/api/admin/sales/${ref}/resend-email`, 'POST');
+      alert(res.message || 'Access email re-queued! The customer will receive it within minutes.');
+      // Refresh the sales view so the ⚠ badge turns green once email is sent
+      loadSalesView();
+    } finally {
+      btn.textContent = origText;
+      btn.disabled = false;
+    }
   }
 
   async function triggerRefund(ref) {

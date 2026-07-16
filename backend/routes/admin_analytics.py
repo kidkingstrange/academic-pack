@@ -141,6 +141,29 @@ async def get_executive_overview(
     funnel_views = await db.funnel_events.count_documents({"event_name": "landing_view"})
     funnel_conversion = round((total_sales / funnel_views * 100), 1) if funnel_views > 0 else conversion_rate
 
+    # ── Delivery Health: welcome emails that permanently failed or are stuck ──
+    # A customer whose welcome email is "failed" (all retries exhausted) has
+    # paid but never received their access link — this is a live support problem.
+    # "pending"/"retry" emails that are very old may also be stuck.
+    failed_welcome_count = await db.email_queue.count_documents(
+        {"kind": "welcome", "status": "failed"}
+    )
+    # Pending/retry welcome emails older than 2 hours are considered stuck
+    two_hours_ago = now - timedelta(hours=2)
+    stuck_welcome_count = await db.email_queue.count_documents({
+        "kind": "welcome",
+        "status": {"$in": ["pending", "retry"]},
+        "scheduled_at": {"$lte": two_hours_ago}
+    })
+    # Total customers who paid but have no sent welcome email
+    all_paid_emails = await db.payments.distinct("email", {"status": "success"})
+    sent_emails_cursor = db.email_queue.find(
+        {"kind": "welcome", "status": "sent"},
+        {"email": 1}
+    )
+    sent_welcome_emails = {doc["email"] async for doc in sent_emails_cursor}
+    customers_without_access = len([e for e in all_paid_emails if e not in sent_welcome_emails])
+
     # Sparkline / Daily Revenue Trend (last 30 days)
     thirty_days_ago = now - timedelta(days=30)
     daily_pipeline = [
@@ -155,7 +178,13 @@ async def get_executive_overview(
     daily_trends = await db.payments.aggregate(daily_pipeline).to_list(31)
 
     # Executive AI Insights Generation
+    delivery_insight = (
+        f"🚨 ALERT: {customers_without_access} paying customers have not received their access email — immediate resend required."
+        if customers_without_access > 0 else
+        "✅ All paying customers have received their access emails. Delivery health is good."
+    )
     ai_insights = [
+        delivery_insight,
         f"🚀 Revenue velocity growth is up {rev_growth_pct}% compared to the previous period.",
         f"💡 Average Order Value stands solid at ₦{aov:,.2f}.",
         f"📊 Checkout conversion rate is performing at {conversion_rate}% across all traffic channels.",
@@ -198,7 +227,11 @@ async def get_executive_overview(
         "daily_trends": daily_trends,
         "ai_insights": ai_insights,
         "recent_transactions": recent_transactions,
-        "recent_leads": recent_leads
+        "recent_leads": recent_leads,
+        # Delivery health
+        "failed_welcome_emails": failed_welcome_count,
+        "stuck_welcome_emails": stuck_welcome_count,
+        "customers_without_access": customers_without_access,
     }
 
 
@@ -314,6 +347,13 @@ async def get_sales_analytics(
 
     # All transactions roster list
     tx_docs = await db.payments.find(match_query, {"gateway_response": 0}).sort("created_at", -1).to_list(500)
+
+    # Build a set of emails that have had a welcome email successfully sent —
+    # used to flag rows where the customer paid but access was never emailed.
+    sent_welcome_set = set()
+    async for eq_doc in db.email_queue.find({"kind": "welcome", "status": "sent"}, {"email": 1}):
+        sent_welcome_set.add(eq_doc["email"])
+
     transactions = []
     for tx in tx_docs:
         tx["id"] = str(tx.pop("_id"))
@@ -321,6 +361,8 @@ async def get_sales_analytics(
             tx["verified_at"] = tx["verified_at"].isoformat() if hasattr(tx["verified_at"], "isoformat") else str(tx["verified_at"])
         if "created_at" in tx and tx["created_at"]:
             tx["created_at"] = tx["created_at"].isoformat() if hasattr(tx["created_at"], "isoformat") else str(tx["created_at"])
+        # True only if this customer's access/welcome email was successfully delivered
+        tx["email_sent"] = tx.get("email", "") in sent_welcome_set
         transactions.append(tx)
 
     return {
