@@ -103,3 +103,26 @@ async def settlement_withdraw(payload: dict, current_user=Depends(require_admin)
         raise HTTPException(status_code=400, detail=str(e))
     record["id"] = str(record.pop("_id"))
     return record
+
+
+@router.delete("/batches/{batch_id}")
+async def discard_batch(batch_id: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Discard a pending or failed payout batch so it can be rebuilt."""
+    try:
+        oid = ObjectId(batch_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid batch ID format")
+
+    batch = await db.payout_batches.find_one({"_id": oid})
+    if not batch:
+        raise HTTPException(status_code=404, detail="Batch not found")
+
+    if batch["status"] not in ("pending_approval", "failed_partial"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Cannot delete a batch that has already been {batch['status']}"
+        )
+
+    # Delete the batch document
+    await db.payout_batches.delete_one({"_id": oid})
+    return {"status": "ok", "message": "Batch discarded successfully"}

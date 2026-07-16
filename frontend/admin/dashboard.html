@@ -621,6 +621,7 @@
           <div style="display:flex; gap:10px">
             <button class="btn-action btn-secondary" onclick="buildBatchNow()"><i class="bi bi-arrow-repeat"></i> Build Batch Now</button>
             <button class="btn-action" id="payout-approve-btn" style="display:none" onclick="approvePendingBatch()"><i class="bi bi-send-check-fill"></i> Approve &amp; Send</button>
+            <button class="btn-action" id="payout-discard-btn" style="display:none; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="discardPendingBatch()"><i class="bi bi-trash"></i> Discard Batch</button>
           </div>
         </div>
         <table class="data-table" id="table-payout-pending">
@@ -1214,17 +1215,20 @@
   function renderPendingBatch() {
     const sub = document.getElementById('payout-pending-sub');
     const approveBtn = document.getElementById('payout-approve-btn');
+    const discardBtn = document.getElementById('payout-discard-btn');
     const tbody = document.querySelector('#table-payout-pending tbody');
 
     if (!pendingBatch) {
       sub.textContent = 'No batch pending';
       approveBtn.style.display = 'none';
+      if (discardBtn) discardBtn.style.display = 'none';
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nothing pending right now</td></tr>';
       return;
     }
 
     sub.textContent = `${money(pendingBatch.total_amount)} across ${pendingBatch.items.length} affiliate(s) — status: ${pendingBatch.status}`;
     approveBtn.style.display = 'inline-flex';
+    if (discardBtn) discardBtn.style.display = 'inline-flex';
 
     tbody.innerHTML = pendingBatch.items.map(i => `
       <tr>
@@ -1283,6 +1287,20 @@
       const succeeded = result.items.filter(i => i.transfer_status === 'success').length;
       const failed = result.items.filter(i => i.transfer_status === 'failed' || i.transfer_status === 'blocked_missing_bank_code').length;
       alert(`Batch sent.\n\n✅ ${succeeded} succeeded${failed > 0 ? `\n⚠️ ${failed} failed/blocked — check the batch below for details` : ''}`);
+    }
+    loadPayoutsView();
+  }
+
+  async function discardPendingBatch() {
+    if (!pendingBatch) return;
+    if (!confirm("Are you sure you want to discard this pending/failed payout batch?\n\nThis will NOT delete any unpaid referral commission logs. They will simply be released back and included when you build the next batch.")) {
+      return;
+    }
+    const res = await apiCall(`/api/admin/payouts/batches/${pendingBatch.id}`, 'DELETE');
+    if (res.status === 'ok') {
+      alert("Batch discarded successfully.");
+    } else {
+      alert(res.detail || "Could not discard batch.");
     }
     loadPayoutsView();
   }
