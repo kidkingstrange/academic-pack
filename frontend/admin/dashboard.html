@@ -1785,20 +1785,36 @@
   // ── EMAIL SEQUENCE VIEW ────────────────────────────────────────────────────
   let allSeqData = [];
 
+  function safeDate(str) {
+    if (!str) return null;
+    let s = str;
+    // If naive ISO string, append Z to ensure modern browser compatibility
+    if (!s.includes('Z') && !s.includes('+') && s.includes('T')) {
+      s = s + 'Z';
+    }
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
   async function loadSequenceView() {
-    const [overview, subsResp] = await Promise.all([
-      apiCall('/api/admin/sequence/overview'),
-      apiCall('/api/admin/sequence/subscribers')
-    ]);
-    allSeqData = subsResp.subscribers || [];
-    renderSeqKPIs(overview);
-    renderSeqTable(allSeqData);
+    try {
+      const [overview, subsResp] = await Promise.all([
+        apiCall('/api/admin/sequence/overview'),
+        apiCall('/api/admin/sequence/subscribers')
+      ]);
+      allSeqData = subsResp.subscribers || [];
+      renderSeqKPIs(overview);
+      renderSeqTable(allSeqData);
+    } catch (err) {
+      console.error("Error loading sequence view:", err);
+    }
   }
 
   function renderSeqKPIs(d) {
     const statusColor = d.health_status === 'healthy' ? 'var(--green)' : d.health_status === 'degraded' ? 'var(--gold)' : 'var(--red)';
     const statusIcon = d.health_status === 'healthy' ? '✅' : d.health_status === 'degraded' ? '⚠️' : '🚨';
-    const lastSent = d.last_sent_at ? new Date(d.last_sent_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : 'Never';
+    const parsedLastSent = safeDate(d.last_sent_at);
+    const lastSent = parsedLastSent ? parsedLastSent.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : 'Never';
     document.getElementById('seq-kpi-row').innerHTML = `
       <div class="kpi-card"><div class="kpi-title">Health</div><div class="kpi-val" style="color:${statusColor};font-size:1rem">${statusIcon} ${d.health_status}</div></div>
       <div class="kpi-card"><div class="kpi-title">Enrolled</div><div class="kpi-val gold">${d.total_enrolled}</div></div>
@@ -1820,7 +1836,8 @@
         'behind': '<span style="background:rgba(234,179,8,0.15);color:#eab308;padding:2px 10px;border-radius:20px;font-size:0.75rem">Behind</span>',
         'overdue': '<span style="background:rgba(239,68,68,0.15);color:#ef4444;padding:2px 10px;border-radius:20px;font-size:0.75rem">⚠ Overdue</span>',
       }[s.status] || s.status;
-      const nextDue = s.next_due_at ? new Date(s.next_due_at).toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+      const parsedNextDue = safeDate(s.next_due_at);
+      const nextDue = parsedNextDue ? parsedNextDue.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
       const nextLabel = s.next_email_number ? `#${s.next_email_number}` : '—';
       const behindColor = s.emails_behind > 0 ? 'color:var(--gold)' : '';
       return `<tr${s.is_overdue ? ' style="background:rgba(239,68,68,0.04)"' : ''}>
@@ -1848,43 +1865,60 @@
   }
 
   async function openSeqHistory(email) {
-    const data = await apiCall('/api/admin/sequence/subscriber/' + encodeURIComponent(email));
-    const sub = data.subscriber;
-    const history = data.history || [];
-    const statusChip = (status) => ({
-      sent: '<span style="color:#10b981">✔ Sent</span>',
-      pending: '<span style="color:var(--text-muted)">⏳ Pending</span>',
-      retry: '<span style="color:var(--gold)">↻ Retry</span>',
-      failed: '<span style="color:#ef4444">✘ Failed</span>',
-      skipped: '<span style="color:var(--text-muted)">– Skipped</span>',
-      superseded: '<span style="color:var(--text-muted)">↷ Superseded</span>',
-      sending: '<span style="color:var(--gold)">⟳ Sending</span>',
-    })[status] || status;
+    try {
+      const data = await apiCall('/api/admin/sequence/subscriber/' + encodeURIComponent(email));
+      if (!data || !data.subscriber) {
+        throw new Error("Failed to load subscriber data");
+      }
+      const sub = data.subscriber;
+      const history = data.history || [];
+      const statusChip = (status) => ({
+        sent: '<span style="color:#10b981">✔ Sent</span>',
+        pending: '<span style="color:var(--text-muted)">⏳ Pending</span>',
+        retry: '<span style="color:var(--gold)">↻ Retry</span>',
+        failed: '<span style="color:#ef4444">✘ Failed</span>',
+        skipped: '<span style="color:var(--text-muted)">– Skipped</span>',
+        superseded: '<span style="color:var(--text-muted)">↷ Superseded</span>',
+        sending: '<span style="color:var(--gold)">⟳ Sending</span>',
+      })[status] || status;
 
-    document.getElementById('drawer-title').textContent = `Sequence History — ${sub.name}`;
-    document.getElementById('drawer-content').innerHTML = `
-      <div style="margin-bottom:16px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border-color)">
-        <div style="font-size:0.82rem;color:var(--text-muted)">${sub.email} · Enrolled ${sub.subscribed_at ? new Date(sub.subscribed_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '?'} · Correct position: #${sub.correct_position}</div>
-      </div>
-      <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
-        <thead><tr style="border-bottom:1px solid var(--border-color);color:var(--text-muted)">
-          <th style="padding:6px 8px;text-align:left">#</th>
-          <th style="padding:6px 8px;text-align:left">Subject</th>
-          <th style="padding:6px 8px;text-align:center">Status</th>
-          <th style="padding:6px 8px;text-align:left">Sent At</th>
-        </tr></thead>
-        <tbody>
-          ${history.map(h => `<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
-            <td style="padding:6px 8px;color:var(--text-muted)">${h.sequence_number}</td>
-            <td style="padding:6px 8px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${h.subject}">${h.subject}</td>
-            <td style="padding:6px 8px;text-align:center">${statusChip(h.status)}</td>
-            <td style="padding:6px 8px;color:var(--text-muted)">${h.sent_at ? new Date(h.sent_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : (h.scheduled_at ? '⏳ due ' + new Date(h.scheduled_at).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '—')}</td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
-    `;
-    openDrawer();
+      const subDate = safeDate(sub.subscribed_at);
+      const subDateStr = subDate ? subDate.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'}) : '?';
+
+      document.getElementById('drawer-title').textContent = `Sequence History — ${sub.name}`;
+      document.getElementById('drawer-content').innerHTML = `
+        <div style="margin-bottom:16px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:8px;border:1px solid var(--border-color)">
+          <div style="font-size:0.82rem;color:var(--text-muted)">${sub.email} · Enrolled ${subDateStr} · Correct position: #${sub.correct_position}</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+          <thead><tr style="border-bottom:1px solid var(--border-color);color:var(--text-muted)">
+            <th style="padding:6px 8px;text-align:left">#</th>
+            <th style="padding:6px 8px;text-align:left">Subject</th>
+            <th style="padding:6px 8px;text-align:center">Status</th>
+            <th style="padding:6px 8px;text-align:left">Sent At</th>
+          </tr></thead>
+          <tbody>
+            ${history.map(h => {
+              const hSent = safeDate(h.sent_at);
+              const hSched = safeDate(h.scheduled_at);
+              const sentAtStr = hSent ? hSent.toLocaleDateString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : (hSched ? '⏳ due ' + hSched.toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '—');
+              return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
+                <td style="padding:6px 8px;color:var(--text-muted)">${h.sequence_number}</td>
+                <td style="padding:6px 8px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${h.subject}">${h.subject}</td>
+                <td style="padding:6px 8px;text-align:center">${statusChip(h.status)}</td>
+                <td style="padding:6px 8px;color:var(--text-muted)">${sentAtStr}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+      openDrawer();
+    } catch (err) {
+      alert("Error loading history: " + err.message);
+      console.error(err);
+    }
   }
+
 
 
   async function seqResend(email) {
