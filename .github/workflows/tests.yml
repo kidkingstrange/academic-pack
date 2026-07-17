@@ -1,0 +1,51 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.runCommand({ping:1})' --quiet"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      # Ephemeral MongoDB service container, not the real Atlas cluster —
+      # CI never touches production data. Every test gets its own scratch
+      # database on top of this (see tests/conftest.py), dropped on teardown.
+      MONGODB_URL: mongodb://127.0.0.1:27017
+      DB_NAME: academic_comeback_ci
+      APP_ENV: development
+      # Any non-empty value works — the webhook tests derive the expected
+      # signature from this same setting, they don't depend on a real
+      # Flutterwave secret.
+      FLW_WEBHOOK_SECRET_HASH: ci_test_webhook_secret_hash
+      JWT_SECRET: ci-test-jwt-secret-not-used-in-production
+      ADMIN_PASSWORD: ci-test-admin-password-not-the-shipped-default
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest -v
