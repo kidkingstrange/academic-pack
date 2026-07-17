@@ -373,10 +373,25 @@ def check_cors_configured_for_production(settings):
         )
 
 
+def check_app_url_configured_for_production(settings):
+    """Hard-fails startup in production if APP_URL is pointing to localhost or 127.0.0.1
+    or is empty — every emailed access link and sequence link depends on APP_URL."""
+    if settings.APP_ENV != "production":
+        return
+    url = (settings.APP_URL or "").strip().lower()
+    if not url or "localhost" in url or "127.0.0.1" in url:
+        raise RuntimeError(
+            f"CRITICAL CONFIGURATION ERROR: APP_ENV is set to 'production', but APP_URL "
+            f"('{settings.APP_URL}') points to localhost/127.0.0.1 or is empty! All customer "
+            "library access links and sequence email links would silently break."
+        )
+
+
 @app.on_event("startup")
 async def startup():
     check_admin_password_rotated(settings)
     check_cors_configured_for_production(settings)
+    check_app_url_configured_for_production(settings)
     await connect_db()
     if settings.RUN_SCHEDULERS:
         start_scheduler()

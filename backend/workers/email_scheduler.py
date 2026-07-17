@@ -252,12 +252,16 @@ async def process_email_queue():
         # above now also prevents two runs' items from being sent concurrently
         # in the first place.
         pending = []
+        TRANSACTIONAL_KINDS = ("welcome", "affiliate_welcome", "affiliate_nudge")
+
+        # Step 1: Claim high-priority transactional emails first
         while len(pending) < 50:
             item = await db.email_queue.find_one_and_update(
                 {
                     "status": {"$in": ["pending", "retry"]},
                     "scheduled_at": {"$lte": now},
-                    "retry_count": {"$lt": 10}
+                    "retry_count": {"$lt": 10},
+                    "kind": {"$in": TRANSACTIONAL_KINDS}
                 },
                 {"$set": {"status": "sending"}},
                 sort=[("scheduled_at", 1)],
@@ -266,7 +270,26 @@ async def process_email_queue():
                 break
             pending.append(item)
 
-        for item in pending:
+        # Step 2: Fill remaining batch budget with bulk sequence emails
+        while len(pending) < 50:
+            item = await db.email_queue.find_one_and_update(
+                {
+                    "status": {"$in": ["pending", "retry"]},
+                    "scheduled_at": {"$lte": now},
+                    "retry_count": {"$lt": 10},
+                    "kind": {"$nin": TRANSACTIONAL_KINDS}
+                },
+                {"$set": {"status": "sending"}},
+                sort=[("scheduled_at", 1)],
+            )
+            if not item:
+                break
+            pending.append(item)
+
+        for idx, item in enumerate(pending):
+            if idx > 0:
+                # Pace sends to prevent PrivateEmail connection bursts
+                await asyncio.sleep(0.2)
             try:
                 kind = item.get("kind", "sequence")
                 error_msg = None
@@ -323,9 +346,6 @@ async def process_email_queue():
                         )
                 else:
                     next_retry = item.get("retry_count", 0) + 1
-                    # All email kinds now get 10 retries with exponential backoff —
-                    # the previous limit of 3 for sequence emails meant a 40h SMTP
-                    # outage permanently killed every email in under 1 hour.
                     max_retries = 10
                     next_status = "failed" if next_retry >= max_retries else "retry"
                     update_fields = {"status": next_status, "error": error_msg, "last_attempt_at": now}
@@ -334,11 +354,24 @@ async def process_email_queue():
                     await db.email_queue.update_one(
                         {"_id": item["_id"]},
                         {"$inc": {"retry_count": 1}, "$set": update_fields}
-                     )
+                    )
+                    if next_status == "failed" and kind in ("welcome", "affiliate_welcome"):
+                        try:
+                            st = get_settings()
+                            target_email = item.get("email") or "customer"
+                            alert_subject = f"⚠️ [DEAD LETTER] Access email failed for {target_email}"
+                            alert_body = (
+                                f"Transactional access email ({kind}) for {target_email} has reached max retries and failed.\n\n"
+                                f"Error: {error_msg}\n"
+                                f"Please use the admin dashboard to resend access."
+                            )
+                            await send_email(st.ADMIN_EMAIL, alert_subject, alert_body)
+                        except Exception as alert_err:
+                            print(f"❌ Failed to send dead-letter alert to admin: {alert_err}")
             except Exception as e:
                 print(f"Email worker error for {item.get('email')}: {e}")
                 next_retry = item.get("retry_count", 0) + 1
-                max_retries = 10  # uniform across all email kinds
+                max_retries = 10
                 next_status = "failed" if next_retry >= max_retries else "retry"
                 update_fields = {"error": str(e), "status": next_status, "last_attempt_at": now}
                 if next_status == "retry":
@@ -347,6 +380,19 @@ async def process_email_queue():
                     {"_id": item["_id"]},
                     {"$inc": {"retry_count": 1}, "$set": update_fields}
                 )
+                if next_status == "failed" and item.get("kind") in ("welcome", "affiliate_welcome"):
+                    try:
+                        st = get_settings()
+                        target_email = item.get("email") or "customer"
+                        alert_subject = f"⚠️ [DEAD LETTER] Access email failed for {target_email}"
+                        alert_body = (
+                            f"Transactional access email ({item.get('kind')}) for {target_email} has reached max retries and failed.\n\n"
+                            f"Error: {e}\n"
+                            f"Please use the admin dashboard to resend access."
+                        )
+                        await send_email(st.ADMIN_EMAIL, alert_subject, alert_body)
+                    except Exception as alert_err:
+                        print(f"❌ Failed to send dead-letter alert to admin: {alert_err}")
 
 
 async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime, sequence=None):
