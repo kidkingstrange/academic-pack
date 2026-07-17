@@ -207,7 +207,7 @@
 /* FOOTER */
 .footer{background:var(--ink);padding:40px 0;text-align:center}
 .footer__brand{font-family:'Inter',sans-serif;color:var(--gold);font-size:1.25rem;font-weight:900;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px}
-.footer__copy{font-size:.78rem;color:rgba(255,255,255,.35);margin-top:6px}
+.footer__copy{font-size:.78rem;color:rgba(255,255,255,.55);margin-top:6px}
 
 /* CHECKOUT MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(12,14,18,.8);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:flex-end;justify-content:center;padding:0;transition:opacity var(--transition)}
@@ -325,7 +325,7 @@
 .community__input-wrap{position:relative;display:flex;align-items:center}
 .community__input-wrap i{position:absolute;left:16px;color:rgba(255,255,255,.35);font-size:1rem;pointer-events:none}
 .community__input-wrap input{width:100%;padding:14px 16px 14px 44px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:#fff;font-size:.95rem;outline:none;transition:border-color .2s,box-shadow .2s}
-.community__input-wrap input::placeholder{color:rgba(255,255,255,.35)}
+.community__input-wrap input::placeholder{color:rgba(255,255,255,.55)}
 .community__input-wrap input:focus{border-color:#25D366;box-shadow:0 0 0 3px rgba(37,211,102,.15)}
 .btn--whatsapp{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;font-weight:700;font-size:.92rem;padding:14px 28px;border-radius:12px;border:none;cursor:pointer;transition:all .25s ease;box-shadow:0 4px 16px rgba(37,211,102,.3)}
 .btn--whatsapp:hover{background:#1fb855;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.4)}
@@ -663,7 +663,7 @@
 .exit-card form{margin-bottom:16px}
 .exit-card .field-error{margin-bottom:0}
 .exit-card__spin{width:16px;height:16px;border:2px solid rgba(12,14,18,.25);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:-3px;margin-right:8px}
-.exit-card__dismiss{background:none;border:none;color:rgba(255,255,255,.35);font-size:.84rem;cursor:pointer;padding:8px 16px;transition:color .2s ease;font-family:inherit}
+.exit-card__dismiss{background:none;border:none;color:rgba(255,255,255,.55);font-size:.84rem;cursor:pointer;padding:8px 16px;transition:color .2s ease;font-family:inherit}
 .exit-card__dismiss:hover{color:rgba(255,255,255,.6)}
 
 

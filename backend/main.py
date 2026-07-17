@@ -115,6 +115,19 @@ if frontend_path.exists():
     app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=3600"), name="css")
     app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=3600"), name="js")
 
+# ── SEO / crawler files ────────────────────────────────────────────────────────
+@app.get("/favicon.ico", include_in_schema=False)
+async def serve_favicon():
+    return FileResponse(str(frontend_path / "favicon.ico"), headers={"Cache-Control": "public, max-age=86400"})
+
+@app.get("/robots.txt", include_in_schema=False)
+async def serve_robots():
+    return FileResponse(str(frontend_path / "robots.txt"), headers={"Cache-Control": "public, max-age=86400"})
+
+@app.get("/sitemap.xml", include_in_schema=False)
+async def serve_sitemap():
+    return FileResponse(str(frontend_path / "sitemap.xml"), headers={"Cache-Control": "public, max-age=86400"})
+
 # ── SPA-style Page Routes ─────────────────────────────────────────────────────
 @app.get("/", include_in_schema=False)
 async def serve_index():
@@ -330,9 +343,26 @@ def check_admin_password_rotated(settings):
     print(warning)
 
 
+def check_cors_configured_for_production(settings):
+    """Warns (never hard-fails — misconfigured CORS is disruptive, not a
+    leaked-credential-grade emergency) if running in production with only
+    localhost origins allowed, which would silently break every browser
+    request from the real deployed frontend."""
+    if settings.APP_ENV != "production":
+        return
+    origins = settings.cors_origins_list
+    if origins and all("localhost" in o or "127.0.0.1" in o for o in origins):
+        print(
+            "🚨 CORS_ORIGINS is running in production with only localhost/127.0.0.1 "
+            f"origins allowed ({origins}) — set it to the real production domain(s) "
+            "or every browser request from the live site will be blocked."
+        )
+
+
 @app.on_event("startup")
 async def startup():
     check_admin_password_rotated(settings)
+    check_cors_configured_for_production(settings)
     await connect_db()
     start_scheduler()
     start_payout_scheduler()

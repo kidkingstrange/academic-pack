@@ -128,12 +128,18 @@ class AffiliateCreateRequest(BaseModel):
 
 
 class AffiliateRegisterRequest(BaseModel):
+    # The public self-registration form actively collects and verifies bank
+    # details at signup (live account-name resolution via Flutterwave,
+    # blocks submit on an invalid account number) — required here to match
+    # that real, deliberate UX, unlike AffiliateCreateRequest (the
+    # admin-created path), where an admin may not have the affiliate's bank
+    # details on hand yet and optional stays correct.
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
-    bank_name: Optional[str] = Field(None, max_length=100)
+    bank_name: str = Field(..., min_length=2, max_length=100)
     bank_code: Optional[str] = Field(None, max_length=20)
-    account_number: Optional[str] = Field(None, max_length=20)
-    account_name: Optional[str] = Field(None, max_length=100)
+    account_number: str = Field(..., min_length=10, max_length=20)
+    account_name: str = Field(..., min_length=2, max_length=100)
 
 
 class AffiliateBankDetailsUpdateRequest(BaseModel):

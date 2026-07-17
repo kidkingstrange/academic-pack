@@ -1,6 +1,14 @@
 """
 MongoDB async connection using Motor.
 Collections are initialized here and imported throughout the app.
+
+NOTE: Motor has been deprecated by MongoDB in favor of PyMongo's own native
+async API (pymongo.AsyncMongoClient, stable since PyMongo 4.9) and will stop
+receiving updates. No immediate action needed, but this whole module is the
+migration surface for eventually switching to that instead — Motor's
+AsyncIOMotorClient/AsyncIOMotorDatabase API is close enough to PyMongo's
+async client that the change should mostly be import lines + a driver-name
+audit, not a rewrite of every route.
 """
 import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
