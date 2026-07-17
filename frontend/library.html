@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
 <link rel="stylesheet" href="css/main.css?v=4">
 <style>
@@ -24,8 +24,8 @@
   .download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); color: #fff; padding: 14px; border-radius: var(--radius); font-weight: 700; font-size: .9rem; cursor: pointer; transition: all var(--transition); }
   .download-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: var(--ink); border-color: transparent; box-shadow: 0 4px 12px rgba(201,151,58,.25); }
   .download-btn:disabled { opacity: .7; cursor: default; }
-  .download-btn--ready { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: var(--ink); border-color: transparent; animation: readyPulse 1.4s ease-in-out infinite; }
-  @keyframes readyPulse { 0%,100% { box-shadow: 0 0 0 rgba(201,151,58,.4); } 50% { box-shadow: 0 0 0 6px rgba(201,151,58,0); } }
+  .download-btn--ready { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: var(--ink); border-color: transparent; box-shadow: 0 4px 16px rgba(201,151,58,.25); }
+  .download-btn--ready:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,151,58,.4); }
   .loader-page { position: fixed; inset: 0; background: var(--ink); display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
   .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -100,7 +100,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       main.innerHTML = `
         <div style="max-width: 500px; margin: 80px auto; padding: 40px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; text-align: center; backdrop-filter: blur(10px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
           <div style="font-size: 3rem; color: #ffbc00; margin-bottom: 20px;"><i class="bi bi-shield-lock"></i></div>
-          <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 16px;">Access Link Required</h2>
+          <h2 style="font-family: 'Clash Display', sans-serif; font-size: 1.8rem; font-weight: 600; color: #fff; margin-bottom: 16px;">Access Link Required</h2>
           <p style="color: var(--gray-l); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">Please use the direct library access link sent to your email after purchase. If you just purchased, wait a few seconds and check your inbox (and spam folder) for your welcome email.</p>
           <a href="/" class="btn btn--gold" style="display: inline-block; text-decoration: none; width: 100%; text-align: center; margin-bottom: 20px;">Go to Homepage</a>
           <div style="border-top: 1px solid rgba(255,255,255,.08); padding-top: 20px;">
