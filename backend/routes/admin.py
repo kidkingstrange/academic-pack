@@ -6,10 +6,12 @@ import asyncio
 import os, shutil
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Request
+from fastapi.concurrency import run_in_threadpool
 from bson import ObjectId
 from ..middleware.auth import require_admin
 from ..utils.security import verify_password, hash_password, create_access_token
+from ..utils.rate_limit import limiter
 from ..database import get_db
 from ..config import get_settings
 from typing import Optional, List
@@ -22,7 +24,8 @@ settings = get_settings()
 
 
 @router.post("/login", response_model=TokenResponse)
-async def admin_login(body: AdminLoginRequest, db=Depends(get_db)):
+@limiter.limit("10/minute")
+async def admin_login(request: Request, body: AdminLoginRequest, db=Depends(get_db)):
     """Admin login — returns JWT with role=admin."""
     # Check against env-configured admin or DB
     if body.email == settings.ADMIN_EMAIL and body.password == settings.ADMIN_PASSWORD:
@@ -341,17 +344,28 @@ async def get_analytics_customers(
 
 
 @router.get("/analytics/affiliates")
-async def get_analytics_affiliates(current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_analytics_affiliates(
+    page: int = 1, limit: int = 100,
+    current_user=Depends(require_admin), db=Depends(get_db),
+):
     """Same aggregation as GET /api/admin/affiliates (routes/affiliates.py),
     reused here rather than duplicated logic drifting — backs the
-    Affiliates Engine tab, which was calling a path that never existed."""
-    affiliates = await db.affiliates.find({}).sort("created_at", -1).to_list(500)
+    Affiliates Engine tab, which was calling a path that never existed.
+
+    limit defaults to 100 (vs. the usual 20 elsewhere) because the
+    Affiliates Engine tab does its own client-side search/sort over
+    everything it's given, same as the Team Members tab — the fix here is
+    removing the old hardcoded to_list(500) ceiling that silently dropped
+    any affiliate beyond it, not forcing a paginated-UI rewrite this pass."""
+    skip = (page - 1) * limit
+    affiliates = await db.affiliates.find({}).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
+    total = await db.affiliates.count_documents({})
 
     click_counts = {
         row["_id"]: row["count"]
         for row in await db.referral_clicks.aggregate([
             {"$group": {"_id": "$affiliate_code", "count": {"$sum": 1}}}
-        ]).to_list(500)
+        ]).to_list(10000)
     }
     referral_stats = {
         row["_id"]: row
@@ -365,7 +379,7 @@ async def get_analytics_affiliates(current_user=Depends(require_admin), db=Depen
                     "$sum": {"$cond": [{"$eq": ["$commission_status", "paid"]}, "$commission_amount", 0]}
                 },
             }}
-        ]).to_list(500)
+        ]).to_list(10000)
     }
 
     out = []
@@ -393,7 +407,7 @@ async def get_analytics_affiliates(current_user=Depends(require_admin), db=Depen
             "account_number": a.get("account_number", ""),
             "account_name": a.get("account_name", ""),
         })
-    return {"affiliates": out}
+    return {"affiliates": out, "total": total, "page": page, "pages": -(-total // limit)}
 
 
 @router.get("/analytics/affiliate-health")
@@ -488,8 +502,14 @@ async def upload_product(
     file_path = Path(settings.UPLOADS_DIR) / safe_name
     file_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with open(file_path, "wb") as f:
-        shutil.copyfileobj(file.file, f)
+    def _write_upload_to_disk():
+        with open(file_path, "wb") as f:
+            shutil.copyfileobj(file.file, f)
+
+    # A large PDF write blocked the whole event loop (every other request,
+    # for every concurrent user) for the duration of the copy — run it in
+    # a worker thread instead, same pattern as the SMTP fix in email_service.py.
+    await run_in_threadpool(_write_upload_to_disk)
 
     result = await db.products.insert_one({
         "title": title,

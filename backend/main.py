@@ -28,6 +28,9 @@ from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge
 from .workers.subscription_scheduler import start_subscription_scheduler, stop_subscription_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
+from .utils.rate_limit import limiter
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 
 settings = get_settings()
 
@@ -38,6 +41,13 @@ app = FastAPI(
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
 )
+
+# ── Rate limiting ─────────────────────────────────────────────────────────────
+# slowapi was already a pinned dependency but never actually wired in —
+# login, checkout, and registration endpoints had no abuse/brute-force
+# throttling of any kind.
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
 app.add_middleware(

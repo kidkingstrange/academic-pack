@@ -2,6 +2,7 @@
 MongoDB async connection using Motor.
 Collections are initialized here and imported throughout the app.
 """
+import asyncio
 from motor.motor_asyncio import AsyncIOMotorClient
 from .config import get_settings
 
@@ -28,43 +29,52 @@ async def connect_db():
                 {"$set": {"unsubscribe_token": secrets.token_urlsafe(32)}}
             )
 
-        # Ensure indexes
-        await db.users.create_index("email", unique=True)
-        await db.leads.create_index("email")
-        await db.payments.create_index("reference", unique=True)
-        await db.payments.create_index([("email", 1), ("status", 1)])
-        await db.payments.create_index("created_at")
-        await db.subscribers.create_index("email", unique=True)
-        await db.subscribers.create_index("unsubscribe_token", unique=True, sparse=True)
-        await db.email_queue.create_index([("status", 1), ("scheduled_at", 1)])
-        await db.email_queue.create_index("subscriber_id")
-        await db.email_queue.create_index([("kind", 1), ("status", 1)])
-        await db.downloads.create_index([("user_id", 1), ("product_id", 1)])
-        await db.used_tokens.create_index("jti", unique=True)
-        await db.pending_payments.create_index("reference", unique=True)
-        await db.users.create_index("library_access_token", unique=True, sparse=True)
-        await db.sessions.create_index("session_hash", unique=True)
-        await db.affiliates.create_index("code", unique=True)
-        await db.affiliates.create_index("email", unique=True)
-        await db.affiliates.create_index("dashboard_token", unique=True)
-        await db.referral_clicks.create_index([("affiliate_code", 1), ("created_at", -1)])
-        await db.referrals.create_index("reference", unique=True)
-        await db.referrals.create_index([("affiliate_code", 1), ("commission_status", 1)])
-        await db.payout_batches.create_index([("created_at", -1)])
-        await db.payout_batches.create_index([("status", 1)])
-        await db.settlement_withdrawals.create_index([("created_at", -1)])
-        await db.marketing_asset_downloads.create_index([("affiliate_code", 1), ("downloaded_at", -1)])
-        await db.marketing_asset_downloads.create_index([("downloaded_at", 1), ("nudge_sent", 1)])
-        await db.marketing_video_clicks.create_index([("affiliate_id", 1), ("clicked_at", -1)])
-        await db.marketing_video_clicks.create_index([("affiliate_code", 1), ("clicked_at", -1)])
-        await db.marketing_video_clicks.create_index([("clicked_at", 1), ("nudge_sent", 1)])
-        
-        # Subscriptions and Sales Team indexes
-        await db.offers.create_index("name", unique=True)
-        await db.sales_leads.create_index("generated_link_token", unique=True)
-        await db.sales_leads.create_index([("sales_rep_id", 1), ("created_at", -1)])
-        await db.subscriptions.create_index("next_charge_date")
-        await db.subscriptions.create_index("customer_email")
+        # Ensure indexes — run concurrently instead of one round trip at a
+        # time. ~25 sequential awaits each paying a full network round trip
+        # to Atlas measurably added to cold-start time on top of Render's
+        # own free-tier sleep/wake delay; index creation on different (and
+        # even the same) collections is safe to run concurrently.
+        await asyncio.gather(
+            db.users.create_index("email", unique=True),
+            db.leads.create_index("email"),
+            db.payments.create_index("reference", unique=True),
+            db.payments.create_index([("email", 1), ("status", 1)]),
+            db.payments.create_index("created_at"),
+            db.subscribers.create_index("email", unique=True),
+            db.subscribers.create_index("unsubscribe_token", unique=True, sparse=True),
+            db.email_queue.create_index([("status", 1), ("scheduled_at", 1)]),
+            db.email_queue.create_index("subscriber_id"),
+            db.email_queue.create_index([("kind", 1), ("status", 1)]),
+            db.downloads.create_index([("user_id", 1), ("product_id", 1)]),
+            db.used_tokens.create_index("jti", unique=True),
+            db.pending_payments.create_index("reference", unique=True),
+            db.users.create_index("library_access_token", unique=True, sparse=True),
+            db.sessions.create_index("session_hash", unique=True),
+            db.affiliates.create_index("code", unique=True),
+            db.affiliates.create_index("email", unique=True),
+            db.affiliates.create_index("dashboard_token", unique=True),
+            db.referral_clicks.create_index([("affiliate_code", 1), ("created_at", -1)]),
+            db.referrals.create_index("reference", unique=True),
+            db.referrals.create_index([("affiliate_code", 1), ("commission_status", 1)]),
+            # affiliate_health_service.py's MAA/retention windows filter
+            # referrals by created_at range with no matching index — a full
+            # collection scan on every admin Affiliate Health panel load.
+            db.referrals.create_index("created_at"),
+            db.payout_batches.create_index([("created_at", -1)]),
+            db.payout_batches.create_index([("status", 1)]),
+            db.settlement_withdrawals.create_index([("created_at", -1)]),
+            db.marketing_asset_downloads.create_index([("affiliate_code", 1), ("downloaded_at", -1)]),
+            db.marketing_asset_downloads.create_index([("downloaded_at", 1), ("nudge_sent", 1)]),
+            db.marketing_video_clicks.create_index([("affiliate_id", 1), ("clicked_at", -1)]),
+            db.marketing_video_clicks.create_index([("affiliate_code", 1), ("clicked_at", -1)]),
+            db.marketing_video_clicks.create_index([("clicked_at", 1), ("nudge_sent", 1)]),
+            # Subscriptions and Sales Team indexes
+            db.offers.create_index("name", unique=True),
+            db.sales_leads.create_index("generated_link_token", unique=True),
+            db.sales_leads.create_index([("sales_rep_id", 1), ("created_at", -1)]),
+            db.subscriptions.create_index("next_charge_date"),
+            db.subscriptions.create_index("customer_email"),
+        )
         print("✅ MongoDB connected")
     except Exception as e:
         print(f"⚠️ Warning: Could not connect to MongoDB ({e}). Running in UI-only mode.")

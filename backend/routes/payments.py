@@ -22,12 +22,14 @@ from ..services.email_service import send_email
 from ..utils.security import create_access_token
 from ..database import get_db
 from ..config import get_settings
+from ..utils.rate_limit import limiter
 
 router = APIRouter(prefix="/api/payments", tags=["payments"])
 settings = get_settings()
 
 
 @router.post("/initialize", response_model=PaymentInitResponse)
+@limiter.limit("10/minute")
 async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(get_db)):
     """
     Step 1: Determine price, create Flutterwave customer,
@@ -192,6 +194,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
 
 
 @router.post("/verify", response_model=PaymentVerifyResponse)
+@limiter.limit("30/minute")
 async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depends(get_db)):
     """
     Step 2: Frontend polls this after customer claims to have paid.

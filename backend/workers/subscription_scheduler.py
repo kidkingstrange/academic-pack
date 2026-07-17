@@ -1,3 +1,4 @@
+import html
 import secrets
 from datetime import datetime, timezone, timedelta
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -91,8 +92,8 @@ async def run_daily_subscription_billing():
                 # 3. Send Success Email
                 email_html = f"""
                 <h2>Renewal Payment Successful!</h2>
-                <p>Hello {sub['customer_name']},</p>
-                <p>Your monthly subscription renewal for <strong>{offer['name']}</strong> has been processed successfully.</p>
+                <p>Hello {html.escape(sub['customer_name'])},</p>
+                <p>Your monthly subscription renewal for <strong>{html.escape(offer['name'])}</strong> has been processed successfully.</p>
                 <p><strong>Amount:</strong> ₦{offer['price']:,.2f}</p>
                 <p><strong>Next Renewal Date:</strong> {(now + timedelta(days=30)).strftime('%B %d, %Y')}</p>
                 <p>Thank you for choosing us!</p>
@@ -148,8 +149,8 @@ async def handle_billing_failure(db, sub, offer, reference, response, now):
     # 4. Send Fallback Email Alert with Manual Checkout URL
     email_html = f"""
     <h2 style="color:#dc2626">Action Required: Renewal Payment Declined</h2>
-    <p>Hello {sub['customer_name']},</p>
-    <p>Your automatic subscription renewal payment for <strong>{offer['name']}</strong> of ₦{offer['price']:,.2f} failed or requires manual authorization.</p>
+    <p>Hello {html.escape(sub['customer_name'])},</p>
+    <p>Your automatic subscription renewal payment for <strong>{html.escape(offer['name'])}</strong> of ₦{offer['price']:,.2f} failed or requires manual authorization.</p>
     <p>To prevent disruption of your subscription access, please manually complete your payment using the link below:</p>
     <p><a href="{checkout_url}" style="display:inline-block;background-color:#d4a63a;color:#0d0f14;padding:12px 24px;border-radius:30px;text-decoration:none;font-weight:bold">Complete Renewal Payment &rarr;</a></p>
     <br>

@@ -9,7 +9,7 @@ database via `Depends(get_db)`.
 """
 import os
 import re
-import time
+import uuid
 import pytest
 import pytest_asyncio
 from httpx import ASGITransport, AsyncClient
@@ -38,7 +38,12 @@ from backend.main import app  # noqa: E402
 @pytest_asyncio.fixture
 async def test_db():
     mongo_url = os.environ["MONGODB_URL"]
-    db_name = f"academic_comeback_pytest_{int(time.time() * 1000)}"
+    # Short prefix + a slice of uuid4 hex, not a millisecond timestamp —
+    # tests in the same file can start within the same millisecond and
+    # would otherwise collide onto the same scratch database name, leaking
+    # data between supposedly-isolated tests. Atlas caps DB names at 38
+    # bytes, so this can't just be the full 32-char hex on a longer prefix.
+    db_name = f"acp_test_{uuid.uuid4().hex[:16]}"
     conn = AsyncIOMotorClient(mongo_url, serverSelectionTimeoutMS=5000)
     scratch = conn[db_name]
 

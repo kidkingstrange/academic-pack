@@ -56,6 +56,18 @@
   .caption-card .text { font-size: .85rem; color: var(--gray-l); line-height: 1.6; white-space: pre-wrap; margin-bottom: 14px; }
   .resource-card { transition: all var(--transition); }
   .resource-card:hover { border-color: var(--gold) !important; box-shadow: var(--gold-glow); }
+
+  .bank-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(12,14,18,.8); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+  .bank-modal-overlay.open { display: flex; }
+  .bank-modal { background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); max-width: 440px; width: 100%; padding: 32px 28px; position: relative; }
+  .bank-modal__close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.06); border: none; cursor: pointer; color: #fff; font-size: 1.2rem; line-height: 1; }
+  .bank-modal__close:hover { background: rgba(255,255,255,.15); }
+  .bank-modal h3 { font-family: 'Clash Display', sans-serif; font-size: 1.3rem; font-weight: 600; margin-bottom: 6px; color: #fff; }
+  .bank-modal p.bank-modal-sub { font-size: .85rem; color: var(--gray-l); margin-bottom: 22px; }
+  .bank-modal .form-group { margin-bottom: 16px; }
+  .bank-modal label { display: block; font-size: .82rem; color: var(--gray-l); margin-bottom: 6px; font-weight: 600; }
+  .bank-modal input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color: #fff; font-size: .9rem; font-family: inherit; }
+  .bank-modal input:focus { outline: none; border-color: var(--gold); }
 </style>
 </head>
 <body>
@@ -155,6 +167,30 @@
     </table>
   </div>
 </main>
+
+<div class="bank-modal-overlay" id="bank-modal-overlay">
+  <div class="bank-modal">
+    <button class="bank-modal__close" onclick="closeBankModal()" aria-label="Close">&times;</button>
+    <h3>Update Bank Details</h3>
+    <p class="bank-modal-sub">This is where your commission payouts are sent.</p>
+    <form id="bank-details-form">
+      <div class="form-group">
+        <label for="bank-name-input">Bank Name</label>
+        <input type="text" id="bank-name-input" placeholder="e.g. Access Bank, GTBank, Kuda" minlength="2" maxlength="100" required>
+      </div>
+      <div class="form-group">
+        <label for="bank-acct-num-input">Account Number</label>
+        <input type="text" id="bank-acct-num-input" inputmode="numeric" pattern="[0-9]*" placeholder="10-digit account number" minlength="10" maxlength="20" required>
+      </div>
+      <div class="form-group">
+        <label for="bank-acct-name-input">Account Name</label>
+        <input type="text" id="bank-acct-name-input" placeholder="Full name on your bank account" minlength="2" maxlength="100" required>
+      </div>
+      <p id="bank-modal-error" style="color:#f87171;font-size:.85rem;display:none;margin-bottom:12px;"></p>
+      <button type="submit" class="btn btn--gold btn--full" id="bank-modal-submit">Save Bank Details</button>
+    </form>
+  </div>
+</div>
 
 <script>
   // FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...}
@@ -352,13 +388,26 @@
     }
   }
 
-  async function editMyBankDetails() {
-    const bank_name = prompt('Enter your Bank Name (e.g. Access Bank, GTBank, Kuda, Zenith, OPay):');
-    if (!bank_name) return;
-    const account_number = prompt('Enter your 10-Digit Account Number:');
-    if (!account_number) return;
-    const account_name = prompt('Enter the Account Name (Full name on your bank account):');
-    if (!account_name) return;
+  function editMyBankDetails() {
+    document.getElementById('bank-modal-error').style.display = 'none';
+    document.getElementById('bank-details-form').reset();
+    document.getElementById('bank-modal-overlay').classList.add('open');
+  }
+
+  function closeBankModal() {
+    document.getElementById('bank-modal-overlay').classList.remove('open');
+  }
+
+  document.getElementById('bank-details-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const bank_name = document.getElementById('bank-name-input').value.trim();
+    const account_number = document.getElementById('bank-acct-num-input').value.trim();
+    const account_name = document.getElementById('bank-acct-name-input').value.trim();
+    const errEl = document.getElementById('bank-modal-error');
+    const submitBtn = document.getElementById('bank-modal-submit');
+    errEl.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving...';
 
     try {
       const res = await fetch(`/api/affiliate/bank-details?token=${encodeURIComponent(token)}`, {
@@ -368,12 +417,17 @@
       });
       const data = await res.json();
       if (!res.ok) throw new Error(formatApiError(data.detail, 'Could not save bank details'));
+      closeBankModal();
       alert('✅ Bank details saved successfully!');
       loadDashboard();
     } catch(err) {
-      alert(`❌ Error: ${err.message || err}`);
+      errEl.textContent = err.message || 'Something went wrong. Please try again.';
+      errEl.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Save Bank Details';
     }
-  }
+  });
 
   loadDashboard();
 </script>

@@ -33,12 +33,19 @@ def create_access_token(
 
 
 def create_download_token(user_id: str, product_id: str) -> str:
-    """Signed URL token for file download — expires strictly on single-use."""
+    """Signed URL token for file download. Time-bound (JWT_DOWNLOAD_EXPIRE_MINUTES),
+    not single-use — a stalled download's automatic browser retry hitting
+    the same URL a second time must not get permanently locked out (see the
+    single-use gate removal in routes/library.py's download_file), but the
+    link still shouldn't stay valid forever once issued."""
+    expire = datetime.now(timezone.utc) + timedelta(minutes=settings.JWT_DOWNLOAD_EXPIRE_MINUTES)
     payload = {
         "sub": user_id,
         "product_id": product_id,
         "type": "download",
         "jti": uuid.uuid4().hex,
+        "exp": expire,
+        "iat": datetime.now(timezone.utc),
     }
     return jwt.encode(payload, settings.JWT_SECRET, algorithm=settings.JWT_ALGORITHM)
 

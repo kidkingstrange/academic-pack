@@ -451,7 +451,7 @@
     gap: 14px;
     font-size: 0.85rem;
   }
-  .detail-label { color: var(--gray-l); font-size: 0.78rem; }
+  .detail-label { display: block; color: var(--gray-l); font-size: 0.78rem; }
   .detail-val { color: #fff; font-weight: 600; margin-top: 2px; word-break: break-all; }
 
   .rate-cell { display: flex; align-items: center; gap: 6px; }
@@ -1376,19 +1376,19 @@
           <div class="drawer-section-title">Partner Details</div>
           <div style="display:flex;flex-direction:column;gap:14px">
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Full Name</div>
+              <label class="detail-label" for="aff-create-name" style="margin-bottom:6px">Full Name</label>
               <input type="text" id="aff-create-name" class="input-control" style="width:100%" placeholder="e.g. Victor Smith" required>
             </div>
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Email Address</div>
+              <label class="detail-label" for="aff-create-email" style="margin-bottom:6px">Email Address</label>
               <input type="email" id="aff-create-email" class="input-control" style="width:100%" placeholder="e.g. victor@example.com" required>
             </div>
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Custom Referral Code (Optional)</div>
+              <label class="detail-label" for="aff-create-code" style="margin-bottom:6px">Custom Referral Code (Optional)</label>
               <input type="text" id="aff-create-code" class="input-control" style="width:100%" placeholder="e.g. VICS20 (leave blank to auto-generate)">
             </div>
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Commission Rate (%)</div>
+              <label class="detail-label" for="aff-create-rate" style="margin-bottom:6px">Commission Rate (%)</label>
               <input type="number" id="aff-create-rate" class="input-control" style="width:100%" value="50" min="0" max="100" step="0.5" required>
             </div>
           </div>
@@ -1560,7 +1560,7 @@
         <div class="drawer-section">
           <div class="drawer-section-title">Settlement Transfer</div>
           <div style="font-size:0.85rem; color:var(--gray-l); margin-bottom:14px">Available to withdraw: <strong style="color:var(--gold-l)">${available}</strong></div>
-          <div class="detail-label" style="margin-bottom:6px">Amount (₦)</div>
+          <label class="detail-label" for="withdraw-amount" style="margin-bottom:6px">Amount (₦)</label>
           <input type="number" id="withdraw-amount" class="input-control" style="width:100%" min="1" step="0.01" required>
         </div>
         <button type="submit" class="btn-action" style="width:100%;justify-content:center"><i class="bi bi-bank"></i> Send to My Bank Account</button>
@@ -1741,15 +1741,15 @@
           <div class="drawer-section-title">Salesperson Details</div>
           <div style="display:flex;flex-direction:column;gap:14px">
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Full Name</div>
+              <label class="detail-label" for="team-create-name" style="margin-bottom:6px">Full Name</label>
               <input type="text" id="team-create-name" class="input-control" style="width:100%" placeholder="e.g. Sarah Jenkins" required>
             </div>
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Email Address</div>
+              <label class="detail-label" for="team-create-email" style="margin-bottom:6px">Email Address</label>
               <input type="email" id="team-create-email" class="input-control" style="width:100%" placeholder="e.g. sarah@scalegroup.com" required>
             </div>
             <div>
-              <div class="detail-label" style="margin-bottom:6px">Login Password</div>
+              <label class="detail-label" for="team-create-password" style="margin-bottom:6px">Login Password</label>
               <input type="password" id="team-create-password" class="input-control" style="width:100%" placeholder="Min 6 characters" required>
             </div>
           </div>
@@ -1795,7 +1795,7 @@
           <div class="drawer-section-title">New Password Settings</div>
           <div style="display:flex;flex-direction:column;gap:14px">
             <div>
-              <div class="detail-label" style="margin-bottom:6px">New Password</div>
+              <label class="detail-label" for="team-change-password" style="margin-bottom:6px">New Password</label>
               <input type="password" id="team-change-password" class="input-control" style="width:100%" placeholder="Min 6 characters" required>
             </div>
           </div>

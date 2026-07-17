@@ -33,22 +33,31 @@ async def run_nudge_check():
         "nudge_sent": {"$ne": True},
     }).to_list(1000)
 
-    candidates = []
-    for d in downloads:
-        candidates.append({"code": d["affiliate_code"]})
-    for v in video_clicks:
-        candidates.append({"code": v["affiliate_code"]})
+    codes = list({d["affiliate_code"] for d in downloads} | {v["affiliate_code"] for v in video_clicks})
+
+    # Two batched queries instead of a count_documents + find_one per
+    # candidate — previously O(n) round trips for n candidate codes.
+    click_counts = {}
+    if codes:
+        async for row in db.referral_clicks.aggregate([
+            {"$match": {"affiliate_code": {"$in": codes}}},
+            {"$group": {"_id": "$affiliate_code", "count": {"$sum": 1}}},
+        ]):
+            click_counts[row["_id"]] = row["count"]
+
+    affiliates_by_code = {}
+    if codes:
+        async for aff in db.affiliates.find({"code": {"$in": codes}}):
+            affiliates_by_code[aff["code"]] = aff
 
     seen_codes = set()
     queued = 0
-    for c in candidates:
-        code = c["code"]
+    for code in codes:
         if code in seen_codes:
             continue
         seen_codes.add(code)
 
-        click_count = await db.referral_clicks.count_documents({"affiliate_code": code})
-        if click_count > 0:
+        if click_counts.get(code, 0) > 0:
             await db.marketing_asset_downloads.update_many(
                 {"affiliate_code": code}, {"$set": {"nudge_sent": True}}
             )
@@ -57,7 +66,7 @@ async def run_nudge_check():
             )
             continue
 
-        affiliate = await db.affiliates.find_one({"code": code})
+        affiliate = affiliates_by_code.get(code)
         if not affiliate:
             await db.marketing_asset_downloads.update_many(
                 {"affiliate_code": code}, {"$set": {"nudge_sent": True}}

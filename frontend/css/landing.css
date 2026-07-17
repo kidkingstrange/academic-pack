@@ -1,5 +1,8 @@
-/* ── Landing Page Styles ── */
-@import 'main.css';
+/* ── Landing Page Styles ──
+   Relies on tokens/classes from main.css (--ink, --gold, .btn, etc.) —
+   every page that loads this file also loads main.css via its own <link>
+   tag first, so this used to just fetch+parse main.css a second time
+   (unversioned, bypassing the versioned <link> elsewhere on the page). */
 
 /* URGENCY BAR */
 .urgency-bar{position:sticky;top:0;z-index:999;background:#b91c1c;color:#fff;padding:0;font-size:.84rem;font-weight:500;overflow:hidden}

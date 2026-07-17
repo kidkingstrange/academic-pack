@@ -71,14 +71,23 @@ async def create_affiliate(
 
 
 @router.get("")
-async def list_affiliates(current_user=Depends(require_admin), db=Depends(get_db)):
-    affiliates = await db.affiliates.find({}).sort("created_at", -1).to_list(500)
+async def list_affiliates(
+    page: int = 1, limit: int = 20,
+    current_user=Depends(require_admin), db=Depends(get_db),
+):
+    skip = (page - 1) * limit
+    affiliates = await db.affiliates.find({}).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
+    total = await db.affiliates.count_documents({})
 
+    # Stats aggregations cover the whole collection (grouped by code, not
+    # per-affiliate-doc) regardless of which page is being viewed — this is
+    # a single query either way, not the O(n) pattern the 500-doc cap on
+    # the affiliates list itself used to cause.
     click_counts = {
         row["_id"]: row["count"]
         for row in await db.referral_clicks.aggregate([
             {"$group": {"_id": "$affiliate_code", "count": {"$sum": 1}}}
-        ]).to_list(500)
+        ]).to_list(10000)
     }
     referral_stats = {
         row["_id"]: row
@@ -94,7 +103,7 @@ async def list_affiliates(current_user=Depends(require_admin), db=Depends(get_db
                     }
                 },
             }}
-        ]).to_list(500)
+        ]).to_list(10000)
     }
 
     out = []
@@ -122,7 +131,7 @@ async def list_affiliates(current_user=Depends(require_admin), db=Depends(get_db
             "account_number": a.get("account_number", ""),
             "account_name": a.get("account_name", ""),
         })
-    return {"affiliates": out}
+    return {"affiliates": out, "total": total, "page": page, "pages": -(-total // limit)}
 
 
 @router.patch("/{affiliate_id}/commission")

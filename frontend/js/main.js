@@ -26,10 +26,12 @@
   const el = document.getElementById('countdown');
   const bar = document.getElementById('urgency-bar');
 
+  let timerId = null;
   function tick() {
     if (!el) return;
     const diff = expiry - Date.now();
     if (diff <= 0) {
+      if (timerId) { clearInterval(timerId); timerId = null; }
       if (bar) {
         bar.classList.add('urgency-bar--expired');
         if (!bar.querySelector('.urgency-bar__expired-notice')) {
@@ -58,9 +60,9 @@
     const m = Math.floor((diff % 3600000) / 60000);
     const s = Math.floor((diff % 60000) / 1000);
     el.textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    requestAnimationFrame(tick);
   }
   tick();
+  timerId = setInterval(tick, 1000);
 })();
 
 // Live Real-Time Buyer Counter (Displays ONLY when live sales reach 500+)

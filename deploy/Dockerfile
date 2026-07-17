@@ -11,6 +11,13 @@ COPY backend/ ./backend/
 COPY frontend/ ./frontend/
 COPY uploads/ ./uploads/
 
+# Drop root — the app writes to uploads/products/ at runtime (admin
+# product upload), so the app user needs ownership of /app, not just
+# read access.
+RUN useradd --create-home --shell /bin/bash appuser \
+    && chown -R appuser:appuser /app
+USER appuser
+
 # Expose port
 EXPOSE 8000
 

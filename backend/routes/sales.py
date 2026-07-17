@@ -1,6 +1,7 @@
+import html
 import secrets
 from datetime import datetime, timezone, timedelta
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from bson import ObjectId
 from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
@@ -8,6 +9,7 @@ from ..database import get_db
 from ..config import get_settings
 from ..middleware.auth import require_sales_rep, require_admin
 from ..utils.security import verify_password, hash_password, create_access_token
+from ..utils.rate_limit import limiter
 from ..services.flutterwave import (
     create_flw_customer, get_flw_token, initiate_card_payment, verify_flw_charge, FLW_API_BASE
 )
@@ -62,7 +64,8 @@ class CancelConfirmRequest(BaseModel):
 
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 @router.post("/register")
-async def register_sales_rep(body: SalesRegisterRequest, db=Depends(get_db)):
+@limiter.limit("5/hour")
+async def register_sales_rep(request: Request, body: SalesRegisterRequest, db=Depends(get_db)):
     """Self-registration via the link an admin shares (see
     copySelfRegistrationLink() in the admin dashboard). The account is
     created inactive — it shows up in the admin's Team Members list exactly
@@ -97,7 +100,8 @@ async def register_sales_rep(body: SalesRegisterRequest, db=Depends(get_db)):
     }
 
 @router.post("/login", response_model=TokenResponse)
-async def sales_login(body: SalesLoginRequest, db=Depends(get_db)):
+@limiter.limit("10/minute")
+async def sales_login(request: Request, body: SalesLoginRequest, db=Depends(get_db)):
     rep = await db.sales_reps.find_one({"email": body.email.lower(), "active": True})
     if not rep or not verify_password(body.password, rep["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid sales credentials")
@@ -458,8 +462,8 @@ async def request_subscription_cancel(body: CancelRequest, db=Depends(get_db)):
 
     email_html = f"""
     <h2>Subscription Cancellation Request</h2>
-    <p>Hello {sub['customer_name']},</p>
-    <p>We received a request to cancel your subscription for <strong>{offer_name}</strong>.</p>
+    <p>Hello {html.escape(sub['customer_name'])},</p>
+    <p>We received a request to cancel your subscription for <strong>{html.escape(offer_name)}</strong>.</p>
     <p>To confirm and complete your cancellation, please click the secure link below (valid for 1 hour):</p>
     <p><a href="{cancel_link}" style="display:inline-block;background-color:#dc2626;color:#ffffff;padding:12px 24px;border-radius:30px;text-decoration:none;font-weight:bold">Confirm Subscription Cancellation &rarr;</a></p>
     <br>
@@ -529,8 +533,8 @@ async def confirm_subscription_cancel(body: CancelConfirmRequest, db=Depends(get
 
     email_html = f"""
     <h2>Subscription Cancelled</h2>
-    <p>Hello {sub['customer_name']},</p>
-    <p>Your subscription for <strong>{offer_name}</strong> has been cancelled successfully as requested.</p>
+    <p>Hello {html.escape(sub['customer_name'])},</p>
+    <p>Your subscription for <strong>{html.escape(offer_name)}</strong> has been cancelled successfully as requested.</p>
     <p>You will not be billed again. Thank you for your time with us!</p>
     """
     await send_email(sub["customer_email"], f"Subscription Cancelled: {offer_name}", email_html)
@@ -567,8 +571,8 @@ async def admin_cancel_subscription(subscription_id: str, current_user=Depends(r
 
     email_html = f"""
     <h2>Subscription Cancelled by Administrator</h2>
-    <p>Hello {sub['customer_name']},</p>
-    <p>An administrator has cancelled your active subscription for <strong>{offer_name}</strong>.</p>
+    <p>Hello {html.escape(sub['customer_name'])},</p>
+    <p>An administrator has cancelled your active subscription for <strong>{html.escape(offer_name)}</strong>.</p>
     <p>No further charges will be made. If you have questions, please contact support.</p>
     """
     await send_email(sub["customer_email"], f"Subscription Cancelled: {offer_name}", email_html)
