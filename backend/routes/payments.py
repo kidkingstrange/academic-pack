@@ -18,6 +18,7 @@ from ..services.flutterwave import (
     create_virtual_account, verify_charges_by_reference,
 )
 from ..services.payment_completion import complete_payment
+from ..services.email_service import send_email
 from ..utils.security import create_access_token
 from ..database import get_db
 from ..config import get_settings
@@ -400,11 +401,33 @@ async def process_webhook_payment(payload: dict, db):
         if not str(ref).startswith("ACP-"):
             print(f"⚠️ Webhook: Unknown non-ACP reference {ref}")
             return
-        email = data.get("customer", {}).get("email")
-        name = data.get("customer", {}).get("name") or "Valued Customer"
-        amount_paid = float(data.get("amount", 2000))
-        charge_id = str(data.get("id"))
-        payment_method = None
+        # No pending_payments record exists for an otherwise-valid (signature
+        # verified) ACP- reference. Every real checkout creates a pending
+        # record up front, so this is anomalous — do NOT grant access based
+        # on payload-supplied email/amount. Flag it for manual review instead.
+        await db.flagged_payments.insert_one({
+            "reference": ref,
+            "reason": "no_matching_pending_payment",
+            "payload": data,
+            "flagged_at": datetime.now(timezone.utc),
+            "resolved": False,
+        })
+        try:
+            flagged_email = data.get("customer", {}).get("email") or "unknown"
+            flagged_amount = data.get("amount")
+            await send_email(
+                settings.ADMIN_EMAIL,
+                f"⚠️ Webhook flagged for manual review — {ref}",
+                f"<p>A verified Flutterwave webhook arrived for reference <b>{ref}</b> "
+                f"with no matching pending_payments record.</p>"
+                f"<p>Payload claims: email={flagged_email}, amount={flagged_amount}</p>"
+                f"<p>No access was granted automatically. Check the flagged_payments "
+                f"collection and grant access manually if this is a legitimate payment.</p>",
+            )
+        except Exception as alert_err:
+            print(f"❌ Failed to send manual-review alert for {ref}: {alert_err}")
+        print(f"⚠️ Webhook: {ref} has no matching pending_payments record — flagged for manual review, no access granted")
+        return
     else:
         email = pending.get("email")
         name = pending.get("name")
@@ -473,25 +496,34 @@ async def flutterwave_webhook(
     except Exception as db_err:
         print(f"❌ Failed to write webhook log to DB: {db_err}")
 
-    # 1. Signature Verification
+    # 1. Signature Verification — fail closed. Any of: no secret configured,
+    # no signature header present, or a signature that doesn't match, must
+    # reject the request outright rather than process it "anyway".
     secret_hash = (settings.FLW_WEBHOOK_SECRET_HASH or "").strip()
-    if secret_hash:
-        # Standard Flutterwave plain text hash verification
-        if received_hash and hmac.compare_digest(received_hash.strip(), secret_hash):
-            pass
-        elif received_signature:
-            # Fallback to cryptographic signature verification
-            expected_signature = base64.b64encode(
-                hmac.new(
-                    secret_hash.encode(),
-                    raw_body,
-                    hashlib.sha256,
-                ).digest()
-            ).decode()
-            if not hmac.compare_digest(received_signature.strip(), expected_signature):
-                print(f"⚠️ Webhook signature mismatch (received={received_signature}, expected={expected_signature}) — processing event anyway")
-        else:
-            print("ℹ️ Webhook received without signature header — processing event")
+    if not secret_hash:
+        print("❌ Webhook rejected: FLW_WEBHOOK_SECRET_HASH is not configured on the server")
+        raise HTTPException(status_code=500, detail="Webhook verification not configured")
+
+    verified = False
+    if received_hash and hmac.compare_digest(received_hash.strip(), secret_hash):
+        verified = True
+    elif received_signature:
+        expected_signature = base64.b64encode(
+            hmac.new(
+                secret_hash.encode(),
+                raw_body,
+                hashlib.sha256,
+            ).digest()
+        ).decode()
+        if hmac.compare_digest(received_signature.strip(), expected_signature):
+            verified = True
+
+    if not verified:
+        print(
+            f"⚠️ Webhook rejected: signature verification failed "
+            f"(hash_header_present={bool(received_hash)}, signature_header_present={bool(received_signature)})"
+        )
+        raise HTTPException(status_code=401, detail="Invalid webhook signature")
 
     # 2. Parse payload
     try:

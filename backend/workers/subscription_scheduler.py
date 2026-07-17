@@ -42,8 +42,9 @@ async def run_daily_subscription_billing():
 
         try:
             # Call Flutterwave tokenized charge
-            # Handle mock tokens in sandbox/test environments
-            if sub["card_token"] == "mock-card-token-12345":
+            # Handle mock tokens in sandbox/test environments only — never in production,
+            # regardless of what card_token a subscription record happens to hold.
+            if sub["card_token"] == "mock-card-token-12345" and settings.APP_ENV == "development":
                 # Simulated successful sandbox tokenized charge
                 chg_res = {
                     "status": "success",

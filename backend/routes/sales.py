@@ -9,7 +9,7 @@ from ..config import get_settings
 from ..middleware.auth import require_sales_rep, require_admin
 from ..utils.security import verify_password, hash_password, create_access_token
 from ..services.flutterwave import (
-    create_flw_customer, get_flw_token, initiate_card_payment, verify_flw_charge
+    create_flw_customer, get_flw_token, initiate_card_payment, verify_flw_charge, FLW_API_BASE
 )
 from ..services.email_service import send_email
 
@@ -213,8 +213,11 @@ async def process_checkout_payment(body: CheckoutPayRequest, db=Depends(get_db))
 
     reference = f"SUB-{secrets.token_hex(8).upper()}"
 
-    if body.payment_method_id == "mock-payment-method-id":
-        # Bypass FLW call for simulation / sandbox card testing
+    if body.payment_method_id == "mock-payment-method-id" and settings.APP_ENV == "development":
+        # Bypass FLW call for simulation / sandbox card testing — only ever
+        # allowed in local development. Gated by an explicit allow-list
+        # check (APP_ENV == "development") rather than != "production" so a
+        # misconfigured/unset APP_ENV can't accidentally enable it.
         charge_id = f"MOCK-{secrets.token_hex(12).upper()}"
         await db.pending_subscription_payments.insert_one({
             "reference": reference,
@@ -295,8 +298,10 @@ async def verify_checkout_payment(body: CheckoutVerifyRequest, db=Depends(get_db
     if pending["status"] == "success":
         return {"success": True, "message": "Payment verified successfully"}
 
-    if pending["charge_id"].startswith("MOCK-"):
-        # Simulated success path
+    if pending["charge_id"].startswith("MOCK-") and settings.APP_ENV == "development":
+        # Simulated success path — defense in depth: even if a MOCK- record
+        # somehow exists (e.g. a leftover from before this env gate), it can
+        # still only simulate success in development.
         charge_resp = {
             "status": "success",
             "data": {

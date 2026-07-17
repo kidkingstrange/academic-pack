@@ -41,6 +41,20 @@
 </div>
 
 <script>
+  // FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...}
+  // objects, not a string — stringifying it directly renders the literal
+  // text "[object Object]" to the user.
+  function formatApiError(detail, fallback) {
+    fallback = fallback || 'Something went wrong. Please try again.';
+    if (!detail) return fallback;
+    if (typeof detail === 'string') return detail;
+    if (Array.isArray(detail)) {
+      const msgs = detail.map(d => (d && typeof d === 'object' && d.msg) ? d.msg : String(d));
+      return msgs.filter(Boolean).join(' ') || fallback;
+    }
+    return fallback;
+  }
+
   if(sessionStorage.getItem('admin_token')) window.location.href = '/admin/dashboard';
 
   document.getElementById('login-form').addEventListener('submit', async (e) => {
@@ -63,7 +77,7 @@
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || 'Login failed');
+      if (!res.ok) throw new Error(formatApiError(data.detail, 'Login failed'));
 
       sessionStorage.setItem('admin_token', data.access_token);
       window.location.href = '/admin/dashboard';

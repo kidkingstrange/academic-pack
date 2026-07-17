@@ -152,6 +152,20 @@
 </main>
 
 <script>
+  // FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...}
+  // objects, not a string — stringifying it directly renders the literal
+  // text "[object Object]" to the user.
+  function formatApiError(detail, fallback) {
+    fallback = fallback || 'Something went wrong. Please try again.';
+    if (!detail) return fallback;
+    if (typeof detail === 'string') return detail;
+    if (Array.isArray(detail)) {
+      const msgs = detail.map(d => (d && typeof d === 'object' && d.msg) ? d.msg : String(d));
+      return msgs.filter(Boolean).join(' ') || fallback;
+    }
+    return fallback;
+  }
+
   const params = new URLSearchParams(window.location.search);
   const token = params.get('token');
 
@@ -348,7 +362,7 @@
         body: JSON.stringify({ bank_name, account_number, account_name })
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || 'Could not save bank details');
+      if (!res.ok) throw new Error(formatApiError(data.detail, 'Could not save bank details'));
       alert('✅ Bank details saved successfully!');
       loadDashboard();
     } catch(err) {

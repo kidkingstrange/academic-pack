@@ -151,6 +151,52 @@
     gap: 12px;
   }
 
+  /* ── Mobile: off-canvas sidebar ─────────────────────────────────────────────
+     Below 900px the fixed 260px sidebar left as little as 60px of usable
+     width on a 320px phone. It now slides off-screen by default and opens
+     over the content via the hamburger toggle, closing on nav or overlay tap. */
+  .sidebar-toggle {
+    display: none;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-color);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 99;
+  }
+  @media (max-width: 900px) {
+    .sidebar {
+      left: -280px;
+      top: 0;
+      transition: left .25s ease;
+      box-shadow: 8px 0 32px rgba(0,0,0,.4);
+    }
+    .sidebar.open { left: 0; }
+    .main-wrapper { margin-left: 0; }
+    .sidebar-toggle { display: flex; }
+    .sidebar-overlay.open { display: block; }
+    .top-header { padding: 14px 16px; gap: 10px; flex-wrap: wrap; }
+    .content-body { padding: 18px; }
+    .header-title h1 { font-size: 1.1rem; }
+  }
+  @media (max-width: 480px) {
+    .sidebar { width: 240px; left: -260px; }
+    .header-actions { width: 100%; }
+    .period-select { width: 100%; }
+  }
+
   .period-select, .input-control {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -432,10 +478,12 @@
 
   <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </aside>
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- Main Area -->
 <div class="main-wrapper">
   <header class="top-header">
+    <button class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
     <div class="header-title">
       <h1 id="page-title">Executive Command Center</h1>
       <div class="header-sub" id="page-sub">Central high-level business velocity and operational performance</div>
@@ -1991,6 +2039,20 @@
     alert(data.message || 'Done');
     loadSequenceView();
   }
+
+  // ── Mobile off-canvas sidebar ──────────────────────────────────────────────
+  function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('open');
+  }
+  document.querySelectorAll('.sidebar .nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        document.querySelector('.sidebar').classList.remove('open');
+        document.getElementById('sidebar-overlay').classList.remove('open');
+      }
+    });
+  });
 
 </script>
 </body>

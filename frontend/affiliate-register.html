@@ -125,6 +125,19 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
 </div>
 
 <script>
+// FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...}
+// objects, not a string — stringifying it directly renders the literal
+// text "[object Object]" to the user.
+function formatApiError(detail, fallback) {
+  fallback = fallback || 'Something went wrong. Please try again.';
+  if (!detail) return fallback;
+  if (typeof detail === 'string') return detail;
+  if (Array.isArray(detail)) {
+    const msgs = detail.map(d => (d && typeof d === 'object' && d.msg) ? d.msg : String(d));
+    return msgs.filter(Boolean).join(' ') || fallback;
+  }
+  return fallback;
+}
 (function() {
   const API_BASE = '/api';
   const form = document.getElementById('aff-register-form');
@@ -347,7 +360,7 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
       const res = await fetch(`${API_BASE}/affiliates/resolve-bank?account_number=${rawVal}&bank_code=${bankCode}`);
       const data = await res.json();
       if (!res.ok || !data.status) {
-        throw new Error(data.detail || 'Invalid account number for selected bank');
+        throw new Error(formatApiError(data.detail, 'Invalid account number for selected bank'));
       }
       
       statusDiv.style.background = 'rgba(34, 197, 94, 0.15)';
@@ -419,7 +432,7 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || 'Registration failed');
+      if (!res.ok) throw new Error(formatApiError(data.detail, 'Registration failed'));
 
       fireCompleteRegistration(data.code);
 

@@ -2,6 +2,24 @@
 // Bank Transfer (virtual account) + Pay with Bank (Mono redirect)
 const API_BASE = '/api';
 
+// FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...}
+// objects, not a string — stringifying it directly renders the literal
+// text "[object Object]" to the user, including at the checkout step.
+// Defined here (not just relying on index.html's copy) so this file works
+// correctly even if loaded on its own.
+if (typeof formatApiError !== 'function') {
+  var formatApiError = function(detail, fallback) {
+    fallback = fallback || 'Something went wrong. Please try again.';
+    if (!detail) return fallback;
+    if (typeof detail === 'string') return detail;
+    if (Array.isArray(detail)) {
+      const msgs = detail.map(d => (d && typeof d === 'object' && d.msg) ? d.msg : String(d));
+      return msgs.filter(Boolean).join(' ') || fallback;
+    }
+    return fallback;
+  };
+}
+
 const modal = document.getElementById('checkout-modal');
 const form  = document.getElementById('lead-form');
 let userEmail         = '';
@@ -170,7 +188,7 @@ form.addEventListener('submit', async (e) => {
     });
 
     const data = await res.json();
-    if (!res.ok) throw new Error(data.detail || 'Initialization failed');
+    if (!res.ok) throw new Error(formatApiError(data.detail, 'Initialization failed'));
 
     currentChargeId  = data.charge_id || null;
     currentReference = data.reference;
@@ -377,9 +395,17 @@ async function pollPayment() {
       hideBankDetails();
       document.getElementById('payment-success').style.display = 'block';
       fireVerifiedPurchase(currentReference, data.amount);
-      sessionStorage.setItem('ac_token', data.token);
-      if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
-      localStorage.setItem('ac_purchased', 'true');
+      // A confirmed payment must never be reinterpreted as "not confirmed
+      // yet" just because storage is blocked (known in Facebook/Instagram
+      // in-app browsers) — isolate these writes so a failure here can't
+      // fall into the outer catch below and re-schedule another poll.
+      try {
+        sessionStorage.setItem('ac_token', data.token);
+        if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
+        localStorage.setItem('ac_purchased', 'true');
+      } catch (storageErr) {
+        console.warn('Storage unavailable after successful payment, continuing via URL token', storageErr);
+      }
       const targetUrl = data.token ? `/welcome?token=${encodeURIComponent(data.token)}` : '/welcome';
       setTimeout(() => { window.location.href = targetUrl; }, 1500);
       return;
@@ -460,9 +486,15 @@ function showResumePaymentBanner(pending) {
       if (data.success) {
         clearPendingPayment();
         fireVerifiedPurchase(pending.reference, data.amount);
-        sessionStorage.setItem('ac_token', data.token);
-        if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
-        localStorage.setItem('ac_purchased', 'true');
+        // Isolated so a storage failure redirects to /welcome anyway
+        // instead of falling through to the resume-payment banner below.
+        try {
+          sessionStorage.setItem('ac_token', data.token);
+          if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
+          localStorage.setItem('ac_purchased', 'true');
+        } catch (storageErr) {
+          console.warn('Storage unavailable after successful payment, continuing via URL token', storageErr);
+        }
         const targetUrl = data.token ? `/welcome?token=${encodeURIComponent(data.token)}` : '/welcome';
         window.location.href = targetUrl;
         return;

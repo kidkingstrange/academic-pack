@@ -11,7 +11,7 @@
   .lib-header { background: var(--ink2); color: #fff; padding: 48px 0; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 48px; }
   .lib-header h1 { font-family: 'Clash Display', sans-serif; font-size: 2.2rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.5px; }
   .lib-header p { color: var(--gray-l); font-size: .95rem; }
-  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 24px; }
   .lib-card { background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: 28px 24px; display: flex; flex-direction: column; transition: all var(--transition); }
   .lib-card:hover { transform: translateY(-4px); box-shadow: var(--gold-glow); border-color: var(--gold); }
   .lib-card__title { font-family: 'Clash Display', sans-serif; font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 10px; line-height: 1.3; }

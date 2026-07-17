@@ -20,12 +20,31 @@
 <script>
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
+  // Kept in memory as a fallback for the button script below — some
+  // Facebook/Instagram in-app browsers block or wipe localStorage, and a
+  // customer who just paid should never be stranded because of that.
+  window.__acToken = token;
+
   if (token) {
-    localStorage.setItem('ac_purchased', 'true');
-    localStorage.setItem('ac_magic_link', '/library?token=' + token);
+    try {
+      localStorage.setItem('ac_purchased', 'true');
+      localStorage.setItem('ac_magic_link', '/library?token=' + token);
+    } catch (e) {
+      console.warn('localStorage unavailable, continuing with in-memory token', e);
+    }
     window.history.replaceState({}, document.title, window.location.pathname);
   }
-  if (localStorage.getItem('ac_purchased') !== 'true') {
+
+  let purchased = false;
+  try {
+    purchased = localStorage.getItem('ac_purchased') === 'true';
+  } catch (e) {
+    purchased = false;
+  }
+
+  // Only bounce to '/' when there's neither a fresh token in the URL nor a
+  // recorded purchase — never purely because storage failed to read/write.
+  if (!token && !purchased) {
     window.location.href = '/';
   }
 </script>
@@ -75,8 +94,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     Access Your Library <i class="bi bi-arrow-right"></i>
   </a>
   <script>
-    // Use the magic link for direct, email-independent library access
-    const magicLink = localStorage.getItem('ac_magic_link');
+    // Use the magic link for direct, email-independent library access.
+    // Falls back to the in-memory token from this page load if localStorage
+    // is blocked/unavailable, so the button still works either way.
+    let magicLink = null;
+    try { magicLink = localStorage.getItem('ac_magic_link'); } catch (e) {}
+    if (!magicLink && window.__acToken) magicLink = '/library?token=' + window.__acToken;
     if (magicLink) document.getElementById('library-btn').href = magicLink;
   </script>
 </div>
