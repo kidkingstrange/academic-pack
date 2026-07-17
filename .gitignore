@@ -9,3 +9,6 @@ venv/
 !uploads/
 !uploads/products/
 !uploads/products/*.pdf
+everything-design-taste/
+package-lock.json
+
