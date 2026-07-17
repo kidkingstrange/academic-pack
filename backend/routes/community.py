@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException, Request, Depends
 from pydantic import BaseModel, EmailStr
 from ..database import get_db
-from ..workers.email_scheduler import enqueue_sequence_for_subscriber
+from ..workers.email_scheduler import enqueue_sequence_for_subscriber, COMMUNITY_EMAIL_SEQUENCE
 
 router = APIRouter(prefix="/api/community", tags=["community"])
 
@@ -69,8 +69,9 @@ async def join_community(body: CommunityJoinRequest, request: Request, db=Depend
         upsert=True,
     )
 
-    # Queue the full 52-email sequence
+    # Free community joiners are not paying customers — queue the short
+    # welcome/value sequence, not the full 52-email paid curriculum.
     import asyncio
-    asyncio.create_task(enqueue_sequence_for_subscriber(sub_result.inserted_id, now))
+    asyncio.create_task(enqueue_sequence_for_subscriber(sub_result.inserted_id, now, sequence=COMMUNITY_EMAIL_SEQUENCE))
 
     return {"success": True, "message": "You're in! Redirecting to community."}

@@ -2,20 +2,70 @@
 Protected library routes — requires valid library access token.
 """
 import os
+import asyncio
+import secrets
 from pathlib import Path
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from pydantic import BaseModel, EmailStr
 from bson import ObjectId
 from ..utils.security import create_download_token, verify_token
 from ..utils.error_pages import expired_link_page
 from ..database import get_db
 from ..config import get_settings
+from ..workers.email_scheduler import process_email_queue
 
 router = APIRouter(prefix="/api/library", tags=["library"])
 settings = get_settings()
 security = HTTPBearer(auto_error=False)
+
+
+class ResendLibraryLinkRequest(BaseModel):
+    email: EmailStr
+
+
+@router.post("/resend-link")
+async def resend_library_link(body: ResendLibraryLinkRequest, db=Depends(get_db)):
+    """Self-service recovery for a customer whose access link is lost —
+    e.g. localStorage wiped by a Facebook/Instagram in-app browser between
+    sessions, or they simply can't find the original email. Always returns
+    the same generic message regardless of whether the email matches an
+    account, so this can't be used to enumerate customers."""
+    email = body.email.strip().lower()
+    generic_response = {
+        "success": True,
+        "message": "If an account exists for that email, we've sent your library access link.",
+    }
+
+    user = await db.users.find_one({"email": email})
+    if not user:
+        return generic_response
+
+    access_token = user.get("library_access_token")
+    if not access_token:
+        access_token = secrets.token_urlsafe(32)
+        await db.users.update_one({"_id": user["_id"]}, {"$set": {"library_access_token": access_token}})
+
+    subscriber = await db.subscribers.find_one({"email": email})
+    unsub_token = subscriber.get("unsubscribe_token", "") if subscriber else ""
+
+    await db.email_queue.insert_one({
+        "kind": "welcome",
+        "user_id": user["_id"],
+        "email": email,
+        "name": user.get("name") or "there",
+        "access_token": access_token,
+        "unsubscribe_token": unsub_token,
+        "scheduled_at": datetime.now(timezone.utc),
+        "status": "pending",
+        "retry_count": 0,
+        "sent_at": None,
+        "error": None,
+    })
+    asyncio.create_task(process_email_queue())
+    return generic_response
 
 
 async def get_library_user(

@@ -15,7 +15,7 @@ import time
 from starlette.responses import Response
 from starlette.types import Scope
 
-from .config import get_settings
+from .config import get_settings, DEFAULT_ADMIN_PASSWORD
 from .database import connect_db, disconnect_db, get_db
 from .routes import (
     payments, library, admin as admin_router, community,
@@ -304,8 +304,25 @@ async def unsubscribe(token: str = "", db=Depends(get_db)):
     return HTMLResponse(content=html_content, status_code=200)
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
+def check_admin_password_rotated(settings):
+    """Raises in production if ADMIN_PASSWORD is still the shipped default
+    (anyone who reads the public source would have full admin access);
+    just warns loudly outside production."""
+    if settings.ADMIN_PASSWORD != DEFAULT_ADMIN_PASSWORD:
+        return
+    warning = (
+        "🚨 ADMIN_PASSWORD is still the shipped default — anyone who reads "
+        "the public source has full admin access. Set a strong, unique "
+        "ADMIN_PASSWORD immediately."
+    )
+    if settings.APP_ENV == "production":
+        raise RuntimeError(warning)
+    print(warning)
+
+
 @app.on_event("startup")
 async def startup():
+    check_admin_password_rotated(settings)
     await connect_db()
     start_scheduler()
     start_payout_scheduler()

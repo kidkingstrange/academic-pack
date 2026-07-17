@@ -13,6 +13,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from ..config import get_settings
 from ..database import get_db
+from ..schemas.schemas import AffiliateBankDetailsUpdateRequest
 from ..services.marketing_assets import get_asset, list_assets_for_affiliate
 
 router = APIRouter(prefix="/api/affiliate", tags=["affiliate-dashboard"])
@@ -73,18 +74,18 @@ async def get_my_stats(token: str, db=Depends(get_db)):
 
 
 @router.post("/bank-details")
-async def update_my_bank_details(token: str, body: dict, db=Depends(get_db)):
+async def update_my_bank_details(token: str, body: AffiliateBankDetailsUpdateRequest, db=Depends(get_db)):
     affiliate = await db.affiliates.find_one({"dashboard_token": token})
     if not affiliate:
         raise HTTPException(status_code=401, detail="Invalid dashboard link")
 
-    bank_name = (body.get("bank_name") or "").strip()
-    bank_code = (body.get("bank_code") or "").strip()
-    account_number = (body.get("account_number") or "").strip()
-    account_name = (body.get("account_name") or "").strip()
+    bank_name = body.bank_name.strip()
+    bank_code = (body.bank_code or "").strip()
+    account_number = body.account_number.strip()
+    account_name = body.account_name.strip()
 
-    if not bank_name or not account_number or not account_name:
-        raise HTTPException(status_code=400, detail="Bank name, account number, and account name are required")
+    if not account_number.isdigit():
+        raise HTTPException(status_code=400, detail="Account number must contain digits only")
 
     update_fields = {
         "bank_name": bank_name,

@@ -211,6 +211,21 @@ EMAIL_SEQUENCE = [
 ]
 
 
+# ── Free community nurture sequence ──────────────────────────────────────────
+# Free WhatsApp community joiners are not paying customers and must not get
+# the full 52-email paid curriculum above (which builds toward a sales pitch
+# for the product itself, e.g. email_48/email_52). This is a short,
+# standalone welcome/value sequence instead, reusing a handful of the
+# general-audience "mindset reset" emails from PHASE 1.
+COMMUNITY_EMAIL_SEQUENCE = [
+    (0,  "You're not lazy — you just don't have the right system yet",              "email_01.html"),
+    (3,  "The top student in your class isn't smarter than you",                    "email_03.html"),
+    (7,  "Your grades reflect your habits — not your potential",                    "email_07.html"),
+    (14, "Your brain doesn't record like a camera — it builds like a scaffold",     "email_10.html"),
+    (21, "You've been studying the wrong way (and it feels productive)",            "email_04.html"),
+]
+
+
 async def process_email_queue():
     """
     Process pending emails from the queue.
@@ -334,11 +349,12 @@ async def process_email_queue():
                 )
 
 
-async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime):
+async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime, sequence=None):
     """
-    Queue all 52 sequence emails for a new subscriber,
-    spaced correctly from their subscription date.
-    Every subscriber gets the exact same fixed order.
+    Queue sequence emails for a new subscriber, spaced correctly from their
+    subscription date. Defaults to the full 52-email paid curriculum — pass
+    sequence=COMMUNITY_EMAIL_SEQUENCE for free (non-purchasing) subscribers
+    so they get the short welcome/value sequence instead.
     """
     db = database.get_db()
     if db is None:
@@ -349,7 +365,7 @@ async def enqueue_sequence_for_subscriber(subscriber_id, subscribed_at: datetime
         return
 
     queue_items = []
-    for position, (day_offset, subject, template) in enumerate(EMAIL_SEQUENCE, 1):
+    for position, (day_offset, subject, template) in enumerate(sequence or EMAIL_SEQUENCE, 1):
         scheduled = subscribed_at + timedelta(days=day_offset)
         queue_items.append({
             "kind": "sequence",

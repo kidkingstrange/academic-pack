@@ -174,6 +174,24 @@ async def complete_payment(
     else:
         unsub_token = existing_sub.get("unsubscribe_token", "")
         subscriber_created = False
+        # A free WhatsApp-community joiner who later actually buys must be
+        # upgraded from the short community nurture sequence to the full
+        # 52-email paid curriculum — otherwise they'd be stuck on the free
+        # sequence forever, since new subscribers are only ever created once.
+        if claimed and "buyer" not in existing_sub.get("tags", []):
+            await db.subscribers.update_one(
+                {"_id": existing_sub["_id"]},
+                {"$addToSet": {"tags": "buyer"}},
+            )
+            await db.email_queue.update_many(
+                {
+                    "subscriber_id": existing_sub["_id"],
+                    "kind": "sequence",
+                    "status": {"$in": ["pending", "retry"]},
+                },
+                {"$set": {"status": "skipped"}},
+            )
+            await enqueue_sequence_for_subscriber(existing_sub["_id"], now)
 
     # ── Welcome email ──────────────────────────────────────────────────
     # Only send once: either this call claimed the payment, or it found

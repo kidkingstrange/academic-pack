@@ -1,5 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap');
+/* Font stylesheets are loaded via <link> tags in each page's <head> now,
+   not @import here — @import forces the browser to fetch and parse this
+   whole file before it even discovers the font stylesheets, serializing
+   what should be a parallel fetch and materially delaying first paint. */
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{

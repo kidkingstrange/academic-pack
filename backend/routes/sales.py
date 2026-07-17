@@ -63,6 +63,12 @@ class CancelConfirmRequest(BaseModel):
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 @router.post("/register")
 async def register_sales_rep(body: SalesRegisterRequest, db=Depends(get_db)):
+    """Self-registration via the link an admin shares (see
+    copySelfRegistrationLink() in the admin dashboard). The account is
+    created inactive — it shows up in the admin's Team Members list exactly
+    like any other suspended rep, and only gets a working login once an
+    admin explicitly clicks Activate there. Previously this created a
+    fully active, immediately-usable account with no approval step at all."""
     existing = await db.sales_reps.find_one({"email": body.email.lower()})
     if existing:
         raise HTTPException(status_code=400, detail="Sales representative already exists")
@@ -72,10 +78,23 @@ async def register_sales_rep(body: SalesRegisterRequest, db=Depends(get_db)):
         "email": body.email.lower(),
         "password_hash": hash_password(body.password),
         "created_at": datetime.now(timezone.utc),
-        "active": True
+        "active": False,
     }
     await db.sales_reps.insert_one(rep)
-    return {"status": "ok", "message": "Sales representative registered successfully"}
+    try:
+        await send_email(
+            settings.ADMIN_EMAIL,
+            "New sales rep self-registration pending approval",
+            f"<p><b>{body.name}</b> ({body.email}) just self-registered as a sales rep "
+            f"and is awaiting approval.</p>"
+            f"<p>Review and activate them from the Team Members tab in the admin dashboard.</p>",
+        )
+    except Exception as alert_err:
+        print(f"❌ Failed to send sales-rep pending-approval alert: {alert_err}")
+    return {
+        "status": "ok",
+        "message": "Registration received. An admin will review and activate your account before you can log in.",
+    }
 
 @router.post("/login", response_model=TokenResponse)
 async def sales_login(body: SalesLoginRequest, db=Depends(get_db)):

@@ -6,6 +6,10 @@ from pydantic_settings import BaseSettings
 from functools import lru_cache
 from typing import List
 
+# Referenced by both the Settings default below and the startup check in
+# main.py, so the two can never drift out of sync.
+DEFAULT_ADMIN_PASSWORD = "Change-Me-Admin-Password!"
+
 
 class Settings(BaseSettings):
     # ── App ──────────────────────────────────────────────────────────
@@ -59,7 +63,7 @@ class Settings(BaseSettings):
 
     # ── Admin ─────────────────────────────────────────────────────────
     ADMIN_EMAIL: str = "admin@scalegroup.com"
-    ADMIN_PASSWORD: str = "Change-Me-Admin-Password!"
+    ADMIN_PASSWORD: str = DEFAULT_ADMIN_PASSWORD
 
     # ── WhatsApp ──────────────────────────────────────────────────────
     WHATSAPP_CHANNEL_LINK: str = "https://chat.whatsapp.com/your-channel-link"
