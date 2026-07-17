@@ -28,7 +28,7 @@ from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge
 from .workers.subscription_scheduler import start_subscription_scheduler, stop_subscription_scheduler
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
-from .utils.rate_limit import limiter
+from .utils.rate_limit import limiter, get_real_client_ip
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
@@ -217,7 +217,7 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
     if affiliate:
         await db.referral_clicks.insert_one({
             "affiliate_code": normalized,
-            "ip_address": request.client.host if request.client else None,
+            "ip_address": get_real_client_ip(request),
             "user_agent": request.headers.get("user-agent", "unknown"),
             "referrer": request.headers.get("referer", ""),
             "created_at": datetime.now(timezone.utc),
@@ -231,16 +231,30 @@ async def health():
     return {"status": "ok", "app": settings.APP_NAME}
 
 
+_sales_count_cache = {"count": 0, "expires_at": 0.0}
+
+
 @app.get("/api/public/sales-count")
 async def get_public_sales_count(db=Depends(get_db)):
     """
-    Returns the real, live count of completed sales in database.
-    Used for landing page live buyer counter.
+    Returns the real, live count of completed sales in database with 30s TTL caching.
+    Fallback policy: neutral cached value if database connectivity drops.
     """
+    import time
+    now = time.time()
+    if now < _sales_count_cache["expires_at"]:
+        return {"sales_count": _sales_count_cache["count"]}
+
     if db is None:
-        return {"sales_count": 38}
-    count = await db.payments.count_documents({"status": "success"})
-    return {"sales_count": count}
+        return {"sales_count": _sales_count_cache["count"]}
+
+    try:
+        count = await db.payments.count_documents({"status": "success"})
+        _sales_count_cache["count"] = count
+        _sales_count_cache["expires_at"] = now + 30.0
+        return {"sales_count": count}
+    except Exception:
+        return {"sales_count": _sales_count_cache["count"]}
 
 
 @app.get("/unsubscribe", response_class=HTMLResponse, include_in_schema=False)
@@ -364,16 +378,21 @@ async def startup():
     check_admin_password_rotated(settings)
     check_cors_configured_for_production(settings)
     await connect_db()
-    start_scheduler()
-    start_payout_scheduler()
-    start_nudge_scheduler()
-    start_subscription_scheduler()
+    if settings.RUN_SCHEDULERS:
+        start_scheduler()
+        start_payout_scheduler()
+        start_nudge_scheduler()
+        start_subscription_scheduler()
+        print("⏰ Background schedulers started")
+    else:
+        print("⏸️ Background schedulers disabled (RUN_SCHEDULERS=false)")
     print(f"🚀 {settings.APP_NAME} API started")
 
 @app.on_event("shutdown")
 async def shutdown():
-    stop_scheduler()
-    stop_payout_scheduler()
-    stop_nudge_scheduler()
-    stop_subscription_scheduler()
+    if settings.RUN_SCHEDULERS:
+        stop_scheduler()
+        stop_payout_scheduler()
+        stop_nudge_scheduler()
+        stop_subscription_scheduler()
     await disconnect_db()

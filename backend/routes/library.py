@@ -159,13 +159,9 @@ async def download_file(signed_token: str, db=Depends(get_db)):
     # Single-use blocking removed: on a slow/flaky mobile connection, a
     # stalled download's automatic browser retry hit this same signed URL
     # a second time — but the token was marked "used" the instant serving
-    # started, before the file ever finished transferring, so the retry
-    # (the customer's own browser, not a leaked link) got permanently
-    # locked out. This token has no separate time-based expiry (see
-    # create_download_token), so removing the single-use gate means a
-    # signed download link now remains valid indefinitely rather than for
-    # one serve — an accepted tradeoff to stop legitimate customers being
-    # falsely locked out of a book they already paid for.
+    # started, before the file ever finished transferring. Removing the single-use
+    # gate allows retries within the token's time-bound expiration window
+    # (JWT_DOWNLOAD_EXPIRE_MINUTES, see create_download_token in security.py).
     product_id = payload.get("product_id")
     product = await db.products.find_one({"_id": ObjectId(product_id)})
     if not product:

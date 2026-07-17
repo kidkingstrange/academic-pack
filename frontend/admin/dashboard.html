@@ -891,6 +891,21 @@
     if(currentView === 'sequence') loadSequenceView();
   }
 
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function escapeJs(str) {
+    if (str === null || str === undefined) return '';
+    return String(str).replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
+  }
+
   async function apiCall(endpoint, method = 'GET', body = null) {
     const opts = { method, headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' } };
     if(body) opts.body = JSON.stringify(body);
@@ -945,7 +960,7 @@
     }
 
     // AI Insights
-    document.getElementById('ai-insights-list').innerHTML = (data.ai_insights || []).map(i => `<div class="ai-item">${i}</div>`).join('');
+    document.getElementById('ai-insights-list').innerHTML = (data.ai_insights || []).map(i => `<div class="ai-item">${escapeHtml(i)}</div>`).join('');
 
     // Chart
     const ctx = document.getElementById('chart-dash-trend');
@@ -961,11 +976,11 @@
 
     // Recent Sales
     document.querySelector('#table-dash-recent-sales tbody').innerHTML = (data.recent_transactions || []).map(t => `
-      <tr onclick="inspectSale('${t.reference}')">
+      <tr onclick="inspectSale('${escapeJs(t.reference)}')">
         <td>${t.verified_at ? new Date(t.verified_at).toLocaleDateString() : 'Today'}</td>
-        <td style="font-weight:600">${t.name}</td>
+        <td style="font-weight:600">${escapeHtml(t.name)}</td>
         <td style="color:var(--gold-light);font-weight:700">${money(t.amount)}</td>
-        <td><span class="status-pill success">${t.status}</span></td>
+        <td><span class="status-pill success">${escapeHtml(t.status)}</span></td>
       </tr>
     `).join('');
 
@@ -973,8 +988,8 @@
     document.querySelector('#table-dash-recent-leads tbody').innerHTML = (data.recent_leads || []).map(l => `
       <tr>
         <td>${new Date(l.created_at).toLocaleDateString()}</td>
-        <td>${l.email}</td>
-        <td style="text-transform:capitalize">${l.source || 'Organic'}</td>
+        <td>${escapeHtml(l.email)}</td>
+        <td style="text-transform:capitalize">${escapeHtml(l.source || 'Organic')}</td>
       </tr>
     `).join('');
 
@@ -1041,18 +1056,18 @@
             : '<span style="background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600">⚠ No Email</span>')
         : '';
       const actionBtn = needsResend
-        ? `<button class="btn-action btn-secondary" style="padding:3px 9px;font-size:0.73rem;color:#fbbf24;border-color:rgba(245,158,11,0.4)" onclick="event.stopPropagation(); resendWelcomeEmail('${s.reference}')">Resend ↗</button>`
-        : `<button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectSale('${s.reference}')">Inspect →</button>`;
+        ? `<button class="btn-action btn-secondary" style="padding:3px 9px;font-size:0.73rem;color:#fbbf24;border-color:rgba(245,158,11,0.4)" onclick="event.stopPropagation(); resendWelcomeEmail('${escapeJs(s.reference)}')">Resend ↗</button>`
+        : `<button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectSale('${escapeJs(s.reference)}')">Inspect →</button>`;
       return `
-      <tr onclick="inspectSale('${s.reference}')" style="${rowStyle}">
+      <tr onclick="inspectSale('${escapeJs(s.reference)}')" style="${rowStyle}">
         <td>${s.verified_at ? new Date(s.verified_at).toLocaleDateString() : (s.created_at ? new Date(s.created_at).toLocaleDateString() : 'N/A')}</td>
-        <td><code>${s.reference}</code></td>
-        <td style="font-weight:600">${s.name}</td>
-        <td>${s.email}</td>
+        <td><code>${escapeHtml(s.reference)}</code></td>
+        <td style="font-weight:600">${escapeHtml(s.name)}</td>
+        <td>${escapeHtml(s.email)}</td>
         <td style="color:var(--gold-light);font-weight:700">${money(s.amount)}</td>
         <td>${formatPaymentMethod(s.payment_method)}</td>
-        <td style="text-transform:capitalize">${s.gateway || 'Flutterwave'}</td>
-        <td><span class="status-pill ${s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed')}">${s.status}</span>&nbsp;${emailBadge}</td>
+        <td style="text-transform:capitalize">${escapeHtml(s.gateway || 'Flutterwave')}</td>
+        <td><span class="status-pill ${s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed')}">${escapeHtml(s.status)}</span>&nbsp;${emailBadge}</td>
         <td>${actionBtn}</td>
       </tr>`;
     }).join('');
@@ -1061,19 +1076,19 @@
 
 
   async function inspectSale(ref) {
-    const details = await apiCall(`/api/admin/sales/${ref}/details`);
+    const details = await apiCall(`/api/admin/sales/${encodeURIComponent(ref)}/details`);
     const p = details.payment || {};
     const c = details.customer || {};
     const refInfo = details.referral || {};
 
-    document.getElementById('drawer-title').textContent = `Transaction ${p.reference}`;
+    document.getElementById('drawer-title').textContent = `Transaction ${p.reference ? escapeHtml(p.reference) : ''}`;
     document.getElementById('drawer-content').innerHTML = `
       <div class="drawer-section">
         <div class="drawer-section-title">Payment Overview</div>
         <div class="drawer-detail-grid">
-          <div><div class="detail-label">Status</div><div class="detail-val"><span class="status-pill ${p.status === 'success' ? 'success' : 'pending'}">${p.status}</span></div></div>
+          <div><div class="detail-label">Status</div><div class="detail-val"><span class="status-pill ${p.status === 'success' ? 'success' : 'pending'}">${escapeHtml(p.status)}</span></div></div>
           <div><div class="detail-label">Amount</div><div class="detail-val" style="color:var(--gold-light);font-size:1.1rem">${money(p.amount)}</div></div>
-          <div><div class="detail-label">Provider</div><div class="detail-val">${p.gateway || 'Flutterwave'}</div></div>
+          <div><div class="detail-label">Provider</div><div class="detail-val">${escapeHtml(p.gateway || 'Flutterwave')}</div></div>
           <div><div class="detail-label">Payment Method</div><div class="detail-val">${formatPaymentMethod(p.payment_method)}</div></div>
           <div style="grid-column:span 2"><div class="detail-label">Verified At</div><div class="detail-val">${p.verified_at ? new Date(p.verified_at).toLocaleString() : 'Pending'}</div></div>
         </div>
@@ -1082,29 +1097,29 @@
       <div class="drawer-section">
         <div class="drawer-section-title">Customer Profile</div>
         <div class="drawer-detail-grid">
-          <div><div class="detail-label">Name</div><div class="detail-val">${p.name}</div></div>
-          <div><div class="detail-label">Email</div><div class="detail-val">${p.email}</div></div>
-          <div style="grid-column:span 2"><div class="detail-label">Access Token</div><div class="detail-val"><code>${c.library_access_token || 'Active'}</code></div></div>
+          <div><div class="detail-label">Name</div><div class="detail-val">${escapeHtml(p.name)}</div></div>
+          <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(p.email)}</div></div>
+          <div style="grid-column:span 2"><div class="detail-label">Access Token</div><div class="detail-val"><code>${escapeHtml(c.library_access_token || 'Active')}</code></div></div>
         </div>
       </div>
 
       <div class="drawer-section">
         <div class="drawer-section-title">Attribution & Referral</div>
         <div class="drawer-detail-grid">
-          <div><div class="detail-label">Affiliate Code</div><div class="detail-val"><code>${refInfo.affiliate_code || 'Direct / Organic'}</code></div></div>
+          <div><div class="detail-label">Affiliate Code</div><div class="detail-val"><code>${escapeHtml(refInfo.affiliate_code || 'Direct / Organic')}</code></div></div>
           <div><div class="detail-label">Commission</div><div class="detail-val">${refInfo.commission_amount ? money(refInfo.commission_amount) : '₦0'}</div></div>
         </div>
       </div>
 
       <div class="drawer-section">
         <div class="drawer-section-title">Admin Notes</div>
-        <textarea id="drawer-notes" class="input-control" style="width:100%;height:70px;margin-bottom:10px">${p.admin_notes || ''}</textarea>
-        <button class="btn-action btn-secondary" onclick="saveSaleNotes('${p.reference}')">Save Notes</button>
+        <textarea id="drawer-notes" class="input-control" style="width:100%;height:70px;margin-bottom:10px">${escapeHtml(p.admin_notes || '')}</textarea>
+        <button class="btn-action btn-secondary" onclick="saveSaleNotes('${escapeJs(p.reference)}')">Save Notes</button>
       </div>
 
       <div style="display:flex; flex-direction:column; gap:10px">
-        <button class="btn-action" onclick="resendWelcomeEmail('${p.reference}')"><i class="bi bi-envelope-check"></i> Resend Access & Receipt Email</button>
-        <button class="btn-action btn-secondary" style="color:var(--red);border-color:rgba(239,68,68,0.3)" onclick="triggerRefund('${p.reference}')"><i class="bi bi-arrow-counterclockwise"></i> Mark Transaction Refunded</button>
+        <button class="btn-action" onclick="resendWelcomeEmail('${escapeJs(p.reference)}')"><i class="bi bi-envelope-check"></i> Resend Access & Receipt Email</button>
+        <button class="btn-action btn-secondary" style="color:var(--red);border-color:rgba(239,68,68,0.3)" onclick="triggerRefund('${escapeJs(p.reference)}')"><i class="bi bi-arrow-counterclockwise"></i> Mark Transaction Refunded</button>
       </div>
     `;
     openDrawer();
@@ -1197,13 +1212,13 @@
       }
       
       tbody.innerHTML = (data.customers || []).map(c => `
-        <tr onclick="inspectCustomer('${c.email}')">
+        <tr onclick="inspectCustomer('${escapeJs(c.email)}')">
           <td>${new Date(c.created_at).toLocaleDateString()}</td>
-          <td style="font-weight:600">${c.name}</td>
-          <td>${c.email}</td>
+          <td style="font-weight:600">${escapeHtml(c.name)}</td>
+          <td>${escapeHtml(c.email)}</td>
           <td style="color:var(--gold-light);font-weight:700">${money(c.total_spent)}</td>
           <td>${c.purchases_count}</td>
-          <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectCustomer('${c.email}')">Profile →</button></td>
+          <td><button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); inspectCustomer('${escapeJs(c.email)}')">Profile →</button></td>
         </tr>
       `).join('');
 
@@ -1220,13 +1235,13 @@
     const data = await apiCall(`/api/admin/customers/${encodeURIComponent(email)}/profile`);
     const c = data.customer || {};
 
-    document.getElementById('drawer-title').textContent = `Customer: ${c.name}`;
+    document.getElementById('drawer-title').textContent = `Customer: ${escapeHtml(c.name)}`;
     document.getElementById('drawer-content').innerHTML = `
       <div class="drawer-section">
         <div class="drawer-section-title">Customer Bio</div>
         <div class="drawer-detail-grid">
-          <div><div class="detail-label">Name</div><div class="detail-val">${c.name}</div></div>
-          <div><div class="detail-label">Email</div><div class="detail-val">${c.email}</div></div>
+          <div><div class="detail-label">Name</div><div class="detail-val">${escapeHtml(c.name)}</div></div>
+          <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(c.email)}</div></div>
           <div><div class="detail-label">Lifetime Spend</div><div class="detail-val" style="color:var(--gold-light);font-size:1.1rem">${money(data.total_spent)}</div></div>
           <div><div class="detail-label">Joined Date</div><div class="detail-val">${new Date(c.created_at).toLocaleDateString()}</div></div>
         </div>
@@ -1236,8 +1251,8 @@
         <div class="drawer-section-title">Purchase History (${(data.purchases || []).length})</div>
         ${(data.purchases || []).map(p => `
           <div style="background:rgba(255,255,255,0.03);padding:10px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between">
-            <div><div style="font-weight:700">${p.reference}</div><div style="font-size:0.75rem;color:var(--gray-l)">${new Date(p.verified_at || p.created_at).toLocaleDateString()}</div></div>
-            <div style="text-align:right"><div style="color:var(--gold-light);font-weight:700">${money(p.amount)}</div><span class="status-pill success">${p.status}</span></div>
+            <div><div style="font-weight:700">${escapeHtml(p.reference)}</div><div style="font-size:0.75rem;color:var(--gray-l)">${new Date(p.verified_at || p.created_at).toLocaleDateString()}</div></div>
+            <div style="text-align:right"><div style="color:var(--gold-light);font-weight:700">${money(p.amount)}</div><span class="status-pill success">${escapeHtml(p.status)}</span></div>
           </div>
         `).join('')}
       </div>
@@ -1296,9 +1311,9 @@
       tbody.innerHTML = list.map(a => `
         <tr>
           <td>${new Date(a.created_at).toLocaleDateString()}</td>
-          <td style="font-weight:700;color:var(--gold-light)">${a.code}</td>
-          <td>${a.name}</td>
-          <td>${a.email}</td>
+          <td style="font-weight:700;color:var(--gold-light)">${escapeHtml(a.code)}</td>
+          <td>${escapeHtml(a.name)}</td>
+          <td>${escapeHtml(a.email)}</td>
         </tr>
       `).join('');
     }
@@ -1320,13 +1335,13 @@
       return;
     }
     tbody.innerHTML = affs.map(a => `
-      <tr onclick="inspectAffiliate('${a.id}')">
+      <tr onclick="inspectAffiliate('${escapeJs(a.id)}')">
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
-        <td style="font-weight:700;color:var(--gold-light)">${a.code}</td>
-        <td style="font-weight:600">${a.name}<div style="font-size:0.75rem;color:var(--gray-l)">${a.email}</div></td>
+        <td style="font-weight:700;color:var(--gold-light)">${escapeHtml(a.code)}</td>
+        <td style="font-weight:600">${escapeHtml(a.name)}<div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(a.email)}</div></td>
         <td>
-          <div style="font-weight:600;font-size:0.82rem;color:#fff">${a.bank_name || '<span style="color:var(--gray-l)">Not provided</span>'}</div>
-          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${a.account_number ? a.account_number + ' (' + (a.account_name || a.name) + ')' : ''}</div>
+          <div style="font-weight:600;font-size:0.82rem;color:#fff">${a.bank_name ? escapeHtml(a.bank_name) : '<span style="color:var(--gray-l)">Not provided</span>'}</div>
+          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${a.account_number ? escapeHtml(a.account_number) + ' (' + escapeHtml(a.account_name || a.name) + ')' : ''}</div>
         </td>
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>
@@ -1334,14 +1349,14 @@
         <td>
           <div class="rate-cell">
             ${a.commission_percent}%
-            <button class="rate-edit-btn" onclick="event.stopPropagation(); editCommissionRate('${a.id}', ${a.commission_percent})" title="Edit rate"><i class="bi bi-pencil-square"></i></button>
+            <button class="rate-edit-btn" onclick="event.stopPropagation(); editCommissionRate('${escapeJs(a.id)}', ${a.commission_percent})" title="Edit rate"><i class="bi bi-pencil-square"></i></button>
           </div>
         </td>
         <td>${money(a.commission_earned)}</td>
         <td>${money(a.commission_paid)}</td>
         <td style="color:var(--gold-light);font-weight:800">${money(a.commission_owed)}</td>
         <td>
-          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); markPayout('${a.id}', '${a.name.replace(/'/g, "\\'")}', '${(a.bank_name || '').replace(/'/g, "\\'")}', '${a.account_number || ''}', '${(a.account_name || '').replace(/'/g, "\\'")}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
+          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
         </td>
       </tr>
     `).join('');
@@ -1479,10 +1494,10 @@
 
     tbody.innerHTML = pendingBatch.items.map(i => `
       <tr>
-        <td style="font-weight:600">${i.affiliate_name}<div style="font-size:0.75rem;color:var(--gray-l)">${i.affiliate_code}</div></td>
+        <td style="font-weight:600">${escapeHtml(i.affiliate_name)}<div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(i.affiliate_code)}</div></td>
         <td>
-          <div style="font-weight:600;font-size:0.82rem;color:#fff">${i.bank_name || '<span style="color:var(--gray-l)">Not set</span>'}</div>
-          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${i.account_number || ''}</div>
+          <div style="font-weight:600;font-size:0.82rem;color:#fff">${i.bank_name ? escapeHtml(i.bank_name) : '<span style="color:var(--gray-l)">Not set</span>'}</div>
+          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${escapeHtml(i.account_number || '')}</div>
         </td>
         <td style="font-weight:700">${money(i.amount)}</td>
         <td>${payoutItemStatusPill(i.transfer_status)}</td>
@@ -1645,16 +1660,16 @@
       return `
         <tr>
           <td style="font-weight:600">
-            ${s.customer_name}
-            <div style="font-size:0.75rem;color:var(--gray-l)">${s.customer_email}</div>
+            ${escapeHtml(s.customer_name)}
+            <div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(s.customer_email)}</div>
           </td>
-          <td>${s.offer_name}</td>
+          <td>${escapeHtml(s.offer_name)}</td>
           <td style="font-weight:700">${money(s.offer_price)}</td>
-          <td style="font-size:0.8rem;font-family:monospace">${s.card_brand} (•••• ${s.card_last4})</td>
+          <td style="font-size:0.8rem;font-family:monospace">${escapeHtml(s.card_brand)} (•••• ${escapeHtml(s.card_last4)})</td>
           <td>${nextBillStr}</td>
-          <td><span class="status-pill ${statusClass}">${s.status.replace('_', ' ')}</span></td>
+          <td><span class="status-pill ${statusClass}">${escapeHtml(s.status.replace('_', ' '))}</span></td>
           <td>
-            ${showCancelBtn ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem;background:linear-gradient(135deg, var(--red), #ef4444);box-shadow:none" onclick="adminCancelSubscription('${s.id}', '${s.customer_name.replace(/'/g, "\\'")}', '${s.offer_name.replace(/'/g, "\\'")}')">Cancel</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">N/A</span>`}
+            ${showCancelBtn ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem;background:linear-gradient(135deg, var(--red), #ef4444);box-shadow:none" onclick="adminCancelSubscription('${escapeJs(s.id)}', '${escapeJs(s.customer_name)}', '${escapeJs(s.offer_name)}')">Cancel</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">N/A</span>`}
           </td>
         </tr>
       `;
@@ -1709,20 +1724,20 @@
       return `
         <tr>
           <td>${createdStr}</td>
-          <td style="font-weight:600">${r.name}</td>
-          <td>${r.email}</td>
-          <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
+          <td style="font-weight:600">${escapeHtml(r.name)}</td>
+          <td>${escapeHtml(r.email)}</td>
+          <td><span class="status-pill ${statusClass}">${escapeHtml(statusLabel)}</span></td>
           <td>${r.leads_count}</td>
           <td>${r.subs_count}</td>
           <td>
             <div style="display:flex;gap:8px">
-              <button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="toggleTeamMemberStatus('${r.id}', '${r.name.replace(/'/g, "\\'")}', ${!r.active})">
+              <button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="toggleTeamMemberStatus('${escapeJs(r.id)}', '${escapeJs(r.name)}', ${!r.active})">
                 ${r.active ? 'Suspend' : 'Activate'}
               </button>
-              <button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="openChangeTeamMemberPasswordModal('${r.id}', '${r.name.replace(/'/g, "\\'")}')">
+              <button class="btn-action btn-secondary" style="padding:4px 10px;font-size:0.75rem" onclick="openChangeTeamMemberPasswordModal('${escapeJs(r.id)}', '${escapeJs(r.name)}')">
                 Password
               </button>
-              <button class="btn-action" style="padding:4px 10px;font-size:0.75rem;background:linear-gradient(135deg, var(--red), #ef4444);box-shadow:none" onclick="deleteTeamMember('${r.id}', '${r.name.replace(/'/g, "\\'")}')">
+              <button class="btn-action" style="padding:4px 10px;font-size:0.75rem;background:linear-gradient(135deg, var(--red), #ef4444);box-shadow:none" onclick="deleteTeamMember('${escapeJs(r.id)}', '${escapeJs(r.name)}')">
                 Delete
               </button>
             </div>
@@ -1933,7 +1948,7 @@
     const parsedLastSent = safeDate(d.last_sent_at);
     const lastSent = parsedLastSent ? parsedLastSent.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : 'Never';
     document.getElementById('seq-kpi-row').innerHTML = `
-      <div class="kpi-card"><div class="kpi-title">Health</div><div class="kpi-val" style="color:${statusColor};font-size:1rem">${statusIcon} ${d.health_status}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Health</div><div class="kpi-val" style="color:${statusColor};font-size:1rem">${statusIcon} ${escapeHtml(d.health_status)}</div></div>
       <div class="kpi-card"><div class="kpi-title">Enrolled</div><div class="kpi-val gold">${d.total_enrolled}</div></div>
       <div class="kpi-card"><div class="kpi-title">Sequence Emails Sent</div><div class="kpi-val" style="color:var(--green)">${d.total_sent}</div></div>
       <div class="kpi-card"><div class="kpi-title">Failed</div><div class="kpi-val" style="color:${d.total_failed > 0 ? 'var(--red)' : 'var(--green)'}">${d.total_failed}</div></div>

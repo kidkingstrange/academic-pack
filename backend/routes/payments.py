@@ -22,7 +22,7 @@ from ..services.email_service import send_email
 from ..utils.security import create_access_token
 from ..database import get_db
 from ..config import get_settings
-from ..utils.rate_limit import limiter
+from ..utils.rate_limit import limiter, get_real_client_ip
 
 router = APIRouter(prefix="/api/payments", tags=["payments"])
 settings = get_settings()
@@ -76,7 +76,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                 "name": body.name,
                 "email": body.email.lower(),
                 "source": "landing_page",
-                "ip_address": request.client.host,
+                "ip_address": get_real_client_ip(request),
                 "converted": False,
                 "price_offered": amount_naira,
             },
@@ -225,7 +225,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             charge_id=existing_payment.get("charge_id"),
             gateway_response=existing_payment.get("gateway_response", {}),
             completed_via="polling",
-            ip_address=request.client.host,
+            ip_address=get_real_client_ip(request),
             payment_method=body.payment_method,
         )
         ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
@@ -322,7 +322,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         charge_id=body.charge_id,
         gateway_response=charge,
         completed_via="polling",
-        ip_address=request.client.host,
+        ip_address=get_real_client_ip(request),
         payment_method=payment_method,
     )
 
@@ -378,7 +378,7 @@ async def payment_callback(
         charge_id=charge_id,
         gateway_response=charge,
         completed_via="callback",
-        ip_address=request.client.host,
+        ip_address=get_real_client_ip(request),
         payment_method=pending.get("payment_method", "pay_with_bank"),
     )
 
@@ -491,7 +491,7 @@ async def flutterwave_webhook(
         "verif_hash_received": received_hash,
         "verif_hash_expected": settings.FLW_WEBHOOK_SECRET_HASH,
         "signature_received": received_signature,
-        "ip": request.client.host if request.client else "unknown"
+        "ip": get_real_client_ip(request)
     }
     
     try:

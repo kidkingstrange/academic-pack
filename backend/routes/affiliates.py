@@ -191,8 +191,9 @@ async def mark_commission_paid(
 
     total = sum(r.get("commission_amount", 0) or 0 for r in unpaid)
     now = datetime.now(timezone.utc)
+    payout_ref = f"MANUAL-{now.strftime('%Y%m%d%H%M%S')}"
     await db.referrals.update_many(
         {"affiliate_code": code, "commission_status": "unpaid"},
-        {"$set": {"commission_status": "paid", "paid_at": now}},
+        {"$set": {"commission_status": "paid", "paid_at": now, "payout_reference": payout_ref}},
     )
-    return {"success": True, "amount_marked_paid": total, "paid_at": now}
+    return {"success": True, "amount_marked_paid": total, "paid_at": now, "payout_reference": payout_ref}

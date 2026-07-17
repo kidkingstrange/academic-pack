@@ -13,6 +13,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 
 from ..database import get_db
 from ..config import get_settings
+from ..utils.rate_limit import get_real_client_ip
 from ..schemas.schemas import AffiliateRegisterRequest
 from ..services.affiliate_service import create_affiliate_record
 from ..services.meta_capi import send_complete_registration_event
@@ -26,7 +27,7 @@ REGISTRATIONS_PER_IP_PER_HOUR = 5
 
 @router.post("/register")
 async def register_affiliate(body: AffiliateRegisterRequest, request: Request, db=Depends(get_db)):
-    ip = request.client.host if request.client else "unknown"
+    ip = get_real_client_ip(request)
     now = datetime.now(timezone.utc)
 
     # ── Lightweight rate limit ──────────────────────────────────────────

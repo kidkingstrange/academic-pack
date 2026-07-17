@@ -9,22 +9,27 @@ their own referral link (a real /r/CODE visit), or generated a sale.
 downloads alone don't count as ongoing activity, only as the initial
 activation signal.
 """
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
+
+def _ensure_utc(dt: datetime) -> datetime:
+    if dt is None:
+        return None
+    if dt.tzinfo is None:
+        return dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
 
 
 def _month_bounds(now: datetime, months_ago: int):
-    """Naive UTC boundaries — Motor returns naive datetimes for fields
-    stored via datetime.now(timezone.utc) elsewhere in this app, and
-    comparing naive vs. aware datetimes directly in Python raises. Query
-    filters work fine either way, but the direct Python comparisons below
-    (a["created_at"] >= month_start, etc.) need matching naive values."""
-    year = now.year
-    month = now.month - months_ago
+    """UTC boundaries for monthly health metrics."""
+    now_utc = _ensure_utc(now)
+    year = now_utc.year
+    month = now_utc.month - months_ago
     while month <= 0:
         month += 12
         year -= 1
-    start = datetime(year, month, 1)
-    end = datetime(year + 1, 1, 1) if month == 12 else datetime(year, month + 1, 1)
+    start = datetime(year, month, 1, tzinfo=timezone.utc)
+    end = datetime(year + 1, 1, 1, tzinfo=timezone.utc) if month == 12 else datetime(year, month + 1, 1, tzinfo=timezone.utc)
     return start, end
 
 
@@ -35,13 +40,13 @@ async def _active_codes_between(db, start, end) -> set:
 
 
 async def compute_affiliate_health(db) -> dict:
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     month_start, _ = _month_bounds(now, 0)
     thirty_days_ago = now - timedelta(days=30)
 
     affiliates = await db.affiliates.find({}).to_list(5000)
     total_registered = len(affiliates)
-    new_this_month = sum(1 for a in affiliates if a["created_at"] >= month_start)
+    new_this_month = sum(1 for a in affiliates if _ensure_utc(a["created_at"]) >= month_start)
 
     # ── Activation (ever) ──────────────────────────────────────────────
     all_click_codes = set(await db.referral_clicks.distinct("affiliate_code"))
@@ -93,9 +98,10 @@ async def compute_affiliate_health(db) -> dict:
     }
     days_list = []
     for a in affiliates:
-        first_sale = first_sale_by_code.get(a["code"])
-        if first_sale:
-            days_list.append(max((first_sale - a["created_at"]).days, 0))
+        first_sale = _ensure_utc(first_sale_by_code.get(a["code"]))
+        created_at = _ensure_utc(a["created_at"])
+        if first_sale and created_at:
+            days_list.append(max((first_sale - created_at).days, 0))
     avg_time_to_first_sale = round(sum(days_list) / len(days_list), 1) if days_list else None
 
     # ── Never activated — the actionable nudge list ────────────────────

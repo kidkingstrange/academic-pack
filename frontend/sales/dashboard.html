@@ -438,6 +438,16 @@
     }
   }
 
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   async function loadLeads() {
     const leadsRes = await fetch('/api/sales/leads', { headers: getHeaders() });
     const tbody = document.querySelector('#leads-table tbody');
@@ -459,24 +469,25 @@
         }
 
         const formattedDate = new Date(l.created_at).toLocaleDateString();
+        const safeUrl = escapeHtml(l.checkout_url);
         return `
           <tr>
             <td>${formattedDate}</td>
             <td style="font-weight:600">
-              ${l.prospect_name}
-              <div style="font-size:0.75rem;color:var(--gray-l);font-weight:400">${l.prospect_email}</div>
-              <div style="font-size:0.72rem;color:var(--gold-l);font-weight:400">${l.prospect_phone}</div>
+              ${escapeHtml(l.prospect_name)}
+              <div style="font-size:0.75rem;color:var(--gray-l);font-weight:400">${escapeHtml(l.prospect_email)}</div>
+              <div style="font-size:0.72rem;color:var(--gold-l);font-weight:400">${escapeHtml(l.prospect_phone)}</div>
             </td>
             <td style="font-weight:600">
-              ${l.offer_name}
+              ${escapeHtml(l.offer_name)}
               <div style="font-size:0.75rem;color:var(--gray-l);font-weight:400">₦${l.offer_price.toLocaleString()}</div>
             </td>
             <td>
               <div style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:monospace;font-size:0.8rem">
-                <a href="${l.checkout_url}" target="_blank" style="color:var(--gold-l);text-decoration:none">${l.checkout_url}</a>
+                <a href="${safeUrl}" target="_blank" style="color:var(--gold-l);text-decoration:none">${safeUrl}</a>
               </div>
             </td>
-            <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
+            <td><span class="status-pill ${statusClass}">${escapeHtml(statusLabel)}</span></td>
           </tr>
         `;
       }).join('');

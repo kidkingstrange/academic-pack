@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel
 from typing import Optional
 from ..database import get_db
+from ..utils.rate_limit import get_real_client_ip
 
 router = APIRouter(prefix="/api/tracking", tags=["tracking"])
 
@@ -21,7 +22,7 @@ class TelemetryEventRequest(BaseModel):
 @router.post("/event")
 async def track_event(body: TelemetryEventRequest, request: Request, db=Depends(get_db)):
     """Log client telemetry event for funnel and traffic source analytics."""
-    ip_address = request.client.host if request.client else "unknown"
+    ip_address = get_real_client_ip(request)
     user_agent = request.headers.get("user-agent", "")
 
     # Basic UA parsing if not provided

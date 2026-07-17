@@ -128,8 +128,8 @@ async def test_flw_api_base_is_defined_for_real_charge_path(client, test_db, mon
     })
     assert res.status_code == 200
     assert captured_urls, "the real charge path never actually ran"
-    assert captured_urls[0].startswith(sales_module.FLW_API_BASE)
-    assert "/charges" in captured_urls[0]
+    assert any(u.startswith(sales_module.FLW_API_BASE) for u in captured_urls)
+    assert any("/charges" in u for u in captured_urls)
 
 
 @pytest.mark.asyncio

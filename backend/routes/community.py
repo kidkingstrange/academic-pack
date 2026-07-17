@@ -5,6 +5,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException, Request, Depends
 from pydantic import BaseModel, EmailStr
 from ..database import get_db
+from ..utils.rate_limit import get_real_client_ip
 from ..workers.email_scheduler import enqueue_sequence_for_subscriber, COMMUNITY_EMAIL_SEQUENCE
 
 router = APIRouter(prefix="/api/community", tags=["community"])
@@ -25,6 +26,7 @@ async def join_community(body: CommunityJoinRequest, request: Request, db=Depend
 
     email = body.email.lower()
     now = datetime.now(timezone.utc)
+    client_ip = get_real_client_ip(request)
 
     # Check if already a subscriber
     existing_sub = await db.subscribers.find_one({"email": email})
@@ -51,7 +53,7 @@ async def join_community(body: CommunityJoinRequest, request: Request, db=Depend
         "is_active": True,
         "tags": ["community"],
         "source": "whatsapp_community",
-        "ip_address": request.client.host,
+        "ip_address": client_ip,
         "unsubscribe_token": unsub_token,
     })
 
@@ -62,7 +64,7 @@ async def join_community(body: CommunityJoinRequest, request: Request, db=Depend
             "name": email.split("@")[0].title(),
             "email": email,
             "source": "whatsapp_community",
-            "ip_address": request.client.host,
+            "ip_address": client_ip,
             "created_at": now,
             "converted": False,
         }},

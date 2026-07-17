@@ -1,4 +1,5 @@
 import html
+import httpx
 import secrets
 from datetime import datetime, timezone, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -24,13 +25,11 @@ class SalesRegisterRequest(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=6)
 
+from ..schemas.schemas import TokenResponse
+
 class SalesLoginRequest(BaseModel):
     email: EmailStr
     password: str
-
-class TokenResponse(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
 
 class LeadCreateRequest(BaseModel):
     offer_id: str
@@ -258,30 +257,41 @@ async def process_checkout_payment(body: CheckoutPayRequest, db=Depends(get_db))
     flw_token = await get_flw_token()
     redirect_url = f"{settings.APP_URL}/sales/checkout?reference={reference}"
 
-    async with httpx.AsyncClient() as client:
-        # Create charge using payment_method_id from client
-        chg_resp = await client.post(
-            f"{FLW_API_BASE}/charges",
-            headers={
-                "Authorization":     f"Bearer {flw_token}",
-                "Content-Type":      "application/json",
-                "X-Trace-Id":        str(uuid.uuid4()),
-                "X-Idempotency-Key": reference,
-            },
-            json={
-                "reference":         reference,
-                "currency":          "NGN",
-                "amount":            offer["price"],
-                "customer_id":       lead["prospect_email"],
-                "payment_method_id": body.payment_method_id,
-                "redirect_url":      redirect_url,
-            },
-            timeout=15,
+    try:
+        customer_id = await create_flw_customer(
+            flw_token,
+            lead.get("prospect_name") or lead["prospect_email"],
+            lead["prospect_email"].lower()
         )
-        chg_data = chg_resp.json()
-        if chg_data.get("status") != "success":
-            raise Exception(f"FLW card charge error: {chg_data}")
-        charge = chg_data["data"]
+        async with httpx.AsyncClient() as client:
+            # Create charge using payment_method_id from client
+            chg_resp = await client.post(
+                f"{FLW_API_BASE}/charges",
+                headers={
+                    "Authorization":     f"Bearer {flw_token}",
+                    "Content-Type":      "application/json",
+                    "X-Trace-Id":        str(uuid.uuid4()),
+                    "X-Idempotency-Key": reference,
+                },
+                json={
+                    "reference":         reference,
+                    "currency":          "NGN",
+                    "amount":            offer["price"],
+                    "customer_id":       customer_id,
+                    "payment_method_id": body.payment_method_id,
+                    "redirect_url":      redirect_url,
+                },
+                timeout=15,
+            )
+            chg_data = chg_resp.json()
+            if chg_data.get("status") != "success":
+                msg = chg_data.get("message") or "Payment gateway charge failed"
+                raise HTTPException(status_code=502, detail=f"Card payment failed: {msg}")
+            charge = chg_data["data"]
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Card payment gateway error: {str(e)}")
 
     charge_id = charge.get("id")
 

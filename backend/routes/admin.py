@@ -284,12 +284,9 @@ async def get_analytics_customers(
             date_filter["$lt"] = datetime.strptime(end_date, "%Y-%m-%d").replace(tzinfo=timezone.utc) + timedelta(days=1)
         query["created_at"] = date_filter
 
-    # Fetch all matching emails to compute aggregates globally in one pass
-    all_matching = await db.users.find(query, {"email": 1}).to_list(100000)
-    emails = [u["email"] for u in all_matching]
-    total = len(emails)
+    total = await db.users.count_documents(query)
 
-    if not emails:
+    if total == 0:
         return {
             "total": 0,
             "repeat_purchase_rate": 0,
@@ -299,27 +296,43 @@ async def get_analytics_customers(
             "pages": 0
         }
 
-    # Bulk query to count/sum payments for all matched users
-    pipeline = [
-        {"$match": {"email": {"$in": emails}, "status": "success"}},
+    # Global CLV and repeat purchase rate via aggregation
+    summary_res = await db.payments.aggregate([
+        {"$match": {"status": "success"}},
+        {"$group": {
+            "_id": "$email",
+            "total_spent": {"$sum": "$amount"},
+            "purchases_count": {"$sum": 1}
+        }},
+        {"$group": {
+            "_id": None,
+            "total_revenue": {"$sum": "$total_spent"},
+            "repeat_customers": {"$sum": {"$cond": [{"$gt": ["$purchases_count", 1]}, 1, 0]}},
+            "unique_customers": {"$sum": 1}
+        }}
+    ]).to_list(1)
+
+    total_revenue = summary_res[0]["total_revenue"] if summary_res else 0.0
+    repeat_customers = summary_res[0]["repeat_customers"] if summary_res else 0
+    unique_customers = summary_res[0]["unique_customers"] if summary_res else 1
+
+    repeat_purchase_rate = round((repeat_customers / unique_customers * 100), 1) if unique_customers else 0.0
+    avg_clv = round((total_revenue / unique_customers), 2) if unique_customers else 0.0
+
+    # Paginated user list
+    skip = (page - 1) * limit
+    customers = await db.users.find(query, {"password_hash": 0}).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
+    page_emails = [c["email"] for c in customers]
+
+    payments_results = await db.payments.aggregate([
+        {"$match": {"email": {"$in": page_emails}, "status": "success"}},
         {"$group": {
             "_id": "$email",
             "total_spent": {"$sum": "$amount"},
             "purchases_count": {"$sum": 1}
         }}
-    ]
-    payments_results = await db.payments.aggregate(pipeline).to_list(None)
+    ]).to_list(limit)
     payments_map = {r["_id"]: r for r in payments_results}
-
-    # Calculate global metrics
-    total_spent_all = sum(r["total_spent"] for r in payments_results)
-    repeat_count = sum(1 for r in payments_results if r["purchases_count"] > 1)
-    repeat_purchase_rate = round((repeat_count / total * 100), 1)
-    avg_clv = round((total_spent_all / total), 2)
-
-    # Fetch paginated list
-    skip = (page - 1) * limit
-    customers = await db.users.find(query, {"password_hash": 0}).sort("created_at", -1).skip(skip).limit(limit).to_list(limit)
 
     out = []
     for c in customers:
@@ -494,22 +507,35 @@ async def upload_product(
     current_user=Depends(require_admin),
     db=Depends(get_db),
 ):
-    """Upload a new PDF product."""
-    if not file.filename.endswith(".pdf"):
+    """Upload a new PDF product with size and magic-header validation."""
+    if not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are accepted")
 
+    max_bytes = settings.MAX_FILE_SIZE_MB * 1024 * 1024
+    content_header = await file.read(1024)
+    if not content_header.startswith(b"%PDF-"):
+        raise HTTPException(status_code=400, detail="Uploaded file is not a valid PDF document")
+
+    await file.seek(0)
+    
     safe_name = "".join(c if c.isalnum() or c in "._-" else "_" for c in file.filename)
     file_path = Path(settings.UPLOADS_DIR) / safe_name
     file_path.parent.mkdir(parents=True, exist_ok=True)
 
     def _write_upload_to_disk():
+        written = 0
         with open(file_path, "wb") as f:
-            shutil.copyfileobj(file.file, f)
+            while chunk := file.file.read(64 * 1024):
+                written += len(chunk)
+                if written > max_bytes:
+                    file_path.unlink(missing_ok=True)
+                    raise ValueError(f"File exceeds maximum size of {settings.MAX_FILE_SIZE_MB}MB")
+                f.write(chunk)
 
-    # A large PDF write blocked the whole event loop (every other request,
-    # for every concurrent user) for the duration of the copy — run it in
-    # a worker thread instead, same pattern as the SMTP fix in email_service.py.
-    await run_in_threadpool(_write_upload_to_disk)
+    try:
+        await run_in_threadpool(_write_upload_to_disk)
+    except ValueError as val_err:
+        raise HTTPException(status_code=400, detail=str(val_err))
 
     result = await db.products.insert_one({
         "title": title,
@@ -734,11 +760,12 @@ async def update_customer_notes(email: str, payload: dict, current_user=Depends(
 
 # ── Affiliate Payout & Management Endpoints ────────────────────────────────────
 @router.post("/affiliates/{code}/mark-payout")
-async def mark_affiliate_payout(code: str, payload: dict, current_user=Depends(require_admin), db=Depends(get_db)):
-    """Mark pending commissions for an affiliate code as paid out."""
-    payout_ref = payload.get("payout_reference", f"PAYOUT-{datetime.now().strftime('%Y%m%d%H%M%S')}")
+async def mark_affiliate_payout(code: str, payload: dict = None, current_user=Depends(require_admin), db=Depends(get_db)):
+    """Record a manual out-of-band payout for an affiliate code (affects unpaid referrals only)."""
+    payload = payload or {}
+    payout_ref = payload.get("payout_reference", f"MANUAL-{datetime.now().strftime('%Y%m%d%H%M%S')}")
     res = await db.referrals.update_many(
-        {"affiliate_code": code, "commission_status": {"$ne": "paid"}},
+        {"affiliate_code": code, "commission_status": "unpaid"},
         {"$set": {"commission_status": "paid", "payout_reference": payout_ref, "paid_at": datetime.now(timezone.utc)}}
     )
     return {"status": "ok", "modified_count": res.modified_count, "payout_reference": payout_ref}
@@ -773,10 +800,14 @@ async def admin_get_subscriptions(
 
     subs = await db.subscriptions.find(query).sort("created_at", -1).to_list(100)
     
-    # Resolve offer names and prices
+    # Batch resolve offer names and prices
+    offer_ids = list({s["offer_id"] for s in subs if "offer_id" in s})
+    offers = await db.offers.find({"_id": {"$in": offer_ids}}).to_list(len(offer_ids) or 1)
+    offer_map = {o["_id"]: o for o in offers}
+
     resolved_subs = []
     for sub in subs:
-        offer = await db.offers.find_one({"_id": sub["offer_id"]})
+        offer = offer_map.get(sub.get("offer_id"))
         resolved_subs.append({
             "id": str(sub["_id"]),
             "customer_name": sub["customer_name"],
@@ -803,14 +834,13 @@ async def admin_get_subscriptions_kpis(
     past_due_count = await db.subscriptions.count_documents({"status": "past_due"})
     cancelled_count = await db.subscriptions.count_documents({"status": "cancelled"})
 
-    # Compute MRR
-    # Sum of price of all active and past_due subscriptions
-    mrr = 0
+    # Compute MRR using batched offer lookup
     subs = await db.subscriptions.find({"status": {"$in": ["active", "past_due"]}}).to_list(1000)
-    for sub in subs:
-        offer = await db.offers.find_one({"_id": sub["offer_id"]})
-        if offer:
-            mrr += offer["price"]
+    offer_ids = list({s["offer_id"] for s in subs if "offer_id" in s})
+    offers = await db.offers.find({"_id": {"$in": offer_ids}}).to_list(len(offer_ids) or 1)
+    offer_map = {o["_id"]: o for o in offers}
+
+    mrr = sum(offer_map[s["offer_id"]]["price"] for s in subs if s.get("offer_id") in offer_map)
 
     return {
         "mrr": mrr,
@@ -896,68 +926,7 @@ async def delete_sales_rep(rep_id: str, current_user=Depends(require_admin), db=
 # EMAIL SEQUENCE MONITORING ENDPOINTS
 # ─────────────────────────────────────────────────────────────────────────────
 
-_SEQ_DAY_OFFSETS = [
-    0, 3, 7, 10, 14, 17, 21, 24, 28, 31, 35, 38,
-    42, 45, 49, 52, 56, 59, 63, 66, 70, 73, 77, 80,
-    84, 87, 91, 94, 98, 101, 105, 108, 112, 115, 119, 122,
-    126, 129, 133, 136, 140, 143, 147, 150, 154, 157, 161, 164,
-    168, 171, 175, 178,
-]
-
-_SEQ_SUBJECTS = [
-    "You're not lazy — you just don't have the right system yet",
-    "The top student in your class isn't smarter than you",
-    "Your grades reflect your habits — not your potential",
-    "Two students. Same exam. The only difference is what they believe about it.",
-    "Every great performer you admire was once a beginner who found the right method",
-    "The curiosity you had as a child didn't disappear — it was buried",
-    "Your brain doesn't record like a camera — it builds like a scaffold",
-    "Barbara Oakley couldn't do maths. Then she learned how the brain actually changes.",
-    "You've been studying the wrong way (and it feels productive)",
-    "If studying feels comfortable, something is probably wrong.",
-    "Your brain processes visuals 60,000x faster than text. You're studying the slow way.",
-    "You're not bad at remembering. You're bad at reviewing. Different problem.",
-    "The most powerful study technique has been proven for 100+ years. You're not using it.",
-    "One technique mastered beats ten techniques practised",
-    "Your notes aren't the problem — what you do after is",
-    "The real reason you can't focus when you study",
-    "This student studied 4 hours a day and outscored the 12-hour grinders",
-    "There's a point where more studying actively destroys your performance.",
-    "You're not multitasking — you're just switching fast and paying the cost",
-    "Your mind wanders 47% of the time. Here's what to do about it.",
-    "Every unfinished task in your head is quietly draining your focus",
-    "Flow is not luck. It has trigger conditions — and you can set them.",
-    "You have the same 24 hours as every top student. Here's what they do differently.",
-    "The world's smartest people use checklists. Here's why you should too.",
-    "Motivation is the spark. You can't run an engine on sparks.",
-    "You don't need more discipline — you need a smaller starting point",
-    "It's not a discipline problem. It's a design problem.",
-    "The gap between average and excellent isn't talent — it's one habit",
-    "One habit. Twenty minutes. Every week. The results are remarkable.",
-    'Every Monday is "the new start." At what point does the pattern become the problem?',
-    "You already know what you should be doing. That's not the problem.",
-    "Your grades are built in the moments nobody sees",
-    "Working hard on the wrong things is worse than not working at all",
-    "Stop blaming yourself for your grades. Fix the system upstream.",
-    "The best student in the room isn't the hardest worker — they're the most strategic",
-    "MIT in 12 months — and what it reveals about how you're wasting yours",
-    "The most powerful career question applies to your academic life right now",
-    '"Balance" is not about doing everything equally. Here\'s what it actually means.',
-    "Exam anxiety has nothing to do with the exam",
-    "The most pressure-proof students aren't fearless — they're prepared differently",
-    "There's a kind of suffering nobody talks about — slow, invisible progress",
-    "You won't notice it happening. Then one day you'll be unrecognisable.",
-    "The most powerful motivation isn't external. It's a clear picture of who you're becoming.",
-    "What you do in the next 90 days will still matter in 2031.",
-    "A mentor doesn't do the work for you — they show you which work matters",
-    "Michael Jordan had a coach. What makes you think you should do this alone?",
-    "He was three failed courses in and considering dropping out. Six months later:",
-    "The decision to not decide is itself a decision. And it has a price.",
-    "I'm not going to sell you. I'm going to tell you the truth about why this exists.",
-    "Let me show you what the before and after actually looks like.",
-    "The argument against investing in yourself is made by the version of you that benefits least.",
-    "One question left.",
-]
+from ..services.sequence_constants import _SEQ_DAY_OFFSETS, _SEQ_SUBJECTS
 
 
 def _correct_seq_position(subscribed_at, now):
@@ -993,21 +962,20 @@ async def get_sequence_overview(current_user=Depends(require_admin), db=Depends(
     )
     last_sent_at = last_sent_doc["sent_at"].isoformat() if last_sent_doc and last_sent_doc.get("sent_at") else None
 
-    # Fetch all active subscriber metadata in bulk to avoid N+1 queries
-    subs = await db.subscribers.find({"is_active": True}, {"subscribed_at": 1}).to_list(100000)
-    sub_ids = [s["_id"] for s in subs]
-
     # Bulk fetch sent counts for active subscribers
     pipeline = [
-        {"$match": {"subscriber_id": {"$in": sub_ids}, "kind": "sequence", "status": "sent"}},
+        {"$match": {"kind": "sequence", "status": "sent"}},
         {"$group": {"_id": "$subscriber_id", "sent_count": {"$sum": 1}}}
     ]
-    sent_results = await db.email_queue.aggregate(pipeline).to_list(None)
+    sent_results = await db.email_queue.aggregate(pipeline).to_list(100000)
     sent_map = {str(r["_id"]): r["sent_count"] for r in sent_results}
 
     stage_distribution = {}
     subscribers_behind = 0
-    for sub in subs:
+    total_enrolled = 0
+
+    async for sub in db.subscribers.find({"is_active": True}, {"subscribed_at": 1}):
+        total_enrolled += 1
         correct = _correct_seq_position(sub.get("subscribed_at"), now)
         stage_distribution[correct] = stage_distribution.get(correct, 0) + 1
         

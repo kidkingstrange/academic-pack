@@ -21,6 +21,7 @@ import uuid
 from datetime import datetime, timezone
 
 from bson import ObjectId
+from pymongo import ReturnDocument
 
 from ..config import get_settings
 from .flutterwave import create_transfer, get_ngn_balance
@@ -97,11 +98,25 @@ async def send_batch(db, batch_id: str) -> dict:
     what's actually available is rejected up front rather than partially
     draining the balance.
     """
-    batch = await db.payout_batches.find_one({"_id": ObjectId(batch_id)})
+    try:
+        oid = ObjectId(batch_id)
+    except Exception:
+        raise ValueError("Invalid batch ID format")
+
+    # Atomic CAS claim: transition status from pending_approval/failed_partial to sending
+    batch = await db.payout_batches.find_one_and_update(
+        {
+            "_id": oid,
+            "status": {"$in": ["pending_approval", "failed_partial"]}
+        },
+        {"$set": {"status": "sending"}},
+        return_document=ReturnDocument.AFTER
+    )
     if not batch:
-        raise ValueError("Batch not found")
-    if batch["status"] not in ("pending_approval", "failed_partial"):
-        raise ValueError(f"Batch already {batch['status']}")
+        existing = await db.payout_batches.find_one({"_id": oid})
+        if not existing:
+            raise ValueError("Batch not found")
+        raise ValueError(f"Batch already {existing['status']}")
 
     items = batch["items"]
     sendable = [i for i in items if i["transfer_status"] in ("pending", "failed")]
@@ -109,14 +124,16 @@ async def send_batch(db, batch_id: str) -> dict:
 
     balance_resp = await get_ngn_balance()
     if balance_resp.get("status") != "success":
+        # Revert status on balance check failure
+        await db.payout_batches.update_one({"_id": oid}, {"$set": {"status": "failed_partial"}})
         raise ValueError(f"Could not read Flutterwave balance: {balance_resp.get('message') or balance_resp}")
     available = (balance_resp.get("data") or {}).get("available_balance", 0)
     if available < sendable_total:
+        # Revert status on insufficient balance
+        await db.payout_batches.update_one({"_id": oid}, {"$set": {"status": "failed_partial"}})
         raise ValueError(
             f"Insufficient balance: available ₦{available:,.2f}, batch needs ₦{sendable_total:,.2f}"
         )
-
-    await db.payout_batches.update_one({"_id": batch["_id"]}, {"$set": {"status": "sending"}})
 
     any_failed = False
     for idx, item in enumerate(items):
@@ -128,7 +145,9 @@ async def send_batch(db, batch_id: str) -> dict:
             await db.payout_batches.update_one({"_id": batch["_id"]}, {"$set": {f"items.{idx}": item}})
             continue
 
-        reference = _clean_reference(f"PAYOUT{batch['_id']}{item['affiliate_code']}{uuid.uuid4().hex[:6]}")
+        # Deterministic transfer reference derived from batch ID + affiliate code
+        # (omitting random UUID so retries reuse Flutterwave's idempotency key)
+        reference = _clean_reference(f"PAYOUT{batch['_id']}{item['affiliate_code']}")
         try:
             resp = await create_transfer(
                 bank_code=item["bank_code"],
@@ -143,7 +162,10 @@ async def send_batch(db, batch_id: str) -> dict:
                 item["error"] = None
                 now = datetime.now(timezone.utc)
                 await db.referrals.update_many(
-                    {"_id": {"$in": item["referral_ids"]}},
+                    {
+                        "_id": {"$in": item["referral_ids"]},
+                        "commission_status": "unpaid"
+                    },
                     {"$set": {"commission_status": "paid", "paid_at": now, "payout_reference": reference}},
                 )
             else:
