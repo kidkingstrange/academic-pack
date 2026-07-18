@@ -696,7 +696,14 @@ if (cardForm) {
         }),
       });
 
-      const data = await res.json();
+      let data;
+      const text = await res.text();
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        throw new Error('Card payment service temporarily unavailable. Please try again or use Bank Transfer.');
+      }
+
       if (!res.ok) throw new Error(formatApiError(data.detail, 'Card authorization failed'));
 
       if (data.redirect_url) {

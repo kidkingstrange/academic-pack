@@ -30,30 +30,19 @@ router = APIRouter(prefix="/api/payments", tags=["payments"])
 settings = get_settings()
 
 
-@router.post("/initialize", response_model=PaymentInitResponse)
-@limiter.limit("10/minute")
-async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(get_db)):
-    """
-    Step 1: Determine price, create Flutterwave customer,
-    initiate bank-transfer charge, return virtual account details.
-    """
-    reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+async def compute_price_and_referral(db, email: str, client_expiry: float = None, referral_code: str = None):
     amount_naira = settings.PRODUCT_PRICE_NAIRA
     now = datetime.now(timezone.utc)
 
-    # ── Resolve referral code (if any) against known, active affiliates ──
-    # Invalid/unknown codes are silently ignored rather than erroring the
-    # checkout — attribution is a nice-to-have, never a purchase blocker.
     referred_by = None
-    if body.referral_code:
-        candidate = body.referral_code.strip().upper()
+    if referral_code:
+        candidate = referral_code.strip().upper()
         if candidate:
             affiliate = await db.affiliates.find_one({"code": candidate, "active": True})
             if affiliate:
                 referred_by = candidate
 
-    # ── Server-side 24-hour price check ──────────────────────────────
-    existing_lead = await db.leads.find_one({"email": body.email.lower()})
+    existing_lead = await db.leads.find_one({"email": email.lower()})
     is_expired = False
     if existing_lead:
         created_at = existing_lead.get("created_at")
@@ -63,12 +52,26 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             if (now - created_at).total_seconds() > 24 * 3600:
                 is_expired = True
     else:
-        if body.client_expiry:
-            if body.client_expiry < now.timestamp() * 1000:
+        if client_expiry:
+            if client_expiry < now.timestamp() * 1000:
                 is_expired = True
 
     if is_expired or referred_by:
         amount_naira = settings.PRODUCT_PRICE_LATE_NAIRA
+
+    return amount_naira, referred_by
+
+
+@router.post("/initialize", response_model=PaymentInitResponse)
+@limiter.limit("10/minute")
+async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(get_db)):
+    """
+    Step 1: Determine price, create Flutterwave customer,
+    initiate bank-transfer charge, return virtual account details.
+    """
+    reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+    now = datetime.now(timezone.utc).isoformat()
+    amount_naira, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code)
 
     # ── Upsert lead ───────────────────────────────────────────────────
     await db.leads.update_one(
@@ -210,7 +213,7 @@ async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depen
     Direct Card Payment endpoint. Encrypts card details and initiates
     a card charge with Flutterwave V4 Experience.
     """
-    amount_naira, referred_by = await compute_price_and_referral(db, body.client_expiry, body.referral_code)
+    amount_naira, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code)
     reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
     now = datetime.now(timezone.utc).isoformat()
 
@@ -281,20 +284,31 @@ async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depen
     next_action = charge.get("next_action", {})
     action_type = next_action.get("type")
 
+    redirect_link = None
     if action_type == "redirect_url":
+        url_val = next_action.get("redirect_url")
+        if isinstance(url_val, dict):
+            redirect_link = url_val.get("url")
+        elif isinstance(url_val, str):
+            redirect_link = url_val
+    elif isinstance(charge.get("redirect_url"), str):
+        redirect_link = charge["redirect_url"]
+
+    if redirect_link and redirect_link != redirect_url:
         return PaymentInitResponse(
             reference=reference,
             charge_id=charge_id,
             action="redirect",
-            redirect_url=next_action["redirect_url"]["url"],
+            redirect_url=redirect_link,
             amount=amount_naira,
         )
 
+    callback_with_ref = f"{redirect_url}?reference={reference}"
     return PaymentInitResponse(
         reference=reference,
         charge_id=charge_id,
         action="redirect",
-        redirect_url=redirect_url,
+        redirect_url=callback_with_ref,
         amount=amount_naira,
     )
 
