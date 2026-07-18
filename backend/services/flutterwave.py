@@ -4,16 +4,15 @@ Replaces paystack.py — uses OAuth 2.0 client_credentials flow.
 """
 import time
 import uuid
+import secrets
 import httpx
 from typing import Dict, Any
 from ..config import get_settings
 
 settings = get_settings()
 
-if settings.APP_ENV == "production":
-    FLW_API_BASE = "https://f4bexperience.flutterwave.com"
-else:
-    FLW_API_BASE = "https://developersandbox-api.flutterwave.com"
+# Always use V4 Experience API base URL for V4 credentials
+FLW_API_BASE = "https://f4bexperience.flutterwave.com"
 
 FLW_AUTH_URL = "https://idp.flutterwave.com/realms/flutterwave/protocol/openid-connect/token"
 
@@ -46,8 +45,15 @@ async def get_flw_token() -> str:
         return _flw_token
 
 
+_flw_customer_cache: Dict[str, str] = {}
+
+
 async def create_flw_customer(token: str, name: str, email: str) -> str:
     """Create or retrieve a Flutterwave customer. Returns customer_id."""
+    clean_email = email.strip().lower()
+    if clean_email in _flw_customer_cache:
+        return _flw_customer_cache[clean_email]
+
     parts = name.strip().split(" ", 1)
     first = parts[0]
     last  = parts[1] if len(parts) > 1 else parts[0]
@@ -59,12 +65,14 @@ async def create_flw_customer(token: str, name: str, email: str) -> str:
                 "Content-Type":  "application/json",
                 "X-Trace-Id":    str(uuid.uuid4()),
             },
-            json={"email": email, "name": {"first": first, "last": last}},
+            json={"email": clean_email, "name": {"first": first, "last": last}},
             timeout=15,
         )
         data = resp.json()
         if data.get("status") == "success":
-            return data["data"]["id"]
+            cid = data["data"]["id"]
+            _flw_customer_cache[clean_email] = cid
+            return cid
             
         # Fallback if customer already exists
         err_type = data.get("error", {}).get("type")
@@ -75,16 +83,20 @@ async def create_flw_customer(token: str, name: str, email: str) -> str:
                     "Authorization": f"Bearer {token}",
                     "Content-Type":  "application/json",
                 },
-                json={"email": email},
+                json={"email": clean_email},
                 timeout=15,
             )
             search_data = search_resp.json()
             if search_data.get("status") == "success" and search_data.get("data"):
                 customers = search_data["data"]
+                cid = None
                 if isinstance(customers, list) and len(customers) > 0:
-                    return customers[0]["id"]
+                    cid = customers[0]["id"]
                 elif isinstance(customers, dict) and "id" in customers:
-                    return customers["id"]
+                    cid = customers["id"]
+                if cid:
+                    _flw_customer_cache[clean_email] = cid
+                    return cid
                     
         raise Exception(f"FLW customer error: {data}")
 

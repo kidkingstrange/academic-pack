@@ -54,6 +54,18 @@ class PaymentVerifyRequest(BaseModel):
     payment_method: Optional[str] = "bank_transfer"
 
 
+class PaymentCardChargeRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    email: EmailStr
+    card_number: str = Field(..., min_length=12, max_length=19)
+    cvv: str = Field(..., min_length=3, max_length=4)
+    expiry_month: str = Field(..., min_length=1, max_length=2)
+    expiry_year: str = Field(..., min_length=2, max_length=4)
+    cardholder_name: str = Field(..., min_length=2, max_length=100)
+    client_expiry: Optional[float] = None
+    referral_code: Optional[str] = None
+
+
 class PaymentVerifyResponse(BaseModel):
     success: bool
     token: Optional[str] = None

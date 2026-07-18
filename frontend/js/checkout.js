@@ -169,6 +169,19 @@ form.addEventListener('submit', async (e) => {
   const pmRadio = document.querySelector('input[name="payment_method"]:checked');
   currentPayMethod = pmRadio ? pmRadio.value : 'bank_transfer';
 
+  // Fast path for Card payment: render card input form instantly in step 2
+  if (currentPayMethod === 'card') {
+    btn.disabled = false;
+    btn.innerHTML = 'Continue to Payment <i class="bi bi-arrow-right"></i>';
+    showStep(2);
+    document.getElementById('payment-spinner').style.display = 'none';
+    const cardView = document.getElementById('view-card-form');
+    if (cardView) cardView.style.display = 'block';
+    const cardHolderInput = document.getElementById('card-holder');
+    if (cardHolderInput && userName) cardHolderInput.value = userName;
+    return;
+  }
+
   btn.disabled   = true;
   btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
 
@@ -198,7 +211,7 @@ form.addEventListener('submit', async (e) => {
     document.getElementById('payment-spinner').style.display = 'none';
 
     if (data.action === 'redirect') {
-      // 3DS / hosted page — just redirect
+      // 3DS / bank authorization page — redirect
       window.location.href = data.redirect_url;
       return;
     }
@@ -580,4 +593,102 @@ function copyAccountNumber(text, buttonEl) {
       alert('Could not copy. Please select and copy manually.');
     }
   }
+}
+
+// ── Card Input Formatting & Submission ────────────────────────────────────────
+const cardNumberInput = document.getElementById('card-number');
+if (cardNumberInput) {
+  cardNumberInput.addEventListener('input', (e) => {
+    let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+    let formatted = val.match(/.{1,4}/g)?.join(' ') || val;
+    e.target.value = formatted;
+  });
+}
+
+const cardExpiryInput = document.getElementById('card-expiry');
+if (cardExpiryInput) {
+  cardExpiryInput.addEventListener('input', (e) => {
+    let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+    if (val.length >= 3) {
+      val = val.substring(0, 2) + '/' + val.substring(2);
+    }
+    e.target.value = val;
+  });
+}
+
+const cardForm = document.getElementById('card-payment-form');
+if (cardForm) {
+  cardForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const cardHolderInput = document.getElementById('card-holder');
+    const cardNumberIn   = document.getElementById('card-number');
+    const cardExpiryIn   = document.getElementById('card-expiry');
+    const cardCvvIn      = document.getElementById('card-cvv');
+    const cardErrDiv     = document.getElementById('card-form-error');
+    const submitCardBtn  = document.getElementById('submit-card');
+
+    if (cardErrDiv) cardErrDiv.style.display = 'none';
+
+    const cardHolder  = cardHolderInput ? cardHolderInput.value.trim() : '';
+    const cardNumber  = cardNumberIn ? cardNumberIn.value.trim().replace(/\s+/g, '') : '';
+    const expiryParts = cardExpiryIn ? cardExpiryIn.value.trim().split('/') : [];
+    const expiryMonth = expiryParts[0] ? expiryParts[0].trim() : '';
+    const expiryYear  = expiryParts[1] ? expiryParts[1].trim() : '';
+    const cvv         = cardCvvIn ? cardCvvIn.value.trim() : '';
+
+    if (cardNumber.length < 15 || cardNumber.length > 19) {
+      if (cardErrDiv) { cardErrDiv.textContent = 'Please enter a valid 16-digit card number'; cardErrDiv.style.display = 'block'; }
+      return;
+    }
+    if (!expiryMonth || !expiryYear || expiryMonth.length > 2 || (expiryYear.length !== 2 && expiryYear.length !== 4)) {
+      if (cardErrDiv) { cardErrDiv.textContent = 'Please enter expiration date as MM/YY (e.g. 12/28)'; cardErrDiv.style.display = 'block'; }
+      return;
+    }
+    if (cvv.length < 3 || cvv.length > 4) {
+      if (cardErrDiv) { cardErrDiv.textContent = 'Please enter a 3 or 4 digit CVV'; cardErrDiv.style.display = 'block'; }
+      return;
+    }
+
+    submitCardBtn.disabled = true;
+    submitCardBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing Card...';
+    document.getElementById('view-card-form').style.display = 'none';
+    document.getElementById('payment-spinner').style.display = 'block';
+
+    try {
+      const clientExpiry = localStorage.getItem('ac_expiry');
+      const referralCode = localStorage.getItem('ac_referral_code');
+      const res = await fetch(`${API_BASE}/payments/charge_card`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:            userName,
+          email:           userEmail,
+          cardholder_name: cardHolder,
+          card_number:     cardNumber,
+          expiry_month:    expiryMonth,
+          expiry_year:     expiryYear,
+          cvv:             cvv,
+          client_expiry:   clientExpiry ? Number(clientExpiry) : null,
+          referral_code:   referralCode || null,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(formatApiError(data.detail, 'Card authorization failed'));
+
+      if (data.redirect_url) {
+        window.location.href = data.redirect_url;
+        return;
+      }
+    } catch (err) {
+      document.getElementById('payment-spinner').style.display = 'none';
+      document.getElementById('view-card-form').style.display = 'block';
+      if (cardErrDiv) {
+        cardErrDiv.textContent = err.message;
+        cardErrDiv.style.display = 'block';
+      }
+      submitCardBtn.disabled = false;
+      submitCardBtn.innerHTML = 'Pay <span class="price-current">₦2,000</span> Now 🔒';
+    }
+  });
 }

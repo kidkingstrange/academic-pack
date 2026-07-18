@@ -11,11 +11,13 @@ from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
 from ..schemas.schemas import (
     PaymentInitRequest, PaymentInitResponse,
     PaymentVerifyRequest, PaymentVerifyResponse,
+    PaymentCardChargeRequest,
 )
 from ..services.flutterwave import (
     get_flw_token, create_flw_customer,
     initiate_bank_transfer, verify_flw_charge,
     create_virtual_account, verify_charges_by_reference,
+    initiate_card_payment,
 )
 from ..services.payment_completion import complete_payment
 from ..services.email_service import send_email
@@ -190,6 +192,102 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         bank_name=va.get("bank_name", ""),
         amount=amount_naira,
         note=instruction.get("note", "Transfer the exact amount. Account is valid for 30 minutes."),
+    )
+
+
+@router.post("/charge_card", response_model=PaymentInitResponse)
+@limiter.limit("15/minute")
+async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depends(get_db)):
+    """
+    Direct Card Payment endpoint. Encrypts card details and initiates
+    a card charge with Flutterwave V4 Experience.
+    """
+    amount_naira, referred_by = await compute_price_and_referral(db, body.client_expiry, body.referral_code)
+    reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+    now = datetime.now(timezone.utc).isoformat()
+
+    # Save lead
+    await db.leads.update_one(
+        {"email": body.email.lower()},
+        {
+            "$set": {
+                "name": body.name,
+                "email": body.email.lower(),
+                "converted": False,
+                "price_offered": amount_naira,
+            },
+            "$setOnInsert": {"created_at": now},
+        },
+        upsert=True,
+    )
+
+    try:
+        token = await get_flw_token()
+        customer_id = await create_flw_customer(token, body.name, body.email.lower())
+    except Exception as e:
+        print(f"❌ FLW customer/token error: {e}")
+        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+
+    redirect_url = f"{settings.APP_URL}/api/payments/callback"
+
+    exp_year = body.expiry_year.strip()
+    if len(exp_year) == 4:
+        exp_year = exp_year[-2:]
+    exp_month = body.expiry_month.strip().zfill(2)
+
+    try:
+        charge = await initiate_card_payment(
+            token=token,
+            customer_id=customer_id,
+            amount_naira=amount_naira,
+            reference=reference,
+            redirect_url=redirect_url,
+            card_number=body.card_number,
+            cvv=body.cvv,
+            expiry_month=exp_month,
+            expiry_year=exp_year,
+            cardholder_name=body.cardholder_name,
+        )
+    except Exception as e:
+        print(f"❌ FLW card charge error: {e}")
+        raise HTTPException(status_code=502, detail="Card charge failed. Please check your card details or try Bank Transfer.")
+
+    charge_id = charge.get("id")
+    await db.pending_payments.update_one(
+        {"reference": reference},
+        {"$set": {
+            "reference":      reference,
+            "charge_id":      charge_id,
+            "va_id":          None,
+            "payment_method": "card",
+            "email":          body.email.lower(),
+            "name":           body.name,
+            "amount":         amount_naira,
+            "customer_id":    customer_id,
+            "created_at":     now,
+            "referred_by":    referred_by,
+        }},
+        upsert=True,
+    )
+
+    next_action = charge.get("next_action", {})
+    action_type = next_action.get("type")
+
+    if action_type == "redirect_url":
+        return PaymentInitResponse(
+            reference=reference,
+            charge_id=charge_id,
+            action="redirect",
+            redirect_url=next_action["redirect_url"]["url"],
+            amount=amount_naira,
+        )
+
+    return PaymentInitResponse(
+        reference=reference,
+        charge_id=charge_id,
+        action="redirect",
+        redirect_url=redirect_url,
+        amount=amount_naira,
     )
 
 
