@@ -147,11 +147,34 @@ function showPaymentError(msg) {
 }
 
 // ── Payment method selector toggle ────────────────────────────────────────────
+function selectPaymentMethod(selectedVal) {
+  currentPayMethod = selectedVal;
+  document.querySelectorAll('.payment-method-option').forEach(opt => {
+    const radio = opt.querySelector('input[type="radio"]');
+    if (radio) {
+      if (radio.value === selectedVal) {
+        radio.checked = true;
+        opt.classList.add('selected');
+      } else {
+        radio.checked = false;
+        opt.classList.remove('selected');
+      }
+    }
+  });
+}
+
+document.querySelectorAll('.payment-method-option').forEach(opt => {
+  opt.addEventListener('click', (e) => {
+    const radio = opt.querySelector('input[type="radio"]');
+    if (radio) {
+      selectPaymentMethod(radio.value);
+    }
+  });
+});
+
 document.querySelectorAll('.payment-method-option input[type="radio"]').forEach(radio => {
   radio.addEventListener('change', () => {
-    document.querySelectorAll('.payment-method-option').forEach(opt => opt.classList.remove('selected'));
-    radio.closest('.payment-method-option').classList.add('selected');
-    currentPayMethod = radio.value;
+    selectPaymentMethod(radio.value);
   });
 });
 

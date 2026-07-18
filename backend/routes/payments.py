@@ -172,12 +172,20 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     next_action = charge.get("next_action", {})
     action_type = next_action.get("type")
 
-    if action_type == "redirect_url":
+    redirect_link = None
+    if action_type == "redirect_url" and isinstance(next_action.get("redirect_url"), dict):
+        redirect_link = next_action["redirect_url"].get("url")
+    elif isinstance(next_action.get("redirect_url"), str):
+        redirect_link = next_action["redirect_url"]
+    elif charge.get("redirect_url"):
+        redirect_link = charge["redirect_url"]
+
+    if redirect_link:
         return PaymentInitResponse(
             reference=reference,
             charge_id=charge_id,
             action="redirect",
-            redirect_url=next_action["redirect_url"]["url"],
+            redirect_url=redirect_link,
             amount=amount_naira,
         )
 
