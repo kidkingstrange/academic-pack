@@ -24,7 +24,7 @@ class PaymentInitRequest(BaseModel):
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
     client_expiry: Optional[float] = None  # ms timestamp from frontend
-    payment_method: Optional[str] = "pay_with_bank"  # "pay_with_bank" | "bank_transfer"
+    payment_method: Optional[str] = "bank_transfer"  # "bank_transfer" | "pay_with_bank" | "card"
     referral_code: Optional[str] = None  # captured from /r/CODE via localStorage at checkout
 
 
@@ -51,7 +51,7 @@ class PaymentVerifyRequest(BaseModel):
     reference: str
     email: EmailStr
     name: str = Field(..., min_length=2, max_length=100)
-    payment_method: Optional[str] = "pay_with_bank"
+    payment_method: Optional[str] = "bank_transfer"
 
 
 class PaymentVerifyResponse(BaseModel):

@@ -1000,7 +1000,8 @@
   function formatPaymentMethod(method) {
     if (method === 'bank_transfer') return 'Bank Transfer';
     if (method === 'pay_with_bank') return 'Pay with Bank';
-    return '—';
+    if (method === 'card') return 'Debit / Credit Card';
+    return method || '—';
   }
 
   function clearSalesDateRange() {

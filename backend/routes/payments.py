@@ -155,7 +155,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "reference":      reference,
             "charge_id":      charge_id,
             "va_id":          None,
-            "payment_method": "pay_with_bank",
+            "payment_method": payment_method,
             "email":          body.email.lower(),
             "name":           body.name,
             "amount":         amount_naira,
