@@ -29,7 +29,9 @@ def _load_dotenv_into_environ():
                 os.environ[m.group(1)] = m.group(2)
 
 
-_load_dotenv_into_environ()
+import sys
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from backend import database  # noqa: E402
 from backend.main import app  # noqa: E402
@@ -37,7 +39,7 @@ from backend.main import app  # noqa: E402
 
 @pytest_asyncio.fixture
 async def test_db():
-    mongo_url = os.environ["MONGODB_URL"]
+    mongo_url = os.environ.get("MONGODB_URL") or os.environ.get("MONGO_URI", "mongodb://127.0.0.1:27017")
     # Short prefix + a slice of uuid4 hex, not a millisecond timestamp —
     # tests in the same file can start within the same millisecond and
     # would otherwise collide onto the same scratch database name, leaking
