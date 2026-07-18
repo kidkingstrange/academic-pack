@@ -656,39 +656,52 @@
 
 /* ── GUARANTEE BOX & MICRO-CARDS ────────────────────────────────────────── */
 .guarantee-box {
-  background: linear-gradient(145deg, rgba(201, 151, 58, 0.08) 0%, rgba(15, 21, 32, 0.95) 100%);
-  border: 1px solid rgba(201, 151, 58, 0.3);
+  background: linear-gradient(145deg, #0e121e 0%, #151a2a 50%, #0f1422 100%);
+  border: 1px solid rgba(201, 151, 58, 0.4);
   border-radius: var(--radius-xl);
-  padding: 36px 32px;
+  padding: 40px 36px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.3), 0 0 40px rgba(201, 151, 58, 0.12);
+}
+.guarantee-box::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  right: -120px;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(201, 151, 58, 0.22) 0%, rgba(201, 151, 58, 0.05) 50%, transparent 70%);
+  pointer-events: none;
 }
 .guarantee-box__badge {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--gold), var(--gold-l));
   color: var(--ink);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 800;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   margin-bottom: 16px;
+  box-shadow: 0 4px 16px rgba(201, 151, 58, 0.35);
 }
 .guarantee-box__title {
   font-family: 'Clash Display', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  color: #fff;
-  margin-bottom: 12px;
+  color: #ffffff;
+  margin-bottom: 14px;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
 }
 .guarantee-box__text {
-  font-size: 0.96rem;
-  color: rgba(255, 255, 255, 0.82);
-  line-height: 1.7;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.75;
 }
 
 .cta-microcopy {
