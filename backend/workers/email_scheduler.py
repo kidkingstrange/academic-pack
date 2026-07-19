@@ -106,7 +106,23 @@ def _backoff_minutes(retry_count: int) -> int:
 # the exact same last_attempt_at millisecond (PrivateEmail rejecting/stalling
 # concurrent connections from the same account). This lock makes an
 # overlapping call wait for the current run to finish rather than racing it.
-_email_queue_lock = asyncio.Lock()
+#
+# Built lazily (not as a bare module-level asyncio.Lock()) because a Lock
+# binds permanently to whichever event loop first acquires it. That's a
+# no-op in production (one event loop for the app's entire lifetime), but
+# pytest-asyncio gives each test its own event loop, so a second test
+# reusing the same Lock object raises "bound to a different event loop".
+_email_queue_lock = None
+_email_queue_lock_loop = None
+
+
+def _get_email_queue_lock() -> asyncio.Lock:
+    global _email_queue_lock, _email_queue_lock_loop
+    loop = asyncio.get_running_loop()
+    if _email_queue_lock is None or _email_queue_lock_loop is not loop:
+        _email_queue_lock = asyncio.Lock()
+        _email_queue_lock_loop = loop
+    return _email_queue_lock
 
 # ─── 52-Email Curriculum Sequence ─────────────────────────────────────────────
 # Organised as a structured transformation journey across 9 phases.
@@ -235,7 +251,7 @@ async def process_email_queue():
     overlapping call blocks here until the current run finishes, instead of
     opening a second concurrent batch of SMTP connections.
     """
-    async with _email_queue_lock:
+    async with _get_email_queue_lock():
         db = database.get_db()
         if db is None:
             return
