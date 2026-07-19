@@ -155,6 +155,17 @@ async def serve_dashboard():
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
 
+@app.get("/admin/site-registry.js", include_in_schema=False)
+async def serve_admin_site_registry():
+    """The Master's Eye View's registry — dashboard.html loads this via a
+    relative <script src>, which resolves against /admin/, so it needs its
+    own route the same way dashboard.html itself does."""
+    return FileResponse(
+        str(frontend_path / "admin" / "site-registry.js"),
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
 @app.get("/affiliate/register", include_in_schema=False)
 async def serve_affiliate_register():
     return FileResponse(

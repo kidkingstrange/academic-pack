@@ -457,6 +457,39 @@
   .rate-cell { display: flex; align-items: center; gap: 6px; }
   .rate-edit-btn { background: none; border: none; color: var(--gold-l); cursor: pointer; font-size: .85rem; padding: 2px 4px; }
   .rate-edit-btn:hover { color: var(--gold); }
+
+  /* ── Master's Eye View ─────────────────────────────────────────────────────── */
+  .hub-toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 28px; flex-wrap: wrap; }
+  .hub-search-wrap { position: relative; flex: 1; min-width: 220px; }
+  .hub-search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-l); font-size: 0.9rem; pointer-events: none; }
+  #hub-search { width: 100%; padding: 11px 14px 11px 38px; }
+  .hub-category { margin-bottom: 32px; }
+  .hub-category-title, .hub-section-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-l); margin-bottom: 14px; }
+  .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  .hub-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px; cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; gap: 8px; }
+  .hub-card:hover { border-color: rgba(201,151,58,.4); transform: translateY(-2px); }
+  .hub-card.hub-card--info { cursor: default; }
+  .hub-card.hub-card--info:hover { transform: none; border-color: var(--border-color); }
+  .hub-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .hub-card__icon { font-size: 1.4rem; line-height: 1; }
+  .hub-card__badge { background: rgba(239,68,68,.15); color: var(--red); font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+  .hub-card__title { font-family: 'Clash Display', sans-serif; font-size: 1rem; font-weight: 600; color: #fff; }
+  .hub-card__desc { font-size: 0.8rem; color: var(--gray-l); line-height: 1.5; flex: 1; }
+  .hub-card__metric { font-family: 'Clash Display', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--gold-l); }
+  .hub-card__hint { font-size: 0.7rem; color: var(--gray-l); text-transform: uppercase; letter-spacing: 0.5px; }
+  .hub-empty { text-align: center; color: var(--gray-l); padding: 40px 0; font-size: 0.9rem; }
+
+  .hub-journeys { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 8px; }
+  .journey-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; }
+  .journey-card-title { font-family: 'Clash Display', sans-serif; font-weight: 600; color: #fff; font-size: 0.95rem; margin-bottom: 14px; }
+  .journey-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .journey-node { background: rgba(201,151,58,.1); border: 1px solid rgba(201,151,58,.25); color: var(--gold-l); font-size: 0.76rem; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+  .journey-node:hover { background: rgba(201,151,58,.2); }
+  .journey-arrow { color: var(--gray-l); font-size: 0.85rem; }
+
+  @media (max-width: 640px) {
+    .hub-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  }
 </style>
 </head>
 <body>
@@ -471,8 +504,10 @@
     </div>
   </div>
 
+  <a class="nav-item active" onclick="switchSection('hub')"><i class="bi bi-grid-1x2-fill"></i> Master's Eye View</a>
+
   <div class="nav-group-label">Core Modules</div>
-  <a class="nav-item active" onclick="switchSection('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a>
+  <a class="nav-item" onclick="switchSection('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a>
   <a class="nav-item" onclick="switchSection('sales')"><i class="bi bi-credit-card-2-front"></i> Sales Management</a>
   <a class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</a>
   <a class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</a>
@@ -507,8 +542,65 @@
 
   <div class="content-body">
 
+    <!-- ── VIEW 0: MASTER'S EYE VIEW (landing screen) ──────────────────────────── -->
+    <div id="view-hub" class="section active">
+      <div class="hub-toolbar">
+        <div class="hub-search-wrap">
+          <i class="bi bi-search"></i>
+          <input type="text" id="hub-search" class="input-control" placeholder="Search everything — try 'refund' or 'affiliate'..." oninput="renderHubGrid()">
+        </div>
+        <button class="btn-action btn-secondary" onclick="loadHubView(true)"><i class="bi bi-arrow-clockwise"></i> Reload</button>
+      </div>
+
+      <div id="hub-grid-container"><!-- Injected by renderHubGrid() --></div>
+
+      <div class="hub-category">
+        <div class="hub-section-title">How It All Connects</div>
+        <div class="hub-journeys">
+          <div class="journey-card">
+            <div class="journey-card-title">🛒 Customer Journey</div>
+            <div class="journey-strip">
+              <span class="journey-node" onclick="window.open('/','_blank')">Landing</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('sales')">Checkout</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="window.open('/welcome','_blank')">Welcome</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="window.open('/library','_blank')">Library</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('sequence')">Email Sequence</span>
+            </div>
+          </div>
+          <div class="journey-card">
+            <div class="journey-card-title">📣 Affiliate Journey</div>
+            <div class="journey-strip">
+              <span class="journey-node" onclick="window.open('/affiliate/register','_blank')">Register</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('affiliates')">Referral Link</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('sales')">Sale Attributed</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('payouts')">Payout</span>
+            </div>
+          </div>
+          <div class="journey-card">
+            <div class="journey-card-title">🧑‍💼 Sales Rep Journey</div>
+            <div class="journey-strip">
+              <span class="journey-node" onclick="window.open('/sales/register','_blank')">Register</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('team')">Approved by Admin</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="window.open('/sales/dashboard','_blank')">Generates Checkout</span>
+              <span class="journey-arrow">→</span>
+              <span class="journey-node" onclick="switchSection('subscriptions')">Subscription</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ── VIEW 1: DASHBOARD (Central Command Center) ────────────────────────── -->
-    <div id="view-dashboard" class="section active">
+    <div id="view-dashboard" class="section">
 
       <!-- ── Delivery Health Alert Banner ── -->
       <div id="delivery-alert-banner" style="display:none; background:linear-gradient(135deg,rgba(220,38,38,0.18),rgba(185,28,28,0.12)); border:1px solid rgba(239,68,68,0.45); border-radius:14px; padding:18px 24px; margin-bottom:24px; display:flex; align-items:center; gap:16px; flex-wrap:wrap">
@@ -806,11 +898,12 @@
   </div>
 </div>
 
+<script src="site-registry.js"></script>
 <script>
   const token = sessionStorage.getItem('admin_token');
   if(!token) window.location.href = '/admin';
 
-  let currentView = 'dashboard';
+  let currentView = 'hub';
   let allSalesData = [];
   let chartTrend = null;
   let chartMaaTrend = null;
@@ -862,6 +955,7 @@
     }
 
     const titles = {
+      hub: { title: "Master's Eye View", sub: 'Everything on the site, in one place — search, jump to any area, and see what needs attention' },
       dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
       sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
       customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
@@ -881,6 +975,7 @@
 
   function refreshCurrentView() {
     const period = document.getElementById('period-select').value;
+    if(currentView === 'hub') loadHubView();
     if(currentView === 'dashboard') loadDashboardView(period);
     if(currentView === 'sales') loadSalesView();
     if(currentView === 'customers') loadCustomersView();
@@ -889,6 +984,107 @@
     if(currentView === 'subscriptions') loadSubscriptionsView();
     if(currentView === 'team') loadTeamView();
     if(currentView === 'sequence') loadSequenceView();
+  }
+
+  // ── MASTER'S EYE VIEW ────────────────────────────────────────────────────────
+  // Everything here is driven by SITE_REGISTRY (site-registry.js) — adding a
+  // future destination to the hub means adding one entry there, not editing
+  // any of the functions below.
+  let hubOverviewData = null;
+
+  async function loadHubView(force = false) {
+    // Render immediately with whatever data we already have (titles/
+    // descriptions never depend on the network) — a slow overview fetch
+    // must not leave the whole hub blank while it's in flight.
+    renderHubGrid();
+    try {
+      hubOverviewData = await apiCall(`/api/admin/master-overview${force ? '?force=true' : ''}`);
+    } catch (err) {
+      hubOverviewData = null; // Never fabricate a number — cards just show no metric/badge.
+    }
+    renderHubGrid();
+  }
+
+  function hubCardBadge(entry) {
+    if (!entry.status_key || !hubOverviewData) return '';
+    const val = hubOverviewData[entry.status_key];
+    if (typeof val !== 'number' || val <= 0) return '';
+    return `<span class="hub-card__badge">${val} needs attention</span>`;
+  }
+
+  const HUB_MONEY_METRICS = ['revenue_today', 'commission_owed'];
+
+  function hubCardMetric(entry) {
+    if (!entry.metric || !hubOverviewData) return '';
+    const val = hubOverviewData[entry.metric];
+    if (val === undefined || val === null) return '';
+    const display = HUB_MONEY_METRICS.includes(entry.metric) ? money(val) : val;
+    return `<div class="hub-card__metric">${display}</div>`;
+  }
+
+  function hubCardHint(entry) {
+    if (entry.type === 'admin-section') return 'Open section →';
+    if ((entry.type === 'public-page' || entry.type === 'external') && entry.target) return 'Opens in new tab ↗';
+    return 'Informational';
+  }
+
+  function openHubCard(id) {
+    const entry = SITE_REGISTRY.find(e => e.id === id);
+    if (!entry) return;
+    if (entry.type === 'admin-section') {
+      switchSection(entry.target);
+    } else if ((entry.type === 'public-page' || entry.type === 'external') && entry.target) {
+      window.open(entry.target, '_blank');
+    }
+    // type "system" with no target: informational only, no navigation.
+  }
+
+  function renderHubGrid() {
+    const container = document.getElementById('hub-grid-container');
+    const searchEl = document.getElementById('hub-search');
+    if (!container || !searchEl) return;
+    const query = (searchEl.value || '').toLowerCase().trim();
+
+    const filtered = SITE_REGISTRY.filter(e => {
+      if (!query) return true;
+      return e.title.toLowerCase().includes(query)
+        || e.description.toLowerCase().includes(query)
+        || e.category.toLowerCase().includes(query);
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="hub-empty">No matches — try a different search term.</div>';
+      return;
+    }
+
+    // Group by category, preserving each category's first-appearance order
+    // in the registry — not hardcoded here, so a new category just appears.
+    const categoryOrder = [];
+    const byCategory = {};
+    filtered.forEach(e => {
+      if (!byCategory[e.category]) { byCategory[e.category] = []; categoryOrder.push(e.category); }
+      byCategory[e.category].push(e);
+    });
+
+    container.innerHTML = categoryOrder.map(cat => `
+      <div class="hub-category">
+        <div class="hub-category-title">${escapeHtml(cat)}</div>
+        <div class="hub-grid">
+          ${byCategory[cat].map(e => `
+            <div class="hub-card${e.type === 'system' && !e.target ? ' hub-card--info' : ''}" onclick="openHubCard('${e.id}')">
+              <div class="hub-card__top">
+                <div class="hub-card__icon">${e.icon || '•'}</div>
+                ${hubCardBadge(e)}
+              </div>
+              <div class="hub-card__title">${escapeHtml(e.title)}</div>
+              <div class="hub-card__desc">${escapeHtml(e.description)}</div>
+              ${hubCardMetric(e)}
+              <div class="hub-card__hint">${hubCardHint(e)}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
   }
 
   function escapeHtml(str) {
@@ -1863,7 +2059,7 @@
 
   // Initial Load
   const urlParams = new URLSearchParams(window.location.search);
-  const initialTab = urlParams.get('tab') || 'dashboard';
+  const initialTab = urlParams.get('tab') || 'hub';
   currentView = initialTab;
   
   // Set active class on view sections
@@ -1883,6 +2079,7 @@
 
   // Update page header titles
   const titles = {
+    hub: { title: "Master's Eye View", sub: 'Everything on the site, in one place — search, jump to any area, and see what needs attention' },
     dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
     sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
     customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },

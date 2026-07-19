@@ -1154,3 +1154,58 @@ async def resend_subscriber_sequence_email(email_addr: str, current_user=Depends
         {"$set": {"status": "pending", "retry_count": 0, "error": None, "scheduled_at": now}}
     )
     return {"status": "ok", "message": f"Re-queued sequence email #{stuck.get('sequence_number')} for {email_addr}. Will send within 5 minutes."}
+
+
+# ── Master's Eye View — single overview endpoint ────────────────────────────
+# Feeds the admin dashboard's Master's Eye View hub screen with one call.
+# Reuses get_analytics_overview / get_sequence_overview /
+# admin_get_subscriptions_kpis directly rather than re-implementing any of
+# their math — the rest are simple one-off counts with no existing
+# aggregation to duplicate. Cached briefly since a couple of the reused
+# calls (sequence overview in particular) iterate every active subscriber;
+# ?force=true bypasses the cache for the hub's manual Reload button.
+_master_overview_cache = {"data": None, "cached_at": None}
+_MASTER_OVERVIEW_TTL_SECONDS = 60
+
+
+@router.get("/master-overview")
+async def get_master_overview(force: bool = False, current_user=Depends(require_admin), db=Depends(get_db)):
+    now = datetime.now(timezone.utc)
+    if not force and _master_overview_cache["data"] is not None and _master_overview_cache["cached_at"]:
+        age = (now - _master_overview_cache["cached_at"]).total_seconds()
+        if age < _MASTER_OVERVIEW_TTL_SECONDS:
+            return _master_overview_cache["data"]
+
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+
+    overview = await get_analytics_overview(period="today", current_user=current_user, db=db)
+    sequence = await get_sequence_overview(current_user=current_user, db=db)
+    sub_kpis = await admin_get_subscriptions_kpis(current_user=current_user, db=db)
+
+    total_customers = await db.users.count_documents({"role": "customer"})
+    pending_emails = await db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}})
+    failed_emails = await db.email_queue.count_documents({"status": "failed"})
+    pending_payout_batches = await db.payout_batches.count_documents({"status": "pending_approval"})
+    flagged_payments = await db.flagged_payments.count_documents({"resolved": False})
+    new_leads_today = await db.leads.count_documents({"created_at": {"$gte": today_start}})
+    active_affiliates = await db.affiliates.count_documents({"active": True})
+
+    data = {
+        "generated_at": now.isoformat(),
+        "sales_today": overview["total_sales"],
+        "revenue_today": overview["today_revenue"],
+        "total_customers": total_customers,
+        "pending_emails": pending_emails,
+        "failed_emails": failed_emails,
+        "subscribers_behind": sequence["subscribers_behind"],
+        "active_subscriptions": sub_kpis["active_count"],
+        "past_due_subscriptions": sub_kpis["past_due_count"],
+        "commission_owed": overview["pending_payouts"],
+        "pending_payout_batches": pending_payout_batches,
+        "flagged_payments": flagged_payments,
+        "new_leads_today": new_leads_today,
+        "active_affiliates": active_affiliates,
+    }
+    _master_overview_cache["data"] = data
+    _master_overview_cache["cached_at"] = now
+    return data
