@@ -11,7 +11,6 @@ from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
 from ..schemas.schemas import (
     PaymentInitRequest, PaymentInitResponse,
     PaymentVerifyRequest, PaymentVerifyResponse,
-    PaymentCardChargeRequest,
 )
 from ..services.paystack import (
     initialize_transaction, verify_transaction
@@ -120,73 +119,6 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "charge_id":      access_code,
             "va_id":          None,
             "payment_method": payment_method,
-            "email":          body.email.lower(),
-            "name":           body.name,
-            "amount":         amount_naira,
-            "created_at":     now,
-            "referred_by":    referred_by,
-        }},
-        upsert=True,
-    )
-
-    return PaymentInitResponse(
-        reference=reference,
-        charge_id=access_code,
-        action="redirect",
-        redirect_url=redirect_url,
-        amount=amount_naira,
-    )
-
-
-@router.post("/charge_card", response_model=PaymentInitResponse)
-@limiter.limit("15/minute")
-async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depends(get_db)):
-    """
-    Direct Card Payment endpoint. Initializes card transaction with Paystack.
-    """
-    amount_naira, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code)
-    reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
-    now = datetime.now(timezone.utc)
-
-    # Save lead
-    await db.leads.update_one(
-        {"email": body.email.lower()},
-        {
-            "$set": {
-                "name": body.name,
-                "email": body.email.lower(),
-                "converted": False,
-                "price_offered": amount_naira,
-            },
-            "$setOnInsert": {"created_at": now},
-        },
-        upsert=True,
-    )
-
-    callback_url = f"{settings.APP_URL}/api/payments/callback"
-    try:
-        tx_data = await initialize_transaction(
-            email=body.email.lower(),
-            amount_naira=amount_naira,
-            reference=reference,
-            callback_url=callback_url,
-            metadata={"name": body.name, "payment_method": "card"},
-            channels=["card"],
-        )
-    except Exception as e:
-        print(f"❌ Paystack card charge error: {e}")
-        raise HTTPException(status_code=502, detail="Card authorization failed. Please try again.")
-
-    redirect_url = tx_data.get("authorization_url")
-    access_code = tx_data.get("access_code")
-
-    await db.pending_payments.update_one(
-        {"reference": reference},
-        {"$set": {
-            "reference":      reference,
-            "charge_id":      access_code,
-            "va_id":          None,
-            "payment_method": "card",
             "email":          body.email.lower(),
             "name":           body.name,
             "amount":         amount_naira,

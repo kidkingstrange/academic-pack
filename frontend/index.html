@@ -655,36 +655,6 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
           <div class="modal__progress-dot active"></div>
         </div>
 
-        <!-- Card Payment Form View -->
-        <div id="view-card-form" style="display: none;">
-          <h3 class="modal__title">Card Payment</h3>
-          <p class="modal__sub">Enter your debit or credit card details below for 256-bit encrypted checkout.</p>
-          <form id="card-payment-form">
-            <div class="form-group">
-              <label for="card-holder">Name on Card</label>
-              <input type="text" id="card-holder" placeholder="e.g. Chidi Okafor" required>
-            </div>
-            <div class="form-group">
-              <label for="card-number">Card Number</label>
-              <input type="text" id="card-number" placeholder="4111 1111 1111 1111" maxlength="19" inputmode="numeric" required>
-            </div>
-            <div style="display: flex; gap: 12px;">
-              <div class="form-group" style="flex: 1;">
-                <label for="card-expiry">Expiry (MM/YY)</label>
-                <input type="text" id="card-expiry" placeholder="12/28" maxlength="5" required>
-              </div>
-              <div class="form-group" style="flex: 1;">
-                <label for="card-cvv">CVV</label>
-                <input type="password" id="card-cvv" placeholder="123" maxlength="4" inputmode="numeric" required>
-              </div>
-            </div>
-            <div class="field-error" id="card-form-error" style="margin-bottom: 12px;"></div>
-            <button type="submit" class="modal__submit" id="submit-card">
-              Pay <span class="price-current">₦2,000</span> Now 🔒
-            </button>
-          </form>
-        </div>
-
         <div class="modal__spinner" id="payment-spinner">
           <div class="spin"></div>
           <p style="margin-top:16px;font-weight:600;color:var(--ink)">Processing payment...</p>
