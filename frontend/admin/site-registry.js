@@ -120,6 +120,16 @@ const SITE_REGISTRY = [
     status_key: "failed_emails",
   },
   {
+    id: "email-delivery",
+    title: "Email Delivery",
+    description: "Every welcome and sequence email, tracked proactively — search a customer's full history or spot systemic failures before they go unnoticed for weeks.",
+    category: "Communication",
+    type: "admin-section",
+    target: "email-delivery",
+    icon: "📬",
+    status_key: "failed_welcome_emails",
+  },
+  {
     id: "unsubscribe-page",
     title: "Unsubscribe Page",
     description: "The page a customer lands on if they opt out of emails. Needs their personal unsubscribe link to work — this opens the page without one, just to preview it.",

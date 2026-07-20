@@ -53,6 +53,13 @@ async def connect_db():
             db.email_queue.create_index([("status", 1), ("scheduled_at", 1)]),
             db.email_queue.create_index("subscriber_id"),
             db.email_queue.create_index([("kind", 1), ("status", 1)]),
+            # Email Delivery admin page — Currently Failed/Retrying tables
+            # sort by last_attempt_at; the alert scheduler filters by
+            # kind+status+last_attempt_at; the per-customer timeline
+            # filters by email.
+            db.email_queue.create_index([("status", 1), ("last_attempt_at", 1)]),
+            db.email_queue.create_index([("kind", 1), ("status", 1), ("last_attempt_at", 1)]),
+            db.email_queue.create_index("email"),
             db.downloads.create_index([("user_id", 1), ("product_id", 1)]),
             db.used_tokens.create_index("jti", unique=True),
             db.pending_payments.create_index("reference", unique=True),

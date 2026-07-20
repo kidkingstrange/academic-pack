@@ -1185,6 +1185,7 @@ async def get_master_overview(force: bool = False, current_user=Depends(require_
     total_customers = await db.users.count_documents({"role": "customer"})
     pending_emails = await db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}})
     failed_emails = await db.email_queue.count_documents({"status": "failed"})
+    failed_welcome_emails = await db.email_queue.count_documents({"status": "failed", "kind": "welcome"})
     pending_payout_batches = await db.payout_batches.count_documents({"status": "pending_approval"})
     flagged_payments = await db.flagged_payments.count_documents({"resolved": False})
     new_leads_today = await db.leads.count_documents({"created_at": {"$gte": today_start}})
@@ -1197,6 +1198,7 @@ async def get_master_overview(force: bool = False, current_user=Depends(require_
         "total_customers": total_customers,
         "pending_emails": pending_emails,
         "failed_emails": failed_emails,
+        "failed_welcome_emails": failed_welcome_emails,
         "subscribers_behind": sequence["subscribers_behind"],
         "active_subscriptions": sub_kpis["active_count"],
         "past_due_subscriptions": sub_kpis["past_due_count"],
