@@ -11,8 +11,8 @@ from ..config import get_settings
 from ..middleware.auth import require_sales_rep, require_admin
 from ..utils.security import verify_password, hash_password, create_access_token
 from ..utils.rate_limit import limiter
-from ..services.flutterwave import (
-    create_flw_customer, get_flw_token, initiate_card_payment, verify_flw_charge, FLW_API_BASE
+from ..services.paystack import (
+    initialize_transaction, verify_transaction
 )
 from ..services.email_service import send_email
 
@@ -50,7 +50,7 @@ class LeadInfoResponse(BaseModel):
 
 class CheckoutPayRequest(BaseModel):
     token: str
-    payment_method_id: str
+    payment_method_id: Optional[str] = None
 
 class CheckoutVerifyRequest(BaseModel):
     reference: str
@@ -220,8 +220,6 @@ async def get_checkout_info(token: str, db=Depends(get_db)):
 
 @router.post("/checkout/pay")
 async def process_checkout_payment(body: CheckoutPayRequest, db=Depends(get_db)):
-    import httpx
-    import uuid
     lead = await db.sales_leads.find_one({"generated_link_token": body.token})
     if not lead:
         raise HTTPException(status_code=404, detail="Invalid checkout link")
@@ -236,10 +234,6 @@ async def process_checkout_payment(body: CheckoutPayRequest, db=Depends(get_db))
     reference = f"SUB-{secrets.token_hex(8).upper()}"
 
     if body.payment_method_id == "mock-payment-method-id" and settings.APP_ENV == "development":
-        # Bypass FLW call for simulation / sandbox card testing — only ever
-        # allowed in local development. Gated by an explicit allow-list
-        # check (APP_ENV == "development") rather than != "production" so a
-        # misconfigured/unset APP_ENV can't accidentally enable it.
         charge_id = f"MOCK-{secrets.token_hex(12).upper()}"
         await db.pending_subscription_payments.insert_one({
             "reference": reference,
@@ -254,48 +248,23 @@ async def process_checkout_payment(body: CheckoutPayRequest, db=Depends(get_db))
             "reference": reference
         }
 
-    flw_token = await get_flw_token()
     redirect_url = f"{settings.APP_URL}/sales/checkout?reference={reference}"
 
     try:
-        customer_id = await create_flw_customer(
-            flw_token,
-            lead.get("prospect_name") or lead["prospect_email"],
-            lead["prospect_email"].lower()
+        tx_data = await initialize_transaction(
+            email=lead["prospect_email"].lower(),
+            amount_naira=offer["price"],
+            reference=reference,
+            callback_url=redirect_url,
+            metadata={"lead_token": body.token, "name": lead.get("prospect_name")},
+            channels=["card"],
         )
-        async with httpx.AsyncClient() as client:
-            # Create charge using payment_method_id from client
-            chg_resp = await client.post(
-                f"{FLW_API_BASE}/charges",
-                headers={
-                    "Authorization":     f"Bearer {flw_token}",
-                    "Content-Type":      "application/json",
-                    "X-Trace-Id":        str(uuid.uuid4()),
-                    "X-Idempotency-Key": reference,
-                },
-                json={
-                    "reference":         reference,
-                    "currency":          "NGN",
-                    "amount":            offer["price"],
-                    "customer_id":       customer_id,
-                    "payment_method_id": body.payment_method_id,
-                    "redirect_url":      redirect_url,
-                },
-                timeout=15,
-            )
-            chg_data = chg_resp.json()
-            if chg_data.get("status") != "success":
-                msg = chg_data.get("message") or "Payment gateway charge failed"
-                raise HTTPException(status_code=502, detail=f"Card payment failed: {msg}")
-            charge = chg_data["data"]
+        charge_id = tx_data.get("access_code") or reference
     except HTTPException:
         raise
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"Card payment gateway error: {str(e)}")
 
-    charge_id = charge.get("id")
-
-    # Store pending subscription payment record
     await db.pending_subscription_payments.insert_one({
         "reference": reference,
         "charge_id": charge_id,
@@ -304,21 +273,10 @@ async def process_checkout_payment(body: CheckoutPayRequest, db=Depends(get_db))
         "created_at": datetime.now(timezone.utc)
     })
 
-    # Return action
-    next_action = charge.get("next_action", {})
-    action_type = next_action.get("type")
-    
-    if action_type == "redirect_url":
-        return {
-            "status": "pending",
-            "action": "redirect",
-            "redirect_url": next_action["redirect_url"]["url"],
-            "reference": reference
-        }
-    
     return {
-        "status": "success",
-        "action": "none",
+        "status": "pending",
+        "action": "redirect",
+        "redirect_url": tx_data.get("authorization_url"),
         "reference": reference
     }
 
@@ -332,39 +290,34 @@ async def verify_checkout_payment(body: CheckoutVerifyRequest, db=Depends(get_db
         return {"success": True, "message": "Payment verified successfully"}
 
     if pending["charge_id"].startswith("MOCK-") and settings.APP_ENV == "development":
-        # Simulated success path — defense in depth: even if a MOCK- record
-        # somehow exists (e.g. a leftover from before this env gate), it can
-        # still only simulate success in development.
         charge_resp = {
-            "status": "success",
+            "status": True,
             "data": {
-                "status": "succeeded",
-                "card": {
-                    "token": "mock-card-token-12345",
-                    "last_4digits": "1111",
-                    "brand": "Visa"
+                "status": "success",
+                "authorization": {
+                    "authorization_code": "mock-card-token-12345",
+                    "last4": "1111",
+                    "card_type": "Visa"
                 }
             }
         }
     else:
         try:
-            charge_resp = await verify_flw_charge(pending["charge_id"])
+            charge_resp = await verify_transaction(body.reference)
         except Exception as e:
-            print(f"❌ FLW verify charge error: {e}")
+            print(f"❌ Paystack verify charge error: {e}")
             raise HTTPException(status_code=502, detail="Gateway error verifying payment")
 
-    flw_status = charge_resp.get("status")
+    paystack_status = charge_resp.get("status")
     charge_data = charge_resp.get("data", {})
     charge_status = charge_data.get("status")
 
-    if flw_status != "success" or charge_status != "succeeded":
-        # Check failed status
+    if not paystack_status or charge_status != "success":
         if charge_status in ["failed", "declined"]:
             await db.pending_subscription_payments.update_one(
                 {"reference": body.reference},
                 {"$set": {"status": "failed", "gateway_response": charge_resp}}
             )
-            # Update lead as abandoned
             await db.sales_leads.update_one(
                 {"generated_link_token": pending["lead_token"]},
                 {"$set": {"status": "abandoned"}}
@@ -373,16 +326,10 @@ async def verify_checkout_payment(body: CheckoutVerifyRequest, db=Depends(get_db
 
         return {"success": False, "message": "Payment is still pending verification"}
 
-    # Success! Extract card token and details
-    pm = charge_data.get("payment_method", {})
-    if pm.get("type") == "card":
-        card_token = pm.get("card", {}).get("token")
-        card_last4 = pm.get("card", {}).get("last_4digits", "")
-        card_brand = pm.get("card", {}).get("brand", "")
-    else:
-        card_token = charge_data.get("card", {}).get("token")
-        card_last4 = charge_data.get("card", {}).get("last_4digits", "")
-        card_brand = charge_data.get("card", {}).get("brand", "")
+    auth_info = charge_data.get("authorization", {})
+    card_token = auth_info.get("authorization_code", "")
+    card_last4 = auth_info.get("last4", "")
+    card_brand = auth_info.get("card_type", "")
 
     # Retrieve lead details
     lead = await db.sales_leads.find_one({"generated_link_token": pending["lead_token"]})

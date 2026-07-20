@@ -29,11 +29,16 @@ def _load_dotenv_into_environ():
                 os.environ[m.group(1)] = m.group(2)
 
 
+_load_dotenv_into_environ()
+
 import sys
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from backend import database  # noqa: E402
+from backend.config import get_settings  # noqa: E402
+
+get_settings.cache_clear()
 from backend.main import app  # noqa: E402
 
 

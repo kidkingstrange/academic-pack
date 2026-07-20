@@ -59,7 +59,7 @@ async def complete_payment(
             "name": name,
             "amount": amount,
             "currency": "NGN",
-            "gateway": "flutterwave",
+            "gateway": "paystack",
             "payment_method": payment_method,
             "status": "success",
             "gateway_response": gateway_response,

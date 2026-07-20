@@ -7,7 +7,7 @@ from apscheduler.triggers.cron import CronTrigger
 from .. import database
 from ..config import get_settings
 from ..services.email_service import send_email
-from ..services.flutterwave import get_flw_token, charge_token
+from ..services.paystack import charge_authorization
 
 scheduler = AsyncIOScheduler()
 settings = get_settings()
@@ -30,7 +30,6 @@ async def run_daily_subscription_billing():
         return
 
     print(f"⏰ Subscription billing: Processing {len(due_subs)} due renewals...")
-    flw_token = await get_flw_token()
 
     offer_ids = list({s["offer_id"] for s in due_subs if "offer_id" in s})
     offers = await db.offers.find({"_id": {"$in": offer_ids}}).to_list(len(offer_ids) or 1)
@@ -63,32 +62,29 @@ async def run_daily_subscription_billing():
         print(f"🔄 Billing sub {sub['_id']} (amount: ₦{offer['price']}) - ref: {reference}")
 
         try:
-            # Call Flutterwave tokenized charge
-            # Handle mock tokens in sandbox/test environments only — never in production,
-            # regardless of what card_token a subscription record happens to hold.
+            # Call Paystack charge_authorization
+            # Handle mock tokens in sandbox/test environments only — never in production
             if sub["card_token"] == "mock-card-token-12345" and settings.APP_ENV == "development":
-                # Simulated successful sandbox tokenized charge
                 chg_res = {
-                    "status": "success",
+                    "status": True,
                     "data": {
-                        "status": "succeeded",
-                        "amount": offer["price"]
+                        "status": "success",
+                        "amount": int(round(offer["price"] * 100))
                     }
                 }
             else:
-                chg_res = await charge_token(
-                    token=flw_token,
-                    card_token=sub["card_token"],
-                    amount_naira=offer["price"],
+                chg_res = await charge_authorization(
+                    authorization_code=sub["card_token"],
                     email=sub["customer_email"],
+                    amount_naira=offer["price"],
                     reference=reference
                 )
 
-            flw_status = chg_res.get("status")
+            paystack_status = chg_res.get("status")
             charge_data = chg_res.get("data", {})
             charge_status = charge_data.get("status") if isinstance(charge_data, dict) else ""
 
-            if flw_status == "success" and charge_status == "succeeded":
+            if paystack_status and charge_status == "success":
                 # ── Renewal Success ──
                 # 1. Update subscription status & next_charge_date (30 days from now) and release claim
                 await db.subscriptions.update_one(

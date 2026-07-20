@@ -3,13 +3,12 @@ Biweekly affiliate commission payouts.
 
 Two separate money flows live here, kept deliberately independent:
   1. Affiliate payout batches — what's owed to affiliates, paid out of
-     the Flutterwave NGN payout balance in a reviewable, admin-approved
+     the Paystack NGN payout balance in a reviewable, admin-approved
      batch (build_pending_batch never moves money; only send_batch does,
      and only after an admin explicitly approves).
   2. Your own settlement withdrawal — pulling your share (balance minus
      everything still owed to affiliates) out to your personal bank,
-     since disabling Flutterwave's auto-settlement means nothing leaves
-     the payout balance automatically anymore, including your own cut.
+     since funds accumulate in the payout balance.
 
 A referral only flips to commission_status="paid" when its specific
 transfer item actually succeeds. Anything that fails (bad account,
@@ -24,22 +23,22 @@ from bson import ObjectId
 from pymongo import ReturnDocument
 
 from ..config import get_settings
-from .flutterwave import create_transfer, get_ngn_balance
+from .paystack import create_transfer, get_paystack_balance
 
 settings = get_settings()
 
 
 def _clean_reference(raw: str) -> str:
-    """Flutterwave transfer references must be alphanumeric, 6-42 chars."""
-    cleaned = re.sub(r"[^A-Za-z0-9]", "", raw)
-    return cleaned[:42]
+    """Paystack transfer references must be alphanumeric, 6-50 chars."""
+    cleaned = re.sub(r"[^A-Za-z0-9_-]", "", raw)
+    return cleaned[:50]
 
 
 async def build_pending_batch(db, period_start: datetime, period_end: datetime) -> dict:
     """
     Group all currently-unpaid commissions by affiliate into a new
     payout_batches document (status "pending_approval"). Read-only
-    against Flutterwave — only touches MongoDB. Returns None if there's
+    against Paystack — only touches MongoDB. Returns None if there's
     nothing owed right now.
     """
     referrals = await db.referrals.find({"commission_status": "unpaid"}).to_list(10000)
@@ -94,7 +93,7 @@ async def send_batch(db, batch_id: str) -> dict:
     """
     Execute every sendable item in a batch. Each affiliate transfer is
     independent — one failure never blocks the others. Checks the live
-    Flutterwave balance before sending anything, so a batch that exceeds
+    Paystack balance before sending anything, so a batch that exceeds
     what's actually available is rejected up front rather than partially
     draining the balance.
     """
@@ -122,11 +121,11 @@ async def send_batch(db, batch_id: str) -> dict:
     sendable = [i for i in items if i["transfer_status"] in ("pending", "failed")]
     sendable_total = round(sum(i["amount"] for i in sendable), 2)
 
-    balance_resp = await get_ngn_balance()
+    balance_resp = await get_paystack_balance()
     if balance_resp.get("status") != "success":
         # Revert status on balance check failure
         await db.payout_batches.update_one({"_id": oid}, {"$set": {"status": "failed_partial"}})
-        raise ValueError(f"Could not read Flutterwave balance: {balance_resp.get('message') or balance_resp}")
+        raise ValueError(f"Could not read Paystack balance: {balance_resp.get('message') or balance_resp}")
     available = (balance_resp.get("data") or {}).get("available_balance", 0)
     if available < sendable_total:
         # Revert status on insufficient balance
@@ -145,8 +144,6 @@ async def send_batch(db, batch_id: str) -> dict:
             await db.payout_batches.update_one({"_id": batch["_id"]}, {"$set": {f"items.{idx}": item}})
             continue
 
-        # Deterministic transfer reference derived from batch ID + affiliate code
-        # (omitting random UUID so retries reuse Flutterwave's idempotency key)
         reference = _clean_reference(f"PAYOUT{batch['_id']}{item['affiliate_code']}")
         try:
             resp = await create_transfer(
@@ -155,10 +152,11 @@ async def send_batch(db, batch_id: str) -> dict:
                 amount_naira=item["amount"],
                 reference=reference,
                 narration=f"Affiliate commission - {item['affiliate_code']}",
+                recipient_name=item.get("account_name") or item.get("affiliate_name") or "Affiliate",
             )
             if resp.get("status") == "success":
                 item["transfer_status"] = "success"
-                item["flw_transfer_id"] = (resp.get("data") or {}).get("id")
+                item["flw_transfer_id"] = (resp.get("data") or {}).get("transfer_code") or (resp.get("data") or {}).get("id")
                 item["error"] = None
                 now = datetime.now(timezone.utc)
                 await db.referrals.update_many(
@@ -170,7 +168,7 @@ async def send_batch(db, batch_id: str) -> dict:
                 )
             else:
                 item["transfer_status"] = "failed"
-                item["error"] = resp.get("message") or str(resp)
+                item["error"] = (resp.get("error") or {}).get("message") or resp.get("message") or str(resp)
                 any_failed = True
         except Exception as e:
             item["transfer_status"] = "failed"
@@ -189,15 +187,13 @@ async def send_batch(db, batch_id: str) -> dict:
 
 async def get_settlement_summary(db) -> dict:
     """
-    What's actually yours to withdraw: the Flutterwave payout balance
-    minus everything still owed to affiliates across ALL batches (not
-    just the latest one — includes anything rolled over from a failed
-    item). Read-only.
+    What's actually yours to withdraw: the Paystack payout balance
+    minus everything still owed to affiliates across ALL batches. Read-only.
     """
-    balance_resp = await get_ngn_balance()
+    balance_resp = await get_paystack_balance()
     if balance_resp.get("status") != "success":
-        raise ValueError(f"Could not read Flutterwave balance: {balance_resp.get('message') or balance_resp}")
-    flw_balance = (balance_resp.get("data") or {}).get("available_balance", 0)
+        raise ValueError(f"Could not read Paystack balance: {balance_resp.get('message') or balance_resp}")
+    paystack_balance = (balance_resp.get("data") or {}).get("available_balance", 0)
 
     pipeline = [
         {"$match": {"commission_status": "unpaid"}},
@@ -207,17 +203,17 @@ async def get_settlement_summary(db) -> dict:
     reserved = round(result[0]["total"], 2) if result else 0.0
 
     return {
-        "flutterwave_balance": flw_balance,
+        "flutterwave_balance": paystack_balance,  # keep key name for backwards compatibility in API responses
+        "paystack_balance": paystack_balance,
         "reserved_for_affiliates": reserved,
-        "available_to_withdraw": round(flw_balance - reserved, 2),
+        "available_to_withdraw": round(paystack_balance - reserved, 2),
     }
 
 
 async def withdraw_settlement_share(db, amount_naira: float) -> dict:
     """
-    Transfer your own share out of the Flutterwave payout balance to the
-    settlement bank account configured via SETTLEMENT_* env vars. Records
-    an audit entry in settlement_withdrawals regardless of outcome.
+    Transfer your own share out of the Paystack payout balance to the
+    settlement bank account configured via SETTLEMENT_* env vars.
     """
     if not settings.SETTLEMENT_BANK_CODE or not settings.SETTLEMENT_ACCOUNT_NUMBER:
         raise ValueError("SETTLEMENT_BANK_CODE / SETTLEMENT_ACCOUNT_NUMBER not configured")
@@ -243,11 +239,12 @@ async def withdraw_settlement_share(db, amount_naira: float) -> dict:
             amount_naira=amount_naira,
             reference=reference,
             narration="Owner settlement withdrawal",
+            recipient_name=settings.SETTLEMENT_ACCOUNT_NAME or "Owner Settlement",
         )
         if resp.get("status") == "success":
-            update = {"status": "success", "flw_transfer_id": (resp.get("data") or {}).get("id")}
+            update = {"status": "success", "flw_transfer_id": (resp.get("data") or {}).get("transfer_code") or (resp.get("data") or {}).get("id")}
         else:
-            update = {"status": "failed", "error": resp.get("message") or str(resp)}
+            update = {"status": "failed", "error": (resp.get("error") or {}).get("message") or resp.get("message") or str(resp)}
     except Exception as e:
         update = {"status": "failed", "error": str(e)}
 

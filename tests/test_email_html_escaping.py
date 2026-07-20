@@ -24,7 +24,6 @@ async def test_subscription_renewal_success_email_escapes_customer_name(test_db,
         return (True, None)
 
     monkeypatch.setattr(sub_scheduler_module, "send_email", fake_send_email)
-    monkeypatch.setattr(sub_scheduler_module, "get_flw_token", AsyncMock(return_value="tok"))
 
     offer_id = ObjectId()
     await test_db.offers.insert_one({"_id": offer_id, "name": "Study Plan", "price": 2000})
@@ -36,10 +35,10 @@ async def test_subscription_renewal_success_email_escapes_customer_name(test_db,
         "customer_phone": "+234000", "sales_rep_id": ObjectId(),
     })
 
-    async def fake_charge_token(**kwargs):
-        return {"status": "success", "data": {"status": "succeeded", "amount": 2000}}
+    async def fake_charge_authorization(**kwargs):
+        return {"status": True, "data": {"status": "success", "amount": 200000}}
 
-    monkeypatch.setattr(sub_scheduler_module, "charge_token", fake_charge_token)
+    monkeypatch.setattr(sub_scheduler_module, "charge_authorization", fake_charge_authorization)
 
     await sub_scheduler_module.run_daily_subscription_billing()
 

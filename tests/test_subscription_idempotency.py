@@ -36,11 +36,10 @@ async def test_subscription_idempotency_claim_and_reference():
     mock_db.offers.find_one.return_value = mock_offer
 
     with patch("backend.workers.subscription_scheduler.database.get_db", return_value=mock_db), \
-         patch("backend.workers.subscription_scheduler.get_flw_token", AsyncMock(return_value="flw-secret")), \
-         patch("backend.workers.subscription_scheduler.charge_token", new_callable=AsyncMock) as mock_charge, \
+         patch("backend.workers.subscription_scheduler.charge_authorization", new_callable=AsyncMock) as mock_charge, \
          patch("backend.workers.subscription_scheduler.send_email", AsyncMock()):
 
-        mock_charge.return_value = {"status": "success", "data": {"status": "succeeded", "amount": 10000.0}}
+        mock_charge.return_value = {"status": True, "data": {"status": "success", "amount": 1000000}}
 
         await run_daily_subscription_billing()
 

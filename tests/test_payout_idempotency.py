@@ -34,7 +34,7 @@ async def test_send_batch_cas_and_deterministic_reference():
     mock_db.payout_batches.find_one_and_update.return_value = sending_batch
     mock_db.payout_batches.find_one.return_value = sending_batch
 
-    with patch("backend.services.payout_service.get_ngn_balance", new_callable=AsyncMock) as mock_bal, \
+    with patch("backend.services.payout_service.get_paystack_balance", new_callable=AsyncMock) as mock_bal, \
          patch("backend.services.payout_service.create_transfer", new_callable=AsyncMock) as mock_transfer:
         
         mock_bal.return_value = {"status": "success", "data": {"available_balance": 100000.0}}

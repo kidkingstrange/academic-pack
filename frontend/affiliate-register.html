@@ -237,9 +237,8 @@ function formatApiError(detail, fallback) {
     return !!(aliasTarget && normName.includes(aliasTarget));
   }
 
-  // Bank list sourced from our own backend (Flutterwave), not Paystack's
-  // public API — the bank `code` values must match what /resolve-bank
-  // expects, and this app authenticates with Flutterwave everywhere else.
+  // Bank list sourced from our own backend (Paystack)
+  // so the bank code values match what /resolve-bank expects.
   async function loadFullNigerianBanks() {
     try {
       const res = await fetch(`${API_BASE}/affiliates/banks`);

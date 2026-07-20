@@ -758,7 +758,7 @@
     <!-- ── VIEW 5: PAYOUTS (Biweekly Batches + Settlement) ──────────────────── -->
     <div id="view-payouts" class="section">
       <div class="kpi-grid">
-        <div class="kpi-card"><div class="kpi-title">Flutterwave Balance</div><div class="kpi-val" id="payout-kpi-balance">₦0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Paystack Balance</div><div class="kpi-val" id="payout-kpi-balance">₦0</div></div>
         <div class="kpi-card"><div class="kpi-title">Reserved for Affiliates</div><div class="kpi-val" id="payout-kpi-reserved">₦0</div></div>
         <div class="kpi-card"><div class="kpi-title">Available to Withdraw</div><div class="kpi-val gold" id="payout-kpi-available">₦0</div></div>
       </div>
@@ -766,7 +766,7 @@
       <div class="data-table-container" style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; margin-bottom:32px">
         <div>
           <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Your Settlement</div>
-          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Pull your share out of the Flutterwave payout balance — never automatic, always your call</div>
+          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Pull your share out of the Paystack payout balance — never automatic, always your call</div>
         </div>
         <button class="btn-action" onclick="openWithdrawModal()"><i class="bi bi-bank"></i> Withdraw My Share</button>
       </div>
@@ -1263,7 +1263,7 @@
         <td>${escapeHtml(s.email)}</td>
         <td style="color:var(--gold-light);font-weight:700">${money(s.amount)}</td>
         <td>${formatPaymentMethod(s.payment_method)}</td>
-        <td style="text-transform:capitalize">${escapeHtml(s.gateway || 'Flutterwave')}</td>
+        <td style="text-transform:capitalize">${escapeHtml(s.gateway || 'Paystack')}</td>
         <td><span class="status-pill ${s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed')}">${escapeHtml(s.status)}</span>&nbsp;${emailBadge}</td>
         <td>${actionBtn}</td>
       </tr>`;
@@ -1355,7 +1355,7 @@
   function exportSalesCSV() {
     let csv = 'Date,Reference,Name,Email,Amount,Status,Method,Gateway\n';
     allSalesData.forEach(s => {
-      csv += `"${s.verified_at || ''}","${s.reference}","${s.name}","${s.email}",${s.amount},"${s.status}","${formatPaymentMethod(s.payment_method)}","${s.gateway || 'flutterwave'}"\n`;
+      csv += `"${s.verified_at || ''}","${s.reference}","${s.name}","${s.email}",${s.amount},"${s.status}","${formatPaymentMethod(s.payment_method)}","${s.gateway || 'paystack'}"\n`;
     });
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
@@ -1636,7 +1636,7 @@
     ]);
 
     if (!settlement.detail) {
-      document.getElementById('payout-kpi-balance').textContent = money(settlement.flutterwave_balance);
+      document.getElementById('payout-kpi-balance').textContent = money(settlement.paystack_balance !== undefined ? settlement.paystack_balance : settlement.flutterwave_balance);
       document.getElementById('payout-kpi-reserved').textContent = money(settlement.reserved_for_affiliates);
       document.getElementById('payout-kpi-available').textContent = money(settlement.available_to_withdraw);
     }
@@ -1736,7 +1736,7 @@
     if (!pendingBatch) return;
     const sendable = pendingBatch.items.filter(i => i.transfer_status === 'pending' || i.transfer_status === 'failed');
     const sendableTotal = sendable.reduce((sum, i) => sum + i.amount, 0);
-    const confirmMsg = `This sends REAL MONEY via Flutterwave to ${sendable.length} affiliate(s), totaling ${money(sendableTotal)}.\n\nThis cannot be undone. Continue?`;
+    const confirmMsg = `This sends REAL MONEY via Paystack to ${sendable.length} affiliate(s), totaling ${money(sendableTotal)}.\n\nThis cannot be undone. Continue?`;
     if (!confirm(confirmMsg)) return;
 
     const result = await apiCall(`/api/admin/payouts/batches/${pendingBatch.id}/approve`, 'POST', {});

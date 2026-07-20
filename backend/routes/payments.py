@@ -1,5 +1,5 @@
 """
-Payment routes — Flutterwave V4 bank transfer flow.
+Payment routes — Paystack payment flow.
 """
 import base64
 import hashlib
@@ -13,11 +13,8 @@ from ..schemas.schemas import (
     PaymentVerifyRequest, PaymentVerifyResponse,
     PaymentCardChargeRequest,
 )
-from ..services.flutterwave import (
-    get_flw_token, create_flw_customer,
-    initiate_bank_transfer, verify_flw_charge,
-    create_virtual_account, verify_charges_by_reference,
-    initiate_card_payment,
+from ..services.paystack import (
+    initialize_transaction, verify_transaction
 )
 from ..services.payment_completion import complete_payment
 from ..services.email_service import send_email
@@ -47,6 +44,8 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
     if existing_lead:
         created_at = existing_lead.get("created_at")
         if created_at:
+            if isinstance(created_at, str):
+                created_at = datetime.fromisoformat(created_at)
             if created_at.tzinfo is None:
                 created_at = created_at.replace(tzinfo=timezone.utc)
             if (now - created_at).total_seconds() > 24 * 3600:
@@ -66,11 +65,11 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
 @limiter.limit("10/minute")
 async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(get_db)):
     """
-    Step 1: Determine price, create Flutterwave customer,
-    initiate bank-transfer charge, return virtual account details.
+    Step 1: Determine price, initialize Paystack transaction,
+    return authorization/redirect URL.
     """
     reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now(timezone.utc)
     amount_naira, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code)
 
     # ── Upsert lead ───────────────────────────────────────────────────
@@ -90,119 +89,52 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         upsert=True,
     )
 
-    # ── Flutterwave: get token → customer ────────────────────────────────
-    try:
-        token       = await get_flw_token()
-        customer_id = await create_flw_customer(token, body.name, body.email.lower())
-    except Exception as e:
-        print(f"❌ FLW initiation error: {e}")
-        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
-
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
-
+    channels = None
     if payment_method == "bank_transfer":
-        # ── Virtual Account path ──────────────────────────────────────
-        try:
-            narration = f"{body.name} - Academic Comeback Package"
-            va_data = await create_virtual_account(
-                token, customer_id, amount_naira, reference, narration,
-                bank_code=settings.FLW_VIRTUAL_ACCOUNT_BANK_CODE,
-            )
-        except Exception as e:
-            print(f"❌ FLW virtual-account error: {e}")
-            raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+        channels = ["bank_transfer"]
+    elif payment_method == "card":
+        channels = ["card"]
 
-        va_id = va_data.get("id")
-        await db.pending_payments.update_one(
-            {"reference": reference},
-            {"$set": {
-                "reference":      reference,
-                "va_id":          va_id,
-                "charge_id":      None,
-                "payment_method": "bank_transfer",
-                "email":          body.email.lower(),
-                "name":           body.name,
-                "amount":         amount_naira,
-                "customer_id":    customer_id,
-                "created_at":     now,
-                "referred_by":    referred_by,
-            }},
-            upsert=True,
-        )
-
-        return PaymentInitResponse(
-            reference=reference,
-            va_id=va_id,
-            action="virtual_account",
-            account_number=va_data.get("account_number", ""),
-            bank_name=va_data.get("account_bank_name", ""),
-            amount=amount_naira,
-            amount_with_fee=int(va_data.get("amount", amount_naira)),
-            expiry=va_data.get("account_expiration_datetime"),
-            note=va_data.get("note", "Transfer the exact amount shown. Account is valid for 60 minutes."),
-        )
-
-    # ── Pay with Bank path (existing behavior) ────────────────────────
+    callback_url = f"{settings.APP_URL}/api/payments/callback"
     try:
-        redirect_url = f"{settings.APP_URL}/api/payments/callback"
-        charge      = await initiate_bank_transfer(
-            token, customer_id, amount_naira, reference, redirect_url
+        tx_data = await initialize_transaction(
+            email=body.email.lower(),
+            amount_naira=amount_naira,
+            reference=reference,
+            callback_url=callback_url,
+            metadata={"name": body.name, "payment_method": payment_method},
+            channels=channels,
         )
     except Exception as e:
-        print(f"❌ FLW initiation error: {e}")
+        print(f"❌ Paystack initiation error: {e}")
         raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
 
-    # ── Save pending order ────────────────────────────────────────────
-    charge_id = charge.get("id")
+    redirect_url = tx_data.get("authorization_url")
+    access_code = tx_data.get("access_code")
+
     await db.pending_payments.update_one(
         {"reference": reference},
         {"$set": {
             "reference":      reference,
-            "charge_id":      charge_id,
+            "charge_id":      access_code,
             "va_id":          None,
             "payment_method": payment_method,
             "email":          body.email.lower(),
             "name":           body.name,
             "amount":         amount_naira,
-            "customer_id":    customer_id,
             "created_at":     now,
             "referred_by":    referred_by,
         }},
         upsert=True,
     )
 
-    # ── Determine action and return ───────────────────────────────────
-    next_action = charge.get("next_action", {})
-    action_type = next_action.get("type")
-
-    redirect_link = None
-    if action_type == "redirect_url" and isinstance(next_action.get("redirect_url"), dict):
-        redirect_link = next_action["redirect_url"].get("url")
-    elif isinstance(next_action.get("redirect_url"), str):
-        redirect_link = next_action["redirect_url"]
-    elif charge.get("redirect_url"):
-        redirect_link = charge["redirect_url"]
-
-    if redirect_link:
-        return PaymentInitResponse(
-            reference=reference,
-            charge_id=charge_id,
-            action="redirect",
-            redirect_url=redirect_link,
-            amount=amount_naira,
-        )
-
-    # Default: bank_transfer (from charge)
-    va = charge.get("payment_method_details", {}).get("bank_transfer", {})
-    instruction = next_action.get("payment_instruction", {})
     return PaymentInitResponse(
         reference=reference,
-        charge_id=charge_id,
-        action="bank_transfer",
-        account_number=va.get("account_number", ""),
-        bank_name=va.get("bank_name", ""),
+        charge_id=access_code,
+        action="redirect",
+        redirect_url=redirect_url,
         amount=amount_naira,
-        note=instruction.get("note", "Transfer the exact amount. Account is valid for 30 minutes."),
     )
 
 
@@ -210,12 +142,11 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
 @limiter.limit("15/minute")
 async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depends(get_db)):
     """
-    Direct Card Payment endpoint. Encrypts card details and initiates
-    a card charge with Flutterwave V4 Experience.
+    Direct Card Payment endpoint. Initializes card transaction with Paystack.
     """
     amount_naira, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code)
     reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
-    now = datetime.now(timezone.utc).isoformat()
+    now = datetime.now(timezone.utc)
 
     # Save lead
     await db.leads.update_one(
@@ -232,83 +163,44 @@ async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depen
         upsert=True,
     )
 
+    callback_url = f"{settings.APP_URL}/api/payments/callback"
     try:
-        token = await get_flw_token()
-        customer_id = await create_flw_customer(token, body.name, body.email.lower())
-    except Exception as e:
-        print(f"❌ FLW customer/token error: {e}")
-        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
-
-    redirect_url = f"{settings.APP_URL}/api/payments/callback"
-
-    exp_year = body.expiry_year.strip()
-    if len(exp_year) == 4:
-        exp_year = exp_year[-2:]
-    exp_month = body.expiry_month.strip().zfill(2)
-
-    try:
-        charge = await initiate_card_payment(
-            token=token,
-            customer_id=customer_id,
+        tx_data = await initialize_transaction(
+            email=body.email.lower(),
             amount_naira=amount_naira,
             reference=reference,
-            redirect_url=redirect_url,
-            card_number=body.card_number,
-            cvv=body.cvv,
-            expiry_month=exp_month,
-            expiry_year=exp_year,
-            cardholder_name=body.cardholder_name,
+            callback_url=callback_url,
+            metadata={"name": body.name, "payment_method": "card"},
+            channels=["card"],
         )
     except Exception as e:
-        print(f"❌ FLW card charge error: {e}")
-        raise HTTPException(status_code=502, detail="Card charge failed. Please check your card details or try Bank Transfer.")
+        print(f"❌ Paystack card charge error: {e}")
+        raise HTTPException(status_code=502, detail="Card authorization failed. Please try again.")
 
-    charge_id = charge.get("id")
+    redirect_url = tx_data.get("authorization_url")
+    access_code = tx_data.get("access_code")
+
     await db.pending_payments.update_one(
         {"reference": reference},
         {"$set": {
             "reference":      reference,
-            "charge_id":      charge_id,
+            "charge_id":      access_code,
             "va_id":          None,
             "payment_method": "card",
             "email":          body.email.lower(),
             "name":           body.name,
             "amount":         amount_naira,
-            "customer_id":    customer_id,
             "created_at":     now,
             "referred_by":    referred_by,
         }},
         upsert=True,
     )
 
-    next_action = charge.get("next_action", {})
-    action_type = next_action.get("type")
-
-    redirect_link = None
-    if action_type == "redirect_url":
-        url_val = next_action.get("redirect_url")
-        if isinstance(url_val, dict):
-            redirect_link = url_val.get("url")
-        elif isinstance(url_val, str):
-            redirect_link = url_val
-    elif isinstance(charge.get("redirect_url"), str):
-        redirect_link = charge["redirect_url"]
-
-    if redirect_link and redirect_link != redirect_url:
-        return PaymentInitResponse(
-            reference=reference,
-            charge_id=charge_id,
-            action="redirect",
-            redirect_url=redirect_link,
-            amount=amount_naira,
-        )
-
-    callback_with_ref = f"{redirect_url}?reference={reference}"
     return PaymentInitResponse(
         reference=reference,
-        charge_id=charge_id,
+        charge_id=access_code,
         action="redirect",
-        redirect_url=callback_with_ref,
+        redirect_url=redirect_url,
         amount=amount_naira,
     )
 
@@ -318,14 +210,8 @@ async def charge_card(body: PaymentCardChargeRequest, request: Request, db=Depen
 async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depends(get_db)):
     """
     Step 2: Frontend polls this after customer claims to have paid.
-    Verifies charge with Flutterwave, then runs complete_payment() —
-    the same shared completion path used by the webhook and /callback.
+    Verifies transaction with Paystack, then runs complete_payment().
     """
-    # Fast path: already confirmed. Avoid re-hitting Flutterwave, but still
-    # self-heal via complete_payment() if the subscriber/email queue never
-    # got created (e.g. the webhook claimed the payment but died before
-    # reaching that step) — this is the exact gap that used to grant
-    # access without ever enrolling the customer.
     existing_payment = await db.payments.find_one({"reference": body.reference, "status": "success"})
     if existing_payment:
         existing_sub = await db.subscribers.find_one({"email": body.email.lower()})
@@ -351,61 +237,23 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
         return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, amount=existing_payment.get("amount", 0))
 
-    # Verify with Flutterwave — branch on payment method
-    payment_method = (body.payment_method or "pay_with_bank").strip().lower()
+    try:
+        result = await verify_transaction(body.reference)
+    except Exception as e:
+        print(f"❌ Paystack verify error: {e}")
+        return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
 
-    if payment_method == "bank_transfer":
-        # ── Virtual Account verification path ─────────────────────────
-        try:
-            result = await verify_charges_by_reference(body.reference)
-        except Exception as e:
-            print(f"❌ FLW VA verify error: {e}")
-            return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
+    if not result.get("status"):
+        return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
 
-        if result.get("status") != "success":
-            return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
+    data = result.get("data", {})
+    if data.get("status") != "success":
+        return PaymentVerifyResponse(
+            success=False,
+            message="Payment not yet confirmed. Please complete payment and try again."
+        )
 
-        charges = result.get("data", [])
-        if not isinstance(charges, list):
-            charges = [charges] if charges else []
-
-        succeeded_charge = None
-        for chg in charges:
-            if chg.get("status") == "succeeded":
-                succeeded_charge = chg
-                break
-
-        if not succeeded_charge:
-            return PaymentVerifyResponse(
-                success=False,
-                message="Payment not yet confirmed. Please complete the transfer and try again."
-            )
-
-        amount_paid = int(succeeded_charge.get("amount", 0))
-        # Keep gateway response reference matching expected shape
-        charge = succeeded_charge
-    else:
-        # ── Charge verification path (existing) ──────────────────────
-        try:
-            result = await verify_flw_charge(body.charge_id)
-        except Exception as e:
-            print(f"❌ FLW verify error: {e}")
-            return PaymentVerifyResponse(success=False, message="Could not verify payment. Please try again.")
-
-        if result.get("status") != "success":
-            return PaymentVerifyResponse(success=False, message="Payment not yet confirmed. Please wait and try again.")
-
-        charge = result["data"]
-        charge_status = charge.get("status")
-
-        if charge_status != "succeeded":
-            return PaymentVerifyResponse(
-                success=False,
-                message=f"Payment status: {charge_status}. Please complete the transfer and try again."
-            )
-
-        amount_paid = charge.get("amount", 0)
-
+    amount_paid = data.get("amount", 0) / 100.0
     now = datetime.now(timezone.utc)
 
     # ── 24-hour price enforcement ─────────────────────────────────────
@@ -439,11 +287,11 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         email=body.email,
         name=body.name,
         amount=amount_paid,
-        charge_id=body.charge_id,
-        gateway_response=charge,
+        charge_id=str(data.get("id")),
+        gateway_response=data,
         completed_via="polling",
         ip_address=get_real_client_ip(request),
-        payment_method=payment_method,
+        payment_method=body.payment_method,
     )
 
     ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
@@ -453,18 +301,17 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
 @router.get("/callback")
 async def payment_callback(
     request: Request,
-    status: str = "",
-    tx_ref: str = "",
+    trxref: str = "",
     reference: str = "",
     db=Depends(get_db),
 ):
     """
-    Flutterwave redirects here after 3DS/redirect payments.
+    Paystack redirects here after payment completion.
     Looks up the pending order and redirects to welcome page with token.
     """
     from fastapi.responses import RedirectResponse
 
-    ref = tx_ref or reference
+    ref = trxref or reference
     if not ref:
         return RedirectResponse("/?error=missing_reference")
 
@@ -472,31 +319,27 @@ async def payment_callback(
     if not pending:
         return RedirectResponse("/?error=order_not_found")
 
-    charge_id = pending.get("charge_id")
-    if not charge_id:
-        return RedirectResponse("/?error=charge_not_found")
-
     try:
-        result = await verify_flw_charge(charge_id)
-        charge = result.get("data", {})
+        result = await verify_transaction(ref)
+        data = result.get("data", {})
     except Exception:
         return RedirectResponse("/?error=verify_failed")
 
-    if charge.get("status") != "succeeded":
+    if not result.get("status") or data.get("status") != "success":
         return RedirectResponse("/?error=payment_not_confirmed")
 
     email = pending["email"]
     name  = pending["name"]
-    now   = datetime.now(timezone.utc)
+    amount_paid = data.get("amount", 0) / 100.0
 
     completion = await complete_payment(
         db,
         reference=ref,
         email=email,
         name=name,
-        amount=charge.get("amount", 0),
-        charge_id=charge_id,
-        gateway_response=charge,
+        amount=amount_paid,
+        charge_id=str(data.get("id")),
+        gateway_response=data,
         completed_via="callback",
         ip_address=get_real_client_ip(request),
         payment_method=pending.get("payment_method", "pay_with_bank"),
@@ -511,23 +354,17 @@ async def payment_callback(
 async def process_webhook_payment(payload: dict, db):
     t_start = datetime.now(timezone.utc)
     data = payload.get("data", {})
-    ref = data.get("tx_ref")
+    ref = data.get("reference")
     print(f"⏱ [webhook] start ref={ref} at={t_start.isoformat()}")
     if not ref:
-        print("⚠️ Webhook payload missing tx_ref")
+        print("⚠️ Webhook payload missing reference")
         return
 
-    # Find pending payment
     pending = await db.pending_payments.find_one({"reference": ref})
     if not pending:
-        # Check if it starts with our prefix to avoid processing random webhooks
         if not str(ref).startswith("ACP-"):
             print(f"⚠️ Webhook: Unknown non-ACP reference {ref}")
             return
-        # No pending_payments record exists for an otherwise-valid (signature
-        # verified) ACP- reference. Every real checkout creates a pending
-        # record up front, so this is anomalous — do NOT grant access based
-        # on payload-supplied email/amount. Flag it for manual review instead.
         await db.flagged_payments.insert_one({
             "reference": ref,
             "reason": "no_matching_pending_payment",
@@ -537,11 +374,11 @@ async def process_webhook_payment(payload: dict, db):
         })
         try:
             flagged_email = data.get("customer", {}).get("email") or "unknown"
-            flagged_amount = data.get("amount")
+            flagged_amount = (data.get("amount") or 0) / 100.0
             await send_email(
                 settings.ADMIN_EMAIL,
                 f"⚠️ Webhook flagged for manual review — {ref}",
-                f"<p>A verified Flutterwave webhook arrived for reference <b>{ref}</b> "
+                f"<p>A verified Paystack webhook arrived for reference <b>{ref}</b> "
                 f"with no matching pending_payments record.</p>"
                 f"<p>Payload claims: email={flagged_email}, amount={flagged_amount}</p>"
                 f"<p>No access was granted automatically. Check the flagged_payments "
@@ -554,18 +391,14 @@ async def process_webhook_payment(payload: dict, db):
     else:
         email = pending.get("email")
         name = pending.get("name")
-        amount_paid = pending.get("amount", 2000)
-        charge_id = pending.get("charge_id") or pending.get("va_id") or str(data.get("id"))
+        amount_paid = (data.get("amount") or 0) / 100.0 or pending.get("amount", 2000)
+        charge_id = str(data.get("id")) or pending.get("charge_id")
         payment_method = pending.get("payment_method")
 
     if not email:
         print(f"⚠️ Webhook: Missing customer email for {ref}")
         return
 
-    # complete_payment() is idempotent — if this reference was already
-    # claimed (e.g. by the frontend poll), this call still checks and
-    # backfills a missing subscriber/email-queue instead of silently
-    # returning early like the old pre-check here used to.
     await complete_payment(
         db,
         reference=ref,
@@ -584,20 +417,18 @@ async def process_webhook_payment(payload: dict, db):
 
 # ── Webhook endpoint ──────────────────────────────────────────────────────────
 @router.post("/webhook")
-async def flutterwave_webhook(
+async def paystack_webhook(
     request: Request,
     background_tasks: BackgroundTasks,
     db=Depends(get_db)
 ):
     """
-    Asynchronous webhook endpoint for Flutterwave payment completion events.
-    Verifies the verif-hash header (plain text secret hash) or flutterwave-signature.
+    Asynchronous webhook endpoint for Paystack payment completion events.
+    Verifies x-paystack-signature (HMAC-SHA512 of request body using secret key).
     """
     raw_body = await request.body()
-    received_hash = request.headers.get("verif-hash")
-    received_signature = request.headers.get("flutterwave-signature")
+    signature = request.headers.get("x-paystack-signature")
 
-    # Log incoming webhook request for diagnostic purposes
     body_text = ""
     try:
         body_text = raw_body.decode("utf-8")
@@ -608,64 +439,46 @@ async def flutterwave_webhook(
         "received_at": datetime.now(timezone.utc),
         "headers": {k: v for k, v in request.headers.items() if k.lower() != "authorization"},
         "body": body_text,
-        "verif_hash_received": received_hash,
-        "verif_hash_expected": settings.FLW_WEBHOOK_SECRET_HASH,
-        "signature_received": received_signature,
+        "signature_received": signature,
         "ip": get_real_client_ip(request)
     }
-    
+
     try:
         await db.webhook_logs.insert_one(log_entry)
     except Exception as db_err:
         print(f"❌ Failed to write webhook log to DB: {db_err}")
 
-    # 1. Signature Verification — fail closed. Any of: no secret configured,
-    # no signature header present, or a signature that doesn't match, must
-    # reject the request outright rather than process it "anyway".
-    secret_hash = (settings.FLW_WEBHOOK_SECRET_HASH or "").strip()
-    if not secret_hash:
-        print("❌ Webhook rejected: FLW_WEBHOOK_SECRET_HASH is not configured on the server")
+    secret_key = (settings.PAYSTACK_SECRET_KEY or "").strip()
+    if not secret_key:
+        print("❌ Webhook rejected: PAYSTACK_SECRET_KEY is not configured on the server")
         raise HTTPException(status_code=500, detail="Webhook verification not configured")
 
-    verified = False
-    if received_hash and hmac.compare_digest(received_hash.strip(), secret_hash):
-        verified = True
-    elif received_signature:
-        expected_signature = base64.b64encode(
-            hmac.new(
-                secret_hash.encode(),
-                raw_body,
-                hashlib.sha256,
-            ).digest()
-        ).decode()
-        if hmac.compare_digest(received_signature.strip(), expected_signature):
-            verified = True
-
-    if not verified:
-        print(
-            f"⚠️ Webhook rejected: signature verification failed "
-            f"(hash_header_present={bool(received_hash)}, signature_header_present={bool(received_signature)})"
-        )
+    if not signature:
+        print("⚠️ Webhook rejected: x-paystack-signature header missing")
         raise HTTPException(status_code=401, detail="Invalid webhook signature")
 
-    # 2. Parse payload
+    computed_signature = hmac.new(
+        secret_key.encode("utf-8"),
+        raw_body,
+        hashlib.sha512,
+    ).hexdigest()
+
+    if not hmac.compare_digest(signature.strip(), computed_signature):
+        print("⚠️ Webhook rejected: Paystack signature verification failed")
+        raise HTTPException(status_code=401, detail="Invalid webhook signature")
+
     try:
         payload = await request.json()
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid JSON payload")
 
-    # Flutterwave V4 sends the event type under "type", not "event", and
-    # the charge status is "succeeded", not "successful" — both wrong
-    # before, so this condition was never true for any real webhook.
-    event = payload.get("type")
+    event = payload.get("event")
     data = payload.get("data", {})
     status = data.get("status")
 
-    print(f"📥 Received Flutterwave webhook: type={event}, status={status}")
+    print(f"📥 Received Paystack webhook: event={event}, status={status}")
 
-    # 3. Handle successful charge events
-    if event == "charge.completed" and status == "succeeded":
+    if event == "charge.success" and status == "success":
         background_tasks.add_task(process_webhook_payment, payload, db)
 
-    # Always return 200 OK immediately to acknowledge receipt
     return {"status": "received"}

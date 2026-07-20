@@ -1,11 +1,6 @@
 """
-Regression coverage for the Flutterwave webhook signature bypass (audit
-Critical #1/#2): backend/routes/payments.py previously logged a warning on
-a missing/mismatched signature but processed the event anyway, and trusted
-payload-supplied email/amount when no matching pending_payments record
-existed.
+Regression coverage for Paystack webhook signature verification and payload handling.
 """
-import base64
 import hashlib
 import hmac
 import json
@@ -20,19 +15,19 @@ WEBHOOK_URL = "/api/payments/webhook"
 
 
 def _sign(raw_body: bytes) -> str:
-    secret = settings.FLW_WEBHOOK_SECRET_HASH.strip()
-    return base64.b64encode(hmac.new(secret.encode(), raw_body, hashlib.sha256).digest()).decode()
+    secret = (settings.PAYSTACK_SECRET_KEY or "").strip()
+    return hmac.new(secret.encode("utf-8"), raw_body, hashlib.sha512).hexdigest()
 
 
-def _payload(ref: str, email: str = "customer@example.com", amount: float = 2000):
+def _payload(ref: str, email: str = "customer@example.com", amount_naira: float = 2000):
     return {
-        "type": "charge.completed",
+        "event": "charge.success",
         "data": {
-            "status": "succeeded",
-            "tx_ref": ref,
-            "id": "FLW-CHG-123",
-            "amount": amount,
-            "customer": {"email": email, "name": "Test Customer"},
+            "status": "success",
+            "reference": ref,
+            "id": 123456,
+            "amount": int(amount_naira * 100),
+            "customer": {"email": email, "first_name": "Test", "last_name": "Customer"},
         },
     }
 
@@ -52,46 +47,23 @@ async def test_webhook_rejects_mismatched_signature(client):
         content=json.dumps(body),
         headers={
             "Content-Type": "application/json",
-            "flutterwave-signature": "not-the-real-signature",
+            "x-paystack-signature": "not-the-real-signature",
         },
     )
     assert res.status_code == 401
 
 
 @pytest.mark.asyncio
-async def test_webhook_rejects_wrong_verif_hash(client):
-    body = _payload("ACP-BADHASH-001")
-    res = await client.post(
-        WEBHOOK_URL,
-        json=body,
-        headers={"verif-hash": "totally-wrong-hash"},
-    )
-    assert res.status_code == 401
-
-
-@pytest.mark.asyncio
-async def test_webhook_accepts_correct_verif_hash(client, test_db, monkeypatch):
-    monkeypatch.setattr("backend.routes.payments.send_email", AsyncMock(return_value=(True, None)))
-    body = _payload("ACP-GOODHASH-001")
-    res = await client.post(
-        WEBHOOK_URL,
-        json=body,
-        headers={"verif-hash": settings.FLW_WEBHOOK_SECRET_HASH},
-    )
-    assert res.status_code == 200
-
-
-@pytest.mark.asyncio
 async def test_webhook_accepts_correct_hmac_signature(client, test_db, monkeypatch):
     monkeypatch.setattr("backend.routes.payments.send_email", AsyncMock(return_value=(True, None)))
     body = _payload("ACP-GOODSIG-001")
-    raw = json.dumps(body).encode()
+    raw = json.dumps(body).encode("utf-8")
     res = await client.post(
         WEBHOOK_URL,
         content=raw,
         headers={
             "Content-Type": "application/json",
-            "flutterwave-signature": _sign(raw),
+            "x-paystack-signature": _sign(raw),
         },
     )
     assert res.status_code == 200
@@ -99,18 +71,19 @@ async def test_webhook_accepts_correct_hmac_signature(client, test_db, monkeypat
 
 @pytest.mark.asyncio
 async def test_webhook_flags_unmatched_reference_instead_of_trusting_payload(client, test_db, monkeypatch):
-    """No pending_payments record exists for this ACP- reference. Even with
-    a valid signature, the payload's claimed email/amount must not be
-    trusted to grant access — it should be flagged for manual review."""
     mock_send = AsyncMock(return_value=(True, None))
     monkeypatch.setattr("backend.routes.payments.send_email", mock_send)
 
     ref = "ACP-ORPHAN-001"
-    body = _payload(ref, email="attacker-controlled@example.com", amount=999999)
+    body = _payload(ref, email="attacker-controlled@example.com", amount_naira=999999)
+    raw = json.dumps(body).encode("utf-8")
     res = await client.post(
         WEBHOOK_URL,
-        json=body,
-        headers={"verif-hash": settings.FLW_WEBHOOK_SECRET_HASH},
+        content=raw,
+        headers={
+            "Content-Type": "application/json",
+            "x-paystack-signature": _sign(raw),
+        },
     )
     assert res.status_code == 200
 
@@ -126,8 +99,6 @@ async def test_webhook_flags_unmatched_reference_instead_of_trusting_payload(cli
 
 @pytest.mark.asyncio
 async def test_webhook_completes_payment_with_matching_pending_record(client, test_db, monkeypatch):
-    """A real checkout flow: a pending_payments record already exists for
-    this reference, so a verified webhook should complete it normally."""
     monkeypatch.setattr("backend.services.payment_completion.process_email_queue", AsyncMock())
 
     ref = "ACP-REALFLOW-001"
@@ -136,15 +107,19 @@ async def test_webhook_completes_payment_with_matching_pending_record(client, te
         "email": "realcustomer@example.com",
         "name": "Real Customer",
         "amount": 2000,
-        "charge_id": "FLW-CHG-REAL",
+        "charge_id": "PAYSTACK-CHG-REAL",
         "payment_method": "bank_transfer",
     })
 
-    body = _payload(ref, email="realcustomer@example.com", amount=2000)
+    body = _payload(ref, email="realcustomer@example.com", amount_naira=2000)
+    raw = json.dumps(body).encode("utf-8")
     res = await client.post(
         WEBHOOK_URL,
-        json=body,
-        headers={"verif-hash": settings.FLW_WEBHOOK_SECRET_HASH},
+        content=raw,
+        headers={
+            "Content-Type": "application/json",
+            "x-paystack-signature": _sign(raw),
+        },
     )
     assert res.status_code == 200
 
