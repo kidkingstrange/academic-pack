@@ -117,17 +117,18 @@
 .value-stack{padding:80px 0;background:var(--surface2)}
 .value-stack__header{text-align:center;margin-bottom:48px}
 .value-table{background:#fff;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow)}
-.value-table__row{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid #f0eee8}
+.value-table__row{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid #f0eee8;color:#0c0e12 !important}
 .value-table__row:last-child{border-bottom:none}
-.value-table__row--total{background:linear-gradient(135deg,var(--ink),var(--ink2));color:#fff}
-.value-table__row--final{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--ink)}
-.value-table__label{font-size:.92rem;font-weight:600;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.value-table__row--total{background:linear-gradient(135deg,var(--ink),var(--ink2));color:#fff !important}
+.value-table__row--final{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:#0c0e12 !important}
+.value-table__label{font-size:.92rem;font-weight:600;display:flex;align-items:center;gap:10px;color:#0c0e12 !important}
+.value-table__label span{color:#0c0e12 !important;font-weight:600}
 .value-table__label i{color:var(--gold);font-size:1rem}
-.value-table__row--total .value-table__label{color:#fff}
-.value-table__row--final .value-table__label{color:var(--ink);font-weight:800}
-.value-table__price{font-size:.95rem;font-weight:700;color:var(--ink)}
-.value-table__row--total .value-table__price{color:rgba(255,255,255,.7);text-decoration:line-through}
-.value-table__row--final .value-table__price{color:var(--ink);font-size:1.2rem;font-weight:900}
+.value-table__row--total .value-table__label,.value-table__row--total .value-table__label span{color:#fff !important}
+.value-table__row--final .value-table__label,.value-table__row--final .value-table__label span{color:#0c0e12 !important;font-weight:800}
+.value-table__price{font-size:.95rem;font-weight:700;color:#0c0e12 !important}
+.value-table__row--total .value-table__price{color:rgba(255,255,255,.7) !important;text-decoration:line-through}
+.value-table__row--final .value-table__price{color:#0c0e12 !important;font-size:1.2rem;font-weight:900}
 
 /* TESTIMONIALS */
 .testimonials{padding:88px 0;background:var(--surface)}
