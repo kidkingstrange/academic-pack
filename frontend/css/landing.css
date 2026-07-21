@@ -121,11 +121,11 @@
 .value-table__row:last-child{border-bottom:none}
 .value-table__row--total{background:linear-gradient(135deg,var(--ink),var(--ink2));color:#fff}
 .value-table__row--final{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--ink)}
-.value-table__label{font-size:.92rem;font-weight:600;display:flex;align-items:center;gap:10px}
+.value-table__label{font-size:.92rem;font-weight:600;display:flex;align-items:center;gap:10px;color:var(--ink)}
 .value-table__label i{color:var(--gold);font-size:1rem}
 .value-table__row--total .value-table__label{color:#fff}
 .value-table__row--final .value-table__label{color:var(--ink);font-weight:800}
-.value-table__price{font-size:.95rem;font-weight:700;color:var(--text2)}
+.value-table__price{font-size:.95rem;font-weight:700;color:var(--ink)}
 .value-table__row--total .value-table__price{color:rgba(255,255,255,.7);text-decoration:line-through}
 .value-table__row--final .value-table__price{color:var(--ink);font-size:1.2rem;font-weight:900}
 
