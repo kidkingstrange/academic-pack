@@ -35,6 +35,9 @@ class Settings(BaseSettings):
     PAYSTACK_PUBLIC_KEY: str = "pk_test_your_paystack_public_key"
     PRODUCT_PRICE_NAIRA: int = 2000   # ₦2,000 early-bird
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
+    PRODUCT_PRICE_USD: float = 15.0     # $15 early-bird
+    PRODUCT_PRICE_LATE_USD: float = 30.0 # $30 after 24 hrs
+    USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
 
     # ── Meta Conversions API (server-side Purchase event) ────────────
     # Same Pixel ID already used client-side in index.html/welcome.html.

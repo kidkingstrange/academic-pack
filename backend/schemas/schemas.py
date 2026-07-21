@@ -26,21 +26,23 @@ class PaymentInitRequest(BaseModel):
     client_expiry: Optional[float] = None  # ms timestamp from frontend
     payment_method: Optional[str] = "bank_transfer"  # "bank_transfer" | "pay_with_bank" | "card"
     referral_code: Optional[str] = None  # captured from /r/CODE via localStorage at checkout
+    country: Optional[str] = "NG"
+    currency: Optional[str] = "NGN"
 
 
 class PaymentInitResponse(BaseModel):
     """
-    Flutterwave bank-transfer response — shows virtual account to customer.
+    Paystack transaction response — shows virtual account or redirect url.
     """
     reference: str
     charge_id: Optional[str] = None
     va_id: Optional[str] = None
-    action: str = "bank_transfer"       # "redirect" | "bank_transfer" | "virtual_account"
+    action: str = "redirect"       # "redirect" | "bank_transfer" | "virtual_account"
     redirect_url: Optional[str] = None  # used when action == "redirect"
     account_number: Optional[str] = None
     bank_name: Optional[str] = None
-    amount: int
-    amount_with_fee: Optional[int] = None  # amount customer actually transfers (includes 2% fee)
+    amount: float
+    amount_with_fee: Optional[float] = None  # amount customer actually transfers (includes 2% fee)
     expiry: Optional[str] = None  # ISO datetime when virtual account expires
     note: Optional[str] = None
 

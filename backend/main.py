@@ -135,6 +135,15 @@ async def serve_sitemap():
 async def serve_index():
     return FileResponse(str(frontend_path / "index.html"))
 
+@app.get("/us", include_in_schema=False)
+async def serve_us_landing():
+    return FileResponse(str(frontend_path / "us.html"))
+
+@app.get("/usa", include_in_schema=False)
+@app.get("/united-states", include_in_schema=False)
+async def serve_us_aliases():
+    return RedirectResponse(url="/us", status_code=301)
+
 @app.get("/welcome", include_in_schema=False)
 async def serve_welcome():
     return FileResponse(str(frontend_path / "welcome.html"))

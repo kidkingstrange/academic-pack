@@ -25,6 +25,7 @@ async def initialize_transaction(
     callback_url: str,
     metadata: Optional[Dict[str, Any]] = None,
     channels: Optional[List[str]] = None,
+    currency: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Initialize a Paystack payment transaction.
@@ -37,6 +38,8 @@ async def initialize_transaction(
         "reference": reference,
         "callback_url": callback_url,
     }
+    if currency:
+        payload["currency"] = currency.upper()
     if metadata:
         payload["metadata"] = metadata
     if channels:

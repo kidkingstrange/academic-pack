@@ -26,8 +26,12 @@ router = APIRouter(prefix="/api/payments", tags=["payments"])
 settings = get_settings()
 
 
-async def compute_price_and_referral(db, email: str, client_expiry: float = None, referral_code: str = None):
-    amount_naira = settings.PRODUCT_PRICE_NAIRA
+async def compute_price_and_referral(db, email: str, client_expiry: float = None, referral_code: str = None, currency: str = "NGN"):
+    is_usd = (currency or "").strip().upper() == "USD"
+    base_price = settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA
+    late_price = settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA
+
+    amount = base_price
     now = datetime.now(timezone.utc)
 
     referred_by = None
@@ -55,9 +59,9 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
                 is_expired = True
 
     if is_expired or referred_by:
-        amount_naira = settings.PRODUCT_PRICE_LATE_NAIRA
+        amount = late_price
 
-    return amount_naira, referred_by
+    return amount, referred_by
 
 
 @router.post("/initialize", response_model=PaymentInitResponse)
@@ -69,7 +73,9 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     """
     reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
     now = datetime.now(timezone.utc)
-    amount_naira, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code)
+
+    currency = (body.currency or ("USD" if (body.country or "").upper() == "US" else "NGN")).strip().upper()
+    amount, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code, currency=currency)
 
     # ── Upsert lead ───────────────────────────────────────────────────
     await db.leads.update_one(
@@ -81,14 +87,15 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                 "source": "landing_page",
                 "ip_address": get_real_client_ip(request),
                 "converted": False,
-                "price_offered": amount_naira,
+                "price_offered": amount,
+                "currency": currency,
             },
             "$setOnInsert": {"created_at": now},
         },
         upsert=True,
     )
 
-    payment_method = (body.payment_method or "pay_with_bank").strip().lower()
+    payment_method = (body.payment_method or "card" if currency == "USD" else "pay_with_bank").strip().lower()
     channels = None
     if payment_method == "bank_transfer":
         channels = ["bank_transfer"]
@@ -99,15 +106,34 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     try:
         tx_data = await initialize_transaction(
             email=body.email.lower(),
-            amount_naira=amount_naira,
+            amount_naira=amount,
             reference=reference,
             callback_url=callback_url,
-            metadata={"name": body.name, "payment_method": payment_method},
+            metadata={"name": body.name, "payment_method": payment_method, "currency": currency},
             channels=channels,
+            currency=currency if currency == "USD" else None,
         )
     except Exception as e:
-        print(f"❌ Paystack initiation error: {e}")
-        raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+        err_msg = str(e)
+        if currency == "USD" and ("Currency not supported" in err_msg or "currency" in err_msg.lower()):
+            print(f"⚠️ Paystack USD not enabled on merchant account: {err_msg}. Falling back to NGN equivalent.")
+            ngn_equivalent = amount * settings.USD_TO_NGN_RATE
+            try:
+                tx_data = await initialize_transaction(
+                    email=body.email.lower(),
+                    amount_naira=ngn_equivalent,
+                    reference=reference,
+                    callback_url=callback_url,
+                    metadata={"name": body.name, "payment_method": payment_method, "original_currency": "USD", "usd_amount": amount},
+                    channels=channels,
+                    currency=None,
+                )
+            except Exception as fallback_err:
+                print(f"❌ Paystack initiation fallback error: {fallback_err}")
+                raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
+        else:
+            print(f"❌ Paystack initiation error: {e}")
+            raise HTTPException(status_code=502, detail="Payment gateway error. Please try again.")
 
     redirect_url = tx_data.get("authorization_url")
     access_code = tx_data.get("access_code")
@@ -121,7 +147,8 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "payment_method": payment_method,
             "email":          body.email.lower(),
             "name":           body.name,
-            "amount":         amount_naira,
+            "amount":         amount,
+            "currency":       currency,
             "created_at":     now,
             "referred_by":    referred_by,
         }},
@@ -133,7 +160,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         charge_id=access_code,
         action="redirect",
         redirect_url=redirect_url,
-        amount=amount_naira,
+        amount=amount,
     )
 
 
