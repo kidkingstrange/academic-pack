@@ -95,3 +95,68 @@ async def create_affiliate_record(
     doc["id"] = str(result.inserted_id)
     doc["code"] = resolved_code
     return doc
+
+
+async def ensure_affiliate_subaccount(db, affiliate: dict) -> dict:
+    """
+    Create or update this affiliate's Paystack subaccount so future
+    referred sales can split to their bank account instantly at the
+    point of payment, bypassing the manual commission/payout-batch
+    pipeline entirely for them going forward.
+
+    No-ops and returns the affiliate unchanged if bank details are
+    incomplete (most commonly a missing bank_code) — such an affiliate
+    simply stays on the existing manual payout system rather than
+    blocking whatever caller triggered this (affiliate creation, a bank
+    details update, or a commission-rate change).
+    """
+    from ..services.paystack import create_subaccount, update_subaccount
+
+    bank_code = (affiliate.get("bank_code") or "").strip()
+    account_number = (affiliate.get("account_number") or "").strip()
+    if not bank_code or not account_number:
+        return affiliate
+
+    business_name = (affiliate.get("account_name") or affiliate.get("name") or affiliate.get("code")).strip()
+    commission_percent = affiliate.get("commission_percent", 0) or 0
+    # percentage_charge is Paystack's field for what the MAIN account
+    # keeps — the affiliate's subaccount receives the rest, i.e. their
+    # actual commission rate.
+    percentage_charge = round(100 - commission_percent, 2)
+
+    existing_code = affiliate.get("subaccount_code")
+    try:
+        if existing_code:
+            resp = await update_subaccount(
+                existing_code,
+                business_name=business_name,
+                bank_code=bank_code,
+                account_number=account_number,
+                percentage_charge=percentage_charge,
+            )
+            subaccount_code = existing_code
+        else:
+            resp = await create_subaccount(
+                business_name=business_name,
+                bank_code=bank_code,
+                account_number=account_number,
+                percentage_charge=percentage_charge,
+                description=f"Affiliate {affiliate.get('code')}",
+            )
+            subaccount_code = (resp.get("data") or {}).get("subaccount_code")
+    except Exception as e:
+        print(f"⚠️ Paystack subaccount sync failed for affiliate {affiliate.get('code')}: {e}")
+        return affiliate
+
+    if not resp.get("status") or not subaccount_code:
+        print(f"⚠️ Paystack subaccount sync rejected for affiliate {affiliate.get('code')}: {resp.get('message')}")
+        return affiliate
+
+    update_fields = {
+        "subaccount_code": subaccount_code,
+        "subaccount_percentage_charge": percentage_charge,
+        "subaccount_synced_at": datetime.now(timezone.utc),
+    }
+    await db.affiliates.update_one({"_id": affiliate["_id"]}, {"$set": update_fields})
+    affiliate.update(update_fields)
+    return affiliate

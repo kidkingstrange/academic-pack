@@ -14,6 +14,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from ..config import get_settings
 from ..database import get_db
 from ..schemas.schemas import AffiliateBankDetailsUpdateRequest
+from ..services.affiliate_service import ensure_affiliate_subaccount
 from ..services.marketing_assets import get_asset, list_assets_for_affiliate
 
 router = APIRouter(prefix="/api/affiliate", tags=["affiliate-dashboard"])
@@ -103,6 +104,8 @@ async def update_my_bank_details(token: str, body: AffiliateBankDetailsUpdateReq
         {"_id": affiliate["_id"]},
         {"$set": update_fields}
     )
+    affiliate.update(update_fields)
+    await ensure_affiliate_subaccount(db, affiliate)
 
     return {
         "status": "ok",

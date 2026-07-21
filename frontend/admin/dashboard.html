@@ -1613,6 +1613,9 @@
         <td>
           <div style="font-weight:600;font-size:0.82rem;color:#fff">${a.bank_name ? escapeHtml(a.bank_name) : '<span style="color:var(--gray-l)">Not provided</span>'}</div>
           <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${a.account_number ? escapeHtml(a.account_number) + ' (' + escapeHtml(a.account_name || a.name) + ')' : ''}</div>
+          ${a.has_instant_split
+            ? '<div style="font-size:0.72rem;color:var(--green);font-weight:700;margin-top:2px"><i class="bi bi-lightning-charge-fill"></i> Instant split</div>'
+            : '<div style="font-size:0.72rem;color:var(--gray-l);font-weight:600;margin-top:2px"><i class="bi bi-clock-history"></i> Manual payout</div>'}
         </td>
         <td>${a.clicks}</td>
         <td>${a.conversions}</td>

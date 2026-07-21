@@ -26,10 +26,19 @@ async def initialize_transaction(
     metadata: Optional[Dict[str, Any]] = None,
     channels: Optional[List[str]] = None,
     currency: Optional[str] = None,
+    subaccount: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Initialize a Paystack payment transaction.
     Returns payload containing authorization_url, access_code, and reference.
+
+    subaccount: a subaccount code (ACCT_xxx) to instantly split this
+    transaction with, per the subaccount's own percentage_charge (the
+    percentage the MAIN account keeps — the subaccount receives the
+    rest). bearer is deliberately left at Paystack's default ("account")
+    so the platform absorbs the Paystack processing fee, not the
+    affiliate — matches how commission has always been calculated on
+    the full sale amount, never net of fees.
     """
     amount_kobo = int(round(amount_naira * 100))
     payload = {
@@ -44,6 +53,8 @@ async def initialize_transaction(
         payload["metadata"] = metadata
     if channels:
         payload["channels"] = channels
+    if subaccount:
+        payload["subaccount"] = subaccount
 
     async with httpx.AsyncClient() as client:
         resp = await client.post(
@@ -95,6 +106,67 @@ async def charge_authorization(
             headers=get_headers(),
             json=payload,
             timeout=20,
+        )
+        return resp.json()
+
+
+async def create_subaccount(
+    business_name: str,
+    bank_code: str,
+    account_number: str,
+    percentage_charge: float,
+    description: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Register a Paystack subaccount — a standing settlement destination an
+    /transaction/initialize call can split payments to directly.
+
+    percentage_charge is the percentage of each transaction the MAIN
+    account keeps; the subaccount receives the remainder. This is
+    Paystack's own convention (confirmed against their docs), not ours —
+    it is NOT the affiliate's commission rate, it's 100 minus it.
+    """
+    payload = {
+        "business_name": business_name.strip(),
+        "bank_code": bank_code.strip(),
+        "account_number": account_number.strip(),
+        "percentage_charge": percentage_charge,
+    }
+    if description:
+        payload["description"] = description
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            f"{PAYSTACK_API_BASE}/subaccount",
+            headers=get_headers(),
+            json=payload,
+            timeout=15,
+        )
+        return resp.json()
+
+
+async def update_subaccount(
+    subaccount_code: str,
+    business_name: Optional[str] = None,
+    bank_code: Optional[str] = None,
+    account_number: Optional[str] = None,
+    percentage_charge: Optional[float] = None,
+) -> Dict[str, Any]:
+    """Update an existing subaccount's settlement bank or split percentage."""
+    payload = {}
+    if business_name:
+        payload["business_name"] = business_name.strip()
+    if bank_code:
+        payload["bank_code"] = bank_code.strip()
+    if account_number:
+        payload["account_number"] = account_number.strip()
+    if percentage_charge is not None:
+        payload["percentage_charge"] = percentage_charge
+    async with httpx.AsyncClient() as client:
+        resp = await client.put(
+            f"{PAYSTACK_API_BASE}/subaccount/{subaccount_code}",
+            headers=get_headers(),
+            json=payload,
+            timeout=15,
         )
         return resp.json()
 

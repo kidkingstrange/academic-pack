@@ -39,7 +39,7 @@ async def test_nigerian_landing_remains_intact(client):
 async def test_usd_payment_initialization_pricing_and_currency(client, test_db, monkeypatch):
     captured_paystack_call = {}
 
-    async def fake_initialize_transaction(email, amount_naira, reference, callback_url, metadata=None, channels=None, currency=None):
+    async def fake_initialize_transaction(email, amount_naira, reference, callback_url, metadata=None, channels=None, currency=None, subaccount=None):
         captured_paystack_call["amount"] = amount_naira
         captured_paystack_call["currency"] = currency
         return {

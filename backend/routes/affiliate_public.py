@@ -15,7 +15,7 @@ from ..database import get_db
 from ..config import get_settings
 from ..utils.rate_limit import get_real_client_ip
 from ..schemas.schemas import AffiliateRegisterRequest
-from ..services.affiliate_service import create_affiliate_record
+from ..services.affiliate_service import create_affiliate_record, ensure_affiliate_subaccount
 from ..services.meta_capi import send_complete_registration_event
 from ..workers.email_scheduler import process_email_queue
 
@@ -51,6 +51,8 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
         if str(e) == "duplicate_email":
             raise HTTPException(status_code=409, detail="An affiliate account with this email already exists.")
         raise HTTPException(status_code=500, detail="Could not complete registration. Please try again.")
+
+    affiliate = await ensure_affiliate_subaccount(db, affiliate)
 
     referral_link = f"{settings.APP_URL}/r/{affiliate['code']}"
     dashboard_link = f"{settings.APP_URL}/affiliate/dashboard?token={affiliate['dashboard_token']}"

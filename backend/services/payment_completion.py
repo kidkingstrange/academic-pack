@@ -119,6 +119,19 @@ async def complete_payment(
             if affiliate:
                 rate = affiliate.get("commission_percent", 0) or 0
                 commission_amount = round(amount * rate / 100, 2)
+                # split_applied means Paystack already sent the affiliate
+                # their cut directly at the point of payment (see
+                # routes/payments.py + services/affiliate_service.py).
+                # Recorded as commission_status="paid" (it genuinely is —
+                # every existing "commission paid" total across the admin
+                # and affiliate dashboards does an exact match on "paid")
+                # with payout_method distinguishing how, purely for audit
+                # visibility. Critically, this also means
+                # build_pending_batch()'s {"commission_status": "unpaid"}
+                # query skips it — without that, the affiliate would be
+                # paid twice: once instantly via the split, once again in
+                # the next manual batch transfer.
+                split_applied = bool(pending.get("split_applied")) if pending else False
                 try:
                     await db.referrals.insert_one({
                         "reference": reference,
@@ -128,8 +141,9 @@ async def complete_payment(
                         "amount": amount,
                         "commission_rate": rate,
                         "commission_amount": commission_amount,
-                        "commission_status": "unpaid",
-                        "paid_at": None,
+                        "commission_status": "paid" if split_applied else "unpaid",
+                        "payout_method": "instant_split" if split_applied else "manual_batch",
+                        "paid_at": now if split_applied else None,
                         "created_at": now,
                     })
                 except DuplicateKeyError:

@@ -77,6 +77,18 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     currency = (body.currency or ("USD" if (body.country or "").upper() == "US" else "NGN")).strip().upper()
     amount, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code, currency=currency)
 
+    # ── Instant affiliate split ────────────────────────────────────────
+    # If this affiliate has a Paystack subaccount set up (bank details
+    # complete — see services/affiliate_service.py), split the sale at
+    # the point of payment instead of tracking it as manual unpaid
+    # commission for a later batch transfer. An affiliate without a
+    # subaccount yet still works exactly as before.
+    subaccount_code = None
+    if referred_by:
+        referring_affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
+        if referring_affiliate:
+            subaccount_code = referring_affiliate.get("subaccount_code")
+
     # ── Upsert lead ───────────────────────────────────────────────────
     await db.leads.update_one(
         {"email": body.email.lower()},
@@ -102,6 +114,11 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     elif payment_method == "card":
         channels = ["card"]
 
+    # Splits settle to an NGN bank account — not meaningful for a USD
+    # charge, so a referred USD sale just stays on the manual commission
+    # path rather than guessing at untested cross-currency behavior.
+    split_applied = bool(subaccount_code) and currency != "USD"
+
     callback_url = f"{settings.APP_URL}/api/payments/callback"
     try:
         tx_data = await initialize_transaction(
@@ -112,6 +129,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             metadata={"name": body.name, "payment_method": payment_method, "currency": currency},
             channels=channels,
             currency=currency if currency == "USD" else None,
+            subaccount=subaccount_code if split_applied else None,
         )
     except Exception as e:
         err_msg = str(e)
@@ -151,6 +169,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "currency":       currency,
             "created_at":     now,
             "referred_by":    referred_by,
+            "split_applied":  split_applied,
         }},
         upsert=True,
     )

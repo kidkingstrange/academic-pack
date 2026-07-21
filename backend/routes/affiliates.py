@@ -24,7 +24,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from ..middleware.auth import require_admin
 from ..database import get_db
 from ..schemas.schemas import AffiliateCreateRequest, AffiliateCommissionUpdateRequest
-from ..services.affiliate_service import create_affiliate_record
+from ..services.affiliate_service import create_affiliate_record, ensure_affiliate_subaccount
 
 router = APIRouter(prefix="/api/admin/affiliates", tags=["affiliates"])
 
@@ -51,6 +51,8 @@ async def create_affiliate(
         if reason == "duplicate_code":
             raise HTTPException(status_code=409, detail=f"Affiliate code '{body.code}' already exists")
         raise HTTPException(status_code=500, detail="Could not generate a unique affiliate code")
+
+    affiliate = await ensure_affiliate_subaccount(db, affiliate)
 
     return {
         "id": affiliate["id"],
@@ -130,6 +132,7 @@ async def list_affiliates(
             "bank_name": a.get("bank_name", ""),
             "account_number": a.get("account_number", ""),
             "account_name": a.get("account_name", ""),
+            "has_instant_split": bool(a.get("subaccount_code")),
         })
     return {"affiliates": out, "total": total, "page": page, "pages": -(-total // limit)}
 
@@ -157,6 +160,14 @@ async def update_commission(
     )
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Affiliate not found")
+
+    # Keep an existing Paystack subaccount's split percentage in sync —
+    # otherwise a rate change here would silently stop applying to
+    # affiliates who get paid via instant split.
+    affiliate = await db.affiliates.find_one({"_id": oid})
+    if affiliate and affiliate.get("subaccount_code"):
+        await ensure_affiliate_subaccount(db, affiliate)
+
     return {"success": True, "commission_percent": body.commission_percent}
 
 
