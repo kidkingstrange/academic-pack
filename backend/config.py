@@ -119,13 +119,19 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     s = Settings()
     
-    # Render environment variable fallback to prevent misconfigured APP_URL
+    # Allow explicit APP_URL in environment (e.g. custom domain https://academiccomeback.com)
+    # to take priority over Render's default RENDER_EXTERNAL_URL (https://academic-pack.onrender.com)
     import os
-    render_url = os.environ.get("RENDER_EXTERNAL_URL")
-    if render_url:
+    env_app_url = os.environ.get("APP_URL", "").strip()
+    render_url = os.environ.get("RENDER_EXTERNAL_URL", "").strip()
+
+    if env_app_url and "localhost" not in env_app_url and "127.0.0.1" not in env_app_url:
+        s.APP_URL = env_app_url.rstrip("/")
+    elif render_url:
         s.APP_URL = render_url.rstrip("/")
 
     for name, value in list(s.__dict__.items()):
         if isinstance(value, str):
             setattr(s, name, value.strip())
     return s
+
