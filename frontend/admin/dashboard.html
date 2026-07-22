@@ -267,6 +267,15 @@
     gap: 20px;
     margin-bottom: 32px;
   }
+  @media (max-width: 768px) {
+    /* Full-width stacked KPI tiles turn a health-metrics row into a wall
+       of scrolling before the actual content starts — two per row cuts
+       that in half, at a size that's still comfortably readable. */
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+    .kpi-card { padding: 12px 14px; }
+    .kpi-title { font-size: 0.62rem; letter-spacing: 0.2px; margin-bottom: 5px; line-height: 1.35; }
+    .kpi-val { font-size: 1.2rem; }
+  }
   .kpi-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
@@ -369,6 +378,67 @@
     letter-spacing: 0.8px;
   }
   table.data-table tr:hover td { background: var(--bg-card-hover); cursor: pointer; }
+
+  /* ── Mobile record cards ───────────────────────────────────────────────────────
+     Below 768px, tables hand off to this instead of shrinking or scrolling
+     sideways — each row becomes one compact, tappable card. Deliberately
+     dense (not the spacious KPI-tile look): a list of these is meant to be
+     scanned quickly, not admired one at a time, so every row after the
+     first should mostly cost you a flick of the thumb, not a scroll. */
+  .record-card-list { display: none; }
+  @media (max-width: 768px) {
+    /* Only containers explicitly marked have a card equivalent built —
+       sections not yet converted keep their table visible on mobile
+       rather than going blank. */
+    .data-table-container.has-mobile-cards { display: none; }
+    .record-card-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
+    .record-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px 12px 12px;
+      cursor: pointer;
+    }
+    /* Scan-first status signal: a whole list should be readable by color
+       alone at a glance, but never color ALONE — the dot+word pairing
+       below still carries the same information in text for anyone who
+       can't distinguish the stripe color. */
+    .record-card--success { border-left-color: var(--green, #22c55e); }
+    .record-card--pending { border-left-color: var(--gold, #c9973a); }
+    .record-card--failed, .record-card--refunded { border-left-color: var(--red, #ef4444); }
+    .record-card:active { background: var(--bg-card-hover); }
+    .record-card__row1, .record-card__row2 {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
+    }
+    .record-card__row2 { margin-top: 4px; }
+    .record-card__primary { font-weight: 700; font-size: 0.9rem; color: #fff; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .record-card__amount { font-weight: 700; color: var(--gold-light); font-size: 0.9rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .record-card__secondary { font-size: 0.78rem; color: var(--gray-l); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .record-card__meta { font-size: 0.72rem; color: var(--gray-l); flex-shrink: 0; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+    .record-card__dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .record-card__dot--success { background: var(--green, #22c55e); }
+    .record-card__dot--pending { background: var(--gold, #c9973a); }
+    .record-card__dot--failed, .record-card__dot--refunded { background: var(--red, #ef4444); }
+    .record-card__action {
+      display: block; width: 100%; margin-top: 10px; min-height: 40px;
+      background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35);
+      border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+    }
+    /* Filter bars: pair up related controls instead of stacking every
+       control on its own full-width row — search stays full width
+       (needs room to type), everything else pairs off two-per-row. */
+    .filter-bar { gap: 10px; padding: 14px; }
+    .filter-bar .input-control { min-width: 0; flex: 1 1 100%; }
+    .filter-bar .input-control#sales-search,
+    .filter-bar .input-control#cust-search,
+    .filter-bar .input-control#aff-search,
+    .filter-bar .input-control#ed-search-input { flex-basis: 100%; }
+    .filter-bar > label { flex: 1 1 calc(50% - 5px); min-width: 0; }
+    .filter-bar > label .input-control { width: 100%; }
+    .filter-bar > select.period-select,
+    .filter-bar > button.btn-action { flex: 1 1 calc(50% - 5px); font-size: 0.76rem; white-space: nowrap; padding-left: 10px; padding-right: 10px; }
+  }
 
   .status-pill {
     padding: 4px 10px;
@@ -683,12 +753,13 @@
         <button class="btn-action btn-secondary" onclick="exportSalesCSV()"><i class="bi bi-download"></i> Export CSV</button>
       </div>
 
-      <div class="data-table-container">
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-sales-management">
           <thead><tr><th>Verified At</th><th>Reference</th><th>Customer</th><th>Email</th><th>Amount</th><th>Method</th><th>Gateway</th><th>Status</th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="record-card-list" id="cards-sales-management"></div>
     </div>
 
     <!-- ── VIEW 3: CUSTOMER MANAGEMENT (Lifecycle 360°) ─────────────────────── -->
@@ -755,18 +826,19 @@
         </label>
       </div>
 
-      <div class="data-table-container">
-        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Affiliate Performance Roster</div>
-          <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateAffiliateModal()">
-            <i class="bi bi-person-plus-fill"></i> + Add New Affiliate
-          </button>
-        </div>
+      <div style="padding:14px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Affiliate Performance Roster</div>
+        <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateAffiliateModal()">
+          <i class="bi bi-person-plus-fill"></i> + Add New Affiliate
+        </button>
+      </div>
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-affiliates-roster">
           <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Payout Bank Account</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="record-card-list" id="cards-affiliates-roster"></div>
     </div>
 
     <!-- ── VIEW 5: PAYOUTS (Biweekly Batches + Settlement) ──────────────────── -->
@@ -1419,6 +1491,28 @@
       </tr>`;
     }).join('');
     restoreScrollPosition('sales');
+
+    const cardList = document.getElementById('cards-sales-management');
+    cardList.innerHTML = sales.map(s => {
+      const isSuccessRow = s.status === 'success';
+      const needsResend = isSuccessRow && s.email_sent === false;
+      const statusClass = s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed');
+      const resendBtn = needsResend
+        ? `<button class="record-card__action" onclick="event.stopPropagation(); resendWelcomeEmail('${escapeJs(s.reference)}')">⚠ Resend welcome email</button>`
+        : '';
+      return `
+      <div class="record-card record-card--${statusClass}" onclick="inspectSale('${escapeJs(s.reference)}')">
+        <div class="record-card__row1">
+          <span class="record-card__primary">${escapeHtml(s.name)}</span>
+          <span class="record-card__amount">${money(s.amount)}</span>
+        </div>
+        <div class="record-card__row2">
+          <span class="record-card__secondary">${escapeHtml(s.email)} · ${formatPaymentMethod(s.payment_method)}</span>
+          <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(s.status)}</span>
+        </div>
+        ${resendBtn}
+      </div>`;
+    }).join('') || '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No transactions match your filters</div>';
   }
 
 
@@ -1710,6 +1804,89 @@
         </td>
       </tr>
     `).join('');
+
+    const cardList = document.getElementById('cards-affiliates-roster');
+    if (affs.length === 0) {
+      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No affiliates yet</div>';
+      return;
+    }
+    cardList.innerHTML = affs.map(a => {
+      const owed = a.commission_owed > 0;
+      // Same scan-first logic as Sales: the stripe answers "does this
+      // one need action" at a glance — owed money is the only state
+      // that actually requires you to do something about an affiliate.
+      const statusClass = owed ? 'pending' : 'success';
+      const splitBadge = a.has_instant_split
+        ? '<i class="bi bi-lightning-charge-fill" style="color:var(--green)"></i> Instant split'
+        : '<i class="bi bi-clock-history"></i> Manual payout';
+      const payBtn = owed
+        ? `<button class="record-card__action" style="background:rgba(201,151,58,.12);color:var(--gold-light);border-color:rgba(201,151,58,.35)" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>`
+        : '';
+      return `
+      <div class="record-card record-card--${statusClass}" onclick="inspectAffiliate('${escapeJs(a.id)}')">
+        <div class="record-card__row1">
+          <span class="record-card__primary">${escapeHtml(a.name)}</span>
+          <span class="record-card__amount">${money(a.commission_owed)}</span>
+        </div>
+        <div class="record-card__row2">
+          <span class="record-card__secondary">${escapeHtml(a.code)} · ${a.commission_percent}% rate</span>
+          <span class="record-card__meta">${splitBadge}</span>
+        </div>
+        ${payBtn}
+      </div>`;
+    }).join('');
+  }
+
+  function inspectAffiliate(id) {
+    // Every field here is already sitting in allAffiliatesData from the
+    // roster load — no reason to round-trip the server for what tapping
+    // a row/card already has in hand.
+    const a = allAffiliatesData.find(x => x.id === id);
+    if (!a) return;
+
+    const splitStatus = a.has_instant_split
+      ? '<span style="color:var(--green)"><i class="bi bi-lightning-charge-fill"></i> Instant split — paid directly on each sale</span>'
+      : '<span style="color:var(--gray-l)"><i class="bi bi-clock-history"></i> Manual biweekly payout</span>';
+
+    document.getElementById('drawer-title').textContent = `Affiliate ${escapeHtml(a.code)}`;
+    document.getElementById('drawer-content').innerHTML = `
+      <div class="drawer-section">
+        <div class="drawer-section-title">Partner</div>
+        <div class="drawer-detail-grid">
+          <div><div class="detail-label">Name</div><div class="detail-val">${escapeHtml(a.name)}</div></div>
+          <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(a.email)}</div></div>
+          <div><div class="detail-label">Code</div><div class="detail-val"><code>${escapeHtml(a.code)}</code></div></div>
+          <div><div class="detail-label">Joined</div><div class="detail-val">${new Date(a.created_at).toLocaleDateString()}</div></div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Payout Bank Account</div>
+        <div class="drawer-detail-grid">
+          <div style="grid-column:span 2"><div class="detail-val">${a.bank_name ? escapeHtml(a.bank_name) : '<span style="color:var(--gray-l)">Not provided</span>'}${a.account_number ? ' · ' + escapeHtml(a.account_number) + ' (' + escapeHtml(a.account_name || a.name) + ')' : ''}</div></div>
+          <div style="grid-column:span 2"><div class="detail-val">${splitStatus}</div></div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Performance</div>
+        <div class="drawer-detail-grid">
+          <div><div class="detail-label">Clicks</div><div class="detail-val">${a.clicks}</div></div>
+          <div><div class="detail-label">Conversions</div><div class="detail-val">${a.conversions}</div></div>
+          <div><div class="detail-label">Revenue Driven</div><div class="detail-val">${money(a.revenue)}</div></div>
+          <div><div class="detail-label">Commission Rate</div><div class="detail-val">${a.commission_percent}%</div></div>
+          <div><div class="detail-label">Earned</div><div class="detail-val">${money(a.commission_earned)}</div></div>
+          <div><div class="detail-label">Paid</div><div class="detail-val">${money(a.commission_paid)}</div></div>
+          <div style="grid-column:span 2"><div class="detail-label">Still Owed</div><div class="detail-val" style="color:var(--gold-light);font-size:1.1rem">${money(a.commission_owed)}</div></div>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px">
+        <button class="btn-action btn-secondary" onclick="closeDrawer(); editCommissionRate('${escapeJs(a.id)}', ${a.commission_percent})">Edit Commission Rate</button>
+        ${a.commission_owed > 0 ? `<button class="btn-action" onclick="closeDrawer(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>` : ''}
+      </div>
+    `;
+    openDrawer();
   }
 
   async function editCommissionRate(affiliateId, currentRate) {

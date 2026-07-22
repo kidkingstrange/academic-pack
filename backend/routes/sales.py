@@ -80,33 +80,40 @@ async def register_sales_rep(request: Request, body: SalesRegisterRequest, db=De
         "email": body.email.lower(),
         "password_hash": hash_password(body.password),
         "created_at": datetime.now(timezone.utc),
-        "active": False,
+        "active": True,
     }
     await db.sales_reps.insert_one(rep)
     try:
         await send_email(
             settings.ADMIN_EMAIL,
-            "New sales rep self-registration pending approval",
-            f"<p><b>{body.name}</b> ({body.email}) just self-registered as a sales rep "
-            f"and is awaiting approval.</p>"
-            f"<p>Review and activate them from the Team Members tab in the admin dashboard.</p>",
+            "New sales rep registered",
+            f"<p><b>{body.name}</b> ({body.email}) registered as a sales rep.</p>",
         )
     except Exception as alert_err:
-        print(f"❌ Failed to send sales-rep pending-approval alert: {alert_err}")
+        print(f"❌ Failed to send sales-rep alert: {alert_err}")
     return {
         "status": "ok",
-        "message": "Registration received. An admin will review and activate your account before you can log in.",
+        "message": "Registration successful! You can now log in to your sales portal.",
     }
+
 
 @router.post("/login", response_model=TokenResponse)
 @limiter.limit("10/minute")
 async def sales_login(request: Request, body: SalesLoginRequest, db=Depends(get_db)):
-    rep = await db.sales_reps.find_one({"email": body.email.lower(), "active": True})
+    email_clean = body.email.lower()
+    rep = await db.sales_reps.find_one({"email": email_clean})
     if not rep or not verify_password(body.password, rep["password_hash"]):
         raise HTTPException(status_code=401, detail="Invalid sales credentials")
 
+    if not rep.get("active"):
+        raise HTTPException(
+            status_code=403,
+            detail="Your sales rep account is pending admin approval. An admin must activate your account before you can log in."
+        )
+
     token = create_access_token({"sub": str(rep["_id"]), "email": rep["email"], "role": "sales_rep"})
     return TokenResponse(access_token=token)
+
 
 @router.get("/offers")
 async def get_sales_offers(current_user=Depends(require_sales_rep), db=Depends(get_db)):
