@@ -96,6 +96,7 @@
   .nav-item {
     display: flex;
     align-items: center;
+    width: 100%;
     gap: 12px;
     padding: 12px 14px;
     color: var(--gray-l);
@@ -103,9 +104,17 @@
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;
+    font-family: inherit;
+    text-align: left;
+    background: none;
+    border: none;
     transition: var(--transition);
     margin-bottom: 4px;
     text-decoration: none;
+  }
+  .nav-item:focus-visible, .sidebar-toggle:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
   }
   .nav-item i { font-size: 1.1rem; }
   .nav-item:hover, .nav-item.active {
@@ -165,8 +174,8 @@
     background: rgba(255,255,255,0.06);
     border: 1px solid var(--border-color);
     color: #fff;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 10px;
     align-items: center;
     justify-content: center;
@@ -508,22 +517,22 @@
     </div>
   </div>
 
-  <a class="nav-item active" onclick="switchSection('hub')"><i class="bi bi-grid-1x2-fill"></i> Master's Eye View</a>
+  <button class="nav-item active" onclick="switchSection('hub')"><i class="bi bi-grid-1x2-fill"></i> Master's Eye View</button>
 
   <div class="nav-group-label">Core Modules</div>
-  <a class="nav-item" onclick="switchSection('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</a>
-  <a class="nav-item" onclick="switchSection('sales')"><i class="bi bi-credit-card-2-front"></i> Sales Management</a>
-  <a class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</a>
-  <a class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</a>
-  <a class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</a>
-  <a class="nav-item" onclick="switchSection('subscriptions')"><i class="bi bi-calendar2-check"></i> Subscriptions</a>
-  <a class="nav-item" onclick="switchSection('team')"><i class="bi bi-person-badge"></i> Team Members</a>
-  <a class="nav-item" onclick="switchSection('sequence')"><i class="bi bi-envelope-check"></i> Email Sequence</a>
-  <a class="nav-item" onclick="switchSection('email-delivery')"><i class="bi bi-shield-check"></i> Email Delivery</a>
-  <a class="nav-item" onclick="switchSection('abandoned')"><i class="bi bi-cart-x"></i> Abandoned Cart Recovery</a>
+  <button class="nav-item" onclick="switchSection('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</button>
+  <button class="nav-item" onclick="switchSection('sales')"><i class="bi bi-credit-card-2-front"></i> Sales Management</button>
+  <button class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</button>
+  <button class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</button>
+  <button class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</button>
+  <button class="nav-item" onclick="switchSection('subscriptions')"><i class="bi bi-calendar2-check"></i> Subscriptions</button>
+  <button class="nav-item" onclick="switchSection('team')"><i class="bi bi-person-badge"></i> Team Members</button>
+  <button class="nav-item" onclick="switchSection('sequence')"><i class="bi bi-envelope-check"></i> Email Sequence</button>
+  <button class="nav-item" onclick="switchSection('email-delivery')"><i class="bi bi-shield-check"></i> Email Delivery</button>
+  <button class="nav-item" onclick="switchSection('abandoned')"><i class="bi bi-cart-x"></i> Abandoned Cart Recovery</button>
 
 
-  <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
+  <button class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</button>
 </aside>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
