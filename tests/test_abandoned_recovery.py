@@ -107,8 +107,16 @@ async def test_buyer_guard(test_db):
 
 
 @pytest.mark.asyncio
-async def test_step4_email_and_price(test_db):
-    from backend.services.abandoned_recovery_service import send_recovery_email_step
+async def test_step4_email_and_price(test_db, monkeypatch):
+    from backend.services import abandoned_recovery_service as recovery_module
+    from unittest.mock import AsyncMock
+
+    # send_email would otherwise open a real SMTP connection — same
+    # mocking pattern every other test in this suite already uses.
+    # Patched on the module it was imported into (recovery_module),
+    # not email_service itself, since `from ..services.email_service
+    # import send_email` already bound its own local reference there.
+    monkeypatch.setattr(recovery_module, "send_email", AsyncMock(return_value=(True, None)))
 
     email = "test_step4_student@example.com"
     ref = "ACP-TEST-STEP4-004"
@@ -123,7 +131,7 @@ async def test_step4_email_and_price(test_db):
     )
 
     # Sending step 4 email should succeed and offer ₦2,000 price
-    sent = await send_recovery_email_step(test_db, tx, step=4)
+    sent = await recovery_module.send_recovery_email_step(test_db, tx, step=4)
     assert sent is True
 
     saved = await test_db.abandoned_transactions.find_one({"reference": ref})
