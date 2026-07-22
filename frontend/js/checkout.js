@@ -424,12 +424,16 @@ async function pollPayment() {
       // fall into the outer catch below and re-schedule another poll.
       try {
         sessionStorage.setItem('ac_token', data.token);
-        if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
         localStorage.setItem('ac_purchased', 'true');
       } catch (storageErr) {
         console.warn('Storage unavailable after successful payment, continuing via URL token', storageErr);
       }
-      const targetUrl = data.token ? `/welcome?token=${encodeURIComponent(data.token)}` : '/welcome';
+      // Straight to the library — no intermediate page. Built directly
+      // from the durable library_access_token, not any link the API
+      // hands back pre-built.
+      const targetUrl = data.library_token
+        ? `/library?token=${encodeURIComponent(data.library_token)}&welcome=1`
+        : '/library';
       setTimeout(() => { window.location.href = targetUrl; }, 1500);
       return;
     }
@@ -509,16 +513,18 @@ function showResumePaymentBanner(pending) {
       if (data.success) {
         clearPendingPayment();
         fireVerifiedPurchase(pending.reference, data.amount);
-        // Isolated so a storage failure redirects to /welcome anyway
-        // instead of falling through to the resume-payment banner below.
+        // Isolated so a storage failure still redirects straight to the
+        // library instead of falling through to the resume-payment banner
+        // below.
         try {
           sessionStorage.setItem('ac_token', data.token);
-          if (data.magic_link) localStorage.setItem('ac_magic_link', data.magic_link);
           localStorage.setItem('ac_purchased', 'true');
         } catch (storageErr) {
           console.warn('Storage unavailable after successful payment, continuing via URL token', storageErr);
         }
-        const targetUrl = data.token ? `/welcome?token=${encodeURIComponent(data.token)}` : '/welcome';
+        const targetUrl = data.library_token
+          ? `/library?token=${encodeURIComponent(data.library_token)}&welcome=1`
+          : '/library';
         window.location.href = targetUrl;
         return;
       }

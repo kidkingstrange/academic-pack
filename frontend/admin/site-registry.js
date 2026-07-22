@@ -150,15 +150,6 @@ const SITE_REGISTRY = [
     icon: "🏠",
   },
   {
-    id: "welcome-page",
-    title: "Welcome Page",
-    description: "What a customer sees the moment they've paid, right before reaching their library.",
-    category: "Public Pages",
-    type: "public-page",
-    target: "/welcome",
-    icon: "🎉",
-  },
-  {
     id: "library-page",
     title: "Customer Library",
     description: "Where a paying customer reads/downloads their books. Needs a real customer's access link to open properly.",

@@ -199,7 +199,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
                 token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
                 access_token = user.get("library_access_token")
                 ml = f"/library?token={access_token}" if access_token else None
-                return PaymentVerifyResponse(success=True, token=token, magic_link=ml, amount=existing_payment.get("amount", 0))
+                return PaymentVerifyResponse(success=True, token=token, magic_link=ml, library_token=access_token, amount=existing_payment.get("amount", 0))
         completion = await complete_payment(
             db,
             reference=body.reference,
@@ -213,7 +213,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
             payment_method=body.payment_method,
         )
         ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
-        return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, amount=existing_payment.get("amount", 0))
+        return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, library_token=completion.get("magic_token"), amount=existing_payment.get("amount", 0))
 
     try:
         result = await verify_transaction(body.reference)
@@ -273,7 +273,7 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
     )
 
     ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
-    return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, amount=amount_paid)
+    return PaymentVerifyResponse(success=True, token=completion["token"], magic_link=ml, library_token=completion.get("magic_token"), amount=amount_paid)
 
 
 @router.get("/callback")
@@ -325,7 +325,7 @@ async def payment_callback(
 
     user = await db.users.find_one({"_id": completion["user_id"]})
     access_token = user.get("library_access_token") if user else completion.get("magic_token")
-    return RedirectResponse(f"/welcome?token={access_token}")
+    return RedirectResponse(f"/library?token={access_token}&welcome=1")
 
 
 # ── Webhook processing helper ───────────────────────────────────────────────

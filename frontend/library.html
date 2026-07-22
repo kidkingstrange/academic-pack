@@ -29,6 +29,10 @@
   .loader-page { position: fixed; inset: 0; background: var(--ink); display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
   .spinner { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .welcome-banner { display: flex; align-items: center; gap: 16px; max-width: 1120px; margin: 0 auto 32px; padding: 20px 24px; background: rgba(201,151,58,.08); border: 1px solid rgba(201,151,58,.25); border-radius: var(--radius-lg); }
+  .welcome-banner i { font-size: 1.6rem; color: var(--gold); flex-shrink: 0; }
+  .welcome-banner strong { display: block; font-family: 'Clash Display', sans-serif; font-size: 1.05rem; color: #fff; margin-bottom: 2px; }
+  .welcome-banner span { font-size: .88rem; color: var(--gray-l); }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -63,6 +67,13 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </header>
 
 <main class="container">
+  <div class="welcome-banner" id="welcome-banner" style="display:none">
+    <i class="bi bi-rocket-takeoff-fill"></i>
+    <div>
+      <strong>You're in. Congratulations.</strong>
+      <span>Your payment was successful — everything below is yours now.</span>
+    </div>
+  </div>
   <div class="lib-grid" id="products-grid">
     <!-- Injected via JS -->
   </div>
@@ -71,6 +82,13 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <script>
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get('token');
+
+  // Shown only on the immediate post-payment redirect (checkout.js and
+  // the Paystack callback both append &welcome=1) — never on a return
+  // visit via the emailed link or a bookmark, which never carry it.
+  if (urlParams.get('welcome') === '1') {
+    document.getElementById('welcome-banner').style.display = 'flex';
+  }
 
   // ── Device-local convenience fallback ────────────────────────────────
   // NOT an exchange or session mechanism — the durable library token

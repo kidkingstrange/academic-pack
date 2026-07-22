@@ -60,6 +60,7 @@ class PaymentVerifyResponse(BaseModel):
     success: bool
     token: Optional[str] = None
     magic_link: Optional[str] = None
+    library_token: Optional[str] = None  # raw library_access_token — the frontend redirects here directly, not via magic_link
     message: Optional[str] = None
     amount: Optional[float] = None
 

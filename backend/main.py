@@ -145,8 +145,13 @@ async def serve_us_aliases():
     return RedirectResponse(url="/us", status_code=301)
 
 @app.get("/welcome", include_in_schema=False)
-async def serve_welcome():
-    return FileResponse(str(frontend_path / "welcome.html"))
+async def serve_welcome(token: str = ""):
+    """Payment completion now redirects straight to /library — this
+    only remains for anyone with an old /welcome?token=... tab or
+    bookmark still open, so they land somewhere useful instead of a
+    dead page."""
+    suffix = f"?token={token}&welcome=1" if token else ""
+    return RedirectResponse(url=f"/library{suffix}", status_code=302)
 
 @app.get("/library", include_in_schema=False)
 async def serve_library():

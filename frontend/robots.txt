@@ -6,6 +6,5 @@ Disallow: /api/
 Disallow: /affiliate/dashboard
 Disallow: /sales/
 Disallow: /library
-Disallow: /welcome
 
 Sitemap: https://academic-pack.onrender.com/sitemap.xml

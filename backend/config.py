@@ -40,7 +40,7 @@ class Settings(BaseSettings):
     USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
 
     # ── Meta Conversions API (server-side Purchase event) ────────────
-    # Same Pixel ID already used client-side in index.html/welcome.html.
+    # Same Pixel ID already used client-side in index.html/library.html.
     # FB_CAPI_ACCESS_TOKEN is blank by default — meta_capi.py no-ops
     # safely until this is set in Render (Events Manager → this Pixel →
     # Settings → Conversions API → Generate access token).
