@@ -174,6 +174,20 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         upsert=True,
     )
 
+    # ── Record in db.abandoned_transactions ───────────────────────────
+    from ..services.abandoned_recovery_service import record_checkout_initialization
+    await record_checkout_initialization(
+        db,
+        email=body.email.lower(),
+        name=body.name,
+        amount=amount,
+        currency=currency,
+        reference=reference,
+        payment_method=payment_method,
+        referred_by=referred_by,
+        source="checkout_init",
+    )
+
     return PaymentInitResponse(
         reference=reference,
         charge_id=access_code,
@@ -181,6 +195,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         redirect_url=redirect_url,
         amount=amount,
     )
+
 
 
 @router.post("/verify", response_model=PaymentVerifyResponse)
@@ -460,3 +475,137 @@ async def paystack_webhook(
         background_tasks.add_task(process_webhook_payment, payload, db)
 
     return {"status": "received"}
+
+
+@router.get("/recovery-redirect")
+async def recovery_redirect(
+    ref: str = "",
+    db=Depends(get_db),
+):
+    """
+    One-click recovery link handler embedded in recovery emails.
+    Checks if customer already completed payment; if not, initializes a fresh
+    Paystack transaction reference and redirects straight to the Paystack checkout URL.
+    """
+    from fastapi.responses import RedirectResponse, HTMLResponse
+    from ..services.abandoned_recovery_service import is_buyer, mark_transaction_recovered
+
+    if not ref:
+        return RedirectResponse("/")
+
+    tx = await db.abandoned_transactions.find_one({"reference": ref})
+    if not tx:
+        return RedirectResponse("/us")
+
+    email = tx.get("email")
+    if await is_buyer(db, email):
+        await mark_transaction_recovered(db, email=email)
+        user = await db.users.find_one({"email": email})
+        token = user.get("library_access_token") if user else None
+        if token:
+            return RedirectResponse(f"/library?token={token}")
+        return RedirectResponse("/")
+
+    name = tx.get("name") or "Student"
+    currency = tx.get("currency", "NGN").upper()
+    
+    # If customer is on Step 4 (1-week re-open offer), lock price to ₦2,000 / $15
+    if tx.get("sequence_step") == 4:
+        amount = settings.ABANDONED_STEP4_PRICE_USD if currency == "USD" else settings.ABANDONED_STEP4_PRICE_NAIRA
+    else:
+        amount = tx.get("amount", settings.PRODUCT_PRICE_NAIRA)
+
+    payment_method = tx.get("payment_method") or "pay_with_bank"
+    referred_by = tx.get("referred_by")
+
+
+    # Generate a fresh Paystack transaction reference for this recovery attempt
+    new_reference = f"ACP-REC-{uuid.uuid4().hex[:10].upper()}"
+    callback_url = f"{settings.APP_URL}/api/payments/callback"
+
+    channels = ["bank_transfer"] if payment_method == "bank_transfer" else (["card"] if payment_method == "card" else None)
+
+    try:
+        tx_data = await initialize_transaction(
+            email=email,
+            amount_naira=amount,
+            reference=new_reference,
+            callback_url=callback_url,
+            metadata={"name": name, "payment_method": payment_method, "currency": currency, "recovery_from_ref": ref},
+            channels=channels,
+            currency=currency if currency == "USD" else None,
+        )
+        auth_url = tx_data.get("authorization_url")
+        access_code = tx_data.get("access_code")
+
+        # Save pending record for fresh reference
+        now = datetime.now(timezone.utc)
+        await db.pending_payments.update_one(
+            {"reference": new_reference},
+            {"$set": {
+                "reference": new_reference,
+                "charge_id": access_code,
+                "email": email,
+                "name": name,
+                "amount": amount,
+                "currency": currency,
+                "created_at": now,
+                "referred_by": referred_by,
+                "is_recovery": True,
+                "original_reference": ref,
+            }},
+            upsert=True,
+        )
+
+        if auth_url:
+            return RedirectResponse(auth_url, status_code=302)
+    except Exception as e:
+        print(f"❌ Error generating fresh recovery Paystack URL: {e}")
+
+    # Fallback if Paystack init fails: redirect to sales page with email prefilled
+    return RedirectResponse(f"/us?email={email}", status_code=302)
+
+
+@router.get("/abandoned/unsubscribe")
+async def recovery_unsubscribe(
+    token: str = "",
+    db=Depends(get_db),
+):
+    """
+    Unsubscribe endpoint for abandoned transaction recovery emails.
+    """
+    from fastapi.responses import HTMLResponse
+    from ..services.abandoned_recovery_service import unsubscribe_email
+
+    if token:
+        tx = await db.abandoned_transactions.find_one({"unsubscribe_token": token})
+        if tx and tx.get("email"):
+            await unsubscribe_email(db, tx["email"])
+
+    return HTMLResponse(
+        content="""
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Unsubscribed</title>
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <style>
+            body { font-family: system-ui, sans-serif; background: #0d0f14; color: #fff; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+            .card { background: #161922; border: 1px solid #2a2e3d; padding: 40px; border-radius: 16px; text-align: center; max-width: 400px; }
+            h2 { color: #d4a63a; margin-top: 0; }
+            p { color: #aaa; font-size: 15px; line-height: 1.5; }
+            a { color: #d4a63a; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 16px; }
+          </style>
+        </head>
+        <body>
+          <div class="card">
+            <h2>You've been unsubscribed</h2>
+            <p>You will no longer receive payment reminder emails for your order.</p>
+            <a href="/">Return to Homepage</a>
+          </div>
+        </body>
+        </html>
+        """,
+        status_code=200,
+    )
+

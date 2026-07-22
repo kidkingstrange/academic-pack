@@ -304,3 +304,36 @@ async def get_paystack_balance() -> Dict[str, Any]:
                 "available_balance": avail_ngn_kobo / 100.0,
             },
         }
+
+
+async def list_transactions(
+    status: Optional[str] = None,
+    page: int = 1,
+    per_page: int = 50,
+    from_date: Optional[str] = None,
+    to_date: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    Query Paystack List Transactions endpoint (`GET /transaction`).
+    Used to pull abandoned, failed, or successful transactions directly from Paystack.
+    """
+    params = {
+        "page": page,
+        "per_page": per_page,
+    }
+    if status:
+        params["status"] = status
+    if from_date:
+        params["from"] = from_date
+    if to_date:
+        params["to"] = to_date
+
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{PAYSTACK_API_BASE}/transaction",
+            headers=get_headers(),
+            params=params,
+            timeout=20,
+        )
+        return resp.json()
+

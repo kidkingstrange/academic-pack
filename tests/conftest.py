@@ -12,10 +12,19 @@ import re
 import uuid
 import pytest
 import pytest_asyncio
+import dns.resolver
+
+try:
+    dns.resolver.default_resolver = dns.resolver.Resolver()
+    dns.resolver.default_resolver.nameservers = ['8.8.8.8', '1.1.1.1']
+except Exception:
+    pass
+
 from httpx import ASGITransport, AsyncClient
 from motor.motor_asyncio import AsyncIOMotorClient
 
 os.environ.setdefault("APP_ENV", "development")
+
 
 
 def _load_dotenv_into_environ():

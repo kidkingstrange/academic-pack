@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block subject %}Your Academic Comeback Package is still reserved, {{ name }}{% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Don't miss your academic breakthrough</h2>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, your access to the <strong>Academic Comeback Package</strong> is still saved, but your checkout session will expire soon.
+</p>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 20px">
+  Top performing students don't rely on luck — they use a proven system. Get instant access to all 7 core guides and join hundreds of students transforming their grades this semester.
+</p>
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#d4a63a,#b88b22);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(212,166,58,0.3)">🚀 Resume &amp; Claim Access</a>
+</div>
+<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
+  Need help or have questions? Simply reply to this email and our team will assist you immediately.
+</p>
+{% endblock %}

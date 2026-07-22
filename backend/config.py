@@ -91,6 +91,20 @@ class Settings(BaseSettings):
     SETTLEMENT_ACCOUNT_NUMBER: str = ""
     SETTLEMENT_ACCOUNT_NAME: str = ""
 
+    # ── Abandoned Transaction Recovery ───────────────────────────────
+    ABANDONED_RECOVERY_ENABLED: bool = True
+    ABANDONED_DELAY_MINUTES_1: int = 60       # Email 1: 1 hour after checkout init
+    ABANDONED_DELAY_MINUTES_2: int = 1440     # Email 2: 24 hours after checkout init
+    ABANDONED_DELAY_MINUTES_3: int = 4320     # Email 3: 72 hours (3 days) after checkout init
+    ABANDONED_DELAY_MINUTES_4: int = 14400    # Email 4: 7 days after Email 3 (10 days total)
+    ABANDONED_DISCOUNT_ENABLED: bool = False  # Enable optional discount in Email 3
+    ABANDONED_DISCOUNT_PERCENT: float = 10.0
+    ABANDONED_DISCOUNT_CODE: str = "COMEBACK10"
+    ABANDONED_STEP4_PRICE_NAIRA: float = 2000.0 # Re-opened ₦2,000 offer in Email 4
+    ABANDONED_STEP4_PRICE_USD: float = 15.0     # Re-opened $15 offer in Email 4
+
+
+
     @property
     def cors_origins_list(self) -> List[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",")]

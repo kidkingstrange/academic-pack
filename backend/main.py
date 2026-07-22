@@ -21,12 +21,15 @@ from .routes import (
     payments, library, admin as admin_router, community,
     affiliates, affiliate_public, affiliate_dashboard, tracking,
     admin_payouts, sales as sales_router, admin_email_delivery,
+    admin_abandoned,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
 from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge_scheduler
 from .workers.subscription_scheduler import start_subscription_scheduler, stop_subscription_scheduler
 from .workers.email_delivery_alert_scheduler import start_alert_scheduler, stop_alert_scheduler
+from .workers.abandoned_recovery_scheduler import start_abandoned_recovery_scheduler, stop_abandoned_recovery_scheduler
+
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
 from .utils.rate_limit import limiter, get_real_client_ip
@@ -92,6 +95,8 @@ app.include_router(tracking.router)
 app.include_router(admin_payouts.router)
 app.include_router(sales_router.router)
 app.include_router(admin_email_delivery.router)
+app.include_router(admin_abandoned.router)
+
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
 # and additionally bakes in a tier-badge system, a ranked leaderboard,
@@ -426,6 +431,7 @@ async def startup():
         start_nudge_scheduler()
         start_subscription_scheduler()
         start_alert_scheduler()
+        start_abandoned_recovery_scheduler()
         print("⏰ Background schedulers started")
     else:
         print("⏸️ Background schedulers disabled (RUN_SCHEDULERS=false)")
@@ -439,4 +445,6 @@ async def shutdown():
         stop_nudge_scheduler()
         stop_subscription_scheduler()
         stop_alert_scheduler()
+        stop_abandoned_recovery_scheduler()
     await disconnect_db()
+

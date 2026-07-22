@@ -104,6 +104,11 @@ async def complete_payment(
             {"$set": {"converted": True, "conversion_date": now}},
         )
 
+        # ── Abandoned Transaction Recovery ──────────────────────────────
+        from .abandoned_recovery_service import mark_transaction_recovered
+        await mark_transaction_recovered(db, email=email, reference=reference)
+
+
         # ── Referral attribution ────────────────────────────────────────
         # Only recorded on the winning claim — a retry/race that finds the
         # payment already claimed must not double-count the same sale

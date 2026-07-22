@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block subject %}You left something behind, {{ name }}!{% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Did something go wrong with your order?</h2>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, we noticed you started securing your copy of the <strong>Academic Comeback Package</strong>, but didn't finish completing your payment.
+</p>
+<div style="background:#fcfbfa;border:1px solid #e8e4d9;border-radius:12px;padding:20px;margin:0 0 24px">
+  <p style="margin:0 0 8px;font-weight:700;color:#0d0f14;font-size:16px">📚 Here is what is waiting for you:</p>
+  <ul style="margin:0;padding-left:20px;color:#444;font-size:14px;line-height:1.7">
+    <li>The First Class Playbook &amp; Study Blueprints</li>
+    <li>Exam Mastery &amp; First-Principles Problem Solving Guide</li>
+    <li>Memory Retaining System &amp; Time Management Templates</li>
+    <li>Instant Access to the Private WhatsApp Academic Community</li>
+  </ul>
+  <p style="margin:16px 0 0;font-size:16px;font-weight:700;color:#0d0f14">Amount: <span style="color:#00a86b">{{ currency_symbol }}{{ "%.2f"|format(amount) }}</span></p>
+</div>
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">⚡ Complete Your Purchase Now</a>
+</div>
+<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
+  If you ran into a payment error or network glitch, clicking the button above will let you complete your payment safely in 1 click.
+</p>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block subject %}Special Re-Open: Get your Academic Comeback Package for {{ currency_symbol }}{{ "%.2f"|format(amount) }}, {{ name }}{% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">A special one-time opportunity for you</h2>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, it's been a week since your last checkout reminder for the <strong>Academic Comeback Package</strong>.
+</p>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  We know that life gets busy and timing isn't always perfect. Because we genuinely want to see you succeed this semester, we're giving you one final chance to claim your complete study package at the original early-bird price of <strong>{{ currency_symbol }}{{ "%.2f"|format(amount) }}</strong>.
+</p>
+
+<div style="background:#fcfbfa;border:1px solid #e8e4d9;border-radius:12px;padding:20px;margin:0 0 24px">
+  <p style="margin:0 0 8px;font-weight:700;color:#0d0f14;font-size:16px">📚 What's included for {{ currency_symbol }}{{ "%.2f"|format(amount) }}:</p>
+  <ul style="margin:0;padding-left:20px;color:#444;font-size:14px;line-height:1.7">
+    <li>The First Class Playbook &amp; Study Blueprints</li>
+    <li>Exam Mastery &amp; First-Principles Problem Solving Guide</li>
+    <li>Memory Retaining System &amp; Time Management Templates</li>
+    <li>Instant Access to the Private WhatsApp Academic Community</li>
+  </ul>
+  <p style="margin:16px 0 0;font-size:16px;font-weight:700;color:#0d0f14">Special Price: <span style="color:#00a86b">{{ currency_symbol }}{{ "%.2f"|format(amount) }}</span></p>
+</div>
+
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">🎉 Claim Your Package for {{ currency_symbol }}{{ "%.2f"|format(amount) }}</a>
+</div>
+
+<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
+  Clicking the button above will automatically lock in the {{ currency_symbol }}{{ "%.2f"|format(amount) }} price so you can complete your purchase smoothly.
+</p>
+{% endblock %}

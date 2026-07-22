@@ -520,6 +520,8 @@
   <a class="nav-item" onclick="switchSection('team')"><i class="bi bi-person-badge"></i> Team Members</a>
   <a class="nav-item" onclick="switchSection('sequence')"><i class="bi bi-envelope-check"></i> Email Sequence</a>
   <a class="nav-item" onclick="switchSection('email-delivery')"><i class="bi bi-shield-check"></i> Email Delivery</a>
+  <a class="nav-item" onclick="switchSection('abandoned')"><i class="bi bi-cart-x"></i> Abandoned Cart Recovery</a>
+
 
   <a class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</a>
 </aside>
@@ -952,8 +954,72 @@
       </div>
     </div>
 
+    <!-- ── VIEW: ABANDONED CART RECOVERY ──────────────── -->
+    <div id="view-abandoned" class="section">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Total Abandoned</div><div class="kpi-val" id="ab-kpi-total">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Recovered</div><div class="kpi-val green" id="ab-kpi-recovered">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Active Sequences</div><div class="kpi-val gold" id="ab-kpi-active">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Emails Sent</div><div class="kpi-val" id="ab-kpi-emails">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Recovery Rate</div><div class="kpi-val green" id="ab-kpi-rate">0%</div></div>
+        <div class="kpi-card"><div class="kpi-title">System Status</div><div class="kpi-val" id="ab-kpi-status" style="font-size:1.1rem; padding-top:4px">Active</div></div>
+      </div>
+
+      <div class="data-table-container" style="padding:20px 24px; margin-bottom:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px">
+        <div>
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">System Controls &amp; Manual Check</div>
+          <div style="font-size:0.82rem; color:var(--gray-l); margin-top:2px">Pause/resume automated emails or trigger an immediate recovery scan</div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:center">
+          <button class="btn-action btn-secondary" onclick="toggleAbandonedSystem()" id="btn-toggle-abandoned"><i class="bi bi-pause-fill"></i> Pause Recovery System</button>
+          <button class="btn-action" onclick="triggerAbandonedCheck()"><i class="bi bi-arrow-clockwise"></i> Trigger Recovery Check Now</button>
+        </div>
+      </div>
+
+      <div class="data-table-container">
+        <div style="padding:18px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); flex-wrap:wrap; gap:12px">
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Abandoned Transactions Log</div>
+          <div style="display:flex; gap:10px; align-items:center">
+            <select class="input-control" id="ab-status-filter" style="width:160px" onchange="loadAbandonedView()">
+              <option value="">All Statuses</option>
+              <option value="pending">Pending (&lt;1h)</option>
+              <option value="sequence_active">Sequence Active</option>
+              <option value="recovered">Recovered 🎉</option>
+              <option value="completed">Sequence Ended</option>
+              <option value="unsubscribed">Unsubscribed</option>
+            </select>
+          </div>
+        </div>
+
+        <table class="data-table" id="table-abandoned">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Reference</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Current Step</th>
+              <th>Emails Sent</th>
+              <th>Initialized At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 24px">
+          <span style="font-size:0.8rem; color:var(--gray-l)" id="ab-pageinfo">Showing 0-0 of 0</span>
+          <div style="display:flex; gap:8px">
+            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageAbandoned(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageAbandoned(1)">Next <i class="bi bi-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
+
 
 <!-- ── SLIDE-OUT INSPECTION DRAWER ─────────────────────────────────────────── -->
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer(event)">
@@ -1034,7 +1100,8 @@
       subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' },
       team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
       sequence: { title: '52-Email Curriculum Sequence', sub: 'Track each subscriber\'s position in the automated email journey — see who is on-track, behind, or needs a manual resend' },
-      'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' }
+      'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' },
+      abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -1056,7 +1123,9 @@
     if(currentView === 'team') loadTeamView();
     if(currentView === 'sequence') loadSequenceView();
     if(currentView === 'email-delivery') loadEmailDeliveryView();
+    if(currentView === 'abandoned') loadAbandonedView();
   }
+
 
   // ── MASTER'S EYE VIEW ────────────────────────────────────────────────────────
   // Everything here is driven by SITE_REGISTRY (site-registry.js) — adding a
@@ -2479,11 +2548,105 @@
     loadSequenceView();
   }
 
+  // ── ABANDONED CART RECOVERY VIEW ──────────────────────────────────────────
+  let abPage = 1;
+  async function loadAbandonedView() {
+    const statusFilter = document.getElementById('ab-status-filter')?.value || '';
+    try {
+      const res = await apiCall(`/api/admin/abandoned-transactions?page=${abPage}&limit=20&status=${statusFilter}`);
+      if (!res) return;
+
+      const summary = res.summary || {};
+      document.getElementById('ab-kpi-total').textContent = summary.total_abandoned || 0;
+      document.getElementById('ab-kpi-recovered').textContent = summary.total_recovered || 0;
+      document.getElementById('ab-kpi-active').textContent = summary.total_active_sequences || 0;
+      document.getElementById('ab-kpi-emails').textContent = summary.total_emails_sent || 0;
+      document.getElementById('ab-kpi-rate').textContent = (summary.recovery_rate_percent || 0) + '%';
+
+      const isEnabled = summary.system_enabled !== false;
+      const statusElem = document.getElementById('ab-kpi-status');
+      const toggleBtn = document.getElementById('btn-toggle-abandoned');
+      if (statusElem) {
+        statusElem.textContent = isEnabled ? 'Active 🟢' : 'Paused ⏸️';
+        statusElem.style.color = isEnabled ? 'var(--green)' : 'var(--red)';
+      }
+      if (toggleBtn) {
+        toggleBtn.innerHTML = isEnabled ? '<i class="bi bi-pause-fill"></i> Pause Recovery System' : '<i class="bi bi-play-fill"></i> Resume Recovery System';
+      }
+
+      // Render table
+      const tbody = document.querySelector('#table-abandoned tbody');
+      tbody.innerHTML = '';
+      const items = res.items || [];
+      if (items.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--gray-l)">No abandoned transactions found</td></tr>';
+      } else {
+        items.forEach(item => {
+          const tr = document.createElement('tr');
+          const badgeColor = item.status === 'recovered' ? 'var(--green)' : (item.status === 'sequence_active' ? 'var(--gold-l)' : (item.status === 'unsubscribed' ? 'var(--red)' : 'var(--gray-l)'));
+          const stepText = item.sequence_step ? `Step ${item.sequence_step} / 4` : 'Pending';
+
+          const createdStr = item.created_at ? new Date(item.created_at).toLocaleString() : '-';
+          const recUrl = `/api/payments/recovery-redirect?ref=${item.reference}`;
+
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(item.name || 'Student')}</strong><br><small style="color:var(--gray-l)">${escapeHtml(item.email)}</small></td>
+            <td><code style="font-size:0.8rem; color:var(--gold-l)">${escapeHtml(item.reference)}</code></td>
+            <td>${item.currency === 'USD' ? '$' : '₦'}${parseFloat(item.amount || 0).toLocaleString()}</td>
+            <td><span style="background:rgba(255,255,255,0.06); color:${badgeColor}; padding:3px 8px; border-radius:4px; font-weight:700; font-size:0.78rem">${escapeHtml(item.status)}</span></td>
+            <td>${stepText}</td>
+            <td>${(item.emails_sent || []).length} sent</td>
+            <td style="font-size:0.8rem">${createdStr}</td>
+            <td><a href="${recUrl}" target="_blank" class="btn-action btn-secondary" style="padding:4px 8px; font-size:0.75rem"><i class="bi bi-box-arrow-up-right"></i> Pay Link</a></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Pagination info
+      const pagination = res.pagination || {};
+      document.getElementById('ab-pageinfo').textContent = `Page ${pagination.page} of ${pagination.pages || 1} (${pagination.total} total)`;
+    } catch (err) {
+      console.error('Error loading abandoned view:', err);
+    }
+  }
+
+  async function toggleAbandonedSystem() {
+    try {
+      const res = await apiCall('/api/admin/abandoned-transactions/toggle', 'POST');
+      if (res && res.success) {
+        alert(res.message);
+        loadAbandonedView();
+      }
+    } catch (err) {
+      alert('Failed to toggle system status');
+    }
+  }
+
+  async function triggerAbandonedCheck() {
+    try {
+      const res = await apiCall('/api/admin/abandoned-transactions/trigger-check', 'POST');
+      if (res && res.success) {
+        alert(res.message);
+        loadAbandonedView();
+      }
+    } catch (err) {
+      alert('Failed to trigger check');
+    }
+  }
+
+  function pageAbandoned(dir) {
+    abPage = Math.max(1, abPage + dir);
+    loadAbandonedView();
+  }
+
+
   // ── Mobile off-canvas sidebar ──────────────────────────────────────────────
   function toggleSidebar() {
     document.querySelector('.sidebar').classList.toggle('open');
     document.getElementById('sidebar-overlay').classList.toggle('open');
   }
+
   document.querySelectorAll('.sidebar .nav-item').forEach(item => {
     item.addEventListener('click', () => {
       if (window.innerWidth <= 900) {

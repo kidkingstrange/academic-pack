@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block subject %}Final Reminder: Complete your Academic Comeback, {{ name }}{% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Final notice for your order</h2>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, this is our final reminder regarding your reserved copy of the <strong>Academic Comeback Package</strong>.
+</p>
+{% if discount_enabled %}
+<div style="background:#fff8e6;border:1px dashed #d4a63a;border-radius:12px;padding:16px 20px;margin:0 0 24px;text-align:center">
+  <p style="margin:0 0 4px;font-size:14px;color:#8a6600;font-weight:600">SPECIAL DISCOUNT APPLIED</p>
+  <p style="margin:0;font-size:20px;font-weight:800;color:#0d0f14">Use Code: <span style="color:#d4a63a;background:#0d0f14;padding:4px 10px;border-radius:6px">{{ discount_code }}</span> for {{ discount_percent }}% OFF!</p>
+</div>
+{% endif %}
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 20px">
+  Everything you need to master your exams, study efficiently, and guarantee top results is ready for immediate download.
+</p>
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">✨ Complete Your Order Now</a>
+</div>
+{% endblock %}
