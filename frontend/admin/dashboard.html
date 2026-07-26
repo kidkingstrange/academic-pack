@@ -438,6 +438,13 @@
     .filter-bar > label .input-control { width: 100%; }
     .filter-bar > select.period-select,
     .filter-bar > button.btn-action { flex: 1 1 calc(50% - 5px); font-size: 0.76rem; white-space: nowrap; padding-left: 10px; padding-right: 10px; }
+
+    /* Forms & detail views: every tappable control meets the 44px minimum
+       touch target, matching the same rule already applied to the sidebar
+       toggle in Phase 1 — these are the primary controls a user must hit
+       to complete a task, not dense secondary table actions. */
+    .btn-action, .input-control, .period-select { min-height: 44px; }
+    .record-card__action { min-height: 44px; }
   }
 
   .status-pill {
@@ -509,6 +516,13 @@
     transition: all var(--transition);
   }
   .drawer-close:hover { background: rgba(255,255,255,.15); color: #fff; }
+  @media (max-width: 768px) {
+    /* 34px matches landing.css on desktop by design; below the 44px touch
+       target minimum on mobile, where this is the only way to dismiss
+       every drawer and form in the admin suite. flex-shrink:0 keeps it at
+       full size even when a long title crowds the header. */
+    .drawer-close { width: 44px; height: 44px; flex-shrink: 0; }
+  }
 
   .drawer-body {
     padding: 28px;
@@ -2569,9 +2583,9 @@
             <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(statusLabel)}</span>
           </div>
           <div style="display:flex; gap:8px; margin-top:10px">
-            <button class="btn-action btn-secondary" style="flex:1; padding:8px; font-size:0.76rem; min-height:36px" onclick="event.stopPropagation(); toggleTeamMemberStatus('${escapeJs(r.id)}', '${escapeJs(r.name)}', ${!r.active})">${r.active ? 'Suspend' : 'Activate'}</button>
-            <button class="btn-action btn-secondary" style="flex:1; padding:8px; font-size:0.76rem; min-height:36px" onclick="event.stopPropagation(); openChangeTeamMemberPasswordModal('${escapeJs(r.id)}', '${escapeJs(r.name)}')">Password</button>
-            <button class="btn-action" style="flex:1; padding:8px; font-size:0.76rem; min-height:36px; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="event.stopPropagation(); deleteTeamMember('${escapeJs(r.id)}', '${escapeJs(r.name)}')">Delete</button>
+            <button class="btn-action btn-secondary" style="flex:1; padding:8px; font-size:0.76rem; min-height:44px" onclick="event.stopPropagation(); toggleTeamMemberStatus('${escapeJs(r.id)}', '${escapeJs(r.name)}', ${!r.active})">${r.active ? 'Suspend' : 'Activate'}</button>
+            <button class="btn-action btn-secondary" style="flex:1; padding:8px; font-size:0.76rem; min-height:44px" onclick="event.stopPropagation(); openChangeTeamMemberPasswordModal('${escapeJs(r.id)}', '${escapeJs(r.name)}')">Password</button>
+            <button class="btn-action" style="flex:1; padding:8px; font-size:0.76rem; min-height:44px; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="event.stopPropagation(); deleteTeamMember('${escapeJs(r.id)}', '${escapeJs(r.name)}')">Delete</button>
           </div>
         </div>`;
       }).join('');
