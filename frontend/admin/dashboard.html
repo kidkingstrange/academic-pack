@@ -781,13 +781,14 @@
         <button class="btn-action btn-secondary" id="cust-date-clear" onclick="clearCustDateRange()" style="display:none">Clear dates</button>
       </div>
 
-      <div class="data-table-container">
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-customers-roster">
           <thead><tr><th>Joined</th><th>Name</th><th>Email</th><th>Total Spent</th><th>Orders</th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
         <div id="cust-pagination"></div>
       </div>
+      <div class="record-card-list" id="cards-customers-roster"></div>
     </div>
 
     <!-- ── VIEW 4: AFFILIATE ENGINE (Growth & Payouts) ─────────────────────── -->
@@ -857,31 +858,33 @@
         <button class="btn-action" onclick="openWithdrawModal()"><i class="bi bi-bank"></i> Withdraw My Share</button>
       </div>
 
-      <div class="data-table-container">
-        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
-          <div>
-            <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Pending Payout Batch</div>
-            <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px" id="payout-pending-sub">No batch pending</div>
-          </div>
-          <div style="display:flex; gap:10px">
-            <button class="btn-action btn-secondary" onclick="buildBatchNow()"><i class="bi bi-arrow-repeat"></i> Build Batch Now</button>
-            <button class="btn-action" id="payout-approve-btn" style="display:none" onclick="approvePendingBatch()"><i class="bi bi-send-check-fill"></i> Approve &amp; Send</button>
-            <button class="btn-action" id="payout-discard-btn" style="display:none; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="discardPendingBatch()"><i class="bi bi-trash"></i> Discard Batch</button>
-          </div>
+      <div style="padding:20px 24px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div>
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Pending Payout Batch</div>
+          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px" id="payout-pending-sub">No batch pending</div>
         </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn-action btn-secondary" onclick="buildBatchNow()"><i class="bi bi-arrow-repeat"></i> Build Batch Now</button>
+          <button class="btn-action" id="payout-approve-btn" style="display:none" onclick="approvePendingBatch()"><i class="bi bi-send-check-fill"></i> Approve &amp; Send</button>
+          <button class="btn-action" id="payout-discard-btn" style="display:none; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="discardPendingBatch()"><i class="bi bi-trash"></i> Discard Batch</button>
+        </div>
+      </div>
+      <div class="data-table-container has-mobile-cards" style="margin-bottom:28px">
         <table class="data-table" id="table-payout-pending">
           <thead><tr><th>Affiliate</th><th>Bank</th><th>Amount</th><th>Status</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="record-card-list" id="cards-payout-pending"></div>
 
-      <div class="data-table-container">
-        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Batch History</div>
+      <div style="padding:18px 20px; margin-bottom:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">Batch History</div>
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-payout-history">
           <thead><tr><th>Created</th><th>Status</th><th>Affiliates</th><th>Total</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="record-card-list" id="cards-payout-history"></div>
     </div>
 
     <!-- ── VIEW 6: SUBSCRIPTIONS (Command & KPI Center) ────────────────── -->
@@ -903,12 +906,13 @@
         </select>
       </div>
 
-      <div class="data-table-container">
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-subscriptions">
           <thead><tr><th>Subscriber</th><th>Plan</th><th>Price</th><th>Card</th><th>Next Bill Date</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="record-card-list" id="cards-subscriptions"></div>
     </div>
 
     <!-- ── VIEW 7: TEAM MEMBERS (Salespersons Suite) ────────────────── -->
@@ -917,38 +921,39 @@
         <input type="text" class="input-control" id="team-search" placeholder="Search team member name, email..." oninput="filterTeam()">
       </div>
 
-      <div class="data-table-container">
-        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Team Performance Roster</div>
-          <div style="display:flex; gap:10px">
-            <button class="btn-action btn-secondary" style="padding:8px 16px; font-size:0.82rem;" onclick="copySelfRegistrationLink()">
-              <i class="bi bi-link-45deg"></i> Copy Registration Link
-            </button>
-            <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateTeamMemberModal()">
-              <i class="bi bi-person-plus-fill"></i> + Add Team Member
-            </button>
-          </div>
+      <div style="padding:14px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Team Performance Roster</div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn-action btn-secondary" style="padding:8px 16px; font-size:0.82rem;" onclick="copySelfRegistrationLink()">
+            <i class="bi bi-link-45deg"></i> Copy Registration Link
+          </button>
+          <button class="btn-action" style="padding:8px 16px; font-size:0.82rem;" onclick="openCreateTeamMemberModal()">
+            <i class="bi bi-person-plus-fill"></i> + Add Team Member
+          </button>
         </div>
+      </div>
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-team-roster">
           <thead><tr><th>Created</th><th>Name</th><th>Email</th><th>Status</th><th>Leads Generated</th><th>Subscriptions Sold</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="record-card-list" id="cards-team-roster"></div>
     </div>
 
     <!-- ── EMAIL SEQUENCE VIEW ─────────────────────────────────────────── -->
     <div id="view-sequence" class="section">
       <!-- Health KPI Row -->
-      <div id="seq-kpi-row" class="kpi-row" style="margin-bottom:20px"></div>
+      <div id="seq-kpi-row" class="kpi-grid" style="margin-bottom:20px"></div>
 
-      <div class="data-table-container">
-        <div style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color)">
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Subscriber Sequence Status</div>
-          <div style="display:flex;gap:10px;align-items:center">
-            <input type="text" class="input-control" id="seq-search" placeholder="Search name or email..." oninput="handleSeqSearch()" style="height:36px;font-size:0.82rem;width:220px">
-            <button class="btn-action btn-secondary" style="padding:8px 16px;font-size:0.82rem" onclick="loadSequenceView()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
-          </div>
+      <div style="padding:14px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Subscriber Sequence Status</div>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <input type="text" class="input-control" id="seq-search" placeholder="Search name or email..." oninput="handleSeqSearch()" style="height:36px;font-size:0.82rem;width:220px">
+          <button class="btn-action btn-secondary" style="padding:8px 16px;font-size:0.82rem" onclick="loadSequenceView()"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
         </div>
+      </div>
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-sequence">
           <thead><tr>
             <th>Name</th>
@@ -966,6 +971,7 @@
         </table>
         <div id="seq-pagination"></div>
       </div>
+      <div class="record-card-list" id="cards-sequence"></div>
     </div>
 
     <!-- ── VIEW 6: EMAIL DELIVERY (Proactive Failure Tracking) ──────────────── -->
@@ -983,13 +989,15 @@
         <i class="bi bi-exclamation-triangle-fill"></i> <span id="ed-welcome-alert-text"></span> — these block real customers from reaching their product.
       </div>
 
-      <div class="data-table-container" style="padding:20px 24px; margin-bottom:28px">
+      <div style="padding:20px 24px; margin-bottom:12px; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
         <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:14px">Search Customer Email History</div>
         <div style="display:flex; gap:10px;">
           <input type="text" class="input-control" id="ed-search-input" placeholder="Search by customer email or name..." style="flex:1" onkeydown="if(event.key==='Enter') searchEmailDeliveryCustomer()">
           <button class="btn-action" onclick="searchEmailDeliveryCustomer()"><i class="bi bi-search"></i> Search</button>
         </div>
-        <div id="ed-customer-results" style="margin-top:20px; display:none">
+      </div>
+      <div id="ed-customer-results" style="margin-bottom:28px; display:none">
+        <div class="data-table-container has-mobile-cards">
           <table class="data-table" id="table-ed-customer">
             <thead><tr><th>Email</th><th>Sent/Scheduled</th><th>Sent At</th><th>Retries</th><th>Status</th><th>Error</th></tr></thead>
             <tbody></tbody>
@@ -1002,36 +1010,43 @@
             </div>
           </div>
         </div>
+        <div class="record-card-list" id="cards-ed-customer"></div>
       </div>
 
-      <div class="data-table-container" style="margin-bottom:28px">
-        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Currently Failed <span style="color:var(--gray-l); font-weight:500; font-size:0.8rem">— oldest first</span></div>
-        <table class="data-table" id="table-ed-failed">
-          <thead><tr><th>Type</th><th>Customer</th><th>Email</th><th>Last Attempt</th><th>Days Stuck</th><th>Retries</th><th>Error</th></tr></thead>
-          <tbody></tbody>
-        </table>
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px">
-          <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-failed-pageinfo"></span>
-          <div style="display:flex; gap:8px">
-            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryFailed(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
-            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryFailed(1)">Next <i class="bi bi-chevron-right"></i></button>
+      <div style="margin-bottom:28px">
+        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color); background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg) var(--radius-lg) 0 0">Currently Failed <span style="color:var(--gray-l); font-weight:500; font-size:0.8rem">— oldest first</span></div>
+        <div class="data-table-container has-mobile-cards" style="border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+          <table class="data-table" id="table-ed-failed">
+            <thead><tr><th>Type</th><th>Customer</th><th>Email</th><th>Last Attempt</th><th>Days Stuck</th><th>Retries</th><th>Error</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px">
+            <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-failed-pageinfo"></span>
+            <div style="display:flex; gap:8px">
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryFailed(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryFailed(1)">Next <i class="bi bi-chevron-right"></i></button>
+            </div>
           </div>
         </div>
+        <div class="record-card-list" id="cards-ed-failed"></div>
       </div>
 
-      <div class="data-table-container">
-        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Currently Retrying <span style="color:var(--gray-l); font-weight:500; font-size:0.8rem">— problems building before they become permanent</span></div>
-        <table class="data-table" id="table-ed-retrying">
-          <thead><tr><th>Type</th><th>Customer</th><th>Email</th><th>Last Attempt</th><th>Days Stuck</th><th>Retries</th><th>Error</th></tr></thead>
-          <tbody></tbody>
-        </table>
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px">
-          <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-retrying-pageinfo"></span>
-          <div style="display:flex; gap:8px">
-            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryRetrying(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
-            <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryRetrying(1)">Next <i class="bi bi-chevron-right"></i></button>
+      <div>
+        <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color); background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg) var(--radius-lg) 0 0">Currently Retrying <span style="color:var(--gray-l); font-weight:500; font-size:0.8rem">— problems building before they become permanent</span></div>
+        <div class="data-table-container has-mobile-cards" style="border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+          <table class="data-table" id="table-ed-retrying">
+            <thead><tr><th>Type</th><th>Customer</th><th>Email</th><th>Last Attempt</th><th>Days Stuck</th><th>Retries</th><th>Error</th></tr></thead>
+            <tbody></tbody>
+          </table>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px">
+            <span style="font-size:0.8rem; color:var(--gray-l)" id="ed-retrying-pageinfo"></span>
+            <div style="display:flex; gap:8px">
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryRetrying(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageEmailDeliveryRetrying(1)">Next <i class="bi bi-chevron-right"></i></button>
+            </div>
           </div>
         </div>
+        <div class="record-card-list" id="cards-ed-retrying"></div>
       </div>
     </div>
 
@@ -1057,21 +1072,21 @@
         </div>
       </div>
 
-      <div class="data-table-container">
-        <div style="padding:18px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); flex-wrap:wrap; gap:12px">
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Abandoned Transactions Log</div>
-          <div style="display:flex; gap:10px; align-items:center">
-            <select class="input-control" id="ab-status-filter" style="width:160px" onchange="loadAbandonedView()">
-              <option value="">All Statuses</option>
-              <option value="pending">Pending (&lt;1h)</option>
-              <option value="sequence_active">Sequence Active</option>
-              <option value="recovered">Recovered 🎉</option>
-              <option value="completed">Sequence Ended</option>
-              <option value="unsubscribed">Unsubscribed</option>
-            </select>
-          </div>
+      <div style="padding:18px 24px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Abandoned Transactions Log</div>
+        <div style="display:flex; gap:10px; align-items:center">
+          <select class="input-control" id="ab-status-filter" style="width:160px" onchange="loadAbandonedView()">
+            <option value="">All Statuses</option>
+            <option value="pending">Pending (&lt;1h)</option>
+            <option value="sequence_active">Sequence Active</option>
+            <option value="recovered">Recovered 🎉</option>
+            <option value="completed">Sequence Ended</option>
+            <option value="unsubscribed">Unsubscribed</option>
+          </select>
         </div>
+      </div>
 
+      <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-abandoned">
           <thead>
             <tr>
@@ -1096,6 +1111,7 @@
           </div>
         </div>
       </div>
+      <div class="record-card-list" id="cards-abandoned"></div>
     </div>
 
   </div>
@@ -1649,6 +1665,7 @@
       if (!data.customers || !data.customers.length) {
         tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px">No customer accounts matched criteria.</td></tr>';
         document.getElementById('cust-pagination').innerHTML = '';
+        document.getElementById('cards-customers-roster').innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No customer accounts matched criteria.</div>';
         return;
       }
       
@@ -1663,8 +1680,24 @@
         </tr>
       `).join('');
 
+      const cardList = document.getElementById('cards-customers-roster');
+      cardList.innerHTML = (data.customers || []).map(c => `
+        <div class="record-card" onclick="inspectCustomer('${escapeJs(c.email)}')">
+          <div class="record-card__row1">
+            <span class="record-card__primary">${escapeHtml(c.name)}</span>
+            <span class="record-card__amount">${money(c.total_spent)}</span>
+          </div>
+          <div class="record-card__row2">
+            <span class="record-card__secondary">${escapeHtml(c.email)}</span>
+            <span class="record-card__meta">${c.purchases_count} order${c.purchases_count === 1 ? '' : 's'}</span>
+          </div>
+        </div>`
+      ).join('');
+      cardList.insertAdjacentHTML('beforeend', '<div id="cust-pagination-mobile"></div>');
+
       custTotalPages = data.pages || 1;
       renderPagination(document.getElementById('cust-pagination'), custCurrentPage, custTotalPages, 'loadCustomersView');
+      renderPagination(document.getElementById('cust-pagination-mobile'), custCurrentPage, custTotalPages, 'loadCustomersView');
       restoreScrollPosition('customers');
     } catch (err) {
       alert("Error loading customers view: " + err.message + "\nStack: " + err.stack);
@@ -2006,12 +2039,14 @@
     const approveBtn = document.getElementById('payout-approve-btn');
     const discardBtn = document.getElementById('payout-discard-btn');
     const tbody = document.querySelector('#table-payout-pending tbody');
+    const cardList = document.getElementById('cards-payout-pending');
 
     if (!pendingBatch) {
       sub.textContent = 'No batch pending';
       approveBtn.style.display = 'none';
       if (discardBtn) discardBtn.style.display = 'none';
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nothing pending right now</td></tr>';
+      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">Nothing pending right now</div>';
       return;
     }
 
@@ -2030,12 +2065,32 @@
         <td>${payoutItemStatusPill(i.transfer_status)}</td>
       </tr>
     `).join('');
+
+    const itemStatusMap = { pending: 'pending', success: 'success', failed: 'failed', blocked_missing_bank_code: 'failed' };
+    const itemLabelMap = { pending: 'Pending', success: 'Sent', failed: 'Failed', blocked_missing_bank_code: 'Missing Bank Code' };
+    cardList.innerHTML = pendingBatch.items.map(i => {
+      const statusClass = itemStatusMap[i.transfer_status] || 'pending';
+      const label = itemLabelMap[i.transfer_status] || i.transfer_status;
+      return `
+      <div class="record-card record-card--${statusClass}">
+        <div class="record-card__row1">
+          <span class="record-card__primary">${escapeHtml(i.affiliate_name)}</span>
+          <span class="record-card__amount">${money(i.amount)}</span>
+        </div>
+        <div class="record-card__row2">
+          <span class="record-card__secondary">${escapeHtml(i.affiliate_code)} · ${i.bank_name ? escapeHtml(i.bank_name) : 'Bank not set'}</span>
+          <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(label)}</span>
+        </div>
+      </div>`;
+    }).join('');
   }
 
   function renderBatchHistory() {
     const tbody = document.querySelector('#table-payout-history tbody');
+    const cardList = document.getElementById('cards-payout-history');
     if (payoutBatches.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">No batches yet</td></tr>';
+      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No batches yet</div>';
       return;
     }
     tbody.innerHTML = payoutBatches.map(b => `
@@ -2046,6 +2101,24 @@
         <td style="font-weight:700">${money(b.total_amount)}</td>
       </tr>
     `).join('');
+
+    const batchStatusMap = { pending_approval: 'pending', sending: 'pending', completed: 'success', failed_partial: 'failed' };
+    const batchLabelMap = { pending_approval: 'Pending Approval', sending: 'Sending', completed: 'Completed', failed_partial: 'Partially Failed' };
+    cardList.innerHTML = payoutBatches.map(b => {
+      const statusClass = batchStatusMap[b.status] || 'pending';
+      const label = batchLabelMap[b.status] || b.status;
+      return `
+      <div class="record-card record-card--${statusClass}">
+        <div class="record-card__row1">
+          <span class="record-card__primary">${new Date(b.created_at).toLocaleDateString()}</span>
+          <span class="record-card__amount">${money(b.total_amount)}</span>
+        </div>
+        <div class="record-card__row2">
+          <span class="record-card__secondary">${b.items.length} affiliate${b.items.length === 1 ? '' : 's'}</span>
+          <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(label)}</span>
+        </div>
+      </div>`;
+    }).join('');
   }
 
   async function buildBatchNow() {
@@ -2174,13 +2247,39 @@
     return new Date(iso).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
   }
 
+  function edStatusClass(tone) {
+    if (tone === 'success') return 'success';
+    if (tone === 'pending' || tone === 'warning') return 'pending';
+    if (tone === 'failed' || tone === 'refunded' || tone === 'danger') return 'failed';
+    return '';
+  }
+
+  function edRecordCard(i, statusClass, statusLabel) {
+    const errorText = i.error ? escapeHtml(i.error) : '';
+    const label = statusLabel || (i.status_view || {}).label || i.status || '';
+    return `
+      <div class="record-card${statusClass ? ' record-card--' + statusClass : ''}">
+        <div class="record-card__row1">
+          <span class="record-card__primary">${escapeHtml(i.name || i.email)}</span>
+          <span class="record-card__amount">${i.days_stuck != null ? i.days_stuck + 'd stuck' : edTimeText(i.sent_at)}</span>
+        </div>
+        <div class="record-card__row2">
+          <span class="record-card__secondary">${escapeHtml(i.label)} · ${i.retry_count} ${i.retry_count === 1 ? 'retry' : 'retries'}</span>
+          ${statusClass && label ? `<span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(label)}</span>` : ''}
+        </div>
+        ${errorText ? `<div style="margin-top:6px; font-size:0.76rem; color:var(--gray-l); overflow:hidden; text-overflow:ellipsis; white-space:nowrap" title="${errorText}">${errorText}</div>` : ''}
+      </div>`;
+  }
+
   async function loadEmailDeliveryFailed() {
     const data = await apiCall(`/api/admin/email-delivery/failed?page=${edFailedPage}&limit=25`);
     if (!data) return;
     edFailedPages = data.pages;
     const tbody = document.querySelector('#table-ed-failed tbody');
+    const cardList = document.getElementById('cards-ed-failed');
     if (data.items.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">Nothing currently failed</td></tr>';
+      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">Nothing currently failed</div>';
     } else {
       tbody.innerHTML = data.items.map(i => `
         <tr>
@@ -2193,6 +2292,7 @@
           <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.78rem; color:var(--gray-l)" title="${(i.error || '').replace(/"/g, '&quot;')}">${i.error || '—'}</td>
         </tr>
       `).join('');
+      cardList.innerHTML = data.items.map(i => edRecordCard(i, 'failed', 'Failed')).join('');
     }
     document.getElementById('ed-failed-pageinfo').textContent = `Page ${edFailedPage} of ${edFailedPages} (${data.total} total)`;
   }
@@ -2202,8 +2302,10 @@
     if (!data) return;
     edRetryingPages = data.pages;
     const tbody = document.querySelector('#table-ed-retrying tbody');
+    const cardList = document.getElementById('cards-ed-retrying');
     if (data.items.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center">Nothing currently retrying</td></tr>';
+      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">Nothing currently retrying</div>';
     } else {
       tbody.innerHTML = data.items.map(i => `
         <tr>
@@ -2216,6 +2318,7 @@
           <td style="max-width:260px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.78rem; color:var(--gray-l)" title="${(i.error || '').replace(/"/g, '&quot;')}">${i.error || '—'}</td>
         </tr>
       `).join('');
+      cardList.innerHTML = data.items.map(i => edRecordCard(i, 'pending', 'Retrying')).join('');
     }
     document.getElementById('ed-retrying-pageinfo').textContent = `Page ${edRetryingPage} of ${edRetryingPages} (${data.total} total)`;
   }
@@ -2250,8 +2353,10 @@
     edCustomerPages = data.pages;
     document.getElementById('ed-customer-results').style.display = 'block';
     const tbody = document.querySelector('#table-ed-customer tbody');
+    const cardList = document.getElementById('cards-ed-customer');
     if (data.items.length === 0) {
       tbody.innerHTML = '<tr><td colspan="6" style="text-align:center">No emails found for this search</td></tr>';
+      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No emails found for this search</div>';
     } else {
       tbody.innerHTML = data.items.map(i => `
         <tr>
@@ -2263,6 +2368,7 @@
           <td style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:0.78rem; color:var(--gray-l)" title="${(i.error || '').replace(/"/g, '&quot;')}">${i.error || '—'}</td>
         </tr>
       `).join('');
+      cardList.innerHTML = data.items.map(i => edRecordCard(i, edStatusClass((i.status_view || {}).tone))).join('');
     }
     document.getElementById('ed-customer-pageinfo').textContent = `Page ${edCustomerPage} of ${edCustomerPages} (${data.total} total)`;
   }
@@ -2313,16 +2419,18 @@
 
   function renderSubscriptionsTable() {
     const tbody = document.querySelector('#table-subscriptions tbody');
+    const cardList = document.getElementById('cards-subscriptions');
     if (!tbody) return;
     if (allSubscriptions.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-l)">No subscriptions found matching the filters.</td></tr>';
+      if (cardList) cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No subscriptions found matching the filters.</div>';
       return;
     }
 
     tbody.innerHTML = allSubscriptions.map(s => {
       const createdStr = s.created_at ? new Date(s.created_at).toLocaleDateString() : 'N/A';
       const nextBillStr = s.next_charge_date ? new Date(s.next_charge_date).toLocaleDateString() : 'N/A';
-      
+
       let statusClass = 'pending';
       if (s.status === 'active') statusClass = 'success';
       if (s.status === 'cancelled') statusClass = 'failed';
@@ -2347,6 +2455,31 @@
       `;
     }).join('');
     restoreScrollPosition('subscriptions');
+
+    if (cardList) {
+      cardList.innerHTML = allSubscriptions.map(s => {
+        let statusClass = 'pending';
+        if (s.status === 'active') statusClass = 'success';
+        if (s.status === 'cancelled') statusClass = 'failed';
+        const nextBillStr = s.next_charge_date ? new Date(s.next_charge_date).toLocaleDateString() : 'N/A';
+        const showCancelBtn = s.status === 'active' || s.status === 'past_due';
+        const cancelBtn = showCancelBtn
+          ? `<button class="record-card__action" style="background:rgba(239,68,68,.1);color:#fca5a5;border-color:rgba(239,68,68,.35)" onclick="event.stopPropagation(); adminCancelSubscription('${escapeJs(s.id)}', '${escapeJs(s.customer_name)}', '${escapeJs(s.offer_name)}')">Cancel Subscription</button>`
+          : '';
+        return `
+        <div class="record-card record-card--${statusClass}">
+          <div class="record-card__row1">
+            <span class="record-card__primary">${escapeHtml(s.customer_name)}</span>
+            <span class="record-card__amount">${money(s.offer_price)}</span>
+          </div>
+          <div class="record-card__row2">
+            <span class="record-card__secondary">${escapeHtml(s.offer_name)} · next bill ${nextBillStr}</span>
+            <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(s.status.replace('_', ' '))}</span>
+          </div>
+          ${cancelBtn}
+        </div>`;
+      }).join('');
+    }
   }
 
   async function adminCancelSubscription(subId, customerName, offerName) {
@@ -2381,9 +2514,11 @@
 
   function renderTeamTable(reps) {
     const tbody = document.querySelector('#table-team-roster tbody');
+    const cardList = document.getElementById('cards-team-roster');
     if (!tbody) return;
     if (reps.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--gray-l)">No team members found</td></tr>';
+      if (cardList) cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No team members found</div>';
       restoreScrollPosition('team');
       return;
     }
@@ -2392,7 +2527,7 @@
       const createdStr = r.created_at ? new Date(r.created_at).toLocaleDateString() : 'N/A';
       const statusClass = r.active ? 'success' : 'failed';
       const statusLabel = r.active ? 'Active' : 'Suspended';
-      
+
       return `
         <tr>
           <td>${createdStr}</td>
@@ -2418,6 +2553,29 @@
       `;
     }).join('');
     restoreScrollPosition('team');
+
+    if (cardList) {
+      cardList.innerHTML = reps.map(r => {
+        const statusClass = r.active ? 'success' : 'failed';
+        const statusLabel = r.active ? 'Active' : 'Suspended';
+        return `
+        <div class="record-card record-card--${statusClass}">
+          <div class="record-card__row1">
+            <span class="record-card__primary">${escapeHtml(r.name)}</span>
+            <span class="record-card__amount">${r.subs_count} sold</span>
+          </div>
+          <div class="record-card__row2">
+            <span class="record-card__secondary">${escapeHtml(r.email)} · ${r.leads_count} leads</span>
+            <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(statusLabel)}</span>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:10px">
+            <button class="btn-action btn-secondary" style="flex:1; padding:8px; font-size:0.76rem; min-height:36px" onclick="event.stopPropagation(); toggleTeamMemberStatus('${escapeJs(r.id)}', '${escapeJs(r.name)}', ${!r.active})">${r.active ? 'Suspend' : 'Activate'}</button>
+            <button class="btn-action btn-secondary" style="flex:1; padding:8px; font-size:0.76rem; min-height:36px" onclick="event.stopPropagation(); openChangeTeamMemberPasswordModal('${escapeJs(r.id)}', '${escapeJs(r.name)}')">Password</button>
+            <button class="btn-action" style="flex:1; padding:8px; font-size:0.76rem; min-height:36px; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="event.stopPropagation(); deleteTeamMember('${escapeJs(r.id)}', '${escapeJs(r.name)}')">Delete</button>
+          </div>
+        </div>`;
+      }).join('');
+    }
   }
 
   function openCreateTeamMemberModal() {
@@ -2532,6 +2690,17 @@
     });
   }
 
+  // Declared here (ahead of Initial Load below) because a direct/bookmarked
+  // load of ?tab=sequence or ?tab=abandoned calls their load*View() function
+  // synchronously through refreshCurrentView() before execution would
+  // otherwise reach these — a `let` declared after that point is still in
+  // its temporal dead zone.
+  let allSeqData = [];
+  let seqCurrentPage = 1;
+  let seqTotalPages = 1;
+  let seqSearchTimeout = null;
+  let abPage = 1;
+
   // Initial Load
   const urlParams = new URLSearchParams(window.location.search);
   const initialTab = urlParams.get('tab') || 'hub';
@@ -2563,7 +2732,8 @@
     subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' },
     team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
     sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend" },
-    'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' }
+    'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' },
+    abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences' }
   };
   const meta = titles[initialTab] || { title: 'Admin Suite', sub: '' };
   document.getElementById('page-title').textContent = meta.title;
@@ -2572,11 +2742,6 @@
   refreshCurrentView();
 
   // ── EMAIL SEQUENCE VIEW ────────────────────────────────────────────────────
-  let allSeqData = [];
-  let seqCurrentPage = 1;
-  let seqTotalPages = 1;
-  let seqSearchTimeout = null;
-
   function safeDate(str) {
     if (!str) return null;
     let s = str;
@@ -2610,6 +2775,11 @@
 
       seqTotalPages = subsResp.pages || 1;
       renderPagination(document.getElementById('seq-pagination'), seqCurrentPage, seqTotalPages, 'loadSequenceView');
+      const seqCardList = document.getElementById('cards-sequence');
+      if (seqCardList) {
+        seqCardList.insertAdjacentHTML('beforeend', '<div id="seq-pagination-mobile"></div>');
+        renderPagination(document.getElementById('seq-pagination-mobile'), seqCurrentPage, seqTotalPages, 'loadSequenceView');
+      }
     } catch (err) {
       alert("Error loading sequence view: " + err.message + "\nStack: " + err.stack);
       console.error("Error loading sequence view:", err);
@@ -2632,9 +2802,25 @@
     `;
   }
 
+  function seqStatusClass(status) {
+    if (status === 'on_track' || status === 'completed') return 'success';
+    if (status === 'behind') return 'pending';
+    if (status === 'overdue') return 'failed';
+    return '';
+  }
+
+  function seqStatusLabel(status) {
+    return { on_track: 'On Track', completed: 'Completed', behind: 'Behind', overdue: 'Overdue' }[status] || status;
+  }
+
   function renderSeqTable(subscribers) {
     const tbody = document.getElementById('tbody-sequence');
-    if (!subscribers.length) { tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted);padding:32px">No subscribers enrolled.</td></tr>'; return; }
+    const cardList = document.getElementById('cards-sequence');
+    if (!subscribers.length) {
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;color:var(--text-muted);padding:32px">No subscribers enrolled.</td></tr>';
+      if (cardList) cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No subscribers enrolled.</div>';
+      return;
+    }
     tbody.innerHTML = subscribers.map(s => {
       const statusBadge = {
         'on_track': '<span style="background:rgba(16,185,129,0.15);color:#10b981;padding:2px 10px;border-radius:20px;font-size:0.75rem">On Track</span>',
@@ -2662,6 +2848,30 @@
         </td>
       </tr>`;
     }).join('');
+
+    if (cardList) {
+      cardList.innerHTML = subscribers.map(s => {
+        const statusClass = seqStatusClass(s.status);
+        const parsedNextDue = safeDate(s.next_due_at);
+        const nextDue = parsedNextDue ? parsedNextDue.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
+        const nextLabel = s.next_email_number ? `Next: #${s.next_email_number}` : 'Next: —';
+        const resendBtn = s.failed_count > 0
+          ? `<button class="record-card__action" onclick="event.stopPropagation(); seqResend('${escapeJs(s.email)}')">⚠ Resend failed email</button>`
+          : '';
+        return `
+        <div class="record-card${statusClass ? ' record-card--' + statusClass : ''}" onclick="openSeqHistory('${escapeJs(s.email)}')">
+          <div class="record-card__row1">
+            <span class="record-card__primary">${escapeHtml(s.name)}</span>
+            <span class="record-card__amount">${s.days_enrolled}d enrolled</span>
+          </div>
+          <div class="record-card__row2">
+            <span class="record-card__secondary">${escapeHtml(s.email)} · ${nextLabel}</span>
+            <span class="record-card__meta">${statusClass ? `<span class="record-card__dot record-card__dot--${statusClass}"></span>` : ''}${seqStatusLabel(s.status)}</span>
+          </div>
+          ${resendBtn}
+        </div>`;
+      }).join('');
+    }
   }
 
   function filterSeqTable() {
@@ -2735,7 +2945,6 @@
   }
 
   // ── ABANDONED CART RECOVERY VIEW ──────────────────────────────────────────
-  let abPage = 1;
   async function loadAbandonedView() {
     const statusFilter = document.getElementById('ab-status-filter')?.value || '';
     try {
@@ -2762,10 +2971,12 @@
 
       // Render table
       const tbody = document.querySelector('#table-abandoned tbody');
+      const cardList = document.getElementById('cards-abandoned');
       tbody.innerHTML = '';
       const items = res.items || [];
       if (items.length === 0) {
         tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:30px; color:var(--gray-l)">No abandoned transactions found</td></tr>';
+        if (cardList) cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No abandoned transactions found</div>';
       } else {
         items.forEach(item => {
           const tr = document.createElement('tr');
@@ -2787,11 +2998,43 @@
           `;
           tbody.appendChild(tr);
         });
+
+        if (cardList) {
+          const abStatusClassMap = { recovered: 'success', sequence_active: 'pending', unsubscribed: 'failed' };
+          cardList.innerHTML = items.map(item => {
+            const statusClass = abStatusClassMap[item.status] || '';
+            const stepText = item.sequence_step ? `Step ${item.sequence_step}/4` : 'Pending';
+            const recUrl = `/api/payments/recovery-redirect?ref=${item.reference}`;
+            const amountStr = `${item.currency === 'USD' ? '$' : '₦'}${parseFloat(item.amount || 0).toLocaleString()}`;
+            return `
+            <div class="record-card${statusClass ? ' record-card--' + statusClass : ''}">
+              <div class="record-card__row1">
+                <span class="record-card__primary">${escapeHtml(item.name || 'Student')}</span>
+                <span class="record-card__amount">${amountStr}</span>
+              </div>
+              <div class="record-card__row2">
+                <span class="record-card__secondary">${escapeHtml(item.email)} · ${stepText} · ${(item.emails_sent || []).length} sent</span>
+                <span class="record-card__meta">${statusClass ? `<span class="record-card__dot record-card__dot--${statusClass}"></span>` : ''}${escapeHtml(item.status)}</span>
+              </div>
+              <a href="${recUrl}" target="_blank" class="record-card__action" style="text-decoration:none; display:flex; align-items:center; justify-content:center"><i class="bi bi-box-arrow-up-right"></i>&nbsp; Pay Link</a>
+            </div>`;
+          }).join('');
+        }
       }
 
       // Pagination info
       const pagination = res.pagination || {};
       document.getElementById('ab-pageinfo').textContent = `Page ${pagination.page} of ${pagination.pages || 1} (${pagination.total} total)`;
+      if (cardList) {
+        cardList.insertAdjacentHTML('beforeend', `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 4px">
+            <span style="font-size:0.8rem; color:var(--gray-l)">Page ${pagination.page} of ${pagination.pages || 1} (${pagination.total} total)</span>
+            <div style="display:flex; gap:8px">
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageAbandoned(-1)"><i class="bi bi-chevron-left"></i> Prev</button>
+              <button class="btn-action btn-secondary" style="padding:6px 14px; font-size:0.8rem" onclick="pageAbandoned(1)">Next <i class="bi bi-chevron-right"></i></button>
+            </div>
+          </div>`);
+      }
     } catch (err) {
       console.error('Error loading abandoned view:', err);
     }
