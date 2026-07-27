@@ -328,100 +328,100 @@ const BOOKS = [
   },
   {
     id: "book1",
-    title: "Academic Comeback Package",
+    title: "How to Balance Your Academics and Your Business",
     cover: "/assets/covers/book1.webp",
     category: "Education & Mastery",
     rating: 4.9,
     reviews: 580,
-    description: "The signature 7-book system for students who study hard but fail to get expected grades. Learn effective learning systems.",
+    description: "A practical guide to excelling in school, growing your business, and building the life you want without burnout.",
     bullets: [
-      "Active recall & Feynman technique mastery",
-      "Exam preparation timeline that guarantees high GPA",
-      "Eliminating exam anxiety & blanking out in tests"
+      "Time allocation framework for student founders",
+      "Prioritizing coursework while running a business",
+      "Managing stress and maintaining top academic performance"
     ]
   },
   {
     id: "book2",
-    title: "Scale & Execution Blueprint",
+    title: "How to Score High in Any Exam",
     cover: "/assets/covers/book2.webp",
-    category: "Business & Scale",
+    category: "Education & Mastery",
     rating: 4.9,
     reviews: 310,
-    description: "High-level execution architecture for business owners, creators, and professionals scaling operations.",
+    description: "Proven strategies, smart study techniques, and practical exam preparation protocols to achieve top results.",
     bullets: [
-      "Quarterly goal decomposition into daily action steps",
-      "Metric tracking dashboards that reveal bottlenecks",
-      "Scaling revenue without increasing working hours"
+      "Active recall & spaced repetition study schedule",
+      "Deconstructing exam questions for maximum marks",
+      "Eliminating exam anxiety & last-minute cramming"
     ]
   },
   {
     id: "book3",
-    title: "High-Income Skill Acceleration",
+    title: "Result-Oriented Learning",
     cover: "/assets/covers/book3.webp",
-    category: "Career Acceleration",
+    category: "Education & Mastery",
     rating: 4.9,
     reviews: 275,
-    description: "Identify, master, and monetize high-value market skills in 90 days or less.",
+    description: "Know exactly what to study for exams. Eliminate wasted effort and focus on high-yield topic mastery.",
     bullets: [
-      "Skill stacking formula that commands premium market rates",
-      "90-day rapid deliberate practice roadmap",
-      "Monetizing skills through consulting, freelancing, or digital assets"
+      "Identifying high-yield exam topics & past question trends",
+      "Feynman technique for rapid concept comprehension",
+      "Studying less hours while achieving higher retention"
     ]
   },
   {
     id: "book4",
-    title: "Corporate Career Velocity",
+    title: "Get Good at Hard Things",
     cover: "/assets/covers/book4.webp",
-    category: "Career Acceleration",
+    category: "Education & Mastery",
     rating: 4.8,
     reviews: 190,
-    description: "Accelerated career advancement and income multiplication playbook for corporate professionals.",
+    description: "A system for academic and skill excellence through discipline, mental depth, and deliberate effort.",
     bullets: [
-      "Securing double-digit annual compensation increases",
-      "Building strategic industry networks outside your company",
-      "Positioning for senior management roles"
+      "Deliberate practice protocol for difficult subjects",
+      "Building 4-hour deep focus stamina",
+      "Overcoming frustration & cognitive fatigue"
     ]
   },
   {
     id: "book5",
-    title: "Financial Mastery & Cash Flow",
+    title: "30-Day Study Tracker",
     cover: "/assets/covers/book5.webp",
-    category: "Business & Wealth",
+    category: "Education & Mastery",
     rating: 4.9,
     reviews: 230,
-    description: "Personal and business cash flow management, asset allocation, and wealth preservation.",
+    description: "Daily progress & discipline system to build consistent study habits, track syllabus coverage, and stay accountable.",
     bullets: [
-      "Building resilient wealth systems across multiple currencies",
-      "Reinvesting business profits into income-producing assets",
-      "Eliminating bad debt and lifestyle inflation traps"
+      "Daily habit tracking grid for 30-day exam prep",
+      "Measuring daily topic completion & review milestones",
+      "Building unshakeable consistency and study momentum"
     ]
   },
   {
     id: "book6",
-    title: "Mental Toughness & Peak Performance",
+    title: "Focus Template: Deep Work Protocol",
     cover: "/assets/covers/book6.webp",
     category: "Mindset & Health",
     rating: 4.9,
     reviews: 215,
-    description: "Develop unshakeable discipline, focus stamina, and high-performance habits under pressure.",
+    description: "Deep work & distraction elimination system to block out digital noise, build focus stamina, and double study output.",
     bullets: [
-      "Building 4-hour uninterrupted deep work blocks",
-      "Eliminating phone addiction & dopamine distractions",
-      "Maintaining high energy levels all day"
+      "Digital environment distraction elimination framework",
+      "Structured Pomodoro & deep work sprint blocks",
+      "Restoring mental clarity and focus control"
     ]
   },
   {
     id: "book7",
-    title: "Digital Product & DM Closing Blueprint",
+    title: "Exam Survival Guide",
     cover: "/assets/covers/book7.webp",
-    category: "Sales & Marketing",
+    category: "Education & Mastery",
     rating: 4.9,
     reviews: 340,
-    description: "Complete guide to creating, marketing, and selling digital assets directly through conversational sales.",
+    description: "High-stakes preparation & tactical performance protocol for final exams, professional certifications, and tests.",
     bullets: [
-      "Ideating & validating digital products in 48 hours",
-      "DM sales conversations that close without feeling pushy",
-      "Automating delivery & customer onboarding"
+      "48-hour pre-exam emergency review protocol",
+      "Pacing strategies inside the examination hall",
+      "Handling unexpected questions under severe time pressure"
     ]
   }
 ];
