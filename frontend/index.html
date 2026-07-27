@@ -33,6 +33,7 @@
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    -webkit-tap-highlight-color: transparent;
   }
 
   /* Header */
@@ -91,6 +92,7 @@
     font-weight: 700;
     font-size: 0.875rem;
     transition: all 0.2s;
+    cursor: pointer;
   }
   .nav-btn:hover {
     background: var(--gold);
@@ -221,24 +223,31 @@
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
+  /* UNCROPPED COVER DISPLAY */
   .book-card__image-wrap {
     width: 100%;
     aspect-ratio: 3 / 4;
-    background: #11141c;
+    background: radial-gradient(circle at center, #1f2433 0%, #11141c 100%);
+    padding: 12px;
+    box-sizing: border-box;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .book-card__image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
     transition: transform 0.3s ease;
   }
   .book-card:hover .book-card__image {
-    transform: scale(1.03);
+    transform: scale(1.04);
   }
+
   .book-card__content {
     padding: 20px;
     display: flex;
@@ -474,6 +483,145 @@
   .footer-links a:hover {
     color: var(--gold);
   }
+
+  /* ── MOBILE OPTIMIZATION MEDIA QUERIES ── */
+  @media (max-width: 640px) {
+    .site-header {
+      padding: 12px 0;
+    }
+    .header-inner {
+      padding: 0 16px;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .brand-logo {
+      font-size: 1.1rem;
+    }
+    .nav-links {
+      width: 100%;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .nav-link {
+      font-size: 0.8rem;
+    }
+    .nav-btn {
+      padding: 6px 12px;
+      font-size: 0.78rem;
+    }
+    .hero-section {
+      padding: 28px 16px 20px;
+    }
+    .hero-badge {
+      font-size: 0.72rem;
+      padding: 4px 12px;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: 1.75rem;
+      margin-bottom: 12px;
+    }
+    .hero-subtitle {
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+    .guarantee-banner {
+      flex-direction: column;
+      text-align: center;
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      gap: 6px;
+      margin-bottom: 28px;
+    }
+    .catalog-header {
+      padding: 0 16px;
+      margin-bottom: 14px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .catalog-title {
+      font-size: 1.2rem;
+    }
+    .price-tag-global {
+      font-size: 0.78rem;
+    }
+    .books-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 12px 60px;
+    }
+    .book-card {
+      border-radius: 12px;
+    }
+    .book-card__badge {
+      top: 6px;
+      right: 6px;
+      font-size: 0.6rem;
+      padding: 3px 6px;
+    }
+    .book-card__image-wrap {
+      padding: 6px;
+      aspect-ratio: 3 / 4;
+    }
+    .book-card__content {
+      padding: 10px;
+    }
+    .book-card__category {
+      font-size: 0.65rem;
+      margin-bottom: 3px;
+    }
+    .book-card__title {
+      font-size: 0.88rem;
+      line-height: 1.25;
+      margin-bottom: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .book-card__desc {
+      font-size: 0.75rem;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      -webkit-line-clamp: 2;
+    }
+    .book-card__footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+      padding-top: 8px;
+    }
+    .book-card__price {
+      font-size: 1.05rem;
+      text-align: center;
+    }
+    .book-card__btn {
+      width: 100%;
+      padding: 8px 6px;
+      font-size: 0.8rem;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .modal-card {
+      padding: 20px 16px;
+      border-radius: 16px;
+      max-width: 95vw;
+    }
+    .form-input {
+      font-size: 1rem; /* Prevent iOS safari auto-zoom on focus */
+      padding: 10px 12px;
+    }
+    .pm-selector {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .footer-links {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -535,7 +683,7 @@
   <div class="modal-card">
     <button class="modal-close" onclick="closePreorderModal()"><i class="bi bi-x-lg"></i></button>
     <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
-      <img id="modal-book-cover" src="" style="width:70px; height:90px; object-fit:cover; border-radius:8px; border:1px solid var(--card-border);">
+      <img id="modal-book-cover" src="" style="width:70px; height:90px; object-fit:contain; border-radius:8px; border:1px solid var(--card-border); background:#11141c; padding:4px;">
       <div>
         <h3 class="modal-title" id="modal-book-title">Book Title</h3>
         <div style="font-size:1.25rem; font-weight:900; color:var(--gold-bright);">₦5,000</div>
