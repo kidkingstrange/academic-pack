@@ -573,13 +573,34 @@ function renderBooks() {
   }).join('');
 }
 
+function updateBundlePreviews() {
+  const b1Id = document.getElementById('bundle-book-1')?.value;
+  const b2Id = document.getElementById('bundle-book-2')?.value;
+  const b3Id = document.getElementById('bundle-book-3')?.value;
+
+  const b1 = BOOKS.find(b => b.id === b1Id);
+  const b2 = BOOKS.find(b => b.id === b2Id);
+  const b3 = BOOKS.find(b => b.id === b3Id);
+
+  const t1 = document.getElementById('bundle-thumb-1');
+  const t2 = document.getElementById('bundle-thumb-2');
+  const t3 = document.getElementById('bundle-thumb-3');
+
+  if (t1 && b1) t1.src = b1.cover;
+  if (t2 && b2) t2.src = b2.cover;
+  if (t3 && b3) t3.src = b3.cover;
+}
+
 function openPreorderModal(bookId) {
+  const bundleContainer = document.getElementById('bundle-selector-container');
+  const modalCover = document.getElementById('modal-book-cover');
+
   if (bookId === 'bundle_3') {
     selectedBook = {
       id: 'bundle_3',
       title: '3-Book Masterclass Bundle (Pick Any 3)',
       cover: '/assets/covers/how-to-close-high-paying-clients-in-the-dms.webp',
-      description: 'Get instant access to any 3 digital masterclasses of your choice for just ₦ 12,000 (Save ₦ 3,000 / 20% OFF).',
+      description: 'Choose your 3 masterclasses below to get instant access for just ₦ 12,000 (Save ₦ 3,000 / 20% OFF).',
       amount: 12000,
       bullets: [
         "Pick any 3 masterclasses from the catalog",
@@ -587,14 +608,40 @@ function openPreorderModal(bookId) {
         "Instant delivery & lifetime updates"
       ]
     };
+
+    if (bundleContainer) bundleContainer.style.display = 'block';
+    if (modalCover) modalCover.style.display = 'none';
+
+    // Populate 3 dropdowns
+    const optionsHtml = BOOKS.map(b => `<option value="${b.id}">${escapeHtml(b.title)}</option>`).join('');
+    const s1 = document.getElementById('bundle-book-1');
+    const s2 = document.getElementById('bundle-book-2');
+    const s3 = document.getElementById('bundle-book-3');
+
+    if (s1 && s2 && s3) {
+      s1.innerHTML = optionsHtml;
+      s2.innerHTML = optionsHtml;
+      s3.innerHTML = optionsHtml;
+
+      s1.value = 'how-to-close-high-paying-clients-in-the-dms';
+      s2.value = 'how-to-build-a-high-converting-whatsapp';
+      s3.value = 'naira-ads';
+
+      updateBundlePreviews();
+    }
   } else {
     const book = BOOKS.find(b => b.id === bookId);
     if (!book) return;
     selectedBook = { ...book, amount: 5000 };
+
+    if (bundleContainer) bundleContainer.style.display = 'none';
+    if (modalCover) {
+      modalCover.src = book.cover;
+      modalCover.style.display = 'block';
+    }
   }
 
   document.getElementById('modal-book-title').textContent = selectedBook.title;
-  document.getElementById('modal-book-cover').src = selectedBook.cover;
   document.getElementById('modal-book-desc').textContent = selectedBook.description;
   document.getElementById('modal-book-price-display').innerHTML = `<span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
   document.getElementById('submit-preorder-btn').innerHTML = `Buy Now — <span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
@@ -634,6 +681,28 @@ async function handlePreorderSubmit(e) {
   btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
 
   try {
+    let bookTitleToSubmit = selectedBook.title;
+    let bookIdToSubmit = selectedBook.id;
+
+    if (selectedBook.id === 'bundle_3') {
+      const b1Id = document.getElementById('bundle-book-1')?.value;
+      const b2Id = document.getElementById('bundle-book-2')?.value;
+      const b3Id = document.getElementById('bundle-book-3')?.value;
+
+      const b1 = BOOKS.find(b => b.id === b1Id);
+      const b2 = BOOKS.find(b => b.id === b2Id);
+      const b3 = BOOKS.find(b => b.id === b3Id);
+
+      const titleList = [b1?.title, b2?.title, b3?.title].filter(Boolean).join(' + ');
+      bookTitleToSubmit = `3-Book Bundle: ${titleList}`;
+      bookIdToSubmit = `bundle_3_${b1Id || 'b1'}_${b2Id || 'b2'}_${b3Id || 'b3'}`;
+
+      // Save pending bundle IDs to local storage so they are automatically added to library on success
+      try {
+        localStorage.setItem('scale_pending_bundle_ids', JSON.stringify([b1Id, b2Id, b3Id]));
+      } catch(err){}
+    }
+
     const referralCode = localStorage.getItem('ac_referral_code');
     const amountToCharge = selectedBook.amount || 5000;
     const res = await fetch(`${API_BASE}/payments/preorder/initialize`, {
@@ -642,8 +711,8 @@ async function handlePreorderSubmit(e) {
       body: JSON.stringify({
         name,
         email,
-        book_id: selectedBook.id,
-        book_title: selectedBook.title,
+        book_id: bookIdToSubmit,
+        book_title: bookTitleToSubmit,
         amount: amountToCharge,
         payment_method: paymentMethod,
         referral_code: referralCode || null,
@@ -674,6 +743,17 @@ function checkSuccessState() {
     const title = params.get('title') || 'Your Masterclass';
     const bookId = params.get('book_id');
     if (bookId) addOwnedBook(bookId);
+
+    // Process pending bundle IDs if present
+    try {
+      const pendingRaw = localStorage.getItem('scale_pending_bundle_ids');
+      if (pendingRaw) {
+        const pIds = JSON.parse(pendingRaw);
+        pIds.forEach(id => addOwnedBook(id));
+        localStorage.removeItem('scale_pending_bundle_ids');
+      }
+    } catch(e){}
+
     showSuccessModal(ref, title);
   }
 }
