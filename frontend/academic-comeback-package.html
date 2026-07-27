@@ -62,7 +62,10 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <nav class="nav">
   <div class="container nav__inner">
     <a href="/" class="nav__brand">SCALE GROUP</a>
-    <button class="btn btn--gold nav__cta" onclick="openCheckout()">Get The Package</button>
+    <div style="display: flex; gap: 12px; align-items: center;">
+      <button class="nav-btn" onclick="openRefundModal()" style="background: rgba(212, 166, 58, 0.15); color: #f3c659; border: 1px solid #d4a63a; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;">Check Status / Support</button>
+      <button class="btn btn--gold nav__cta" onclick="openCheckout()">Get The Package</button>
+    </div>
   </div>
 </nav>
 
@@ -582,11 +585,48 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
 <!-- Footer -->
 <footer class="footer">
-  <div class="container">
+  <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
     <div class="footer__brand">SCALE GROUP</div>
-    <p class="footer__copy">© 2025 Itoya David. All rights reserved.</p>
+    <div>
+      <a href="javascript:void(0)" onclick="openRefundModal()" style="color: var(--gold-l); font-size: 0.875rem; text-decoration: none; font-weight: 600;">Check Order Status / Customer Support</a>
+    </div>
+    <p class="footer__copy">© 2026 Scale Group. All rights reserved.</p>
   </div>
 </footer>
+
+<!-- Support / Order Lookup Modal -->
+<div class="modal-overlay" id="refund-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 16px; box-sizing: border-box;">
+  <div class="modal-card" style="background: #161922; border: 1px solid #2a2e3d; border-radius: 20px; max-width: 480px; width: 100%; padding: 32px; position: relative; color: #fff; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
+    <button class="modal-close" onclick="closeRefundModal()" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;"><i class="bi bi-x-lg"></i></button>
+    <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin-top: 0; margin-bottom: 8px;">Order Lookup / Customer Support</h3>
+    <p style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 20px;">
+      If you need assistance with an order or wish to request support, submit your details below.
+    </p>
+
+    <form id="refund-form" onsubmit="handleRefundSubmit(event)">
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #9ca3af; margin-bottom: 6px;">Order Reference Code (e.g. ACP-PRE-XXXX or ACP-LIVE-XXXX)</label>
+        <input type="text" id="refund-ref" class="form-input" placeholder="ACP-..." required style="width: 100%; background: #0d0f14; border: 1px solid #2a2e3d; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #9ca3af; margin-bottom: 6px;">Customer Email Address</label>
+        <input type="email" id="refund-email" class="form-input" placeholder="email@example.com" required style="width: 100%; background: #0d0f14; border: 1px solid #2a2e3d; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #9ca3af; margin-bottom: 6px;">Message / Reason</label>
+        <textarea id="refund-reason" class="form-input" rows="3" placeholder="How can we help you?" required style="width: 100%; background: #0d0f14; border: 1px solid #2a2e3d; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;"></textarea>
+      </div>
+
+      <div id="refund-status-msg" style="padding: 12px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; margin-top: 12px; display: none;"></div>
+
+      <button type="submit" class="btn-submit" id="submit-refund-btn" style="width: 100%; background: #d4a63a; color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 12px;">
+        Submit Request
+      </button>
+    </form>
+  </div>
+</div>
 
 <!-- Checkout Modal -->
 <div class="modal-overlay" id="checkout-modal">
@@ -965,11 +1005,57 @@ function formatApiError(detail, fallback) {
   });
 </script>
 <script>
-  window.addEventListener('DOMContentLoaded', function() {
-    if (typeof trackTelemetry === 'function') {
-      trackTelemetry('landing_view');
-    }
-  });
+function openRefundModal() {
+  var modal = document.getElementById('refund-modal');
+  if (modal) {
+    modal.style.opacity = '1';
+    modal.style.pointerEvents = 'auto';
+  }
+}
+function closeRefundModal() {
+  var modal = document.getElementById('refund-modal');
+  if (modal) {
+    modal.style.opacity = '0';
+    modal.style.pointerEvents = 'none';
+  }
+}
+async function handleRefundSubmit(e) {
+  e.preventDefault();
+  const ref = document.getElementById('refund-ref').value.trim();
+  const email = document.getElementById('refund-email').value.trim();
+  const reason = document.getElementById('refund-reason').value.trim();
+  const btn = document.getElementById('submit-refund-btn');
+  const statusEl = document.getElementById('refund-status-msg');
+
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch('/api/preorders/request-refund', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ reference: ref, email, reason }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Request submission failed');
+
+    statusEl.style.background = 'rgba(22, 163, 74, 0.15)';
+    statusEl.style.border = '1px solid #16a34a';
+    statusEl.style.color = '#4ade80';
+    statusEl.textContent = data.message;
+    statusEl.style.display = 'block';
+    setTimeout(closeRefundModal, 4000);
+  } catch (err) {
+    statusEl.style.background = 'rgba(220, 38, 38, 0.15)';
+    statusEl.style.border = '1px solid #dc2626';
+    statusEl.style.color = '#f87171';
+    statusEl.textContent = err.message;
+    statusEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Submit Request';
+  }
+}
 </script>
 </body>
 </html>
