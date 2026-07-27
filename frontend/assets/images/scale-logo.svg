@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Scale Group">
+  <defs>
+    <linearGradient id="scaleLogoChevronTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e3b55a"/>
+      <stop offset="100%" stop-color="#c9973a"/>
+    </linearGradient>
+    <linearGradient id="scaleLogoChevronBottom" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c9973a"/>
+      <stop offset="100%" stop-color="#a87830"/>
+    </linearGradient>
+  </defs>
+
+  <path d="M50 18 L84 32 L84 40 L50 26 L16 40 L16 32 Z" fill="url(#scaleLogoChevronTop)"/>
+  <path d="M50 42 L84 56 L84 64 L50 50 L16 64 L16 56 Z" fill="url(#scaleLogoChevronBottom)"/>
+  <path d="M14 68 C 14 68, 32 86, 50 86 C 68 86, 86 68, 86 68 C 86 68, 74 78, 50 78 C 26 78, 14 68, 14 68 Z" fill="#f7f6f2"/>
+</svg>

@@ -20,7 +20,8 @@
 /* NAVBAR */
 .nav{background:var(--ink);padding:16px 0;position:relative;z-index:100}
 .nav__inner{display:flex;align-items:center;justify-content:space-between}
-.nav__brand{font-family:'Inter',sans-serif;font-size:1.15rem;font-weight:900;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase}
+.nav__brand{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:1.15rem;font-weight:900;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;text-decoration:none}
+.nav__brand img{width:26px;height:26px;display:block}
 .nav__cta{font-size:.82rem;padding:10px 22px}
 
 /* HERO */
