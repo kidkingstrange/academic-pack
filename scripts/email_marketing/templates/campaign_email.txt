@@ -1,0 +1,29 @@
+SCALE GROUP — Digital Growth & Leadership Library
+==================================================
+
+Hello {{ recipient_name }},
+
+💡 Weekly Tactical Focus: {{ lead_headline }}
+{{ lead_story }}
+
+Here are {{ products|length }} handpicked masterclasses to accelerate your execution:
+
+{% for product in products %}
+--------------------------------------------------
+* {{ product.name }} [{{ product.category }}]
+Price: {{ product.formatted_price }}
+Description: {{ product.description }}
+Direct Link: {{ product.product_url }}
+{% endfor %}
+
+--------------------------------------------------
+🎁 SPECIAL BUNDLE OFFER
+Claim any 3 masterclasses for just ₦ 12,000 (Save ₦ 3,000):
+https://edgepack.thescaleconference.com/#bundle
+
+==================================================
+Scale Group Digital Publishing
+The Scale Conference Head Office, Victoria Island, Lagos, Nigeria.
+
+To unsubscribe from future updates, visit:
+{{ unsubscribe_url }}
