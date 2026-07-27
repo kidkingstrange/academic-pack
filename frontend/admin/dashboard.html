@@ -267,6 +267,7 @@
     gap: 20px;
     margin-bottom: 32px;
   }
+  .dash-recent-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
   @media (max-width: 768px) {
     /* Full-width stacked KPI tiles turn a health-metrics row into a wall
        of scrolling before the actual content starts — two per row cuts
@@ -324,7 +325,7 @@
   }
   .ai-bullets {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 12px;
   }
   .ai-item {
@@ -445,6 +446,11 @@
        to complete a task, not dense secondary table actions. */
     .btn-action, .input-control, .period-select { min-height: 44px; }
     .record-card__action { min-height: 44px; }
+
+    /* Dashboard's two "Recent" widgets were a fixed 2-column grid with no
+       mobile override — two 4-column tables squeezed into half-width
+       columns, clipping every cell's text. Stack them instead. */
+    .dash-recent-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
   }
 
   .status-pill {
@@ -728,20 +734,26 @@
         <div style="height:300px"><canvas id="chart-dash-trend"></canvas></div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px">
-        <div class="data-table-container">
-          <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Recent Sales Activity</div>
-          <table class="data-table" id="table-dash-recent-sales">
-            <thead><tr><th>Date</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
-            <tbody></tbody>
-          </table>
+      <div class="dash-recent-grid">
+        <div>
+          <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color); background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg) var(--radius-lg) 0 0">Recent Sales Activity</div>
+          <div class="data-table-container has-mobile-cards" style="border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+            <table class="data-table" id="table-dash-recent-sales">
+              <thead><tr><th>Date</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="record-card-list" id="cards-dash-recent-sales"></div>
         </div>
-        <div class="data-table-container">
-          <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Recent Captured Leads</div>
-          <table class="data-table" id="table-dash-recent-leads">
-            <thead><tr><th>Date</th><th>Email</th><th>Source</th></tr></thead>
-            <tbody></tbody>
-          </table>
+        <div>
+          <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color); background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg) var(--radius-lg) 0 0">Recent Captured Leads</div>
+          <div class="data-table-container has-mobile-cards" style="border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+            <table class="data-table" id="table-dash-recent-leads">
+              <thead><tr><th>Date</th><th>Email</th><th>Source</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="record-card-list" id="cards-dash-recent-leads"></div>
         </div>
       </div>
     </div>
@@ -821,13 +833,14 @@
           <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff; margin-bottom:16px">MAA Trend (Last 6 Months)</div>
           <div style="height:220px"><canvas id="chart-maa-trend"></canvas></div>
         </div>
-        <div class="data-table-container">
-          <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color)">Never Activated — Needs a Nudge</div>
+        <div style="padding:18px 20px; margin-bottom:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">Never Activated — Needs a Nudge</div>
+        <div class="data-table-container has-mobile-cards">
           <table class="data-table" id="table-never-activated">
             <thead><tr><th>Registered</th><th>Code</th><th>Name</th><th>Email</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
+        <div class="record-card-list" id="cards-never-activated"></div>
       </div>
 
       <div class="filter-bar">
@@ -1431,6 +1444,22 @@
         <td><span class="status-pill success">${escapeHtml(t.status)}</span></td>
       </tr>
     `).join('');
+    const dashSalesCards = document.getElementById('cards-dash-recent-sales');
+    if (dashSalesCards) {
+      const recentSales = data.recent_transactions || [];
+      dashSalesCards.innerHTML = recentSales.length ? recentSales.map(t => `
+        <div class="record-card record-card--success" onclick="inspectSale('${escapeJs(t.reference)}')">
+          <div class="record-card__row1">
+            <span class="record-card__primary">${escapeHtml(t.name)}</span>
+            <span class="record-card__amount">${money(t.amount)}</span>
+          </div>
+          <div class="record-card__row2">
+            <span class="record-card__secondary">${t.verified_at ? new Date(t.verified_at).toLocaleDateString() : 'Today'}</span>
+            <span class="record-card__meta"><span class="record-card__dot record-card__dot--success"></span>${escapeHtml(t.status)}</span>
+          </div>
+        </div>`
+      ).join('') : '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No recent sales</div>';
+    }
 
     // Recent Leads
     document.querySelector('#table-dash-recent-leads tbody').innerHTML = (data.recent_leads || []).map(l => `
@@ -1440,6 +1469,21 @@
         <td style="text-transform:capitalize">${escapeHtml(l.source || 'Organic')}</td>
       </tr>
     `).join('');
+    const dashLeadsCards = document.getElementById('cards-dash-recent-leads');
+    if (dashLeadsCards) {
+      const recentLeads = data.recent_leads || [];
+      dashLeadsCards.innerHTML = recentLeads.length ? recentLeads.map(l => `
+        <div class="record-card">
+          <div class="record-card__row1">
+            <span class="record-card__primary">${escapeHtml(l.email)}</span>
+            <span class="record-card__amount" style="text-transform:capitalize;font-size:0.78rem;color:var(--gray-l)">${escapeHtml(l.source || 'Organic')}</span>
+          </div>
+          <div class="record-card__row2">
+            <span class="record-card__secondary">${new Date(l.created_at).toLocaleDateString()}</span>
+          </div>
+        </div>`
+      ).join('') : '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No recent leads</div>';
+    }
 
     restoreScrollPosition('dashboard');
   }
@@ -1792,9 +1836,11 @@
     });
 
     const tbody = document.querySelector('#table-never-activated tbody');
+    const cardList = document.getElementById('cards-never-activated');
     const list = h.never_activated || [];
     if (list.length === 0) {
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Every registered affiliate has activated</td></tr>';
+      if (cardList) cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">Every registered affiliate has activated</div>';
     } else {
       tbody.innerHTML = list.map(a => `
         <tr>
@@ -1804,6 +1850,20 @@
           <td>${escapeHtml(a.email)}</td>
         </tr>
       `).join('');
+      if (cardList) {
+        cardList.innerHTML = list.map(a => `
+          <div class="record-card">
+            <div class="record-card__row1">
+              <span class="record-card__primary">${escapeHtml(a.name)}</span>
+              <span class="record-card__amount" style="color:var(--gold-light)">${escapeHtml(a.code)}</span>
+            </div>
+            <div class="record-card__row2">
+              <span class="record-card__secondary">${escapeHtml(a.email)}</span>
+              <span class="record-card__meta">${new Date(a.created_at).toLocaleDateString()}</span>
+            </div>
+          </div>`
+        ).join('');
+      }
     }
     restoreScrollPosition('affiliates');
   }
