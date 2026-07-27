@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scale Group Library — Digital Masterclasses & Blueprints</title>
-<meta name="description" content="Explore 30 tactical digital books and blueprints to scale your business, career, and wealth. Buy now for ₦5,000 each.">
+<meta name="description" content="Explore 30 tactical digital books and blueprints to scale your business, career, and wealth. Buy now for ₦ 5,000 each.">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 <link rel="preload" as="image" href="/assets/covers/how-to-close-high-paying-clients-in-the-dms.webp" type="image/webp">
 <link rel="preload" as="image" href="/assets/covers/how-to-build-a-high-converting-whatsapp.webp" type="image/webp">
 <link rel="preload" as="image" href="/assets/covers/how-to-sell-digital-products-globally.webp" type="image/webp">
-<link rel="stylesheet" href="/css/main.css?v=4">
+<link rel="stylesheet" href="/css/main.css?v=6">
 <style>
   :root {
     --bg-dark: #0d0f14;
@@ -34,6 +34,13 @@
     padding: 0;
     line-height: 1.6;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Currency Styling Fix */
+  .naira {
+    font-family: system-ui, -apple-system, sans-serif;
+    margin-right: 2px;
+    font-weight: 700;
   }
 
   /* Returning Visitor Banner */
@@ -261,7 +268,12 @@
     font-size: 0.85rem;
     font-weight: 700;
     cursor: pointer;
+    outline: none;
+    user-select: none;
     transition: all 0.2s ease;
+  }
+  .filter-tab:focus {
+    outline: none;
   }
   .filter-tab:hover {
     border-color: var(--gold);
@@ -271,6 +283,7 @@
     background: var(--gold-dim);
     border-color: var(--gold);
     color: var(--gold-bright);
+    box-shadow: 0 0 12px rgba(212, 166, 58, 0.2);
   }
 
   /* Book Grid */
@@ -783,11 +796,11 @@
   <!-- Multi-Book Bundle Offer Banner -->
   <div class="bundle-banner">
     <div class="bundle-content">
-      <h3>🔥 SPECIAL BUNDLE: Pick Any 3 Masterclasses for ₦12,000</h3>
-      <p>Select any 3 books of your choice and save ₦3,000 instantly (20% OFF). Includes lifetime updates.</p>
+      <h3>🔥 SPECIAL BUNDLE: Pick Any 3 Masterclasses for <span class="naira">₦</span> 12,000</h3>
+      <p>Select any 3 books of your choice and save <span class="naira">₦</span> 3,000 instantly (20% OFF). Includes lifetime updates.</p>
     </div>
     <button class="bundle-btn" onclick="openPreorderModal('bundle_3')">
-      Claim 3-Book Bundle — ₦12,000
+      Claim 3-Book Bundle — <span class="naira">₦</span> 12,000
     </button>
   </div>
 </section>
@@ -800,12 +813,12 @@
   </div>
 
   <div class="filter-tabs">
-    <button class="filter-tab active" onclick="filterCategory('all', this)">🔥 All (30)</button>
-    <button class="filter-tab" onclick="filterCategory('Sales & Marketing', this)">💰 Sales & Marketing</button>
-    <button class="filter-tab" onclick="filterCategory('Business & Scale', this)">🏢 Business & Scale</button>
-    <button class="filter-tab" onclick="filterCategory('Career Acceleration', this)">🚀 Career Acceleration</button>
-    <button class="filter-tab" onclick="filterCategory('Mindset & Health', this)">🧠 Mindset & Health</button>
-    <button class="filter-tab" onclick="filterCategory('Education & Mastery', this)">🎓 Education</button>
+    <button class="filter-tab active" data-category="all" onclick="filterCategory('all', this)">🔥 All (30)</button>
+    <button class="filter-tab" data-category="sales" onclick="filterCategory('sales', this)">💰 Sales & Marketing</button>
+    <button class="filter-tab" data-category="business" onclick="filterCategory('business', this)">🏢 Business & Wealth</button>
+    <button class="filter-tab" data-category="career" onclick="filterCategory('career', this)">🚀 Career Acceleration</button>
+    <button class="filter-tab" data-category="mindset" onclick="filterCategory('mindset', this)">🧠 Mindset & Health</button>
+    <button class="filter-tab" data-category="education" onclick="filterCategory('education', this)">🎓 Education</button>
   </div>
 </div>
 
@@ -831,7 +844,7 @@
       <img id="modal-book-cover" src="" style="width:70px; height:90px; object-fit:contain; border-radius:8px; border:1px solid var(--card-border); background:#11141c; padding:4px;">
       <div>
         <h3 class="modal-title" id="modal-book-title">Book Title</h3>
-        <div style="font-size:1.25rem; font-weight:900; color:var(--gold-bright);" id="modal-book-price-display">₦5,000</div>
+        <div style="font-size:1.25rem; font-weight:900; color:var(--gold-bright);" id="modal-book-price-display"><span class="naira">₦</span> 5,000</div>
       </div>
     </div>
     <p id="modal-book-desc" style="font-size:0.875rem; color:var(--text-muted); margin-bottom:12px;"></p>
@@ -872,7 +885,7 @@
       <div id="preorder-error" class="status-msg status-msg--error"></div>
 
       <button type="submit" class="btn-submit" id="submit-preorder-btn">
-        Buy Now — ₦5,000
+        Buy Now — <span class="naira">₦</span> 5,000
       </button>
     </form>
   </div>

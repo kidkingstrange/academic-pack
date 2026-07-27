@@ -134,7 +134,7 @@ const BOOKS = [
     id: "how-to-stop-worrying-about-money",
     title: "How to Stop Worrying About Money & Build Security",
     cover: "/assets/covers/how-to-stop-worrying-about-money.webp",
-    category: "Finance & Wealth",
+    category: "Business & Wealth",
     rating: 4.9,
     reviews: 201,
     description: "Psychological principles and tactical money management systems to eliminate financial anxiety.",
@@ -386,7 +386,7 @@ const BOOKS = [
     id: "book5",
     title: "Financial Mastery & Cash Flow",
     cover: "/assets/covers/book5.webp",
-    category: "Finance & Wealth",
+    category: "Business & Wealth",
     rating: 4.9,
     reviews: 230,
     description: "Personal and business cash flow management, asset allocation, and wealth preservation.",
@@ -471,11 +471,33 @@ function checkOwnedState() {
   }
 }
 
-function filterCategory(cat, btnEl) {
-  currentCategory = cat;
-  document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-  if (btnEl) btnEl.classList.add('active');
+function filterCategory(catKey, btnEl) {
+  currentCategory = catKey;
+  document.querySelectorAll('.filter-tab').forEach(b => {
+    b.classList.remove('active');
+    b.blur();
+  });
+
+  if (btnEl) {
+    btnEl.classList.add('active');
+  } else {
+    const target = document.querySelector(`.filter-tab[data-category="${catKey}"]`);
+    if (target) target.classList.add('active');
+  }
+
   renderBooks();
+}
+
+function matchesCategoryFilter(bookCategory, targetKey) {
+  if (!targetKey || targetKey === 'all') return true;
+  const bc = bookCategory.toLowerCase();
+  const tk = targetKey.toLowerCase();
+  if (tk === 'sales') return bc.includes('sales') || bc.includes('marketing');
+  if (tk === 'business') return bc.includes('business') || bc.includes('scale') || bc.includes('finance') || bc.includes('wealth');
+  if (tk === 'career') return bc.includes('career');
+  if (tk === 'mindset') return bc.includes('mindset') || bc.includes('health');
+  if (tk === 'education') return bc.includes('education') || bc.includes('mastery');
+  return bc.includes(tk);
 }
 
 function setupSearchListener() {
@@ -494,7 +516,7 @@ function renderBooks() {
   const ownedBooks = getOwnedBooks();
 
   const filtered = BOOKS.filter(book => {
-    const matchesCat = (currentCategory === 'all') || (book.category.toLowerCase().includes(currentCategory.toLowerCase()));
+    const matchesCat = matchesCategoryFilter(book.category, currentCategory);
     const matchesSearch = !searchQuery || 
       book.title.toLowerCase().includes(searchQuery) || 
       book.description.toLowerCase().includes(searchQuery) ||
@@ -507,7 +529,7 @@ function renderBooks() {
       <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
         <i class="bi bi-search" style="font-size: 2.5rem; color: var(--gold); display: block; margin-bottom: 12px;"></i>
         <h3 style="color: #fff; margin-bottom: 8px;">No masterclasses found</h3>
-        <p>Try searching for a different skill, topic, or selecting 'All Categories'.</p>
+        <p>Try searching for a different skill or goal, or select 'All Categories'.</p>
       </div>
     `;
     return;
@@ -541,7 +563,7 @@ function renderBooks() {
         <p class="book-card__desc">${escapeHtml(book.description)}</p>
         <div class="book-card__footer">
           <div class="book-card__price">
-            <span class="book-card__currency">₦</span>5,000
+            <span class="book-card__currency"><span class="naira">₦</span> </span>5,000
           </div>
           ${buttonHtml}
         </div>
@@ -557,11 +579,11 @@ function openPreorderModal(bookId) {
       id: 'bundle_3',
       title: '3-Book Masterclass Bundle (Pick Any 3)',
       cover: '/assets/covers/how-to-close-high-paying-clients-in-the-dms.webp',
-      description: 'Get instant access to any 3 digital masterclasses of your choice for just ₦12,000 (Save ₦3,000 / 20% OFF).',
+      description: 'Get instant access to any 3 digital masterclasses of your choice for just ₦ 12,000 (Save ₦ 3,000 / 20% OFF).',
       amount: 12000,
       bullets: [
         "Pick any 3 masterclasses from the catalog",
-        "Save ₦3,000 instantly vs single purchase",
+        "Save ₦ 3,000 instantly vs single purchase",
         "Instant delivery & lifetime updates"
       ]
     };
@@ -574,8 +596,8 @@ function openPreorderModal(bookId) {
   document.getElementById('modal-book-title').textContent = selectedBook.title;
   document.getElementById('modal-book-cover').src = selectedBook.cover;
   document.getElementById('modal-book-desc').textContent = selectedBook.description;
-  document.getElementById('modal-book-price-display').textContent = `₦${(selectedBook.amount || 5000).toLocaleString()}`;
-  document.getElementById('submit-preorder-btn').textContent = `Buy Now — ₦${(selectedBook.amount || 5000).toLocaleString()}`;
+  document.getElementById('modal-book-price-display').innerHTML = `<span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
+  document.getElementById('submit-preorder-btn').innerHTML = `Buy Now — <span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
 
   const bulletsContainer = document.getElementById('modal-book-bullets');
   if (bulletsContainer && selectedBook.bullets) {
@@ -640,7 +662,7 @@ async function handlePreorderSubmit(e) {
     errorEl.textContent = err.message;
     errorEl.style.display = 'block';
     btn.disabled = false;
-    btn.innerHTML = `Buy Now — ₦${(selectedBook.amount || 5000).toLocaleString()}`;
+    btn.innerHTML = `Buy Now — <span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
   }
 }
 
