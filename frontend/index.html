@@ -491,20 +491,19 @@
     }
     .header-inner {
       padding: 0 16px;
-      flex-direction: column;
-      gap: 12px;
-      align-items: flex-start;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
     }
     .brand-logo {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
     }
     .nav-links {
-      width: 100%;
-      justify-content: space-between;
-      gap: 10px;
+      width: auto;
+      gap: 12px;
     }
     .nav-link {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
     }
     .nav-btn {
       padding: 6px 12px;
@@ -635,7 +634,7 @@
     </a>
     <div class="nav-links">
       <a href="/academic-comeback-package" class="nav-link">Academic Comeback Package</a>
-      <button onclick="openRefundModal()" class="nav-btn">Check Status / Support</button>
+      <a href="javascript:void(0)" onclick="openRefundModal()" class="nav-link nav-link--support">Check Status / Support</a>
     </div>
   </div>
 </header>
