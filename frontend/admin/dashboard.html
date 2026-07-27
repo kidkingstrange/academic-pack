@@ -620,6 +620,7 @@
   <button class="nav-item" onclick="switchSection('sequence')"><i class="bi bi-envelope-check"></i> Email Sequence</button>
   <button class="nav-item" onclick="switchSection('email-delivery')"><i class="bi bi-shield-check"></i> Email Delivery</button>
   <button class="nav-item" onclick="switchSection('abandoned')"><i class="bi bi-cart-x"></i> Abandoned Cart Recovery</button>
+  <button class="nav-item" onclick="switchSection('preorders')"><i class="bi bi-box-seam"></i> Pre-Orders Fulfillment</button>
 
 
   <button class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</button>
@@ -1141,6 +1142,48 @@
       <div class="record-card-list" id="cards-abandoned"></div>
     </div>
 
+    <!-- ── VIEW: PRE-ORDERS FULFILLMENT ──────────────── -->
+    <div id="view-preorders" class="section">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Total Pre-Orders</div><div class="kpi-val" id="po-kpi-total">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Undelivered</div><div class="kpi-val gold" id="po-kpi-undelivered">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Delivered</div><div class="kpi-val green" id="po-kpi-delivered">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Refund Requests</div><div class="kpi-val red" id="po-kpi-refunds">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Total Revenue</div><div class="kpi-val green" id="po-kpi-revenue">₦0</div></div>
+      </div>
+
+      <div style="padding:18px 24px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Pre-Orders Fulfillment List (Oldest Undelivered First)</div>
+        <div style="display:flex; gap:10px; align-items:center">
+          <select class="input-control" id="po-status-filter" style="width:180px" onchange="filterPreordersView()">
+            <option value="">All Pre-Orders</option>
+            <option value="undelivered">Undelivered Only</option>
+            <option value="refund_requested">Refund Requests</option>
+            <option value="delivered">Delivered Only</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="data-table-container has-mobile-cards">
+        <table class="data-table" id="table-preorders">
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Book Title</th>
+              <th>Amount</th>
+              <th>Days Elapsed</th>
+              <th>Delivery Status</th>
+              <th>Refund Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-preorders">
+            <tr><td colspan="7" style="text-align:center; padding:30px; color:var(--gray-l)">Loading pre-orders...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -1225,7 +1268,8 @@
       team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
       sequence: { title: '52-Email Curriculum Sequence', sub: 'Track each subscriber\'s position in the automated email journey — see who is on-track, behind, or needs a manual resend' },
       'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' },
-      abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences' }
+      abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences' },
+      preorders: { title: 'Pre-Orders Fulfillment Tracking', sub: 'Track multi-book pre-orders, days since purchase, customer refund requests, and mark orders as delivered' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
@@ -1248,6 +1292,7 @@
     if(currentView === 'sequence') loadSequenceView();
     if(currentView === 'email-delivery') loadEmailDeliveryView();
     if(currentView === 'abandoned') loadAbandonedView();
+    if(currentView === 'preorders') loadPreordersView();
   }
 
 
@@ -3141,6 +3186,101 @@
   function pageAbandoned(dir) {
     abPage = Math.max(1, abPage + dir);
     loadAbandonedView();
+  }
+
+  // ── PRE-ORDERS FULFILLMENT ──────────────────────────────────────────────────
+  let allPreordersData = [];
+
+  async function loadPreordersView() {
+    try {
+      const data = await apiCall('/api/admin/preorders', 'GET');
+      allPreordersData = (data && data.pre_orders) ? data.pre_orders : [];
+      renderPreordersView(allPreordersData);
+    } catch (err) {
+      document.getElementById('tbody-preorders').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--red); padding:20px">${err.message}</td></tr>`;
+    }
+  }
+
+  function renderPreordersView(list) {
+    const total = list.length;
+    const undelivered = list.filter(p => !p.delivered).length;
+    const delivered = list.filter(p => p.delivered).length;
+    const refunds = list.filter(p => p.refund_requested).length;
+    const revenue = list.reduce((sum, p) => sum + (p.amount || 5000), 0);
+
+    if (document.getElementById('po-kpi-total')) document.getElementById('po-kpi-total').textContent = total;
+    if (document.getElementById('po-kpi-undelivered')) document.getElementById('po-kpi-undelivered').textContent = undelivered;
+    if (document.getElementById('po-kpi-delivered')) document.getElementById('po-kpi-delivered').textContent = delivered;
+    if (document.getElementById('po-kpi-refunds')) document.getElementById('po-kpi-refunds').textContent = refunds;
+    if (document.getElementById('po-kpi-revenue')) document.getElementById('po-kpi-revenue').textContent = '₦' + revenue.toLocaleString();
+
+    const filterEl = document.getElementById('po-status-filter');
+    const filter = filterEl ? filterEl.value : '';
+    let filtered = list;
+    if (filter === 'undelivered') filtered = list.filter(p => !p.delivered);
+    if (filter === 'delivered') filtered = list.filter(p => p.delivered);
+    if (filter === 'refund_requested') filtered = list.filter(p => p.refund_requested);
+
+    const tbody = document.getElementById('tbody-preorders');
+    if (!tbody) return;
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:var(--gray-l)">No pre-orders found matching filter.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(item => {
+      const days = item.days_since_purchase;
+      const daysBadge = days > 7 
+        ? `<span class="badge badge-red" style="font-weight:700">${days} days ago (LATE)</span>` 
+        : `<span class="badge badge-gold">${days} days ago</span>`;
+
+      const deliveryBadge = item.delivered
+        ? `<span class="badge badge-green"><i class="bi bi-check-circle-fill"></i> Delivered</span>`
+        : `<span class="badge badge-gold"><i class="bi bi-clock-history"></i> Undelivered</span>`;
+
+      let refundBadge = '<span style="color:var(--gray-l); font-size:0.8rem">—</span>';
+      if (item.refund_requested) {
+        refundBadge = `<span class="badge badge-red" title="${escapeHtml(item.refund_reason || '')}">⚠️ Refund Requested</span>`;
+      }
+
+      const actionBtn = item.delivered
+        ? `<button class="btn-action btn-secondary" disabled style="opacity:0.6"><i class="bi bi-check-all"></i> Delivered</button>`
+        : `<button class="btn-action" style="background:var(--gold); color:#000; font-weight:700;" onclick="markPreorderDelivered('${item.id}')"><i class="bi bi-box-seam"></i> Mark Delivered</button>`;
+
+      return `
+        <tr>
+          <td>
+            <div style="font-weight:600; color:#fff">${escapeHtml(item.name || 'Customer')}</div>
+            <div style="font-size:0.8rem; color:var(--gray-l)">${escapeHtml(item.email)}</div>
+            <div style="font-size:0.75rem; color:var(--gray-m)">Ref: ${escapeHtml(item.reference)}</div>
+          </td>
+          <td style="font-weight:600; color:var(--gold-l)">${escapeHtml(item.book_title)}</td>
+          <td style="font-weight:700">₦${(item.amount || 5000).toLocaleString()}</td>
+          <td>${daysBadge}</td>
+          <td>${deliveryBadge}</td>
+          <td>${refundBadge}</td>
+          <td>${actionBtn}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function filterPreordersView() {
+    renderPreordersView(allPreordersData);
+  }
+
+  async function markPreorderDelivered(preorderId) {
+    if (!confirm('Mark this pre-order as delivered to the customer?')) return;
+    try {
+      const res = await apiCall(`/api/admin/preorders/${preorderId}/deliver`, 'POST');
+      if (res && res.success) {
+        alert('Pre-order marked as delivered!');
+        loadPreordersView();
+      }
+    } catch (err) {
+      alert(err.message || 'Failed to update pre-order status');
+    }
   }
 
 

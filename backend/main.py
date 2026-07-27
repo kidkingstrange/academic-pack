@@ -21,7 +21,7 @@ from .routes import (
     payments, library, admin as admin_router, community,
     affiliates, affiliate_public, affiliate_dashboard, tracking,
     admin_payouts, sales as sales_router, admin_email_delivery,
-    admin_abandoned,
+    admin_abandoned, preorders,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
@@ -96,6 +96,7 @@ app.include_router(admin_payouts.router)
 app.include_router(sales_router.router)
 app.include_router(admin_email_delivery.router)
 app.include_router(admin_abandoned.router)
+app.include_router(preorders.router)
 
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
@@ -122,6 +123,10 @@ if frontend_path.exists():
     app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=3600"), name="css")
     app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=3600"), name="js")
 
+book_covers_path = Path(__file__).parent.parent / "book cover home"
+if book_covers_path.exists():
+    app.mount("/book-covers", CachedStaticFiles(directory=str(book_covers_path), cache_control="public, max-age=86400"), name="book-covers")
+
 # ── SEO / crawler files ────────────────────────────────────────────────────────
 @app.get("/favicon.ico", include_in_schema=False)
 async def serve_favicon():
@@ -139,6 +144,11 @@ async def serve_sitemap():
 @app.get("/", include_in_schema=False)
 async def serve_index():
     return FileResponse(str(frontend_path / "index.html"))
+
+@app.get("/academic-comeback-package", include_in_schema=False)
+@app.get("/academic-comeback", include_in_schema=False)
+async def serve_acp_landing():
+    return FileResponse(str(frontend_path / "academic-comeback-package.html"))
 
 @app.get("/us", include_in_schema=False)
 async def serve_us_landing():
@@ -254,8 +264,8 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
             "referrer": request.headers.get("referer", ""),
             "created_at": datetime.now(timezone.utc),
         })
-        return RedirectResponse(url=f"/?ref={normalized}&price=5000")
-    return RedirectResponse(url="/")
+        return RedirectResponse(url=f"/academic-comeback-package?ref={normalized}&price=5000", status_code=302)
+    return RedirectResponse(url="/academic-comeback-package", status_code=302)
 
 # ── Health Check & Public Stats ────────────────────────────────────────────────
 @app.get("/api/health")
