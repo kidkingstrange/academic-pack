@@ -304,6 +304,11 @@
 @media(min-width:900px){
   .products-grid{grid-template-columns:repeat(3,1fr)}
   .product-card--featured, .product-card:last-child{grid-column:auto}
+  /* When the last card is the sole occupant of the final row (nth-child(3n+1)
+     that's also :last-child), center it instead of leaving it stranded on
+     the left with empty space beside it. No-ops when the count divides
+     evenly into rows of 3. */
+  .product-card:nth-child(3n+1):last-child{grid-column:2}
   .testi-grid{grid-template-columns:repeat(2,1fr)}
   .modal{border-radius:24px;margin-bottom:40px}
   @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
