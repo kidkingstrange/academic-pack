@@ -119,13 +119,11 @@ class CachedStaticFiles(StaticFiles):
 
 frontend_path = Path(__file__).parent.parent / "frontend"
 if frontend_path.exists():
-    app.mount("/assets", CachedStaticFiles(directory=str(frontend_path / "assets"), cache_control="public, max-age=86400"), name="assets")
-    app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=3600"), name="css")
-    app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=3600"), name="js")
+    app.mount("/assets", CachedStaticFiles(directory=str(frontend_path / "assets"), cache_control="public, max-age=31536000, immutable"), name="assets")
+    app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=86400"), name="css")
+    app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=86400"), name="js")
+    app.mount("/book-covers", CachedStaticFiles(directory=str(frontend_path / "book-covers"), cache_control="public, max-age=31536000, immutable"), name="book-covers")
 
-book_covers_path = Path(__file__).parent.parent / "book cover home"
-if book_covers_path.exists():
-    app.mount("/book-covers", CachedStaticFiles(directory=str(book_covers_path), cache_control="public, max-age=86400"), name="book-covers")
 
 # ── SEO / crawler files ────────────────────────────────────────────────────────
 @app.get("/favicon.ico", include_in_schema=False)

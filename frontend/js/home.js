@@ -7,210 +7,210 @@ const BOOKS = [
   {
     id: "how-to-close-high-paying-clients-in-the-dms",
     title: "How to Close High-Paying Clients in the DMs",
-    cover: "/assets/covers/how-to-close-high-paying-clients-in-the-dms.png",
+    cover: "/assets/covers/how-to-close-high-paying-clients-in-the-dms.webp",
     category: "Sales & Marketing",
     description: "The complete script, objection handling, and conversation framework to close high-ticket deals inside social media DMs."
   },
   {
     id: "how-to-build-a-high-converting-whatsapp",
     title: "How to Build a High-Converting WhatsApp Sales Funnel",
-    cover: "/assets/covers/how-to-build-a-high-converting-whatsapp.png",
+    cover: "/assets/covers/how-to-build-a-high-converting-whatsapp.webp",
     category: "Sales & Marketing",
     description: "Turn your WhatsApp broadcast and status into an automated sales machine that converts cold leads into eager buyers."
   },
   {
     id: "how-to-sell-digital-products-globally",
     title: "How to Sell Digital Products Globally",
-    cover: "/assets/covers/how-to-sell-digital-products-globally.png",
+    cover: "/assets/covers/how-to-sell-digital-products-globally.webp",
     category: "Sales & Marketing",
     description: "Frameworks for building, pricing, and distributing digital products to international buyers from Nigeria."
   },
   {
     id: "naira-ads",
     title: "Naira Ads Masterclass: Scale Your Business with Meta Ads",
-    cover: "/assets/covers/naira-ads.png",
+    cover: "/assets/covers/naira-ads.webp",
     category: "Sales & Marketing",
     description: "Run profitable Facebook and Instagram ads using Naira accounts without ban risks or payment failures."
   },
   {
     id: "how-to-land-high-paying-corporate-clients",
     title: "How to Land High-Paying Corporate Clients",
-    cover: "/assets/covers/how-to-land-high-paying-corporate-clients.png",
+    cover: "/assets/covers/how-to-land-high-paying-corporate-clients.webp",
     category: "Sales & Marketing",
     description: "Position yourself, pitch decision-makers, and win high-retainer B2B corporate contracts."
   },
   {
     id: "how-to-build-a-business-that-functions-without",
     title: "How to Build a Business That Functions Without You",
-    cover: "/assets/covers/how-to-build-a-business-that-functions-without.png",
+    cover: "/assets/covers/how-to-build-a-business-that-functions-without.webp",
     category: "Business & Scale",
     description: "Systematize operations, delegate responsibilities, and create SOPs so your business runs smoothly when you step away."
   },
   {
     id: "how-to-fund-your-business-with-upfront",
     title: "How to Fund Your Business with Upfront Client Cash",
-    cover: "/assets/covers/how-to-fund-your-business-with-upfront.png",
+    cover: "/assets/covers/how-to-fund-your-business-with-upfront.webp",
     category: "Business & Scale",
     description: "Bootstrapping playbook to pre-sell services and fund expansion using upfront client payments instead of debt."
   },
   {
     id: "how-to-maintain-positive-cash-flow-under",
     title: "How to Maintain Positive Cash Flow Under Pressure",
-    cover: "/assets/covers/how-to-maintain-positive-cash-flow-under.png",
+    cover: "/assets/covers/how-to-maintain-positive-cash-flow-under.webp",
     category: "Business & Scale",
     description: "Cash flow management strategies for volatile markets, inflation, and unpredictable revenue cycles."
   },
   {
     id: "how-to-qualify-and-filter-out-low",
     title: "How to Qualify and Filter Out Low-Paying Clients",
-    cover: "/assets/covers/how-to-qualify-and-filter-out-low.png",
+    cover: "/assets/covers/how-to-qualify-and-filter-out-low.webp",
     category: "Business & Scale",
     description: "Stop wasting time on budget-constrained clients and establish qualifying filters that attract premium buyers."
   },
   {
     id: "how-to-stop-worrying-about-money",
     title: "How to Stop Worrying About Money & Build Security",
-    cover: "/assets/covers/how-to-stop-worrying-about-money.png",
+    cover: "/assets/covers/how-to-stop-worrying-about-money.webp",
     category: "Finance & Wealth",
     description: "Psychological principles and tactical money management systems to eliminate financial anxiety."
   },
   {
     id: "how-to-transition-from-a-side-hustle-to",
     title: "How to Transition from a Side Hustle to Full-Time Enterprise",
-    cover: "/assets/covers/how-to-transition-from-a-side-hustle-to.png",
+    cover: "/assets/covers/how-to-transition-from-a-side-hustle-to.webp",
     category: "Business & Scale",
     description: "Risk-calculated roadmap for quitting your 9-to-5 safely and scaling your business full-time."
   },
   {
     id: "how-to-ask-for-the-promotion-and",
     title: "How to Ask for the Promotion and Get It",
-    cover: "/assets/covers/how-to-ask-for-the-promotion-and.png",
+    cover: "/assets/covers/how-to-ask-for-the-promotion-and.webp",
     category: "Career Acceleration",
     description: "Proven corporate negotiation scripts and performance proof frameworks to secure salary increases and titles."
   },
   {
     id: "how-to-get-seen-by-the-people-who-actually-decide",
     title: "How to Get Seen by the People Who Actually Decide Your Promotion",
-    cover: "/assets/covers/how-to-get-seen-by-the-people-who-actually-decide.png",
+    cover: "/assets/covers/how-to-get-seen-by-the-people-who-actually-decide.webp",
     category: "Career Acceleration",
     description: "Strategic executive visibility tactics to make your work noticeable to senior leadership and key stakeholders."
   },
   {
     id: "how-to-expand-your-role-before-anyone",
     title: "How to Expand Your Role Before Anyone Asks",
-    cover: "/assets/covers/how-to-expand-your-role-before-anyone.png",
+    cover: "/assets/covers/how-to-expand-your-role-before-anyone.webp",
     category: "Career Acceleration",
     description: "Proactive career ownership techniques to carve out high-impact responsibilities and fast-track advancement."
   },
   {
     id: "how-to-master-your-role-so-well",
     title: "How to Master Your Role So Well You Become Irreplaceable",
-    cover: "/assets/covers/how-to-master-your-role-so-well.png",
+    cover: "/assets/covers/how-to-master-your-role-so-well.webp",
     category: "Career Acceleration",
     description: "Operational excellence and skill stack building to become an essential key player in any organization."
   },
   {
     id: "how-to-navigate-the-unspoken-rules-and",
     title: "How to Navigate the Unspoken Rules of Workplace Politics",
-    cover: "/assets/covers/how-to-navigate-the-unspoken-rules-and.png",
+    cover: "/assets/covers/how-to-navigate-the-unspoken-rules-and.webp",
     category: "Career Acceleration",
     description: "Corporate dynamics, alliance building, and self-preservation in competitive office environments."
   },
   {
     id: "how-to-think-like-a-leader-before-you-have",
     title: "How to Think Like a Leader Before You Have the Title",
-    cover: "/assets/covers/how-to-think-like-a-leader-before-you-have.png",
+    cover: "/assets/covers/how-to-think-like-a-leader-before-you-have.webp",
     category: "Career Acceleration",
     description: "Strategic leadership mindset, decision-making frameworks, and influence building for aspiring executives."
   },
   {
     id: "how-to-turn-your-boss-into-your-biggest",
     title: "How to Turn Your Boss Into Your Biggest Career Advocate",
-    cover: "/assets/covers/how-to-turn-your-boss-into-your-biggest.png",
+    cover: "/assets/covers/how-to-turn-your-boss-into-your-biggest.webp",
     category: "Career Acceleration",
     description: "Managing up, aligning goals, and turning your direct manager into your active sponsor."
   },
   {
     id: "how-to-heal-your-body-from-stress",
     title: "How to Heal Your Body from Chronic Stress & Burnout",
-    cover: "/assets/covers/how-to-heal-your-body-from-stress.png",
+    cover: "/assets/covers/how-to-heal-your-body-from-stress.webp",
     category: "Mindset & Health",
     description: "Somatic recovery techniques and energy management for high achievers facing burnout."
   },
   {
     id: "how-to-overcome-decision-paralysis",
     title: "How to Overcome Decision Paralysis and Take Action",
-    cover: "/assets/covers/how-to-overcome-decision-paralysis.png",
+    cover: "/assets/covers/how-to-overcome-decision-paralysis.webp",
     category: "Mindset & Health",
     description: "Frameworks to eliminate overthinking, reduce analysis paralysis, and execute with confidence."
   },
   {
     id: "how-to-set-boundaries-with-family",
     title: "How to Set Boundaries with Family, Money, and Time",
-    cover: "/assets/covers/how-to-set-boundaries-with-family.png",
+    cover: "/assets/covers/how-to-set-boundaries-with-family.webp",
     category: "Mindset & Health",
     description: "Assertive communication and emotional boundary setting to protect your focus, energy, and finances."
   },
   {
     id: "how-to-stay-calm-in-chaos",
     title: "How to Stay Calm in Chaos and High-Pressure Environments",
-    cover: "/assets/covers/how-to-stay-calm-in-chaos.png",
+    cover: "/assets/covers/how-to-stay-calm-in-chaos.webp",
     category: "Mindset & Health",
     description: "Stoic mental models and emotional regulation techniques for high-stakes pressure situations."
   },
   {
     id: "how-to-stop-learning-and-start-executing",
     title: "How to Stop Learning and Start Executing Today",
-    cover: "/assets/covers/how-to-stop-learning-and-start-executing.png",
+    cover: "/assets/covers/how-to-stop-learning-and-start-executing.webp",
     category: "Mindset & Health",
     description: "Break the cycle of endless tutorials and course hoarding — switch to active output and real-world results."
   },
   {
     id: "book1",
     title: "Academic Comeback Package",
-    cover: "/assets/covers/book1.png",
+    cover: "/assets/covers/book1.webp",
     category: "Education & Mastery",
     description: "The signature system for students who study hard but fail to get expected grades. Learn effective learning systems."
   },
   {
     id: "book2",
     title: "Scale & Execution Blueprint",
-    cover: "/assets/covers/book2.png",
+    cover: "/assets/covers/book2.webp",
     category: "Business & Scale",
     description: "High-level execution architecture for business owners, creators, and professionals scaling operations."
   },
   {
     id: "book3",
     title: "High-Income Skill Acceleration",
-    cover: "/assets/covers/book3.png",
+    cover: "/assets/covers/book3.webp",
     category: "Career Acceleration",
     description: "Identify, master, and monetize high-value market skills in 90 days or less."
   },
   {
     id: "book4",
     title: "Corporate Career Velocity",
-    cover: "/assets/covers/book4.png",
+    cover: "/assets/covers/book4.webp",
     category: "Career Acceleration",
     description: "Accelerated career advancement and income multiplication playbook for corporate professionals."
   },
   {
     id: "book5",
     title: "Financial Mastery & Cash Flow",
-    cover: "/assets/covers/book5.png",
+    cover: "/assets/covers/book5.webp",
     category: "Finance & Wealth",
     description: "Personal and business cash flow management, asset allocation, and wealth preservation."
   },
   {
     id: "book6",
     title: "Mental Toughness & Peak Performance",
-    cover: "/assets/covers/book6.png",
+    cover: "/assets/covers/book6.webp",
     category: "Mindset & Health",
     description: "Develop unshakeable discipline, focus stamina, and high-performance habits under pressure."
   },
   {
     id: "book7",
     title: "Digital Product & DM Closing Blueprint",
-    cover: "/assets/covers/book7.png",
+    cover: "/assets/covers/book7.webp",
     category: "Sales & Marketing",
     description: "Complete guide to creating, marketing, and selling digital assets directly through conversational sales."
   }
@@ -234,11 +234,14 @@ function renderBooks() {
   const grid = document.getElementById('books-grid');
   if (!grid) return;
 
-  grid.innerHTML = BOOKS.map(book => `
+  grid.innerHTML = BOOKS.map((book, idx) => {
+    const isAboveTheFold = idx < 6;
+    const loadingAttr = isAboveTheFold ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+    return `
     <div class="book-card" data-id="${book.id}">
       <div class="book-card__badge">Available Now</div>
       <div class="book-card__image-wrap">
-        <img src="${book.cover}" alt="${escapeHtml(book.title)}" class="book-card__image" loading="lazy">
+        <img src="${book.cover}" alt="${escapeHtml(book.title)}" class="book-card__image" ${loadingAttr} decoding="async">
       </div>
       <div class="book-card__content">
         <span class="book-card__category">${escapeHtml(book.category)}</span>
@@ -254,7 +257,8 @@ function renderBooks() {
         </div>
       </div>
     </div>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function openPreorderModal(bookId) {
