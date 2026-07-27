@@ -223,29 +223,26 @@
     z-index: 2;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
-  /* UNCROPPED COVER DISPLAY */
+  /* FULL-BLEED EDGE-TO-EDGE COVER DISPLAY (NO DARK SPACES) */
   .book-card__image-wrap {
     width: 100%;
-    aspect-ratio: 3 / 4;
-    background: radial-gradient(circle at center, #1f2433 0%, #11141c 100%);
-    padding: 12px;
+    aspect-ratio: 1 / 1.414;
+    background: var(--card-bg);
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
   }
   .book-card__image {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.45));
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
     transition: transform 0.3s ease;
   }
   .book-card:hover .book-card__image {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 
   .book-card__content {
@@ -561,8 +558,8 @@
       padding: 3px 6px;
     }
     .book-card__image-wrap {
-      padding: 6px;
-      aspect-ratio: 3 / 4;
+      padding: 0;
+      aspect-ratio: 1 / 1.414;
     }
     .book-card__content {
       padding: 10px;
