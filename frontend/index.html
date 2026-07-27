@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scale & Execution Library — Pre-Order Digital Masterclasses</title>
-<meta name="description" content="Explore 30 tactical digital books and blueprints to scale your business, career, and wealth. Pre-order today for ₦5,000 each.">
+<title>Scale & Execution Library — Digital Masterclasses & Blueprints</title>
+<meta name="description" content="Explore 30 tactical digital books and blueprints to scale your business, career, and wealth. Buy now for ₦5,000 each.">
 <link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="/css/main.css?v=4">
 <style>
@@ -484,7 +484,7 @@
     </a>
     <div class="nav-links">
       <a href="/academic-comeback-package" class="nav-link">Academic Comeback Package</a>
-      <button onclick="openRefundModal()" class="nav-btn">Check Status / Refund</button>
+      <button onclick="openRefundModal()" class="nav-btn">Check Status / Support</button>
     </div>
   </div>
 </header>
@@ -492,7 +492,7 @@
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="hero-badge">
-    <i class="bi bi-shield-check"></i> Official Pre-Order Catalog
+    <i class="bi bi-shield-check"></i> Official Digital Catalog
   </div>
   <h1 class="hero-title">
     Master Any Skill. Scale Your Income. <em>Build Your Enterprise.</em>
@@ -502,8 +502,8 @@
   </p>
 
   <div class="guarantee-banner">
-    <i class="bi bi-truck"></i>
-    <span>Pre-Order Notice: Every book is ₦5,000 during pre-order. You will receive your complete book by email within 7 days.</span>
+    <i class="bi bi-shield-lock-fill"></i>
+    <span>Instant Checkout: Every book is ₦5,000. Secure checkout via Paystack with Bank Transfer and Card support.</span>
   </div>
 </section>
 
@@ -522,12 +522,12 @@
 <footer class="site-footer">
   <div class="footer-links">
     <a href="/academic-comeback-package">Academic Comeback Package</a>
-    <a href="javascript:void(0)" onclick="openRefundModal()">Pre-Order Refund Safety Net</a>
+    <a href="javascript:void(0)" onclick="openRefundModal()">Customer Support / Order Lookup</a>
   </div>
   <p>© 2026 Scale & Execution. All rights reserved. Secured by Paystack 256-bit Encryption.</p>
 </footer>
 
-<!-- Pre-Order Modal -->
+<!-- Purchase Modal -->
 <div class="modal-overlay" id="preorder-modal">
   <div class="modal-card">
     <button class="modal-close" onclick="closePreorderModal()"><i class="bi bi-x-lg"></i></button>
@@ -541,8 +541,8 @@
     <p id="modal-book-desc" style="font-size:0.875rem; color:var(--text-muted); margin-bottom:16px;"></p>
 
     <div class="modal-notice">
-      <i class="bi bi-info-circle-fill" style="font-size:1.1rem; flex-shrink:0;"></i>
-      <div><strong>Pre-order Guarantee:</strong> This item is currently on pre-order. Your book will be delivered directly to your email address within 7 days of purchase.</div>
+      <i class="bi bi-shield-check" style="font-size:1.1rem; flex-shrink:0;"></i>
+      <div><strong>Instant Access Guarantee:</strong> Complete payment securely below to receive your digital masterclass.</div>
     </div>
 
     <form id="preorder-form" onsubmit="handlePreorderSubmit(event)">
@@ -552,7 +552,7 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Email Address (For Book Delivery)</label>
+        <label class="form-label">Email Address (For Delivery)</label>
         <input type="email" id="customer-email" class="form-input" placeholder="e.g. tunde@example.com" required>
       </div>
 
@@ -573,7 +573,7 @@
       <div id="preorder-error" class="status-msg status-msg--error"></div>
 
       <button type="submit" class="btn-submit" id="submit-preorder-btn">
-        Complete Pre-Order — ₦5,000
+        Buy Now — ₦5,000
       </button>
     </form>
   </div>
@@ -584,25 +584,25 @@
   <div class="modal-card" style="text-align:center;">
     <button class="modal-close" onclick="closeSuccessModal()"><i class="bi bi-x-lg"></i></button>
     <div style="font-size:3rem; color:var(--gold); margin-bottom:12px;"><i class="bi bi-check-circle-fill"></i></div>
-    <h3 class="modal-title">Pre-Order Confirmed!</h3>
+    <h3 class="modal-title">Purchase Confirmed!</h3>
     <p style="color:var(--text-muted); font-size:0.95rem; margin-bottom:20px;">
-      Thank you for your pre-order of <strong id="success-title-display" style="color:#fff;"></strong>. Your order reference is <code id="success-ref-display" style="color:var(--gold-bright);"></code>.
+      Thank you for purchasing <strong id="success-title-display" style="color:#fff;"></strong>. Your order reference is <code id="success-ref-display" style="color:var(--gold-bright);"></code>.
     </p>
     <div class="modal-notice" style="text-align:left;">
       <i class="bi bi-envelope-check-fill" style="font-size:1.2rem;"></i>
-      <div>Your book will be delivered directly to your email address within 7 days. If you ever need assistance, save your reference code.</div>
+      <div>Your digital order has been confirmed. Check your email for purchase confirmation and details.</div>
     </div>
     <button class="btn-submit" onclick="closeSuccessModal()">Return to Library</button>
   </div>
 </div>
 
-<!-- Refund Request Modal -->
+<!-- Support / Order Lookup Modal -->
 <div class="modal-overlay" id="refund-modal">
   <div class="modal-card">
     <button class="modal-close" onclick="closeRefundModal()"><i class="bi bi-x-lg"></i></button>
-    <h3 class="modal-title">Pre-Order Status / Refund Safety Net</h3>
+    <h3 class="modal-title">Order Lookup / Customer Support</h3>
     <p style="font-size:0.875rem; color:var(--text-muted); margin-bottom:20px;">
-      If your pre-order delivery has been delayed or you need to request a refund, submit your details below. Requests are reviewed and processed directly in our admin center.
+      If you need assistance with an order or wish to request support, submit your details below.
     </p>
 
     <form id="refund-form" onsubmit="handleRefundSubmit(event)">
@@ -617,14 +617,14 @@
       </div>
 
       <div class="form-group">
-        <label class="form-label">Reason for Refund Request</label>
-        <textarea id="refund-reason" class="form-input" rows="3" placeholder="Please state your reason for refund..." required></textarea>
+        <label class="form-label">Message / Reason</label>
+        <textarea id="refund-reason" class="form-input" rows="3" placeholder="How can we help you?" required></textarea>
       </div>
 
       <div id="refund-status-msg" class="status-msg"></div>
 
       <button type="submit" class="btn-submit" id="submit-refund-btn">
-        Submit Refund Request
+        Submit Request
       </button>
     </form>
   </div>
