@@ -32,34 +32,34 @@ DRY_RUN_DIR = os.path.join(BASE_DIR, "dry_run_output")
 # Campaign Lead Content Strategy
 CAMPAIGN_THEMES = {
     "Sales & Marketing": {
-        "subject": "Close more high-ticket clients this week",
-        "preheader": "3 proven conversation scripts & WhatsApp strategies inside.",
-        "lead_headline": "Closing High-Ticket Deals in Modern Conversational Channels",
-        "lead_story": "Most deals aren't lost because of price — they're lost in the DM conversation structure. When you establish high authority and qualify leads upfront, closing becomes a natural step rather than a pitch."
+        "subject": "[PDF Guide] Close high-ticket clients in DMs & WhatsApp",
+        "preheader": "Copy-paste scripts & ad playbooks delivered instantly to your phone.",
+        "lead_headline": "How Top Operators Close High-Ticket Clients via DM",
+        "lead_story": "Closing high-ticket clients isn't about pushing hard — it's about structured conversation frameworks. Below are step-by-step PDF guidebooks with copy-paste scripts, objection-handling templates, and ad blueprints you can download immediately."
     },
     "Business & Wealth": {
-        "subject": "Systematize your business & cash flow",
-        "preheader": "Operational playbooks for high-margin execution.",
-        "lead_headline": "Building Operations That Function Without You",
-        "lead_story": "A true business is a system that generates revenue reliably whether you work 10 hours or take a 2-week vacation. The key is establishing documented SOPs and delegation frameworks."
+        "subject": "[PDF Guide] Build a business that runs without you",
+        "preheader": "SOP blueprints & upfront cash flow playbooks (Instant Download).",
+        "lead_headline": "Systematize Operations & Preserve Cash Flow",
+        "lead_story": "A scalable business relies on documented SOPs and upfront cash flow models instead of manual firefighting. Below are practical PDF playbooks with exact frameworks to structure your enterprise."
     },
     "Career Acceleration": {
-        "subject": "Fast-track your corporate advancement",
-        "preheader": "Executive positioning and promotion negotiation playbooks.",
-        "lead_headline": "Becoming Indispensable to Decision-Makers",
-        "lead_story": "Promotions and salary increases aren't awarded for hard work alone; they are awarded for high-visibility business impact aligned with executive priorities."
+        "subject": "[PDF Guide] How to negotiate your next promotion & raise",
+        "preheader": "Executive positioning & salary negotiation playbooks.",
+        "lead_headline": "Executive Positioning & Promotion Frameworks",
+        "lead_story": "Promotions aren't given for hard work alone — they require strategic visibility and ROI proof. Download these instant PDF guidebooks to master workplace negotiation and leadership positioning."
     },
     "Mindset & Health": {
-        "subject": "Eliminate stress & double your daily output",
-        "preheader": "Somatic recovery & deep work focus frameworks.",
-        "lead_headline": "High Performance Without Burnout",
-        "lead_story": "Peak output requires deliberate cognitive recovery. By structuring uninterrupted deep-work blocks and lowering cortisol, you double your daily results with less strain."
+        "subject": "[PDF Guide] Double daily output without burnout",
+        "preheader": "Deep work protocols & stress recovery playbooks.",
+        "lead_headline": "Deep Work Stamina & Stress Recovery Systems",
+        "lead_story": "Peak productivity requires structured deep-work blocks and nervous system recovery. Below are actionable PDF guidebooks to eliminate overthinking and build unshakeable execution routines."
     },
     "Education & Mastery": {
-        "subject": "Master complex skills & score top marks",
-        "preheader": "Active recall & result-oriented learning systems.",
-        "lead_headline": "High-Yield Study & Mastery Protocols",
-        "lead_story": "Studying 8 hours blindly produces far fewer results than 2 hours of focused active recall on high-yield exam concepts."
+        "subject": "[PDF Guide] Score high in any exam with less study hours",
+        "preheader": "High-yield active recall & study tracker playbooks.",
+        "lead_headline": "High-Yield Exam Preparation & Skill Mastery",
+        "lead_story": "Studying 8 hours blindly produces far fewer results than 2 hours of active recall. Download these step-by-step PDF study guidebooks to master complex topics and score top marks."
     }
 }
 
