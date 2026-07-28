@@ -32,34 +32,34 @@ DRY_RUN_DIR = os.path.join(BASE_DIR, "dry_run_output")
 # Campaign Lead Content Strategy
 CAMPAIGN_THEMES = {
     "Sales & Marketing": {
-        "subject": "[PDF Guide] Close high-ticket clients in DMs & WhatsApp",
+        "subject": "Close high-ticket clients in DMs & WhatsApp",
         "preheader": "Copy-paste scripts & ad playbooks delivered instantly to your phone.",
         "lead_headline": "How Top Operators Close High-Ticket Clients via DM",
-        "lead_story": "Closing high-ticket clients isn't about pushing hard — it's about structured conversation frameworks. Below are step-by-step PDF guidebooks with copy-paste scripts, objection-handling templates, and ad blueprints you can download immediately."
+        "lead_story": "Closing high-ticket clients isn't about pushing hard — it's about structured conversation frameworks. Below are step-by-step masterclass books with copy-paste scripts, objection-handling templates, and ad blueprints you can access immediately."
     },
     "Business & Wealth": {
-        "subject": "[PDF Guide] Build a business that runs without you",
-        "preheader": "SOP blueprints & upfront cash flow playbooks (Instant Download).",
+        "subject": "Build a business that runs without you",
+        "preheader": "SOP blueprints & upfront cash flow playbooks (Instant Access).",
         "lead_headline": "Systematize Operations & Preserve Cash Flow",
-        "lead_story": "A scalable business relies on documented SOPs and upfront cash flow models instead of manual firefighting. Below are practical PDF playbooks with exact frameworks to structure your enterprise."
+        "lead_story": "A scalable business relies on documented SOPs and upfront cash flow models instead of manual firefighting. Below are practical masterclass books with exact frameworks to structure your enterprise."
     },
     "Career Acceleration": {
-        "subject": "[PDF Guide] How to negotiate your next promotion & raise",
+        "subject": "How to negotiate your next promotion & raise",
         "preheader": "Executive positioning & salary negotiation playbooks.",
         "lead_headline": "Executive Positioning & Promotion Frameworks",
-        "lead_story": "Promotions aren't given for hard work alone — they require strategic visibility and ROI proof. Download these instant PDF guidebooks to master workplace negotiation and leadership positioning."
+        "lead_story": "Promotions aren't given for hard work alone — they require strategic visibility and ROI proof. Access these masterclass books to master workplace negotiation and leadership positioning."
     },
     "Mindset & Health": {
-        "subject": "[PDF Guide] Double daily output without burnout",
+        "subject": "Double daily output without burnout",
         "preheader": "Deep work protocols & stress recovery playbooks.",
         "lead_headline": "Deep Work Stamina & Stress Recovery Systems",
-        "lead_story": "Peak productivity requires structured deep-work blocks and nervous system recovery. Below are actionable PDF guidebooks to eliminate overthinking and build unshakeable execution routines."
+        "lead_story": "Peak productivity requires structured deep-work blocks and nervous system recovery. Below are actionable masterclass books to eliminate overthinking and build unshakeable execution routines."
     },
     "Education & Mastery": {
-        "subject": "[PDF Guide] Score high in any exam with less study hours",
+        "subject": "Score high in any exam with less study hours",
         "preheader": "High-yield active recall & study tracker playbooks.",
         "lead_headline": "High-Yield Exam Preparation & Skill Mastery",
-        "lead_story": "Studying 8 hours blindly produces far fewer results than 2 hours of active recall. Download these step-by-step PDF study guidebooks to master complex topics and score top marks."
+        "lead_story": "Studying 8 hours blindly produces far fewer results than 2 hours of active recall. Access these step-by-step study books to master complex topics and score top marks."
     }
 }
 

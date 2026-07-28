@@ -542,7 +542,7 @@ function renderBooks() {
 
     const badgeHtml = isOwned 
       ? `<div class="book-card__badge book-card__badge--owned"><i class="bi bi-check-circle-fill"></i> In Library</div>`
-      : `<div class="book-card__badge">Instant PDF</div>`;
+      : `<div class="book-card__badge">Available Now</div>`;
 
     const buttonHtml = isOwned
       ? `<button class="btn btn--green book-card__btn" onclick="location.href='/library'">Read Now</button>`
@@ -557,7 +557,7 @@ function renderBooks() {
       <div class="book-card__content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
           <span class="book-card__category">${escapeHtml(book.category)}</span>
-          <span style="font-size:0.68rem; color:var(--text-muted); display:flex; align-items:center; gap:3px;"><i class="bi bi-file-earmark-pdf-fill" style="color:var(--gold);"></i> PDF</span>
+          <span class="book-card__rating"><i class="bi bi-star-fill" style="color:var(--gold-bright); font-size:0.75rem;"></i> ${book.rating}</span>
         </div>
         <h3 class="book-card__title">${escapeHtml(book.title)}</h3>
         <p class="book-card__desc">${escapeHtml(book.description)}</p>
@@ -642,9 +642,9 @@ function openPreorderModal(bookId) {
   }
 
   document.getElementById('modal-book-title').textContent = selectedBook.title;
-  document.getElementById('modal-book-desc').innerHTML = `${escapeHtml(selectedBook.description)} <div style="margin-top:8px; padding:6px 10px; background:rgba(212,175,55,0.1); border:1px solid var(--gold); border-radius:6px; color:var(--gold-bright); font-size:0.78rem; font-weight:700;"><i class="bi bi-lightning-charge-fill"></i> Format: Instant PDF Download (On-screen + Email Delivery)</div>`;
+  document.getElementById('modal-book-desc').innerHTML = `${escapeHtml(selectedBook.description)} <div style="margin-top:8px; padding:6px 10px; background:rgba(212,175,55,0.1); border:1px solid var(--gold); border-radius:6px; color:var(--gold-bright); font-size:0.78rem; font-weight:700;"><i class="bi bi-lightning-charge-fill"></i> Delivery: Instant Access (Read On Screen + Email Delivery)</div>`;
   document.getElementById('modal-book-price-display').innerHTML = `<span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
-  document.getElementById('submit-preorder-btn').innerHTML = `Get Instant PDF — <span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
+  document.getElementById('submit-preorder-btn').innerHTML = `Buy Now — <span class="naira">₦</span> ${(selectedBook.amount || 5000).toLocaleString()}`;
 
   const bulletsContainer = document.getElementById('modal-book-bullets');
   if (bulletsContainer && selectedBook.bullets) {
