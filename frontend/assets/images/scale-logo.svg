@@ -1,16 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Scale Group">
   <defs>
-    <linearGradient id="scaleLogoChevronTop" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#e3b55a"/>
+    <linearGradient id="scaleLogoChevron1" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#a87830"/>
+      <stop offset="50%" stop-color="#f0c96a"/>
       <stop offset="100%" stop-color="#c9973a"/>
     </linearGradient>
-    <linearGradient id="scaleLogoChevronBottom" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#c9973a"/>
+    <linearGradient id="scaleLogoChevron2" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#8a611f"/>
+      <stop offset="50%" stop-color="#e3b55a"/>
       <stop offset="100%" stop-color="#a87830"/>
+    </linearGradient>
+    <linearGradient id="scaleLogoBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0c96a"/>
+      <stop offset="100%" stop-color="#c9973a"/>
     </linearGradient>
   </defs>
 
-  <path d="M50 18 L84 32 L84 40 L50 26 L16 40 L16 32 Z" fill="url(#scaleLogoChevronTop)"/>
-  <path d="M50 42 L84 56 L84 64 L50 50 L16 64 L16 56 Z" fill="url(#scaleLogoChevronBottom)"/>
-  <path d="M14 68 C 14 68, 32 86, 50 86 C 68 86, 86 68, 86 68 C 86 68, 74 78, 50 78 C 26 78, 14 68, 14 68 Z" fill="#f7f6f2"/>
+  <!-- Top chevron: wide ribbon band, peak at top-center, flat vertical end caps -->
+  <polygon points="12,40 50,12 88,40 88,54 50,26 12,54" fill="url(#scaleLogoChevron1)"/>
+
+  <!-- Bottom chevron: same band, offset down -->
+  <polygon points="12,60 50,34 88,60 88,74 50,46 12,74" fill="url(#scaleLogoChevron2)"/>
+
+  <!-- Gold base: solid lens/eye shape -->
+  <path d="M12 68 Q50 78 88 68 Q50 96 12 68 Z" fill="url(#scaleLogoBase)"/>
 </svg>
