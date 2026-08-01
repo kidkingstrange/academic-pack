@@ -332,6 +332,15 @@ async def process_email_queue():
                         email=item["email"],
                         referral_link=item["referral_link"],
                     )
+                elif item.get("template_name") == "welcome_lead_magnet":
+                    ctx = item.get("context", {})
+                    from ..services.email_service import send_lead_magnet_welcome_email
+                    success, error_msg = await send_lead_magnet_welcome_email(
+                        name=item.get("name", "Subscriber"),
+                        email=item.get("email"),
+                        ref_code=ctx.get("ref_code", ""),
+                        referral_link=ctx.get("referral_link", ""),
+                    )
                 else:
                     subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
                     if not subscriber or not subscriber.get("is_active"):

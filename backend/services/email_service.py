@@ -236,3 +236,16 @@ async def send_sequence_email(name: str, email: str, template_name: str, subject
     }
     html = render_template(f"sequence/{template_name}", merged)
     return await send_email(email, subject, html)
+
+
+async def send_lead_magnet_welcome_email(name: str, email: str, ref_code: str, referral_link: str):
+    """Send free cheat sheet deliverable + referral link after lead magnet opt-in."""
+    html_body = render_template("welcome_lead_magnet.html", {
+        "name": name,
+        "ref_code": ref_code,
+        "referral_link": referral_link,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    subject = "[FREE DOWNLOAD] Your 15-Minute DM Objection Matrix Cheat Sheet"
+    return await send_email(email, subject, html_body)
