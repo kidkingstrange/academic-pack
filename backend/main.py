@@ -119,11 +119,15 @@ class CachedStaticFiles(StaticFiles):
         return response
 
 frontend_path = Path(__file__).parent.parent / "frontend"
+pdfs_path = Path(__file__).parent.parent / "pdfs"
 if frontend_path.exists():
     app.mount("/assets", CachedStaticFiles(directory=str(frontend_path / "assets"), cache_control="public, max-age=31536000, immutable"), name="assets")
     app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=86400"), name="css")
     app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=86400"), name="js")
     app.mount("/book-covers", CachedStaticFiles(directory=str(frontend_path / "book-covers"), cache_control="public, max-age=31536000, immutable"), name="book-covers")
+
+if pdfs_path.exists():
+    app.mount("/pdfs", StaticFiles(directory=str(pdfs_path)), name="pdfs")
 
 
 # ── SEO / crawler files ────────────────────────────────────────────────────────
