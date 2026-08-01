@@ -65,7 +65,7 @@ async def lead_magnet_opt_in(payload: LeadOptInRequest, db=Depends(get_db)):
         welcome_email_task = {
             "email": email_clean,
             "name": name_clean,
-            "subject": "[FREE DOWNLOAD] Your 15-Minute DM Objection Matrix",
+            "subject": "[FREE DOWNLOAD] The DM Sales Script: 5 Copy-Paste Messages That Turn 'How Much?' Into Bank Transfers",
             "template_name": "welcome_lead_magnet",
             "context": {
                 "name": name_clean,
@@ -83,7 +83,7 @@ async def lead_magnet_opt_in(payload: LeadOptInRequest, db=Depends(get_db)):
             (1, "Why sending your price early is costing you ₦500k/month", "lead_sequence_01.html"),
             (2, "How Chidi closed a ₦750,000 retainer in 4 messages", "lead_sequence_02.html"),
             (3, "The complete DM closing playbook (Available now)", "lead_sequence_03.html"),
-            (4, "Pick Any 3 Masterclasses for ₦12,000 (Save ₦3,000)", "lead_sequence_04.html"),
+            (4, "Pick Any 3 Execution Playbooks for ₦12,000 (Save ₦3,000)", "lead_sequence_04.html"),
         ]
 
         for days_delay, subject, template in sequence_schedule:
