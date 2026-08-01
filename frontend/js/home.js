@@ -1122,3 +1122,108 @@ function escapeHtml(str) {
   if (!str) return '';
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
+
+// ── LEAD MAGNET & VIRAL REFERRAL LOGIC ──
+function openLeadMagnetModal() {
+  const modal = document.getElementById('lead-magnet-modal');
+  if (modal) {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeLeadMagnetModal() {
+  const modal = document.getElementById('lead-magnet-modal');
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+function closeLeadMagnetSuccessModal() {
+  const modal = document.getElementById('lead-magnet-success-modal');
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+async function handleLeadMagnetSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('lm-name').value.trim();
+  const email = document.getElementById('lm-email').value.trim();
+  const category = document.getElementById('lm-category').value;
+  const btn = document.getElementById('submit-lm-btn');
+  const statusEl = document.getElementById('lm-status-msg');
+
+  statusEl.style.display = 'none';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Dispatched...';
+
+  try {
+    const referralCode = localStorage.getItem('ac_referral_code') || null;
+    const res = await fetch(`${API_BASE}/lead-magnet/opt-in`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        category,
+        referral_code: referralCode
+      }),
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Opt-in submission failed');
+
+    closeLeadMagnetModal();
+
+    // Populate success modal referral details
+    const refInput = document.getElementById('subscriber-referral-link');
+    const emailDisp = document.getElementById('lm-success-email');
+
+    if (refInput && data.referral_link) {
+      refInput.value = data.referral_link;
+    }
+    if (emailDisp) {
+      emailDisp.textContent = email;
+    }
+
+    const successModal = document.getElementById('lead-magnet-success-modal');
+    if (successModal) {
+      successModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = 'Send Me The Free Cheat Sheet &rarr;';
+  } catch (err) {
+    statusEl.className = 'status-msg status-msg--error';
+    statusEl.textContent = err.message;
+    statusEl.style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = 'Send Me The Free Cheat Sheet &rarr;';
+  }
+}
+
+function copyReferralLink() {
+  const refInput = document.getElementById('subscriber-referral-link');
+  if (!refInput) return;
+  refInput.select();
+  navigator.clipboard.writeText(refInput.value);
+  alert('Referral link copied to clipboard! Share with 2 friends to unlock free masterclasses.');
+}
+
+function shareReferralWhatsApp() {
+  const refInput = document.getElementById('subscriber-referral-link');
+  const link = refInput ? refInput.value : window.location.href;
+  const text = encodeURIComponent(`Hey! I just got this free cheat sheet: "The 15-Minute DM Objection Matrix (5 Copy-Paste Closing Scripts)". Get your free copy here: ${link}`);
+  window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+}
+
+function shareReferralTwitter() {
+  const refInput = document.getElementById('subscriber-referral-link');
+  const link = refInput ? refInput.value : window.location.href;
+  const text = encodeURIComponent(`Just claimed "The 15-Minute DM Objection Matrix" cheat sheet. Stop getting left on read when sending prices: ${link}`);
+  window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+}
