@@ -61,6 +61,7 @@ async def lead_magnet_opt_in(payload: LeadOptInRequest, db=Depends(get_db)):
             referral_count = 0
 
         # Queue automated Day 0 Welcome Email
+        now_dt = datetime.now(timezone.utc)
         welcome_email_task = {
             "email": email_clean,
             "name": name_clean,
@@ -72,9 +73,31 @@ async def lead_magnet_opt_in(payload: LeadOptInRequest, db=Depends(get_db)):
                 "referral_link": f"https://edgepack.thescaleconference.com/?ref={ref_code}"
             },
             "status": "pending",
-            "created_at": datetime.now(timezone.utc)
+            "created_at": now_dt
         }
         await db.email_queue.insert_one(welcome_email_task)
+
+        # Queue 4-Day Automated Nurture & Conversion Sequence
+        from datetime import timedelta
+        sequence_schedule = [
+            (1, "Why sending your price early is costing you ₦500k/month", "lead_sequence_01.html"),
+            (2, "How Chidi closed a ₦750,000 retainer in 4 messages", "lead_sequence_02.html"),
+            (3, "The complete DM closing playbook (Available now)", "lead_sequence_03.html"),
+            (4, "Pick Any 3 Masterclasses for ₦12,000 (Save ₦3,000)", "lead_sequence_04.html"),
+        ]
+
+        for days_delay, subject, template in sequence_schedule:
+            seq_task = {
+                "email": email_clean,
+                "name": name_clean,
+                "subject": subject,
+                "template": template,
+                "status": "pending",
+                "scheduled_at": now_dt + timedelta(days=days_delay),
+                "created_at": now_dt,
+                "kind": "lead_sequence"
+            }
+            await db.email_queue.insert_one(seq_task)
     else:
         # Fallback memory store when db is None
         if email_clean in _memory_subscribers:

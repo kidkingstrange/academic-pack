@@ -109,6 +109,45 @@ async def get_analytics(period: str = "all", current_user=Depends(require_admin)
     }
 
 
+@router.get("/lead-growth-analytics")
+async def get_lead_growth_analytics(current_user=Depends(require_admin), db=Depends(get_db)):
+    """Lead Magnet Opt-In & Viral Referral Analytics."""
+    if db is None:
+        return {
+            "total_lead_subscribers": 0,
+            "total_referrals_generated": 0,
+            "referral_conversion_rate": 0,
+            "top_categories": [],
+            "top_referrers": []
+        }
+
+    total_subscribers = await db.lead_subscribers.count_documents({})
+    referred_subscribers = await db.lead_subscribers.count_documents({"referred_by": {"$ne": None}})
+    
+    # Category breakdown
+    cat_pipeline = [
+        {"$group": {"_id": "$category", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}}
+    ]
+    categories = await db.lead_subscribers.aggregate(cat_pipeline).to_list(10)
+
+    # Top referrers leaderboard
+    top_referrers = await db.lead_subscribers.find(
+        {"referrals_count": {"$gt": 0}},
+        {"_id": 0, "name": 1, "email": 1, "ref_code": 1, "referrals_count": 1}
+    ).sort("referrals_count", -1).limit(10).to_list(10)
+
+    referral_conversion_rate = (referred_subscribers / total_subscribers * 100) if total_subscribers > 0 else 0
+
+    return {
+        "total_lead_subscribers": total_subscribers,
+        "total_referrals_generated": referred_subscribers,
+        "referral_conversion_rate": round(referral_conversion_rate, 1),
+        "top_categories": [{"category": c["_id"] or "General", "count": c["count"]} for c in categories],
+        "top_referrers": top_referrers
+    }
+
+
 # ── Dashboard tab data endpoints ────────────────────────────────────────────
 # These back the 4 tabs in the rebuilt admin dashboard UI (frontend/admin/
 # dashboard.html). The UI was rewritten to call these paths at some point
