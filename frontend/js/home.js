@@ -786,16 +786,17 @@ function renderBooks() {
 
     const buttonHtml = isOwned
       ? `<button class="btn btn--green book-card__btn" onclick="event.stopPropagation(); location.href='/library'">Read Now</button>`
-      : `<div style="display:flex; gap:6px; width:100%;">
-          <button class="btn" style="flex:1; background:#161922; border:1px solid var(--card-border); color:var(--gold-bright); font-size:0.75rem; padding:8px 4px; border-radius:8px; font-weight:700;" onclick="event.stopPropagation(); openBookDetailsModal('${book.id}')"><i class="bi bi-eye"></i> Details</button>
-          <button class="btn btn--gold book-card__btn" style="flex:1.5;" onclick="event.stopPropagation(); openPreorderModal('${book.id}')">Buy Now</button>
-         </div>`;
+      : `<button class="btn btn--gold book-card__btn" onclick="event.stopPropagation(); openPreorderModal('${book.id}')">Buy Playbook</button>`;
 
     return `
     <div class="book-card" data-id="${book.id}" onclick="openBookDetailsModal('${book.id}')" style="cursor:pointer;">
       ${badgeHtml}
       <div class="book-card__image-wrap">
         <img src="${book.cover}" alt="${escapeHtml(book.title)}" class="book-card__image" ${loadingAttr} decoding="async">
+        <div class="book-card__preview-overlay">
+          <div class="book-card__preview-pill"><i class="bi bi-eye-fill"></i> Read Playbook Details</div>
+          <span style="font-size:0.75rem; color:#cbd5e1; margin-top:4px;">Tap to preview pain points & takeaways</span>
+        </div>
       </div>
       <div class="book-card__content">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
@@ -804,9 +805,12 @@ function renderBooks() {
         </div>
         <h3 class="book-card__title">${escapeHtml(book.title)}</h3>
         <p class="book-card__desc">${escapeHtml(book.description)}</p>
+        <div class="book-card__details-action" onclick="event.stopPropagation(); openBookDetailsModal('${book.id}')">
+          <i class="bi bi-info-circle-fill"></i> Read Details & Takeaways &rarr;
+        </div>
         <div class="book-card__footer">
           <div class="book-card__price">
-            <span class="book-card__currency"><span class="naira">₦</span> </span>5,000
+            <span class="book-card__currency"><span class="naira">₦</span></span>5,000
           </div>
           ${buttonHtml}
         </div>
