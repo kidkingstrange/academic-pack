@@ -23,7 +23,7 @@
  *                "system"        — informational only; no click action unless
  *                                  `target` is also set (then behaves like public-page)
  *   target       switchSection key (admin-section) or a URL (everything else).
- *   icon         one emoji, shown at card top-left.
+ *   icon         Bootstrap icon class string (e.g. "bi bi-speedometer2").
  *   metric       optional. A key into the GET /api/admin/master-overview
  *                payload — its value renders as the card's headline number.
  *   status_key   optional. A key into the same payload — if its value is a
@@ -40,7 +40,7 @@ const SITE_REGISTRY = [
     category: "Money & Orders",
     type: "admin-section",
     target: "dashboard",
-    icon: "📊",
+    icon: "bi bi-speedometer2",
     metric: "revenue_today",
   },
   {
@@ -50,7 +50,7 @@ const SITE_REGISTRY = [
     category: "Money & Orders",
     type: "admin-section",
     target: "sales",
-    icon: "💳",
+    icon: "bi bi-credit-card-2-front-fill",
     metric: "sales_today",
   },
   {
@@ -60,7 +60,7 @@ const SITE_REGISTRY = [
     category: "Money & Orders",
     type: "admin-section",
     target: "payouts",
-    icon: "🏦",
+    icon: "bi bi-bank2",
     metric: "commission_owed",
     status_key: "pending_payout_batches",
   },
@@ -71,7 +71,7 @@ const SITE_REGISTRY = [
     category: "Money & Orders",
     type: "admin-section",
     target: "subscriptions",
-    icon: "🔁",
+    icon: "bi bi-arrow-repeat",
     metric: "active_subscriptions",
     status_key: "past_due_subscriptions",
   },
@@ -84,7 +84,7 @@ const SITE_REGISTRY = [
     category: "People",
     type: "admin-section",
     target: "customers",
-    icon: "👥",
+    icon: "bi bi-people-fill",
     metric: "total_customers",
   },
   {
@@ -94,7 +94,7 @@ const SITE_REGISTRY = [
     category: "People",
     type: "admin-section",
     target: "affiliates",
-    icon: "📣",
+    icon: "bi bi-megaphone-fill",
     metric: "active_affiliates",
   },
   {
@@ -104,7 +104,7 @@ const SITE_REGISTRY = [
     category: "People",
     type: "admin-section",
     target: "team",
-    icon: "🧑‍💼",
+    icon: "bi bi-person-badge-fill",
   },
 
   // ── Communication ────────────────────────────────────────────────────────
@@ -115,7 +115,7 @@ const SITE_REGISTRY = [
     category: "Communication",
     type: "admin-section",
     target: "sequence",
-    icon: "✉️",
+    icon: "bi bi-envelope-paper-fill",
     metric: "subscribers_behind",
     status_key: "failed_emails",
   },
@@ -126,7 +126,7 @@ const SITE_REGISTRY = [
     category: "Communication",
     type: "admin-section",
     target: "email-delivery",
-    icon: "📬",
+    icon: "bi bi-mailbox2",
     status_key: "failed_welcome_emails",
   },
   {
@@ -136,7 +136,7 @@ const SITE_REGISTRY = [
     category: "Communication",
     type: "public-page",
     target: "/unsubscribe",
-    icon: "🔕",
+    icon: "bi bi-bell-slash-fill",
   },
 
   // ── Public Pages ─────────────────────────────────────────────────────────
@@ -147,7 +147,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/",
-    icon: "🏠",
+    icon: "bi bi-house-door-fill",
   },
   {
     id: "library-page",
@@ -156,7 +156,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/library",
-    icon: "📚",
+    icon: "bi bi-journal-bookmark-fill",
   },
   {
     id: "affiliate-register-page",
@@ -165,7 +165,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/affiliate/register",
-    icon: "🖋️",
+    icon: "bi bi-person-plus-fill",
   },
   {
     id: "affiliate-dashboard-page",
@@ -174,7 +174,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/affiliate/dashboard",
-    icon: "📈",
+    icon: "bi bi-graph-up-arrow",
   },
   {
     id: "sales-login-page",
@@ -183,7 +183,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/sales",
-    icon: "🔑",
+    icon: "bi bi-key-fill",
   },
   {
     id: "sales-register-page",
@@ -192,7 +192,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/sales/register",
-    icon: "📝",
+    icon: "bi bi-pencil-square",
   },
   {
     id: "sales-dashboard-page",
@@ -201,7 +201,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/sales/dashboard",
-    icon: "🗂️",
+    icon: "bi bi-folder2-open",
   },
   {
     id: "sales-checkout-page",
@@ -210,7 +210,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/sales/checkout",
-    icon: "🧾",
+    icon: "bi bi-receipt-cutoff",
   },
   {
     id: "sales-cancel-page",
@@ -219,7 +219,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/sales/cancel",
-    icon: "✖️",
+    icon: "bi bi-x-circle-fill",
   },
   {
     id: "referral-redirect",
@@ -227,7 +227,7 @@ const SITE_REGISTRY = [
     description: "The link format affiliates share: /r/ followed by their code. Every affiliate gets a unique one — open a specific affiliate's page to test theirs.",
     category: "Public Pages",
     type: "system",
-    icon: "🔗",
+    icon: "bi bi-link-45deg",
   },
   {
     id: "admin-login-page",
@@ -236,7 +236,7 @@ const SITE_REGISTRY = [
     category: "Public Pages",
     type: "public-page",
     target: "/admin",
-    icon: "🛡️",
+    icon: "bi bi-shield-lock-fill",
   },
 
   // ── System Health ────────────────────────────────────────────────────────
@@ -246,7 +246,7 @@ const SITE_REGISTRY = [
     description: "Payment notifications that came in but didn't match an expected order — held here for you to check by hand instead of auto-approving.",
     category: "System Health",
     type: "system",
-    icon: "🚩",
+    icon: "bi bi-flag-fill",
     status_key: "flagged_payments",
   },
   {
@@ -255,6 +255,6 @@ const SITE_REGISTRY = [
     description: "An automatic once-a-day check that emails any affiliate who signed up but hasn't shared their link yet, encouraging them to get started.",
     category: "System Health",
     type: "system",
-    icon: "⏰",
+    icon: "bi bi-clock-history",
   },
 ];

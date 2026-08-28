@@ -3,71 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scale Admin — Unified Executive Command Center</title>
+<title>Scale Admin — Executive Command Center</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
 <link rel="stylesheet" href="/css/main.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <style>
-  /* This page reuses the site's established dark navy/gold tokens directly
-     from main.css (--ink, --ink2, --ink3, --gold, --gold-l, --gray-l,
-     --radius-lg, --gold-glow, --transition, --green, --red) rather than
-     declaring its own palette. Only genuinely new layout aliases (sidebar/
-     card surface names) are declared here, and each one just points at an
-     existing token — never a new color. */
+
   :root {
-    --bg-sidebar: var(--ink);
-    --bg-card: var(--ink2);
-    --bg-card-hover: var(--ink3);
+    --ink: #090c12;
+    --ink2: #111520;
+    --ink3: #181e2e;
+    --ink4: #222a3f;
+    --bg-sidebar: #0b0e16;
+    --bg-card: #121724;
+    --bg-card-hover: #192032;
     --border-color: rgba(255, 255, 255, 0.08);
+    --border-glow: rgba(212, 166, 58, 0.3);
+    --gold: #d4a63a;
+    --gold-l: #e8bf5a;
+    --gold-bright: #f59e0b;
+    --gold-glow: 0 0 24px rgba(212, 166, 58, 0.22);
+    --gold-dim: rgba(212, 166, 58, 0.12);
+    --gray-l: #94a3b8;
+    --gray-muted: #64748b;
+    --green: #22c55e;
+    --green-dim: rgba(34, 197, 94, 0.15);
+    --red: #ef4444;
+    --red-dim: rgba(239, 68, 68, 0.15);
+    --radius-sm: 6px;
+    --radius: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  
   body {
     background: var(--ink);
-    color: #fff;
-    font-family: 'Manrope', sans-serif;
+    color: #f8fafc;
+    font-family: 'Manrope', 'Inter', -apple-system, sans-serif;
     display: flex;
     min-height: 100vh;
     overflow-x: hidden;
+    letter-spacing: -0.01em;
   }
+
+  /* Custom Scrollbars */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(212,166,58,0.3); }
 
   /* ── Sidebar Component ─────────────────────────────────────────────────────── */
   .sidebar {
-    width: 260px;
+    width: 270px;
     background: var(--bg-sidebar);
     border-right: 1px solid var(--border-color);
-    padding: 28px 16px;
+    padding: 22px 14px 20px;
     display: flex;
     flex-direction: column;
     position: fixed;
     height: 100vh;
     z-index: 100;
+    overflow-y: auto;
+    backdrop-filter: blur(16px);
+    transition: width var(--transition), left var(--transition);
   }
+  
   .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 0 12px 28px 12px;
+    justify-content: space-between;
+    padding: 0 8px 20px 8px;
     border-bottom: 1px solid var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+  }
+  .brand-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
   }
   .brand-logo {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     background: linear-gradient(135deg, var(--gold), var(--gold-l));
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--ink);
-    font-weight: 800;
-    font-size: 1.2rem;
+    font-family: 'Clash Display', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
     box-shadow: var(--gold-glow);
+    flex-shrink: 0;
   }
   .brand-text {
     font-family: 'Clash Display', sans-serif;
@@ -75,207 +112,376 @@
     font-weight: 600;
     color: #fff;
     letter-spacing: -0.3px;
+    line-height: 1.2;
   }
   .brand-badge {
-    font-size: 0.65rem;
-    background: rgba(201,151,58,.15);
+    font-size: 0.62rem;
+    background: var(--gold-dim);
     color: var(--gold-l);
-    padding: 2px 6px;
-    border-radius: 4px;
+    border: 1px solid rgba(212,166,58,0.25);
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
     font-weight: 700;
+    display: inline-block;
+    margin-top: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
+  .nav-group {
+    margin-bottom: 18px;
+  }
   .nav-group-label {
-    font-size: 0.68rem;
-    font-weight: 700;
+    font-size: 0.65rem;
+    font-weight: 800;
     text-transform: uppercase;
-    color: var(--gray-l);
-    letter-spacing: 1px;
-    padding: 12px;
+    color: var(--gray-muted);
+    letter-spacing: 1.2px;
+    padding: 6px 12px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .nav-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
-    gap: 12px;
-    padding: 12px 14px;
+    padding: 10px 12px;
     color: var(--gray-l);
-    border-radius: 10px;
+    border-radius: var(--radius);
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.86rem;
     font-weight: 600;
     font-family: inherit;
     text-align: left;
     background: none;
-    border: none;
+    border: 1px solid transparent;
     transition: var(--transition);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     text-decoration: none;
+    position: relative;
   }
-  .nav-item:focus-visible, .sidebar-toggle:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 2px;
+  .nav-item-content {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
   }
-  .nav-item i { font-size: 1.1rem; }
-  .nav-item:hover, .nav-item.active {
-    background: rgba(255, 255, 255, 0.06);
+  .nav-item i {
+    font-size: 1.1rem;
+    color: var(--gray-muted);
+    transition: var(--transition);
+    flex-shrink: 0;
+  }
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.04);
     color: #fff;
   }
+  .nav-item:hover i { color: var(--gold-l); }
   .nav-item.active {
-    background: linear-gradient(90deg, rgba(201,151,58,.15), transparent);
+    background: linear-gradient(90deg, rgba(212,166,58,0.15) 0%, rgba(212,166,58,0.03) 100%);
+    color: #fff;
+    border-color: rgba(212,166,58,0.25);
+    font-weight: 700;
+  }
+  .nav-item.active i {
     color: var(--gold-l);
-    border-left: 3px solid var(--gold);
+    text-shadow: 0 0 12px rgba(212,166,58,0.4);
+  }
+  .nav-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+    background: rgba(255,255,255,0.08);
+    color: var(--gray-l);
+    transition: var(--transition);
+  }
+  .nav-badge.alert {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+  }
+  .nav-badge.gold {
+    background: var(--gold-dim);
+    color: var(--gold-l);
+    border: 1px solid rgba(212,166,58,0.3);
+  }
+
+  /* Sidebar User Footer */
+  .sidebar-user {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color);
+  }
+  .user-pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.15);
+    flex-shrink: 0;
+  }
+  .user-meta {
+    min-width: 0;
+  }
+  .user-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .user-role-badge {
+    font-size: 0.62rem;
+    color: var(--gold-l);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .user-logout-btn {
+    background: none;
+    border: none;
+    color: var(--gray-muted);
+    cursor: pointer;
+    font-size: 1.05rem;
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: var(--transition);
+  }
+  .user-logout-btn:hover {
+    color: var(--red);
+    background: rgba(239, 68, 68, 0.1);
   }
 
   /* ── Main Layout ───────────────────────────────────────────────────────────── */
   .main-wrapper {
-    margin-left: 260px;
+    margin-left: 270px;
     flex: 1;
     display: flex;
     flex-direction: column;
     min-width: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 0%, rgba(26,34,51,0.4) 0%, transparent 60%);
   }
 
   .top-header {
-    background: rgba(26, 29, 36, 0.85);
-    backdrop-filter: blur(12px);
+    background: rgba(11, 14, 22, 0.82);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-color);
-    padding: 18px 36px;
+    padding: 14px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 90;
+    gap: 16px;
   }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-width: 0;
+  }
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.76rem;
+    color: var(--gray-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+  .breadcrumb-sep { font-size: 0.65rem; opacity: 0.6; }
+  .breadcrumb-active { color: var(--gold-l); font-weight: 700; }
+  
   .header-title h1 {
     font-family: 'Clash Display', sans-serif;
     font-size: 1.35rem;
     font-weight: 600;
     color: #fff;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
   }
   .header-sub {
     font-size: 0.8rem;
     color: var(--gray-l);
-    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 550px;
   }
+
+  /* Command Palette Trigger Button in Header */
+  .cmd-trigger-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-color);
+    color: var(--gray-l);
+    padding: 8px 14px;
+    border-radius: var(--radius-full);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+  }
+  .cmd-trigger-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(212, 166, 58, 0.4);
+    color: #fff;
+  }
+  .cmd-trigger-btn kbd {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    color: var(--gold-l);
+    font-family: inherit;
+    font-weight: 700;
+  }
+
   .header-actions {
     display: flex;
     align-items: center;
     gap: 12px;
-  }
-
-  /* ── Mobile: off-canvas sidebar ─────────────────────────────────────────────
-     Below 900px the fixed 260px sidebar left as little as 60px of usable
-     width on a 320px phone. It now slides off-screen by default and opens
-     over the content via the hamburger toggle, closing on nav or overlay tap. */
-  .sidebar-toggle {
-    display: none;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.15rem;
-    cursor: pointer;
     flex-shrink: 0;
   }
-  .sidebar-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.55);
-    z-index: 99;
+
+  /* System Status Indicator */
+  .system-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(34, 197, 94, 0.08);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #4ade80;
   }
-  @media (max-width: 900px) {
-    .sidebar {
-      left: -280px;
-      top: 0;
-      transition: left .25s ease;
-      box-shadow: 8px 0 32px rgba(0,0,0,.4);
-    }
-    .sidebar.open { left: 0; }
-    .main-wrapper { margin-left: 0; }
-    .sidebar-toggle { display: flex; }
-    .sidebar-overlay.open { display: block; }
-    .top-header { padding: 14px 16px; gap: 10px; flex-wrap: wrap; }
-    .content-body { padding: 18px; }
-    .header-title h1 { font-size: 1.1rem; }
+  .status-dot-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+    animation: pulse 2s infinite;
   }
-  @media (max-width: 480px) {
-    .sidebar { width: 240px; left: -260px; }
-    .header-actions { width: 100%; }
-    .period-select { width: 100%; }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
   }
 
   .period-select, .input-control {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     color: #fff;
-    padding: 10px 16px;
-    border-radius: 10px;
-    font-size: 0.85rem;
+    padding: 9px 14px;
+    border-radius: var(--radius);
+    font-size: 0.84rem;
     font-weight: 600;
     outline: none;
     transition: var(--transition);
-    font-family: 'Manrope', sans-serif;
+    font-family: inherit;
   }
-  .period-select:hover, .input-control:focus { border-color: var(--gold); }
+  .period-select:focus, .input-control:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(212, 166, 58, 0.15);
+  }
 
-  /* Value-identical to .btn/.btn--gold (main.css) — same class names kept
-     here (not renamed to btn/btn--gold) since many rows are built from JS
-     template strings, but every property below matches exactly. */
   .btn-action {
     background: linear-gradient(135deg, var(--gold), var(--gold-l));
     color: var(--ink);
     font-weight: 700;
-    font-size: 0.85rem;
-    padding: 10px 18px;
+    font-size: 0.84rem;
+    padding: 9px 16px;
     border-radius: var(--radius-full);
     border: none;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     transition: var(--transition);
     text-decoration: none;
-    box-shadow: 0 4px 24px rgba(201,151,58,.3);
+    box-shadow: 0 4px 18px rgba(212,166,58,.25);
+    font-family: inherit;
   }
   .btn-action:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 36px rgba(201,151,58,.4);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(212,166,58,.4);
   }
   .btn-secondary {
-    background: rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.05);
     color: #fff;
     border: 1px solid var(--border-color);
     box-shadow: none;
   }
-  .btn-secondary:hover { background: rgba(255,255,255,0.12); transform: none; box-shadow: none; }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.18);
+    transform: none;
+    box-shadow: none;
+  }
+  .btn-icon {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
 
-  .content-body { padding: 36px; }
-  .section { display: none; }
+  .content-body { padding: 32px; flex: 1; }
+  .section { display: none; animation: fadeIn 0.25s ease-out; }
   .section.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
   /* ── Card Components ───────────────────────────────────────────────────────── */
   .kpi-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-  .dash-recent-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
-  @media (max-width: 768px) {
-    /* Full-width stacked KPI tiles turn a health-metrics row into a wall
-       of scrolling before the actual content starts — two per row cuts
-       that in half, at a size that's still comfortably readable. */
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
-    .kpi-card { padding: 12px 14px; }
-    .kpi-title { font-size: 0.62rem; letter-spacing: 0.2px; margin-bottom: 5px; line-height: 1.35; }
-    .kpi-val { font-size: 1.2rem; }
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
   }
   .kpi-card {
     background: var(--bg-card);
@@ -283,58 +489,42 @@
     border-radius: var(--radius-lg);
     padding: 20px;
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
   }
   .kpi-card:hover {
-    border-color: rgba(201,151,58,.4);
+    border-color: rgba(212,166,58,.4);
     transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4), var(--gold-glow);
   }
   .kpi-title {
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--gray-l);
-    letter-spacing: 0.5px;
+    color: var(--gray-muted);
+    letter-spacing: 0.8px;
     margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .kpi-val {
     font-family: 'Clash Display', sans-serif;
-    font-size: 1.55rem;
+    font-size: 1.65rem;
     font-weight: 600;
     color: #fff;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
   }
   .kpi-val.gold { color: var(--gold-l); }
-
-  /* AI Insights panel — kept as a structural element (see routes/admin.py:
-     ai_insights is always []), reskinned to established tokens only. */
-  .ai-insights-box {
-    background: linear-gradient(135deg, rgba(201,151,58,.08), rgba(26,29,36,.8));
-    border: 1px solid rgba(201,151,58,.3);
-    border-radius: var(--radius-lg);
-    padding: 20px 24px;
-    margin-bottom: 32px;
-  }
-  .ai-title {
-    font-family: 'Clash Display', sans-serif;
-    font-weight: 600;
-    font-size: 1rem;
-    color: var(--gold-l);
+  .kpi-meta {
+    font-size: 0.74rem;
+    color: var(--gray-l);
+    margin-top: 6px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .ai-bullets {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 12px;
-  }
-  .ai-item {
-    font-size: 0.85rem;
-    color: rgba(255,255,255,0.85);
-    background: rgba(0,0,0,0.2);
-    padding: 10px 14px;
-    border-radius: var(--radius);
-    border-left: 3px solid var(--gold);
+    gap: 6px;
   }
 
   /* ── Filter Bar Component ──────────────────────────────────────────────────── */
@@ -342,24 +532,24 @@
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
-    padding: 16px 20px;
+    padding: 14px 18px;
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   }
   .filter-bar .input-control { flex: 1; min-width: 200px; }
 
-  /* ── Table Components ─────────────────────────────────────────────────────────
-     Matches the dark table treatment already established in
-     affiliate-dashboard.html (same background/radius/border/header style). */
+  /* ── Data Tables ───────────────────────────────────────────────────────────── */
   .data-table-container {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    margin-bottom: 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
   }
   table.data-table {
     width: 100%;
@@ -367,132 +557,292 @@
     text-align: left;
   }
   table.data-table th, table.data-table td {
-    padding: 16px 20px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border-color);
-    font-size: 0.86rem;
+    font-size: 0.85rem;
   }
   table.data-table th {
-    color: var(--gray-l);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--gray-muted);
     font-weight: 700;
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.8px;
+    user-select: none;
+    position: sticky;
+    top: 0;
   }
-  table.data-table tr:hover td { background: var(--bg-card-hover); cursor: pointer; }
-
-  /* ── Mobile record cards ───────────────────────────────────────────────────────
-     Below 768px, tables hand off to this instead of shrinking or scrolling
-     sideways — each row becomes one compact, tappable card. Deliberately
-     dense (not the spacious KPI-tile look): a list of these is meant to be
-     scanned quickly, not admired one at a time, so every row after the
-     first should mostly cost you a flick of the thumb, not a scroll. */
-  .record-card-list { display: none; }
-  @media (max-width: 768px) {
-    /* Only containers explicitly marked have a card equivalent built —
-       sections not yet converted keep their table visible on mobile
-       rather than going blank. */
-    .data-table-container.has-mobile-cards { display: none; }
-    .record-card-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px; }
-    .record-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-left: 3px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px 14px 12px 12px;
-      cursor: pointer;
-    }
-    /* Scan-first status signal: a whole list should be readable by color
-       alone at a glance, but never color ALONE — the dot+word pairing
-       below still carries the same information in text for anyone who
-       can't distinguish the stripe color. */
-    .record-card--success { border-left-color: var(--green, #22c55e); }
-    .record-card--pending { border-left-color: var(--gold, #c9973a); }
-    .record-card--failed, .record-card--refunded { border-left-color: var(--red, #ef4444); }
-    .record-card:active { background: var(--bg-card-hover); }
-    .record-card__row1, .record-card__row2 {
-      display: flex; justify-content: space-between; align-items: baseline; gap: 10px;
-    }
-    .record-card__row2 { margin-top: 4px; }
-    .record-card__primary { font-weight: 700; font-size: 0.9rem; color: #fff; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .record-card__amount { font-weight: 700; color: var(--gold-light); font-size: 0.9rem; flex-shrink: 0; font-variant-numeric: tabular-nums; }
-    .record-card__secondary { font-size: 0.78rem; color: var(--gray-l); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .record-card__meta { font-size: 0.72rem; color: var(--gray-l); flex-shrink: 0; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
-    .record-card__dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .record-card__dot--success { background: var(--green, #22c55e); }
-    .record-card__dot--pending { background: var(--gold, #c9973a); }
-    .record-card__dot--failed, .record-card__dot--refunded { background: var(--red, #ef4444); }
-    .record-card__action {
-      display: block; width: 100%; margin-top: 10px; min-height: 40px;
-      background: rgba(245,158,11,0.1); color: #fbbf24; border: 1px solid rgba(245,158,11,0.35);
-      border-radius: 8px; font-size: 0.8rem; font-weight: 700;
-    }
-    /* Filter bars: pair up related controls instead of stacking every
-       control on its own full-width row — search stays full width
-       (needs room to type), everything else pairs off two-per-row. */
-    .filter-bar { gap: 10px; padding: 14px; }
-    .filter-bar .input-control { min-width: 0; flex: 1 1 100%; }
-    .filter-bar .input-control#sales-search,
-    .filter-bar .input-control#cust-search,
-    .filter-bar .input-control#aff-search,
-    .filter-bar .input-control#ed-search-input { flex-basis: 100%; }
-    .filter-bar > label { flex: 1 1 calc(50% - 5px); min-width: 0; }
-    .filter-bar > label .input-control { width: 100%; }
-    .filter-bar > select.period-select,
-    .filter-bar > button.btn-action { flex: 1 1 calc(50% - 5px); font-size: 0.76rem; white-space: nowrap; padding-left: 10px; padding-right: 10px; }
-
-    /* Forms & detail views: every tappable control meets the 44px minimum
-       touch target, matching the same rule already applied to the sidebar
-       toggle in Phase 1 — these are the primary controls a user must hit
-       to complete a task, not dense secondary table actions. */
-    .btn-action, .input-control, .period-select { min-height: 44px; }
-    .record-card__action { min-height: 44px; }
-
-    /* Dashboard's two "Recent" widgets were a fixed 2-column grid with no
-       mobile override — two 4-column tables squeezed into half-width
-       columns, clipping every cell's text. Stack them instead. */
-    .dash-recent-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  table.data-table th.sortable {
+    cursor: pointer;
+    transition: var(--transition);
   }
+  table.data-table th.sortable:hover {
+    color: var(--gold-l);
+    background: rgba(212, 166, 58, 0.05);
+  }
+  table.data-table th.sortable i {
+    margin-left: 4px;
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+  table.data-table tr:hover td {
+    background: var(--bg-card-hover);
+    cursor: pointer;
+  }
+  table.data-table tr:last-child td { border-bottom: none; }
 
+  /* Status Pills */
   .status-pill {
-    padding: 4px 10px;
+    padding: 3px 10px;
     border-radius: var(--radius-full);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: capitalize;
+  }
+  .status-pill.success { background: var(--green-dim); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+  .status-pill.pending, .status-pill.warning { background: var(--gold-dim); color: var(--gold-l); border: 1px solid rgba(212, 166, 58, 0.3); }
+  .status-pill.failed, .status-pill.refunded, .status-pill.danger { background: var(--red-dim); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+  .status-pill.neutral { background: rgba(148,163,184,.12); color: var(--gray-l); border: 1px solid rgba(148,163,184,.2); }
+
+  /* ── Skeleton Loaders ──────────────────────────────────────────────────────── */
+  @keyframes skeletonShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .skeleton {
+    background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+    background-size: 200% 100%;
+    animation: skeletonShimmer 1.8s infinite linear;
+    border-radius: 4px;
     display: inline-block;
   }
-  .status-pill.success { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-  .status-pill.pending, .status-pill.warning { background: rgba(201,151,58,.15); color: var(--gold-l); }
-  .status-pill.failed, .status-pill.refunded, .status-pill.danger { background: rgba(239, 68, 68, 0.15); color: var(--red); }
-  .status-pill.neutral { background: rgba(148,163,184,.15); color: var(--gray-l); }
-  .kind-badge { padding: 3px 9px; border-radius: var(--radius-full); font-size: 0.68rem; font-weight: 700; display: inline-block; }
-  .kind-badge.urgent { background: rgba(239, 68, 68, 0.15); color: var(--red); }
-  .kind-badge.normal { background: rgba(255,255,255,0.08); color: var(--gray-l); }
+  .skeleton-text { height: 14px; width: 80%; }
+  .skeleton-cell { height: 16px; width: 70%; }
+  .skeleton-kpi { height: 28px; width: 60%; margin: 8px 0; }
 
-  /* ── Slide-Out Drawer Component ────────────────────────────────────────────
-     Skinned like .modal-overlay/.modal (landing.css) — same backdrop blur,
-     surface color, and box-shadow — sliding from the right instead of up
-     from the bottom, since this drawer serves a different, already-approved
-     inspector interaction rather than the checkout flow. */
+  /* ── Linear-Style Command Palette Modal ────────────────────────────────────── */
+  .cmd-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(9, 12, 18, 0.8);
+    backdrop-filter: blur(14px);
+    z-index: 999;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 14vh;
+    animation: fadeIn 0.15s ease-out;
+  }
+  .cmd-overlay.open { display: flex; }
+  .cmd-modal {
+    background: var(--ink2);
+    border: 1px solid rgba(212, 166, 58, 0.25);
+    border-radius: var(--radius-lg);
+    width: 600px;
+    max-width: 90vw;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.7), var(--gold-glow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .cmd-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+  }
+  .cmd-search-wrap i { color: var(--gold-l); font-size: 1.2rem; }
+  #cmd-search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.05rem;
+    font-family: inherit;
+    outline: none;
+  }
+  .cmd-search-wrap kbd {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.72rem;
+    color: var(--gray-l);
+    font-family: inherit;
+  }
+  .cmd-results {
+    max-height: 380px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+  .cmd-group-title {
+    font-size: 0.66rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--gray-muted);
+    letter-spacing: 1px;
+    padding: 8px 12px 4px;
+  }
+  .cmd-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+  .cmd-item-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .cmd-item-left i { font-size: 1.05rem; color: var(--gray-l); }
+  .cmd-item.selected, .cmd-item:hover {
+    background: rgba(212, 166, 58, 0.12);
+    color: #fff;
+  }
+  .cmd-item.selected i, .cmd-item:hover i { color: var(--gold-l); }
+  .cmd-badge {
+    font-size: 0.7rem;
+    color: var(--gold-l);
+    background: var(--gold-dim);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+  .cmd-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-top: 1px solid var(--border-color);
+    background: rgba(0,0,0,0.25);
+    font-size: 0.72rem;
+    color: var(--gray-muted);
+  }
+  .cmd-footer-keys { display: flex; gap: 10px; }
+  .cmd-footer-keys span kbd { background: rgba(255,255,255,0.06); padding: 1px 4px; border-radius: 3px; }
+
+  /* ── Toast Notifications ───────────────────────────────────────────────────── */
+  #toast-container {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+  }
+  .toast {
+    pointer-events: auto;
+    background: var(--ink2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.5), 0 0 1px rgba(255,255,255,0.15);
+    animation: toastSlideIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 280px;
+    max-width: 420px;
+  }
+  .toast.success { border-color: rgba(34, 197, 94, 0.4); }
+  .toast.success i { color: #4ade80; }
+  .toast.error { border-color: rgba(239, 68, 68, 0.4); }
+  .toast.error i { color: #f87171; }
+  .toast.warning { border-color: rgba(212, 166, 58, 0.4); }
+  .toast.warning i { color: var(--gold-l); }
+  @keyframes toastSlideIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* ── Keyboard Shortcuts Modal ──────────────────────────────────────────────── */
+  .shortcuts-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(9, 12, 18, 0.8);
+    backdrop-filter: blur(14px);
+    z-index: 999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .shortcuts-overlay.open { display: flex; }
+  .shortcuts-modal {
+    background: var(--ink2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    width: 520px;
+    max-width: 90vw;
+    padding: 24px 28px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.7);
+  }
+  .shortcuts-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .shortcuts-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.2rem; color: #fff; }
+  .shortcuts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .shortcut-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255,255,255,0.03);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--gray-l);
+  }
+  .shortcut-row kbd {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.72rem;
+    color: var(--gold-l);
+    font-weight: 700;
+  }
+
+  /* ── Drawers & Overlays ─────────────────────────────────────────────────────── */
   .drawer-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(12,14,18,.8);
-    backdrop-filter: blur(8px);
+    background: rgba(9, 12, 18, 0.8);
+    backdrop-filter: blur(12px);
     z-index: 200;
     opacity: 0;
     pointer-events: none;
     transition: var(--transition);
   }
   .drawer-overlay.open { opacity: 1; pointer-events: auto; }
-
   .drawer-panel {
     position: fixed;
     top: 0; right: 0; bottom: 0;
-    width: 520px;
+    width: 540px;
     max-width: 100vw;
     background: var(--ink2);
     border-left: 1px solid var(--border-color);
-    box-shadow: 0 24px 60px rgba(0,0,0,.6);
+    box-shadow: 0 24px 60px rgba(0,0,0,.7);
     z-index: 210;
     transform: translateX(100%);
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -500,142 +850,274 @@
     flex-direction: column;
   }
   .drawer-overlay.open .drawer-panel { transform: translateX(0); }
-
   .drawer-header {
-    padding: 24px 28px;
+    padding: 22px 28px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .drawer-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.2rem; font-weight: 600; color: #fff; }
-  /* Exact values from .modal__close (landing.css). */
+  .drawer-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.25rem; font-weight: 600; color: #fff; }
   .drawer-close {
-    width: 34px; height: 34px;
+    width: 36px; height: 36px;
     border-radius: 50%;
     background: rgba(255,255,255,.06);
     border: none;
     display: flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,.7);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: all var(--transition);
+    transition: var(--transition);
   }
   .drawer-close:hover { background: rgba(255,255,255,.15); color: #fff; }
-  @media (max-width: 768px) {
-    /* 34px matches landing.css on desktop by design; below the 44px touch
-       target minimum on mobile, where this is the only way to dismiss
-       every drawer and form in the admin suite. flex-shrink:0 keeps it at
-       full size even when a long title crowds the header. */
-    .drawer-close { width: 44px; height: 44px; flex-shrink: 0; }
-  }
-
-  .drawer-body {
-    padding: 28px;
-    overflow-y: auto;
-    flex: 1;
-  }
-  .drawer-section {
-    margin-bottom: 24px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-  }
-  .drawer-section-title {
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: var(--gold-l);
-    letter-spacing: 0.5px;
-    margin-bottom: 12px;
-  }
-  .drawer-detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    font-size: 0.85rem;
-  }
-  .detail-label { display: block; color: var(--gray-l); font-size: 0.78rem; }
+  .drawer-body { padding: 28px; overflow-y: auto; flex: 1; }
+  .drawer-section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
+  .drawer-section-title { font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: var(--gold-l); letter-spacing: 0.8px; margin-bottom: 12px; }
+  .drawer-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 0.85rem; }
+  .detail-label { display: block; color: var(--gray-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .detail-val { color: #fff; font-weight: 600; margin-top: 2px; word-break: break-all; }
-
-  .rate-cell { display: flex; align-items: center; gap: 6px; }
-  .rate-edit-btn { background: none; border: none; color: var(--gold-l); cursor: pointer; font-size: .85rem; padding: 2px 4px; }
-  .rate-edit-btn:hover { color: var(--gold); }
 
   /* ── Master's Eye View ─────────────────────────────────────────────────────── */
   .hub-toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 28px; flex-wrap: wrap; }
-  .hub-search-wrap { position: relative; flex: 1; min-width: 220px; }
-  .hub-search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-l); font-size: 0.9rem; pointer-events: none; }
-  #hub-search { width: 100%; padding: 11px 14px 11px 38px; }
-  .hub-category { margin-bottom: 32px; }
-  .hub-category-title, .hub-section-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--gray-l); margin-bottom: 14px; }
-  .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
-  .hub-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px; cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; gap: 8px; }
-  .hub-card:hover { border-color: rgba(201,151,58,.4); transform: translateY(-2px); }
+  .hub-search-wrap { position: relative; flex: 1; min-width: 240px; }
+  .hub-search-wrap i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--gray-muted); font-size: 0.95rem; pointer-events: none; }
+  #hub-search { width: 100%; padding: 11px 14px 11px 40px; border-radius: var(--radius-full); }
+  .hub-category { margin-bottom: 36px; }
+  .hub-category-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px; color: var(--gray-muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+  .hub-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .hub-card:hover {
+    border-color: rgba(212,166,58,.4);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.4), var(--gold-glow);
+  }
   .hub-card.hub-card--info { cursor: default; }
   .hub-card.hub-card--info:hover { transform: none; border-color: var(--border-color); }
   .hub-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-  .hub-card__icon { font-size: 1.4rem; line-height: 1; }
-  .hub-card__badge { background: rgba(239,68,68,.15); color: var(--red); font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
-  .hub-card__title { font-family: 'Clash Display', sans-serif; font-size: 1rem; font-weight: 600; color: #fff; }
-  .hub-card__desc { font-size: 0.8rem; color: var(--gray-l); line-height: 1.5; flex: 1; }
-  .hub-card__metric { font-family: 'Clash Display', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--gold-l); }
-  .hub-card__hint { font-size: 0.7rem; color: var(--gray-l); text-transform: uppercase; letter-spacing: 0.5px; }
-  .hub-empty { text-align: center; color: var(--gray-l); padding: 40px 0; font-size: 0.9rem; }
-
-  .hub-journeys { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; margin-top: 8px; }
-  .journey-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 20px; }
-  .journey-card-title { font-family: 'Clash Display', sans-serif; font-weight: 600; color: #fff; font-size: 0.95rem; margin-bottom: 14px; }
-  .journey-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-  .journey-node { background: rgba(201,151,58,.1); border: 1px solid rgba(201,151,58,.25); color: var(--gold-l); font-size: 0.76rem; font-weight: 600; padding: 6px 12px; border-radius: 20px; cursor: pointer; transition: var(--transition); white-space: nowrap; }
-  .journey-node:hover { background: rgba(201,151,58,.2); }
-  .journey-arrow { color: var(--gray-l); font-size: 0.85rem; }
-
-  @media (max-width: 640px) {
-    .hub-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .hub-card__icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(212, 166, 58, 0.08);
+    border: 1px solid rgba(212, 166, 58, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-l);
+    font-size: 1.25rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
+  .hub-card:hover .hub-card__icon {
+    background: rgba(212, 166, 58, 0.18);
+    border-color: rgba(212, 166, 58, 0.45);
+    transform: scale(1.08);
+    color: #fff;
+    box-shadow: 0 0 16px rgba(212, 166, 58, 0.25);
+  }
+  .hub-card__badge { background: rgba(239,68,68,.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+  .hub-card__title { font-family: 'Clash Display', sans-serif; font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .hub-card__desc { font-size: 0.82rem; color: var(--gray-l); line-height: 1.5; flex: 1; }
+  .hub-card__metric { font-family: 'Clash Display', sans-serif; font-size: 1.35rem; font-weight: 600; color: var(--gold-l); font-variant-numeric: tabular-nums; }
+  .hub-card__hint { font-size: 0.72rem; color: var(--gray-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+  .hub-empty { text-align: center; color: var(--gray-l); padding: 48px 0; font-size: 0.95rem; }
+
+  /* Mobile Responsive */
+  .sidebar-toggle {
+    display: none;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border-color);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    backdrop-filter: blur(4px);
+    z-index: 99;
+  }
+
+  @media (max-width: 992px) {
+    .sidebar { left: -290px; top: 0; transition: left .25s ease; box-shadow: 8px 0 32px rgba(0,0,0,.6); }
+    .sidebar.open { left: 0; }
+    .main-wrapper { margin-left: 0; }
+    .sidebar-toggle { display: flex; }
+    .sidebar-overlay.open { display: block; }
+    .top-header { padding: 12px 18px; }
+    .content-body { padding: 20px; }
+    .header-sub { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .kpi-card { padding: 14px; }
+    .kpi-val { font-size: 1.3rem; }
+    .data-table-container.has-mobile-cards { display: none; }
+    .record-card-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .record-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+    }
+    .record-card--success { border-left-color: var(--green); }
+    .record-card--pending { border-left-color: var(--gold); }
+    .record-card--failed { border-left-color: var(--red); }
+    .record-card__row1, .record-card__row2 { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+    .record-card__row2 { margin-top: 4px; }
+    .record-card__primary { font-weight: 700; font-size: 0.9rem; color: #fff; }
+    .record-card__amount { font-weight: 700; color: var(--gold-l); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+    .record-card__secondary { font-size: 0.78rem; color: var(--gray-l); }
+    .record-card__meta { font-size: 0.72rem; color: var(--gray-l); display: flex; align-items: center; gap: 5px; }
+    .record-card__dot { width: 7px; height: 7px; border-radius: 50%; }
+    .record-card__dot--success { background: var(--green); }
+    .record-card__dot--pending { background: var(--gold); }
+    .record-card__dot--failed { background: var(--red); }
+    .shortcuts-grid { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
 
+
 <!-- Sidebar Nav -->
 <aside class="sidebar">
   <div class="brand">
-    <div class="brand-logo">S</div>
-    <div>
-      <div class="brand-text">Scale Group</div>
-      <span class="brand-badge">Admin Suite</span>
-    </div>
+    <a href="#" onclick="switchSection('hub'); return false;" class="brand-left">
+      <div class="brand-logo">S</div>
+      <div>
+        <div class="brand-text">Scale Admin</div>
+        <span class="brand-badge">Enterprise Suite</span>
+      </div>
+    </a>
   </div>
 
-  <button class="nav-item active" onclick="switchSection('hub')"><i class="bi bi-grid-1x2-fill"></i> Master's Eye View</button>
+  <div class="nav-group">
+    <div class="nav-group-label"><span>Executive Cockpit</span></div>
+    <button class="nav-item active" onclick="switchSection('hub')">
+      <div class="nav-item-content"><i class="bi bi-grid-1x2-fill"></i> <span>Master's Hub</span></div>
+      <span class="nav-badge gold">Live</span>
+    </button>
+    <button class="nav-item" onclick="switchSection('dashboard')">
+      <div class="nav-item-content"><i class="bi bi-speedometer2"></i> <span>Analytics & Velocity</span></div>
+    </button>
+  </div>
 
-  <div class="nav-group-label">Core Modules</div>
-  <button class="nav-item" onclick="switchSection('dashboard')"><i class="bi bi-speedometer2"></i> Dashboard</button>
-  <button class="nav-item" onclick="switchSection('sales')"><i class="bi bi-credit-card-2-front"></i> Sales Management</button>
-  <button class="nav-item" onclick="switchSection('customers')"><i class="bi bi-people"></i> Customers 360°</button>
-  <button class="nav-item" onclick="switchSection('affiliates')"><i class="bi bi-megaphone"></i> Affiliates Engine</button>
-  <button class="nav-item" onclick="switchSection('payouts')"><i class="bi bi-cash-stack"></i> Payouts</button>
-  <button class="nav-item" onclick="switchSection('subscriptions')"><i class="bi bi-calendar2-check"></i> Subscriptions</button>
-  <button class="nav-item" onclick="switchSection('team')"><i class="bi bi-person-badge"></i> Team Members</button>
-  <button class="nav-item" onclick="switchSection('sequence')"><i class="bi bi-envelope-check"></i> Email Sequence</button>
-  <button class="nav-item" onclick="switchSection('email-delivery')"><i class="bi bi-shield-check"></i> Email Delivery</button>
-  <button class="nav-item" onclick="switchSection('abandoned')"><i class="bi bi-cart-x"></i> Abandoned Cart Recovery</button>
-  <button class="nav-item" onclick="switchSection('preorders')"><i class="bi bi-box-seam"></i> Pre-Orders Fulfillment</button>
+  <div class="nav-group">
+    <div class="nav-group-label"><span>Money & Orders</span></div>
+    <button class="nav-item" onclick="switchSection('sales')">
+      <div class="nav-item-content"><i class="bi bi-credit-card-2-front"></i> <span>Sales Ledger</span></div>
+    </button>
+    <button class="nav-item" onclick="switchSection('payouts')">
+      <div class="nav-item-content"><i class="bi bi-cash-stack"></i> <span>Payouts & Milestones</span></div>
+      <span class="nav-badge" id="nav-badge-payouts" style="display:none">0</span>
+    </button>
+    <button class="nav-item" onclick="switchSection('subscriptions')">
+      <div class="nav-item-content"><i class="bi bi-calendar2-check"></i> <span>Subscriptions & MRR</span></div>
+    </button>
+    <button class="nav-item" onclick="switchSection('preorders')">
+      <div class="nav-item-content"><i class="bi bi-box-seam"></i> <span>Pre-Orders</span></div>
+    </button>
+  </div>
 
+  <div class="nav-group">
+    <div class="nav-group-label"><span>People & Growth</span></div>
+    <button class="nav-item" onclick="switchSection('customers')">
+      <div class="nav-item-content"><i class="bi bi-people"></i> <span>Customers 360°</span></div>
+    </button>
+    <button class="nav-item" onclick="switchSection('affiliates')">
+      <div class="nav-item-content"><i class="bi bi-megaphone"></i> <span>Affiliates & Tree</span></div>
+    </button>
+    <button class="nav-item" onclick="switchSection('team')">
+      <div class="nav-item-content"><i class="bi bi-person-badge"></i> <span>Sales Team</span></div>
+    </button>
+  </div>
 
-  <button class="nav-item" onclick="logout()" style="margin-top:auto; color:var(--red)"><i class="bi bi-box-arrow-right"></i> Logout</button>
+  <div class="nav-group">
+    <div class="nav-group-label"><span>System & Funnels</span></div>
+    <button class="nav-item" onclick="switchSection('sequence')">
+      <div class="nav-item-content"><i class="bi bi-envelope-check"></i> <span>52-Day Curriculum</span></div>
+    </button>
+    <button class="nav-item" onclick="switchSection('email-delivery')">
+      <div class="nav-item-content"><i class="bi bi-shield-check"></i> <span>Email Delivery Health</span></div>
+      <span class="nav-badge alert" id="nav-badge-emails" style="display:none"><i class="bi bi-exclamation-circle-fill"></i> Alert</span>
+    </button>
+    <button class="nav-item" onclick="switchSection('abandoned')">
+      <div class="nav-item-content"><i class="bi bi-cart-x"></i> <span>Cart Recovery</span></div>
+    </button>
+  </div>
+
+  <!-- User Scope Card -->
+  <div class="sidebar-user">
+    <div class="user-pill">
+      <div class="user-info">
+        <div class="user-avatar" id="sidebar-user-avatar">AD</div>
+        <div class="user-meta">
+          <div class="user-name" id="sidebar-user-email">Super Admin</div>
+          <div class="user-role-badge"><i class="bi bi-shield-fill-check"></i> Super Administrator</div>
+        </div>
+      </div>
+      <button class="user-logout-btn" onclick="logout()" title="Logout Session"><i class="bi bi-box-arrow-right"></i></button>
+    </div>
+  </div>
 </aside>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <!-- Main Area -->
 <div class="main-wrapper">
   <header class="top-header">
-    <button class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
-    <div class="header-title">
-      <h1 id="page-title">Executive Command Center</h1>
-      <div class="header-sub" id="page-sub">Central high-level business velocity and operational performance</div>
+    <div class="header-left">
+      <button class="sidebar-toggle" id="sidebar-toggle-btn" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="bi bi-list"></i></button>
+      <div>
+        <div class="breadcrumbs">
+          <span>Scale Admin</span>
+          <span class="breadcrumb-sep">/</span>
+          <span id="breadcrumb-category">Cockpit</span>
+          <span class="breadcrumb-sep">/</span>
+          <span class="breadcrumb-active" id="breadcrumb-active-view">Master's Hub</span>
+        </div>
+        <div class="header-title">
+          <h1 id="page-title">Master's Eye View</h1>
+        </div>
+      </div>
     </div>
+
+    <!-- Center Command Bar -->
+    <button class="cmd-trigger-btn" onclick="openCommandPalette()" title="Press Cmd+K / Ctrl+K">
+      <i class="bi bi-search"></i>
+      <span>Jump to section, customer, or action...</span>
+      <kbd>⌘K</kbd>
+    </button>
+
     <div class="header-actions">
+      <div class="system-status-indicator">
+        <span class="status-dot-pulse"></span>
+        <span>Operational</span>
+      </div>
+
       <select class="period-select" id="period-select" onchange="refreshCurrentView()">
         <option value="all" selected>All Time</option>
         <option value="today">Today</option>
@@ -644,12 +1126,17 @@
         <option value="30days">Last 30 Days</option>
         <option value="this_month">This Month</option>
       </select>
+
+      <button class="btn-action btn-secondary btn-icon" onclick="openShortcutsModal()" title="Keyboard Shortcuts (?)">
+        <i class="bi bi-keyboard"></i>
+      </button>
     </div>
   </header>
 
   <div class="content-body">
 
-    <!-- ── VIEW 0: MASTER'S EYE VIEW (landing screen) ──────────────────────────── -->
+
+<!-- ── VIEW 0: MASTER'S EYE VIEW (landing screen) ──────────────────────────── -->
     <div id="view-hub" class="section active">
       <div class="hub-toolbar">
         <div class="hub-search-wrap">
@@ -665,7 +1152,7 @@
         <div class="hub-section-title">How It All Connects</div>
         <div class="hub-journeys">
           <div class="journey-card">
-            <div class="journey-card-title">🛒 Customer Journey</div>
+            <div class="journey-card-title"><i class="bi bi-cart-check-fill" style="color:var(--gold-l);margin-right:4px"></i> Customer Journey</div>
             <div class="journey-strip">
               <span class="journey-node" onclick="window.open('/','_blank')">Landing</span>
               <span class="journey-arrow">→</span>
@@ -677,7 +1164,7 @@
             </div>
           </div>
           <div class="journey-card">
-            <div class="journey-card-title">📣 Affiliate Journey</div>
+            <div class="journey-card-title"><i class="bi bi-megaphone-fill" style="color:var(--gold-l);margin-right:4px"></i> Affiliate Journey</div>
             <div class="journey-strip">
               <span class="journey-node" onclick="window.open('/affiliate/register','_blank')">Register</span>
               <span class="journey-arrow">→</span>
@@ -689,7 +1176,7 @@
             </div>
           </div>
           <div class="journey-card">
-            <div class="journey-card-title">🧑‍💼 Sales Rep Journey</div>
+            <div class="journey-card-title"><i class="bi bi-person-badge-fill" style="color:var(--gold-l);margin-right:4px"></i> Sales Rep Journey</div>
             <div class="journey-strip">
               <span class="journey-node" onclick="window.open('/sales/register','_blank')">Register</span>
               <span class="journey-arrow">→</span>
@@ -709,7 +1196,7 @@
 
       <!-- ── Delivery Health Alert Banner ── -->
       <div id="delivery-alert-banner" style="display:none; background:linear-gradient(135deg,rgba(220,38,38,0.18),rgba(185,28,28,0.12)); border:1px solid rgba(239,68,68,0.45); border-radius:14px; padding:18px 24px; margin-bottom:24px; display:flex; align-items:center; gap:16px; flex-wrap:wrap">
-        <div style="font-size:1.6rem">🚨</div>
+        <div style="font-size:1.6rem;color:#f87171"><i class="bi bi-exclamation-triangle-fill"></i></div>
         <div style="flex:1; min-width:220px">
           <div style="font-weight:700; color:#f87171; font-size:1rem; margin-bottom:4px">Access Email Delivery Failure</div>
           <div style="color:#fca5a5; font-size:0.88rem" id="delivery-alert-text">Some customers paid but never received their access link.</div>
@@ -782,7 +1269,7 @@
 
       <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-sales-management">
-          <thead><tr><th>Verified At</th><th>Reference</th><th>Customer</th><th>Email</th><th>Amount</th><th>Method</th><th>Gateway</th><th>Status</th><th>Action</th></tr></thead>
+          <thead><tr><th class="sortable" onclick="sortTable('table-sales-management', 0)">Verified At <i class="bi bi-arrow-down-up"></i></th><th>Reference</th><th class="sortable" onclick="sortTable('table-sales-management', 2)">Customer <i class="bi bi-arrow-down-up"></i></th><th>Email</th><th class="sortable" onclick="sortTable('table-sales-management', 4, true)">Amount <i class="bi bi-arrow-down-up"></i></th><th>Method</th><th>Gateway</th><th class="sortable" onclick="sortTable('table-sales-management', 7)">Status <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -810,7 +1297,7 @@
 
       <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-customers-roster">
-          <thead><tr><th>Joined</th><th>Name</th><th>Email</th><th>Total Spent</th><th>Orders</th><th>Action</th></tr></thead>
+          <thead><tr><th class="sortable" onclick="sortTable('table-customers-roster', 0)">Joined <i class="bi bi-arrow-down-up"></i></th><th class="sortable" onclick="sortTable('table-customers-roster', 1)">Name <i class="bi bi-arrow-down-up"></i></th><th>Email</th><th class="sortable" onclick="sortTable('table-customers-roster', 3, true)">Total Spent <i class="bi bi-arrow-down-up"></i></th><th class="sortable" onclick="sortTable('table-customers-roster', 4, true)">Orders <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
         <div id="cust-pagination"></div>
@@ -863,7 +1350,7 @@
       </div>
       <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-affiliates-roster">
-          <thead><tr><th>Created</th><th>Type</th><th>Code</th><th>Name</th><th>Payout Bank Account</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
+          <thead><tr><th class="sortable" onclick="sortTable('table-affiliates-roster', 0)">Created <i class="bi bi-arrow-down-up"></i></th><th>Type</th><th class="sortable" onclick="sortTable('table-affiliates-roster', 2)">Code <i class="bi bi-arrow-down-up"></i></th><th class="sortable" onclick="sortTable('table-affiliates-roster', 3)">Name <i class="bi bi-arrow-down-up"></i></th><th>Payout Bank Account</th><th class="sortable" onclick="sortTable('table-affiliates-roster', 5, true)">Clicks <i class="bi bi-arrow-down-up"></i></th><th class="sortable" onclick="sortTable('table-affiliates-roster', 6, true)">Sales <i class="bi bi-arrow-down-up"></i></th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th class="sortable" onclick="sortTable('table-affiliates-roster', 11, true)">Owed <i class="bi bi-arrow-down-up"></i></th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -917,14 +1404,14 @@
       <!-- ── AUTOMATED MILESTONE BONUS RELEASES ── -->
       <div style="padding:18px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
         <div>
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">🏆 Automated Milestone Bonus Releases</div>
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff"><i class="bi bi-trophy-fill" style="color:var(--gold-l);margin-right:6px"></i> Automated Milestone Bonus Releases</div>
           <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Real-time ₦10,000 direct (10 sales) &amp; ₦5,000 recruiter bank transfers sent automatically via Paystack</div>
         </div>
         <button class="btn-action btn-secondary" onclick="loadMilestonePayouts()"><i class="bi bi-arrow-clockwise"></i> Refresh Bonuses</button>
       </div>
       <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-payout-milestones">
-          <thead><tr><th>Date</th><th>Type</th><th>Partner</th><th>Bonus Amount</th><th>Bank Account</th><th>Transfer Reference</th><th>Status</th><th>Action</th></tr></thead>
+          <thead><tr><th class="sortable" onclick="sortTable('table-payout-milestones', 0)">Date <i class="bi bi-arrow-down-up"></i></th><th>Type</th><th class="sortable" onclick="sortTable('table-payout-milestones', 2)">Partner <i class="bi bi-arrow-down-up"></i></th><th class="sortable" onclick="sortTable('table-payout-milestones', 3, true)">Bonus Amount <i class="bi bi-arrow-down-up"></i></th><th>Bank Account</th><th>Transfer Reference</th><th class="sortable" onclick="sortTable('table-payout-milestones', 6)">Status <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -1123,7 +1610,7 @@
             <option value="">All Statuses</option>
             <option value="pending">Pending (&lt;1h)</option>
             <option value="sequence_active">Sequence Active</option>
-            <option value="recovered">Recovered 🎉</option>
+            <option value="recovered">Recovered</option>
             <option value="completed">Sequence Ended</option>
             <option value="unsubscribed">Unsubscribed</option>
           </select>
@@ -1217,7 +1704,298 @@
   </div>
 </div>
 
-<script src="site-registry.js"></script>
+
+
+
+<!-- Linear-Style Command Palette Modal -->
+<div class="cmd-overlay" id="cmd-overlay" onclick="closeCommandPalette(event)">
+  <div class="cmd-modal" onclick="event.stopPropagation()">
+    <div class="cmd-search-wrap">
+      <i class="bi bi-search"></i>
+      <input type="text" id="cmd-search-input" placeholder="Type a command or jump to view..." autocomplete="off" oninput="filterCommandPalette()">
+      <kbd>ESC</kbd>
+    </div>
+    <div class="cmd-results" id="cmd-results">
+      <!-- Injected dynamically via JS -->
+    </div>
+    <div class="cmd-footer">
+      <div class="cmd-footer-keys">
+        <span><kbd>↑</kbd> <kbd>↓</kbd> Navigate</span>
+        <span><kbd>↵</kbd> Select</span>
+        <span><kbd>ESC</kbd> Close</span>
+      </div>
+      <div>Scale Admin v2.5</div>
+    </div>
+  </div>
+</div>
+
+<!-- Keyboard Shortcuts Cheatsheet Modal -->
+<div class="shortcuts-overlay" id="shortcuts-overlay" onclick="closeShortcutsModal(event)">
+  <div class="shortcuts-modal" onclick="event.stopPropagation()">
+    <div class="shortcuts-header">
+      <h3>Keyboard Shortcuts</h3>
+      <button class="drawer-close" onclick="closeShortcutsModal()">&times;</button>
+    </div>
+    <div class="shortcuts-grid">
+      <div class="shortcut-row"><span>Command Palette</span> <kbd>⌘ K</kbd></div>
+      <div class="shortcut-row"><span>Jump to Hub</span> <kbd>G then H</kbd></div>
+      <div class="shortcut-row"><span>Jump to Dashboard</span> <kbd>G then D</kbd></div>
+      <div class="shortcut-row"><span>Jump to Sales</span> <kbd>G then S</kbd></div>
+      <div class="shortcut-row"><span>Jump to Customers</span> <kbd>G then C</kbd></div>
+      <div class="shortcut-row"><span>Jump to Affiliates</span> <kbd>G then A</kbd></div>
+      <div class="shortcut-row"><span>Jump to Payouts</span> <kbd>G then P</kbd></div>
+      <div class="shortcut-row"><span>Close Modal / Drawer</span> <kbd>ESC</kbd></div>
+      <div class="shortcut-row"><span>Show Shortcuts</span> <kbd>?</kbd></div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Toast Container -->
+<div id="toast-container"></div>
+
+
+<script src="site-registry.js">
+  // ── AWARD-WINNING TOAST NOTIFICATION ENGINE ─────────────────────────────────
+  function showToast(message, type = 'success', duration = 3500) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const icon = type === 'success' ? 'bi-check-circle-fill' : (type === 'error' ? 'bi-exclamation-circle-fill' : 'bi-info-circle-fill');
+    toast.innerHTML = `<i class="bi ${icon}"></i> <span>${escapeHtml(message)}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px) scale(0.95)';
+      toast.style.transition = 'all 0.25s ease';
+      setTimeout(() => toast.remove(), 250);
+    }, duration);
+  }
+
+  // ── COMMAND PALETTE ENGINE (Cmd+K / Ctrl+K) ──────────────────────────────────
+  const COMMAND_ITEMS = [
+    { title: "Master's Eye View Hub", group: "Navigation", icon: "bi-grid-1x2-fill", action: () => switchSection('hub') },
+    { title: "Analytics & Executive Velocity", group: "Navigation", icon: "bi-speedometer2", action: () => switchSection('dashboard') },
+    { title: "Sales & Orders Ledger", group: "Navigation", icon: "bi-credit-card-2-front", action: () => switchSection('sales') },
+    { title: "Customers 360° Directory", group: "Navigation", icon: "bi-people", action: () => switchSection('customers') },
+    { title: "Affiliates & Recruiter Tree", group: "Navigation", icon: "bi-megaphone", action: () => switchSection('affiliates') },
+    { title: "Payouts & Automated Milestone Releases", group: "Navigation", icon: "bi-cash-stack", action: () => switchSection('payouts') },
+    { title: "Subscriptions & Recurring Billing", group: "Navigation", icon: "bi-calendar2-check", action: () => switchSection('subscriptions') },
+    { title: "Sales Team & Rep Accounts", group: "Navigation", icon: "bi-person-badge", action: () => switchSection('team') },
+    { title: "52-Day Curriculum Email Sequence", group: "Navigation", icon: "bi-envelope-check", action: () => switchSection('sequence') },
+    { title: "Email Delivery Infrastructure Monitor", group: "Navigation", icon: "bi-shield-check", action: () => switchSection('email-delivery') },
+    { title: "Abandoned Cart Recovery Pipeline", group: "Navigation", icon: "bi-cart-x", action: () => switchSection('abandoned') },
+    { title: "Pre-Orders & Waitlists", group: "Navigation", icon: "bi-box-seam", action: () => switchSection('preorders') },
+    
+    { title: "Export Sales Ledger to CSV", group: "Quick Actions", icon: "bi-download", action: () => exportSalesCSV() },
+    { title: "Build Pending Payout Batch Now", group: "Quick Actions", icon: "bi-cash-coin", action: () => buildBatchNow() },
+    { title: "Create New Sales Team Member", group: "Quick Actions", icon: "bi-person-plus", action: () => openCreateTeamMemberModal() },
+    { title: "Trigger Abandoned Cart Check Sweep", group: "Quick Actions", icon: "bi-arrow-repeat", action: () => triggerAbandonedCheck() },
+    { title: "Show Keyboard Shortcuts Cheatsheet", group: "Help", icon: "bi-keyboard", action: () => openShortcutsModal() }
+  ];
+
+  let cmdSelectedIndex = 0;
+  let filteredCmdItems = [...COMMAND_ITEMS];
+
+  function openCommandPalette() {
+    const overlay = document.getElementById('cmd-overlay');
+    overlay.classList.add('open');
+    const input = document.getElementById('cmd-search-input');
+    input.value = '';
+    cmdSelectedIndex = 0;
+    filterCommandPalette();
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeCommandPalette(e) {
+    if (e && e.target && e.target !== document.getElementById('cmd-overlay') && !e.target.classList.contains('cmd-overlay')) return;
+    document.getElementById('cmd-overlay').classList.remove('open');
+  }
+
+  function filterCommandPalette() {
+    const query = (document.getElementById('cmd-search-input').value || '').toLowerCase().trim();
+    filteredCmdItems = COMMAND_ITEMS.filter(item => {
+      return !query || item.title.toLowerCase().includes(query) || item.group.toLowerCase().includes(query);
+    });
+    cmdSelectedIndex = 0;
+    renderCommandResults();
+  }
+
+  function renderCommandResults() {
+    const container = document.getElementById('cmd-results');
+    if (filteredCmdItems.length === 0) {
+      container.innerHTML = '<div style="padding:24px;text-align:center;color:var(--gray-muted);font-size:0.85rem">No matching commands</div>';
+      return;
+    }
+
+    const byGroup = {};
+    filteredCmdItems.forEach((item, idx) => {
+      if (!byGroup[item.group]) byGroup[item.group] = [];
+      byGroup[item.group].push({ item, globalIdx: idx });
+    });
+
+    let html = '';
+    Object.keys(byGroup).forEach(group => {
+      html += `<div class="cmd-group-title">${escapeHtml(group)}</div>`;
+      byGroup[group].forEach(({ item, globalIdx }) => {
+        const isSel = globalIdx === cmdSelectedIndex;
+        html += `
+          <div class="cmd-item ${isSel ? 'selected' : ''}" onclick="executeCmdIndex(${globalIdx})">
+            <div class="cmd-item-left">
+              <i class="bi ${item.icon}"></i>
+              <span>${escapeHtml(item.title)}</span>
+            </div>
+            <span class="cmd-badge">${escapeHtml(item.group)}</span>
+          </div>
+        `;
+      });
+    });
+    container.innerHTML = html;
+  }
+
+  function executeCmdIndex(idx) {
+    if (filteredCmdItems[idx]) {
+      document.getElementById('cmd-overlay').classList.remove('open');
+      filteredCmdItems[idx].action();
+    }
+  }
+
+  // ── KEYBOARD SHORTCUTS MODAL ────────────────────────────────────────────────
+  function openShortcutsModal() {
+    document.getElementById('shortcuts-overlay').classList.add('open');
+  }
+  function closeShortcutsModal(e) {
+    if (e && e.target && e.target !== document.getElementById('shortcuts-overlay') && !e.target.classList.contains('shortcuts-overlay')) return;
+    document.getElementById('shortcuts-overlay').classList.remove('open');
+  }
+
+  // ── GLOBAL KEYBOARD LISTENERS ───────────────────────────────────────────────
+  let gPressed = false;
+  let gTimeout = null;
+
+  window.addEventListener('keydown', (e) => {
+    // Cmd+K or Ctrl+K for Command Palette
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      const overlay = document.getElementById('cmd-overlay');
+      if (overlay.classList.contains('open')) {
+        overlay.classList.remove('open');
+      } else {
+        openCommandPalette();
+      }
+      return;
+    }
+
+    // Escape closes palette, shortcuts, and drawers
+    if (e.key === 'Escape') {
+      document.getElementById('cmd-overlay').classList.remove('open');
+      document.getElementById('shortcuts-overlay').classList.remove('open');
+      closeDrawer();
+      return;
+    }
+
+    // Palette navigation
+    const cmdOpen = document.getElementById('cmd-overlay').classList.contains('open');
+    if (cmdOpen) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        cmdSelectedIndex = (cmdSelectedIndex + 1) % filteredCmdItems.length;
+        renderCommandResults();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        cmdSelectedIndex = (cmdSelectedIndex - 1 + filteredCmdItems.length) % filteredCmdItems.length;
+        renderCommandResults();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        executeCmdIndex(cmdSelectedIndex);
+      }
+      return;
+    }
+
+    // Ignore single key shortcuts when user is typing in an input/textarea
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+      return;
+    }
+
+    // '?' opens shortcuts
+    if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+      openShortcutsModal();
+      return;
+    }
+
+    // Two-key chord (G then key)
+    if (e.key.toLowerCase() === 'g') {
+      gPressed = true;
+      clearTimeout(gTimeout);
+      gTimeout = setTimeout(() => { gPressed = false; }, 1000);
+      return;
+    }
+
+    if (gPressed) {
+      gPressed = false;
+      const k = e.key.toLowerCase();
+      if (k === 'h') switchSection('hub');
+      else if (k === 'd') switchSection('dashboard');
+      else if (k === 's') switchSection('sales');
+      else if (k === 'c') switchSection('customers');
+      else if (k === 'a') switchSection('affiliates');
+      else if (k === 'p') switchSection('payouts');
+    }
+  });
+
+  // Breadcrumb Updater Integration
+  const SECTION_METAS = {
+    hub: { group: 'Executive', title: "Master's Hub" },
+    dashboard: { group: 'Executive', title: 'Analytics & Velocity' },
+    sales: { group: 'Money & Orders', title: 'Sales Ledger' },
+    payouts: { group: 'Money & Orders', title: 'Payouts & Milestones' },
+    subscriptions: { group: 'Money & Orders', title: 'Subscriptions' },
+    preorders: { group: 'Money & Orders', title: 'Pre-Orders' },
+    customers: { group: 'People & Network', title: 'Customers 360°' },
+    affiliates: { group: 'People & Network', title: 'Affiliates & Tree' },
+    team: { group: 'People & Network', title: 'Sales Team' },
+    sequence: { group: 'System & Funnels', title: 'Email Curriculum' },
+    'email-delivery': { group: 'System & Funnels', title: 'Delivery Health' },
+    abandoned: { group: 'System & Funnels', title: 'Cart Recovery' }
+  };
+
+  const originalSwitchSection = switchSection;
+  switchSection = function(viewId) {
+    originalSwitchSection(viewId);
+    const meta = SECTION_METAS[viewId] || { group: 'Console', title: viewId };
+    const catEl = document.getElementById('breadcrumb-category');
+    const actEl = document.getElementById('breadcrumb-active-view');
+    if (catEl) catEl.textContent = meta.group;
+    if (actEl) actEl.textContent = meta.title;
+  };
+
+  // Table Sorter Helper
+  window.sortTable = function(tableId, colIndex, isNumeric = false) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const th = table.querySelectorAll('th')[colIndex];
+    const asc = th.dataset.sortAsc !== 'true';
+    th.dataset.sortAsc = asc ? 'true' : 'false';
+
+    rows.sort((a, b) => {
+      const aText = (a.children[colIndex]?.innerText || '').trim();
+      const bText = (b.children[colIndex]?.innerText || '').trim();
+      if (isNumeric) {
+        const aNum = parseFloat(aText.replace(/[^0-9.-]+/g, '')) || 0;
+        const bNum = parseFloat(bText.replace(/[^0-9.-]+/g, '')) || 0;
+        return asc ? aNum - bNum : bNum - aNum;
+      }
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    });
+
+    tbody.innerHTML = '';
+    rows.forEach(r => tbody.appendChild(r));
+    showToast(`Sorted by ${th.innerText.replace(/[^a-zA-Z0-9 ]/g, '').trim()} (${asc ? 'Asc' : 'Desc'})`, 'info', 1500);
+  };
+\n</script>
 <script>
   const token = sessionStorage.getItem('admin_token');
   if(!token) window.location.href = '/admin';
@@ -1325,6 +2103,21 @@
     renderHubGrid();
     try {
       hubOverviewData = await apiCall(`/api/admin/master-overview${force ? '?force=true' : ''}`);
+      // Update dynamic sidebar badge counters
+      if (hubOverviewData) {
+        const payoutsBadge = document.getElementById('nav-badge-payouts');
+        if (payoutsBadge && hubOverviewData.pending_payout_batches > 0) {
+          payoutsBadge.textContent = hubOverviewData.pending_payout_batches;
+          payoutsBadge.className = 'nav-badge gold';
+          payoutsBadge.style.display = 'inline-block';
+        }
+        const emailAlertBadge = document.getElementById('nav-badge-emails');
+        if (emailAlertBadge && hubOverviewData.customers_without_access > 0) {
+          emailAlertBadge.textContent = `${hubOverviewData.customers_without_access} Alert`;
+          emailAlertBadge.className = 'nav-badge alert';
+          emailAlertBadge.style.display = 'inline-block';
+        }
+      }
     } catch (err) {
       hubOverviewData = null; // Never fabricate a number — cards just show no metric/badge.
     }
@@ -1399,7 +2192,7 @@
           ${byCategory[cat].map(e => `
             <div class="hub-card${e.type === 'system' && !e.target ? ' hub-card--info' : ''}" onclick="openHubCard('${e.id}')">
               <div class="hub-card__top">
-                <div class="hub-card__icon">${e.icon || '•'}</div>
+                <div class="hub-card__icon"><i class="${e.icon || 'bi bi-grid'}"></i></div>
                 ${hubCardBadge(e)}
               </div>
               <div class="hub-card__title">${escapeHtml(e.title)}</div>
@@ -1466,7 +2259,7 @@
       <div class="kpi-card"><div class="kpi-title">Avg Order Value</div><div class="kpi-val">${money(data.aov)}</div></div>
       <div class="kpi-card"><div class="kpi-title">Conversion Rate</div><div class="kpi-val gold">${data.conversion_rate}%</div></div>
       <div class="kpi-card"><div class="kpi-title">Commission Owed</div><div class="kpi-val gold">${money(data.pending_payouts)}</div></div>
-      ${(data.customers_without_access || 0) > 0 ? `<div class="kpi-card" style="border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.06)"><div class="kpi-title" style="color:#f87171">⚠️ No Access Email Sent</div><div class="kpi-val" style="color:#f87171">${data.customers_without_access}</div></div>` : '<div class="kpi-card" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.05)"><div class="kpi-title" style="color:#86efac">✅ Email Delivery Health</div><div class="kpi-val" style="color:#86efac; font-size:1.1rem">All Good</div></div>'}
+      ${(data.customers_without_access || 0) > 0 ? `<div class="kpi-card" style="border-color:rgba(239,68,68,0.4);background:rgba(239,68,68,0.06)"><div class="kpi-title" style="color:#f87171"><i class="bi bi-exclamation-circle-fill" style="color:#f87171;margin-right:4px"></i> No Access Email Sent</div><div class="kpi-val" style="color:#f87171">${data.customers_without_access}</div></div>` : '<div class="kpi-card" style="border-color:rgba(34,197,94,0.3);background:rgba(34,197,94,0.05)"><div class="kpi-title" style="color:#86efac"><i class="bi bi-check-circle-fill" style="color:#86efac;margin-right:4px"></i> Email Delivery Health</div><div class="kpi-val" style="color:#86efac; font-size:1.1rem">All Good</div></div>'}
     `;
     document.getElementById('dash-kpi-grid').innerHTML = kpiHTML;
 
@@ -1606,8 +2399,8 @@
       const rowStyle = needsResend ? 'background:rgba(245,158,11,0.06); border-left:3px solid rgba(245,158,11,0.5)' : '';
       const emailBadge = isSuccessRow
         ? (emailOk
-            ? '<span style="background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600">✓ Sent</span>'
-            : '<span style="background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600">⚠ No Email</span>')
+            ? '<span style="background:rgba(34,197,94,0.15);color:#86efac;border:1px solid rgba(34,197,94,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600"><i class="bi bi-check2"></i> Sent</span>'
+            : '<span style="background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:2px 7px;font-size:0.72rem;font-weight:600"><i class="bi bi-exclamation-circle"></i> No Email</span>')
         : '';
       const actionBtn = needsResend
         ? `<button class="btn-action btn-secondary" style="padding:3px 9px;font-size:0.73rem;color:#fbbf24;border-color:rgba(245,158,11,0.4)" onclick="event.stopPropagation(); resendWelcomeEmail('${escapeJs(s.reference)}')">Resend ↗</button>`
@@ -1633,7 +2426,7 @@
       const needsResend = isSuccessRow && s.email_sent === false;
       const statusClass = s.status === 'success' ? 'success' : (s.status === 'pending' ? 'pending' : 'failed');
       const resendBtn = needsResend
-        ? `<button class="record-card__action" onclick="event.stopPropagation(); resendWelcomeEmail('${escapeJs(s.reference)}')">⚠ Resend welcome email</button>`
+        ? `<button class="record-card__action" onclick="event.stopPropagation(); resendWelcomeEmail('${escapeJs(s.reference)}')"><i class="bi bi-arrow-repeat"></i> Resend welcome email</button>`
         : '';
       return `
       <div class="record-card record-card--${statusClass}" onclick="inspectSale('${escapeJs(s.reference)}')">
@@ -1715,7 +2508,7 @@
     try {
       const res = await apiCall(`/api/admin/sales/${ref}/resend-email`, 'POST');
       alert(res.message || 'Access email re-queued! The customer will receive it within minutes.');
-      // Refresh the sales view so the ⚠ badge turns green once email is sent
+      // Refresh the sales view so the badge turns green once email is sent
       loadSalesView();
     } finally {
       btn.textContent = origText;
@@ -1852,7 +2645,7 @@
 
       ${data.affiliate ? `
       <div class="drawer-section">
-        <div class="drawer-section-title">🌟 VIP Ambassador Status</div>
+        <div class="drawer-section-title"><i class="bi bi-star-fill" style="color:var(--gold-l);margin-right:6px"></i> VIP Ambassador Status</div>
         <div class="drawer-detail-grid">
           <div><div class="detail-label">Status</div><div class="detail-val" style="color:var(--gold-l)">Active VIP Ambassador</div></div>
           <div><div class="detail-label">Referral Code</div><div class="detail-val"><code style="color:var(--gold-light);font-size:0.95rem;font-weight:700">${escapeHtml(data.affiliate.code)}</code></div></div>
@@ -1963,7 +2756,7 @@
     tbody.innerHTML = affs.map(a => {
       let typeBadge = `<span style="background:rgba(255,255,255,0.06);color:var(--gray-l);padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700">Organic</span>`;
       if (a.source === 'customer_buyer') {
-        typeBadge = `<span style="background:rgba(201,151,58,0.15);color:var(--gold-l);padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700;border:1px solid rgba(201,151,58,0.3)">🌟 VIP Buyer</span>`;
+        typeBadge = `<span style="background:rgba(201,151,58,0.15);color:var(--gold-l);padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700;border:1px solid rgba(201,151,58,0.3)"><i class="bi bi-patch-check-fill" style="color:var(--gold-l);margin-right:4px"></i> VIP Buyer</span>`;
       } else if (a.source === 'admin_created') {
         typeBadge = `<span style="background:rgba(59,130,246,0.15);color:#60a5fa;padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700">Admin</span>`;
       }
@@ -2025,7 +2818,7 @@
       const payBtn = owed
         ? `<button class="record-card__action" style="background:rgba(201,151,58,.12);color:var(--gold-light);border-color:rgba(201,151,58,.35)" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>`
         : '';
-      const badgeText = a.source === 'customer_buyer' ? '🌟 VIP Buyer' : (a.source === 'admin_created' ? 'Admin' : 'Organic');
+      const badgeText = a.source === 'customer_buyer' ? '<i class="bi bi-patch-check-fill" style="color:var(--gold-l);margin-right:4px"></i> VIP Buyer' : (a.source === 'admin_created' ? 'Admin' : 'Organic');
       return `
       <div class="record-card record-card--${statusClass}" onclick="inspectAffiliate('${escapeJs(a.id)}')">
         <div class="record-card__row1">
@@ -2050,7 +2843,7 @@
       : '<span style="color:var(--gray-l)"><i class="bi bi-clock-history"></i> Manual biweekly payout</span>';
 
     const sourceLabel = a.source === 'customer_buyer'
-      ? '🌟 VIP Customer Ambassador (Auto-Converted)'
+      ? '<i class="bi bi-patch-check-fill" style="color:var(--gold-l);margin-right:4px"></i> VIP Customer Ambassador (Auto-Converted)'
       : (a.source === 'admin_created' ? 'Admin Created' : 'Organic Public Registration');
 
     document.getElementById('drawer-title').textContent = `Affiliate ${escapeHtml(a.code)}`;
@@ -2165,11 +2958,11 @@
 
     const res = await apiCall('/api/admin/affiliates', 'POST', { name, email, code, commission_percent });
     if (res.code) {
-      alert(`✅ Affiliate '${res.name}' created successfully!\n\nReferral Code: ${res.code}\nCommission Rate: ${res.commission_percent}%`);
+      showToast(`Affiliate '${res.name}' created successfully (Code: ${res.code})`, 'success');
       closeDrawer();
       loadAffiliatesView();
     } else {
-      alert(`❌ Error: ${res.detail || 'Could not create affiliate'}`);
+      showToast(res.detail || 'Could not create affiliate', 'error');
     }
   }
 
@@ -2327,11 +3120,11 @@
 
     const result = await apiCall(`/api/admin/payouts/batches/${pendingBatch.id}/approve`, 'POST', {});
     if (result.detail) {
-      alert(`❌ ${result.detail}`);
+      showToast(result.detail, 'error');
     } else {
       const succeeded = result.items.filter(i => i.transfer_status === 'success').length;
       const failed = result.items.filter(i => i.transfer_status === 'failed' || i.transfer_status === 'blocked_missing_bank_code').length;
-      alert(`Batch sent.\n\n✅ ${succeeded} succeeded${failed > 0 ? `\n⚠️ ${failed} failed/blocked — check the batch below for details` : ''}`);
+      showToast(`Batch sent: ${succeeded} succeeded${failed > 0 ? `, ${failed} failed` : ''}`, succeeded > 0 ? 'success' : 'warning');
     }
     loadPayoutsView();
   }
@@ -2363,8 +3156,8 @@
     }
 
     const typeLabels = {
-      direct_10_sales: '<span style="color:var(--gold-l);font-weight:700">🎯 Direct 10-Sales Bonus</span>',
-      parent_recruiter_bonus: '<span style="color:var(--green);font-weight:700">🤝 Recruiter Referral Bonus</span>',
+      direct_10_sales: '<span style="color:var(--gold-l);font-weight:700"><i class="bi bi-bullseye" style="color:var(--gold-l);margin-right:4px"></i> Direct 10-Sales Bonus</span>',
+      parent_recruiter_bonus: '<span style="color:var(--green);font-weight:700"><i class="bi bi-people-fill" style="color:var(--green);margin-right:4px"></i> Recruiter Referral Bonus</span>',
     };
 
     tbody.innerHTML = milestones.map(m => {
@@ -2420,7 +3213,7 @@
               <span class="record-card__amount">${money(m.amount_naira)}</span>
             </div>
             <div class="record-card__row2">
-              <span class="record-card__secondary">${m.type === 'direct_10_sales' ? '🎯 10-Sales Bonus' : '🤝 Recruiter Bonus'} · ${m.account_number ? escapeHtml(m.bank_name) : 'No bank'}</span>
+              <span class="record-card__secondary">${m.type === 'direct_10_sales' ? '<i class="bi bi-bullseye" style="color:var(--gold-l);margin-right:4px"></i> 10-Sales Bonus' : '<i class="bi bi-people-fill" style="color:var(--green);margin-right:4px"></i> Recruiter Bonus'} · ${m.account_number ? escapeHtml(m.bank_name) : 'No bank'}</span>
               <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(m.status)}</span>
             </div>
           </div>
@@ -2465,12 +3258,12 @@
 
     const res = await apiCall('/api/admin/payouts/settlement/withdraw', 'POST', { amount });
     if (res.detail) {
-      alert(`❌ ${res.detail}`);
+      showToast(res.detail, 'error');
     } else if (res.status === 'success') {
-      alert(`✅ Withdrawal sent: ${money(res.amount)}`);
+      showToast(`Withdrawal sent: ${money(res.amount)}`, 'success');
       closeDrawer();
     } else {
-      alert(`⚠️ Withdrawal failed: ${res.error || 'Unknown error'}`);
+      showToast(`Withdrawal failed: ${res.error || 'Unknown error'}`, 'warning');
     }
     loadPayoutsView();
   }
@@ -3061,11 +3854,11 @@
 
   function renderSeqKPIs(d) {
     const statusColor = d.health_status === 'healthy' ? 'var(--green)' : d.health_status === 'degraded' ? 'var(--gold)' : 'var(--red)';
-    const statusIcon = d.health_status === 'healthy' ? '✅' : d.health_status === 'degraded' ? '⚠️' : '🚨';
+    const statusIcon = d.health_status === 'healthy' ? '<i class="bi bi-check-circle-fill" style="color:var(--green)"></i>' : d.health_status === 'degraded' ? '<i class="bi bi-exclamation-triangle-fill" style="color:var(--gold)"></i>' : '<i class="bi bi-exclamation-octagon-fill" style="color:var(--red)"></i>';
     const parsedLastSent = safeDate(d.last_sent_at);
     const lastSent = parsedLastSent ? parsedLastSent.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : 'Never';
     document.getElementById('seq-kpi-row').innerHTML = `
-      <div class="kpi-card"><div class="kpi-title">Health</div><div class="kpi-val" style="color:${statusColor};font-size:1rem">${statusIcon} ${escapeHtml(d.health_status)}</div></div>
+      <div class="kpi-card"><div class="kpi-title">Health</div><div class="kpi-val" style="color:${statusColor};font-size:1rem">${statusIcon} <span style="margin-left:4px">${escapeHtml(d.health_status)}</span></div></div>
       <div class="kpi-card"><div class="kpi-title">Enrolled</div><div class="kpi-val gold">${d.total_enrolled}</div></div>
       <div class="kpi-card"><div class="kpi-title">Sequence Emails Sent</div><div class="kpi-val" style="color:var(--green)">${d.total_sent}</div></div>
       <div class="kpi-card"><div class="kpi-title">Failed</div><div class="kpi-val" style="color:${d.total_failed > 0 ? 'var(--red)' : 'var(--green)'}">${d.total_failed}</div></div>
@@ -3099,7 +3892,7 @@
         'on_track': '<span style="background:rgba(16,185,129,0.15);color:#10b981;padding:2px 10px;border-radius:20px;font-size:0.75rem">On Track</span>',
         'completed': '<span style="background:rgba(212,166,58,0.15);color:var(--gold);padding:2px 10px;border-radius:20px;font-size:0.75rem">Completed</span>',
         'behind': '<span style="background:rgba(234,179,8,0.15);color:#eab308;padding:2px 10px;border-radius:20px;font-size:0.75rem">Behind</span>',
-        'overdue': '<span style="background:rgba(239,68,68,0.15);color:#ef4444;padding:2px 10px;border-radius:20px;font-size:0.75rem">⚠ Overdue</span>',
+        'overdue': '<span style="background:rgba(239,68,68,0.15);color:#ef4444;padding:2px 10px;border-radius:20px;font-size:0.75rem"><i class="bi bi-exclamation-circle-fill"></i> Overdue</span>',
       }[s.status] || s.status;
       const parsedNextDue = safeDate(s.next_due_at);
       const nextDue = parsedNextDue ? parsedNextDue.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
@@ -3129,7 +3922,7 @@
         const nextDue = parsedNextDue ? parsedNextDue.toLocaleDateString('en-GB', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '—';
         const nextLabel = s.next_email_number ? `Next: #${s.next_email_number}` : 'Next: —';
         const resendBtn = s.failed_count > 0
-          ? `<button class="record-card__action" onclick="event.stopPropagation(); seqResend('${escapeJs(s.email)}')">⚠ Resend failed email</button>`
+          ? `<button class="record-card__action" onclick="event.stopPropagation(); seqResend('${escapeJs(s.email)}')"><i class="bi bi-arrow-repeat"></i> Resend failed email</button>`
           : '';
         return `
         <div class="record-card${statusClass ? ' record-card--' + statusClass : ''}" onclick="openSeqHistory('${escapeJs(s.email)}')">
@@ -3162,13 +3955,13 @@
       const sub = data.subscriber;
       const history = data.history || [];
       const statusChip = (status) => ({
-        sent: '<span style="color:#10b981">✔ Sent</span>',
-        pending: '<span style="color:var(--text-muted)">⏳ Pending</span>',
-        retry: '<span style="color:var(--gold)">↻ Retry</span>',
-        failed: '<span style="color:#ef4444">✘ Failed</span>',
+        sent: '<span style="color:#10b981"><i class="bi bi-check-circle-fill"></i> Sent</span>',
+        pending: '<span style="color:var(--text-muted"><i class="bi bi-hourglass-split"></i> Pending</span>',
+        retry: '<span style="color:var(--gold)"><i class="bi bi-arrow-clockwise"></i> Retry</span>',
+        failed: '<span style="color:#ef4444"><i class="bi bi-x-circle-fill"></i> Failed</span>',
         skipped: '<span style="color:var(--text-muted)">– Skipped</span>',
         superseded: '<span style="color:var(--text-muted)">↷ Superseded</span>',
-        sending: '<span style="color:var(--gold)">⟳ Sending</span>',
+        sending: '<span style="color:var(--gold)"><i class="bi bi-arrow-repeat"></i> Sending</span>',
       })[status] || status;
 
       const subDate = safeDate(sub.subscribed_at);
@@ -3190,7 +3983,7 @@
             ${history.map(h => {
               const hSent = safeDate(h.sent_at);
               const hSched = safeDate(h.scheduled_at);
-              const sentAtStr = hSent ? hSent.toLocaleDateString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : (hSched ? '⏳ due ' + hSched.toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '—');
+              const sentAtStr = hSent ? hSent.toLocaleDateString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : (hSched ? '<i class="bi bi-clock"></i> due ' + hSched.toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '—');
               return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04)">
                 <td style="padding:6px 8px;color:var(--text-muted)">${h.sequence_number}</td>
                 <td style="padding:6px 8px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${h.subject}">${h.subject}</td>
@@ -3235,7 +4028,7 @@
       const statusElem = document.getElementById('ab-kpi-status');
       const toggleBtn = document.getElementById('btn-toggle-abandoned');
       if (statusElem) {
-        statusElem.textContent = isEnabled ? 'Active 🟢' : 'Paused ⏸️';
+        statusElem.textContent = isEnabled ? 'Active' : 'Paused';
         statusElem.style.color = isEnabled ? 'var(--green)' : 'var(--red)';
       }
       if (toggleBtn) {
@@ -3395,7 +4188,7 @@
 
       let refundBadge = '<span style="color:var(--gray-l); font-size:0.8rem">—</span>';
       if (item.refund_requested) {
-        refundBadge = `<span class="badge badge-red" title="${escapeHtml(item.refund_reason || '')}">⚠️ Refund Requested</span>`;
+        refundBadge = `<span class="badge badge-red" title="${escapeHtml(item.refund_reason || '')}"><i class="bi bi-arrow-counterclockwise"></i> Refund Requested</span>`;
       }
 
       const actionBtn = item.delivered
@@ -3453,6 +4246,248 @@
     });
   });
 
-</script>
+
+  // ── AWARD-WINNING TOAST NOTIFICATION ENGINE ─────────────────────────────────
+  function showToast(message, type = 'success', duration = 3500) {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    const icon = type === 'success' ? 'bi-check-circle-fill' : (type === 'error' ? 'bi-exclamation-circle-fill' : 'bi-info-circle-fill');
+    toast.innerHTML = `<i class="bi ${icon}"></i> <span>${escapeHtml(message)}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(10px) scale(0.95)';
+      toast.style.transition = 'all 0.25s ease';
+      setTimeout(() => toast.remove(), 250);
+    }, duration);
+  }
+
+  // ── COMMAND PALETTE ENGINE (Cmd+K / Ctrl+K) ──────────────────────────────────
+  const COMMAND_ITEMS = [
+    { title: "Master's Eye View Hub", group: "Navigation", icon: "bi-grid-1x2-fill", action: () => switchSection('hub') },
+    { title: "Analytics & Executive Velocity", group: "Navigation", icon: "bi-speedometer2", action: () => switchSection('dashboard') },
+    { title: "Sales & Orders Ledger", group: "Navigation", icon: "bi-credit-card-2-front", action: () => switchSection('sales') },
+    { title: "Customers 360° Directory", group: "Navigation", icon: "bi-people", action: () => switchSection('customers') },
+    { title: "Affiliates & Recruiter Tree", group: "Navigation", icon: "bi-megaphone", action: () => switchSection('affiliates') },
+    { title: "Payouts & Automated Milestone Releases", group: "Navigation", icon: "bi-cash-stack", action: () => switchSection('payouts') },
+    { title: "Subscriptions & Recurring Billing", group: "Navigation", icon: "bi-calendar2-check", action: () => switchSection('subscriptions') },
+    { title: "Sales Team & Rep Accounts", group: "Navigation", icon: "bi-person-badge", action: () => switchSection('team') },
+    { title: "52-Day Curriculum Email Sequence", group: "Navigation", icon: "bi-envelope-check", action: () => switchSection('sequence') },
+    { title: "Email Delivery Infrastructure Monitor", group: "Navigation", icon: "bi-shield-check", action: () => switchSection('email-delivery') },
+    { title: "Abandoned Cart Recovery Pipeline", group: "Navigation", icon: "bi-cart-x", action: () => switchSection('abandoned') },
+    { title: "Pre-Orders & Waitlists", group: "Navigation", icon: "bi-box-seam", action: () => switchSection('preorders') },
+    
+    { title: "Export Sales Ledger to CSV", group: "Quick Actions", icon: "bi-download", action: () => exportSalesCSV() },
+    { title: "Build Pending Payout Batch Now", group: "Quick Actions", icon: "bi-cash-coin", action: () => buildBatchNow() },
+    { title: "Create New Sales Team Member", group: "Quick Actions", icon: "bi-person-plus", action: () => openCreateTeamMemberModal() },
+    { title: "Trigger Abandoned Cart Check Sweep", group: "Quick Actions", icon: "bi-arrow-repeat", action: () => triggerAbandonedCheck() },
+    { title: "Show Keyboard Shortcuts Cheatsheet", group: "Help", icon: "bi-keyboard", action: () => openShortcutsModal() }
+  ];
+
+  let cmdSelectedIndex = 0;
+  let filteredCmdItems = [...COMMAND_ITEMS];
+
+  function openCommandPalette() {
+    const overlay = document.getElementById('cmd-overlay');
+    overlay.classList.add('open');
+    const input = document.getElementById('cmd-search-input');
+    input.value = '';
+    cmdSelectedIndex = 0;
+    filterCommandPalette();
+    setTimeout(() => input.focus(), 50);
+  }
+
+  function closeCommandPalette(e) {
+    if (e && e.target && e.target !== document.getElementById('cmd-overlay') && !e.target.classList.contains('cmd-overlay')) return;
+    document.getElementById('cmd-overlay').classList.remove('open');
+  }
+
+  function filterCommandPalette() {
+    const query = (document.getElementById('cmd-search-input').value || '').toLowerCase().trim();
+    filteredCmdItems = COMMAND_ITEMS.filter(item => {
+      return !query || item.title.toLowerCase().includes(query) || item.group.toLowerCase().includes(query);
+    });
+    cmdSelectedIndex = 0;
+    renderCommandResults();
+  }
+
+  function renderCommandResults() {
+    const container = document.getElementById('cmd-results');
+    if (filteredCmdItems.length === 0) {
+      container.innerHTML = '<div style="padding:24px;text-align:center;color:var(--gray-muted);font-size:0.85rem">No matching commands</div>';
+      return;
+    }
+
+    const byGroup = {};
+    filteredCmdItems.forEach((item, idx) => {
+      if (!byGroup[item.group]) byGroup[item.group] = [];
+      byGroup[item.group].push({ item, globalIdx: idx });
+    });
+
+    let html = '';
+    Object.keys(byGroup).forEach(group => {
+      html += `<div class="cmd-group-title">${escapeHtml(group)}</div>`;
+      byGroup[group].forEach(({ item, globalIdx }) => {
+        const isSel = globalIdx === cmdSelectedIndex;
+        html += `
+          <div class="cmd-item ${isSel ? 'selected' : ''}" onclick="executeCmdIndex(${globalIdx})">
+            <div class="cmd-item-left">
+              <i class="bi ${item.icon}"></i>
+              <span>${escapeHtml(item.title)}</span>
+            </div>
+            <span class="cmd-badge">${escapeHtml(item.group)}</span>
+          </div>
+        `;
+      });
+    });
+    container.innerHTML = html;
+  }
+
+  function executeCmdIndex(idx) {
+    if (filteredCmdItems[idx]) {
+      document.getElementById('cmd-overlay').classList.remove('open');
+      filteredCmdItems[idx].action();
+    }
+  }
+
+  // ── KEYBOARD SHORTCUTS MODAL ────────────────────────────────────────────────
+  function openShortcutsModal() {
+    document.getElementById('shortcuts-overlay').classList.add('open');
+  }
+  function closeShortcutsModal(e) {
+    if (e && e.target && e.target !== document.getElementById('shortcuts-overlay') && !e.target.classList.contains('shortcuts-overlay')) return;
+    document.getElementById('shortcuts-overlay').classList.remove('open');
+  }
+
+  // ── GLOBAL KEYBOARD LISTENERS ───────────────────────────────────────────────
+  let gPressed = false;
+  let gTimeout = null;
+
+  window.addEventListener('keydown', (e) => {
+    // Cmd+K or Ctrl+K for Command Palette
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      const overlay = document.getElementById('cmd-overlay');
+      if (overlay.classList.contains('open')) {
+        overlay.classList.remove('open');
+      } else {
+        openCommandPalette();
+      }
+      return;
+    }
+
+    // Escape closes palette, shortcuts, and drawers
+    if (e.key === 'Escape') {
+      document.getElementById('cmd-overlay').classList.remove('open');
+      document.getElementById('shortcuts-overlay').classList.remove('open');
+      closeDrawer();
+      return;
+    }
+
+    // Palette navigation
+    const cmdOpen = document.getElementById('cmd-overlay').classList.contains('open');
+    if (cmdOpen) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        cmdSelectedIndex = (cmdSelectedIndex + 1) % filteredCmdItems.length;
+        renderCommandResults();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        cmdSelectedIndex = (cmdSelectedIndex - 1 + filteredCmdItems.length) % filteredCmdItems.length;
+        renderCommandResults();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        executeCmdIndex(cmdSelectedIndex);
+      }
+      return;
+    }
+
+    // Ignore single key shortcuts when user is typing in an input/textarea
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+      return;
+    }
+
+    // '?' opens shortcuts
+    if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+      openShortcutsModal();
+      return;
+    }
+
+    // Two-key chord (G then key)
+    if (e.key.toLowerCase() === 'g') {
+      gPressed = true;
+      clearTimeout(gTimeout);
+      gTimeout = setTimeout(() => { gPressed = false; }, 1000);
+      return;
+    }
+
+    if (gPressed) {
+      gPressed = false;
+      const k = e.key.toLowerCase();
+      if (k === 'h') switchSection('hub');
+      else if (k === 'd') switchSection('dashboard');
+      else if (k === 's') switchSection('sales');
+      else if (k === 'c') switchSection('customers');
+      else if (k === 'a') switchSection('affiliates');
+      else if (k === 'p') switchSection('payouts');
+    }
+  });
+
+  // Breadcrumb Updater Integration
+  const SECTION_METAS = {
+    hub: { group: 'Executive', title: "Master's Hub" },
+    dashboard: { group: 'Executive', title: 'Analytics & Velocity' },
+    sales: { group: 'Money & Orders', title: 'Sales Ledger' },
+    payouts: { group: 'Money & Orders', title: 'Payouts & Milestones' },
+    subscriptions: { group: 'Money & Orders', title: 'Subscriptions' },
+    preorders: { group: 'Money & Orders', title: 'Pre-Orders' },
+    customers: { group: 'People & Network', title: 'Customers 360°' },
+    affiliates: { group: 'People & Network', title: 'Affiliates & Tree' },
+    team: { group: 'People & Network', title: 'Sales Team' },
+    sequence: { group: 'System & Funnels', title: 'Email Curriculum' },
+    'email-delivery': { group: 'System & Funnels', title: 'Delivery Health' },
+    abandoned: { group: 'System & Funnels', title: 'Cart Recovery' }
+  };
+
+  const originalSwitchSection = switchSection;
+  switchSection = function(viewId) {
+    originalSwitchSection(viewId);
+    const meta = SECTION_METAS[viewId] || { group: 'Console', title: viewId };
+    const catEl = document.getElementById('breadcrumb-category');
+    const actEl = document.getElementById('breadcrumb-active-view');
+    if (catEl) catEl.textContent = meta.group;
+    if (actEl) actEl.textContent = meta.title;
+  };
+
+  // Table Sorter Helper
+  window.sortTable = function(tableId, colIndex, isNumeric = false) {
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    const th = table.querySelectorAll('th')[colIndex];
+    const asc = th.dataset.sortAsc !== 'true';
+    th.dataset.sortAsc = asc ? 'true' : 'false';
+
+    rows.sort((a, b) => {
+      const aText = (a.children[colIndex]?.innerText || '').trim();
+      const bText = (b.children[colIndex]?.innerText || '').trim();
+      if (isNumeric) {
+        const aNum = parseFloat(aText.replace(/[^0-9.-]+/g, '')) || 0;
+        const bNum = parseFloat(bText.replace(/[^0-9.-]+/g, '')) || 0;
+        return asc ? aNum - bNum : bNum - aNum;
+      }
+      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
+    });
+
+    tbody.innerHTML = '';
+    rows.forEach(r => tbody.appendChild(r));
+    showToast(`Sorted by ${th.innerText.replace(/[^a-zA-Z0-9 ]/g, '').trim()} (${asc ? 'Asc' : 'Desc'})`, 'info', 1500);
+  };
+\n</script>
 </body>
 </html>
+
