@@ -138,14 +138,18 @@ async def send_email(to_email: str, subject: str, html_body: str) -> tuple:
         return (False, error_msg)
 
 
-async def send_welcome_email(name: str, email: str, token: str, unsubscribe_token: str = "", delayed: bool = False):
-    """Send welcome + download access email after successful payment.
-
-    delayed=True adds a brief, honest acknowledgment of a delivery delay —
-    used only for the one-time recovery resend of emails that failed
-    before the email-queue concurrency fix; never set on a normal
-    first-attempt send.
-    """
+async def send_welcome_email(
+    name: str,
+    email: str,
+    token: str,
+    unsubscribe_token: str = "",
+    delayed: bool = False,
+    affiliate_code: str = None,
+    referral_link: str = None,
+    dashboard_link: str = None,
+    recruiter_link: str = None,
+):
+    """Send welcome + download access email after successful payment."""
     html = render_template("welcome.html", {
         "name": name,
         "library_url": f"{settings.APP_URL}/library?token={token}",
@@ -154,6 +158,10 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
         "app_url": settings.APP_URL,
         "unsubscribe_token": unsubscribe_token,
         "delayed": delayed,
+        "affiliate_code": affiliate_code,
+        "referral_link": referral_link,
+        "dashboard_link": dashboard_link,
+        "recruiter_link": recruiter_link,
     })
     subject = (
         f"Sorry for the wait — your Academic Comeback Package is ready, {name}!"
@@ -163,17 +171,90 @@ async def send_welcome_email(name: str, email: str, token: str, unsubscribe_toke
     return await send_email(email, subject, html)
 
 
-async def send_affiliate_welcome_email(name: str, email: str, code: str, referral_link: str, dashboard_link: str):
+
+async def send_affiliate_welcome_email(
+    name: str, email: str, code: str, referral_link: str, dashboard_link: str, affiliate_invite_link: str = None
+):
     """Send confirmation + referral/dashboard links after affiliate registration."""
     html = render_template("affiliate_welcome.html", {
         "name": name,
         "code": code,
         "referral_link": referral_link,
+        "affiliate_invite_link": affiliate_invite_link or f"{settings.APP_URL}/affiliate/register?invite={code}",
         "dashboard_link": dashboard_link,
         "app_name": settings.APP_NAME,
         "app_url": settings.APP_URL,
     })
-    return await send_email(email, f"You're in — here's your referral link, {name}", html)
+    return await send_email(email, f"Welcome to the Affiliate Program — Your Links & ₦10,000 Bonus Challenge, {name}", html)
+
+
+async def send_affiliate_direct_milestone_email(
+    name: str,
+    email: str,
+    code: str,
+    bonus_amount: float,
+    sales_count: int,
+    dashboard_link: str,
+    is_transferred: bool = False,
+    transfer_reference: str = "",
+    bank_name: str = "",
+    account_number: str = "",
+):
+    """Send celebratory email when an affiliate reaches the 10-sale milestone."""
+    html = render_template("affiliate_direct_milestone.html", {
+        "name": name,
+        "code": code,
+        "bonus_amount": bonus_amount,
+        "sales_count": sales_count,
+        "dashboard_link": dashboard_link,
+        "is_transferred": is_transferred,
+        "transfer_reference": transfer_reference,
+        "bank_name": bank_name,
+        "account_number": account_number,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    subject = (
+        f"🏆 ₦{int(bonus_amount):,} Transferred to Your Bank Account, {name}!"
+        if is_transferred
+        else f"🏆 CONGRATULATIONS: You Unlocked Your ₦{int(bonus_amount):,} Milestone Bonus, {name}!"
+    )
+    return await send_email(email, subject, html)
+
+
+async def send_affiliate_parent_referral_bonus_email(
+    name: str,
+    email: str,
+    code: str,
+    subaffiliate_name: str,
+    bonus_amount: float,
+    dashboard_link: str,
+    is_transferred: bool = False,
+    transfer_reference: str = "",
+    bank_name: str = "",
+    account_number: str = "",
+):
+    """Send celebratory email when an invited affiliate reaches 10 sales, rewarding the parent recruiter."""
+    html = render_template("affiliate_parent_referral_bonus.html", {
+        "name": name,
+        "code": code,
+        "subaffiliate_name": subaffiliate_name,
+        "bonus_amount": bonus_amount,
+        "dashboard_link": dashboard_link,
+        "is_transferred": is_transferred,
+        "transfer_reference": transfer_reference,
+        "bank_name": bank_name,
+        "account_number": account_number,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    subject = (
+        f"🎉 ₦{int(bonus_amount):,} Recruiter Bonus Transferred to Your Bank Account, {name}!"
+        if is_transferred
+        else f"🎉 Great News: You Earned a ₦{int(bonus_amount):,} Recruiter Bonus, {name}!"
+    )
+    return await send_email(email, subject, html)
+
 
 
 async def send_affiliate_nudge_email(name: str, email: str, referral_link: str):

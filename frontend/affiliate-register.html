@@ -62,7 +62,12 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
   <div id="aff-form-state">
     <div class="icon-wrap"><i class="bi bi-megaphone-fill"></i></div>
     <h1 class="aff-title">Become an Affiliate</h1>
-    <p class="aff-sub">Get your referral link and start earning when people you refer join the Academic Comeback Package.</p>
+    <p class="aff-sub">Earn 60% instant commissions on every sale + unlock ₦10,000 milestone cash bonuses.</p>
+
+    <!-- Invite Banner -->
+    <div id="aff-invite-banner" style="display:none; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.3); border-radius:10px; padding:10px 14px; margin-bottom:18px; font-size:0.85rem; color:#4ade80; text-align:center;">
+      <i class="bi bi-person-check-fill"></i> You were invited by affiliate <strong id="invited-by-code-text"></strong>
+    </div>
 
     <form id="aff-register-form" autocomplete="off">
       <div class="form-group">
@@ -103,21 +108,27 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
   <div id="aff-success">
     <div class="icon-wrap"><i class="bi bi-check-lg"></i></div>
     <h1 class="aff-title">You're in!</h1>
-    <p class="aff-sub">You're active immediately — start sharing your link now. We've also emailed both links to you.</p>
+    <p class="aff-sub">You're active immediately — start sharing your link now. We've also emailed your links to you.</p>
 
     <!-- Save Links Warning Banner -->
     <div style="background: rgba(201, 151, 58, 0.1); border: 1px solid rgba(201, 151, 58, 0.3); border-radius: 8px; padding: 16px; margin: 24px 0; text-align: left; display: flex; gap: 12px; align-items: flex-start;">
       <div style="color: var(--gold-l); font-size: 1.3rem; margin-top: -2px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-exclamation-triangle-fill"></i></div>
       <div>
         <strong style="color: #fff; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚠️ Action Required: Save Your Links Safely!</strong>
-        <p style="color: var(--gray-l); font-size: 0.82rem; margin: 0; line-height: 1.45;">Please copy both your referral link and private dashboard URL immediately and save them in a secure place (like your notes or bookmarks). The dashboard link is private to you and is the only way to track your clicks, conversions, and unpaid commissions.</p>
+        <p style="color: var(--gray-l); font-size: 0.82rem; margin: 0; line-height: 1.45;">Please copy your links immediately and save them in your bookmarks or notes.</p>
       </div>
     </div>
 
-    <p class="aff-link-label">Your referral link — share this</p>
+    <p class="aff-link-label">Your Sales referral link (Share with students)</p>
     <div class="aff-link-row">
       <span class="aff-link-value" id="aff-link-text"></span>
       <button class="copy-btn" id="aff-copy-btn" title="Copy link"><i class="bi bi-copy"></i></button>
+    </div>
+
+    <p class="aff-link-label" style="color:#4ade80;">Your Recruiter Link (Invite other affiliates & earn ₦5,000)</p>
+    <div class="aff-link-row" style="border-color:rgba(74,222,128,.3); background:rgba(34,197,94,.05);">
+      <span class="aff-link-value" id="aff-recruiter-text" style="color:#4ade80;"></span>
+      <button class="copy-btn" id="aff-recruiter-copy-btn" title="Copy recruiter link" style="color:#4ade80;"><i class="bi bi-copy"></i></button>
     </div>
 
     <p class="aff-link-label">Your personal dashboard — keep this private</p>
@@ -125,7 +136,7 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
       <span class="aff-link-value" id="aff-dashboard-text"></span>
       <button class="copy-btn" id="aff-dashboard-copy-btn" title="Copy link"><i class="bi bi-copy"></i></button>
     </div>
-    <p class="aff-dashboard-note">Bookmark your dashboard link — it's how you check your clicks, conversions, and commission owed. Don't share it; anyone with the link can view your stats.</p>
+    <p class="aff-dashboard-note">Bookmark your dashboard link — it tracks your sales, invited affiliates, and ₦10,000 / ₦5,000 bonus payouts.</p>
   </div>
 </div>
 
@@ -402,6 +413,18 @@ function formatApiError(detail, fallback) {
     }
   }
 
+  // ── Parse Invite Code from URL ──
+  const urlParams = new URLSearchParams(window.location.search);
+  const inviteCode = (urlParams.get('invite') || urlParams.get('ref') || '').trim();
+  if (inviteCode) {
+    const banner = document.getElementById('aff-invite-banner');
+    const codeText = document.getElementById('invited-by-code-text');
+    if (banner && codeText) {
+      codeText.textContent = inviteCode.toUpperCase();
+      banner.style.display = 'block';
+    }
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     errEl.style.display = 'none';
@@ -423,17 +446,22 @@ function formatApiError(detail, fallback) {
     submitBtn.textContent = 'Registering…';
 
     try {
+      const payload = {
+        name,
+        email,
+        bank_name: bankName,
+        bank_code: bankCode,
+        account_number: accountNum,
+        account_name: accountName,
+      };
+      if (inviteCode) {
+        payload.invited_by = inviteCode;
+      }
+
       const res = await fetch(`${API_BASE}/affiliates/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          bank_name: bankName,
-          bank_code: bankCode,
-          account_number: accountNum,
-          account_name: accountName
-        }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(formatApiError(data.detail, 'Registration failed'));
@@ -450,6 +478,16 @@ function formatApiError(detail, fallback) {
       document.getElementById('aff-copy-btn').addEventListener('click', function() {
         copyToClipboard(data.referral_link, this);
       });
+
+      const recruiterText = document.getElementById('aff-recruiter-text');
+      const recruiterLink = data.affiliate_invite_link || `${window.location.origin}/affiliate/register?invite=${data.code}`;
+      if (recruiterText) {
+        recruiterText.textContent = recruiterLink;
+        recruiterText.title = recruiterLink;
+        document.getElementById('aff-recruiter-copy-btn').addEventListener('click', function() {
+          copyToClipboard(recruiterLink, this);
+        });
+      }
 
       const dashText = document.getElementById('aff-dashboard-text');
       dashText.textContent = data.dashboard_link;

@@ -239,3 +239,72 @@ async def send_recovery_email_step(db, tx: dict, step: int) -> bool:
 
 
     return success
+
+
+async def backfill_unconverted_leads(db) -> int:
+    """
+    Backfill any unconverted leads from db.leads into db.abandoned_transactions.
+    Skips customers who have already purchased or are already in abandoned_transactions.
+    """
+    import uuid
+    now = datetime.now(timezone.utc)
+    
+    # Pre-fetch all buyers and existing abandoned emails in single fast batch queries
+    paid_emails = {p.get("email", "").strip().lower() for p in await db.payments.find({"status": "success"}, {"email": 1}).to_list(5000)}
+    user_buyers = {u.get("email", "").strip().lower() for u in await db.users.find({"purchased_products": {"$exists": True, "$ne": []}}, {"email": 1}).to_list(5000)}
+    all_buyers = paid_emails.union(user_buyers)
+    
+    existing_abandoned = {a.get("email", "").strip().lower() for a in await db.abandoned_transactions.find({}, {"email": 1}).to_list(5000)}
+    
+    unconverted_leads = await db.leads.find({"converted": False}).to_list(length=1000)
+    
+    backfilled_count = 0
+    for lead in unconverted_leads:
+        email = lead.get("email", "").strip().lower()
+        if not email or "@" not in email:
+            continue
+            
+        if email in all_buyers:
+            await db.leads.update_one({"_id": lead["_id"]}, {"$set": {"converted": True, "conversion_date": now}})
+            continue
+            
+        if email in existing_abandoned:
+            continue
+            
+        ref = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+        amount = lead.get("price_offered") or settings.PRODUCT_PRICE_NAIRA
+        currency = (lead.get("currency") or "NGN").upper()
+        unsub_token = secrets.token_urlsafe(32)
+        
+        created_at = lead.get("created_at") or now
+        if isinstance(created_at, str):
+            try:
+                created_at = datetime.fromisoformat(created_at)
+            except Exception:
+                created_at = now
+        if created_at.tzinfo is None:
+            created_at = created_at.replace(tzinfo=timezone.utc)
+            
+        doc = {
+            "reference": ref,
+            "email": email,
+            "name": lead.get("name") or "Valued Student",
+            "amount": float(amount),
+            "currency": currency,
+            "payment_method": "bank_transfer",
+            "referred_by": lead.get("referred_by"),
+            "created_at": created_at,
+            "updated_at": now,
+            "status": "pending",
+            "sequence_step": 0,
+            "next_email_at": None,
+            "last_email_sent_at": None,
+            "emails_sent": [],
+            "unsubscribe_token": unsub_token,
+            "source": "lead_backfill",
+        }
+        await db.abandoned_transactions.insert_one(doc)
+        backfilled_count += 1
+        
+    return backfilled_count
+

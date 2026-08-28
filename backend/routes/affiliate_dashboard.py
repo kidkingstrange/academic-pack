@@ -53,6 +53,15 @@ async def get_my_stats(token: str, db=Depends(get_db)):
         for r in referrals
     ]
 
+    from ..services.affiliate_milestone_service import (
+        get_affiliate_recruits_and_bonuses, MILESTONE_SALES_TARGET,
+        DIRECT_10_SALES_BONUS, PARENT_RECRUITER_BONUS,
+    )
+    recruits_data = await get_affiliate_recruits_and_bonuses(db, code)
+
+    direct_progress = min(100, round((len(referrals) / MILESTONE_SALES_TARGET) * 100, 1))
+    direct_unlocked = any(m.get("type") == "direct_10_sales" for m in recruits_data["milestones"]) or len(referrals) >= MILESTONE_SALES_TARGET
+
     return {
         "code": code,
         "name": affiliate["name"],
@@ -69,6 +78,18 @@ async def get_my_stats(token: str, db=Depends(get_db)):
         "commission_paid": commission_paid,
         "commission_owed": commission_earned - commission_paid,
         "sales": sales,
+        "referral_link": f"{settings.APP_URL}/r/{code}",
+        "affiliate_invite_link": f"{settings.APP_URL}/affiliate/register?invite={code}",
+        "milestone_target": MILESTONE_SALES_TARGET,
+        "direct_milestone_bonus": DIRECT_10_SALES_BONUS,
+        "parent_recruiter_bonus": PARENT_RECRUITER_BONUS,
+        "direct_milestone_progress": direct_progress,
+        "direct_milestone_unlocked": direct_unlocked,
+        "invited_affiliates": recruits_data["invited_affiliates"],
+        "milestones": recruits_data["milestones"],
+        "total_bonus_unlocked": recruits_data["total_bonus_unlocked"],
+        "total_bonus_paid": recruits_data["total_bonus_paid"],
+        "total_recruits": recruits_data["total_recruits"],
         "video_materials_link": settings.AFFILIATE_VIDEO_MATERIALS_LINK,
         "whatsapp_affiliate_link": settings.WHATSAPP_AFFILIATE_LINK,
     }
@@ -107,12 +128,17 @@ async def update_my_bank_details(token: str, body: AffiliateBankDetailsUpdateReq
     affiliate.update(update_fields)
     await ensure_affiliate_subaccount(db, affiliate)
 
+    # Auto-disburse any unlocked milestone bonuses that were waiting for bank details
+    from ..services.affiliate_milestone_service import auto_disburse_pending_milestones_for_affiliate
+    payout_results = await auto_disburse_pending_milestones_for_affiliate(db, affiliate["code"])
+
     return {
         "status": "ok",
         "message": "Bank details updated successfully",
         "bank_name": bank_name,
         "account_number": account_number,
         "account_name": account_name,
+        "payout_results": payout_results,
     }
 
 

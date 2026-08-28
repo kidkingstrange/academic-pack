@@ -32,7 +32,7 @@ async def test_nigerian_landing_remains_intact(client):
     res = await client.get("/")
     assert res.status_code == 200
     assert "SCALE GROUP" in res.text
-    assert "Complete 7-Book Study System" in res.text
+    assert "Digital Masterclasses" in res.text
 
 
 @pytest.mark.asyncio

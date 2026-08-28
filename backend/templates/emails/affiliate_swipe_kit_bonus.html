@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block subject %}🚀 ₦10,000 Bonus Challenge + Your Ready-to-Post Marketing Swipe Kit, {{ name }}{% endblock %}
+
+{% block content %}
+<p style="font-size:16px;color:#111;margin:0 0 16px;font-weight:600">Hey {{ name }},</p>
+
+<p style="font-size:15px;color:#444;line-height:1.7;margin:0 0 16px">
+  We are launching our <strong>August Fast-Track Affiliate Challenge</strong>! To help you generate consistent daily payouts, we are offering an exclusive <strong>₦10,000 Cash Milestone Bonus</strong> on top of your generous 60% commission.
+</p>
+
+<!-- Milestone Bonus Banner -->
+<div style="background:linear-gradient(135deg, #0d0f14, #1a202c);border-radius:14px;padding:22px;margin:0 0 24px;border:1px solid #d4a63a;text-align:center">
+  <span style="background:rgba(212,166,58,0.2);color:#f0c058;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase">🔥 Fast-Track Challenge</span>
+  <h2 style="color:#fff;font-size:22px;margin:12px 0 8px;font-weight:700">Make 10 Sales ➔ Earn +₦10,000 Cash Bonus</h2>
+  <p style="color:#cbd5e0;font-size:14px;line-height:1.6;margin:0">
+    At 60% commission (₦3,000/sale), 10 sales gives you <strong>₦30,000</strong> commission + <strong>₦10,000</strong> milestone bonus = <strong style="color:#f0c058;font-size:16px">₦40,000 in your bank account!</strong>
+  </p>
+</div>
+
+<!-- Personal Referral & Dashboard Links -->
+<div style="background:#fcfbfa;border:1px solid #e8e4d9;border-radius:12px;padding:20px;margin:0 0 24px">
+  <p style="margin:0 0 8px;font-weight:700;color:#111;font-size:15px">🔗 Your Unique Referral Link:</p>
+  <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:12px;margin:0 0 14px;word-break:break-all;font-family:monospace;font-size:13px;color:#111">
+    {{ referral_link }}
+  </div>
+  <div style="text-align:center;margin-bottom:14px">
+    <a href="{{ dashboard_link }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:700;font-size:14px;padding:12px 28px;border-radius:50px;text-decoration:none;box-shadow:0 4px 12px rgba(212,166,58,0.25)">
+      Open Your Affiliate Dashboard →
+    </a>
+  </div>
+  <p style="margin:0;font-size:12px;color:#777;text-align:center">Affiliate Code: <strong style="color:#d4a63a">{{ code }}</strong> · Instant 60% Subaccount Split Enabled</p>
+</div>
+
+<h3 style="color:#111;font-size:18px;margin:28px 0 12px;font-weight:700">📦 Your Plug-and-Play Marketing Swipe Kit</h3>
+<p style="font-size:14px;color:#555;line-height:1.6;margin:0 0 16px">
+  You don't need to create content from scratch. Our top affiliates (like Oreoluwa, who made over ₦15,500 in 48 hours) use these exact resources:
+</p>
+
+<!-- Drive & WhatsApp Buttons -->
+<table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px">
+  <tr>
+    <td style="padding-right:8px" width="50%">
+      <a href="{{ drive_materials_link }}" style="display:block;background:#2563eb;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px">
+        📁 Download Video Ads &amp; Covers
+      </a>
+    </td>
+    <td style="padding-left:8px" width="50%">
+      <a href="{{ whatsapp_group_link }}" style="display:block;background:#16a34a;color:#fff;text-align:center;padding:12px;border-radius:8px;text-decoration:none;font-weight:700;font-size:13px">
+        💬 Join WhatsApp VIP Affiliates
+      </a>
+    </td>
+  </tr>
+</table>
+
+<!-- Ready-to-post Copy Templates -->
+<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin:0 0 20px">
+  <p style="margin:0 0 8px;font-weight:700;color:#0f172a;font-size:14px">📱 WhatsApp Status Template 1 (High Conversion):</p>
+  <blockquote style="margin:0 0 8px;padding:10px 14px;background:#fff;border-left:4px solid #d4a63a;font-style:italic;color:#334155;font-size:13px;line-height:1.6">
+    "Most students struggle in university not because they aren't smart, but because nobody taught them the proven system for scoring A's in 400L/300L/200L/100L courses. If you want a serious academic comeback this semester, check out this 7-part mastery pack: {{ referral_link }}"
+  </blockquote>
+</div>
+
+<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin:0 0 20px">
+  <p style="margin:0 0 8px;font-weight:700;color:#0f172a;font-size:14px">📱 WhatsApp Status Template 2 (Urgency &amp; Relief):</p>
+  <blockquote style="margin:0 0 8px;padding:10px 14px;background:#fff;border-left:4px solid #16a34a;font-style:italic;color:#334155;font-size:13px;line-height:1.6">
+    "Don't go into next semester repeating the exact same study habits that drained you last semester. Get the exact exam breakdown, study tracker, and time management system used by First Class graduates: {{ referral_link }}"
+  </blockquote>
+</div>
+
+<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:18px;margin:0 0 24px">
+  <p style="margin:0 0 8px;font-weight:700;color:#0f172a;font-size:14px">🎬 TikTok / Reels Video Hook:</p>
+  <blockquote style="margin:0;padding:10px 14px;background:#fff;border-left:4px solid #2563eb;font-style:italic;color:#334155;font-size:13px;line-height:1.6">
+    "POV: You stopped studying 10 hours a day blindly and started using the 48-Hour Exam Revision Blueprint... My CGPA moved from 2.8 to 4.3. Link in bio to get the full Academic Comeback bundle."
+  </blockquote>
+</div>
+
+<p style="font-size:15px;color:#333;line-height:1.7;margin:0 0 20px">
+  Post your link on your WhatsApp Status and student groups today. As soon as you hit 10 sales, your ₦10,000 bonus is paid instantly. Let's make this semester your most profitable one yet!
+</p>
+
+<p style="font-size:15px;color:#333;margin:24px 0 0">
+  — Itoya David<br>
+  <span style="color:#999;font-size:13px">Founder, Scale Group · First Class Graduate</span>
+</p>
+{% endblock %}

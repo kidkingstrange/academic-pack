@@ -55,8 +55,8 @@ const SITE_REGISTRY = [
   },
   {
     id: "payouts",
-    title: "Payouts",
-    description: "Build and approve affiliate commission payments, and withdraw your own settlement balance. Every transfer needs your explicit approval — nothing sends automatically.",
+    title: "Payouts & Milestone Releases",
+    description: "Biweekly commission batch reviews and automated 10-sale milestone bonuses (₦10k direct / ₦5k recruiter) sent directly to Nigerian bank accounts via Paystack.",
     category: "Money & Orders",
     type: "admin-section",
     target: "payouts",
@@ -79,8 +79,8 @@ const SITE_REGISTRY = [
   // ── People ───────────────────────────────────────────────────────────────
   {
     id: "customers",
-    title: "Customers",
-    description: "Every customer who's ever bought. Click one to see their full history: what they bought, what they've spent, and notes you've left.",
+    title: "Customers 360°",
+    description: "Every verified customer. View lifetime spend, purchase logs, PDF downloads, and their auto-provisioned VIP Ambassador status and referral link.",
     category: "People",
     type: "admin-section",
     target: "customers",
@@ -89,8 +89,8 @@ const SITE_REGISTRY = [
   },
   {
     id: "affiliates",
-    title: "Affiliates",
-    description: "Everyone promoting your product for a commission. See clicks, sales, and commission owed; change their rate; pause an affiliate.",
+    title: "Affiliates & Ambassadors",
+    description: "Your promoter ecosystem: VIP Customer Ambassadors, recruiter downlines, clicks, sales, and automated instant subaccount splits.",
     category: "People",
     type: "admin-section",
     target: "affiliates",

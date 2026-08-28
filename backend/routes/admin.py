@@ -434,6 +434,14 @@ async def get_analytics_affiliates(
         ]).to_list(10000)
     }
 
+    recruit_counts = {
+        row["_id"]: row["count"]
+        for row in await db.affiliates.aggregate([
+            {"$match": {"invited_by": {"$exists": True, "$ne": None}}},
+            {"$group": {"_id": "$invited_by", "count": {"$sum": 1}}}
+        ]).to_list(10000)
+    }
+
     out = []
     for a in affiliates:
         code = a["code"]
@@ -447,6 +455,9 @@ async def get_analytics_affiliates(
             "email": a["email"],
             "active": a.get("active", True),
             "source": a.get("source", "admin_created"),
+            "invited_by": a.get("invited_by"),
+            "recruited_count": recruit_counts.get(code, 0),
+            "dashboard_token": a.get("dashboard_token"),
             "commission_percent": a.get("commission_percent", 0),
             "created_at": a["created_at"],
             "clicks": click_counts.get(code, 0),
@@ -458,6 +469,7 @@ async def get_analytics_affiliates(
             "bank_name": a.get("bank_name", ""),
             "account_number": a.get("account_number", ""),
             "account_name": a.get("account_name", ""),
+            "has_instant_split": bool(a.get("subaccount_code")),
         })
     return {"affiliates": out, "total": total, "page": page, "pages": -(-total // limit)}
 
@@ -766,12 +778,28 @@ async def get_customer_profile(email: str, current_user=Depends(require_admin), 
         if e.get("user_id"):
             e["user_id"] = str(e["user_id"])
 
+    # Affiliate / Ambassador Profile
+    aff = await db.affiliates.find_one({"email": email_clean})
+    affiliate_info = None
+    if aff:
+        affiliate_info = {
+            "id": str(aff["_id"]),
+            "code": aff.get("code"),
+            "source": aff.get("source", "customer_buyer"),
+            "commission_percent": aff.get("commission_percent", 50),
+            "dashboard_token": aff.get("dashboard_token"),
+            "bank_name": aff.get("bank_name", ""),
+            "account_number": aff.get("account_number", ""),
+            "has_instant_split": bool(aff.get("subaccount_code")),
+        }
+
     return {
         "customer": customer,
         "total_spent": total_spent,
         "purchases": payments,
         "downloads": downloads,
-        "emails": emails
+        "emails": emails,
+        "affiliate": affiliate_info,
     }
 
 

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block subject %}{% if is_transferred %}🎉 ₦5,000 Recruiter Bonus Transferred to Your Bank Account, {{ name }}!{% else %}🎉 Great News: You Earned a ₦5,000 Recruiter Bonus, {{ name }}!{% endif %}{% endblock %}
+{% block content %}
+<p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
+
+<p style="font-size:16px;color:#166534;font-weight:800;margin:0 0 16px">
+  🎯 Exciting update! An affiliate you recruited just hit a major milestone!
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4;border:2px solid #16a34a;border-radius:12px;margin:0 0 24px">
+  <tr><td style="padding:20px;text-align:center">
+    <p style="margin:0 0 8px;color:#166534;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px">Recruiter Reward Unlocked</p>
+    <p style="margin:0 0 8px;color:#15803d;font-size:26px;font-weight:900">₦5,000 CASH BONUS</p>
+    <p style="margin:0;color:#166534;font-size:14px;line-height:1.6">
+      <strong>{{ subaffiliate_name }}</strong>, whom you invited to join as an affiliate, has just completed <strong>10 sales</strong>!
+    </p>
+  </td></tr>
+</table>
+
+{% if is_transferred %}
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f0fdf4;border:2px solid #16a34a;border-radius:12px;margin:0 0 24px">
+  <tr><td style="padding:18px">
+    <p style="margin:0 0 8px;color:#166534;font-size:14px;font-weight:800">⚡ Instant Transfer Confirmation</p>
+    <p style="margin:0 0 4px;color:#15803d;font-size:13px"><strong>Amount Sent:</strong> ₦5,000.00</p>
+    {% if bank_name %}<p style="margin:0 0 4px;color:#15803d;font-size:13px"><strong>Destination:</strong> {{ bank_name }} ({{ account_number }})</p>{% endif %}
+    {% if transfer_reference %}<p style="margin:0;color:#15803d;font-size:12px;font-family:monospace"><strong>Ref:</strong> {{ transfer_reference }}</p>{% endif %}
+  </td></tr>
+</table>
+{% else %}
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#eff6ff;border:1px solid #3b82f6;border-radius:12px;margin:0 0 24px">
+  <tr><td style="padding:18px;text-align:center">
+    <p style="margin:0 0 8px;color:#1e40af;font-size:14px;font-weight:800">💳 Claim Your Instant Transfer</p>
+    <p style="margin:0 0 12px;color:#1d4ed8;font-size:13px;line-height:1.5">
+      We're ready to disburse your ₦5,000 recruiter reward! Simply enter your Nigerian bank details on your dashboard to receive the transfer immediately.
+    </p>
+    <a href="{{ dashboard_link }}" style="display:inline-block;background:#2563eb;color:#fff;font-weight:800;font-size:13px;padding:10px 24px;border-radius:50px;text-decoration:none">
+      Add Bank Details on Dashboard →
+    </a>
+  </td></tr>
+</table>
+{% endif %}
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  As promised in our 2-Tier Affiliate Program, you have earned an extra <strong>₦5,000 Recruiter Bonus</strong> for referring a top-performing affiliate to our platform.
+</p>
+
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#f7f6f2;border:1px solid #eee;border-radius:12px;margin:0 0 24px">
+  <tr><td style="padding:18px;text-align:center">
+    <p style="font-weight:700;color:#333;margin:0 0 10px;font-size:14px">View Your Recruited Affiliates & Bonuses</p>
+    <a href="{{ dashboard_link }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:800;font-size:14px;padding:12px 30px;border-radius:50px;text-decoration:none">
+      Open Affiliate Dashboard →
+    </a>
+  </td></tr>
+</table>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  There is no limit to how many affiliates you can recruit. Keep inviting friends to earn ₦5,000 for each one that hits 10 sales!
+</p>
+
+<p style="font-size:15px;color:#333;margin:24px 0 0">
+  Warm regards,<br>
+  <strong>Itoya David</strong><br>
+  <span style="color:#999;font-size:13px">Founder, Scale Group</span>
+</p>
+{% endblock %}
+

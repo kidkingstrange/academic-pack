@@ -57,6 +57,16 @@ async def run_biweekly_batch_build():
     await send_email(settings.ADMIN_EMAIL, "Affiliate payout batch ready for review", html)
 
 
+async def run_daily_milestone_disbursement_sweep():
+    db = database.get_db()
+    if db is None:
+        return
+    from ..services.affiliate_milestone_service import auto_disburse_all_pending_milestones
+    results = await auto_disburse_all_pending_milestones(db)
+    if results:
+        print(f"💸 Daily milestone auto-disbursement sweep: processed {len(results)} pending milestone payouts")
+
+
 def start_payout_scheduler():
     scheduler.add_job(
         run_biweekly_batch_build,
@@ -64,9 +74,16 @@ def start_payout_scheduler():
         id="payout_batch_builder",
         replace_existing=True,
     )
+    scheduler.add_job(
+        run_daily_milestone_disbursement_sweep,
+        CronTrigger(hour=8, minute=0),
+        id="milestone_auto_disburser",
+        replace_existing=True,
+    )
     scheduler.start()
-    print("💰 Payout scheduler started")
+    print("💰 Payout scheduler started (bi-weekly commission batches + daily milestone auto-disbursement)")
 
 
 def stop_payout_scheduler():
     scheduler.shutdown()
+

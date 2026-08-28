@@ -8,6 +8,7 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
 from ..services.email_service import (
     send_sequence_email, send_welcome_email, send_affiliate_welcome_email, send_affiliate_nudge_email,
+    send_affiliate_direct_milestone_email, send_affiliate_parent_referral_bonus_email,
 )
 
 scheduler = AsyncIOScheduler()
@@ -268,7 +269,10 @@ async def process_email_queue():
         # above now also prevents two runs' items from being sent concurrently
         # in the first place.
         pending = []
-        TRANSACTIONAL_KINDS = ("welcome", "affiliate_welcome", "affiliate_nudge")
+        TRANSACTIONAL_KINDS = (
+            "welcome", "affiliate_welcome", "affiliate_nudge",
+            "affiliate_direct_milestone", "affiliate_parent_referral_bonus"
+        )
 
         # Step 1: Claim high-priority transactional emails first
         while len(pending) < 50:
@@ -317,6 +321,10 @@ async def process_email_queue():
                         token=item.get("access_token") or item.get("magic_token"),
                         unsubscribe_token=item.get("unsubscribe_token", ""),
                         delayed=item.get("delayed_resend", False),
+                        affiliate_code=item.get("affiliate_code"),
+                        referral_link=item.get("referral_link"),
+                        dashboard_link=item.get("dashboard_link"),
+                        recruiter_link=item.get("recruiter_link"),
                     )
                 elif kind == "affiliate_welcome":
                     success, error_msg = await send_affiliate_welcome_email(
@@ -325,12 +333,39 @@ async def process_email_queue():
                         code=item["code"],
                         referral_link=item["referral_link"],
                         dashboard_link=item.get("dashboard_link", ""),
+                        affiliate_invite_link=item.get("affiliate_invite_link"),
                     )
                 elif kind == "affiliate_nudge":
                     success, error_msg = await send_affiliate_nudge_email(
                         name=item["name"],
                         email=item["email"],
                         referral_link=item["referral_link"],
+                    )
+                elif kind == "affiliate_direct_milestone":
+                    success, error_msg = await send_affiliate_direct_milestone_email(
+                        name=item["name"],
+                        email=item["email"],
+                        code=item["code"],
+                        bonus_amount=item.get("bonus_amount", 10000.0),
+                        sales_count=item.get("sales_count", 10),
+                        dashboard_link=item.get("dashboard_link", ""),
+                        is_transferred=item.get("is_transferred", False),
+                        transfer_reference=item.get("transfer_reference", ""),
+                        bank_name=item.get("bank_name", ""),
+                        account_number=item.get("account_number", ""),
+                    )
+                elif kind == "affiliate_parent_referral_bonus":
+                    success, error_msg = await send_affiliate_parent_referral_bonus_email(
+                        name=item["name"],
+                        email=item["email"],
+                        code=item["code"],
+                        subaffiliate_name=item.get("subaffiliate_name", "Your invited affiliate"),
+                        bonus_amount=item.get("bonus_amount", 5000.0),
+                        dashboard_link=item.get("dashboard_link", ""),
+                        is_transferred=item.get("is_transferred", False),
+                        transfer_reference=item.get("transfer_reference", ""),
+                        bank_name=item.get("bank_name", ""),
+                        account_number=item.get("account_number", ""),
                     )
                 elif item.get("template_name") == "welcome_lead_magnet":
                     ctx = item.get("context", {})

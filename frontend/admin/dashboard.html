@@ -863,7 +863,7 @@
       </div>
       <div class="data-table-container has-mobile-cards">
         <table class="data-table" id="table-affiliates-roster">
-          <thead><tr><th>Created</th><th>Code</th><th>Name</th><th>Payout Bank Account</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Created</th><th>Type</th><th>Code</th><th>Name</th><th>Payout Bank Account</th><th>Clicks</th><th>Sales</th><th>Revenue</th><th>Rate</th><th>Earned</th><th>Paid</th><th>Owed</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -906,13 +906,29 @@
       <div class="record-card-list" id="cards-payout-pending"></div>
 
       <div style="padding:18px 20px; margin-bottom:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">Batch History</div>
-      <div class="data-table-container has-mobile-cards">
+      <div class="data-table-container has-mobile-cards" style="margin-bottom:28px">
         <table class="data-table" id="table-payout-history">
           <thead><tr><th>Created</th><th>Status</th><th>Affiliates</th><th>Total</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
       <div class="record-card-list" id="cards-payout-history"></div>
+
+      <!-- ── AUTOMATED MILESTONE BONUS RELEASES ── -->
+      <div style="padding:18px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div>
+          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">🏆 Automated Milestone Bonus Releases</div>
+          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Real-time ₦10,000 direct (10 sales) &amp; ₦5,000 recruiter bank transfers sent automatically via Paystack</div>
+        </div>
+        <button class="btn-action btn-secondary" onclick="loadMilestonePayouts()"><i class="bi bi-arrow-clockwise"></i> Refresh Bonuses</button>
+      </div>
+      <div class="data-table-container has-mobile-cards">
+        <table class="data-table" id="table-payout-milestones">
+          <thead><tr><th>Date</th><th>Type</th><th>Partner</th><th>Bonus Amount</th><th>Bank Account</th><th>Transfer Reference</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="record-card-list" id="cards-payout-milestones"></div>
     </div>
 
     <!-- ── VIEW 6: SUBSCRIPTIONS (Command & KPI Center) ────────────────── -->
@@ -1834,6 +1850,23 @@
         `).join('')}
       </div>
 
+      ${data.affiliate ? `
+      <div class="drawer-section">
+        <div class="drawer-section-title">🌟 VIP Ambassador Status</div>
+        <div class="drawer-detail-grid">
+          <div><div class="detail-label">Status</div><div class="detail-val" style="color:var(--gold-l)">Active VIP Ambassador</div></div>
+          <div><div class="detail-label">Referral Code</div><div class="detail-val"><code style="color:var(--gold-light);font-size:0.95rem;font-weight:700">${escapeHtml(data.affiliate.code)}</code></div></div>
+          <div><div class="detail-label">Commission Rate</div><div class="detail-val">${data.affiliate.commission_percent}% (Instant split)</div></div>
+          <div><div class="detail-label">Bank Setup</div><div class="detail-val">${data.affiliate.bank_name ? escapeHtml(data.affiliate.bank_name) + ' (' + escapeHtml(data.affiliate.account_number) + ')' : '<span style="color:var(--gray-l)">Not provided yet</span>'}</div></div>
+          <div style="grid-column:span 2; margin-top:8px">
+            <button class="btn-action" style="padding:8px 16px; font-size:0.82rem; width:100%; justify-content:center" onclick="window.open('/affiliate/dashboard?token=${escapeJs(data.affiliate.dashboard_token || '')}', '_blank')">
+              <i class="bi bi-box-arrow-up-right"></i> Open Private Ambassador Dashboard
+            </button>
+          </div>
+        </div>
+      </div>
+      ` : ''}
+
       <div class="drawer-section">
         <div class="drawer-section-title">Book Downloads History (${(data.downloads || []).length})</div>
         ${(data.downloads || []).map(d => `
@@ -1924,14 +1957,35 @@
 
     const tbody = document.querySelector('#table-affiliates-roster tbody');
     if (affs.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center">No affiliates yet</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="13" style="text-align:center">No affiliates yet</td></tr>';
       return;
     }
-    tbody.innerHTML = affs.map(a => `
+    tbody.innerHTML = affs.map(a => {
+      let typeBadge = `<span style="background:rgba(255,255,255,0.06);color:var(--gray-l);padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700">Organic</span>`;
+      if (a.source === 'customer_buyer') {
+        typeBadge = `<span style="background:rgba(201,151,58,0.15);color:var(--gold-l);padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700;border:1px solid rgba(201,151,58,0.3)">🌟 VIP Buyer</span>`;
+      } else if (a.source === 'admin_created') {
+        typeBadge = `<span style="background:rgba(59,130,246,0.15);color:#60a5fa;padding:3px 7px;border-radius:4px;font-size:0.7rem;font-weight:700">Admin</span>`;
+      }
+
+      const inviteInfo = a.invited_by
+        ? `<div style="font-size:0.72rem;color:var(--gold-light);margin-top:2px"><i class="bi bi-diagram-3"></i> Recruited by: <b>${escapeHtml(a.invited_by)}</b></div>`
+        : '';
+      const recruitInfo = a.recruited_count > 0
+        ? `<div style="font-size:0.72rem;color:var(--green);font-weight:600;margin-top:2px"><i class="bi bi-people-fill"></i> ${a.recruited_count} downline recruit${a.recruited_count === 1 ? '' : 's'}</div>`
+        : '';
+
+      return `
       <tr onclick="inspectAffiliate('${escapeJs(a.id)}')">
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
-        <td style="font-weight:700;color:var(--gold-light)">${escapeHtml(a.code)}</td>
-        <td style="font-weight:600">${escapeHtml(a.name)}<div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(a.email)}</div></td>
+        <td>${typeBadge}</td>
+        <td style="font-weight:700;color:var(--gold-light)"><code>${escapeHtml(a.code)}</code></td>
+        <td style="font-weight:600">
+          ${escapeHtml(a.name)}
+          <div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(a.email)}</div>
+          ${inviteInfo}
+          ${recruitInfo}
+        </td>
         <td>
           <div style="font-weight:600;font-size:0.82rem;color:#fff">${a.bank_name ? escapeHtml(a.bank_name) : '<span style="color:var(--gray-l)">Not provided</span>'}</div>
           <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${a.account_number ? escapeHtml(a.account_number) + ' (' + escapeHtml(a.account_name || a.name) + ')' : ''}</div>
@@ -1955,7 +2009,7 @@
           ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
         </td>
       </tr>
-    `).join('');
+    `}).join('');
 
     const cardList = document.getElementById('cards-affiliates-roster');
     if (affs.length === 0) {
@@ -1964,9 +2018,6 @@
     }
     cardList.innerHTML = affs.map(a => {
       const owed = a.commission_owed > 0;
-      // Same scan-first logic as Sales: the stripe answers "does this
-      // one need action" at a glance — owed money is the only state
-      // that actually requires you to do something about an affiliate.
       const statusClass = owed ? 'pending' : 'success';
       const splitBadge = a.has_instant_split
         ? '<i class="bi bi-lightning-charge-fill" style="color:var(--green)"></i> Instant split'
@@ -1974,14 +2025,15 @@
       const payBtn = owed
         ? `<button class="record-card__action" style="background:rgba(201,151,58,.12);color:var(--gold-light);border-color:rgba(201,151,58,.35)" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>`
         : '';
+      const badgeText = a.source === 'customer_buyer' ? '🌟 VIP Buyer' : (a.source === 'admin_created' ? 'Admin' : 'Organic');
       return `
       <div class="record-card record-card--${statusClass}" onclick="inspectAffiliate('${escapeJs(a.id)}')">
         <div class="record-card__row1">
-          <span class="record-card__primary">${escapeHtml(a.name)}</span>
+          <span class="record-card__primary">${escapeHtml(a.name)} <span style="font-size:0.7rem;color:var(--gold-l);font-weight:700">${badgeText}</span></span>
           <span class="record-card__amount">${money(a.commission_owed)}</span>
         </div>
         <div class="record-card__row2">
-          <span class="record-card__secondary">${escapeHtml(a.code)} · ${a.commission_percent}% rate</span>
+          <span class="record-card__secondary">${escapeHtml(a.code)} · ${a.commission_percent}% rate ${a.invited_by ? '· via ' + escapeHtml(a.invited_by) : ''}</span>
           <span class="record-card__meta">${splitBadge}</span>
         </div>
         ${payBtn}
@@ -1990,9 +2042,6 @@
   }
 
   function inspectAffiliate(id) {
-    // Every field here is already sitting in allAffiliatesData from the
-    // roster load — no reason to round-trip the server for what tapping
-    // a row/card already has in hand.
     const a = allAffiliatesData.find(x => x.id === id);
     if (!a) return;
 
@@ -2000,15 +2049,28 @@
       ? '<span style="color:var(--green)"><i class="bi bi-lightning-charge-fill"></i> Instant split — paid directly on each sale</span>'
       : '<span style="color:var(--gray-l)"><i class="bi bi-clock-history"></i> Manual biweekly payout</span>';
 
+    const sourceLabel = a.source === 'customer_buyer'
+      ? '🌟 VIP Customer Ambassador (Auto-Converted)'
+      : (a.source === 'admin_created' ? 'Admin Created' : 'Organic Public Registration');
+
     document.getElementById('drawer-title').textContent = `Affiliate ${escapeHtml(a.code)}`;
     document.getElementById('drawer-content').innerHTML = `
       <div class="drawer-section">
-        <div class="drawer-section-title">Partner</div>
+        <div class="drawer-section-title">Partner Profile</div>
         <div class="drawer-detail-grid">
           <div><div class="detail-label">Name</div><div class="detail-val">${escapeHtml(a.name)}</div></div>
           <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(a.email)}</div></div>
-          <div><div class="detail-label">Code</div><div class="detail-val"><code>${escapeHtml(a.code)}</code></div></div>
+          <div><div class="detail-label">Code</div><div class="detail-val"><code style="color:var(--gold-light);font-weight:700">${escapeHtml(a.code)}</code></div></div>
           <div><div class="detail-label">Joined</div><div class="detail-val">${new Date(a.created_at).toLocaleDateString()}</div></div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Lineage & Recruiter Tree</div>
+        <div class="drawer-detail-grid">
+          <div><div class="detail-label">Enrolled Source</div><div class="detail-val" style="color:var(--gold-l);font-weight:700">${sourceLabel}</div></div>
+          <div><div class="detail-label">Recruited By</div><div class="detail-val">${a.invited_by ? `<code>${escapeHtml(a.invited_by)}</code>` : '<span style="color:var(--gray-l)">Direct (None)</span>'}</div></div>
+          <div style="grid-column:span 2"><div class="detail-label">Downline Recruits</div><div class="detail-val" style="color:var(--green);font-weight:700">${a.recruited_count || 0} sub-affiliates</div></div>
         </div>
       </div>
 
@@ -2034,6 +2096,7 @@
       </div>
 
       <div style="display:flex; flex-direction:column; gap:10px">
+        <button class="btn-action" style="background:linear-gradient(135deg, var(--gold), var(--gold-l));color:var(--ink);width:100%;justify-content:center" onclick="window.open('/affiliate/dashboard?token=${escapeJs(a.dashboard_token || '')}', '_blank')"><i class="bi bi-box-arrow-up-right"></i> Open Partner Dashboard</button>
         <button class="btn-action btn-secondary" onclick="closeDrawer(); editCommissionRate('${escapeJs(a.id)}', ${a.commission_percent})">Edit Commission Rate</button>
         ${a.commission_owed > 0 ? `<button class="btn-action" onclick="closeDrawer(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>` : ''}
       </div>
@@ -2128,6 +2191,7 @@
 
     renderPendingBatch();
     renderBatchHistory();
+    loadMilestonePayouts();
     restoreScrollPosition('payouts');
   }
 
@@ -2284,6 +2348,96 @@
       alert(res.detail || "Could not discard batch.");
     }
     loadPayoutsView();
+  }
+
+  async function loadMilestonePayouts() {
+    const res = await apiCall('/api/admin/payouts/milestones?limit=50');
+    const milestones = res.milestones || [];
+    const tbody = document.querySelector('#table-payout-milestones tbody');
+    const cardList = document.getElementById('cards-payout-milestones');
+
+    if (milestones.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray-l);padding:24px">No milestone bonuses achieved yet. Unlocks automatically at 10 sales.</td></tr>';
+      if (cardList) cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No milestone bonuses achieved yet. Unlocks automatically at 10 sales.</div>';
+      return;
+    }
+
+    const typeLabels = {
+      direct_10_sales: '<span style="color:var(--gold-l);font-weight:700">🎯 Direct 10-Sales Bonus</span>',
+      parent_recruiter_bonus: '<span style="color:var(--green);font-weight:700">🤝 Recruiter Referral Bonus</span>',
+    };
+
+    tbody.innerHTML = milestones.map(m => {
+      let statusBadge = `<span class="status-pill pending">Unlocked (Waiting Bank)</span>`;
+      let actionBtn = `<span style="font-size:0.75rem;color:var(--gray-l)">Awaiting Bank</span>`;
+
+      if (m.status === 'paid') {
+        statusBadge = `<span class="status-pill success"><i class="bi bi-check-circle-fill"></i> Paid (Automated)</span>`;
+        actionBtn = `<span style="font-size:0.75rem;color:var(--green);font-weight:700">Transferred</span>`;
+      } else if (m.status === 'processing') {
+        statusBadge = `<span class="status-pill pending"><i class="bi bi-arrow-repeat"></i> Processing Transfer</span>`;
+        actionBtn = `<span style="font-size:0.75rem;color:var(--gold-l)">In Flight</span>`;
+      } else if (m.status === 'failed') {
+        statusBadge = `<span class="status-pill failed"><i class="bi bi-x-circle-fill"></i> Failed</span>`;
+        actionBtn = `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="retryMilestoneTransfer('${escapeJs(m.id)}')">Retry Transfer</button>`;
+      } else if (m.account_number) {
+        actionBtn = `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="retryMilestoneTransfer('${escapeJs(m.id)}')">Send Now</button>`;
+      }
+
+      const bankInfo = m.account_number
+        ? `<div style="font-weight:600;font-size:0.82rem">${escapeHtml(m.bank_name || 'Bank')}</div><div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${escapeHtml(m.account_number)} (${escapeHtml(m.account_name || m.affiliate_name)})</div>`
+        : `<span style="color:var(--gray-l);font-size:0.8rem">No bank details added</span>`;
+
+      const refInfo = m.transfer_reference
+        ? `<div style="font-family:monospace;font-size:0.78rem;color:var(--gold-light)">${escapeHtml(m.transfer_reference)}</div><div style="font-size:0.72rem;color:var(--gray-l)">${m.paid_at ? new Date(m.paid_at).toLocaleString() : ''}</div>`
+        : `<span style="color:var(--gray-l);font-size:0.78rem">—</span>`;
+
+      return `
+        <tr>
+          <td>${new Date(m.created_at).toLocaleDateString()}</td>
+          <td>${typeLabels[m.type] || escapeHtml(m.type)}</td>
+          <td>
+            <div style="font-weight:600">${escapeHtml(m.affiliate_name)}</div>
+            <div style="font-size:0.75rem;color:var(--gold-light)"><code>${escapeHtml(m.affiliate_code)}</code></div>
+          </td>
+          <td style="font-weight:700;color:var(--gold-l);font-size:0.95rem">${money(m.amount_naira)}</td>
+          <td>${bankInfo}</td>
+          <td>${refInfo}</td>
+          <td>${statusBadge}</td>
+          <td>${actionBtn}</td>
+        </tr>
+      `;
+    }).join('');
+
+    if (cardList) {
+      cardList.innerHTML = milestones.map(m => {
+        const isPaid = m.status === 'paid';
+        const statusClass = isPaid ? 'success' : (m.status === 'failed' ? 'failed' : 'pending');
+        return `
+          <div class="record-card record-card--${statusClass}">
+            <div class="record-card__row1">
+              <span class="record-card__primary">${escapeHtml(m.affiliate_name)} (${escapeHtml(m.affiliate_code)})</span>
+              <span class="record-card__amount">${money(m.amount_naira)}</span>
+            </div>
+            <div class="record-card__row2">
+              <span class="record-card__secondary">${m.type === 'direct_10_sales' ? '🎯 10-Sales Bonus' : '🤝 Recruiter Bonus'} · ${m.account_number ? escapeHtml(m.bank_name) : 'No bank'}</span>
+              <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(m.status)}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  async function retryMilestoneTransfer(milestoneId) {
+    if (!confirm('Attempt automated Paystack transfer for this milestone bonus now?')) return;
+    try {
+      const res = await apiCall(`/api/admin/payouts/milestones/${milestoneId}/retry`, 'POST', {});
+      alert(res.message || 'Transfer completed successfully!');
+      loadPayoutsView();
+    } catch (err) {
+      alert('Transfer retry failed: ' + (err.message || err));
+    }
   }
 
   function openWithdrawModal() {

@@ -108,6 +108,14 @@ async def list_affiliates(
         ]).to_list(10000)
     }
 
+    recruit_counts = {
+        row["_id"]: row["count"]
+        for row in await db.affiliates.aggregate([
+            {"$match": {"invited_by": {"$exists": True, "$ne": None}}},
+            {"$group": {"_id": "$invited_by", "count": {"$sum": 1}}}
+        ]).to_list(10000)
+    }
+
     out = []
     for a in affiliates:
         code = a["code"]
@@ -121,6 +129,9 @@ async def list_affiliates(
             "email": a["email"],
             "active": a.get("active", True),
             "source": a.get("source", "admin_created"),
+            "invited_by": a.get("invited_by"),
+            "recruited_count": recruit_counts.get(code, 0),
+            "dashboard_token": a.get("dashboard_token"),
             "commission_percent": a.get("commission_percent", 0),
             "created_at": a["created_at"],
             "clicks": click_counts.get(code, 0),

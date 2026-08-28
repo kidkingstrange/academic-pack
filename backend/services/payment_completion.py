@@ -13,9 +13,12 @@ from datetime import datetime, timedelta, timezone
 
 from pymongo.errors import DuplicateKeyError
 
+from ..config import get_settings
 from ..utils.security import create_access_token
 from ..workers.email_scheduler import enqueue_sequence_for_subscriber, process_email_queue
 from .meta_capi import send_purchase_event
+
+settings = get_settings()
 
 
 async def complete_payment(
@@ -154,6 +157,10 @@ async def complete_payment(
                 except DuplicateKeyError:
                     pass
 
+                # ── Check and Trigger 10-Sale Milestone / Recruiter Bonuses ───
+                from .affiliate_milestone_service import check_and_trigger_milestones
+                await check_and_trigger_milestones(db, referred_by)
+
         # Server-side conversion confirmation — fires exactly once per
         # real payment (guarded by `claimed`, same as everything else in
         # this block), independent of whether the customer's browser ever
@@ -218,6 +225,27 @@ async def complete_payment(
     # gap this refactor closes).
     queued_email = False
     if claimed or subscriber_created:
+        # ── Auto-Provision Buyer as VIP Ambassador & Affiliate ──────────
+        aff_code = None
+        aff_token = None
+        try:
+            from .affiliate_service import get_or_create_customer_affiliate
+            customer_affiliate, _ = await get_or_create_customer_affiliate(
+                db,
+                name=name,
+                email=email,
+                invited_by=referred_by,
+            )
+            if customer_affiliate:
+                aff_code = customer_affiliate.get("code")
+                aff_token = customer_affiliate.get("dashboard_token")
+        except Exception as e:
+            print(f"⚠️ Failed to auto-provision affiliate for buyer {email}: {e}")
+
+        referral_link = f"https://edgepack.thescaleconference.com/?ref={aff_code}" if aff_code else None
+        recruiter_link = f"https://edgepack.thescaleconference.com/affiliate/register?invite={aff_code}" if aff_code else None
+        dashboard_link = f"{settings.APP_URL}/affiliate/dashboard?token={aff_token}" if aff_token else f"{settings.APP_URL}/affiliate/dashboard"
+
         # Tracked the same way as sequence emails, so a transient SMTP
         # failure gets automatically retried by the 5-minute scheduler
         # instead of silently vanishing with no record it ever failed.
@@ -228,6 +256,10 @@ async def complete_payment(
             "name": name,
             "access_token": access_token,
             "unsubscribe_token": unsub_token,
+            "affiliate_code": aff_code,
+            "referral_link": referral_link,
+            "recruiter_link": recruiter_link,
+            "dashboard_link": dashboard_link,
             "scheduled_at": now,
             "status": "pending",
             "retry_count": 0,

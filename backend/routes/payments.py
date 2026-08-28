@@ -107,12 +107,13 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         upsert=True,
     )
 
-    payment_method = (body.payment_method or "card" if currency == "USD" else "pay_with_bank").strip().lower()
+    payment_method = (body.payment_method or ("card" if currency == "USD" else "bank_transfer")).strip().lower()
     channels = None
-    if payment_method == "bank_transfer":
-        channels = ["bank_transfer"]
-    elif payment_method == "card":
+    if currency == "USD" or payment_method == "card":
         channels = ["card"]
+    elif payment_method in ("bank_transfer", "pay_with_bank", "bank"):
+        # Prioritize Bank Transfer / Instant Transfer first for fastest approval
+        channels = ["bank_transfer", "bank", "card", "ussd", "qr"]
 
     # Splits settle to an NGN bank account — not meaningful for a USD
     # charge, so a referred USD sale just stays on the manual commission

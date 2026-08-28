@@ -203,3 +203,68 @@ async def discard_batch(batch_id: str, current_user=Depends(require_admin), db=D
     # Delete the batch document
     await db.payout_batches.delete_one({"_id": oid})
     return {"status": "ok", "message": "Batch discarded successfully"}
+
+
+@router.get("/milestones")
+async def list_milestone_payouts(limit: int = 50, current_user=Depends(require_admin), db=Depends(get_db)):
+    """
+    List all unlocked and processed milestone bonuses (Direct ₦10,000 & Recruiter ₦5,000)
+    with their Paystack transfer status, bank details, and transaction references.
+    """
+    milestones = await db.affiliate_milestones.find({}).sort("created_at", -1).limit(limit).to_list(limit)
+
+    # Bulk fetch affiliate records to enrich with names and current bank details
+    codes = list(set([m.get("affiliate_code") for m in milestones if m.get("affiliate_code")]))
+    affiliates_list = await db.affiliates.find({"code": {"$in": codes}}).to_list(len(codes))
+    aff_map = {a["code"]: a for a in affiliates_list}
+
+    out = []
+    for m in milestones:
+        aff = aff_map.get(m.get("affiliate_code"), {})
+        out.append({
+            "id": str(m["_id"]),
+            "affiliate_code": m.get("affiliate_code"),
+            "affiliate_name": aff.get("name", m.get("affiliate_code")),
+            "affiliate_email": aff.get("email", ""),
+            "type": m.get("type"),
+            "amount_naira": m.get("amount_naira", 0.0),
+            "status": m.get("status", "unlocked"),
+            "subaffiliate_code": m.get("subaffiliate_code"),
+            "bank_name": m.get("bank_name") or aff.get("bank_name", ""),
+            "account_number": m.get("account_number") or aff.get("account_number", ""),
+            "account_name": m.get("account_name") or aff.get("account_name", ""),
+            "transfer_reference": m.get("transfer_reference", ""),
+            "transfer_code": m.get("transfer_code", ""),
+            "paystack_transfer_id": m.get("paystack_transfer_id"),
+            "paid_at": m.get("paid_at"),
+            "error_detail": m.get("error_detail"),
+            "created_at": m.get("created_at"),
+        })
+    return {"milestones": out, "total": len(out)}
+
+
+@router.post("/milestones/{milestone_id}/retry")
+async def retry_milestone_payout(milestone_id: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """
+    Manually trigger an automated transfer retry for an unlocked or failed milestone bonus.
+    """
+    from ..services.affiliate_milestone_service import disburse_single_milestone
+    try:
+        oid = ObjectId(milestone_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid milestone ID format")
+
+    # If status was failed/processing, reset to unlocked so CAS in disburse_single_milestone can claim it
+    await db.affiliate_milestones.update_one(
+        {"_id": oid, "status": {"$in": ["unlocked", "failed", "processing"]}},
+        {"$set": {"status": "unlocked"}}
+    )
+
+    res = await disburse_single_milestone(db, oid)
+    if not res.get("success"):
+        raise HTTPException(
+            status_code=400,
+            detail=f"Transfer could not be completed: {res.get('reason')}"
+        )
+    return {"status": "ok", "message": "Transfer successfully disbursed", "result": res}
+

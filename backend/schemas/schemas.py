@@ -128,6 +128,7 @@ class AffiliateCreateRequest(BaseModel):
     bank_code: Optional[str] = Field(None, max_length=20)
     account_number: Optional[str] = Field(None, max_length=20)
     account_name: Optional[str] = Field(None, max_length=100)
+    invited_by: Optional[str] = Field(None, max_length=50)
 
 
 class AffiliateRegisterRequest(BaseModel):
@@ -143,6 +144,7 @@ class AffiliateRegisterRequest(BaseModel):
     bank_code: Optional[str] = Field(None, max_length=20)
     account_number: str = Field(..., min_length=10, max_length=20)
     account_name: str = Field(..., min_length=2, max_length=100)
+    invited_by: Optional[str] = Field(None, max_length=50)
 
 
 class AffiliateBankDetailsUpdateRequest(BaseModel):

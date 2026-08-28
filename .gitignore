@@ -11,4 +11,7 @@ venv/
 !uploads/products/*.pdf
 everything-design-taste/
 package-lock.json
+last_7_sales_*.json
+scratch/
+
 

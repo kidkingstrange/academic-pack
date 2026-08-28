@@ -57,6 +57,26 @@
   .resource-card { transition: all var(--transition); }
   .resource-card:hover { border-color: var(--gold) !important; box-shadow: var(--gold-glow); }
 
+  .milestone-section { margin-bottom: 40px; }
+  .milestone-card { background: linear-gradient(135deg, rgba(201,151,58,.12) 0%, rgba(19,24,38,.9) 100%); border: 1px solid rgba(201,151,58,.3); border-radius: var(--radius-lg); padding: 28px 24px; position: relative; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,.4); }
+  .milestone-card::before { content: ''; position: absolute; top: -50px; right: -50px; width: 180px; height: 180px; background: radial-gradient(circle, rgba(201,151,58,.2) 0%, transparent 70%); pointer-events: none; }
+  .milestone-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .milestone-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.25rem; font-weight: 600; color: #fff; margin: 0; display: flex; align-items: center; gap: 8px; }
+  .milestone-bonus-pill { background: rgba(34,197,94,.15); border: 1px solid rgba(34,197,94,.3); color: #4ade80; font-size: .85rem; font-weight: 700; padding: 4px 12px; border-radius: 50px; }
+  .progress-track { width: 100%; height: 12px; background: rgba(255,255,255,.08); border-radius: 6px; overflow: hidden; margin: 14px 0 8px; border: 1px solid rgba(255,255,255,.1); }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #c9973a, #4ade80); border-radius: 6px; transition: width .6s ease; }
+  .progress-labels { display: flex; justify-content: space-between; font-size: .82rem; color: var(--gray-l); }
+  
+  .recruiter-box { background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); padding: 28px 24px; margin-bottom: 40px; }
+  .recruiter-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+  .recruiter-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.25rem; font-weight: 600; color: #fff; margin: 0 0 6px; }
+  .recruiter-header p { font-size: .88rem; color: var(--gray-l); margin: 0; line-height: 1.5; max-width: 600px; }
+  .recruiter-share-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .recruiter-link-wrap { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.05); border: 1px solid rgba(74,222,128,.3); border-radius: 12px; padding: 8px 14px; flex: 1; min-width: 260px; }
+  .recruiter-link-wrap span { font-family: monospace; font-size: .84rem; color: #4ade80; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+  .btn-whatsapp { background: #25D366; color: #fff; border: none; font-size: .84rem; font-weight: 700; padding: 10px 18px; border-radius: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: all .2s; }
+  .btn-whatsapp:hover { opacity: .9; transform: translateY(-1px); }
+
   .bank-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(12,14,18,.8); backdrop-filter: blur(8px); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
   .bank-modal-overlay.open { display: flex; }
   .bank-modal { background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); max-width: 440px; width: 100%; padding: 32px 28px; position: relative; }
@@ -143,6 +163,56 @@
     <div class="stat-card"><h3>Still Owed</h3><div class="val gold" id="stat-owed">₦0</div></div>
   </div>
 
+  <!-- Milestone Challenge Card -->
+  <div class="milestone-section">
+    <div class="milestone-card">
+      <div class="milestone-header">
+        <h3><i class="bi bi-trophy-fill" style="color:var(--gold-l);"></i> 10-Sale Milestone Challenge</h3>
+        <span class="milestone-bonus-pill" id="milestone-bonus-pill">₦10,000 Cash Bonus</span>
+      </div>
+      <p style="font-size:.9rem; color:var(--gray-l); margin:0 0 12px; line-height:1.5;" id="milestone-desc">
+        Make 10 total verified sales of the Academic Comeback Package to automatically unlock an extra <strong>₦10,000 cash bonus</strong> on top of your 60% commissions.
+      </p>
+      <div class="progress-track">
+        <div class="progress-fill" id="milestone-progress-bar" style="width:0%;"></div>
+      </div>
+      <div class="progress-labels">
+        <span id="milestone-sales-text">0 / 10 Sales</span>
+        <span id="milestone-status-badge" style="font-weight:700; color:var(--gold-l);">In Progress</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recruiter Program Hub -->
+  <div class="recruiter-box">
+    <div class="recruiter-header">
+      <div>
+        <h3><i class="bi bi-people-fill" style="color:#4ade80;"></i> Invite Other Affiliates & Earn ₦5,000 Each</h3>
+        <p>Invite friends to join our affiliate program. When anyone you invite hits their first 10 sales, you automatically receive a <strong>₦5,000 cash recruiter bonus</strong>!</p>
+      </div>
+      <div style="text-align:right;">
+        <span style="font-size:.76rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:.8px; font-weight:700; display:block; margin-bottom:4px;">Recruits Total</span>
+        <span style="font-family:'Clash Display', sans-serif; font-size:1.4rem; font-weight:700; color:#4ade80;" id="recruits-count">0</span>
+      </div>
+    </div>
+
+    <div class="recruiter-share-row">
+      <div class="recruiter-link-wrap">
+        <span id="aff-recruiter-link-val">Generating your invite link...</span>
+        <button class="copy-btn" id="aff-recruiter-copy-btn" title="Copy Recruiter Link"><i class="bi bi-copy"></i></button>
+      </div>
+      <a href="#" id="recruiter-whatsapp-btn" target="_blank" class="btn-whatsapp">
+        <i class="bi bi-whatsapp"></i> Share on WhatsApp
+      </a>
+    </div>
+
+    <h4 style="font-size:.95rem; font-weight:700; margin:24px 0 12px; color:#fff;">Your Recruited Affiliates</h4>
+    <table id="recruits-table">
+      <thead><tr><th>Affiliate</th><th>Date Joined</th><th>Their Sales Progress</th><th>Your Recruiter Bonus</th></tr></thead>
+      <tbody><tr><td colspan="4" style="text-align:center; color:var(--gray-l)">You haven't invited any affiliates yet. Share your invite link above to start earning ₦5,000 per active recruit!</td></tr></tbody>
+    </table>
+  </div>
+
   <div style="background:var(--ink2); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); padding:24px; margin-bottom:40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
     <div>
       <div style="font-size:.76rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:.8px; font-weight:700; margin-bottom:6px;">Your Payout Bank Account</div>
@@ -151,6 +221,15 @@
     <button onclick="editMyBankDetails()" style="background:rgba(201,151,58,.15); border:1px solid rgba(201,151,58,.3); color:var(--gold-l); font-size:.82rem; font-weight:700; padding:8px 18px; border-radius:var(--radius-full); cursor:pointer; transition:all .2s;">
       <i class="bi bi-pencil-square"></i> Update Bank Details
     </button>
+  </div>
+
+  <!-- Milestone Bonuses Earned Section -->
+  <div class="sales-section" id="milestones-section" style="margin-bottom:40px;">
+    <h2>Milestone Cash Bonuses Earned</h2>
+    <table id="milestones-table">
+      <thead><tr><th>Bonus Type</th><th>Amount</th><th>Date Unlocked</th><th>Status</th></tr></thead>
+      <tbody><!-- Injected --></tbody>
+    </table>
   </div>
 
   <div class="assets-section">
@@ -288,6 +367,99 @@
             <td><span class="status-tag ${s.status}">${s.status === 'paid' ? 'Paid' : 'Unpaid'}</span></td>
           </tr>
         `).join('');
+      }
+
+      // Milestone 10-Sale Challenge
+      const conversions = data.conversions || 0;
+      const directProgress = data.direct_milestone_progress || Math.min(100, Math.round((conversions / 10) * 100));
+      const progressBar = document.getElementById('milestone-progress-bar');
+      if (progressBar) progressBar.style.width = `${directProgress}%`;
+      
+      const salesText = document.getElementById('milestone-sales-text');
+      if (salesText) salesText.textContent = `${conversions} / 10 Sales (${directProgress}%)`;
+
+      const statusBadge = document.getElementById('milestone-status-badge');
+      if (statusBadge) {
+        if (data.direct_milestone_unlocked || conversions >= 10) {
+          statusBadge.textContent = '🎉 UNLOCKED (₦10,000 Bonus Earned)';
+          statusBadge.style.color = '#4ade80';
+        } else {
+          const remaining = Math.max(0, 10 - conversions);
+          statusBadge.textContent = `${remaining} more sale${remaining === 1 ? '' : 's'} to unlock ₦10,000`;
+          statusBadge.style.color = 'var(--gold-l)';
+        }
+      }
+
+      // Recruiter Hub
+      const recruiterLink = data.affiliate_invite_link || `${window.location.origin}/affiliate/register?invite=${data.code}`;
+      const recruiterLinkVal = document.getElementById('aff-recruiter-link-val');
+      if (recruiterLinkVal) {
+        recruiterLinkVal.textContent = recruiterLink;
+        recruiterLinkVal.title = recruiterLink;
+      }
+      const recruiterCopyBtn = document.getElementById('aff-recruiter-copy-btn');
+      if (recruiterCopyBtn) {
+        recruiterCopyBtn.onclick = function() {
+          copyToClipboard(recruiterLink, this);
+        };
+      }
+
+      const whatsappShareBtn = document.getElementById('recruiter-whatsapp-btn');
+      if (whatsappShareBtn) {
+        const shareMsg = `Hey! Join the Academic Comeback Affiliate Program with me. You earn 60% instant commissions on every sale + ₦10,000 milestone cash bonuses! Register here: ${recruiterLink}`;
+        whatsappShareBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareMsg)}`;
+      }
+
+      const recruitsCount = document.getElementById('recruits-count');
+      if (recruitsCount) recruitsCount.textContent = data.total_recruits || 0;
+
+      // Recruited Affiliates Table
+      const recruitsTbody = document.querySelector('#recruits-table tbody');
+      if (recruitsTbody) {
+        const recruits = data.invited_affiliates || [];
+        if (recruits.length === 0) {
+          recruitsTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--gray-l)">You haven\'t invited any affiliates yet. Share your invite link above to start earning ₦5,000 per recruit!</td></tr>';
+        } else {
+          recruitsTbody.innerHTML = recruits.map(r => `
+            <tr>
+              <td><strong>${r.name || r.code}</strong></td>
+              <td>${new Date(r.created_at).toLocaleDateString()}</td>
+              <td>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="flex:1; max-width:100px; height:8px; background:rgba(255,255,255,.1); border-radius:4px; overflow:hidden;">
+                    <div style="width:${Math.min(100, Math.round((r.sales_count/10)*100))}%; height:100%; background:#4ade80;"></div>
+                  </div>
+                  <span>${r.sales_count} / 10</span>
+                </div>
+              </td>
+              <td><span class="status-tag ${r.bonus_unlocked ? 'paid' : 'unpaid'}">${r.bonus_unlocked ? '₦5,000 Unlocked!' : 'In Progress'}</span></td>
+            </tr>
+          `).join('');
+        }
+      }
+
+      // Milestone Bonuses History Table
+      const milestonesTbody = document.querySelector('#milestones-table tbody');
+      if (milestonesTbody) {
+        const milestones = data.milestones || [];
+        if (milestones.length === 0) {
+          milestonesTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:var(--gray-l)">No milestone bonuses unlocked yet. Reach 10 sales or invite active affiliates to unlock cash bonuses!</td></tr>';
+        } else {
+          milestonesTbody.innerHTML = milestones.map(m => {
+            const isDirect = m.type === 'direct_10_sales';
+            const title = isDirect ? '🏆 Direct 10-Sale Milestone' : `🎉 Recruiter Bonus (${m.subaffiliate_name || m.subaffiliate_code})`;
+            const statusClass = m.status === 'paid' ? 'paid' : 'unpaid';
+            const statusText = m.status === 'paid' ? 'Paid' : 'Unpaid (Pending Payout)';
+            return `
+              <tr>
+                <td><strong>${title}</strong></td>
+                <td><strong style="color:#4ade80;">${money(m.amount)}</strong></td>
+                <td>${new Date(m.created_at).toLocaleDateString()}</td>
+                <td><span class="status-tag ${statusClass}">${statusText}</span></td>
+              </tr>
+            `;
+          }).join('');
+        }
       }
 
       document.getElementById('loader').style.display = 'none';

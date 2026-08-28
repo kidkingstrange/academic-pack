@@ -46,6 +46,7 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
             db, name=body.name, email=body.email, source="self_registered",
             registration_ip=ip, bank_name=body.bank_name, bank_code=body.bank_code,
             account_number=body.account_number, account_name=body.account_name,
+            invited_by=body.invited_by,
         )
     except ValueError as e:
         if str(e) == "duplicate_email":
@@ -55,6 +56,7 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
     affiliate = await ensure_affiliate_subaccount(db, affiliate)
 
     referral_link = f"{settings.APP_URL}/r/{affiliate['code']}"
+    affiliate_invite_link = f"{settings.APP_URL}/affiliate/register?invite={affiliate['code']}"
     dashboard_link = f"{settings.APP_URL}/affiliate/dashboard?token={affiliate['dashboard_token']}"
 
     # Server-side conversion confirmation — fires exactly once per real
@@ -84,6 +86,7 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
         "name": affiliate["name"],
         "code": affiliate["code"],
         "referral_link": referral_link,
+        "affiliate_invite_link": affiliate_invite_link,
         "dashboard_link": dashboard_link,
         "scheduled_at": now,
         "status": "pending",
@@ -96,9 +99,11 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
     return {
         "code": affiliate["code"],
         "referral_link": referral_link,
+        "affiliate_invite_link": affiliate_invite_link,
         "dashboard_link": dashboard_link,
         "name": affiliate["name"],
         "email": affiliate["email"],
+        "invited_by": affiliate.get("invited_by"),
     }
 
 

@@ -35,6 +35,7 @@ async def create_affiliate_record(
     bank_code: str = None,
     account_number: str = None,
     account_name: str = None,
+    invited_by: str = None,
 ) -> dict:
     """
     Insert a new affiliate. Raises ValueError("duplicate_email") or
@@ -60,6 +61,13 @@ async def create_affiliate_record(
         else settings.AFFILIATE_DEFAULT_COMMISSION_PERCENT
     )
 
+    parent_code = None
+    if invited_by:
+        clean_invite = invited_by.strip().upper()
+        parent = await db.affiliates.find_one({"code": clean_invite, "active": True})
+        if parent:
+            parent_code = clean_invite
+
     doc = {
         "code": resolved_code,
         "name": name,
@@ -72,6 +80,7 @@ async def create_affiliate_record(
         "source": source,
         "commission_percent": resolved_commission,
         "dashboard_token": secrets.token_urlsafe(24),
+        "invited_by": parent_code,
         "created_at": now,
     }
     if registration_ip:
@@ -160,3 +169,35 @@ async def ensure_affiliate_subaccount(db, affiliate: dict) -> dict:
     await db.affiliates.update_one({"_id": affiliate["_id"]}, {"$set": update_fields})
     affiliate.update(update_fields)
     return affiliate
+
+
+async def get_or_create_customer_affiliate(
+    db,
+    *,
+    name: str,
+    email: str,
+    invited_by: str = None,
+) -> tuple[dict, bool]:
+    """
+    Finds an existing affiliate by email, or auto-provisions a new affiliate
+    record for a paying customer with source='auto_customer_upgrade'.
+    Returns (affiliate_doc, created_bool).
+    """
+    clean_email = (email or "").lower().strip()
+    if not clean_email:
+        return None, False
+
+    existing = await db.affiliates.find_one({"email": clean_email})
+    if existing:
+        return existing, False
+
+    clean_name = (name or "").strip() or "Valued Ambassador"
+    doc = await create_affiliate_record(
+        db,
+        name=clean_name,
+        email=clean_email,
+        source="auto_customer_upgrade",
+        invited_by=invited_by,
+    )
+    return doc, True
+
