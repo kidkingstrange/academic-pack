@@ -75,6 +75,15 @@ const SITE_REGISTRY = [
     metric: "active_subscriptions",
     status_key: "past_due_subscriptions",
   },
+  {
+    id: "preorders",
+    title: "Pre-Orders Fulfillment",
+    description: "Track multi-book pre-orders, monitor fulfillment wait time, manage customer refund requests, and mark books delivered.",
+    category: "Money & Orders",
+    type: "admin-section",
+    target: "preorders",
+    icon: "bi bi-box-seam-fill",
+  },
 
   // ── People ───────────────────────────────────────────────────────────────
   {
@@ -137,6 +146,15 @@ const SITE_REGISTRY = [
     type: "public-page",
     target: "/unsubscribe",
     icon: "bi bi-bell-slash-fill",
+  },
+  {
+    id: "abandoned",
+    title: "Abandoned Cart Recovery",
+    description: "Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences.",
+    category: "Communication",
+    type: "admin-section",
+    target: "abandoned",
+    icon: "bi bi-cart-x-fill",
   },
 
   // ── Public Pages ─────────────────────────────────────────────────────────

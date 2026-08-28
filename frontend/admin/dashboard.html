@@ -1454,6 +1454,7 @@
         </div>
         <div class="header-title">
           <h1 id="page-title">Master's Eye View</h1>
+          <div class="header-sub" id="page-sub">Everything on the site, in one place — search, jump to any area, and see what needs attention</div>
         </div>
       </div>
     </div>
@@ -2107,249 +2108,9 @@
 <div id="toast-container"></div>
 
 
-<script src="site-registry.js">
-  // ── AWARD-WINNING TOAST NOTIFICATION ENGINE ─────────────────────────────────
-  function showToast(message, type = 'success', duration = 3500) {
-    const container = document.getElementById('toast-container');
-    if (!container) return;
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    const icon = type === 'success' ? 'bi-check-circle-fill' : (type === 'error' ? 'bi-exclamation-circle-fill' : 'bi-info-circle-fill');
-    toast.innerHTML = `<i class="bi ${icon}"></i> <span>${escapeHtml(message)}</span>`;
-    container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(10px) scale(0.95)';
-      toast.style.transition = 'all 0.25s ease';
-      setTimeout(() => toast.remove(), 250);
-    }, duration);
-  }
-
-  // ── COMMAND PALETTE ENGINE (Cmd+K / Ctrl+K) ──────────────────────────────────
-  const COMMAND_ITEMS = [
-    { title: "Master's Eye View Hub", group: "Navigation", icon: "bi-grid-1x2-fill", action: () => switchSection('hub') },
-    { title: "Analytics & Executive Velocity", group: "Navigation", icon: "bi-speedometer2", action: () => switchSection('dashboard') },
-    { title: "Sales & Orders Ledger", group: "Navigation", icon: "bi-credit-card-2-front", action: () => switchSection('sales') },
-    { title: "Customers 360° Directory", group: "Navigation", icon: "bi-people", action: () => switchSection('customers') },
-    { title: "Affiliates & Recruiter Tree", group: "Navigation", icon: "bi-megaphone", action: () => switchSection('affiliates') },
-    { title: "Payouts & Automated Milestone Releases", group: "Navigation", icon: "bi-cash-stack", action: () => switchSection('payouts') },
-    { title: "Subscriptions & Recurring Billing", group: "Navigation", icon: "bi-calendar2-check", action: () => switchSection('subscriptions') },
-    { title: "Sales Team & Rep Accounts", group: "Navigation", icon: "bi-person-badge", action: () => switchSection('team') },
-    { title: "52-Day Curriculum Email Sequence", group: "Navigation", icon: "bi-envelope-check", action: () => switchSection('sequence') },
-    { title: "Email Delivery Infrastructure Monitor", group: "Navigation", icon: "bi-shield-check", action: () => switchSection('email-delivery') },
-    { title: "Abandoned Cart Recovery Pipeline", group: "Navigation", icon: "bi-cart-x", action: () => switchSection('abandoned') },
-    { title: "Pre-Orders & Waitlists", group: "Navigation", icon: "bi-box-seam", action: () => switchSection('preorders') },
-    
-    { title: "Export Sales Ledger to CSV", group: "Quick Actions", icon: "bi-download", action: () => exportSalesCSV() },
-    { title: "Build Pending Payout Batch Now", group: "Quick Actions", icon: "bi-cash-coin", action: () => buildBatchNow() },
-    { title: "Create New Sales Team Member", group: "Quick Actions", icon: "bi-person-plus", action: () => openCreateTeamMemberModal() },
-    { title: "Trigger Abandoned Cart Check Sweep", group: "Quick Actions", icon: "bi-arrow-repeat", action: () => triggerAbandonedCheck() },
-    { title: "Show Keyboard Shortcuts Cheatsheet", group: "Help", icon: "bi-keyboard", action: () => openShortcutsModal() }
-  ];
-
-  let cmdSelectedIndex = 0;
-  let filteredCmdItems = [...COMMAND_ITEMS];
-
-  function openCommandPalette() {
-    const overlay = document.getElementById('cmd-overlay');
-    overlay.classList.add('open');
-    const input = document.getElementById('cmd-search-input');
-    input.value = '';
-    cmdSelectedIndex = 0;
-    filterCommandPalette();
-    setTimeout(() => input.focus(), 50);
-  }
-
-  function closeCommandPalette(e) {
-    if (e && e.target && e.target !== document.getElementById('cmd-overlay') && !e.target.classList.contains('cmd-overlay')) return;
-    document.getElementById('cmd-overlay').classList.remove('open');
-  }
-
-  function filterCommandPalette() {
-    const query = (document.getElementById('cmd-search-input').value || '').toLowerCase().trim();
-    filteredCmdItems = COMMAND_ITEMS.filter(item => {
-      return !query || item.title.toLowerCase().includes(query) || item.group.toLowerCase().includes(query);
-    });
-    cmdSelectedIndex = 0;
-    renderCommandResults();
-  }
-
-  function renderCommandResults() {
-    const container = document.getElementById('cmd-results');
-    if (filteredCmdItems.length === 0) {
-      container.innerHTML = '<div style="padding:24px;text-align:center;color:var(--gray-muted);font-size:0.85rem">No matching commands</div>';
-      return;
-    }
-
-    const byGroup = {};
-    filteredCmdItems.forEach((item, idx) => {
-      if (!byGroup[item.group]) byGroup[item.group] = [];
-      byGroup[item.group].push({ item, globalIdx: idx });
-    });
-
-    let html = '';
-    Object.keys(byGroup).forEach(group => {
-      html += `<div class="cmd-group-title">${escapeHtml(group)}</div>`;
-      byGroup[group].forEach(({ item, globalIdx }) => {
-        const isSel = globalIdx === cmdSelectedIndex;
-        html += `
-          <div class="cmd-item ${isSel ? 'selected' : ''}" onclick="executeCmdIndex(${globalIdx})">
-            <div class="cmd-item-left">
-              <i class="bi ${item.icon}"></i>
-              <span>${escapeHtml(item.title)}</span>
-            </div>
-            <span class="cmd-badge">${escapeHtml(item.group)}</span>
-          </div>
-        `;
-      });
-    });
-    container.innerHTML = html;
-  }
-
-  function executeCmdIndex(idx) {
-    if (filteredCmdItems[idx]) {
-      document.getElementById('cmd-overlay').classList.remove('open');
-      filteredCmdItems[idx].action();
-    }
-  }
-
-  // ── KEYBOARD SHORTCUTS MODAL ────────────────────────────────────────────────
-  function openShortcutsModal() {
-    document.getElementById('shortcuts-overlay').classList.add('open');
-  }
-  function closeShortcutsModal(e) {
-    if (e && e.target && e.target !== document.getElementById('shortcuts-overlay') && !e.target.classList.contains('shortcuts-overlay')) return;
-    document.getElementById('shortcuts-overlay').classList.remove('open');
-  }
-
-  // ── GLOBAL KEYBOARD LISTENERS ───────────────────────────────────────────────
-  let gPressed = false;
-  let gTimeout = null;
-
-  window.addEventListener('keydown', (e) => {
-    // Cmd+K or Ctrl+K for Command Palette
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-      e.preventDefault();
-      const overlay = document.getElementById('cmd-overlay');
-      if (overlay.classList.contains('open')) {
-        overlay.classList.remove('open');
-      } else {
-        openCommandPalette();
-      }
-      return;
-    }
-
-    // Escape closes palette, shortcuts, and drawers
-    if (e.key === 'Escape') {
-      document.getElementById('cmd-overlay').classList.remove('open');
-      document.getElementById('shortcuts-overlay').classList.remove('open');
-      closeDrawer();
-      return;
-    }
-
-    // Palette navigation
-    const cmdOpen = document.getElementById('cmd-overlay').classList.contains('open');
-    if (cmdOpen) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        cmdSelectedIndex = (cmdSelectedIndex + 1) % filteredCmdItems.length;
-        renderCommandResults();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        cmdSelectedIndex = (cmdSelectedIndex - 1 + filteredCmdItems.length) % filteredCmdItems.length;
-        renderCommandResults();
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        executeCmdIndex(cmdSelectedIndex);
-      }
-      return;
-    }
-
-    // Ignore single key shortcuts when user is typing in an input/textarea
-    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
-      return;
-    }
-
-    // '?' opens shortcuts
-    if (e.key === '?' || (e.shiftKey && e.key === '/')) {
-      openShortcutsModal();
-      return;
-    }
-
-    // Two-key chord (G then key)
-    if (e.key.toLowerCase() === 'g') {
-      gPressed = true;
-      clearTimeout(gTimeout);
-      gTimeout = setTimeout(() => { gPressed = false; }, 1000);
-      return;
-    }
-
-    if (gPressed) {
-      gPressed = false;
-      const k = e.key.toLowerCase();
-      if (k === 'h') switchSection('hub');
-      else if (k === 'd') switchSection('dashboard');
-      else if (k === 's') switchSection('sales');
-      else if (k === 'c') switchSection('customers');
-      else if (k === 'a') switchSection('affiliates');
-      else if (k === 'p') switchSection('payouts');
-    }
-  });
-
-  // Breadcrumb Updater Integration
-  const SECTION_METAS = {
-    hub: { group: 'Executive', title: "Master's Hub" },
-    dashboard: { group: 'Executive', title: 'Analytics & Velocity' },
-    sales: { group: 'Money & Orders', title: 'Sales Ledger' },
-    payouts: { group: 'Money & Orders', title: 'Payouts & Milestones' },
-    subscriptions: { group: 'Money & Orders', title: 'Subscriptions' },
-    preorders: { group: 'Money & Orders', title: 'Pre-Orders' },
-    customers: { group: 'People & Network', title: 'Customers 360°' },
-    affiliates: { group: 'People & Network', title: 'Affiliates & Tree' },
-    team: { group: 'People & Network', title: 'Sales Team' },
-    sequence: { group: 'System & Funnels', title: 'Email Curriculum' },
-    'email-delivery': { group: 'System & Funnels', title: 'Delivery Health' },
-    abandoned: { group: 'System & Funnels', title: 'Cart Recovery' }
-  };
-
-  const originalSwitchSection = switchSection;
-  switchSection = function(viewId) {
-    originalSwitchSection(viewId);
-    const meta = SECTION_METAS[viewId] || { group: 'Console', title: viewId };
-    const catEl = document.getElementById('breadcrumb-category');
-    const actEl = document.getElementById('breadcrumb-active-view');
-    if (catEl) catEl.textContent = meta.group;
-    if (actEl) actEl.textContent = meta.title;
-  };
-
-  // Table Sorter Helper
-  window.sortTable = function(tableId, colIndex, isNumeric = false) {
-    const table = document.getElementById(tableId);
-    if (!table) return;
-    const tbody = table.querySelector('tbody');
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-    const th = table.querySelectorAll('th')[colIndex];
-    const asc = th.dataset.sortAsc !== 'true';
-    th.dataset.sortAsc = asc ? 'true' : 'false';
-
-    rows.sort((a, b) => {
-      const aText = (a.children[colIndex]?.innerText || '').trim();
-      const bText = (b.children[colIndex]?.innerText || '').trim();
-      if (isNumeric) {
-        const aNum = parseFloat(aText.replace(/[^0-9.-]+/g, '')) || 0;
-        const bNum = parseFloat(bText.replace(/[^0-9.-]+/g, '')) || 0;
-        return asc ? aNum - bNum : bNum - aNum;
-      }
-      return asc ? aText.localeCompare(bText) : bText.localeCompare(aText);
-    });
-
-    tbody.innerHTML = '';
-    rows.forEach(r => tbody.appendChild(r));
-    showToast(`Sorted by ${th.innerText.replace(/[^a-zA-Z0-9 ]/g, '').trim()} (${asc ? 'Asc' : 'Desc'})`, 'info', 1500);
-  };
-\n</script>
+<script src="/admin/site-registry.js"></script>
 <script>
+
   const token = sessionStorage.getItem('admin_token');
   if(!token) window.location.href = '/admin';
 
@@ -2393,7 +2154,8 @@
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-    document.getElementById('view-' + viewId).classList.add('active');
+    const sec = document.getElementById('view-' + viewId);
+    if (sec) sec.classList.add('active');
     
     // Set active class on sidebar items
     const sidebarLink = Array.from(document.querySelectorAll('.sidebar .nav-item')).find(n => {
@@ -2405,24 +2167,27 @@
     }
 
     const titles = {
-      hub: { title: "Master's Eye View", sub: 'Everything on the site, in one place — search, jump to any area, and see what needs attention' },
-      dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
-      sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
-      customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
-      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
-      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
-      subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' },
-      team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
-      sequence: { title: '52-Email Curriculum Sequence', sub: 'Track each subscriber\'s position in the automated email journey — see who is on-track, behind, or needs a manual resend' },
-      'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' },
-      abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences' },
-      preorders: { title: 'Pre-Orders Fulfillment Tracking', sub: 'Track multi-book pre-orders, days since purchase, customer refund requests, and mark orders as delivered' }
+      hub: { title: "Master's Eye View", sub: 'Everything on the site, in one place — search, jump to any area, and see what needs attention', group: 'Executive Cockpit' },
+      dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance', group: 'Executive Cockpit' },
+      sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution', group: 'Money & Orders' },
+      customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags', group: 'People & Growth' },
+      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here', group: 'People & Growth' },
+      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval', group: 'Money & Orders' },
+      subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations', group: 'Money & Orders' },
+      team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics', group: 'People & Growth' },
+      sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend", group: 'System & Funnels' },
+      'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks', group: 'System & Funnels' },
+      abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences', group: 'System & Funnels' },
+      preorders: { title: 'Pre-Orders Fulfillment Tracking', sub: 'Track multi-book pre-orders, days since purchase, customer refund requests, and mark orders as delivered', group: 'Money & Orders' }
     };
 
-    const meta = titles[viewId] || { title: 'Admin Suite', sub: '' };
-    document.getElementById('page-title').textContent = meta.title;
-    document.getElementById('page-sub').textContent = meta.sub;
+    const meta = titles[viewId] || { title: 'Admin Suite', sub: '', group: 'Console' };
+    const titleEl = document.getElementById('page-title'); if (titleEl) titleEl.textContent = meta.title;
+    const subEl = document.getElementById('page-sub'); if (subEl) subEl.textContent = meta.sub;
+    const catEl = document.getElementById('breadcrumb-category'); if (catEl) catEl.textContent = meta.group;
+    const actEl = document.getElementById('breadcrumb-active-view'); if (actEl) actEl.textContent = meta.title;
 
+    restoreScrollPosition(viewId);
     refreshCurrentView();
   }
 
@@ -4120,45 +3885,7 @@
   let seqSearchTimeout = null;
   let abPage = 1;
 
-  // Initial Load
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialTab = urlParams.get('tab') || 'hub';
-  currentView = initialTab;
-  
-  // Set active class on view sections
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  const targetSection = document.getElementById('view-' + initialTab);
-  if (targetSection) targetSection.classList.add('active');
-  
-  // Set active class on sidebar items
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const sidebarLink = Array.from(document.querySelectorAll('.sidebar .nav-item')).find(n => {
-    const onclickAttr = n.getAttribute('onclick') || '';
-    return onclickAttr.includes(`'${initialTab}'`) || onclickAttr.includes(`"${initialTab}"`);
-  });
-  if (sidebarLink) {
-    sidebarLink.classList.add('active');
-  }
 
-  // Update page header titles
-  const titles = {
-    hub: { title: "Master's Eye View", sub: 'Everything on the site, in one place — search, jump to any area, and see what needs attention' },
-    dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance' },
-    sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution' },
-    customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags' },
-    affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here' },
-    payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval' },
-    subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations' },
-    team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics' },
-    sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend" },
-    'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks' },
-    abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences' }
-  };
-  const meta = titles[initialTab] || { title: 'Admin Suite', sub: '' };
-  document.getElementById('page-title').textContent = meta.title;
-  document.getElementById('page-sub').textContent = meta.sub;
-
-  refreshCurrentView();
 
   // ── EMAIL SEQUENCE VIEW ────────────────────────────────────────────────────
   function safeDate(str) {
@@ -4799,31 +4526,7 @@
     }
   });
 
-  // Breadcrumb Updater Integration
-  const SECTION_METAS = {
-    hub: { group: 'Executive', title: "Master's Hub" },
-    dashboard: { group: 'Executive', title: 'Analytics & Velocity' },
-    sales: { group: 'Money & Orders', title: 'Sales Ledger' },
-    payouts: { group: 'Money & Orders', title: 'Payouts & Milestones' },
-    subscriptions: { group: 'Money & Orders', title: 'Subscriptions' },
-    preorders: { group: 'Money & Orders', title: 'Pre-Orders' },
-    customers: { group: 'People & Network', title: 'Customers 360°' },
-    affiliates: { group: 'People & Network', title: 'Affiliates & Tree' },
-    team: { group: 'People & Network', title: 'Sales Team' },
-    sequence: { group: 'System & Funnels', title: 'Email Curriculum' },
-    'email-delivery': { group: 'System & Funnels', title: 'Delivery Health' },
-    abandoned: { group: 'System & Funnels', title: 'Cart Recovery' }
-  };
 
-  const originalSwitchSection = switchSection;
-  switchSection = function(viewId) {
-    originalSwitchSection(viewId);
-    const meta = SECTION_METAS[viewId] || { group: 'Console', title: viewId };
-    const catEl = document.getElementById('breadcrumb-category');
-    const actEl = document.getElementById('breadcrumb-active-view');
-    if (catEl) catEl.textContent = meta.group;
-    if (actEl) actEl.textContent = meta.title;
-  };
 
   // Table Sorter Helper
   window.sortTable = function(tableId, colIndex, isNumeric = false) {
@@ -4850,7 +4553,13 @@
     rows.forEach(r => tbody.appendChild(r));
     showToast(`Sorted by ${th.innerText.replace(/[^a-zA-Z0-9 ]/g, '').trim()} (${asc ? 'Asc' : 'Desc'})`, 'info', 1500);
   };
-\n</script>
+
+  // ── INITIAL BOOT ──────────────────────────────────────────────────────────
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialTab = urlParams.get('tab') || 'hub';
+  switchSection(initialTab);
+
+</script>
 </body>
 </html>
 
