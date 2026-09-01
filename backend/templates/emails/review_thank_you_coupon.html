@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block subject %}Thank you for your review! Here is your 20% discount gift, {{ name }}{% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Thank You For Your Feedback! 🎉</h2>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, we deeply appreciate you taking a moment to share your experience with the Academic Comeback Package. Your review is invaluable to the student community.
+</p>
+
+<!-- Coupon Code Box -->
+<div style="background:linear-gradient(135deg, #0d0f14, #161922);border-radius:14px;padding:24px;margin:0 0 24px;border:1px solid #d4a63a;text-align:center">
+  <span style="background:rgba(212,166,58,0.2);color:#f0c058;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase">🎁 YOUR 20% OFF GIFT CODE</span>
+  <p style="color:#fff;font-family:monospace;font-size:26px;font-weight:800;letter-spacing:2px;margin:16px 0;background:rgba(255,255,255,0.06);padding:12px;border-radius:8px;border:1px dashed #d4a63a">
+    {{ coupon_code }}
+  </p>
+  <p style="color:#cbd5e0;font-size:13px;line-height:1.5;margin:0">
+    Use this single-use code at checkout on any blueprint in the Scale Group Library, or share it with a friend who needs an academic comeback!
+  </p>
+</div>
+
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ app_url }}/" style="background:linear-gradient(135deg,#d4a63a,#b88b22);color:#fff;display:inline-block;padding:14px 32px;font-size:15px;font-weight:700;border-radius:10px;text-decoration:none">
+    📚 Explore the Playbook Library →
+  </a>
+</div>
+
+<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
+  Keep pushing for that First Class target this semester!
+</p>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block subject %}How is your study progress going, {{ name }}? (Quick 60-second check-in + 20% gift){% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Quick 60-Second Check-In</h2>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, it's been a few days since you unlocked the <strong>Academic Comeback Package</strong>.
+</p>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  We'd love to hear how the <strong>20-Minute Quick-Start Active Retrieval Protocol</strong> is working for your study sessions. Your feedback directly helps other students overcome exam anxiety and improve their CGPA.
+</p>
+
+<div style="background:#fff8e6;border:1px dashed #d4a63a;border-radius:12px;padding:16px 20px;margin:0 0 24px;text-align:center">
+  <p style="margin:0 0 4px;font-size:13px;color:#8a6600;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">🎁 THANK YOU GIFT INCLUDED</p>
+  <p style="margin:0;font-size:15px;color:#0d0f14;font-weight:600">
+    Leave a quick star rating &amp; honest review to instantly unlock a <strong>20% discount coupon</strong> for your next masterclass playbook or to gift a coursemate!
+  </p>
+</div>
+
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ review_url }}" style="background:linear-gradient(135deg,#d4a63a,#b88b22);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(212,166,58,0.3)">⭐ Leave Your Quick Review (60 Seconds) →</a>
+</div>
+
+<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
+  This link is securely tied to your verified purchase. It takes less than a minute.
+</p>
+{% endblock %}

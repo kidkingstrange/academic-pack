@@ -68,6 +68,7 @@ async def complete_payment(
             "gateway_response": gateway_response,
             "verified_at": now,
             "created_at": now,
+            "purchase_date": now,
             "ip_address": ip_address,
             "completed_via": completed_via,
         })
@@ -85,6 +86,7 @@ async def complete_payment(
             "email": email,
             "role": "customer",
             "created_at": now,
+            "purchase_date": now,
             "last_login": now,
             "is_active": True,
             "purchased_products": ["all"],

@@ -31,9 +31,14 @@ def html_to_text(html_content: str) -> str:
     return html.unescape(text)
 
 
-def render_template(template_name: str, context: dict) -> str:
+def render_template(template_name: str, context: dict = None, **kwargs) -> str:
     tpl = env.get_template(template_name)
-    return tpl.render(**context)
+    merged = {}
+    if context:
+        merged.update(context)
+    if kwargs:
+        merged.update(kwargs)
+    return tpl.render(**merged)
 
 
 SMTP_TIMEOUT_SECONDS = 30

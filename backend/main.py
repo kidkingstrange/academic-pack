@@ -21,7 +21,7 @@ from .routes import (
     payments, library, admin as admin_router, community,
     affiliates, affiliate_public, affiliate_dashboard, tracking,
     admin_payouts, sales as sales_router, admin_email_delivery,
-    admin_abandoned, preorders, lead_magnet,
+    admin_abandoned, preorders, lead_magnet, reviews,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
@@ -29,6 +29,7 @@ from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge
 from .workers.subscription_scheduler import start_subscription_scheduler, stop_subscription_scheduler
 from .workers.email_delivery_alert_scheduler import start_alert_scheduler, stop_alert_scheduler
 from .workers.abandoned_recovery_scheduler import start_abandoned_recovery_scheduler, stop_abandoned_recovery_scheduler
+from .workers.review_scheduler import start_review_scheduler
 
 from .utils.security import create_access_token
 from .utils.error_pages import expired_link_page
@@ -98,6 +99,7 @@ app.include_router(admin_email_delivery.router)
 app.include_router(admin_abandoned.router)
 app.include_router(preorders.router)
 app.include_router(lead_magnet.router)
+app.include_router(reviews.router)
 
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
@@ -107,7 +109,7 @@ app.include_router(lead_magnet.router)
 # dormant file rather than deleted, pending an explicit call on whether to
 # remove it entirely.
 
-# ── Static Files (Frontend) ───────────────────────────────────────────────────
+# ── Static Files (Frontend & Uploads) ──────────────────────────────────────────
 class CachedStaticFiles(StaticFiles):
     def __init__(self, *args, cache_control: str = "public, max-age=86400", **kwargs):
         super().__init__(*args, **kwargs)
@@ -120,11 +122,18 @@ class CachedStaticFiles(StaticFiles):
 
 frontend_path = Path(__file__).parent.parent / "frontend"
 pdfs_path = Path(__file__).parent.parent / "pdfs"
+uploads_path = Path(__file__).parent.parent / "uploads"
+uploads_path.mkdir(parents=True, exist_ok=True)
+(uploads_path / "reviews").mkdir(parents=True, exist_ok=True)
+
 if frontend_path.exists():
     app.mount("/assets", CachedStaticFiles(directory=str(frontend_path / "assets"), cache_control="public, max-age=31536000, immutable"), name="assets")
     app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=86400"), name="css")
     app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=86400"), name="js")
     app.mount("/book-covers", CachedStaticFiles(directory=str(frontend_path / "book-covers"), cache_control="public, max-age=31536000, immutable"), name="book-covers")
+
+if uploads_path.exists():
+    app.mount("/uploads", CachedStaticFiles(directory=str(uploads_path), cache_control="public, max-age=86400"), name="uploads")
 
 if pdfs_path.exists():
     app.mount("/pdfs", StaticFiles(directory=str(pdfs_path)), name="pdfs")
@@ -445,6 +454,8 @@ async def startup():
         start_subscription_scheduler()
         start_alert_scheduler()
         start_abandoned_recovery_scheduler()
+        from .database import db as main_db
+        asyncio.create_task(start_review_scheduler(main_db))
         print("⏰ Background schedulers started")
     else:
         print("⏸️ Background schedulers disabled (RUN_SCHEDULERS=false)")

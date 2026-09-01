@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share Your Feedback — Academic Comeback Package</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="/css/main.css?v=4">
+<style>
+  body {
+    background: radial-gradient(circle at 50% 0%, #1a1e2e 0%, #0d0f14 70%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+    font-family: 'Manrope', sans-serif;
+  }
+  .review-card {
+    background: linear-gradient(160deg, #131722 0%, #0d1017 100%);
+    border: 1px solid rgba(212, 166, 58, 0.25);
+    border-radius: 20px;
+    max-width: 540px;
+    width: 100%;
+    padding: 40px 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 166, 58, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .review-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212, 166, 58, 0.12);
+    border: 1px solid rgba(212, 166, 58, 0.3);
+    color: #f3c659;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 50px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .star-rating {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0 24px;
+  }
+  .star-rating i {
+    font-size: 2.2rem;
+    color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+  .star-rating i.active,
+  .star-rating i.hovered {
+    color: #f3c659;
+    transform: scale(1.15);
+  }
+  .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+  }
+  .form-control {
+    width: 100%;
+    background: #181d28;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+  .form-control:focus {
+    outline: none;
+    border-color: #d4a63a;
+  }
+  textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+  }
+  .file-upload-box {
+    border: 2px dashed rgba(212, 166, 58, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.02);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .file-upload-box:hover {
+    background: rgba(212, 166, 58, 0.05);
+    border-color: #d4a63a;
+  }
+  .preview-img {
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 8px;
+    margin-top: 12px;
+    display: none;
+    border: 1px solid rgba(212, 166, 58, 0.4);
+  }
+  .submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #d4a63a 0%, #b88b22 100%);
+    color: #0d0f14;
+    font-size: 1rem;
+    font-weight: 800;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(212, 166, 58, 0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 10px;
+  }
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 166, 58, 0.4);
+  }
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .success-box {
+    display: none;
+    text-align: center;
+  }
+  .coupon-pill {
+    background: #181d28;
+    border: 1px dashed #d4a63a;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: monospace;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #f3c659;
+    letter-spacing: 2px;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .copy-btn {
+    background: #d4a63a;
+    color: #0d0f14;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="review-card">
+  <!-- Review Form State -->
+  <div id="review-form-state">
+    <div style="text-align: center;">
+      <span class="review-badge"><i class="bi bi-patch-check-fill"></i> VERIFIED STUDENT REVIEW</span>
+      <h1 style="font-size: 1.6rem; font-weight: 800; margin: 4px 0 8px; letter-spacing: -0.5px;">How was your experience?</h1>
+      <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.5; margin: 0 0 16px;">
+        Share your honest feedback on the study protocols. Takes 60 seconds & unlocks an instant 20% discount gift.
+      </p>
+
+      <!-- Interactive 5-Star Selector -->
+      <div class="star-rating" id="star-rating">
+        <i class="bi bi-star-fill active" data-rating="1"></i>
+        <i class="bi bi-star-fill active" data-rating="2"></i>
+        <i class="bi bi-star-fill active" data-rating="3"></i>
+        <i class="bi bi-star-fill active" data-rating="4"></i>
+        <i class="bi bi-star-fill active" data-rating="5"></i>
+      </div>
+      <div id="rating-label" style="font-size: 0.82rem; font-weight: 700; color: #f3c659; margin-bottom: 20px;">
+        ⭐⭐⭐⭐⭐ 5 Stars — Outstanding System!
+      </div>
+    </div>
+
+    <form id="review-form" enctype="multipart/form-data">
+      <input type="hidden" name="token" id="token-input" value="{{TOKEN}}">
+      <input type="hidden" name="rating" id="selected-rating" value="5">
+
+      <div class="form-group">
+        <label for="display_name">Your Name (or Nickname):</label>
+        <input type="text" id="display_name" name="display_name" class="form-control" value="{{CUSTOMER_NAME}}" placeholder="e.g. David (300L Engineering)">
+      </div>
+
+      <div class="form-group">
+        <label for="review_text">Your Honest Review &amp; Results:</label>
+        <textarea id="review_text" name="text" class="form-control" required placeholder="What shift did you notice in your study time, retention, or confidence? (e.g. Cut reading time from 4h to 90m...)" minlength="10"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Optional Photo (Study Desk / Screenshot / Avatar):</label>
+        <div class="file-upload-box" id="file-drop-zone">
+          <i class="bi bi-cloud-arrow-up-fill" style="font-size: 1.8rem; color: #d4a63a;"></i>
+          <p style="margin: 6px 0 0; font-size: 0.82rem; color: #94a3b8;">
+            <strong style="color: #fff;">Click to upload</strong> or drag image here (JPG, PNG, WebP)
+          </p>
+          <input type="file" id="photo-input" name="photo" accept="image/*" style="display:none">
+          <img id="image-preview" class="preview-img" alt="Uploaded Preview">
+        </div>
+      </div>
+
+      <div id="error-msg" style="color: #f87171; font-size: 0.85rem; margin-bottom: 12px; display: none; text-align: center;"></div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">
+        🚀 Submit Review &amp; Unlock 20% Gift
+      </button>
+    </form>
+  </div>
+
+  <!-- Success State -->
+  <div id="review-success-state" class="success-box">
+    <div style="width: 56px; height: 56px; border-radius: 50%; background: rgba(34, 197, 94, 0.15); color: #4ade80; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 16px;">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">Review Received! Thank You 🎉</h2>
+    <p style="color: #94a3b8; font-size: 0.88rem; line-height: 1.6; margin-bottom: 20px;">
+      Your feedback helps build the student community. As promised, here is your 20% discount coupon code:
+    </p>
+
+    <div class="coupon-pill">
+      <span id="coupon-display">REV20-XXXXXX</span>
+      <button class="copy-btn" id="copy-coupon-btn" onclick="copyCoupon()">Copy Code</button>
+    </div>
+
+    <p style="color: #64748b; font-size: 0.8rem; line-height: 1.5; margin-bottom: 24px;">
+      A copy of this code has also been sent to your email. You can apply it anytime on the masterclass library.
+    </p>
+
+    <a href="/" style="display: inline-block; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); color: #fff; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-size: 0.9rem; font-weight: 700;">
+      &larr; Return to Library
+    </a>
+  </div>
+</div>
+
+<script>
+  // Star Rating Interactive Selector
+  const stars = document.querySelectorAll('#star-rating i');
+  const ratingInput = document.getElementById('selected-rating');
+  const ratingLabel = document.getElementById('rating-label');
+  const labels = {
+    1: '⭐ 1 Star — Poor experience',
+    2: '⭐⭐ 2 Stars — Needs improvement',
+    3: '⭐⭐⭐ 3 Stars — Average / Decent',
+    4: '⭐⭐⭐⭐ 4 Stars — Very Good & Useful!',
+    5: '⭐⭐⭐⭐⭐ 5 Stars — Outstanding System!'
+  };
+
+  stars.forEach(star => {
+    star.addEventListener('mouseenter', () => {
+      const r = parseInt(star.dataset.rating);
+      updateStars(r, true);
+    });
+    star.addEventListener('click', () => {
+      const r = parseInt(star.dataset.rating);
+      ratingInput.value = r;
+      ratingLabel.textContent = labels[r];
+      updateStars(r, false);
+    });
+  });
+
+  document.getElementById('star-rating').addEventListener('mouseleave', () => {
+    updateStars(parseInt(ratingInput.value), false);
+  });
+
+  function updateStars(rating, isHover) {
+    stars.forEach(s => {
+      const val = parseInt(s.dataset.rating);
+      if (val <= rating) {
+        s.classList.add(isHover ? 'hovered' : 'active');
+      } else {
+        s.classList.remove(isHover ? 'hovered' : 'active');
+      }
+    });
+  }
+
+  // Photo Upload & Preview
+  const dropZone = document.getElementById('file-drop-zone');
+  const photoInput = document.getElementById('photo-input');
+  const imagePreview = document.getElementById('image-preview');
+
+  dropZone.addEventListener('click', () => photoInput.click());
+  photoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size exceeds 5MB limit. Please choose a smaller image.');
+        photoInput.value = '';
+        imagePreview.style.display = 'none';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        imagePreview.src = ev.target.result;
+        imagePreview.style.display = 'inline-block';
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  // Form Submit Handler
+  const form = document.getElementById('review-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const errorMsg = document.getElementById('error-msg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorMsg.style.display = 'none';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting your review...';
+
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.detail || 'Failed to submit review.');
+      }
+
+      document.getElementById('coupon-display').textContent = data.coupon_code || 'REV20-ACTIVE';
+      document.getElementById('review-form-state').style.display = 'none';
+      document.getElementById('review-success-state').style.display = 'block';
+
+    } catch (err) {
+      errorMsg.textContent = err.message;
+      errorMsg.style.display = 'block';
+      submitBtn.disabled = false;
+      submitBtn.textContent = '🚀 Submit Review & Unlock 20% Gift';
+    }
+  });
+
+  function copyCoupon() {
+    const code = document.getElementById('coupon-display').textContent;
+    navigator.clipboard.writeText(code);
+    const btn = document.getElementById('copy-coupon-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy Code', 2000);
+  }
+</script>
+</body>
+</html>

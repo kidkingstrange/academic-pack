@@ -92,6 +92,13 @@ async def connect_db():
             db.sales_leads.create_index([("sales_rep_id", 1), ("created_at", -1)]),
             db.subscriptions.create_index("next_charge_date"),
             db.subscriptions.create_index("customer_email"),
+            # Reviews and Coupons indexes
+            db.reviews.create_index("customer_token_hash", unique=True, sparse=True),
+            db.reviews.create_index([("approved", 1), ("date", -1)]),
+            db.reviews.create_index("date"),
+            db.reviews.create_index("payment_reference"),
+            db.coupons.create_index("code", unique=True),
+            db.coupons.create_index("issued_to"),
         )
         print("✅ MongoDB connected")
     except Exception as e:
