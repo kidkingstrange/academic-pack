@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 
-{% block subject %}Your Academic Comeback Package is still reserved, {{ name }}{% endblock %}
+{% block subject %}Imagine studying for only 90 minutes tonight, {{ name }}{% endblock %}
 
 {% block content %}
-<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Don't miss your academic breakthrough</h2>
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">What made you check out the package today?</h2>
 <p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Hi {{ name }}, your access to the <strong>Academic Comeback Package</strong> is still saved, but your checkout session will expire soon.
+  Hi {{ name }}, when you visited the site today, you were looking for a way to stop studying for hours and blanking out in exams.
 </p>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 20px">
-  Top performing students don't rely on luck — they use a proven system. Get instant access to all 7 core guides and join hundreds of students transforming their grades this semester.
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Here is the truth: <strong>You don't need to read hundreds of pages of theory.</strong> The 20-minute Quick-Start section inside <em>Get Good at Hard Things</em> gives you the exact Active Retrieval protocol to cut your study time in half starting on whatever topic you're reading tonight.
 </p>
+<div style="background:#fff8e6;border-left:4px solid #d4a63a;border-radius:0 8px 8px 0;padding:16px;margin:0 0 20px">
+  <p style="margin:0;font-size:14px;color:#8a6600;line-height:1.6">
+    <strong>The Dream Shift:</strong> Instead of 6-hour night marathons that leave you exhausted, you install 90-minute hyper-focused study blocks. You retain 100% of the material, finish your syllabus weeks ahead, and walk into exam halls completely calm.
+  </p>
+</div>
 <div style="text-align:center;margin:28px 0">
-  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#d4a63a,#b88b22);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(212,166,58,0.3)">🚀 Resume &amp; Claim Access</a>
+  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#d4a63a,#b88b22);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(212,166,58,0.3)">🚀 Unlock Your 20-Minute Protocol Now</a>
 </div>
 <p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
-  Need help or have questions? Simply reply to this email and our team will assist you immediately.
+  Protected by our 30-Day "Higher Retention or Zero Cost" Guarantee.
 </p>
 {% endblock %}

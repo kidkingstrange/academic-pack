@@ -1,22 +1,30 @@
 {% extends "base.html" %}
 
-{% block subject %}Final Reminder: Complete your Academic Comeback, {{ name }}{% endblock %}
+{% block subject %}The real cost of studying the same way this semester, {{ name }}{% endblock %}
 
 {% block content %}
-<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Final notice for your order</h2>
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">The worst feeling in university...</h2>
 <p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Hi {{ name }}, this is our final reminder regarding your reserved copy of the <strong>Academic Comeback Package</strong>.
+  Hi {{ name }}, the worst feeling isn't failing an exam you didn't prepare for. It's spending 3 straight weeks in night class, highlighting entire textbooks, and still opening your result portal to see a D or C.
+</p>
+<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
+  If you continue reading the exact same way, the next exam season will produce the exact same outcome.
 </p>
 {% if discount_enabled %}
 <div style="background:#fff8e6;border:1px dashed #d4a63a;border-radius:12px;padding:16px 20px;margin:0 0 24px;text-align:center">
-  <p style="margin:0 0 4px;font-size:14px;color:#8a6600;font-weight:600">SPECIAL DISCOUNT APPLIED</p>
+  <p style="margin:0 0 4px;font-size:14px;color:#8a6600;font-weight:600">SPECIAL DISCOUNT COURTESY APPLIED</p>
   <p style="margin:0;font-size:20px;font-weight:800;color:#0d0f14">Use Code: <span style="color:#d4a63a;background:#0d0f14;padding:4px 10px;border-radius:6px">{{ discount_code }}</span> for {{ discount_percent }}% OFF!</p>
 </div>
 {% endif %}
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 20px">
-  Everything you need to master your exams, study efficiently, and guarantee top results is ready for immediate download.
-</p>
-<div style="text-align:center;margin:28px 0">
-  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">✨ Complete Your Order Now</a>
+<div style="background:#fef2f2;border-left:4px solid #ef4444;border-radius:0 8px 8px 0;padding:16px;margin:0 0 20px">
+  <p style="margin:0;font-size:14px;color:#991b1b;line-height:1.6">
+    <strong>The Real Cost:</strong> A small one-time investment today is less than the price of a fast-food meal. But the cost of repeating a course, dropping your CGPA, or losing out on job opportunities is massive.
+  </p>
 </div>
+<div style="text-align:center;margin:28px 0">
+  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">✨ Claim Your Copy Risk-Free</a>
+</div>
+<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
+  100% Risk-Free Guarantee: Double your retention in 30 days or get a full refund.
+</p>
 {% endblock %}
