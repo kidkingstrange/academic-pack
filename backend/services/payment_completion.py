@@ -33,6 +33,7 @@ async def complete_payment(
     completed_via: str,
     ip_address: str = None,
     payment_method: str = None,
+    base_price: float = None,
 ) -> dict:
     """
     Idempotently complete a confirmed payment. Safe to call more than once
@@ -49,6 +50,29 @@ async def complete_payment(
     """
     email = email.lower()
     now = datetime.now(timezone.utc)
+    amount_charged = float(amount or 0)
+
+    # ── Resolve base product price ─────────────────────────────────────
+    # Commission, revenue reporting, and refunds must ALWAYS calculate on
+    # the product's base price — NOT the raw gateway amount charged, which
+    # can include Paystack processing fees, bank transfer surcharges, etc.
+    pending = await db.pending_payments.find_one({"reference": reference})
+    currency = (pending.get("currency") if pending else None) or ("USD" if gateway_response.get("currency") == "USD" else "NGN")
+
+    if base_price is not None:
+        resolved_base_price = float(base_price)
+    elif pending and pending.get("base_price") is not None:
+        resolved_base_price = float(pending["base_price"])
+    elif pending and pending.get("amount") is not None:
+        resolved_base_price = float(pending["amount"])
+    else:
+        # Fallback if pending record is somehow missing
+        if currency == "USD":
+            resolved_base_price = float(settings.USD_PRICE)
+        elif amount_charged >= 4500:
+            resolved_base_price = float(settings.PRODUCT_PRICE_LATE_NAIRA)
+        else:
+            resolved_base_price = float(settings.PRODUCT_PRICE_NAIRA)
 
     # ── Atomically claim this reference ────────────────────────────────
     # The unique index on payments.reference (see database.py) makes this
@@ -60,8 +84,10 @@ async def complete_payment(
             "charge_id": charge_id,
             "email": email,
             "name": name,
-            "amount": amount,
-            "currency": "NGN",
+            "base_price": resolved_base_price,
+            "amount_charged": amount_charged,
+            "amount": resolved_base_price,
+            "currency": currency,
             "gateway": "paystack",
             "payment_method": payment_method,
             "status": "success",
@@ -122,13 +148,13 @@ async def complete_payment(
         # pending_payments doc. The commission rate is locked in at the
         # affiliate's *current* rate at this exact moment — a later edit
         # to their rate never retroactively changes what this sale owes.
-        pending = await db.pending_payments.find_one({"reference": reference})
+        # Commission is ALWAYS computed on base_price, method-agnostic.
         referred_by = pending.get("referred_by") if pending else None
         if referred_by:
             affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
             if affiliate:
                 rate = affiliate.get("commission_percent", 0) or 0
-                commission_amount = round(amount * rate / 100, 2)
+                commission_amount = round(resolved_base_price * rate / 100, 2)
                 # split_applied means Paystack already sent the affiliate
                 # their cut directly at the point of payment (see
                 # routes/payments.py + services/affiliate_service.py).
@@ -148,7 +174,10 @@ async def complete_payment(
                         "affiliate_code": referred_by,
                         "email": email,
                         "name": name,
-                        "amount": amount,
+                        "base_price": resolved_base_price,
+                        "amount_charged": amount_charged,
+                        "amount": resolved_base_price,
+                        "currency": currency,
                         "commission_rate": rate,
                         "commission_amount": commission_amount,
                         "commission_status": "paid" if split_applied else "unpaid",
@@ -171,7 +200,7 @@ async def complete_payment(
         # into one conversion rather than counting twice. No-ops safely if
         # FB_CAPI_ACCESS_TOKEN isn't configured.
         capi_result = await send_purchase_event(
-            email=email, amount=amount, reference=reference, ip_address=ip_address,
+            email=email, amount=resolved_base_price, reference=reference, ip_address=ip_address,
         )
         await db.payments.update_one({"reference": reference}, {"$set": {"capi_result": capi_result}})
         if capi_result.get("sent"):

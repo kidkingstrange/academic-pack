@@ -9,6 +9,8 @@ venv/
 !uploads/
 !uploads/products/
 !uploads/products/*.pdf
+uploads/reviews/*
+!uploads/reviews/.gitkeep
 everything-design-taste/
 package-lock.json
 last_7_sales_*.json

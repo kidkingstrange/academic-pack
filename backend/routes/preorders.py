@@ -89,6 +89,7 @@ async def init_preorder_payment(body: PreorderInitRequest, request: Request, db=
             "payment_method": payment_method,
             "email": email_clean,
             "name": body.name,
+            "base_price": amount,
             "amount": amount,
             "currency": "NGN",
             "created_at": now,
@@ -142,6 +143,7 @@ async def verify_preorder_payment(body: PreorderVerifyRequest, request: Request,
     book_id = body.book_id or (pending.get("book_id") if pending else "unknown-book")
     book_title = body.book_title or (pending.get("book_title") if pending else "Pre-order Book")
     customer_name = body.name or (pending.get("name") if pending else "Customer")
+    base_price = (pending.get("base_price") if pending and pending.get("base_price") is not None else pending.get("amount")) if pending else amount_paid
 
     pre_order_doc = {
         "reference": body.reference,
@@ -150,7 +152,9 @@ async def verify_preorder_payment(body: PreorderVerifyRequest, request: Request,
         "name": customer_name,
         "book_id": book_id,
         "book_title": book_title,
-        "amount": amount_paid,
+        "base_price": base_price,
+        "amount_charged": amount_paid,
+        "amount": base_price,
         "currency": "NGN",
         "paid_at": now,
         "created_at": now,
@@ -177,7 +181,9 @@ async def verify_preorder_payment(body: PreorderVerifyRequest, request: Request,
             "charge_id": str(data.get("id")),
             "email": email_clean,
             "name": customer_name,
-            "amount": amount_paid,
+            "base_price": base_price,
+            "amount_charged": amount_paid,
+            "amount": base_price,
             "currency": "NGN",
             "gateway": "paystack",
             "status": "success",
@@ -216,14 +222,17 @@ async def preorder_callback(request: Request, trxref: str = "", reference: str =
         if result.get("status") and data.get("status") == "success":
             now = datetime.now(timezone.utc)
             amount_paid = data.get("amount", 0) / 100.0
+            base_price = (pending.get("base_price") if pending and pending.get("base_price") is not None else pending.get("amount")) if pending else amount_paid
             pre_order_doc = {
                 "reference": ref,
                 "charge_id": str(data.get("id")),
                 "email": email,
                 "name": name,
-                "book_id": pending.get("book_id", "book"),
+                "book_id": pending.get("book_id", "book") if pending else "book",
                 "book_title": book_title,
-                "amount": amount_paid,
+                "base_price": base_price,
+                "amount_charged": amount_paid,
+                "amount": base_price,
                 "currency": "NGN",
                 "paid_at": now,
                 "created_at": now,
