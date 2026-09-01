@@ -18,6 +18,21 @@ def get_headers() -> Dict[str, str]:
     }
 
 
+_client: Optional[httpx.AsyncClient] = None
+
+
+def get_http_client() -> httpx.AsyncClient:
+    """Returns a shared, keep-alive pooled httpx.AsyncClient to eliminate
+    repeated TLS handshake latency on every checkout and verification call."""
+    global _client
+    if _client is None or _client.is_closed:
+        _client = httpx.AsyncClient(
+            timeout=httpx.Timeout(20.0, connect=10.0),
+            limits=httpx.Limits(max_keepalive_connections=20, max_connections=50),
+        )
+    return _client
+
+
 async def initialize_transaction(
     email: str,
     amount_naira: float,
@@ -56,18 +71,18 @@ async def initialize_transaction(
     if subaccount:
         payload["subaccount"] = subaccount
 
-    async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            f"{PAYSTACK_API_BASE}/transaction/initialize",
-            headers=get_headers(),
-            json=payload,
-            timeout=20,
-        )
-        data = resp.json()
-        if not data.get("status"):
-            msg = data.get("message") or "Failed to initialize Paystack transaction"
-            raise Exception(f"Paystack initialize error: {msg}")
-        return data["data"]
+    client = get_http_client()
+    resp = await client.post(
+        f"{PAYSTACK_API_BASE}/transaction/initialize",
+        headers=get_headers(),
+        json=payload,
+        timeout=20,
+    )
+    data = resp.json()
+    if not data.get("status"):
+        msg = data.get("message") or "Failed to initialize Paystack transaction"
+        raise Exception(f"Paystack initialize error: {msg}")
+    return data["data"]
 
 
 async def verify_transaction(reference: str) -> Dict[str, Any]:
@@ -75,13 +90,13 @@ async def verify_transaction(reference: str) -> Dict[str, Any]:
     Verify a Paystack transaction by reference.
     Returns full Paystack response dictionary.
     """
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(
-            f"{PAYSTACK_API_BASE}/transaction/verify/{reference}",
-            headers=get_headers(),
-            timeout=20,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.get(
+        f"{PAYSTACK_API_BASE}/transaction/verify/{reference}",
+        headers=get_headers(),
+        timeout=20,
+    )
+    return resp.json()
 
 
 async def charge_authorization(
@@ -100,14 +115,14 @@ async def charge_authorization(
         "amount": amount_kobo,
         "reference": reference,
     }
-    async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            f"{PAYSTACK_API_BASE}/transaction/charge_authorization",
-            headers=get_headers(),
-            json=payload,
-            timeout=20,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.post(
+        f"{PAYSTACK_API_BASE}/transaction/charge_authorization",
+        headers=get_headers(),
+        json=payload,
+        timeout=20,
+    )
+    return resp.json()
 
 
 async def create_subaccount(
@@ -134,14 +149,14 @@ async def create_subaccount(
     }
     if description:
         payload["description"] = description
-    async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            f"{PAYSTACK_API_BASE}/subaccount",
-            headers=get_headers(),
-            json=payload,
-            timeout=15,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.post(
+        f"{PAYSTACK_API_BASE}/subaccount",
+        headers=get_headers(),
+        json=payload,
+        timeout=15,
+    )
+    return resp.json()
 
 
 async def update_subaccount(
@@ -161,14 +176,14 @@ async def update_subaccount(
         payload["account_number"] = account_number.strip()
     if percentage_charge is not None:
         payload["percentage_charge"] = percentage_charge
-    async with httpx.AsyncClient() as client:
-        resp = await client.put(
-            f"{PAYSTACK_API_BASE}/subaccount/{subaccount_code}",
-            headers=get_headers(),
-            json=payload,
-            timeout=15,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.put(
+        f"{PAYSTACK_API_BASE}/subaccount/{subaccount_code}",
+        headers=get_headers(),
+        json=payload,
+        timeout=15,
+    )
+    return resp.json()
 
 
 async def list_banks(country: str = "nigeria") -> List[Dict[str, Any]]:
@@ -176,29 +191,29 @@ async def list_banks(country: str = "nigeria") -> List[Dict[str, Any]]:
     Fetch bank list for country (default: nigeria).
     Returns list of bank dicts with name, code, etc.
     """
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(
-            f"{PAYSTACK_API_BASE}/bank?country={country}",
-            headers=get_headers(),
-            timeout=15,
-        )
-        data = resp.json()
-        if not data.get("status"):
-            raise Exception(f"Paystack list_banks error: {data.get('message')}")
-        return data.get("data", [])
+    client = get_http_client()
+    resp = await client.get(
+        f"{PAYSTACK_API_BASE}/bank?country={country}",
+        headers=get_headers(),
+        timeout=15,
+    )
+    data = resp.json()
+    if not data.get("status"):
+        raise Exception(f"Paystack list_banks error: {data.get('message')}")
+    return data.get("data", [])
 
 
 async def resolve_account_number(account_number: str, bank_code: str) -> Dict[str, Any]:
     """
     Resolve NUBAN account number to holder's account name.
     """
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(
-            f"{PAYSTACK_API_BASE}/bank/resolve?account_number={account_number}&bank_code={bank_code}",
-            headers=get_headers(),
-            timeout=15,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.get(
+        f"{PAYSTACK_API_BASE}/bank/resolve?account_number={account_number}&bank_code={bank_code}",
+        headers=get_headers(),
+        timeout=15,
+    )
+    return resp.json()
 
 
 async def create_transfer_recipient(
@@ -217,14 +232,14 @@ async def create_transfer_recipient(
         "bank_code": bank_code.strip(),
         "currency": "NGN",
     }
-    async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            f"{PAYSTACK_API_BASE}/transferrecipient",
-            headers=get_headers(),
-            json=payload,
-            timeout=15,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.post(
+        f"{PAYSTACK_API_BASE}/transferrecipient",
+        headers=get_headers(),
+        json=payload,
+        timeout=15,
+    )
+    return resp.json()
 
 
 async def create_transfer(
@@ -254,26 +269,26 @@ async def create_transfer(
         "reference": reference,
         "reason": narration,
     }
-    async with httpx.AsyncClient() as client:
-        resp = await client.post(
-            f"{PAYSTACK_API_BASE}/transfer",
-            headers=get_headers(),
-            json=payload,
-            timeout=20,
-        )
-        data = resp.json()
-        if data.get("status"):
-            # Map data format to consistent structure
-            return {
-                "status": "success",
-                "data": {
-                    "id": data["data"].get("id"),
-                    "transfer_code": data["data"].get("transfer_code"),
-                    "reference": data["data"].get("reference"),
-                    "status": data["data"].get("status"),
-                },
-            }
-        return {"status": "failed", "error": {"message": data.get("message") or "Transfer failed"}}
+    client = get_http_client()
+    resp = await client.post(
+        f"{PAYSTACK_API_BASE}/transfer",
+        headers=get_headers(),
+        json=payload,
+        timeout=20,
+    )
+    data = resp.json()
+    if data.get("status"):
+        # Map data format to consistent structure
+        return {
+            "status": "success",
+            "data": {
+                "id": data["data"].get("id"),
+                "transfer_code": data["data"].get("transfer_code"),
+                "reference": data["data"].get("reference"),
+                "status": data["data"].get("status"),
+            },
+        }
+    return {"status": "failed", "error": {"message": data.get("message") or "Transfer failed"}}
 
 
 async def get_paystack_balance() -> Dict[str, Any]:
@@ -281,29 +296,29 @@ async def get_paystack_balance() -> Dict[str, Any]:
     Check Paystack NGN balance.
     Returns dict with available NGN balance in Naira.
     """
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(
-            f"{PAYSTACK_API_BASE}/balance",
-            headers=get_headers(),
-            timeout=15,
-        )
-        data = resp.json()
-        if not data.get("status"):
-            return {"status": False, "message": data.get("message"), "data": {"available_balance": 0.0}}
+    client = get_http_client()
+    resp = await client.get(
+        f"{PAYSTACK_API_BASE}/balance",
+        headers=get_headers(),
+        timeout=15,
+    )
+    data = resp.json()
+    if not data.get("status"):
+        return {"status": False, "message": data.get("message"), "data": {"available_balance": 0.0}}
 
-        avail_ngn_kobo = 0
-        for item in data.get("data", []):
-            if item.get("currency") == "NGN":
-                avail_ngn_kobo = item.get("balance", 0)
-                break
+    avail_ngn_kobo = 0
+    for item in data.get("data", []):
+        if item.get("currency") == "NGN":
+            avail_ngn_kobo = item.get("balance", 0)
+            break
 
-        return {
-            "status": "success",
-            "data": {
-                "currency": "NGN",
-                "available_balance": avail_ngn_kobo / 100.0,
-            },
-        }
+    return {
+        "status": "success",
+        "data": {
+            "currency": "NGN",
+            "available_balance": avail_ngn_kobo / 100.0,
+        },
+    }
 
 
 async def list_transactions(
@@ -328,12 +343,13 @@ async def list_transactions(
     if to_date:
         params["to"] = to_date
 
-    async with httpx.AsyncClient() as client:
-        resp = await client.get(
-            f"{PAYSTACK_API_BASE}/transaction",
-            headers=get_headers(),
-            params=params,
-            timeout=20,
-        )
-        return resp.json()
+    client = get_http_client()
+    resp = await client.get(
+        f"{PAYSTACK_API_BASE}/transaction",
+        headers=get_headers(),
+        params=params,
+        timeout=20,
+    )
+    return resp.json()
+
 

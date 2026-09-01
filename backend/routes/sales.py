@@ -1,5 +1,4 @@
 import html
-import httpx
 import secrets
 from datetime import datetime, timezone, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Request

@@ -74,28 +74,32 @@ async def get_analytics(period: str = "all", current_user=Depends(require_admin)
         lead_query.setdefault("created_at", {})["$lt"] = end_date
         sub_query.setdefault("subscribed_at", {})["$lt"] = end_date
 
-    total_sales = await db.payments.count_documents(match_query)
-    total_leads = await db.leads.count_documents(lead_query)
-    total_subscribers = await db.subscribers.count_documents(sub_query)
-    pending_emails = await db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}})
-
-    # Revenue
-    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
-    rev_result = await db.payments.aggregate(pipeline).to_list(1)
-    total_revenue = rev_result[0]["total"] if rev_result else 0
-
-    # Conversion rate
-    conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
-
-    # Downloads today
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
-    downloads_today = await db.downloads.count_documents({"downloaded_at": {"$gte": today_start}})
+    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
 
-    # Recent sales (using match_query)
-    recent_sales = await db.payments.find(
-        match_query,
-        {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1}
-    ).sort("verified_at", -1).limit(10).to_list(10)
+    (
+        total_sales,
+        total_leads,
+        total_subscribers,
+        pending_emails,
+        rev_result,
+        downloads_today,
+        recent_sales,
+    ) = await asyncio.gather(
+        db.payments.count_documents(match_query),
+        db.leads.count_documents(lead_query),
+        db.subscribers.count_documents(sub_query),
+        db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}}),
+        db.payments.aggregate(pipeline).to_list(1),
+        db.downloads.count_documents({"downloaded_at": {"$gte": today_start}}),
+        db.payments.find(
+            match_query,
+            {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1}
+        ).sort("verified_at", -1).limit(10).to_list(10),
+    )
+
+    total_revenue = rev_result[0]["total"] if rev_result else 0
+    conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
 
     return {
         "total_sales": total_sales,
@@ -107,6 +111,7 @@ async def get_analytics(period: str = "all", current_user=Depends(require_admin)
         "downloads_today": downloads_today,
         "recent_sales": recent_sales,
     }
+
 
 
 @router.get("/lead-growth-analytics")
@@ -180,31 +185,12 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
         match_query.setdefault("verified_at", {})["$lt"] = end_date
         lead_query.setdefault("created_at", {})["$lt"] = end_date
 
-    total_sales = await db.payments.count_documents(match_query)
-    total_leads = await db.leads.count_documents(lead_query)
-    conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
-
-    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
-    rev_result = await db.payments.aggregate(pipeline).to_list(1)
-    total_revenue = rev_result[0]["total"] if rev_result else 0
-    aov = (total_revenue / total_sales) if total_sales > 0 else 0
-
-    # Fixed rollup windows — independent of the period selector, since these
-    # are labeled as specific windows (Today/Week/Month), not filtered views.
-    async def revenue_since(since):
-        pipe = [{"$match": {"status": "success", "verified_at": {"$gte": since}}},
-                {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
-        result = await db.payments.aggregate(pipe).to_list(1)
-        return result[0]["total"] if result else 0
-
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     week_start = now - timedelta(days=7)
     month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-    today_revenue = await revenue_since(today_start)
-    week_revenue = await revenue_since(week_start)
-    month_revenue = await revenue_since(month_start)
+    thirty_days_ago = now - timedelta(days=30)
 
-    # Commission owed across all affiliates — tracking only, no automation.
+    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
     owed_pipeline = [
         {"$group": {
             "_id": None,
@@ -212,11 +198,6 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
             "paid": {"$sum": {"$cond": [{"$eq": ["$commission_status", "paid"]}, "$commission_amount", 0]}},
         }}
     ]
-    owed_result = await db.referrals.aggregate(owed_pipeline).to_list(1)
-    commission_owed = (owed_result[0]["earned"] - owed_result[0]["paid"]) if owed_result else 0
-
-    # 30-day daily revenue trend for the chart — a real aggregation, not AI.
-    thirty_days_ago = now - timedelta(days=30)
     trend_pipeline = [
         {"$match": {"status": "success", "verified_at": {"$gte": thirty_days_ago}}},
         {"$group": {
@@ -225,15 +206,46 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
         }},
         {"$sort": {"_id": 1}},
     ]
-    daily_trends = await db.payments.aggregate(trend_pipeline).to_list(31)
 
-    recent_transactions = await db.payments.find(
-        match_query, {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1, "status": 1}
-    ).sort("verified_at", -1).limit(10).to_list(10)
+    async def revenue_since(since):
+        pipe = [{"$match": {"status": "success", "verified_at": {"$gte": since}}},
+                {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
+        result = await db.payments.aggregate(pipe).to_list(1)
+        return result[0]["total"] if result else 0
 
-    recent_leads = await db.leads.find(
-        lead_query, {"_id": 0, "email": 1, "source": 1, "created_at": 1}
-    ).sort("created_at", -1).limit(10).to_list(10)
+    (
+        total_sales,
+        total_leads,
+        rev_result,
+        today_revenue,
+        week_revenue,
+        month_revenue,
+        owed_result,
+        daily_trends,
+        recent_transactions,
+        recent_leads,
+    ) = await asyncio.gather(
+        db.payments.count_documents(match_query),
+        db.leads.count_documents(lead_query),
+        db.payments.aggregate(pipeline).to_list(1),
+        revenue_since(today_start),
+        revenue_since(week_start),
+        revenue_since(month_start),
+        db.referrals.aggregate(owed_pipeline).to_list(1),
+        db.payments.aggregate(trend_pipeline).to_list(31),
+        db.payments.find(
+            match_query, {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1, "status": 1}
+        ).sort("verified_at", -1).limit(10).to_list(10),
+        db.leads.find(
+            lead_query, {"_id": 0, "email": 1, "source": 1, "created_at": 1}
+        ).sort("created_at", -1).limit(10).to_list(10),
+    )
+
+    total_revenue = rev_result[0]["total"] if rev_result else 0
+    aov = (total_revenue / total_sales) if total_sales > 0 else 0
+    conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
+    commission_owed = (owed_result[0]["earned"] - owed_result[0]["paid"]) if owed_result else 0
+
 
     return {
         "total_revenue": total_revenue,
@@ -1245,18 +1257,31 @@ async def get_master_overview(force: bool = False, current_user=Depends(require_
 
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    overview = await get_analytics_overview(period="today", current_user=current_user, db=db)
-    sequence = await get_sequence_overview(current_user=current_user, db=db)
-    sub_kpis = await admin_get_subscriptions_kpis(current_user=current_user, db=db)
-
-    total_customers = await db.users.count_documents({"role": "customer"})
-    pending_emails = await db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}})
-    failed_emails = await db.email_queue.count_documents({"status": "failed"})
-    failed_welcome_emails = await db.email_queue.count_documents({"status": "failed", "kind": "welcome"})
-    pending_payout_batches = await db.payout_batches.count_documents({"status": "pending_approval"})
-    flagged_payments = await db.flagged_payments.count_documents({"resolved": False})
-    new_leads_today = await db.leads.count_documents({"created_at": {"$gte": today_start}})
-    active_affiliates = await db.affiliates.count_documents({"active": True})
+    (
+        overview,
+        sequence,
+        sub_kpis,
+        total_customers,
+        pending_emails,
+        failed_emails,
+        failed_welcome_emails,
+        pending_payout_batches,
+        flagged_payments,
+        new_leads_today,
+        active_affiliates,
+    ) = await asyncio.gather(
+        get_analytics_overview(period="today", current_user=current_user, db=db),
+        get_sequence_overview(current_user=current_user, db=db),
+        admin_get_subscriptions_kpis(current_user=current_user, db=db),
+        db.users.count_documents({"role": "customer"}),
+        db.email_queue.count_documents({"status": {"$in": ["pending", "retry"]}}),
+        db.email_queue.count_documents({"status": "failed"}),
+        db.email_queue.count_documents({"status": "failed", "kind": "welcome"}),
+        db.payout_batches.count_documents({"status": "pending_approval"}),
+        db.flagged_payments.count_documents({"resolved": False}),
+        db.leads.count_documents({"created_at": {"$gte": today_start}}),
+        db.affiliates.count_documents({"active": True}),
+    )
 
     data = {
         "generated_at": now.isoformat(),

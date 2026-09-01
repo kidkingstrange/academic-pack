@@ -14,3 +14,4 @@ slowapi==0.1.9
 bcrypt==4.2.0
 apscheduler==3.11.3
 python-multipart==0.0.32
+Pillow==11.1.0

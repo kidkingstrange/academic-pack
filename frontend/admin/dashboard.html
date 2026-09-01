@@ -838,44 +838,174 @@
   .drawer-panel {
     position: fixed;
     top: 0; right: 0; bottom: 0;
-    width: 540px;
+    width: 620px;
     max-width: 100vw;
     background: var(--ink2);
     border-left: 1px solid var(--border-color);
-    box-shadow: 0 24px 60px rgba(0,0,0,.7);
+    box-shadow: -12px 0 40px rgba(0,0,0,.65);
     z-index: 210;
     transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
   }
   .drawer-overlay.open .drawer-panel { transform: translateX(0); }
   .drawer-header {
-    padding: 22px 28px;
+    padding: 14px 20px;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: rgba(255, 255, 255, 0.015);
   }
-  .drawer-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.25rem; font-weight: 600; color: #fff; }
+  .drawer-header h3 { font-family: 'Clash Display', sans-serif; font-size: 1.1rem; font-weight: 600; color: #fff; margin: 0; }
   .drawer-close {
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     border-radius: 50%;
     background: rgba(255,255,255,.06);
     border: none;
     display: flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,.7);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: var(--transition);
   }
   .drawer-close:hover { background: rgba(255,255,255,.15); color: #fff; }
-  .drawer-body { padding: 28px; overflow-y: auto; flex: 1; }
+  .drawer-body { padding: 16px 20px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  /* ── High-Density Transaction Drawer UI ── */
+  .tx-glance-bar {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: linear-gradient(135deg, rgba(212, 166, 58, 0.08) 0%, rgba(22, 25, 34, 0.6) 100%);
+    border: 1px solid rgba(212, 166, 58, 0.25);
+    border-radius: var(--radius);
+  }
+  .tx-glance-user {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .tx-glance-name {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tx-glance-email {
+    font-size: 0.75rem;
+    color: var(--gray-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .tx-glance-amount {
+    text-align: right;
+    font-family: 'Clash Display', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--gold-l);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .tx-glance-sub {
+    font-size: 0.7rem;
+    color: var(--gray-l);
+  }
+  .tx-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 580px) {
+    .tx-dual-grid { grid-template-columns: 1fr; }
+  }
+  .tx-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+  }
+  .tx-card-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--gold-l);
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .tx-kv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .tx-kv-row:last-child { border-bottom: none; }
+  .tx-kv-label { color: var(--gray-muted); font-weight: 500; }
+  .tx-kv-val { color: #fff; font-weight: 600; text-align: right; max-width: 58%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .tx-collapse {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: var(--transition);
+  }
+  .tx-collapse[open] {
+    border-color: rgba(212, 166, 58, 0.3);
+  }
+  .tx-collapse summary {
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    list-style: none;
+  }
+  .tx-collapse summary::-webkit-details-marker { display: none; }
+  .tx-collapse summary:hover {
+    background: var(--bg-card-hover);
+  }
+  .tx-collapse-body {
+    padding: 12px 14px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+  }
+  .tx-actions-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .tx-actions-row .btn-action {
+    padding: 9px 12px;
+    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
   .drawer-section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
   .drawer-section-title { font-size: 0.74rem; font-weight: 800; text-transform: uppercase; color: var(--gold-l); letter-spacing: 0.8px; margin-bottom: 12px; }
   .drawer-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; font-size: 0.85rem; }
   .detail-label { display: block; color: var(--gray-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
   .detail-val { color: #fff; font-weight: 600; margin-top: 2px; word-break: break-all; }
+
 
   /* ── Master's Eye View ─────────────────────────────────────────────────────── */
   .hub-toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 28px; flex-wrap: wrap; }
@@ -2517,45 +2647,126 @@
     const c = details.customer || {};
     const refInfo = details.referral || {};
 
-    document.getElementById('drawer-title').textContent = `Transaction ${p.reference ? escapeHtml(p.reference) : ''}`;
+    const hasNotes = !!(p.admin_notes && p.admin_notes.trim());
+    const formattedDate = p.verified_at ? new Date(p.verified_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : 'Pending';
+    const commissionVal = refInfo.commission_amount ? money(refInfo.commission_amount) : '₦0.00';
+    const affiliateCode = refInfo.affiliate_code ? refInfo.affiliate_code.toUpperCase() : 'Direct';
+
+    document.getElementById('drawer-title').textContent = `Transaction ${escapeHtml(p.reference || ref)}`;
     document.getElementById('drawer-content').innerHTML = `
-      <div class="drawer-section">
-        <div class="drawer-section-title">Payment Overview</div>
-        <div class="drawer-detail-grid">
-          <div><div class="detail-label">Status</div><div class="detail-val"><span class="status-pill ${p.status === 'success' ? 'success' : 'pending'}">${escapeHtml(p.status)}</span></div></div>
-          <div><div class="detail-label">Amount</div><div class="detail-val" style="color:var(--gold-light);font-size:1.1rem">${money(p.amount)}</div></div>
-          <div><div class="detail-label">Provider</div><div class="detail-val">${escapeHtml(p.gateway || 'Flutterwave')}</div></div>
-          <div><div class="detail-label">Payment Method</div><div class="detail-val">${formatPaymentMethod(p.payment_method)}</div></div>
-          <div style="grid-column:span 2"><div class="detail-label">Verified At</div><div class="detail-val">${p.verified_at ? new Date(p.verified_at).toLocaleString() : 'Pending'}</div></div>
+      <!-- 1. Glance Summary Bar (Immediate Lookup, Zero Scroll) -->
+      <div class="tx-glance-bar">
+        <div>
+          <span class="status-pill ${p.status === 'success' ? 'success' : (p.status === 'refunded' ? 'refunded' : 'pending')}">
+            ${p.status === 'success' ? '✓ ' : ''}${escapeHtml(p.status || 'unknown')}
+          </span>
+        </div>
+        <div class="tx-glance-user">
+          <span class="tx-glance-name">${escapeHtml(p.name || 'Anonymous Customer')}</span>
+          <span class="tx-glance-email">${escapeHtml(p.email || '—')}</span>
+        </div>
+        <div>
+          <div class="tx-glance-amount">${money(p.amount || 0)}</div>
+          <div class="tx-glance-sub">Comm: <strong style="color:${refInfo.commission_amount ? 'var(--gold-l)' : 'var(--gray-muted)'}">${commissionVal}</strong></div>
         </div>
       </div>
 
-      <div class="drawer-section">
-        <div class="drawer-section-title">Customer Profile</div>
-        <div class="drawer-detail-grid">
-          <div><div class="detail-label">Name</div><div class="detail-val">${escapeHtml(p.name)}</div></div>
-          <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(p.email)}</div></div>
-          <div style="grid-column:span 2"><div class="detail-label">Access Token</div><div class="detail-val"><code>${escapeHtml(c.library_access_token || 'Active')}</code></div></div>
+      <!-- 2. Dense 2-Column Grid: Payment & Customer -->
+      <div class="tx-dual-grid">
+        <!-- Left: Payment Details -->
+        <div class="tx-card">
+          <div class="tx-card-title"><i class="bi bi-credit-card-2-front"></i> Payment Details</div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Base Price</span>
+            <span class="tx-kv-val">${money(p.base_price || p.amount || 0)}</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Gateway</span>
+            <span class="tx-kv-val">${escapeHtml(p.gateway || 'Paystack')}</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Method</span>
+            <span class="tx-kv-val">${formatPaymentMethod(p.payment_method)}</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Verified</span>
+            <span class="tx-kv-val" title="${p.verified_at || ''}">${formattedDate}</span>
+          </div>
+        </div>
+
+        <!-- Right: Customer Access -->
+        <div class="tx-card">
+          <div class="tx-card-title"><i class="bi bi-person-badge"></i> Customer Access</div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Account</span>
+            <span class="tx-kv-val" style="color:#4ade80">Active</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Downloads</span>
+            <span class="tx-kv-val">${c.download_count || 0} PDF access(es)</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Token</span>
+            <span class="tx-kv-val"><code style="font-size:0.72rem;background:rgba(255,255,255,0.06);padding:1px 4px;border-radius:3px">${escapeHtml((c.library_access_token || '').slice(0, 10))}…</code></span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Currency</span>
+            <span class="tx-kv-val">${escapeHtml(p.currency || 'NGN')}</span>
+          </div>
         </div>
       </div>
 
-      <div class="drawer-section">
-        <div class="drawer-section-title">Attribution & Referral</div>
-        <div class="drawer-detail-grid">
-          <div><div class="detail-label">Affiliate Code</div><div class="detail-val"><code>${escapeHtml(refInfo.affiliate_code || 'Direct / Organic')}</code></div></div>
-          <div><div class="detail-label">Commission</div><div class="detail-val">${refInfo.commission_amount ? money(refInfo.commission_amount) : '₦0'}</div></div>
+      <!-- 3. Collapsible: Attribution & Affiliate Details (Collapsed by default) -->
+      <details class="tx-collapse">
+        <summary>
+          <span><i class="bi bi-megaphone" style="color:var(--gold-l);margin-right:6px"></i> Attribution (${affiliateCode})</span>
+          <span style="font-size:0.75rem;color:var(--gray-muted)">${commissionVal} commission <i class="bi bi-chevron-down" style="font-size:0.7rem;margin-left:4px"></i></span>
+        </summary>
+        <div class="tx-collapse-body">
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Affiliate Code</span>
+            <span class="tx-kv-val"><code>${escapeHtml(affiliateCode)}</code></span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Commission Status</span>
+            <span class="tx-kv-val">${escapeHtml(refInfo.commission_status || (refInfo.commission_amount ? 'paid' : 'none'))}</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Split Method</span>
+            <span class="tx-kv-val">${escapeHtml(refInfo.payout_method || 'instant_split')}</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Rate Applied</span>
+            <span class="tx-kv-val">${refInfo.commission_rate || 60}%</span>
+          </div>
         </div>
-      </div>
+      </details>
 
-      <div class="drawer-section">
-        <div class="drawer-section-title">Admin Notes</div>
-        <textarea id="drawer-notes" class="input-control" style="width:100%;height:70px;margin-bottom:10px">${escapeHtml(p.admin_notes || '')}</textarea>
-        <button class="btn-action btn-secondary" onclick="saveSaleNotes('${escapeJs(p.reference)}')">Save Notes</button>
-      </div>
+      <!-- 4. Collapsible: Admin Notes (Shows badge if notes exist) -->
+      <details class="tx-collapse" ${hasNotes ? 'open' : ''}>
+        <summary>
+          <span>
+            <i class="bi bi-journal-text" style="color:var(--gold-l);margin-right:6px"></i> Internal Notes
+            ${hasNotes ? '<span class="status-pill neutral" style="font-size:0.65rem;padding:1px 6px;margin-left:6px">Has Note</span>' : ''}
+          </span>
+          <i class="bi bi-chevron-down" style="font-size:0.7rem;color:var(--gray-muted)"></i>
+        </summary>
+        <div class="tx-collapse-body">
+          <textarea id="drawer-notes" class="input-control" placeholder="Add private transaction note..." style="width:100%;height:54px;font-size:0.8rem;margin-bottom:8px">${escapeHtml(p.admin_notes || '')}</textarea>
+          <button class="btn-action btn-secondary" style="padding:5px 12px;font-size:0.75rem" onclick="saveSaleNotes('${escapeJs(p.reference)}')">
+            <i class="bi bi-check2"></i> Save Note
+          </button>
+        </div>
+      </details>
 
-      <div style="display:flex; flex-direction:column; gap:10px">
-        <button class="btn-action" onclick="resendWelcomeEmail('${escapeJs(p.reference)}')"><i class="bi bi-envelope-check"></i> Resend Access & Receipt Email</button>
-        <button class="btn-action btn-secondary" style="color:var(--red);border-color:rgba(239,68,68,0.3)" onclick="triggerRefund('${escapeJs(p.reference)}')"><i class="bi bi-arrow-counterclockwise"></i> Mark Transaction Refunded</button>
+      <!-- 5. Compact Action Footer (Side-by-Side) -->
+      <div class="tx-actions-row">
+        <button class="btn-action" onclick="resendWelcomeEmail('${escapeJs(p.reference)}')">
+          <i class="bi bi-envelope-check"></i> Resend Access Link
+        </button>
+        <button class="btn-action btn-secondary" style="color:var(--red);border-color:rgba(239,68,68,0.35)" onclick="triggerRefund('${escapeJs(p.reference)}')">
+          <i class="bi bi-arrow-counterclockwise"></i> Mark Refunded
+        </button>
       </div>
     `;
     openDrawer();

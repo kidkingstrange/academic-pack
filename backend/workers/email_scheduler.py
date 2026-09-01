@@ -7,6 +7,7 @@ from datetime import datetime, timedelta, timezone
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from .. import database
 from ..services.email_service import (
+    send_email,
     send_sequence_email, send_welcome_email, send_affiliate_welcome_email, send_affiliate_nudge_email,
     send_affiliate_direct_milestone_email, send_affiliate_parent_referral_bonus_email,
 )
