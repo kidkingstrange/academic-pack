@@ -67,11 +67,38 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </header>
 
 <main class="container">
-  <div class="welcome-banner" id="welcome-banner" style="display:none">
-    <i class="bi bi-rocket-takeoff-fill"></i>
-    <div>
-      <strong>You're in. Congratulations.</strong>
-      <span>Your payment was successful — everything below is yours now.</span>
+  <div class="welcome-banner" id="welcome-banner" style="display:none; flex-direction:column; align-items:flex-start; gap:16px;">
+    <div style="display:flex; align-items:center; gap:12px; width:100%;">
+      <div style="width:40px; height:40px; border-radius:50%; background:rgba(34,197,94,0.15); color:#4ade80; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <div>
+        <strong style="font-size:1.15rem;">Payment Confirmed! Complete These 2 Action Steps:</strong>
+        <span style="color:var(--gray-l); font-size:0.88rem;">Your package access is fully unlocked below. Follow this quick roadmap for maximum results:</span>
+      </div>
+    </div>
+    
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; width:100%; margin-top:4px;">
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px 16px;">
+        <div style="color:var(--gold-l); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">📍 STEP 1 (STUDY FIRST)</div>
+        <div style="color:#fff; font-size:0.9rem; font-weight:700; margin-bottom:4px;">Download <em>Get Good at Hard Things</em></div>
+        <p style="color:var(--gray-l); font-size:0.82rem; line-height:1.5; margin:0;">
+          Read the <strong>20-Minute Quick-Start Guide (Page 4)</strong> before opening any other file to install your active retrieval study system tonight.
+        </p>
+      </div>
+
+      <div style="background:rgba(34,197,94,0.05); border:1px solid rgba(34,197,94,0.25); border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; justify-content:space-between;">
+        <div>
+          <div style="color:#4ade80; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">💸 STEP 2 (GET 150% CASH BACK)</div>
+          <div style="color:#fff; font-size:0.9rem; font-weight:700; margin-bottom:4px;">Earn ₦3,000 Per Referral</div>
+          <p style="color:var(--gray-l); font-size:0.82rem; line-height:1.5; margin:0 0 10px;">
+            As a student owner, your Ambassador link is active. Share with 1 friend to pocket ₦3,000 instant direct bank payout.
+          </p>
+        </div>
+        <a href="/affiliate/dashboard" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#4ade80; color:#0c0e14; font-size:0.8rem; font-weight:800; padding:8px 14px; border-radius:8px; text-decoration:none; transition:all 0.2s;">
+          <i class="bi bi-wallet2"></i> Open Ambassador Dashboard &rarr;
+        </a>
+      </div>
     </div>
   </div>
   <div class="lib-grid" id="products-grid">
