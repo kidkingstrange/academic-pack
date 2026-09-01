@@ -1384,10 +1384,6 @@
     <button class="nav-item" onclick="switchSection('sales')">
       <div class="nav-item-content"><i class="bi bi-credit-card-2-front"></i> <span>Sales Ledger</span></div>
     </button>
-    <button class="nav-item" onclick="switchSection('payouts')">
-      <div class="nav-item-content"><i class="bi bi-cash-stack"></i> <span>Payouts & Milestones</span></div>
-      <span class="nav-badge" id="nav-badge-payouts" style="display:none">0</span>
-    </button>
     <button class="nav-item" onclick="switchSection('subscriptions')">
       <div class="nav-item-content"><i class="bi bi-calendar2-check"></i> <span>Subscriptions & MRR</span></div>
     </button>
@@ -1402,7 +1398,8 @@
       <div class="nav-item-content"><i class="bi bi-people"></i> <span>Customers 360°</span></div>
     </button>
     <button class="nav-item" onclick="switchSection('affiliates')">
-      <div class="nav-item-content"><i class="bi bi-megaphone"></i> <span>Affiliates & Tree</span></div>
+      <div class="nav-item-content"><i class="bi bi-megaphone"></i> <span>Affiliates & Bonuses</span></div>
+      <span class="nav-badge gold" id="nav-badge-milestones" style="display:none">0</span>
     </button>
     <button class="nav-item" onclick="switchSection('team')">
       <div class="nav-item-content"><i class="bi bi-person-badge"></i> <span>Sales Team</span></div>
@@ -1526,7 +1523,7 @@
               <span class="journey-arrow">→</span>
               <span class="journey-node" onclick="switchSection('sales')">Sale Attributed</span>
               <span class="journey-arrow">→</span>
-              <span class="journey-node" onclick="switchSection('payouts')">Payout</span>
+              <span class="journey-node" onclick="switchSection('affiliates')">Instant Split &amp; Bonuses</span>
             </div>
           </div>
           <div class="journey-card">
@@ -1709,54 +1706,9 @@
         </table>
       </div>
       <div class="record-card-list" id="cards-affiliates-roster"></div>
-    </div>
-
-    <!-- ── VIEW 5: PAYOUTS (Biweekly Batches + Settlement) ──────────────────── -->
-    <div id="view-payouts" class="section">
-      <div class="kpi-grid">
-        <div class="kpi-card"><div class="kpi-title">Paystack Balance</div><div class="kpi-val" id="payout-kpi-balance">₦0</div></div>
-        <div class="kpi-card"><div class="kpi-title">Reserved for Affiliates</div><div class="kpi-val" id="payout-kpi-reserved">₦0</div></div>
-        <div class="kpi-card"><div class="kpi-title">Available to Withdraw</div><div class="kpi-val gold" id="payout-kpi-available">₦0</div></div>
-      </div>
-
-      <div class="data-table-container" style="padding:20px 24px; display:flex; justify-content:space-between; align-items:center; margin-bottom:32px">
-        <div>
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.05rem; font-weight:600; color:#fff">Your Settlement</div>
-          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Pull your share out of the Paystack payout balance — never automatic, always your call</div>
-        </div>
-        <button class="btn-action" onclick="openWithdrawModal()"><i class="bi bi-bank"></i> Withdraw My Share</button>
-      </div>
-
-      <div style="padding:20px 24px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
-        <div>
-          <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff">Pending Payout Batch</div>
-          <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px" id="payout-pending-sub">No batch pending</div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap">
-          <button class="btn-action btn-secondary" onclick="buildBatchNow()"><i class="bi bi-arrow-repeat"></i> Build Batch Now</button>
-          <button class="btn-action" id="payout-approve-btn" style="display:none" onclick="approvePendingBatch()"><i class="bi bi-send-check-fill"></i> Approve &amp; Send</button>
-          <button class="btn-action" id="payout-discard-btn" style="display:none; background:linear-gradient(135deg, var(--red), #ef4444); box-shadow:none" onclick="discardPendingBatch()"><i class="bi bi-trash"></i> Discard Batch</button>
-        </div>
-      </div>
-      <div class="data-table-container has-mobile-cards" style="margin-bottom:28px">
-        <table class="data-table" id="table-payout-pending">
-          <thead><tr><th>Affiliate</th><th>Bank</th><th>Amount</th><th>Status</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div class="record-card-list" id="cards-payout-pending"></div>
-
-      <div style="padding:18px 20px; margin-bottom:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">Batch History</div>
-      <div class="data-table-container has-mobile-cards" style="margin-bottom:28px">
-        <table class="data-table" id="table-payout-history">
-          <thead><tr><th>Created</th><th>Status</th><th>Affiliates</th><th>Total</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div class="record-card-list" id="cards-payout-history"></div>
 
       <!-- ── AUTOMATED MILESTONE BONUS RELEASES ── -->
-      <div style="padding:18px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+      <div style="margin-top:36px; padding:18px 20px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-weight:700; color:#fff; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
         <div>
           <div style="font-family:'Clash Display',sans-serif; font-size:1.1rem; font-weight:600; color:#fff"><i class="bi bi-trophy-fill" style="color:var(--gold-l);margin-right:6px"></i> Automated Milestone Bonus Releases</div>
           <div style="font-size:0.78rem; color:var(--gray-l); margin-top:2px">Real-time ₦10,000 direct (10 sales) &amp; ₦5,000 recruiter bank transfers sent automatically via Paystack</div>
@@ -2096,8 +2048,7 @@
       <div class="shortcut-row"><span>Jump to Dashboard</span> <kbd>G then D</kbd></div>
       <div class="shortcut-row"><span>Jump to Sales</span> <kbd>G then S</kbd></div>
       <div class="shortcut-row"><span>Jump to Customers</span> <kbd>G then C</kbd></div>
-      <div class="shortcut-row"><span>Jump to Affiliates</span> <kbd>G then A</kbd></div>
-      <div class="shortcut-row"><span>Jump to Payouts</span> <kbd>G then P</kbd></div>
+      <div class="shortcut-row"><span>Jump to Affiliates &amp; Bonuses</span> <kbd>G then A</kbd></div>
       <div class="shortcut-row"><span>Close Modal / Drawer</span> <kbd>ESC</kbd></div>
       <div class="shortcut-row"><span>Show Shortcuts</span> <kbd>?</kbd></div>
     </div>
@@ -2171,8 +2122,7 @@
       dashboard: { title: 'Executive Command Center', sub: 'Central high-level business velocity and operational performance', group: 'Executive Cockpit' },
       sales: { title: 'Sales & Order Management', sub: 'Deep transaction timelines, resend receipts, refund processing, and order attribution', group: 'Money & Orders' },
       customers: { title: 'Customer 360° Lifecycle', sub: 'Customer lifetime spend, purchase history, download logs, and segment tags', group: 'People & Growth' },
-      affiliates: { title: 'Affiliate Growth Engine', sub: 'Partner performance, commission owed, and referral links — payouts are sent manually and marked paid here', group: 'People & Growth' },
-      payouts: { title: 'Affiliate Payouts', sub: 'Biweekly commission batches and your own settlement withdrawal — every transfer requires your explicit approval', group: 'Money & Orders' },
+      affiliates: { title: 'Affiliates, Tree & Milestone Bonuses', sub: 'Partner performance, network tree, instant Paystack splits, and automated milestone bonus releases', group: 'People & Growth' },
       subscriptions: { title: 'Subscriptions Command & KPI Center', sub: 'Monitor recurring revenue, track MRR, active, past-due billing, and handle cancellations', group: 'Money & Orders' },
       team: { title: 'Team & Salesperson Management', sub: 'Create, modify, and track internal sales representative accounts and performance metrics', group: 'People & Growth' },
       sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend", group: 'System & Funnels' },
@@ -2197,8 +2147,7 @@
     if(currentView === 'dashboard') loadDashboardView(period);
     if(currentView === 'sales') loadSalesView();
     if(currentView === 'customers') loadCustomersView();
-    if(currentView === 'affiliates') loadAffiliatesView();
-    if(currentView === 'payouts') loadPayoutsView();
+    if(currentView === 'affiliates' || currentView === 'payouts') loadAffiliatesView();
     if(currentView === 'subscriptions') loadSubscriptionsView();
     if(currentView === 'team') loadTeamView();
     if(currentView === 'sequence') loadSequenceView();
@@ -2800,6 +2749,8 @@
     allAffiliatesData = data.affiliates || [];
     renderAffiliatesTable();
     loadAffiliateHealth();
+    loadMilestonePayouts();
+    restoreScrollPosition('affiliates');
   }
 
   async function loadAffiliateHealth() {
@@ -3084,188 +3035,13 @@
     }
   }
 
-  // ── 5. PAYOUTS VIEW ────────────────────────────────────────────────────────
-  async function loadPayoutsView() {
-    const [settlement, batchesResp] = await Promise.all([
-      apiCall('/api/admin/payouts/settlement'),
-      apiCall('/api/admin/payouts/batches?limit=20'),
-    ]);
-
-    if (!settlement.detail) {
-      document.getElementById('payout-kpi-balance').textContent = money(settlement.paystack_balance !== undefined ? settlement.paystack_balance : settlement.flutterwave_balance);
-      document.getElementById('payout-kpi-reserved').textContent = money(settlement.reserved_for_affiliates);
-      document.getElementById('payout-kpi-available').textContent = money(settlement.available_to_withdraw);
-    }
-
-    payoutBatches = batchesResp.batches || [];
-    pendingBatch = payoutBatches.find(b => b.status === 'pending_approval' || b.status === 'failed_partial') || null;
-
-    renderPendingBatch();
-    renderBatchHistory();
-    loadMilestonePayouts();
-    restoreScrollPosition('payouts');
-  }
-
-  function payoutItemStatusPill(status) {
-    const map = {
-      pending: ['pending', 'Pending'],
-      success: ['success', 'Sent'],
-      failed: ['failed', 'Failed'],
-      blocked_missing_bank_code: ['failed', 'Missing Bank Code'],
-    };
-    const [cls, label] = map[status] || ['pending', status];
-    return `<span class="status-pill ${cls}">${label}</span>`;
-  }
-
-  function batchStatusPill(status) {
-    const map = {
-      pending_approval: ['pending', 'Pending Approval'],
-      sending: ['pending', 'Sending'],
-      completed: ['success', 'Completed'],
-      failed_partial: ['failed', 'Partially Failed'],
-    };
-    const [cls, label] = map[status] || ['pending', status];
-    return `<span class="status-pill ${cls}">${label}</span>`;
-  }
-
-  function renderPendingBatch() {
-    const sub = document.getElementById('payout-pending-sub');
-    const approveBtn = document.getElementById('payout-approve-btn');
-    const discardBtn = document.getElementById('payout-discard-btn');
-    const tbody = document.querySelector('#table-payout-pending tbody');
-    const cardList = document.getElementById('cards-payout-pending');
-
-    if (!pendingBatch) {
-      sub.textContent = 'No batch pending';
-      approveBtn.style.display = 'none';
-      if (discardBtn) discardBtn.style.display = 'none';
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">Nothing pending right now</td></tr>';
-      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">Nothing pending right now</div>';
-      return;
-    }
-
-    sub.textContent = `${money(pendingBatch.total_amount)} across ${pendingBatch.items.length} affiliate(s) — status: ${pendingBatch.status}`;
-    approveBtn.style.display = 'inline-flex';
-    if (discardBtn) discardBtn.style.display = 'inline-flex';
-
-    tbody.innerHTML = pendingBatch.items.map(i => `
-      <tr>
-        <td style="font-weight:600">${escapeHtml(i.affiliate_name)}<div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(i.affiliate_code)}</div></td>
-        <td>
-          <div style="font-weight:600;font-size:0.82rem;color:#fff">${i.bank_name ? escapeHtml(i.bank_name) : '<span style="color:var(--gray-l)">Not set</span>'}</div>
-          <div style="font-size:0.74rem;color:var(--gold-light);font-family:monospace">${escapeHtml(i.account_number || '')}</div>
-        </td>
-        <td style="font-weight:700">${money(i.amount)}</td>
-        <td>${payoutItemStatusPill(i.transfer_status)}</td>
-      </tr>
-    `).join('');
-
-    const itemStatusMap = { pending: 'pending', success: 'success', failed: 'failed', blocked_missing_bank_code: 'failed' };
-    const itemLabelMap = { pending: 'Pending', success: 'Sent', failed: 'Failed', blocked_missing_bank_code: 'Missing Bank Code' };
-    cardList.innerHTML = pendingBatch.items.map(i => {
-      const statusClass = itemStatusMap[i.transfer_status] || 'pending';
-      const label = itemLabelMap[i.transfer_status] || i.transfer_status;
-      return `
-      <div class="record-card record-card--${statusClass}">
-        <div class="record-card__row1">
-          <span class="record-card__primary">${escapeHtml(i.affiliate_name)}</span>
-          <span class="record-card__amount">${money(i.amount)}</span>
-        </div>
-        <div class="record-card__row2">
-          <span class="record-card__secondary">${escapeHtml(i.affiliate_code)} · ${i.bank_name ? escapeHtml(i.bank_name) : 'Bank not set'}</span>
-          <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(label)}</span>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  function renderBatchHistory() {
-    const tbody = document.querySelector('#table-payout-history tbody');
-    const cardList = document.getElementById('cards-payout-history');
-    if (payoutBatches.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">No batches yet</td></tr>';
-      cardList.innerHTML = '<div style="text-align:center;color:var(--gray-l);padding:24px;font-size:0.85rem">No batches yet</div>';
-      return;
-    }
-    tbody.innerHTML = payoutBatches.map(b => `
-      <tr>
-        <td>${new Date(b.created_at).toLocaleDateString()}</td>
-        <td>${batchStatusPill(b.status)}</td>
-        <td>${b.items.length}</td>
-        <td style="font-weight:700">${money(b.total_amount)}</td>
-      </tr>
-    `).join('');
-
-    const batchStatusMap = { pending_approval: 'pending', sending: 'pending', completed: 'success', failed_partial: 'failed' };
-    const batchLabelMap = { pending_approval: 'Pending Approval', sending: 'Sending', completed: 'Completed', failed_partial: 'Partially Failed' };
-    cardList.innerHTML = payoutBatches.map(b => {
-      const statusClass = batchStatusMap[b.status] || 'pending';
-      const label = batchLabelMap[b.status] || b.status;
-      return `
-      <div class="record-card record-card--${statusClass}">
-        <div class="record-card__row1">
-          <span class="record-card__primary">${new Date(b.created_at).toLocaleDateString()}</span>
-          <span class="record-card__amount">${money(b.total_amount)}</span>
-        </div>
-        <div class="record-card__row2">
-          <span class="record-card__secondary">${b.items.length} affiliate${b.items.length === 1 ? '' : 's'}</span>
-          <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(label)}</span>
-        </div>
-      </div>`;
-    }).join('');
-  }
-
-  async function buildBatchNow() {
-    if (pendingBatch) {
-      alert('There is already a pending batch. Approve or resolve it before building a new one.');
-      return;
-    }
-    const res = await apiCall('/api/admin/payouts/build-now', 'POST', {});
-    if (res.batch) {
-      alert(`Batch built: ${money(res.batch.total_amount)} across ${res.batch.items.length} affiliate(s). Review it below before approving.`);
-    } else {
-      alert(res.message || 'Nothing currently owed to any affiliate.');
-    }
-    loadPayoutsView();
-  }
-
-  async function approvePendingBatch() {
-    if (!pendingBatch) return;
-    const sendable = pendingBatch.items.filter(i => i.transfer_status === 'pending' || i.transfer_status === 'failed');
-    const sendableTotal = sendable.reduce((sum, i) => sum + i.amount, 0);
-    const confirmMsg = `This sends REAL MONEY via Paystack to ${sendable.length} affiliate(s), totaling ${money(sendableTotal)}.\n\nThis cannot be undone. Continue?`;
-    if (!confirm(confirmMsg)) return;
-
-    const result = await apiCall(`/api/admin/payouts/batches/${pendingBatch.id}/approve`, 'POST', {});
-    if (result.detail) {
-      showToast(result.detail, 'error');
-    } else {
-      const succeeded = result.items.filter(i => i.transfer_status === 'success').length;
-      const failed = result.items.filter(i => i.transfer_status === 'failed' || i.transfer_status === 'blocked_missing_bank_code').length;
-      showToast(`Batch sent: ${succeeded} succeeded${failed > 0 ? `, ${failed} failed` : ''}`, succeeded > 0 ? 'success' : 'warning');
-    }
-    loadPayoutsView();
-  }
-
-  async function discardPendingBatch() {
-    if (!pendingBatch) return;
-    if (!confirm("Are you sure you want to discard this pending/failed payout batch?\n\nThis will NOT delete any unpaid referral commission logs. They will simply be released back and included when you build the next batch.")) {
-      return;
-    }
-    const res = await apiCall(`/api/admin/payouts/batches/${pendingBatch.id}`, 'DELETE');
-    if (res.status === 'ok') {
-      alert("Batch discarded successfully.");
-    } else {
-      alert(res.detail || "Could not discard batch.");
-    }
-    loadPayoutsView();
-  }
-
+  // ── 4B. AUTOMATED MILESTONE BONUS RELEASES ────────────────────────────────
   async function loadMilestonePayouts() {
     const res = await apiCall('/api/admin/payouts/milestones?limit=50');
     const milestones = res.milestones || [];
     const tbody = document.querySelector('#table-payout-milestones tbody');
     const cardList = document.getElementById('cards-payout-milestones');
+    if (!tbody) return;
 
     if (milestones.length === 0) {
       tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--gray-l);padding:24px">No milestone bonuses achieved yet. Unlocks automatically at 10 sales.</td></tr>';
@@ -3345,45 +3121,11 @@
     try {
       const res = await apiCall(`/api/admin/payouts/milestones/${milestoneId}/retry`, 'POST', {});
       alert(res.message || 'Transfer completed successfully!');
-      loadPayoutsView();
+      loadMilestonePayouts();
+      loadAffiliatesView();
     } catch (err) {
       alert('Transfer retry failed: ' + (err.message || err));
     }
-  }
-
-  function openWithdrawModal() {
-    const available = document.getElementById('payout-kpi-available').textContent;
-    document.getElementById('drawer-title').textContent = 'Withdraw My Share';
-    document.getElementById('drawer-content').innerHTML = `
-      <form onsubmit="submitWithdraw(event)">
-        <div class="drawer-section">
-          <div class="drawer-section-title">Settlement Transfer</div>
-          <div style="font-size:0.85rem; color:var(--gray-l); margin-bottom:14px">Available to withdraw: <strong style="color:var(--gold-l)">${available}</strong></div>
-          <label class="detail-label" for="withdraw-amount" style="margin-bottom:6px">Amount (₦)</label>
-          <input type="number" id="withdraw-amount" class="input-control" style="width:100%" min="1" step="0.01" required>
-        </div>
-        <button type="submit" class="btn-action" style="width:100%;justify-content:center"><i class="bi bi-bank"></i> Send to My Bank Account</button>
-      </form>
-    `;
-    openDrawer();
-  }
-
-  async function submitWithdraw(e) {
-    e.preventDefault();
-    const amount = Number(document.getElementById('withdraw-amount').value);
-    if (!amount || amount <= 0) { alert('Enter a valid amount'); return; }
-    if (!confirm(`Transfer ${money(amount)} to your settlement bank account now?\n\nThis sends real money and cannot be undone.`)) return;
-
-    const res = await apiCall('/api/admin/payouts/settlement/withdraw', 'POST', { amount });
-    if (res.detail) {
-      showToast(res.detail, 'error');
-    } else if (res.status === 'success') {
-      showToast(`Withdrawal sent: ${money(res.amount)}`, 'success');
-      closeDrawer();
-    } else {
-      showToast(`Withdrawal failed: ${res.error || 'Unknown error'}`, 'warning');
-    }
-    loadPayoutsView();
   }
 
   // ── 6. EMAIL DELIVERY VIEW ─────────────────────────────────────────────────
@@ -4361,8 +4103,7 @@
     { title: "Analytics & Executive Velocity", group: "Navigation", icon: "bi-speedometer2", action: () => switchSection('dashboard') },
     { title: "Sales & Orders Ledger", group: "Navigation", icon: "bi-credit-card-2-front", action: () => switchSection('sales') },
     { title: "Customers 360° Directory", group: "Navigation", icon: "bi-people", action: () => switchSection('customers') },
-    { title: "Affiliates & Recruiter Tree", group: "Navigation", icon: "bi-megaphone", action: () => switchSection('affiliates') },
-    { title: "Payouts & Automated Milestone Releases", group: "Navigation", icon: "bi-cash-stack", action: () => switchSection('payouts') },
+    { title: "Affiliates, Tree & Milestone Bonuses", group: "Navigation", icon: "bi-megaphone", action: () => switchSection('affiliates') },
     { title: "Subscriptions & Recurring Billing", group: "Navigation", icon: "bi-calendar2-check", action: () => switchSection('subscriptions') },
     { title: "Sales Team & Rep Accounts", group: "Navigation", icon: "bi-person-badge", action: () => switchSection('team') },
     { title: "52-Day Curriculum Email Sequence", group: "Navigation", icon: "bi-envelope-check", action: () => switchSection('sequence') },
@@ -4371,7 +4112,6 @@
     { title: "Pre-Orders & Waitlists", group: "Navigation", icon: "bi-box-seam", action: () => switchSection('preorders') },
     
     { title: "Export Sales Ledger to CSV", group: "Quick Actions", icon: "bi-download", action: () => exportSalesCSV() },
-    { title: "Build Pending Payout Batch Now", group: "Quick Actions", icon: "bi-cash-coin", action: () => buildBatchNow() },
     { title: "Create New Sales Team Member", group: "Quick Actions", icon: "bi-person-plus", action: () => openCreateTeamMemberModal() },
     { title: "Trigger Abandoned Cart Check Sweep", group: "Quick Actions", icon: "bi-arrow-repeat", action: () => triggerAbandonedCheck() },
     { title: "Show Keyboard Shortcuts Cheatsheet", group: "Help", icon: "bi-keyboard", action: () => openShortcutsModal() }
@@ -4521,8 +4261,7 @@
       else if (k === 'd') switchSection('dashboard');
       else if (k === 's') switchSection('sales');
       else if (k === 'c') switchSection('customers');
-      else if (k === 'a') switchSection('affiliates');
-      else if (k === 'p') switchSection('payouts');
+      else if (k === 'a' || k === 'p') switchSection('affiliates');
     }
   });
 

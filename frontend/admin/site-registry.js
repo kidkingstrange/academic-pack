@@ -54,17 +54,6 @@ const SITE_REGISTRY = [
     metric: "sales_today",
   },
   {
-    id: "payouts",
-    title: "Payouts & Milestone Releases",
-    description: "Biweekly commission batch reviews and automated 10-sale milestone bonuses (₦10k direct / ₦5k recruiter) sent directly to Nigerian bank accounts via Paystack.",
-    category: "Money & Orders",
-    type: "admin-section",
-    target: "payouts",
-    icon: "bi bi-bank2",
-    metric: "commission_owed",
-    status_key: "pending_payout_batches",
-  },
-  {
     id: "subscriptions",
     title: "Subscriptions",
     description: "Recurring plans: who's active, who's behind on billing, and monthly recurring revenue. Cancel a plan from here.",
@@ -98,8 +87,8 @@ const SITE_REGISTRY = [
   },
   {
     id: "affiliates",
-    title: "Affiliates & Ambassadors",
-    description: "Your promoter ecosystem: VIP Customer Ambassadors, recruiter downlines, clicks, sales, and automated instant subaccount splits.",
+    title: "Affiliates & Milestone Bonuses",
+    description: "Your promoter ecosystem: VIP Customer Ambassadors, recruiter downlines, clicks, sales, instant Paystack splits, and automated ₦10k/₦5k milestone bonus transfers.",
     category: "People",
     type: "admin-section",
     target: "affiliates",
