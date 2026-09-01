@@ -7,6 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse, JSONResponse, HTMLResponse, RedirectResponse
+import asyncio
 from pathlib import Path
 from bson import ObjectId
 from pymongo import ReturnDocument
@@ -455,7 +456,7 @@ async def startup():
         start_alert_scheduler()
         start_abandoned_recovery_scheduler()
         from .database import db as main_db
-        asyncio.create_task(start_review_scheduler(main_db))
+        app.state.review_scheduler_task = asyncio.create_task(start_review_scheduler(main_db))
         print("⏰ Background schedulers started")
     else:
         print("⏸️ Background schedulers disabled (RUN_SCHEDULERS=false)")
@@ -470,5 +471,7 @@ async def shutdown():
         stop_subscription_scheduler()
         stop_alert_scheduler()
         stop_abandoned_recovery_scheduler()
+        if hasattr(app.state, "review_scheduler_task"):
+            app.state.review_scheduler_task.cancel()
     await disconnect_db()
 
