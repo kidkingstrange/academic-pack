@@ -638,7 +638,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </footer>
 
 <!-- Support / Order Lookup Modal -->
-<div class="modal-overlay" id="refund-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 16px; box-sizing: border-box;">
+<div class="modal-overlay" id="refund-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 14, 22, 0.85); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 16px; box-sizing: border-box;">
   <div class="modal-card" style="background: #161922; border: 1px solid #2a2e3d; border-radius: 20px; max-width: 480px; width: 100%; padding: 32px; position: relative; color: #fff; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
     <button class="modal-close" onclick="closeRefundModal()" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;"><i class="bi bi-x-lg"></i></button>
     <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin-top: 0; margin-bottom: 8px;">Order Lookup / Customer Support</h3>
@@ -978,35 +978,6 @@ function formatApiError(detail, fallback) {
       }
       lastY = e.clientY;
     });
-  }
-
-  // ── Mobile: back-button interception via History API ──
-  if (isMobile) {
-    // Push a dummy state so we can intercept the first "back"
-    // Wait until page is settled to avoid conflicts with other pushState users
-    setTimeout(function() {
-      if (fired) return;
-      history.pushState({ exitIntent: true }, '');
-
-      window.addEventListener('popstate', function onPop(e) {
-        if (fired) {
-          // Already shown — let the back navigate normally
-          window.removeEventListener('popstate', onPop);
-          return;
-        }
-        if (isCheckoutOpen()) {
-          // Don't compete with checkout — let default behavior proceed
-          window.removeEventListener('popstate', onPop);
-          return;
-        }
-        // Show popup instead of navigating away
-        showPopup();
-        // Push state again so the page doesn't actually go back
-        history.pushState({ exitIntent: true }, '');
-        // Remove listener — only intercept once
-        window.removeEventListener('popstate', onPop);
-      });
-    }, 2000);
   }
 })();
 </script>
