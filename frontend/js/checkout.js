@@ -196,8 +196,10 @@ form.addEventListener('submit', async (e) => {
   btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
 
   try {
-    const clientExpiry = localStorage.getItem('ac_expiry');
     const referralCode = localStorage.getItem('ac_referral_code');
+    const clientExpiry = referralCode 
+      ? (localStorage.getItem('ac_aff_expiry') || localStorage.getItem('ac_expiry'))
+      : localStorage.getItem('ac_expiry');
     const res = await fetch(`${API_BASE}/payments/initialize`, {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },

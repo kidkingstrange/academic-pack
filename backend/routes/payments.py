@@ -30,8 +30,8 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
     is_usd = (currency or "").strip().upper() == "USD"
     base_price = settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA
     late_price = settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA
+    retail_price = settings.PRODUCT_PRICE_RETAIL_USD if is_usd else settings.PRODUCT_PRICE_RETAIL_NAIRA
 
-    amount = base_price
     now = datetime.now(timezone.utc)
 
     referred_by = None
@@ -43,23 +43,46 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
                 referred_by = candidate
 
     existing_lead = await db.leads.find_one({"email": email.lower()})
-    is_expired = False
-    if existing_lead:
-        created_at = existing_lead.get("created_at")
-        if created_at:
-            if isinstance(created_at, str):
-                created_at = datetime.fromisoformat(created_at)
-            if created_at.tzinfo is None:
-                created_at = created_at.replace(tzinfo=timezone.utc)
-            if (now - created_at).total_seconds() > 24 * 3600:
-                is_expired = True
-    else:
-        if client_expiry:
-            if client_expiry < now.timestamp() * 1000:
-                is_expired = True
 
-    if is_expired or referred_by:
-        amount = late_price
+    if referred_by:
+        # ── Affiliate Referral Pathway: 48-Hour Urgency Window ────────
+        # Locked-in partner rate: ₦5,000 ($30).
+        # After 48 hours, price jumps to full retail: ₦20,000 ($100).
+        aff_expired = False
+        if existing_lead and existing_lead.get("referred_by") == referred_by:
+            created_at = existing_lead.get("created_at")
+            if created_at:
+                if isinstance(created_at, str):
+                    created_at = datetime.fromisoformat(created_at)
+                if created_at.tzinfo is None:
+                    created_at = created_at.replace(tzinfo=timezone.utc)
+                if (now - created_at).total_seconds() > 48 * 3600:
+                    aff_expired = True
+        elif client_expiry:
+            if client_expiry < now.timestamp() * 1000:
+                aff_expired = True
+
+        amount = retail_price if aff_expired else late_price
+    else:
+        # ── Direct / Organic Pathway: 24-Hour Early-Bird Window ───────
+        # Early-bird price: ₦2,000 ($15).
+        # After 24 hours, price reverts to standard: ₦5,000 ($30).
+        is_expired = False
+        if existing_lead:
+            created_at = existing_lead.get("created_at")
+            if created_at:
+                if isinstance(created_at, str):
+                    created_at = datetime.fromisoformat(created_at)
+                if created_at.tzinfo is None:
+                    created_at = created_at.replace(tzinfo=timezone.utc)
+                if (now - created_at).total_seconds() > 24 * 3600:
+                    is_expired = True
+        else:
+            if client_expiry:
+                if client_expiry < now.timestamp() * 1000:
+                    is_expired = True
+
+        amount = late_price if is_expired else base_price
 
     return amount, referred_by
 

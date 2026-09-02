@@ -37,6 +37,8 @@ class Settings(BaseSettings):
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
     PRODUCT_PRICE_USD: float = 15.0     # $15 early-bird
     PRODUCT_PRICE_LATE_USD: float = 30.0 # $30 after 24 hrs
+    PRODUCT_PRICE_RETAIL_NAIRA: int = 20000  # ₦20,000 standard retail / after 48h affiliate expiry
+    PRODUCT_PRICE_RETAIL_USD: float = 100.0  # $100 standard retail / after 48h affiliate expiry
     USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
 
     # ── Meta Conversions API (server-side Purchase event) ────────────

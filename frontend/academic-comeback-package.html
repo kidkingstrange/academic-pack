@@ -44,7 +44,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 (function() {
   var ref = new URLSearchParams(window.location.search).get('ref');
   if (ref) {
-    try { localStorage.setItem('ac_referral_code', ref.trim().toUpperCase()); } catch (err) { /* ignore */ }
+    try { 
+      localStorage.setItem('ac_referral_code', ref.trim().toUpperCase()); 
+      if (!localStorage.getItem('ac_aff_expiry')) {
+        localStorage.setItem('ac_aff_expiry', Date.now() + 48 * 60 * 60 * 1000);
+      }
+    } catch (err) { /* ignore */ }
   }
 })();
 </script>

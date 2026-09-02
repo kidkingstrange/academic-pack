@@ -96,8 +96,10 @@
       if (errorEl) errorEl.style.display = 'none';
 
       try {
-        const clientExpiry = localStorage.getItem(EXPIRY_KEY);
-        const ref = new URLSearchParams(window.location.search).get('ref');
+        const ref = new URLSearchParams(window.location.search).get('ref') || localStorage.getItem('ac_referral_code');
+        const clientExpiry = ref 
+          ? (localStorage.getItem('ac_aff_expiry') || localStorage.getItem(EXPIRY_KEY))
+          : localStorage.getItem(EXPIRY_KEY);
 
         const res = await fetch(`${API_BASE}/payments/initialize`, {
           method: 'POST',
