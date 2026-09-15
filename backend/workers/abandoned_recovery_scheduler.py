@@ -204,16 +204,22 @@ async def run_abandoned_recovery_check():
 
 
 def start_abandoned_recovery_scheduler():
-    interval = settings.ABANDONED_RECOVERY_INTERVAL_MINS or 5
+    settings = get_settings()
+    if not getattr(settings, "ABANDONED_RECOVERY_ENABLED", True):
+        print("⏸️ Abandoned transaction recovery scheduler disabled (ABANDONED_RECOVERY_ENABLED=false)")
+        return
+    interval = getattr(settings, "ABANDONED_RECOVERY_INTERVAL_MINS", 5) or 5
     scheduler.add_job(
         run_abandoned_recovery_check,
         IntervalTrigger(minutes=interval),
         id="abandoned_recovery_check",
         replace_existing=True,
     )
-    scheduler.start()
+    if not scheduler.running:
+        scheduler.start()
     print(f"⏰ Abandoned transaction recovery scheduler started (runs every {interval}m)")
 
 
 def stop_abandoned_recovery_scheduler():
-    scheduler.shutdown()
+    if scheduler.running:
+        scheduler.shutdown()
