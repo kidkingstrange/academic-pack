@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block subject %}The brutal math of carrying over one course (Read this, {{ name }}){% endblock %}
+
+{% block content %}
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">74 students downloaded their package today. Here is why.</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, let's do some simple, brutal math that most university students avoid thinking about until it is too late:
+</p>
+
+<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:18px;margin:20px 0;">
+  <p style="margin:0 0 10px;font-weight:800;color:#991b1b;font-size:15px;">What does carrying over a single course actually cost you?</p>
+  <ul style="margin:0;padding-left:20px;color:#7f1d1d;font-size:14px;line-height:1.7;">
+    <li><strong>School fees &amp; departmental dues:</strong> ₦80,000 to ₦250,000+ for an extra year/semester</li>
+    <li><strong>Hostel rent, food &amp; transport:</strong> ₦150,000 to ₦400,000 wasted just to rewrite 2 exam papers</li>
+    <li><strong>The social toll:</strong> Watching your coursemates graduate, wear gowns, and start life while you are still sitting in lecture halls with juniors</li>
+    <li><strong>The career delay:</strong> An entire year lost from NYSC, internships, and earning an income</li>
+  </ul>
+</div>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Compare that to {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} for the Starter Pack or {{ currency_symbol }}{{ "%.2f"|format(complete_amount) }} for the Complete Academic Comeback System.
+</p>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  This is not an expense. It is an insurance policy against failure and carryovers.
+</p>
+
+<div style="text-align:center;margin:28px 0;">
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#ffffff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3);">
+    ⚡ Protect Your GPA Now ({{ currency_symbol }}{{ "%.2f"|format(complete_amount) }})
+  </a>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    <a href="{{ starter_url }}" style="color:#2563eb;font-weight:700;">Take the Starter Pack for {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} &rarr;</a>
+  </div>
+</div>
+{% endblock %}

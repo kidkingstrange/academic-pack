@@ -137,6 +137,6 @@ async def test_step4_email_and_price(test_db, monkeypatch):
     saved = await test_db.abandoned_transactions.find_one({"reference": ref})
     assert saved["sequence_step"] == 4
     assert len(saved["emails_sent"]) == 1
-    assert "2,000" in saved["emails_sent"][0]["subject"]
+    assert "Tonight before you sleep" in saved["emails_sent"][0]["subject"]
 
 

@@ -68,6 +68,7 @@ async def record_checkout_initialization(
     payment_method: str = "pay_with_bank",
     referred_by: Optional[str] = None,
     source: str = "checkout_init",
+    tier: str = "complete",
 ) -> Dict[str, Any]:
     """
     Record or update a checkout initialization in db.abandoned_transactions.
@@ -91,6 +92,7 @@ async def record_checkout_initialization(
         "currency": (currency or "NGN").upper(),
         "payment_method": payment_method,
         "referred_by": referred_by,
+        "tier": tier or "complete",
         "created_at": now,
         "updated_at": now,
         "status": "pending",
@@ -130,7 +132,21 @@ async def mark_transaction_recovered(
     else:
         return 0
 
-    query["status"] = {"$in": ["pending", "sequence_active", "abandoned"]}
+    query["status"] = {"$in": ["pending", "sequence_active", "daily_drip_active", "abandoned"]}
+
+    # Identify any active bonuses based on current sequence step before recovering
+    abandoned_tx = await db.abandoned_transactions.find_one(query)
+    earned_bonuses = []
+    if abandoned_tx:
+        step = abandoned_tx.get("sequence_step", 1)
+        if step <= 2:
+            earned_bonuses.append("The 3.0 to 4.5 GPA Active Retrieval Audio Cram Protocol")
+        if step <= 7:
+            earned_bonuses.append("72-Hour Semester Exam Survival Template + Emergency Worksheets")
+        if step <= 9:
+            earned_bonuses.append("Priority VIP WhatsApp Strategy Pass")
+        if step >= 10:
+            earned_bonuses.append("Emergency Comeback Flashcard Vault")
 
     res = await db.abandoned_transactions.update_many(
         query,
@@ -139,21 +155,56 @@ async def mark_transaction_recovered(
                 "status": "recovered",
                 "recovered_at": now,
                 "recovered_reference": recovered_reference or reference,
+                "earned_bonuses": earned_bonuses,
                 "updated_at": now,
             }
         },
     )
+
+    if earned_bonuses and email:
+        await db.users.update_one(
+            {"email": email.strip().lower()},
+            {"$addToSet": {"earned_bonuses": {"$each": earned_bonuses}}},
+        )
+
     return res.modified_count
+
+
+DAILY_TOPICS = [
+    {
+        "subject": "The optical illusion of re-reading lecture slides, {name}",
+        "subtitle": "Why studying 8 hours with highlighters still leads to exam hall panic.",
+        "headline": "Why 'feeling familiar' with a topic is killing your exam grades.",
+        "body": "<p>When you read a lecture slide 4 times, your brain recognizes the words and gives you a false dopamine signal: <em>'I know this.'</em></p><p>Then exam day comes. The question asks you to apply the concept or derive the formula from a blank sheet of paper, and your brain completely freezes.</p><p>Psychologists call this the <strong>Fluency Illusion</strong>. In the <em>Academic Comeback Package</em>, you learn how to test retrieval every 15 minutes using the Active Retrieval Protocol so information is burned into long-term synaptic memory.</p>",
+    },
+    {
+        "subject": "How to study 3 hours and outperform 10-hour crammers, {name}",
+        "subtitle": "The cognitive difference between active extraction and passive absorption.",
+        "headline": "Why top students never study until 4:00 AM.",
+        "body": "<p>Have you ever noticed that the top student in your department often looks relaxed, plays sports, and sleeps early before exam days?</p><p>They aren't genetically superior. They use <strong>Spaced High-Yield Encoding</strong>. Rather than rereading 300-page textbooks, they use structured concept maps and self-testing matrices.</p><p>You can start using this exact framework tonight for less than the cost of a plate of food.</p>",
+    },
+    {
+        "subject": "The 10-minute cure for exam room blank-outs, {name}",
+        "subtitle": "What to do the second stress cortisol blocks your hippocampus during exams.",
+        "headline": "Never stare blankly at an exam paper again.",
+        "body": "<p>When you sit in the hall and feel your heart beating fast, cortisol floods your prefrontal cortex and physically blocks your memory retrieval pathways.</p><p>Inside the <em>Exam Survival Protocol</em> (Guide #3 of the Academic Comeback Package), you get the physical 60-second breathing and neural grounding sequence that resets your memory engine in under a minute.</p>",
+    },
+    {
+        "subject": "Did you surrender your semester, {name}? (Let's be real)",
+        "subtitle": "No matter how low your GPA dropped, there is still time to recover.",
+        "headline": "A bad past semester does not define your graduation class.",
+        "body": "<p>I have worked with students who thought they were heading straight for probation, who turned their grades around in a single 12-week semester by changing their study systems.</p><p>Don't let another week of lecture notes pile up without an effective study protocol.</p>",
+    },
+]
 
 
 async def send_recovery_email_step(db, tx: dict, step: int) -> bool:
     """
-    Send Step 1, 2, or 3 recovery email to the customer.
+    Send Step 1 through 9, or Daily Drip (Step 10+) recovery email to the customer.
     """
     email = tx.get("email")
     name = tx.get("name") or "Student"
     reference = tx.get("reference")
-    amount = tx.get("amount", 2000.0)
     currency = tx.get("currency", "NGN").upper()
     unsub_token = tx.get("unsubscribe_token") or ""
 
@@ -169,43 +220,65 @@ async def send_recovery_email_step(db, tx: dict, step: int) -> bool:
         )
         return False
 
-
-    if step == 4:
-        amount = settings.ABANDONED_STEP4_PRICE_USD if currency == "USD" else settings.ABANDONED_STEP4_PRICE_NAIRA
-
     currency_symbol = "$" if currency == "USD" else "₦"
-    recovery_url = f"{settings.APP_URL}/api/payments/recovery-redirect?ref={reference}"
+    is_usd = currency == "USD"
+    starter_amount = float(settings.TIER_STARTER_PRICE_USD if is_usd else settings.TIER_STARTER_PRICE_NAIRA)
+    complete_amount = float(settings.TIER_COMPLETE_PRICE_USD if is_usd else settings.TIER_COMPLETE_PRICE_NAIRA)
+    vip_amount = float(settings.TIER_VIP_PRICE_USD if is_usd else settings.TIER_VIP_PRICE_NAIRA)
+
+    starter_url = f"{settings.APP_URL}/api/payments/recovery-redirect?ref={reference}&tier=starter"
+    complete_url = f"{settings.APP_URL}/api/payments/recovery-redirect?ref={reference}&tier=complete"
+    vip_url = f"{settings.APP_URL}/api/payments/recovery-redirect?ref={reference}&tier=vip"
+    recovery_url = complete_url
     unsubscribe_url = f"{settings.APP_URL}/api/payments/abandoned/unsubscribe?token={unsub_token}"
 
     context = {
         "name": name,
-        "amount": amount,
+        "amount": complete_amount,
+        "starter_amount": starter_amount,
+        "complete_amount": complete_amount,
+        "vip_amount": vip_amount,
+        "starter_url": starter_url,
+        "complete_url": complete_url,
+        "vip_url": vip_url,
         "currency": currency,
         "currency_symbol": currency_symbol,
         "recovery_url": recovery_url,
         "unsubscribe_token": unsub_token,
         "unsubscribe_url": unsubscribe_url,
         "app_url": settings.APP_URL,
-        "discount_enabled": settings.ABANDONED_DISCOUNT_ENABLED if step == 3 else False,
-        "discount_percent": settings.ABANDONED_DISCOUNT_PERCENT,
-        "discount_code": settings.ABANDONED_DISCOUNT_CODE,
     }
 
-    template_name = f"abandoned_recovery_{step}.html"
+    subjects = {
+        1: f"Did your payment get stuck, {name}? (+ 2-Hour Audio Cram Bonus)",
+        2: f"⏰ [Final 30 Mins] Your 2-Hour Audio Cram Bonus is expiring, {name}",
+        3: f"Is this what's holding you back, {name}? (Honest question)",
+        4: f"Tonight before you sleep, {name}...",
+        5: f"🎁 [New Day 2 Bonus Unlocked] 72-Hour Exam Survival Template, {name}",
+        6: f"The brutal math of carrying over one course (Read this, {name})",
+        7: f"Midnight Deadline: Day 2 Bonus Vault is closing, {name}",
+        8: f"Releasing your cart reservation to the waitlist, {name}",
+        9: f"Final Notice: VIP Strategy Pass added for tonight only, {name}",
+    }
+
+    if step <= 9:
+        template_name = f"abandoned_recovery_{step}.html"
+        subject = subjects.get(step, f"Complete your Academic Comeback, {name}")
+    else:
+        template_name = "abandoned_recovery_daily.html"
+        topic_idx = (step - 10) % len(DAILY_TOPICS)
+        topic = DAILY_TOPICS[topic_idx]
+        subject = topic["subject"].format(name=name)
+        context["daily_subject"] = subject
+        context["daily_subtitle"] = topic["subtitle"]
+        context["daily_headline"] = topic["headline"]
+        context["daily_body"] = topic["body"]
+
     try:
         html_content = render_template(template_name, context)
     except Exception as e:
         print(f"❌ Error rendering recovery template {template_name}: {e}")
         return False
-
-    subjects = {
-        1: f"You left something behind, {name}!",
-        2: f"Your Academic Comeback Package is still reserved, {name}",
-        3: f"Final Reminder: Complete your Academic Comeback, {name}",
-        4: f"Special Re-Open: Get your Academic Comeback Package for {currency_symbol}{amount:,.2f}, {name}",
-    }
-    subject = subjects.get(step, f"Complete your purchase, {name}")
-
 
     success, error = await send_email(email, subject, html_content)
     now = datetime.now(timezone.utc)
@@ -236,7 +309,6 @@ async def send_recovery_email_step(db, tx: dict, step: int) -> bool:
             "$push": {"emails_sent": log_entry},
         },
     )
-
 
     return success
 

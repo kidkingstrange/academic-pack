@@ -91,8 +91,8 @@ async def run_abandoned_recovery_check():
     # 1. Sync from Paystack API to catch any offline/direct abandoned checkouts
     await sync_paystack_abandoned_transactions(db)
 
-    # 2. Transition pending checkouts older than ABANDONED_DELAY_MINUTES_1 to active sequence
-    cutoff_1 = now - timedelta(minutes=settings.ABANDONED_DELAY_MINUTES_1)
+    # 2. Transition pending checkouts older than ABANDONED_TOUCH_1_MINS to active sequence
+    cutoff_1 = now - timedelta(minutes=settings.ABANDONED_TOUCH_1_MINS)
     pending_items = await db.abandoned_transactions.find({
         "status": "pending",
         "created_at": {"$lte": cutoff_1},
@@ -110,11 +110,11 @@ async def run_abandoned_recovery_check():
             )
             continue
 
-        # Send Step 1 email immediately
+        # Send Step 1 email immediately (T + 15m)
         sent = await abandoned_recovery_service.send_recovery_email_step(db, tx, step=1)
         if sent:
-            delay_2_mins = settings.ABANDONED_DELAY_MINUTES_2 - settings.ABANDONED_DELAY_MINUTES_1
-            next_due = now + timedelta(minutes=max(1, delay_2_mins))
+            delay_2_mins = settings.ABANDONED_TOUCH_2_MINS - settings.ABANDONED_TOUCH_1_MINS
+            next_due = now + timedelta(minutes=max(5, delay_2_mins))
             await db.abandoned_transactions.update_one(
                 {"_id": tx["_id"]},
                 {
@@ -127,11 +127,22 @@ async def run_abandoned_recovery_check():
                 },
             )
 
-    # 3. Process active sequences due for Step 2 or Step 3
+    # 3. Process active sequences due for next touch (Steps 2..9 and Daily Drip 10+)
     due_items = await db.abandoned_transactions.find({
-        "status": "sequence_active",
+        "status": {"$in": ["sequence_active", "daily_drip_active"]},
         "next_email_at": {"$lte": now},
     }).to_list(100)
+
+    STEP_TRANSITIONS = {
+        1: {"next_step": 2, "delay_mins": settings.ABANDONED_TOUCH_2_MINS - settings.ABANDONED_TOUCH_1_MINS},
+        2: {"next_step": 3, "delay_mins": settings.ABANDONED_TOUCH_3_MINS - settings.ABANDONED_TOUCH_2_MINS},
+        3: {"next_step": 4, "delay_mins": settings.ABANDONED_TOUCH_4_MINS - settings.ABANDONED_TOUCH_3_MINS},
+        4: {"next_step": 5, "delay_mins": settings.ABANDONED_TOUCH_5_MINS - settings.ABANDONED_TOUCH_4_MINS},
+        5: {"next_step": 6, "delay_mins": settings.ABANDONED_TOUCH_6_MINS - settings.ABANDONED_TOUCH_5_MINS},
+        6: {"next_step": 7, "delay_mins": settings.ABANDONED_TOUCH_7_MINS - settings.ABANDONED_TOUCH_6_MINS},
+        7: {"next_step": 8, "delay_mins": settings.ABANDONED_TOUCH_8_MINS - settings.ABANDONED_TOUCH_7_MINS},
+        8: {"next_step": 9, "delay_mins": settings.ABANDONED_TOUCH_9_MINS - settings.ABANDONED_TOUCH_8_MINS},
+    }
 
     for tx in due_items:
         email = tx.get("email")
@@ -147,65 +158,61 @@ async def run_abandoned_recovery_check():
 
         current_step = tx.get("sequence_step", 1)
 
-        if current_step == 1:
-            # Send Step 2 email
-            sent = await abandoned_recovery_service.send_recovery_email_step(db, tx, step=2)
+        if current_step in STEP_TRANSITIONS:
+            transition = STEP_TRANSITIONS[current_step]
+            step_to_send = transition["next_step"]
+            sent = await abandoned_recovery_service.send_recovery_email_step(db, tx, step=step_to_send)
             if sent:
-                delay_3_mins = settings.ABANDONED_DELAY_MINUTES_3 - settings.ABANDONED_DELAY_MINUTES_2
-                next_due = now + timedelta(minutes=max(1, delay_3_mins))
-                await db.abandoned_transactions.update_one(
-                    {"_id": tx["_id"]},
-                    {
-                        "$set": {
-                            "sequence_step": 2,
-                            "next_email_at": next_due,
-                            "updated_at": now,
-                        }
-                    },
-                )
-        elif current_step == 2:
-            # Send Step 3 email, then schedule Step 4 (7 days after Step 3)
-            sent = await abandoned_recovery_service.send_recovery_email_step(db, tx, step=3)
-            if sent:
-                delay_4_mins = settings.ABANDONED_DELAY_MINUTES_4 - settings.ABANDONED_DELAY_MINUTES_3
-                next_due = now + timedelta(minutes=max(1, delay_4_mins))
-                await db.abandoned_transactions.update_one(
-                    {"_id": tx["_id"]},
-                    {
-                        "$set": {
-                            "sequence_step": 3,
-                            "next_email_at": next_due,
-                            "updated_at": now,
-                        }
-                    },
-                )
-        elif current_step == 3:
-            # Send Step 4 email (1-week ₦2,000 / $15 re-open offer)
-            sent = await abandoned_recovery_service.send_recovery_email_step(db, tx, step=4)
-            if sent:
-                await db.abandoned_transactions.update_one(
-                    {"_id": tx["_id"]},
-                    {
-                        "$set": {
-                            "status": "completed",
-                            "sequence_step": 4,
-                            "next_email_at": None,
-                            "updated_at": now,
-                        }
-                    },
-                )
+                if step_to_send == 9:
+                    # Transition to daily ongoing follow-up after step 9
+                    next_due = now + timedelta(minutes=settings.ABANDONED_DAILY_INTERVAL_MINS)
+                    status = "daily_drip_active"
+                else:
+                    # Schedule next intra-day touch
+                    next_delay = STEP_TRANSITIONS.get(step_to_send, {}).get("delay_mins", 360)
+                    next_due = now + timedelta(minutes=max(5, next_delay))
+                    status = "sequence_active"
 
+                await db.abandoned_transactions.update_one(
+                    {"_id": tx["_id"]},
+                    {
+                        "$set": {
+                            "status": status,
+                            "sequence_step": step_to_send,
+                            "next_email_at": next_due,
+                            "updated_at": now,
+                        }
+                    },
+                )
+        else:
+            # Step >= 9: Ongoing Daily Drip until purchase or unsubscribe
+            step_to_send = current_step + 1
+            sent = await abandoned_recovery_service.send_recovery_email_step(db, tx, step=step_to_send)
+            if sent:
+                next_due = now + timedelta(minutes=settings.ABANDONED_DAILY_INTERVAL_MINS)
+                await db.abandoned_transactions.update_one(
+                    {"_id": tx["_id"]},
+                    {
+                        "$set": {
+                            "status": "daily_drip_active",
+                            "sequence_step": step_to_send,
+                            "next_email_at": next_due,
+                            "updated_at": now,
+                        }
+                    },
+                )
 
 
 def start_abandoned_recovery_scheduler():
+    interval = settings.ABANDONED_RECOVERY_INTERVAL_MINS or 5
     scheduler.add_job(
         run_abandoned_recovery_check,
-        IntervalTrigger(minutes=15),
+        IntervalTrigger(minutes=interval),
         id="abandoned_recovery_check",
         replace_existing=True,
     )
     scheduler.start()
-    print("⏰ Abandoned transaction recovery scheduler started (runs every 15m)")
+    print(f"⏰ Abandoned transaction recovery scheduler started (runs every {interval}m)")
 
 
 def stop_abandoned_recovery_scheduler():

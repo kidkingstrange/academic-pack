@@ -89,19 +89,33 @@ async def get_library_user(
 
 @router.get("")
 async def get_library(user=Depends(get_library_user), db=Depends(get_db)):
-    """Return all products the user has purchased."""
+    """Return all products with lock status based on user tier and entitlements."""
     products = await db.products.find({"is_active": True}).sort("order", 1).to_list(100)
+    user_prods = user.get("purchased_products", [])
+    has_all = "all" in user_prods
+    user_tier = user.get("tier", "complete" if has_all else "starter")
+    is_vip = bool(user.get("is_vip", False))
+
     result = []
     for p in products:
+        p_id = str(p["_id"])
+        is_locked = not (has_all or p_id in user_prods)
         result.append({
-            "id": str(p["_id"]),
+            "id": p_id,
             "title": p["title"],
             "description": p["description"],
             "thumbnail": p.get("thumbnail"),
             "order": p["order"],
+            "locked": is_locked,
         })
 
-    return {"products": result, "user_name": user["name"]}
+    return {
+        "products": result,
+        "user_name": user["name"],
+        "tier": user_tier,
+        "is_vip": is_vip,
+        "whatsapp_community_link": settings.WHATSAPP_COMMUNITY_LINK if is_vip else None,
+    }
 
 
 @router.get("/sign/{product_id}")

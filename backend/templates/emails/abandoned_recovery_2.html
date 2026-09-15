@@ -1,24 +1,36 @@
 {% extends "base.html" %}
 
-{% block subject %}Imagine studying for only 90 minutes tonight, {{ name }}{% endblock %}
+{% block subject %}⏰ [Final 30 Mins] Your 2-Hour Audio Cram Bonus is expiring, {{ name }}{% endblock %}
 
 {% block content %}
-<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">What made you check out the package today?</h2>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Hi {{ name }}, when you visited the site today, you were looking for a way to stop studying for hours and blanking out in exams.
-</p>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Here is the truth: <strong>You don't need to read hundreds of pages of theory.</strong> The 20-minute Quick-Start section inside <em>Get Good at Hard Things</em> gives you the exact Active Retrieval protocol to cut your study time in half starting on whatever topic you're reading tonight.
-</p>
-<div style="background:#fff8e6;border-left:4px solid #d4a63a;border-radius:0 8px 8px 0;padding:16px;margin:0 0 20px">
-  <p style="margin:0;font-size:14px;color:#8a6600;line-height:1.6">
-    <strong>The Dream Shift:</strong> Instead of 6-hour night marathons that leave you exhausted, you install 90-minute hyper-focused study blocks. You retain 100% of the material, finish your syllabus weeks ahead, and walk into exam halls completely calm.
+<div style="background:#fef2f2;border-left:4px solid #ef4444;border-radius:6px;padding:12px 16px;margin:0 0 20px;">
+  <span style="font-size:12px;font-weight:800;letter-spacing:0.5px;color:#b91c1c;text-transform:uppercase;">⚠️ Fast-Action Timer Warning:</span>
+  <p style="margin:4px 0 0;font-size:14px;color:#991b1b;line-height:1.5;">
+    The 2-hour window to get <strong>"The 3.0 to 4.5 GPA Active Retrieval Audio Cram Protocol"</strong> included with your Academic Comeback Package expires shortly.
   </p>
 </div>
-<div style="text-align:center;margin:28px 0">
-  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#d4a63a,#b88b22);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(212,166,58,0.3)">🚀 Unlock Your 20-Minute Protocol Now</a>
+
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">Did you get distracted before finishing checkout?</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  {{ name }}, we all know how university life is — a WhatsApp message pops up, a lecture starts, or a network drops, and suddenly an hour is gone.
+</p>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  I kept your cart and bonus locked so you don't miss out. The difference between reading textbooks for 6 exhausted hours and learning the material in 90 minutes comes down to the cognitive protocols inside this package.
+</p>
+
+<div style="text-align:center;margin:28px 0;background:#fcfbfa;border:1px solid #e5e7eb;border-radius:12px;padding:24px;">
+  <p style="font-size:16px;font-weight:700;color:#111827;margin:0 0 16px;">Claim the Complete Pack + Audio Cram Bonus before it closes:</p>
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#eab308,#ca8a04);color:#000000;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 16px rgba(202,138,4,0.3);">
+    ⚡ Complete Order Now — {{ currency_symbol }}{{ "%.2f"|format(complete_amount) }}
+  </a>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    Prefer Starter? <a href="{{ starter_url }}" style="color:#2563eb;font-weight:700;text-decoration:underline;">Grab Starter for {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} &rarr;</a>
+  </div>
 </div>
-<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
-  Protected by our 30-Day "Higher Retention or Zero Cost" Guarantee.
+
+<p style="color:#6b7280;font-size:13px;line-height:1.5;margin:16px 0 0;text-align:center;">
+  Instant access is delivered to your screen and email immediately after transfer/card verification.
 </p>
 {% endblock %}

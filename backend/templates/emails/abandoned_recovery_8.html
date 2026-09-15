@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block subject %}Releasing your cart reservation to the waitlist, {{ name }}{% endblock %}
+
+{% block content %}
+<div style="background:#fef2f2;border-left:4px solid #ef4444;border-radius:6px;padding:12px 16px;margin:0 0 20px;">
+  <span style="font-size:12px;font-weight:800;letter-spacing:0.5px;color:#b91c1c;text-transform:uppercase;">⚠️ Final Reservation Notice:</span>
+  <p style="margin:4px 0 0;font-size:14px;color:#991b1b;line-height:1.5;">
+    Your held cart and digital license for the Academic Comeback Package is scheduled for release.
+  </p>
+</div>
+
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">Should I release your spot, {{ name }}?</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  We have hundreds of new students discovering the Academic Comeback curriculum each week. Because your checkout from 2 days ago has remained pending, the system will release your reserved license back into the public queue today.
+</p>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  If you are ready to finally master how to study smart, cut your study time in half, and ace your exams, click your recovery link below to finalize your access in 30 seconds:
+</p>
+
+<div style="text-align:center;margin:28px 0;">
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#ffffff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3);">
+    ⚡ Reclaim &amp; Lock In Your Spot ({{ currency_symbol }}{{ "%.2f"|format(complete_amount) }})
+  </a>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    Starter: {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} | Complete: {{ currency_symbol }}{{ "%.2f"|format(complete_amount) }} | VIP: {{ currency_symbol }}{{ "%.2f"|format(vip_amount) }}
+  </div>
+</div>
+{% endblock %}

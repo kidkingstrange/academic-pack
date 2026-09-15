@@ -28,6 +28,7 @@ class PaymentInitRequest(BaseModel):
     referral_code: Optional[str] = None  # captured from /r/CODE via localStorage at checkout
     country: Optional[str] = "NG"
     currency: Optional[str] = "NGN"
+    tier: Optional[str] = None  # Explicitly set only by recovery flows ("starter" | "complete" | "vip")
 
 
 class PaymentInitResponse(BaseModel):

@@ -25,19 +25,22 @@
       bar.classList.remove('urgency-bar--expired');
     }
 
-    // Set initial ₦5,000 price (75% OFF ₦20,000 retail)
+    // Set initial ₦5,000 price
     document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
 
     // Update price warning notices to highlight the 48-hour lock
     document.querySelectorAll('.price-warning-notice').forEach(notice => {
       notice.style.display = 'block';
-      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦5,000</strong> student rate (75% OFF) is temporarily reserved through this referral link. In 48 hours, this page automatically reverts to the standard <strong>₦20,000</strong> retail price.`;
+      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦5,000</strong> student rate is temporarily reserved through this referral link (Total Real-World Cost: <strong>₦2,678,945</strong>). In 48 hours, this page automatically reverts to the standard <strong>₦20,000</strong> retail price.`;
     });
 
-    // Update discount badges
+    // Update discount badges with clean, non-wrapping copy
     document.querySelectorAll('.price-urgency-badge').forEach(badge => {
       badge.style.display = 'inline-block';
-      badge.innerHTML = `🔥 <strong>75% Partner Discount</strong> — Price jumps to ₦20,000 in <span class="aff-badge-countdown">48:00:00</span>`;
+      badge.innerHTML = `🔥 <strong>Special Partner Rate</strong> — ₦5,000 Limited Access`;
+    });
+    document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
+      badge.innerHTML = `🔥 Partner Rate: ₦5,000`;
     });
 
     let affTimerId = null;
@@ -58,6 +61,9 @@
         document.querySelectorAll('.price-urgency-badge').forEach(badge => {
           badge.innerHTML = 'Standard Retail Price (₦20,000)';
         });
+        document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
+          badge.innerHTML = 'Standard Price';
+        });
         document.querySelectorAll('.price-warning-notice').forEach(notice => {
           notice.innerHTML = `💡 <strong>Notice:</strong> The 48-hour partner discount has closed. This package is now available at the standard <strong>₦20,000</strong> rate.`;
         });
@@ -76,7 +82,12 @@
       }
       const textSpan = document.getElementById('urgency-bar-text');
       if (textSpan && bar && !bar.classList.contains('urgency-bar--expired')) {
-        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> 75% OFF (₦5,000) — Price Jumps to ₦20,000 In: <strong id="countdown">${formatted}</strong>`;
+        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦5,000 Student Rate (₦2,678,945 Value) — Price Jumps to ₦20,000 In: <strong id="countdown">${formatted}</strong>`;
+      }
+      const urgencyCta = bar ? bar.querySelector('.urgency-bar__cta') : null;
+      if (urgencyCta && !urgencyCta.dataset.partnerUpdated) {
+        urgencyCta.innerHTML = `GET IT NOW — ₦5,000 <i class="bi bi-arrow-right"></i>`;
+        urgencyCta.dataset.partnerUpdated = 'true';
       }
       document.querySelectorAll('.aff-badge-countdown').forEach(b => {
         b.textContent = formatted;
@@ -117,12 +128,12 @@
       // Update all current price displays to standard price
       document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
       
-      // Update all discount badges and labels from 90% to 75%
+      // Update all discount badges and labels on expiry
       document.querySelectorAll('.price-urgency-badge').forEach(n => {
         if (n.textContent.includes('window is closing')) {
-          n.innerHTML = 'The 90% discount window has closed.';
+          n.innerHTML = 'The early-bird discount window has closed.';
         } else {
-          n.innerHTML = n.innerHTML.replace(/90%/g, '75%');
+          n.innerHTML = n.innerHTML.replace(/90%/g, '75%').replace(/99% OFF TODAY/g, 'SPECIAL OFFER');
         }
       });
       return;

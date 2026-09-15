@@ -203,18 +203,58 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       try { localStorage.setItem(STORAGE_KEY, token); } catch (err) { /* ignore */ }
 
       const data = await res.json();
-      document.getElementById('user-name').textContent = `Welcome, ${data.user_name.split(' ')[0]}`;
+      const userFirstName = data.user_name ? data.user_name.split(' ')[0] : 'there';
+      document.getElementById('user-name').innerHTML = `Welcome, ${userFirstName} ${data.is_vip ? '<span style="font-size:0.55em; vertical-align:middle; background:linear-gradient(135deg,#c9973a,#e5b85c); color:#0c0e14; padding:4px 10px; border-radius:20px; font-weight:800; letter-spacing:0.5px; margin-left:8px;"><i class="bi bi-star-fill"></i> VIP ACCELERATOR</span>' : ''}`;
       
+      // Inject VIP Community banner if user is VIP
+      if (data.is_vip && data.whatsapp_community_link) {
+        const vipBanner = document.createElement('div');
+        vipBanner.style.cssText = 'background: linear-gradient(135deg, rgba(201,151,58,0.15), rgba(201,151,58,0.05)); border: 1px solid rgba(201,151,58,0.4); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(201,151,58,0.15);';
+        vipBanner.innerHTML = `
+          <div style="display:flex; align-items:center; gap:14px;">
+            <div style="width:48px; height:48px; border-radius:50%; background:rgba(201,151,58,0.2); color:var(--gold-l); display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">
+              <i class="bi bi-broadcast"></i>
+            </div>
+            <div>
+              <strong style="color:#fff; font-size:1.05rem; display:block; margin-bottom:2px;">VIP Masterclass Community Access</strong>
+              <span style="color:var(--gray-l); font-size:0.85rem;">Join the private live Wednesday 8PM sessions with Itoya David & the inner circle.</span>
+            </div>
+          </div>
+          <a href="${data.whatsapp_community_link}" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,var(--gold),var(--gold-l)); color:var(--ink); font-weight:800; font-size:0.88rem; padding:12px 20px; border-radius:var(--radius); text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(201,151,58,0.3);">
+            <i class="bi bi-whatsapp"></i> Enter VIP WhatsApp Community &rarr;
+          </a>
+        `;
+        document.querySelector('main.container').insertBefore(vipBanner, document.getElementById('products-grid'));
+      }
+
       const grid = document.getElementById('products-grid');
-      grid.innerHTML = data.products.map(p => `
-        <div class="lib-card">
-          <h3 class="lib-card__title">${p.title}</h3>
-          <p class="lib-card__desc">${p.description}</p>
-          <button class="download-btn" data-product-id="${p.id}" data-state="idle">
-            <i class="bi bi-download"></i> Download PDF
-          </button>
-        </div>
-      `).join('');
+      grid.innerHTML = data.products.map(p => {
+        if (p.locked) {
+          return `
+            <div class="lib-card" style="opacity: 0.85; border-style: dashed; border-color: rgba(255,255,255,0.15); background: rgba(14,17,24,0.6);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:0.72rem; font-weight:700; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); padding:3px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:4px;">
+                  <i class="bi bi-lock-fill"></i> Complete Pack Exclusive
+                </span>
+              </div>
+              <h3 class="lib-card__title" style="color: rgba(255,255,255,0.7);">${p.title}</h3>
+              <p class="lib-card__desc" style="color: rgba(255,255,255,0.45);">${p.description}</p>
+              <a href="/academic-comeback-package.html#pricing" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:rgba(201,151,58,0.1); border:1px solid rgba(201,151,58,0.3); color:var(--gold-l); padding:14px; border-radius:var(--radius); font-weight:700; font-size:0.88rem; text-decoration:none; transition:all 0.2s;">
+                <i class="bi bi-unlock-fill"></i> Upgrade to Unlock
+              </a>
+            </div>
+          `;
+        }
+        return `
+          <div class="lib-card">
+            <h3 class="lib-card__title">${p.title}</h3>
+            <p class="lib-card__desc">${p.description}</p>
+            <button class="download-btn" data-product-id="${p.id}" data-state="idle">
+              <i class="bi bi-download"></i> Download PDF
+            </button>
+          </div>
+        `;
+      }).join('');
 
       document.getElementById('loader').style.display = 'none';
     } catch (err) {

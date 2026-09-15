@@ -1,30 +1,43 @@
 {% extends "base.html" %}
 
-{% block subject %}The real cost of studying the same way this semester, {{ name }}{% endblock %}
+{% block subject %}Is this what's holding you back, {{ name }}? (Honest question){% endblock %}
 
 {% block content %}
-<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">The worst feeling in university...</h2>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Hi {{ name }}, the worst feeling isn't failing an exam you didn't prepare for. It's spending 3 straight weeks in night class, highlighting entire textbooks, and still opening your result portal to see a D or C.
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">Can I ask you an honest question?</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, when students abandon checkout for the Academic Comeback Package, it's almost never because of the money.
 </p>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  If you continue reading the exact same way, the next exam season will produce the exact same outcome.
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} is less than the cost of a single meal with chicken or 2 days of mobile data subscriptions.
 </p>
-{% if discount_enabled %}
-<div style="background:#fff8e6;border:1px dashed #d4a63a;border-radius:12px;padding:16px 20px;margin:0 0 24px;text-align:center">
-  <p style="margin:0 0 4px;font-size:14px;color:#8a6600;font-weight:600">SPECIAL DISCOUNT COURTESY APPLIED</p>
-  <p style="margin:0;font-size:20px;font-weight:800;color:#0d0f14">Use Code: <span style="color:#d4a63a;background:#0d0f14;padding:4px 10px;border-radius:6px">{{ discount_code }}</span> for {{ discount_percent }}% OFF!</p>
-</div>
-{% endif %}
-<div style="background:#fef2f2;border-left:4px solid #ef4444;border-radius:0 8px 8px 0;padding:16px;margin:0 0 20px">
-  <p style="margin:0;font-size:14px;color:#991b1b;line-height:1.6">
-    <strong>The Real Cost:</strong> A small one-time investment today is less than the price of a fast-food meal. But the cost of repeating a course, dropping your CGPA, or losing out on job opportunities is massive.
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  What usually holds students back is a quiet, unspoken doubt: <em>"What if I buy this, and my brain is still too slow? What if I still struggle when exam sheets are shared?"</em>
+</p>
+
+<div style="background:#f8fafc;border-left:4px solid #3b82f6;border-radius:6px;padding:16px;margin:20px 0;">
+  <p style="margin:0 0 8px;font-weight:700;color:#1e293b;font-size:14px;">📖 The story of Emmanuel (Electrical Engineering):</p>
+  <p style="margin:0;font-size:14px;color:#475569;line-height:1.6;">
+    Emmanuel entered his 300L with 3 carryovers. He was studying 7 to 9 hours every single night until 3:00 AM — and still blanking out in exam halls. Why? Because re-reading notes and highlighting slides creates an <strong>illusion of competence</strong>. The moment he switched to the 20-minute Active Retrieval protocol in this package, his retention skyrocketed. He cleared all 3 carryovers with straight As and finished the semester on a 4.82 GPA.
   </p>
 </div>
-<div style="text-align:center;margin:28px 0">
-  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">✨ Claim Your Copy Risk-Free</a>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  You are not "not smart enough". You were simply never taught <strong>how the human memory engine actually encodes difficult technical formulas and theories under pressure</strong>.
+</p>
+
+<div style="text-align:center;margin:28px 0;">
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#ffffff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3);">
+    ⚡ Reclaim Your Academic Comeback ({{ currency_symbol }}{{ "%.2f"|format(complete_amount) }})
+  </a>
+  <div style="margin-top:12px;font-size:13px;color:#6b7280;">
+    Starting at only {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} for the Starter Edition. <a href="{{ starter_url }}" style="color:#2563eb;font-weight:700;">Get Starter &rarr;</a>
+  </div>
 </div>
-<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
-  100% Risk-Free Guarantee: Double your retention in 30 days or get a full refund.
+
+<p style="color:#6b7280;font-size:13px;line-height:1.5;margin:16px 0 0;text-align:center;">
+  Protected by our 30-Day "Higher Retention or Zero Cost" Money-Back Guarantee. You take zero risk.
 </p>
 {% endblock %}

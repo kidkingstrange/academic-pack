@@ -97,14 +97,31 @@ async def complete_payment(
             "purchase_date": now,
             "ip_address": ip_address,
             "completed_via": completed_via,
+            "tier": (pending.get("tier") if pending else "complete"),
         })
         claimed = True
     except DuplicateKeyError:
         claimed = False
     print(f"⏱ [complete_payment] ref={reference} claimed={claimed} via={completed_via} at={now.isoformat()}")
 
-    # ── Create or get the user ─────────────────────────────────────────
+    # ── Resolve Tier & Product Entitlements ────────────────────────────
+    tier = (pending.get("tier") if pending else None) or "complete"
     user = await db.users.find_one({"email": email})
+    
+    current_products = user.get("purchased_products", []) if user else []
+    already_has_all = "all" in current_products
+    
+    if tier == "starter" and not already_has_all:
+        starter_prods = await db.products.find({"order": {"$in": [1, 2]}}).to_list(10)
+        starter_ids = [str(p["_id"]) for p in starter_prods]
+        new_products = list(set(current_products + starter_ids))
+    else:
+        new_products = ["all"]
+        
+    is_vip = True if tier == "vip" or (user and user.get("is_vip")) else False
+    user_tier = "vip" if is_vip else ("complete" if "all" in new_products else tier)
+
+    # ── Create or get the user ─────────────────────────────────────────
     access_token = secrets.token_urlsafe(32)
     if not user:
         ins = await db.users.insert_one({
@@ -115,18 +132,25 @@ async def complete_payment(
             "purchase_date": now,
             "last_login": now,
             "is_active": True,
-            "purchased_products": ["all"],
+            "purchased_products": new_products,
+            "tier": user_tier,
+            "is_vip": is_vip,
             "library_access_token": access_token,
         })
         user_id = ins.inserted_id
     else:
         user_id = user["_id"]
         access_token = user.get("library_access_token")
+        update_doc = {
+            "last_login": now,
+            "purchased_products": new_products,
+            "tier": user_tier,
+            "is_vip": is_vip,
+        }
         if not access_token:
             access_token = secrets.token_urlsafe(32)
-            await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now, "library_access_token": access_token}})
-        else:
-            await db.users.update_one({"_id": user_id}, {"$set": {"last_login": now}})
+            update_doc["library_access_token"] = access_token
+        await db.users.update_one({"_id": user_id}, {"$set": update_doc})
 
     if claimed:
         await db.payments.update_one({"reference": reference}, {"$set": {"user_id": user_id}})

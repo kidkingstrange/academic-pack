@@ -33,13 +33,21 @@ class Settings(BaseSettings):
     # ── Paystack ─────────────────────────────────────────────────────
     PAYSTACK_SECRET_KEY: str = "sk_test_your_paystack_secret_key"
     PAYSTACK_PUBLIC_KEY: str = "pk_test_your_paystack_public_key"
-    PRODUCT_PRICE_NAIRA: int = 2000   # ₦2,000 early-bird
+    PRODUCT_PRICE_NAIRA: int = 2000   # Legacy ₦2,000 early-bird
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
     PRODUCT_PRICE_USD: float = 15.0     # $15 early-bird
     PRODUCT_PRICE_LATE_USD: float = 30.0 # $30 after 24 hrs
     PRODUCT_PRICE_RETAIL_NAIRA: int = 20000  # ₦20,000 standard retail / after 48h affiliate expiry
     PRODUCT_PRICE_RETAIL_USD: float = 100.0  # $100 standard retail / after 48h affiliate expiry
     USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
+
+    # ── Tiered Pricing Structure ─────────────────────────────────────
+    TIER_STARTER_PRICE_NAIRA: int = 3500
+    TIER_STARTER_PRICE_USD: float = 22.0
+    TIER_COMPLETE_PRICE_NAIRA: int = 6000
+    TIER_COMPLETE_PRICE_USD: float = 35.0
+    TIER_VIP_PRICE_NAIRA: int = 12500
+    TIER_VIP_PRICE_USD: float = 75.0
 
     # ── Meta Conversions API (server-side Purchase event) ────────────
     # Same Pixel ID already used client-side in index.html/library.html.
@@ -93,17 +101,30 @@ class Settings(BaseSettings):
     SETTLEMENT_ACCOUNT_NUMBER: str = ""
     SETTLEMENT_ACCOUNT_NAME: str = ""
 
-    # ── Abandoned Transaction Recovery ───────────────────────────────
+    # ── Abandoned Transaction Recovery (Aggressive Multi-Touch Engine) ───
     ABANDONED_RECOVERY_ENABLED: bool = True
-    ABANDONED_DELAY_MINUTES_1: int = 60       # Email 1: 1 hour after checkout init
-    ABANDONED_DELAY_MINUTES_2: int = 1440     # Email 2: 24 hours after checkout init
-    ABANDONED_DELAY_MINUTES_3: int = 4320     # Email 3: 72 hours (3 days) after checkout init
-    ABANDONED_DELAY_MINUTES_4: int = 14400    # Email 4: 7 days after Email 3 (10 days total)
-    ABANDONED_DISCOUNT_ENABLED: bool = False  # Enable optional discount in Email 3
+    ABANDONED_RECOVERY_INTERVAL_MINS: int = 5   # Worker check frequency (every 5 minutes)
+    ABANDONED_TOUCH_1_MINS: int = 15            # Step 1: 15m (Payment snag + 2-Hour Audio Cram Bonus)
+    ABANDONED_TOUCH_2_MINS: int = 120           # Step 2: 2h (Bonus 1 expiring alert)
+    ABANDONED_TOUCH_3_MINS: int = 360           # Step 3: 6h (Empathy + Comeback Case Study)
+    ABANDONED_TOUCH_4_MINS: int = 720           # Step 4: 12h (Bedtime anxiety check)
+    ABANDONED_TOUCH_5_MINS: int = 1080          # Step 5: 18h (Day 2 AM: Exam Survival Template bonus)
+    ABANDONED_TOUCH_6_MINS: int = 1440          # Step 6: 24h (Day 2 PM: Social proof & carryover math)
+    ABANDONED_TOUCH_7_MINS: int = 1800          # Step 7: 30h (Day 2 Night: Day 2 bonus final call)
+    ABANDONED_TOUCH_8_MINS: int = 2520          # Step 8: 42h (Day 3 AM: Cart reservation release)
+    ABANDONED_TOUCH_9_MINS: int = 3240          # Step 9: 54h (Day 3 Night: VIP WhatsApp pass + midnight)
+    ABANDONED_DAILY_INTERVAL_MINS: int = 1440   # Step 10+: Daily ongoing reminder until purchase
+    
+    # Backwards compatibility legacy aliases
+    ABANDONED_DELAY_MINUTES_1: int = 15
+    ABANDONED_DELAY_MINUTES_2: int = 120
+    ABANDONED_DELAY_MINUTES_3: int = 360
+    ABANDONED_DELAY_MINUTES_4: int = 720
+    ABANDONED_DISCOUNT_ENABLED: bool = False
     ABANDONED_DISCOUNT_PERCENT: float = 10.0
     ABANDONED_DISCOUNT_CODE: str = "COMEBACK10"
-    ABANDONED_STEP4_PRICE_NAIRA: float = 2000.0 # Re-opened ₦2,000 offer in Email 4
-    ABANDONED_STEP4_PRICE_USD: float = 15.0     # Re-opened $15 offer in Email 4
+    ABANDONED_STEP4_PRICE_NAIRA: float = 2000.0
+    ABANDONED_STEP4_PRICE_USD: float = 15.0
 
 
 

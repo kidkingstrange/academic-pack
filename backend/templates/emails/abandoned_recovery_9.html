@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block subject %}Final Notice: VIP Strategy Pass added for tonight only, {{ name }}{% endblock %}
+
+{% block content %}
+<div style="background:#fdf4ff;border-left:4px solid #c026d3;border-radius:6px;padding:12px 16px;margin:0 0 20px;">
+  <span style="font-size:12px;font-weight:800;letter-spacing:0.5px;color:#86198f;text-transform:uppercase;">🔥 Day 3 Final Offer:</span>
+  <p style="margin:4px 0 0;font-size:14px;color:#701a75;line-height:1.5;">
+    Complete your Academic Comeback order tonight, and I will personally throw in a <strong>VIP Exam Strategy Q&A Pass</strong> so you can ask any questions directly before exams.
+  </p>
+</div>
+
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">This is your final call before cart archive, {{ name }}.</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  At 11:59 PM tonight, your checkout session officially archives. If you want to stop reading passively, eliminate exam room blank-outs, and see how fast you can turn a 2.0 GPA into a 4.5+, do not let this pass you by.
+</p>
+
+<div style="text-align:center;margin:28px 0;background:#fcfbfa;border:1px solid #e5e7eb;border-radius:12px;padding:24px;">
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#eab308,#ca8a04);color:#000000;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 16px rgba(202,138,4,0.3);">
+    ⚡ Finalize Order + Get VIP Strategy Pass ({{ currency_symbol }}{{ "%.2f"|format(complete_amount) }})
+  </a>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    Or choose Starter for just {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }}: <a href="{{ starter_url }}" style="color:#2563eb;font-weight:700;">Take Starter &rarr;</a>
+  </div>
+</div>
+{% endblock %}

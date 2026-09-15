@@ -1,38 +1,37 @@
 {% extends "base.html" %}
 
-{% block subject %}Final Opportunity: Unlock the Academic Comeback Package for {{ currency_symbol }}{{ "%.2f"|format(amount) }}, {{ name }}{% endblock %}
+{% block subject %}Tonight before you sleep, {{ name }}...{% endblock %}
 
 {% block content %}
-<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Your final early-bird window is closing</h2>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Hi {{ name }}, this is your final opportunity to claim the complete <strong>Academic Comeback Package</strong> at the original early-bird price of <strong>{{ currency_symbol }}{{ "%.2f"|format(amount) }}</strong> before this special recovery link is archived.
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">Before you close your eyes tonight...</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, it's getting late. If you are like most students who want to do exceptionally well, you are probably lying in bed thinking about the exams ahead, the unfinished syllabuses, and that knot of anxiety in your stomach.
 </p>
 
-<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:16px 20px;margin:0 0 20px;text-align:left">
-  <p style="margin:0 0 6px;color:#991b1b;font-weight:700;font-size:15px">⚠️ What is at stake if you let this expire:</p>
-  <ul style="margin:0;padding-left:20px;color:#7f1d1d;font-size:13px;line-height:1.6">
-    <li>The standard price steps up permanently to {{ currency_symbol }}{{ "5,000" if currency_symbol == "₦" else "30" }}</li>
-    <li>Forfeiting your VIP Pass to the Wednesday Live Masterclass Community</li>
-    <li>Entering your upcoming exams relying on trial-and-error study habits</li>
-  </ul>
-</div>
-
-<div style="background:#fcfbfa;border:1px solid #e8e4d9;border-radius:12px;padding:20px;margin:0 0 24px">
-  <p style="margin:0 0 8px;font-weight:700;color:#0d0f14;font-size:16px">📚 Everything unlocked for {{ currency_symbol }}{{ "%.2f"|format(amount) }}:</p>
-  <ul style="margin:0;padding-left:20px;color:#444;font-size:14px;line-height:1.7">
-    <li>The 20-Minute Quick-Start Active Retrieval Protocol</li>
-    <li>The First Class Playbook &amp; Exam Strategy Systems</li>
-    <li>Focus Templates &amp; Daily Study Tracking Frameworks</li>
-    <li>Protected by our 30-Day "Higher Retention or Zero Cost" Guarantee</li>
-  </ul>
-  <p style="margin:16px 0 0;font-size:16px;font-weight:700;color:#0d0f14">Special Locked Price: <span style="color:#00a86b">{{ currency_symbol }}{{ "%.2f"|format(amount) }}</span></p>
-</div>
-
-<div style="text-align:center;margin:28px 0">
-  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">🎉 Lock In {{ currency_symbol }}{{ "%.2f"|format(amount) }} Access Before Expiry</a>
-</div>
-
-<p style="color:#777;font-size:13px;line-height:1.5;margin:20px 0 0;text-align:center">
-  Clicking the button above instantly applies your reserved rate so you can complete your order smoothly.
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Tomorrow morning, you have a choice:
 </p>
+
+<div style="background:#f9fafb;border-left:4px solid #6366f1;border-radius:6px;padding:16px;margin:20px 0;">
+  <p style="margin:0 0 10px;font-size:14px;color:#1e293b;line-height:1.6;">
+    ❌ <strong>Path 1:</strong> Wake up and continue the old cycle. Open heavy slides, read until your eyes hurt, feel like you know it, and then realize you can't explain it without looking at the page.
+  </p>
+  <p style="margin:0;font-size:14px;color:#1e293b;line-height:1.6;">
+    ✅ <strong>Path 2:</strong> Wake up armed with <em>Get Good at Hard Things</em> and the <em>20-Minute Active Retrieval Protocol</em>. Study for 45 sharp minutes, lock formulas in permanent long-term memory, and walk into exam venues with calm, unflinching confidence.
+  </p>
+</div>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Your cart reservation is still held. Take 60 seconds right now so you wake up tomorrow morning completely equipped.
+</p>
+
+<div style="text-align:center;margin:28px 0;">
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#ffffff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3);">
+    ⚡ Complete Order via Bank Transfer / Card
+  </a>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    Starter: {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} | Complete: {{ currency_symbol }}{{ "%.2f"|format(complete_amount) }} | VIP: {{ currency_symbol }}{{ "%.2f"|format(vip_amount) }}
+  </div>
+</div>
 {% endblock %}

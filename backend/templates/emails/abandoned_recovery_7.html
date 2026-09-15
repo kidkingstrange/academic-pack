@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block subject %}Midnight Deadline: Day 2 Bonus Vault is closing, {{ name }}{% endblock %}
+
+{% block content %}
+<div style="background:#fff7ed;border-left:4px solid #ea580c;border-radius:6px;padding:12px 16px;margin:0 0 20px;">
+  <span style="font-size:12px;font-weight:800;letter-spacing:0.5px;color:#c2410c;text-transform:uppercase;">⏳ Expiring at Midnight:</span>
+  <p style="margin:4px 0 0;font-size:14px;color:#9a3412;line-height:1.5;">
+    The <strong>72-Hour Semester Exam Survival Template + Emergency Worksheets</strong> will be detached from your pending order at 11:59 PM.
+  </p>
+</div>
+
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">Will you let this bonus slip away, {{ name }}?</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Tonight is the final chance to lock in both the complete 7-book package and the crisis survival templates under one checkout.
+</p>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  When exam season hits in a few weeks, having this template ready will be the difference between panic-scrolling through lecture notes at 2:00 AM and having a crystal-clear, step-by-step revision hierarchy.
+</p>
+
+<div style="text-align:center;margin:28px 0;background:#fcfbfa;border:1px solid #e5e7eb;border-radius:12px;padding:24px;">
+  <a href="{{ complete_url }}" style="background:linear-gradient(135deg,#eab308,#ca8a04);color:#000000;display:inline-block;padding:16px 36px;font-size:16px;font-weight:800;border-radius:10px;text-decoration:none;box-shadow:0 4px 16px rgba(202,138,4,0.3);">
+    ⚡ Claim Everything Before Midnight ({{ currency_symbol }}{{ "%.2f"|format(complete_amount) }})
+  </a>
+  <div style="margin-top:14px;font-size:13px;color:#6b7280;">
+    Or get <a href="{{ starter_url }}" style="color:#2563eb;font-weight:700;">Starter Pack for {{ currency_symbol }}{{ "%.2f"|format(starter_amount) }} &rarr;</a>
+  </div>
+</div>
+{% endblock %}

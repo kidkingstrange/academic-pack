@@ -1,34 +1,61 @@
 {% extends "base.html" %}
 
-{% block subject %}Quick question about your Academic Comeback order, {{ name }}{% endblock %}
+{% block subject %}Did your payment get stuck, {{ name }}? (+ 2-Hour Audio Cram Bonus){% endblock %}
 
 {% block content %}
-<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:700">Did your payment get stuck?</h2>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Hi {{ name }}, I noticed you reached checkout for the <strong>Academic Comeback Package</strong>, but didn't complete your order.
-</p>
-<p style="color:#444;font-size:15px;line-height:1.6;margin:0 0 16px">
-  Most of the time, this happens because a debit card had bank network issues or an OTP didn't deliver.
-</p>
-<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:16px;margin:0 0 20px;text-align:left">
-  <p style="color:#166534;font-size:14px;line-height:1.5;margin:0;font-weight:600">
-    ⚡ <strong>Zero-Friction Workaround:</strong> Click your recovery link below and choose <strong>"Bank Transfer"</strong>. You will get an instant dedicated account number to transfer to directly from your mobile banking app (OPay, PalmPay, Kuda, GTB, Zenith, etc.) without entering any card details or waiting for OTPs.
+<div style="background:#f0fdf4;border-left:4px solid #16a34a;border-radius:6px;padding:12px 16px;margin:0 0 20px;">
+  <span style="font-size:12px;font-weight:800;letter-spacing:0.5px;color:#15803d;text-transform:uppercase;">⚡ Fast-Action Bonus Unlocked for the next 2 Hours:</span>
+  <p style="margin:4px 0 0;font-size:14px;color:#166534;line-height:1.5;">
+    Complete your order within 2 hours and get <strong>"The 3.0 to 4.5 GPA Active Retrieval Audio Cram Protocol"</strong> added to your library for free.
   </p>
 </div>
-<div style="background:#fcfbfa;border:1px solid #e8e4d9;border-radius:12px;padding:20px;margin:0 0 24px">
-  <p style="margin:0 0 8px;font-weight:700;color:#0d0f14;font-size:16px">📚 Reserved in your library cart:</p>
-  <ul style="margin:0;padding-left:20px;color:#444;font-size:14px;line-height:1.7">
-    <li>The 20-Minute Quick-Start Active Retrieval Protocol</li>
-    <li>Get Good at Hard Things + 6 Supporting Exam Blueprints</li>
-    <li>Focus Template &amp; 30-Day Semester Study Tracker</li>
-    <li>Protected by our 30-Day "Higher Retention or Zero Cost" Guarantee</li>
-  </ul>
-  <p style="margin:16px 0 0;font-size:16px;font-weight:700;color:#0d0f14">Amount: <span style="color:#00a86b">{{ currency_symbol }}{{ "%.2f"|format(amount) }}</span></p>
+
+<h2 style="color:#0d0f14;font-size:22px;margin:0 0 16px;font-weight:800;letter-spacing:-0.5px;">Did your network or bank app freeze at checkout?</h2>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  Hi {{ name }}, I noticed you initiated your order for the <strong>Academic Comeback Package</strong>, but the transaction didn't go through.
+</p>
+
+<p style="color:#374151;font-size:15px;line-height:1.6;margin:0 0 16px">
+  9 times out of 10, this is simply a debit card glitch or an OTP delay. If that happened to you, here is the zero-friction solution: <strong>choose "Bank Transfer"</strong> to get a dedicated transfer account number and pay straight from your banking app (OPay, PalmPay, Kuda, GTB, Zenith, etc.) in 10 seconds.
+</p>
+
+<div style="background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;padding:20px;margin:24px 0;box-shadow:0 4px 12px rgba(0,0,0,0.03);">
+  <p style="margin:0 0 14px;font-weight:800;color:#111827;font-size:15px;text-transform:uppercase;letter-spacing:0.5px;">Choose your recovery tier to unlock immediately:</p>
+  
+  <!-- Tier 1: Starter -->
+  <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px;margin-bottom:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <strong style="color:#111827;font-size:15px;">Option 1: Starter Pack</strong>
+      <span style="font-weight:800;color:#16a34a;font-size:15px;">{{ currency_symbol }}{{ "%.2f"|format(starter_amount) }}</span>
+    </div>
+    <p style="margin:0 0 10px;font-size:13px;color:#6b7280;line-height:1.4;">2 Core Guides: <em>Get Good at Hard Things</em> + <em>How to Score High in Any Exam</em>.</p>
+    <a href="{{ starter_url }}" style="display:inline-block;background:#374151;color:#ffffff;font-size:13px;font-weight:700;padding:8px 18px;border-radius:6px;text-decoration:none;">Complete Starter ({{ currency_symbol }}{{ "%.2f"|format(starter_amount) }}) &rarr;</a>
+  </div>
+
+  <!-- Tier 2: Complete Pack (Featured) -->
+  <div style="background:#fefce8;border:2px solid #eab308;border-radius:8px;padding:16px;margin-bottom:12px;position:relative;">
+    <div style="display:inline-block;background:#ca8a04;color:#ffffff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:4px;margin-bottom:6px;text-transform:uppercase;">Most Popular + Audio Cram Bonus</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <strong style="color:#854d0e;font-size:16px;">Option 2: Complete Academic Comeback Pack</strong>
+      <span style="font-weight:800;color:#ca8a04;font-size:16px;">{{ currency_symbol }}{{ "%.2f"|format(complete_amount) }}</span>
+    </div>
+    <p style="margin:0 0 12px;font-size:13px;color:#713f12;line-height:1.4;">All 7 Books & Blueprints + Semester Study Tracker + Focus Template + 30-Day Guarantee + <strong>Audio Cram Bonus</strong>.</p>
+    <a href="{{ complete_url }}" style="display:inline-block;background:linear-gradient(135deg,#eab308,#ca8a04);color:#000000;font-size:14px;font-weight:800;padding:12px 24px;border-radius:6px;text-decoration:none;box-shadow:0 3px 10px rgba(202,138,4,0.25);">⚡ Claim Complete Pack ({{ currency_symbol }}{{ "%.2f"|format(complete_amount) }}) &rarr;</a>
+  </div>
+
+  <!-- Tier 3: VIP Accelerator -->
+  <div style="background:#0f172a;border-radius:8px;padding:14px 16px;color:#ffffff;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <strong style="color:#ffffff;font-size:15px;">Option 3: VIP Accelerator</strong>
+      <span style="font-weight:800;color:#facc15;font-size:15px;">{{ currency_symbol }}{{ "%.2f"|format(vip_amount) }}</span>
+    </div>
+    <p style="margin:0 0 10px;font-size:13px;color:#94a3b8;line-height:1.4;">Everything in Complete + VIP WhatsApp Inner Circle + Wednesday Live Masterclasses with David.</p>
+    <a href="{{ vip_url }}" style="display:inline-block;background:#facc15;color:#0f172a;font-size:13px;font-weight:800;padding:8px 18px;border-radius:6px;text-decoration:none;">Join VIP Accelerator ({{ currency_symbol }}{{ "%.2f"|format(vip_amount) }}) &rarr;</a>
+  </div>
 </div>
-<div style="text-align:center;margin:28px 0">
-  <a href="{{ recovery_url }}" style="background:linear-gradient(135deg,#00a86b,#008f5a);color:#fff;display:inline-block;padding:16px 36px;font-size:16px;font-weight:700;border-radius:10px;text-decoration:none;box-shadow:0 4px 14px rgba(0,168,107,0.3)">⚡ Complete In 1-Click via Bank Transfer</a>
-</div>
-<p style="color:#777;font-size:13px;line-height:1.5;margin:16px 0 0;text-align:center">
-  Your instant digital download access is saved and waiting for you.
+
+<p style="color:#6b7280;font-size:13px;line-height:1.5;margin:16px 0 0;text-align:center;">
+  Need to check out via card, bank transfer, or USSD? Your recovery links securely authorize instant access.
 </p>
 {% endblock %}

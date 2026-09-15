@@ -26,12 +26,15 @@ router = APIRouter(prefix="/api/payments", tags=["payments"])
 settings = get_settings()
 
 
-async def compute_price_and_referral(db, email: str, client_expiry: float = None, referral_code: str = None, currency: str = "NGN"):
+async def compute_price_and_referral(
+    db, 
+    email: str, 
+    client_expiry: float = None, 
+    referral_code: str = None, 
+    currency: str = "NGN",
+    tier: str = None,
+):
     is_usd = (currency or "").strip().upper() == "USD"
-    base_price = settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA
-    late_price = settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA
-    retail_price = settings.PRODUCT_PRICE_RETAIL_USD if is_usd else settings.PRODUCT_PRICE_RETAIL_NAIRA
-
     now = datetime.now(timezone.utc)
 
     referred_by = None
@@ -42,12 +45,26 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
             if affiliate:
                 referred_by = candidate
 
+    # ── If an explicit tier was chosen (specifically from recovery flow):
+    tier_clean = (tier or "").strip().lower()
+    if tier_clean in ("starter", "complete", "vip"):
+        if tier_clean == "starter":
+            amount = float(settings.TIER_STARTER_PRICE_USD if is_usd else settings.TIER_STARTER_PRICE_NAIRA)
+        elif tier_clean == "vip":
+            amount = float(settings.TIER_VIP_PRICE_USD if is_usd else settings.TIER_VIP_PRICE_NAIRA)
+        else:
+            amount = float(settings.TIER_COMPLETE_PRICE_USD if is_usd else settings.TIER_COMPLETE_PRICE_NAIRA)
+        return amount, referred_by
+
+    # ── Standard Sales Page Pathway (₦2,000 early bird / ₦5,000 late / ₦20,000 retail):
+    base_price = settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA
+    late_price = settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA
+    retail_price = settings.PRODUCT_PRICE_RETAIL_USD if is_usd else settings.PRODUCT_PRICE_RETAIL_NAIRA
+
     existing_lead = await db.leads.find_one({"email": email.lower()})
 
     if referred_by:
         # ── Affiliate Referral Pathway: 48-Hour Urgency Window ────────
-        # Locked-in partner rate: ₦5,000 ($30).
-        # After 48 hours, price jumps to full retail: ₦20,000 ($100).
         aff_expired = False
         if existing_lead and existing_lead.get("referred_by") == referred_by:
             created_at = existing_lead.get("created_at")
@@ -65,8 +82,6 @@ async def compute_price_and_referral(db, email: str, client_expiry: float = None
         amount = retail_price if aff_expired else late_price
     else:
         # ── Direct / Organic Pathway: 24-Hour Early-Bird Window ───────
-        # Early-bird price: ₦2,000 ($15).
-        # After 24 hours, price reverts to standard: ₦5,000 ($30).
         is_expired = False
         if existing_lead:
             created_at = existing_lead.get("created_at")
@@ -98,7 +113,12 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     now = datetime.now(timezone.utc)
 
     currency = (body.currency or ("USD" if (body.country or "").upper() == "US" else "NGN")).strip().upper()
-    amount, referred_by = await compute_price_and_referral(db, body.email, body.client_expiry, body.referral_code, currency=currency)
+    tier_requested = (body.tier or "").strip().lower() if body.tier else None
+    tier = tier_requested if tier_requested in ("starter", "complete", "vip") else "complete"
+
+    amount, referred_by = await compute_price_and_referral(
+        db, body.email, body.client_expiry, body.referral_code, currency=currency, tier=tier_requested
+    )
 
     # ── Instant affiliate split ────────────────────────────────────────
     # If this affiliate has a Paystack subaccount set up (bank details
@@ -124,6 +144,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                 "converted": False,
                 "price_offered": amount,
                 "currency": currency,
+                "tier": tier,
             },
             "$setOnInsert": {"created_at": now},
         },
@@ -195,6 +216,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "created_at":     now,
             "referred_by":    referred_by,
             "split_applied":  split_applied,
+            "tier":           tier,
         }},
         upsert=True,
     )
@@ -211,6 +233,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         payment_method=payment_method,
         referred_by=referred_by,
         source="checkout_init",
+        tier=tier,
     )
 
     return PaymentInitResponse(
@@ -505,6 +528,7 @@ async def paystack_webhook(
 @router.get("/recovery-redirect")
 async def recovery_redirect(
     ref: str = "",
+    tier: str = None,
     db=Depends(get_db),
 ):
     """
@@ -534,12 +558,20 @@ async def recovery_redirect(
     name = tx.get("name") or "Student"
     currency = tx.get("currency", "NGN").upper()
     
-    # If customer is on Step 4 (1-week re-open offer), lock price to ₦2,000 / $15
-    if tx.get("sequence_step") == 4:
-        amount = settings.ABANDONED_STEP4_PRICE_USD if currency == "USD" else settings.ABANDONED_STEP4_PRICE_NAIRA
-    else:
-        amount = tx.get("amount", settings.PRODUCT_PRICE_NAIRA)
+    # Resolve selected tier (param overrides stored tx tier, defaulting to complete)
+    tier_selected = (tier or tx.get("tier") or "complete").strip().lower()
+    if tier_selected not in ("starter", "complete", "vip"):
+        tier_selected = "complete"
 
+    is_usd = currency == "USD"
+    if tier_selected == "starter":
+        amount = float(settings.TIER_STARTER_PRICE_USD if is_usd else settings.TIER_STARTER_PRICE_NAIRA)
+    elif tier_selected == "vip":
+        amount = float(settings.TIER_VIP_PRICE_USD if is_usd else settings.TIER_VIP_PRICE_NAIRA)
+    else:
+        amount = float(settings.TIER_COMPLETE_PRICE_USD if is_usd else settings.TIER_COMPLETE_PRICE_NAIRA)
+
+    tier = tier_selected
     payment_method = tx.get("payment_method") or "pay_with_bank"
     referred_by = tx.get("referred_by")
 
@@ -556,7 +588,7 @@ async def recovery_redirect(
             amount_naira=amount,
             reference=new_reference,
             callback_url=callback_url,
-            metadata={"name": name, "payment_method": payment_method, "currency": currency, "recovery_from_ref": ref},
+            metadata={"name": name, "payment_method": payment_method, "currency": currency, "tier": tier, "recovery_from_ref": ref},
             channels=channels,
             currency=currency if currency == "USD" else None,
         )
@@ -579,6 +611,7 @@ async def recovery_redirect(
                 "referred_by": referred_by,
                 "is_recovery": True,
                 "original_reference": ref,
+                "tier": tier,
             }},
             upsert=True,
         )
