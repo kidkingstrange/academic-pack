@@ -28,10 +28,18 @@
     // Set initial ₦5,000 price
     document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
 
+    // Update hero ledger for affiliate visitors
+    document.querySelectorAll('.ledger__ratio-pill').forEach(pill => {
+      pill.innerHTML = `<i class="bi bi-tag-fill"></i> SPECIAL PARTNER RATE: ₦5,000`;
+    });
+    document.querySelectorAll('.pillar__eyebrow--gold').forEach(el => {
+      el.textContent = 'PARTNER ACCESS TODAY';
+    });
+
     // Update price warning notices to highlight the 48-hour lock
     document.querySelectorAll('.price-warning-notice').forEach(notice => {
       notice.style.display = 'block';
-      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦5,000</strong> student rate is temporarily reserved through this referral link (Total Real-World Cost: <strong>₦2,678,945</strong>). In 48 hours, this page automatically reverts to the standard <strong>₦20,000</strong> retail price.`;
+      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦5,000</strong> partner rate is temporarily reserved through this referral link (Author's Sunk Research: <strong>₦2,678,945</strong>). In 48 hours, this page reverts to the standard <strong>₦20,000</strong> retail price.`;
     });
 
     // Update discount badges with clean, non-wrapping copy
@@ -82,7 +90,7 @@
       }
       const textSpan = document.getElementById('urgency-bar-text');
       if (textSpan && bar && !bar.classList.contains('urgency-bar--expired')) {
-        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦5,000 Student Rate (₦2,678,945 Value) — Price Jumps to ₦20,000 In: <strong id="countdown">${formatted}</strong>`;
+        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦5,000 Student Rate (Author's Sunk Research: ₦2,678,945) — 48-Hour Lock: <strong id="countdown">${formatted}</strong>`;
       }
       const urgencyCta = bar ? bar.querySelector('.urgency-bar__cta') : null;
       if (urgencyCta && !urgencyCta.dataset.partnerUpdated) {
