@@ -56,50 +56,9 @@ async def compute_price_and_referral(
             amount = float(settings.TIER_COMPLETE_PRICE_USD if is_usd else settings.TIER_COMPLETE_PRICE_NAIRA)
         return amount, referred_by
 
-    # ── Standard Sales Page Pathway (₦2,000 early bird / ₦5,000 late / ₦20,000 retail):
-    base_price = settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA
-    late_price = settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA
-    retail_price = settings.PRODUCT_PRICE_RETAIL_USD if is_usd else settings.PRODUCT_PRICE_RETAIL_NAIRA
-
-    existing_lead = await db.leads.find_one({"email": email.lower()})
-
-    if referred_by:
-        # ── Affiliate Referral Pathway: 48-Hour Urgency Window ────────
-        aff_expired = False
-        if existing_lead and existing_lead.get("referred_by") == referred_by:
-            created_at = existing_lead.get("created_at")
-            if created_at:
-                if isinstance(created_at, str):
-                    created_at = datetime.fromisoformat(created_at)
-                if created_at.tzinfo is None:
-                    created_at = created_at.replace(tzinfo=timezone.utc)
-                if (now - created_at).total_seconds() > 48 * 3600:
-                    aff_expired = True
-        elif client_expiry:
-            if client_expiry < now.timestamp() * 1000:
-                aff_expired = True
-
-        amount = retail_price if aff_expired else late_price
-    else:
-        # ── Direct / Organic Pathway: 24-Hour Early-Bird Window ───────
-        is_expired = False
-        if existing_lead:
-            created_at = existing_lead.get("created_at")
-            if created_at:
-                if isinstance(created_at, str):
-                    created_at = datetime.fromisoformat(created_at)
-                if created_at.tzinfo is None:
-                    created_at = created_at.replace(tzinfo=timezone.utc)
-                if (now - created_at).total_seconds() > 24 * 3600:
-                    is_expired = True
-        else:
-            if client_expiry:
-                if client_expiry < now.timestamp() * 1000:
-                    is_expired = True
-
-        amount = late_price if is_expired else base_price
-
-    return amount, referred_by
+    # ── Standard Sales Page Pathway (₦2,000 Student Price / $15 USD International):
+    base_price = float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+    return base_price, referred_by
 
 
 @router.post("/initialize", response_model=PaymentInitResponse)
@@ -297,31 +256,6 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
     amount_paid = data.get("amount", 0) / 100.0
     now = datetime.now(timezone.utc)
 
-    # ── 24-hour price enforcement ─────────────────────────────────────
-    lead = await db.leads.find_one({"email": body.email.lower()})
-    if lead:
-        created_at = lead.get("created_at")
-        if created_at:
-            if created_at.tzinfo is None:
-                created_at = created_at.replace(tzinfo=timezone.utc)
-            if (now - created_at).total_seconds() > 24 * 3600:
-                if amount_paid < settings.PRODUCT_PRICE_LATE_NAIRA:
-                    await db.payments.update_one(
-                        {"reference": body.reference},
-                        {"$set": {
-                            "reference": body.reference,
-                            "email": body.email.lower(),
-                            "status": "failed",
-                            "created_at": now,
-                            "failure_reason": "Promo expired — paid ₦2,000 instead of ₦5,000",
-                        }},
-                        upsert=True,
-                    )
-                    return PaymentVerifyResponse(
-                        success=False,
-                        message="The 24-hour promotional price has expired. Standard price of ₦5,000 applies.",
-                    )
-
     completion = await complete_payment(
         db,
         reference=body.reference,
@@ -354,20 +288,20 @@ async def payment_callback(
 
     ref = trxref or reference
     if not ref:
-        return RedirectResponse("/?error=missing_reference")
+        return RedirectResponse("/academic-comeback-package?error=missing_reference")
 
     pending = await db.pending_payments.find_one({"reference": ref})
     if not pending:
-        return RedirectResponse("/?error=order_not_found")
+        return RedirectResponse("/academic-comeback-package?error=order_not_found")
 
     try:
         result = await verify_transaction(ref)
         data = result.get("data", {})
     except Exception:
-        return RedirectResponse("/?error=verify_failed")
+        return RedirectResponse("/academic-comeback-package?error=verify_failed")
 
     if not result.get("status") or data.get("status") != "success":
-        return RedirectResponse("/?error=payment_not_confirmed")
+        return RedirectResponse("/academic-comeback-package?error=payment_not_confirmed")
 
     email = pending["email"]
     name  = pending["name"]

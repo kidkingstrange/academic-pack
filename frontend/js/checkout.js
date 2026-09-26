@@ -220,13 +220,20 @@ form.addEventListener('submit', async (e) => {
     currentVaId      = data.va_id || null;
 
     showStep(2);
-    document.getElementById('payment-spinner').style.display = 'none';
 
     if (data.action === 'redirect') {
       // 3DS / bank authorization page — redirect
+      const spinner = document.getElementById('payment-spinner');
+      if (spinner) {
+        spinner.style.display = 'block';
+        const txt = spinner.querySelector('p');
+        if (txt) txt.textContent = 'Redirecting to secure payment gateway...';
+      }
       window.location.href = data.redirect_url;
       return;
     }
+
+    document.getElementById('payment-spinner').style.display = 'none';
 
     if (data.action === 'virtual_account') {
       // Bank Transfer — show virtual account with fee-inclusive amount

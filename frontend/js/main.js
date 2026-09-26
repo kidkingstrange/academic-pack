@@ -25,12 +25,12 @@
       bar.classList.remove('urgency-bar--expired');
     }
 
-    // Set initial ₦5,000 price
-    document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
+    // Set initial ₦2,000 partner price
+    document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦2,000');
 
     // Update hero ledger for affiliate visitors
     document.querySelectorAll('.ledger__ratio-pill').forEach(pill => {
-      pill.innerHTML = `<i class="bi bi-tag-fill"></i> SPECIAL PARTNER RATE: ₦5,000`;
+      pill.innerHTML = `<i class="bi bi-tag-fill"></i> SPECIAL PARTNER RATE: ₦2,000`;
     });
     document.querySelectorAll('.pillar__eyebrow--gold').forEach(el => {
       el.textContent = 'PARTNER ACCESS TODAY';
@@ -39,44 +39,26 @@
     // Update price warning notices to highlight the 48-hour lock
     document.querySelectorAll('.price-warning-notice').forEach(notice => {
       notice.style.display = 'block';
-      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦5,000</strong> partner rate is temporarily reserved through this referral link (Author's Sunk Research: <strong>₦2,678,945</strong>). In 48 hours, this page reverts to the standard <strong>₦20,000</strong> retail price.`;
+      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦2,000</strong> partner rate is temporarily reserved through this referral link (Standard Retail Value: <strong>₦20,000</strong>). In 48 hours, this page reverts to the standard <strong>₦20,000</strong> retail price.`;
     });
 
     // Update discount badges with clean, non-wrapping copy
     document.querySelectorAll('.price-urgency-badge').forEach(badge => {
       badge.style.display = 'inline-block';
-      badge.innerHTML = `🔥 <strong>Special Partner Rate</strong> — ₦5,000 Limited Access`;
+      badge.innerHTML = `🔥 <strong>Special Partner Rate</strong> — ₦2,000 Limited Access`;
     });
     document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
-      badge.innerHTML = `🔥 Partner Rate: ₦5,000`;
+      badge.innerHTML = `🔥 Partner Rate: ₦2,000`;
     });
 
     let affTimerId = null;
     function tickAffiliate() {
-      const diff = affExpiry - Date.now();
+      let diff = affExpiry - Date.now();
       if (diff <= 0) {
-        if (affTimerId) { clearInterval(affTimerId); affTimerId = null; }
-        if (bar) {
-          bar.classList.add('urgency-bar--expired');
-          bar.innerHTML = `
-            <div class="urgency-bar__expired-notice">
-              <span>💡 <strong>Your 48-hour partner access window has expired.</strong> The package has reverted to the standard retail price of <strong>₦20,000</strong>.</span>
-            </div>
-          `;
-        }
-        // Update all price displays to full retail ₦20,000
-        document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦20,000');
-        document.querySelectorAll('.price-urgency-badge').forEach(badge => {
-          badge.innerHTML = 'Standard Retail Price (₦20,000)';
-        });
-        document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
-          badge.innerHTML = 'Standard Price';
-        });
-        document.querySelectorAll('.price-warning-notice').forEach(notice => {
-          notice.innerHTML = `💡 <strong>Notice:</strong> The 48-hour partner discount has closed. This package is now available at the standard <strong>₦20,000</strong> rate.`;
-        });
-        document.querySelectorAll('.aff-badge-countdown').forEach(b => b.textContent = 'Expired');
-        return;
+        // Roll over to ensure returning visitors still get the ₦2,000 student access
+        affExpiry = Date.now() + 24 * 60 * 60 * 1000;
+        try { localStorage.setItem(AFF_KEY, affExpiry); } catch (e) {}
+        diff = affExpiry - Date.now();
       }
 
       const totalSec = Math.floor(diff / 1000);
@@ -89,12 +71,12 @@
         el.textContent = formatted;
       }
       const textSpan = document.getElementById('urgency-bar-text');
-      if (textSpan && bar && !bar.classList.contains('urgency-bar--expired')) {
-        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦5,000 Student Rate (Author's Sunk Research: ₦2,678,945) — 48-Hour Lock: <strong id="countdown">${formatted}</strong>`;
+      if (textSpan && bar) {
+        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦2,000 Student Rate (Standard Retail Value: ₦20,000) — Batch Window: <strong id="countdown">${formatted}</strong>`;
       }
       const urgencyCta = bar ? bar.querySelector('.urgency-bar__cta') : null;
       if (urgencyCta && !urgencyCta.dataset.partnerUpdated) {
-        urgencyCta.innerHTML = `GET IT NOW — ₦5,000 <i class="bi bi-arrow-right"></i>`;
+        urgencyCta.innerHTML = `GET IT NOW — ₦2,000 <i class="bi bi-arrow-right"></i>`;
         urgencyCta.dataset.partnerUpdated = 'true';
       }
       document.querySelectorAll('.aff-badge-countdown').forEach(b => {
@@ -107,7 +89,7 @@
     return;
   }
 
-  // ── DIRECT / ORGANIC 24-HOUR EARLY BIRD FLOW (UNCHANGED) ──────────────
+  // ── DIRECT / ORGANIC 24-HOUR BATCH TIMER ──────────────
   const KEY = 'ac_expiry';
   let expiry = localStorage.getItem(KEY);
   if (!expiry || isNaN(Number(expiry))) {
@@ -119,32 +101,12 @@
   let timerId = null;
   function tick() {
     if (!el) return;
-    const diff = expiry - Date.now();
+    let diff = expiry - Date.now();
     if (diff <= 0) {
-      if (timerId) { clearInterval(timerId); timerId = null; }
-      if (bar) {
-        bar.classList.add('urgency-bar--expired');
-        if (!bar.querySelector('.urgency-bar__expired-notice')) {
-          bar.innerHTML = `
-            <div class="urgency-bar__expired-notice">
-              <span>💡 <strong>Your 24-hour early-bird window has ended.</strong> The package is now available at the standard price of <strong>₦5,000</strong>. Thank you for your understanding — the full value of all 7 books is still yours the moment you order.</span>
-            </div>
-          `;
-        }
-      }
-      
-      // Update all current price displays to standard price
-      document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
-      
-      // Update all discount badges and labels on expiry
-      document.querySelectorAll('.price-urgency-badge').forEach(n => {
-        if (n.textContent.includes('window is closing')) {
-          n.innerHTML = 'The early-bird discount window has closed.';
-        } else {
-          n.innerHTML = n.innerHTML.replace(/90%/g, '75%').replace(/99% OFF TODAY/g, 'SPECIAL OFFER');
-        }
-      });
-      return;
+      // Roll over for current batch — preserve ₦2,000 price
+      expiry = Date.now() + 24 * 60 * 60 * 1000;
+      try { localStorage.setItem(KEY, expiry); } catch (e) {}
+      diff = expiry - Date.now();
     }
     const h = Math.floor(diff / 3600000);
     const m = Math.floor((diff % 3600000) / 60000);
