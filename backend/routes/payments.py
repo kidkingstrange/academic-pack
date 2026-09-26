@@ -56,9 +56,32 @@ async def compute_price_and_referral(
             amount = float(settings.TIER_COMPLETE_PRICE_USD if is_usd else settings.TIER_COMPLETE_PRICE_NAIRA)
         return amount, referred_by
 
-    # ── Standard Sales Page Pathway (₦2,000 Student Price / $15 USD International):
-    base_price = float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
-    return base_price, referred_by
+    if referred_by:
+        # ── Affiliate Referral Pathway: 48-Hour Urgency Window (₦5,000 -> ₦20,000) ──
+        aff_expired = False
+        existing_lead = await db.leads.find_one({"email": email.lower()})
+        if existing_lead and existing_lead.get("referred_by") == referred_by:
+            created_at = existing_lead.get("created_at")
+            if created_at:
+                if isinstance(created_at, str):
+                    created_at = datetime.fromisoformat(created_at)
+                if created_at.tzinfo is None:
+                    created_at = created_at.replace(tzinfo=timezone.utc)
+                if (now - created_at).total_seconds() > 48 * 3600:
+                    aff_expired = True
+        elif client_expiry and client_expiry < now.timestamp() * 1000:
+            aff_expired = True
+
+        amount = (
+            float(settings.PRODUCT_PRICE_RETAIL_USD if is_usd else settings.PRODUCT_PRICE_RETAIL_NAIRA)
+            if aff_expired
+            else float(settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA)
+        )
+        return amount, referred_by
+    else:
+        # ── Direct / Organic Pathway: ₦2,000 Student Price ──
+        base_price = float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+        return base_price, referred_by
 
 
 @router.post("/initialize", response_model=PaymentInitResponse)

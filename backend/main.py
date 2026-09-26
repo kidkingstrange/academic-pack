@@ -277,7 +277,7 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
             "referrer": request.headers.get("referer", ""),
             "created_at": datetime.now(timezone.utc),
         })
-        return RedirectResponse(url=f"/academic-comeback-package?ref={normalized}", status_code=302)
+        return RedirectResponse(url=f"/academic-comeback-package?ref={normalized}&price=5000", status_code=302)
     return RedirectResponse(url="/academic-comeback-package", status_code=302)
 
 # ── Health Check & Public Stats ────────────────────────────────────────────────

@@ -25,41 +25,89 @@
       bar.classList.remove('urgency-bar--expired');
     }
 
-    // Set initial ₦2,000 partner price
-    document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦2,000');
+    function applyAffiliateActiveState() {
+      // Set ₦5,000 partner price across all price displays
+      document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦5,000');
 
-    // Update hero ledger for affiliate visitors
-    document.querySelectorAll('.ledger__ratio-pill').forEach(pill => {
-      pill.innerHTML = `<i class="bi bi-tag-fill"></i> SPECIAL PARTNER RATE: ₦2,000`;
-    });
-    document.querySelectorAll('.pillar__eyebrow--gold').forEach(el => {
-      el.textContent = 'PARTNER ACCESS TODAY';
-    });
+      // Update hero ledger for affiliate visitors
+      document.querySelectorAll('.ledger__ratio-pill').forEach(pill => {
+        pill.innerHTML = `<i class="bi bi-tag-fill"></i> SPECIAL PARTNER RATE: ₦5,000`;
+      });
+      document.querySelectorAll('.pillar__eyebrow--gold').forEach(el => {
+        el.textContent = 'PARTNER ACCESS TODAY';
+      });
 
-    // Update price warning notices to highlight the 48-hour lock
-    document.querySelectorAll('.price-warning-notice').forEach(notice => {
-      notice.style.display = 'block';
-      notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦2,000</strong> partner rate is temporarily reserved through this referral link (Standard Retail Value: <strong>₦20,000</strong>). In 48 hours, this page reverts to the standard <strong>₦20,000</strong> retail price.`;
-    });
+      // Update price warning notices to highlight the 48-hour lock
+      document.querySelectorAll('.price-warning-notice').forEach(notice => {
+        notice.style.display = 'block';
+        notice.innerHTML = `⚠️ <strong>48-HOUR PARTNER PRICE LOCK:</strong> Your special <strong>₦5,000</strong> partner rate is temporarily reserved through this referral link (Standard Retail Value: <strong>₦20,000</strong>). In 48 hours, this page reverts to the standard <strong>₦20,000</strong> retail price.`;
+      });
 
-    // Update discount badges with clean, non-wrapping copy
-    document.querySelectorAll('.price-urgency-badge').forEach(badge => {
-      badge.style.display = 'inline-block';
-      badge.innerHTML = `🔥 <strong>Special Partner Rate</strong> — ₦2,000 Limited Access`;
-    });
-    document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
-      badge.innerHTML = `🔥 Partner Rate: ₦2,000`;
-    });
+      // Update discount badges with clean, non-wrapping copy
+      document.querySelectorAll('.price-urgency-badge').forEach(badge => {
+        badge.style.display = 'inline-block';
+        badge.innerHTML = `🔥 <strong>Special Partner Rate</strong> — ₦5,000 Limited Access (75% OFF)`;
+      });
+      document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
+        badge.innerHTML = `🔥 Partner Rate: ₦5,000 (75% OFF)`;
+      });
+      document.querySelectorAll('.hero__price-float .discount-badge').forEach(badge => {
+        badge.innerHTML = `75% OFF PARTNER SPECIAL`;
+      });
+      document.querySelectorAll('.value-table__row--final .value-table__label span').forEach(el => {
+        el.textContent = 'Your Partner Price Today (75% OFF)';
+      });
+      document.querySelectorAll('.mid-cta__sub').forEach(el => {
+        el.textContent = '7 books. Proven frameworks. Instant delivery. Standard ₦20,000 retail value — claim the complete system today for just ₦5,000.';
+      });
+    }
+
+    function applyAffiliateExpiredState() {
+      if (bar) {
+        bar.classList.add('urgency-bar--expired');
+        bar.innerHTML = `
+          <div class="urgency-bar__expired-notice">
+            <span>💡 <strong>Your 48-hour partner access window has expired.</strong> The package has reverted to the standard retail price of <strong>₦20,000</strong>.</span>
+          </div>
+        `;
+      }
+      // Update all price displays to full retail ₦20,000
+      document.querySelectorAll('.price-current').forEach(n => n.textContent = '₦20,000');
+      document.querySelectorAll('.price-urgency-badge').forEach(badge => {
+        badge.innerHTML = 'Standard Retail Price (₦20,000)';
+      });
+      document.querySelectorAll('.showcase__pill-badge, .mobile-price-discount').forEach(badge => {
+        badge.innerHTML = 'Standard Price: ₦20,000';
+      });
+      document.querySelectorAll('.hero__price-float .discount-badge').forEach(badge => {
+        badge.innerHTML = 'STANDARD RETAIL VALUE';
+      });
+      document.querySelectorAll('.value-table__row--final .value-table__label span').forEach(el => {
+        el.textContent = 'Standard Retail Price';
+      });
+      document.querySelectorAll('.price-warning-notice').forEach(notice => {
+        notice.style.display = 'block';
+        notice.innerHTML = `💡 <strong>Notice:</strong> The 48-hour partner discount has closed. This package is now available at the standard <strong>₦20,000</strong> rate.`;
+      });
+      document.querySelectorAll('.mid-cta__sub').forEach(el => {
+        el.textContent = '7 books. Proven frameworks. Instant delivery. Claim the complete 7-part system today at the standard ₦20,000 retail price.';
+      });
+      document.querySelectorAll('.hero__price-float .old-price, .mobile-price-old, .mid-cta__old, .mid-cta__arrow').forEach(el => {
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('.aff-badge-countdown').forEach(b => b.textContent = 'Expired');
+    }
 
     let affTimerId = null;
     function tickAffiliate() {
-      let diff = affExpiry - Date.now();
+      const diff = affExpiry - Date.now();
       if (diff <= 0) {
-        // Roll over to ensure returning visitors still get the ₦2,000 student access
-        affExpiry = Date.now() + 24 * 60 * 60 * 1000;
-        try { localStorage.setItem(AFF_KEY, affExpiry); } catch (e) {}
-        diff = affExpiry - Date.now();
+        if (affTimerId) { clearInterval(affTimerId); affTimerId = null; }
+        applyAffiliateExpiredState();
+        return;
       }
+
+      applyAffiliateActiveState();
 
       const totalSec = Math.floor(diff / 1000);
       const h = Math.floor(totalSec / 3600);
@@ -71,12 +119,12 @@
         el.textContent = formatted;
       }
       const textSpan = document.getElementById('urgency-bar-text');
-      if (textSpan && bar) {
-        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦2,000 Student Rate (Standard Retail Value: ₦20,000) — Batch Window: <strong id="countdown">${formatted}</strong>`;
+      if (textSpan && bar && !bar.classList.contains('urgency-bar--expired')) {
+        textSpan.innerHTML = `🔥 <strong>SPECIAL PARTNER PASS:</strong> ₦5,000 Partner Rate (Standard Retail: ₦20,000) — 48-Hour Lock: <strong id="countdown">${formatted}</strong>`;
       }
       const urgencyCta = bar ? bar.querySelector('.urgency-bar__cta') : null;
       if (urgencyCta && !urgencyCta.dataset.partnerUpdated) {
-        urgencyCta.innerHTML = `GET IT NOW — ₦2,000 <i class="bi bi-arrow-right"></i>`;
+        urgencyCta.innerHTML = `GET IT NOW — ₦5,000 <i class="bi bi-arrow-right"></i>`;
         urgencyCta.dataset.partnerUpdated = 'true';
       }
       document.querySelectorAll('.aff-badge-countdown').forEach(b => {
@@ -85,7 +133,9 @@
     }
 
     tickAffiliate();
-    affTimerId = setInterval(tickAffiliate, 1000);
+    if (affExpiry - Date.now() > 0) {
+      affTimerId = setInterval(tickAffiliate, 1000);
+    }
     return;
   }
 
