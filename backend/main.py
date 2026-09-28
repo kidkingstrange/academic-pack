@@ -301,6 +301,12 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
 
 # ── Health Check & Public Stats ────────────────────────────────────────────────
 @app.get("/api/health")
+@app.get("/health")
+@app.get("/ping")
+@app.head("/api/health")
+@app.head("/health")
+@app.head("/ping")
+@app.head("/")
 async def health():
     return {"status": "ok", "app": settings.APP_NAME}
 
