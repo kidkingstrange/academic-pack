@@ -500,7 +500,7 @@ def generate_json_ld(article: Dict[str, Any]) -> str:
 
 # ── Dual Theme Components (Light & Dark) ────────────────────────────────────
 
-THEME_HEAD_SCRIPT = """  <!-- Anti-flicker Theme Init -->
+THEME_HEAD_SCRIPT = """  <!-- Anti-flicker Theme Init & Global Theme Handler -->
   <script>
     (function() {
       try {
@@ -508,10 +508,34 @@ THEME_HEAD_SCRIPT = """  <!-- Anti-flicker Theme Init -->
         var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
+
+      window.toggleGlobalTheme = function(e) {
+        if (e) {
+          if (typeof e.preventDefault === 'function') e.preventDefault();
+          if (typeof e.stopPropagation === 'function') e.stopPropagation();
+        }
+        var cur = document.documentElement.getAttribute('data-theme') || 'light';
+        var next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try {
+          localStorage.setItem('academic_blog_theme', next);
+        } catch(err) {}
+        
+        var isDark = next === 'dark';
+        var btns = document.querySelectorAll('.theme-toggle');
+        btns.forEach(function(btn) {
+          btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          var text = btn.querySelector('.theme-toggle__text');
+          if (text) text.textContent = isDark ? 'Light' : 'Dark';
+          var label = btn.querySelector('.theme-toggle__label');
+          if (label) label.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+        });
+      };
     })();
   </script>"""
 
-THEME_TOGGLE_HTML = """<button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+THEME_TOGGLE_HTML = """<button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
           <span class="theme-toggle__icon-wrap">
             <i class="bi bi-moon-stars-fill theme-toggle__moon" aria-hidden="true"></i>
             <i class="bi bi-sun-fill theme-toggle__sun" aria-hidden="true"></i>
@@ -523,29 +547,41 @@ THEME_FOOTER_SCRIPT = """  <!-- Theme Toggle Controller -->
   <script>
     (function() {
       function updateToggleUI(theme) {
-        var btn = document.getElementById('theme-toggle');
-        if (!btn) return;
         var isDark = theme === 'dark';
-        btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-        btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
-        var text = btn.querySelector('.theme-toggle__text');
-        if (text) text.textContent = isDark ? 'Light' : 'Dark';
+        var btns = document.querySelectorAll('.theme-toggle');
+        btns.forEach(function(btn) {
+          btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+          var text = btn.querySelector('.theme-toggle__text');
+          if (text) text.textContent = isDark ? 'Light' : 'Dark';
+          var label = btn.querySelector('.theme-toggle__label');
+          if (label) label.textContent = isDark ? 'Dark Mode' : 'Light Mode';
+        });
       }
 
-      var current = document.documentElement.getAttribute('data-theme') || 'light';
-      updateToggleUI(current);
+      function initToggles() {
+        var current = document.documentElement.getAttribute('data-theme') || 'light';
+        updateToggleUI(current);
 
-      var btn = document.getElementById('theme-toggle');
-      if (btn) {
-        btn.addEventListener('click', function() {
-          var cur = document.documentElement.getAttribute('data-theme') || 'light';
-          var target = cur === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', target);
-          try {
-            localStorage.setItem('academic_blog_theme', target);
-          } catch(e) {}
-          updateToggleUI(target);
+        var btns = document.querySelectorAll('.theme-toggle');
+        btns.forEach(function(btn) {
+          btn.onclick = window.toggleGlobalTheme || function(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            var cur = document.documentElement.getAttribute('data-theme') || 'light';
+            var target = cur === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', target);
+            try {
+              localStorage.setItem('academic_blog_theme', target);
+            } catch(err) {}
+            updateToggleUI(target);
+          };
         });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initToggles);
+      } else {
+        initToggles();
       }
 
       if (window.matchMedia) {
@@ -697,6 +733,24 @@ def get_global_blog_drawer() -> str:
     <a href="/?support=true" class="drawer-nav-item">
       <i class="bi bi-headset"></i> <span>Order Lookup &amp; Support</span>
     </a>
+  </div>
+
+  <!-- Reading & Appearance Preferences Inside Drawer -->
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">READING PREFERENCE</div>
+    <button type="button" class="drawer-theme-btn theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
+      <span class="drawer-theme-btn__left">
+        <span class="theme-toggle__icon-wrap">
+          <i class="bi bi-moon-stars-fill theme-toggle__moon" aria-hidden="true"></i>
+          <i class="bi bi-sun-fill theme-toggle__sun" aria-hidden="true"></i>
+        </span>
+        <span class="drawer-theme-btn__title">Reading Theme</span>
+      </span>
+      <span class="drawer-theme-btn__pill">
+        <span class="theme-toggle__label">Mode</span>
+        <i class="bi bi-arrow-left-right" style="font-size: 0.72rem; opacity: 0.7;"></i>
+      </span>
+    </button>
   </div>
 
   <div class="drawer-footer">

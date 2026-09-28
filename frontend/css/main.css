@@ -528,6 +528,38 @@ button{font-family:inherit;cursor:pointer}
   }
 }
 
+@media (max-width: 480px) {
+  .global-header-inner {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+  .global-brand {
+    font-size: 1.02rem;
+    letter-spacing: 1px;
+    gap: 8px;
+  }
+  .global-brand img {
+    height: 23px;
+  }
+  .global-header-mobile-actions {
+    gap: 6px;
+  }
+  .global-nav__mobile-flagship {
+    padding: 5px 8px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .global-brand span {
+    font-size: 0.92rem;
+  }
+  .global-nav__mobile-flagship {
+    padding: 5px 6px;
+    font-size: 0.68rem;
+  }
+}
+
 /* ==========================================================================
    HOMEPAGE FLAGSHIP SPOTLIGHT SECTION
    ========================================================================== */
