@@ -2135,6 +2135,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     background: rgba(245, 200, 98, 0.15) !important;
     border: 1px solid rgba(245, 200, 98, 0.4) !important;
     color: #f5c862 !important;
+  }
   /* ── Free Campus Guides & Smart Audio Engine: Specular Glass ──────── */
   .free-guide-card {
     background: linear-gradient(180deg, rgba(28, 36, 56, 0.82) 0%, rgba(18, 23, 38, 0.9) 100%) !important;
@@ -2159,6 +2160,262 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     color: #f5c862 !important;
     font-weight: 800 !important;
   }
+
+  /* ── COMPREHENSIVE RESPONSIVE & MOBILE POLISH ─────────────────────── */
+  html, body {
+    overflow-x: hidden !important;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  /* Flagship Companion Guides Grid */
+  .flagship-companion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .flagship-cta-buttons {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .flagship-cta-buttons .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .site-header {
+      padding: 12px 0 !important;
+    }
+    .header-inner {
+      padding: 0 16px !important;
+    }
+    .hero-section {
+      padding: 36px 16px 24px !important;
+    }
+    .hero-title {
+      font-size: clamp(1.75rem, 6.2vw, 2.3rem) !important;
+      line-height: 1.2 !important;
+      letter-spacing: -0.02em !important;
+    }
+    .hero-subtitle {
+      font-size: 0.95rem !important;
+      line-height: 1.55 !important;
+      padding: 0 4px !important;
+    }
+    .social-proof-bar {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 10px 14px !important;
+      font-size: 0.8rem !important;
+    }
+    
+    /* Bento Grid */
+    .next-level-grid {
+      grid-template-columns: 1fr !important;
+      gap: 16px !important;
+      margin-bottom: 28px !important;
+    }
+    .next-level-card {
+      padding: 22px 18px !important;
+    }
+
+    /* Flagship Section */
+    .flagship-spotlight-section {
+      padding: 30px 16px 40px !important;
+    }
+    .flagship-card-wrap {
+      padding: 24px 16px !important;
+      border-radius: 18px !important;
+    }
+    .flagship-grid {
+      grid-template-columns: 1fr !important;
+      gap: 28px !important;
+    }
+    .flagship-visual-card {
+      padding: 22px 16px !important;
+      border-radius: 18px !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .flagship-companion-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+    }
+    .flagship-companion-grid div img {
+      max-height: 110px;
+      object-fit: cover;
+    }
+    .flagship-cta-buttons {
+      flex-direction: column !important;
+      width: 100% !important;
+      gap: 10px !important;
+    }
+    .flagship-cta-buttons .hero-btn {
+      width: 100% !important;
+      padding: 14px 20px !important;
+      font-size: 0.94rem !important;
+      justify-content: center !important;
+    }
+
+    /* Bundle Banner */
+    .bundle-banner {
+      flex-direction: column !important;
+      text-align: center !important;
+      padding: 20px 16px !important;
+      gap: 14px !important;
+      border-radius: 14px !important;
+    }
+    .bundle-btn {
+      width: 100% !important;
+      padding: 14px !important;
+      font-size: 0.95rem !important;
+    }
+
+    /* Horizontal Scroll Filter Tabs */
+    .catalog-controls {
+      padding: 0 16px !important;
+      margin-bottom: 20px !important;
+    }
+    .search-box-wrap {
+      margin: 0 auto 16px !important;
+    }
+    .search-input {
+      font-size: 16px !important; /* Prevents iOS Safari auto-zoom */
+      padding: 13px 18px 13px 44px !important;
+    }
+    .filter-tabs {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      justify-content: flex-start !important;
+      padding: 4px 4px 12px 4px !important;
+      gap: 8px !important;
+      -webkit-overflow-scrolling: touch !important;
+      scrollbar-width: none !important;
+    }
+    .filter-tabs::-webkit-scrollbar {
+      display: none !important;
+    }
+    .filter-tab {
+      flex-shrink: 0 !important;
+      white-space: nowrap !important;
+      font-size: 0.82rem !important;
+      padding: 8px 16px !important;
+    }
+
+    /* Books Grid */
+    .books-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+      padding: 0 14px 48px !important;
+    }
+    .book-card {
+      border-radius: 14px !important;
+    }
+    .book-card__content {
+      padding: 12px !important;
+    }
+    .book-card__title {
+      font-size: 0.88rem !important;
+      line-height: 1.3 !important;
+    }
+    .book-card__desc {
+      font-size: 0.76rem !important;
+      line-height: 1.35 !important;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .book-card__btn {
+      width: 100% !important;
+      padding: 10px 8px !important;
+      font-size: 0.8rem !important;
+    }
+
+    /* Free Guides Grid */
+    .free-guides-section {
+      padding: 36px 16px !important;
+    }
+    .free-guides-grid {
+      grid-template-columns: 1fr !important;
+      gap: 12px !important;
+    }
+
+    /* Modals & Forms */
+    .modal-overlay {
+      padding: 12px !important;
+    }
+    .modal-card {
+      padding: 22px 16px !important;
+      border-radius: 18px !important;
+      max-width: 100% !important;
+      max-height: 94vh !important;
+    }
+    .modal-close {
+      width: 38px !important;
+      height: 38px !important;
+      top: 14px !important;
+      right: 14px !important;
+    }
+    .form-input {
+      font-size: 16px !important; /* Prevents iOS auto-zoom */
+      padding: 12px 14px !important;
+    }
+    .btn-submit {
+      padding: 15px !important;
+      font-size: 1rem !important;
+      min-height: 48px !important;
+      border-radius: 12px !important;
+    }
+    .pm-selector {
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+    }
+
+    /* Footer */
+    .site-footer {
+      padding: 36px 16px 80px !important;
+    }
+    .footer-links {
+      flex-direction: column !important;
+      gap: 12px !important;
+    }
+  }
+
+  /* Ultra-compact screens (e.g. 320px - 440px smartphones) */
+  @media (max-width: 440px) {
+    .books-grid {
+      grid-template-columns: 1fr !important;
+      max-width: 340px;
+      margin: 0 auto 40px !important;
+    }
+    .book-card__title {
+      font-size: 1rem !important;
+    }
+    .book-card__desc {
+      -webkit-line-clamp: 3 !important;
+      font-size: 0.82rem !important;
+    }
+    .book-card__btn {
+      padding: 12px !important;
+      font-size: 0.88rem !important;
+    }
+    .flagship-visual-card {
+      padding: 18px 12px !important;
+    }
+  }
+
 
 </style>
 </head>
@@ -2404,11 +2661,11 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
         </div>
 
         <!-- Call to Action Buttons -->
-        <div style="display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
-          <a href="/academic-comeback-package" class="hero-btn hero-btn--primary" style="padding: 15px 32px; font-size: 0.96rem;">
+        <div class="flagship-cta-buttons">
+          <a href="/academic-comeback-package" class="hero-btn hero-btn--primary">
             Claim Academic Comeback Package — ₦2,000 &rarr;
           </a>
-          <a href="/academic-comeback-package" class="hero-btn hero-btn--secondary" style="padding: 15px 24px; font-size: 0.9rem;">
+          <a href="/academic-comeback-package" class="hero-btn hero-btn--secondary">
             See Full Curriculum &amp; Reviews
           </a>
         </div>
@@ -2437,7 +2694,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
           </div>
 
           <!-- Mini Grid of Companion Guides -->
-          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px;">
+          <div class="flagship-companion-grid">
             <div style="text-align: center;">
               <img src="assets/images/bookcover1.webp" alt="CGPA Recovery" style="width: 100%; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
               <span style="font-size: 0.68rem; color: #94a3b8; display: block; margin-top: 4px;">CGPA Plan</span>
