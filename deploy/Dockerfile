@@ -10,6 +10,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ ./backend/
 COPY frontend/ ./frontend/
 COPY uploads/ ./uploads/
+COPY content/ ./content/
+COPY pdfs/ ./pdfs/
 
 # Drop root — the app writes to uploads/products/ at runtime (admin
 # product upload), so the app user needs ownership of /app, not just

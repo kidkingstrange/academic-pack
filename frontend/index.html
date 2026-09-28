@@ -112,231 +112,114 @@
   }
 
   /* Hero */
-  /* Hero Section */
+  /* ── Apex Hero Section ────────────────────────────────────────── */
   .hero-section {
-    padding: 64px 24px 40px;
+    padding: 80px 24px 44px;
     text-align: center;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
   }
   .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: var(--gold-dim);
-    border: 1px solid var(--gold);
-    color: var(--gold-bright);
-    padding: 7px 18px;
+    background: rgba(212, 166, 58, 0.08);
+    border: 1px solid rgba(212, 166, 58, 0.35);
+    color: #f5c862;
+    padding: 6px 16px;
     border-radius: 50px;
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 800;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 1px;
+    box-shadow: 0 0 20px rgba(212, 166, 58, 0.08);
   }
   .hero-title {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(2.3rem, 4.5vw, 3.4rem);
+    font-size: clamp(2.3rem, 4.8vw, 3.6rem);
     font-weight: 900;
     color: #ffffff;
-    line-height: 1.18;
-    margin-bottom: 18px;
-    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -0.8px;
   }
   .hero-title em {
     font-style: normal;
-    color: var(--gold-bright);
-    background: linear-gradient(135deg, #f3c659 0%, #d4a63a 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f3c659 45%, #d4a63a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .hero-subtitle {
-    font-size: 1.15rem;
-    color: #cbd5e1;
-    max-width: 840px;
-    margin: 0 auto 36px;
+    font-size: 1.12rem;
+    color: #94a3b8;
+    max-width: 780px;
+    margin: 0 auto 32px;
     line-height: 1.65;
   }
   .hero-subtitle strong {
-    color: #ffffff;
+    color: #f1f5f9;
   }
-
-  /* Next Level Persona Cards Grid */
-  .next-level-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    text-align: left;
-    margin: 36px auto 36px;
-  }
-  @media (max-width: 980px) {
-    .next-level-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-  }
-
-  .next-level-card {
-    background: linear-gradient(180deg, #171a24 0%, #0f121a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.09);
-    border-radius: 18px;
-    padding: 26px 22px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-  }
-  .next-level-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(212, 166, 58, 0.5);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
-  }
-  .next-level-card--flagship {
-    border-color: rgba(212, 166, 58, 0.4);
-    background: linear-gradient(180deg, #1d1912 0%, #11141c 100%);
-    box-shadow: 0 4px 20px rgba(212, 166, 58, 0.08);
-  }
-  .next-level-card--flagship:hover {
-    border-color: #f3c659;
-    box-shadow: 0 16px 40px rgba(212, 166, 58, 0.22);
-  }
-
-  .next-level-card__top {
+  .hero-actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
   }
-  .next-level-card__persona {
-    font-size: 0.72rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .next-level-card__persona--student {
-    background: rgba(212, 166, 58, 0.16);
-    border: 1px solid #d4a63a;
-    color: #f3c659;
-  }
-  .next-level-card__persona--career {
-    background: rgba(56, 189, 248, 0.14);
-    border: 1px solid rgba(56, 189, 248, 0.4);
-    color: #38bdf8;
-  }
-  .next-level-card__persona--business {
-    background: rgba(34, 197, 94, 0.14);
-    border: 1px solid rgba(34, 197, 94, 0.4);
-    color: #4ade80;
-  }
-  .next-level-card__title {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.18rem;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.35;
-    margin: 0 0 16px 0;
-  }
-
-  .next-level-contrast {
-    background: rgba(8, 10, 15, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 12px;
-    padding: 14px 15px;
-    margin-bottom: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 0.84rem;
-    line-height: 1.5;
-  }
-  .next-level-contrast__row {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .next-level-contrast__icon--stuck {
-    color: #f87171;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .next-level-contrast__icon--level {
-    color: #4ade80;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .next-level-contrast__text {
-    color: #94a3b8;
-  }
-  .next-level-contrast__text strong {
-    color: #ffffff;
-  }
-
-  .next-level-card__vehicle {
-    background: rgba(255, 255, 255, 0.03);
-    border-left: 3px solid #d4a63a;
-    padding: 10px 14px;
-    border-radius: 0 8px 8px 0;
-    margin-bottom: 20px;
-    font-size: 0.8rem;
-    color: #cbd5e1;
-    line-height: 1.45;
-  }
-  .next-level-card__vehicle strong {
-    color: #f3c659;
-  }
-
-  .next-level-card__btn {
-    margin-top: auto;
+  .hero-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-size: 0.86rem;
+    padding: 13px 26px;
+    border-radius: 50px;
+    font-size: 0.92rem;
     font-weight: 800;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.25s ease;
   }
-  .next-level-card__btn--gold {
-    background: linear-gradient(135deg, #c9973a, #f3c659);
+  .hero-btn--primary {
+    background: linear-gradient(135deg, #d4a63a 0%, #f5c862 100%);
     color: #0c0e14;
-    box-shadow: 0 4px 16px rgba(201, 151, 58, 0.3);
+    box-shadow: 0 6px 24px rgba(212, 166, 58, 0.35);
   }
-  .next-level-card__btn--gold:hover {
+  .hero-btn--primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 22px rgba(201, 151, 58, 0.45);
+    box-shadow: 0 10px 32px rgba(212, 166, 58, 0.5);
+    color: #000;
   }
-  .next-level-card__btn--outline {
+  .hero-btn--secondary {
     background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    color: #f1f5f9;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    backdrop-filter: blur(10px);
   }
-  .next-level-card__btn--outline:hover {
-    background: rgba(255, 255, 255, 0.09);
+  .hero-btn--secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.3);
-    color: #ffffff;
+    color: #fff;
+    transform: translateY(-2px);
   }
 
-  /* Social Proof Bar */
+  /* ── Social Proof Bar ────────────────────────────────────────── */
   .social-proof-bar {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 24px;
     flex-wrap: wrap;
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.85rem;
+    color: #94a3b8;
     font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 32px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    max-width: 960px;
+    margin: 0 auto 48px;
   }
   .social-proof-item {
     display: flex;
@@ -345,6 +228,222 @@
   }
   .social-proof-item i {
     color: var(--gold-bright);
+    font-size: 0.95rem;
+  }
+  .social-proof-item strong {
+    color: #f1f5f9;
+  }
+
+  /* ── The 3 Arenas / Bento Persona Grid ───────────────────────── */
+  .bento-section-title {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #f5c862;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 18px;
+  }
+  .next-level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: left;
+    margin: 0 auto 36px;
+  }
+  @media (max-width: 980px) {
+    .next-level-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  .next-level-card {
+    background: rgba(17, 20, 28, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .next-level-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+  .next-level-card--flagship {
+    background: radial-gradient(120% 120% at 50% 0%, #201a11 0%, #11141c 100%);
+    border-color: rgba(212, 166, 58, 0.45);
+    box-shadow: 0 8px 30px rgba(212, 166, 58, 0.08);
+  }
+  .next-level-card--flagship:hover {
+    border-color: #f5c862;
+    box-shadow: 0 16px 44px rgba(212, 166, 58, 0.25);
+  }
+
+  .next-level-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .next-level-card__icon-badge {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+  }
+  .next-level-card__icon-badge--gold {
+    background: rgba(212, 166, 58, 0.15);
+    color: #f5c862;
+    border: 1px solid rgba(212, 166, 58, 0.3);
+  }
+  .next-level-card__icon-badge--blue {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+  .next-level-card__icon-badge--green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+  .next-level-card__tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .next-level-card__tag--gold {
+    background: rgba(212, 166, 58, 0.16);
+    color: #f5c862;
+    border: 1px solid rgba(212, 166, 58, 0.4);
+  }
+  .next-level-card__tag--blue {
+    background: rgba(56, 189, 248, 0.1);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+  }
+  .next-level-card__tag--green {
+    background: rgba(34, 197, 94, 0.1);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+  }
+
+  .next-level-card__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.35;
+    margin: 0 0 10px 0;
+  }
+  .next-level-card__desc {
+    font-size: 0.88rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .next-level-card__desc strong {
+    color: #e2e8f0;
+  }
+
+  .next-level-card__system {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .next-level-card__system i {
+    color: #f5c862;
+    font-size: 0.95rem;
+  }
+
+  .next-level-card__btn {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .next-level-card__btn--gold {
+    background: linear-gradient(135deg, #c9973a, #f5c862);
+    color: #0c0e14;
+    box-shadow: 0 4px 14px rgba(201, 151, 58, 0.3);
+  }
+  .next-level-card__btn--gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(201, 151, 58, 0.45);
+    color: #000;
+  }
+  .next-level-card__btn--outline {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+  }
+  .next-level-card__btn--outline:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  /* Flagship 4-Pillar Grid */
+  .flagship-pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  @media (max-width: 640px) {
+    .flagship-pillars-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+  .flagship-pillar-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: #cbd5e1;
+  }
+  .flagship-pillar-item i {
+    color: #4ade80;
+    font-size: 1rem;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .flagship-pillar-item strong {
+    color: #ffffff;
+    display: block;
+    font-size: 0.88rem;
+    margin-bottom: 2px;
   }
 
   /* Bundle Offer Card */
@@ -1044,130 +1143,113 @@
 <!-- Apex Hero Section: Dedicated to Getting You To Your Next Level -->
 <section class="hero-section">
   <div class="hero-badge">
-    <i class="bi bi-rocket-takeoff-fill"></i> SCALE GROUP MISSION: YOUR NEXT LEVEL
+    <i class="bi bi-shield-check"></i> SCALE GROUP • HIGH-PERFORMANCE SYSTEMS
   </div>
   <h1 class="hero-title">
-    We Are Dedicated To Getting You To Your <em>Next Level.</em>
+    Engineering Your Transformation to the <em>Next Level.</em>
   </h1>
   <p class="hero-subtitle">
-    "The next level" isn't a vague motivational slogan. At <strong>Scale Group</strong>, it is an engineered transformation—a tactical bridge from where you feel trapped or stagnant today to measurable, high-performing mastery tomorrow. High performance looks different depending on your battlefield:
+    "The next level" isn't an abstract motivation—it is an engineered reality. At <strong>Scale Group</strong>, we design tactical digital blueprints and execution frameworks to bridge the gap from where you feel trapped or stagnant today to measurable, high-performing mastery tomorrow.
   </p>
 
-  <!-- Next Level Category Persona Matrix -->
-  <div class="next-level-grid">
-    <!-- Category 1: University Students (Flagship) -->
-    <div class="next-level-card next-level-card--flagship">
-      <div class="next-level-card__top">
-        <span class="next-level-card__persona next-level-card__persona--student">
-          <i class="bi bi-mortarboard-fill"></i> For University Students
-        </span>
-        <span style="font-size: 0.7rem; font-weight: 900; color: #f5c862; background: rgba(201,151,58,0.2); border: 1px solid #d4a63a; padding: 2px 8px; border-radius: 12px; letter-spacing: 0.5px;">
-          FLAGSHIP FOCUS
-        </span>
-      </div>
-      <h3 class="next-level-card__title">
-        From Low CGPA &amp; Panic Cramming &rarr; To Calm, First-Class Mastery
-      </h3>
-      <div class="next-level-contrast">
-        <div class="next-level-contrast__row">
-          <i class="bi bi-x-circle-fill next-level-contrast__icon--stuck"></i>
-          <div class="next-level-contrast__text">
-            <strong>Where You're Stuck:</strong> 10-hour all-nighters, exam hall memory blackouts, erratic lecturers, and the terrifying dread of carryovers or graduating with a 3rd class.
-          </div>
-        </div>
-        <div class="next-level-contrast__row">
-          <i class="bi bi-check-circle-fill next-level-contrast__icon--level"></i>
-          <div class="next-level-contrast__text">
-            <strong>Your Next Level:</strong> Deep active recall, mathematical CGPA turnaround, total exam composure under pressure, and graduating with honors and job readiness.
-          </div>
-        </div>
-      </div>
-      <div class="next-level-card__vehicle">
-        <strong>Scale Flagship System:</strong> The Academic Comeback Package™ (₦2,000 complete 7-in-1 study &amp; recovery system) + 201+ free campus audio guides.
-      </div>
-      <a href="#academic-comeback" class="next-level-card__btn next-level-card__btn--gold">
-        <i class="bi bi-mortarboard-fill"></i> Explore Flagship System (₦2k) &rarr;
-      </a>
-    </div>
-
-    <!-- Category 2: Jobseekers & Early Career Climbers -->
-    <div class="next-level-card">
-      <div class="next-level-card__top">
-        <span class="next-level-card__persona next-level-card__persona--career">
-          <i class="bi bi-briefcase-fill"></i> For Career Climbers
-        </span>
-        <span style="font-size: 0.7rem; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 12px;">
-          GLOBAL ROLES
-        </span>
-      </div>
-      <h3 class="next-level-card__title">
-        From Invisible CVs &amp; Stagnant Wages &rarr; To High-Paying Remote Roles
-      </h3>
-      <div class="next-level-contrast">
-        <div class="next-level-contrast__row">
-          <i class="bi bi-x-circle-fill next-level-contrast__icon--stuck"></i>
-          <div class="next-level-contrast__text">
-            <strong>Where You're Stuck:</strong> Sending dozens of ignored CVs into black holes, underemployed on stagnant local naira salaries, and capped by office bureaucracy.
-          </div>
-        </div>
-        <div class="next-level-contrast__row">
-          <i class="bi bi-check-circle-fill next-level-contrast__icon--level"></i>
-          <div class="next-level-contrast__text">
-            <strong>Your Next Level:</strong> High-demand tech positioning, inbound recruiter attraction on LinkedIn, executive salary negotiation, and earning foreign remote income.
-          </div>
-        </div>
-      </div>
-      <div class="next-level-card__vehicle">
-        <strong>Scale Solution:</strong> Tactical Career Masterclasses on remote work acquisition, high-ticket positioning, and corporate leverage.
-      </div>
-      <a href="#masterclasses" onclick="filterCategory('career')" class="next-level-card__btn next-level-card__btn--outline">
-        <i class="bi bi-arrow-up-right"></i> Explore Career Blueprints &rarr;
-      </a>
-    </div>
-
-    <!-- Category 3: Freelancers, Creators & Digital Operators -->
-    <div class="next-level-card">
-      <div class="next-level-card__top">
-        <span class="next-level-card__persona next-level-card__persona--business">
-          <i class="bi bi-graph-up-arrow"></i> For Operators &amp; Creators
-        </span>
-        <span style="font-size: 0.7rem; font-weight: 800; color: #4ade80; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px;">
-          REVENUE SYSTEMS
-        </span>
-      </div>
-      <h3 class="next-level-card__title">
-        From Dry DMs &amp; Trading Hours &rarr; To Scalable Automated Cashflow
-      </h3>
-      <div class="next-level-contrast">
-        <div class="next-level-contrast__row">
-          <i class="bi bi-x-circle-fill next-level-contrast__icon--stuck"></i>
-          <div class="next-level-contrast__text">
-            <strong>Where You're Stuck:</strong> Feast-or-famine gig cycles, underpricing your work, ghosted proposals in social media DMs, and exchanging exhausting hours for tiny checks.
-          </div>
-        </div>
-        <div class="next-level-contrast__row">
-          <i class="bi bi-check-circle-fill next-level-contrast__icon--level"></i>
-          <div class="next-level-contrast__text">
-            <strong>Your Next Level:</strong> Closing high-ticket foreign clients directly in the DMs, launching digital assets globally, and building 24/7 automated WhatsApp sales funnels.
-          </div>
-        </div>
-      </div>
-      <div class="next-level-card__vehicle">
-        <strong>Scale Solution:</strong> Execution playbooks on DM Closing Scripts, High-Converting WhatsApp Funnels &amp; Selling Digital Products Globally.
-      </div>
-      <a href="#masterclasses" onclick="filterCategory('sales')" class="next-level-card__btn next-level-card__btn--outline">
-        <i class="bi bi-arrow-up-right"></i> Explore Revenue Playbooks &rarr;
-      </a>
-    </div>
+  <div class="hero-actions">
+    <a href="#academic-comeback" class="hero-btn hero-btn--primary">
+      <i class="bi bi-mortarboard-fill"></i> Explore Flagship: Academic Comeback (₦2,000) &rarr;
+    </a>
+    <a href="#masterclasses" class="hero-btn hero-btn--secondary">
+      <i class="bi bi-collection-play-fill"></i> Browse 30 Tactical Masterclasses &darr;
+    </a>
   </div>
 
   <!-- Social Proof Bar -->
   <div class="social-proof-bar">
-    <div class="social-proof-item"><i class="bi bi-people-fill"></i> <strong>4,200+</strong> Students &amp; Operators Trained</div>
+    <div class="social-proof-item"><i class="bi bi-people-fill"></i> <strong>4,200+</strong> Trained</div>
     <div class="social-proof-item"><i class="bi bi-star-fill"></i> <strong>4.9 / 5</strong> Reader Rating</div>
-    <div class="social-proof-item"><i class="bi bi-award-fill"></i> <strong>Flagship Offer:</strong> Academic Comeback (₦2,000)</div>
-    <div class="social-proof-item"><i class="bi bi-book-half"></i> <strong>30</strong> Tactical Masterclasses</div>
-    <div class="social-proof-item"><i class="bi bi-headphones"></i> <strong>201+</strong> Free Campus Audio Guides</div>
+    <div class="social-proof-item"><i class="bi bi-award-fill"></i> <strong>Flagship:</strong> Academic Comeback (₦2,000)</div>
+    <div class="social-proof-item"><i class="bi bi-book-half"></i> <strong>30</strong> Masterclasses</div>
+    <div class="social-proof-item"><i class="bi bi-headphones"></i> <strong>201+</strong> Free Audio Guides</div>
+  </div>
+
+  <div class="bento-section-title">
+    <i class="bi bi-compass"></i> Select Your Transformation Battlefield
+  </div>
+
+  <!-- Next Level Bento Persona Grid -->
+  <div class="next-level-grid">
+    <!-- Arena 1: University Students (Flagship Focus) -->
+    <div class="next-level-card next-level-card--flagship">
+      <div class="next-level-card__header">
+        <div class="next-level-card__icon-badge next-level-card__icon-badge--gold">
+          <i class="bi bi-mortarboard-fill"></i>
+        </div>
+        <span class="next-level-card__tag next-level-card__tag--gold">
+          🌟 Flagship Focus
+        </span>
+      </div>
+      <h3 class="next-level-card__title">
+        From Panic Cramming to First-Class CGPA Mastery
+      </h3>
+      <p class="next-level-card__desc">
+        Eliminate 10-hour all-nighters and exam blankouts. Install <strong>deep active recall</strong>, mathematical semester turnaround roadmaps, and calm composure under Nigerian university pressure.
+      </p>
+      <div class="next-level-card__system">
+        <i class="bi bi-layers-fill"></i>
+        <span><strong>Flagship System:</strong> Academic Comeback Package (₦2,000)</span>
+      </div>
+      <a href="#academic-comeback" class="next-level-card__btn next-level-card__btn--gold">
+        Explore Flagship System &rarr;
+      </a>
+    </div>
+
+    <!-- Arena 2: Career Climbers & Tech Talent -->
+    <div class="next-level-card">
+      <div class="next-level-card__header">
+        <div class="next-level-card__icon-badge next-level-card__icon-badge--blue">
+          <i class="bi bi-briefcase-fill"></i>
+        </div>
+        <span class="next-level-card__tag next-level-card__tag--blue">
+          Global Careers
+        </span>
+      </div>
+      <h3 class="next-level-card__title">
+        From Overlooked CVs to High-Paying Remote Roles
+      </h3>
+      <p class="next-level-card__desc">
+        Escape stagnant local salaries and corporate bureaucracy. Master <strong>high-ticket positioning</strong>, inbound recruiter attraction on LinkedIn, and remote foreign earnings.
+      </p>
+      <div class="next-level-card__system">
+        <i class="bi bi-arrow-up-right-circle-fill" style="color: #38bdf8;"></i>
+        <span><strong>Scale Blueprints:</strong> Remote Acquisition &amp; Executive Salary Negotiation</span>
+      </div>
+      <a href="#masterclasses" onclick="filterCategory('career')" class="next-level-card__btn next-level-card__btn--outline">
+        Explore Career Blueprints &rarr;
+      </a>
+    </div>
+
+    <!-- Arena 3: Digital Operators & Creators -->
+    <div class="next-level-card">
+      <div class="next-level-card__header">
+        <div class="next-level-card__icon-badge next-level-card__icon-badge--green">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+        <span class="next-level-card__tag next-level-card__tag--green">
+          Revenue Engines
+        </span>
+      </div>
+      <h3 class="next-level-card__title">
+        From Trading Hours to Scalable Automated Cashflow
+      </h3>
+      <p class="next-level-card__desc">
+        Stop underpricing your work. Build <strong>automated 24/7 WhatsApp funnels</strong>, close high-ticket clients directly in social DMs, and sell digital assets globally.
+      </p>
+      <div class="next-level-card__system">
+        <i class="bi bi-cash-stack" style="color: #4ade80;"></i>
+        <span><strong>Scale Blueprints:</strong> DM Closing, Meta Ads &amp; Digital Product Funnels</span>
+      </div>
+      <a href="#masterclasses" onclick="filterCategory('sales')" class="next-level-card__btn next-level-card__btn--outline">
+        Explore Revenue Playbooks &rarr;
+      </a>
+    </div>
   </div>
 </section>
 
@@ -1179,9 +1261,9 @@
     <div class="flagship-grid">
       <!-- Left Column: The Offer & Curriculum -->
       <div>
-        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px;">
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 14px;">
           <span style="background: rgba(212, 166, 58, 0.18); border: 1.5px solid #d4a63a; color: #f3c659; font-size: 0.75rem; font-weight: 900; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px;">
-            <i class="bi bi-award-fill"></i> SCALE GROUP FLAGSHIP OFFER
+            <i class="bi bi-award-fill"></i> SCALE GROUP FLAGSHIP SYSTEM
           </span>
           <span style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #4ade80; font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px;">
             <i class="bi bi-people-fill"></i> 4,200+ NIGERIAN STUDENTS
@@ -1194,56 +1276,56 @@
         <p style="font-size: 1.05rem; color: #f5c862; font-weight: 700; margin: 0 0 14px 0; line-height: 1.4;">
           Stop Studying 10 Hours a Day Just to Blank Out on Exam Day. Start Learning Smarter.
         </p>
-        <p style="font-size: 0.92rem; color: #cbd5e1; line-height: 1.6; margin: 0 0 18px 0;">
+        <p style="font-size: 0.92rem; color: #cbd5e1; line-height: 1.6; margin: 0 0 20px 0;">
           The complete 7-in-1 digital study system engineered specifically for Nigerian university students fighting tough lecturers, exhausting timetables, and low GPAs. Install active recall, retain what you read under pressure, and engineer your academic turnaround this semester.
         </p>
 
-        <!-- 7-in-1 System Breakdown -->
-        <div style="background: rgba(15, 18, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 16px 18px; margin-bottom: 22px;">
-          <div style="font-size: 0.78rem; font-weight: 900; color: #f3c659; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
-            <i class="bi bi-layers-fill"></i> WHAT'S INCLUDED IN THE 7-PART SYSTEM:
+        <!-- 4-Pillar Grid (Spacious, Uncluttered Bento Style) -->
+        <div class="flagship-pillars-grid">
+          <div class="flagship-pillar-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <div>
+              <strong>1. Active Recall Engine</strong>
+              <span>Encode memory for instant retrieval under exam pressure.</span>
+            </div>
           </div>
-          <ul class="flagship-stack-list">
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>1. Get Good at Hard Things:</strong> The Core Cognitive Study &amp; Mindset Protocol.</span>
-            </li>
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>2. The CGPA Recovery Protocol:</strong> Mathematical roadmap to turn 2.0s into First-Class.</span>
-            </li>
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>3. Nigerian University Survival Compendium:</strong> Handling lecturers, departmental politics &amp; hostels.</span>
-            </li>
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>4. Exam Week Execution Blueprint:</strong> 72-hour triage formula that cures panic cramming.</span>
-            </li>
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>5. Active Recall &amp; Spaced Repetition Engine:</strong> Encode memory so you recall concepts under stress.</span>
-            </li>
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>6. 100+ High-Yield AI Study Prompts:</strong> Custom ChatGPT/Claude prompts for fast coursework summarization.</span>
-            </li>
-            <li class="flagship-stack-item">
-              <i class="bi bi-check-circle-fill"></i>
-              <span><strong>7. The First-Class Notion Workspace:</strong> Pre-built digital academic dashboard and second brain.</span>
-            </li>
-          </ul>
+          <div class="flagship-pillar-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <div>
+              <strong>2. CGPA Recovery Roadmap</strong>
+              <span>Mathematical strategy to turn 2.0 GPAs into First-Class honors.</span>
+            </div>
+          </div>
+          <div class="flagship-pillar-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <div>
+              <strong>3. 72-Hour Exam Triage</strong>
+              <span>Emergency triage protocol that cures panic cramming.</span>
+            </div>
+          </div>
+          <div class="flagship-pillar-item">
+            <i class="bi bi-check-circle-fill"></i>
+            <div>
+              <strong>4. AI Prompts &amp; Notion Hub</strong>
+              <span>Coursework summarization engine + prebuilt academic dashboard.</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 20px; display: flex; align-items: center; gap: 6px;">
+          <i class="bi bi-plus-circle-fill" style="color: #f5c862;"></i>
+          <span>Includes 3 Bonus Guides: Campus Survival Compendium, Hard Things Mindset &amp; Spaced Repetition Protocol.</span>
         </div>
 
         <!-- Value & Price Callout -->
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 22px; flex-wrap: wrap;">
           <div>
-            <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; display: block;">Standard Retail Value</span>
+            <span style="font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; display: block;">Standard Retail Value</span>
             <span style="font-size: 1.15rem; color: #64748b; text-decoration: line-through; font-weight: 700;">₦20,000</span>
           </div>
           <div style="height: 36px; width: 1px; background: rgba(255, 255, 255, 0.1);"></div>
           <div>
-            <span style="font-size: 0.75rem; color: #4ade80; text-transform: uppercase; font-weight: 800; display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 0.72rem; color: #4ade80; text-transform: uppercase; font-weight: 800; display: flex; align-items: center; gap: 4px;">
               <i class="bi bi-tag-fill"></i> One-Time Student Price (90% OFF)
             </span>
             <div style="display: flex; align-items: baseline; gap: 8px;">
@@ -1309,7 +1391,7 @@
           <!-- Quick Stat Callout Inside Card -->
           <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
             <span style="color: #cbd5e1;">Deliverables:</span>
-            <span style="color: #f3c659; font-weight: 800;">7 Files (PDF + Notion)</span>
+            <span style="color: #f3c659; font-weight: 800;">7 Complete Files (PDF + Notion)</span>
           </div>
         </div>
       </div>
@@ -1360,7 +1442,7 @@
       <span class="free-guide-card__link">View Guides &rarr;</span>
     </a>
 
-    <a href="/blog/hostels/" class="free-guide-card">
+    <a href="/blog/hostel-and-accommodation/" class="free-guide-card">
       <div class="free-guide-card__icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
         <i class="bi bi-building-fill"></i>
       </div>
@@ -1401,7 +1483,7 @@
 <!-- =====================================================================
      SECTION: 30 TACTICAL DIGITAL MASTERCLASSES & BLUEPRINTS
      ===================================================================== -->
-<section id="masterclasses" style="padding: 20px 24px 40px; max-width: 1140px; margin: 0 auto;">
+<section id="masterclasses" style="padding: 40px 24px 20px; max-width: 1140px; margin: 0 auto;">
   <div style="text-align: center; max-width: 820px; margin: 0 auto 28px;">
     <span class="hero-badge">
       <i class="bi bi-collection-play-fill"></i> SCALE GROUP EXECUTION BLUEPRINTS
@@ -1410,12 +1492,12 @@
       30 Tactical Digital Masterclasses
     </h2>
     <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6; margin: 0 auto;">
-      Beyond academics: Field-tested playbooks for sales, client acquisition, Meta ads, corporate advancement, and wealth generation. Pick any single book for <strong>₦ 5,000</strong> or save with the 3-book bundle.
+      Field-tested playbooks for sales, client acquisition, Meta ads, corporate advancement, and wealth generation. Pick any single book for <strong>₦ 5,000</strong> or save with the 3-book bundle.
     </p>
   </div>
 
   <!-- Multi-Book Bundle Offer Banner -->
-  <div class="bundle-banner" style="margin-bottom:20px;">
+  <div class="bundle-banner" style="margin-bottom:24px;">
     <div class="bundle-content">
       <h3>🔥 SPECIAL BUNDLE: Pick Any 3 Masterclasses for <span class="naira">₦</span> 12,000</h3>
       <p>Select any 3 books of your choice and save <span class="naira">₦</span> 3,000 instantly (20% OFF). Includes instant delivery &amp; lifetime access.</p>
@@ -1425,42 +1507,12 @@
     </button>
   </div>
 
-  <!-- 3-Step How It Works Banner -->
-  <div class="how-it-works-banner" style="background:#11141c; border:1px solid var(--card-border); border-radius:16px; padding:20px 24px; max-width:900px; margin:0 auto 24px; text-align:left;">
-    <div style="font-weight:800; font-size:0.85rem; color:var(--gold-bright); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; text-align:center;">
-      ⚡ HOW IT WORKS (INSTANT 3-STEP DELIVERY)
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-      <div style="background:#161922; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; display:flex; gap:12px; align-items:flex-start;">
-        <span style="background:var(--gold-dim); color:var(--gold-bright); font-weight:900; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.9rem;">1</span>
-        <div>
-          <strong style="color:#fff; display:block; font-size:0.9rem; margin-bottom:2px;">Select Masterclass</strong>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Pick any book for ₦ 5,000 or claim the 3-Book Bundle for ₦ 12,000.</span>
-        </div>
-      </div>
-
-      <div style="background:#161922; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; display:flex; gap:12px; align-items:flex-start;">
-        <span style="background:var(--gold-dim); color:var(--gold-bright); font-weight:900; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.9rem;">2</span>
-        <div>
-          <strong style="color:#fff; display:block; font-size:0.9rem; margin-bottom:2px;">Instant Secure Payment</strong>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Pay securely via Paystack using Card, Bank Transfer, or USSD.</span>
-        </div>
-      </div>
-
-      <div style="background:#161922; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:14px; display:flex; gap:12px; align-items:flex-start;">
-        <span style="background:var(--gold-dim); color:var(--gold-bright); font-weight:900; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.9rem;">3</span>
-        <div>
-          <strong style="color:#fff; display:block; font-size:0.9rem; margin-bottom:2px;">Read Immediately</strong>
-          <span style="font-size:0.8rem; color:var(--text-muted);">Access your book immediately on screen + sent straight to your email.</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Actionable Implementation Guarantee Bar -->
-  <div style="background:rgba(201,151,58,0.08); border:1px solid rgba(201,151,58,0.25); border-radius:12px; padding:12px 18px; max-width:900px; margin:0 auto 32px; display:flex; align-items:center; justify-content:center; gap:10px; text-align:center;">
-    <i class="bi bi-shield-check" style="color:var(--gold-bright); font-size:1.2rem; flex-shrink:0;"></i>
-    <span style="font-size:0.84rem; color:rgba(255,255,255,0.9); line-height:1.4;"><strong style="color:var(--gold-bright);">100% Actionable Implementation Guarantee:</strong> If any playbook fails to give you clear, field-tested systems you can execute within 48 hours, reach out for a full exchange or prompt refund.</span>
+  <!-- Sleek Guarantee Bar -->
+  <div style="background: rgba(201,151,58,0.06); border: 1px solid rgba(201,151,58,0.22); border-radius: 50px; padding: 10px 20px; max-width: 860px; margin: 0 auto 32px; display: flex; align-items: center; justify-content: center; gap: 10px; text-align: center;">
+    <i class="bi bi-shield-check" style="color: var(--gold-bright); font-size: 1.1rem; flex-shrink: 0;"></i>
+    <span style="font-size: 0.82rem; color: rgba(255,255,255,0.85); line-height: 1.4;">
+      <strong style="color: var(--gold-bright);">100% Actionable Implementation Guarantee:</strong> Real, field-tested systems you can execute within 48 hours or full exchange/refund. Instant delivery on-screen &amp; straight to your email.
+    </span>
   </div>
 </section>
 

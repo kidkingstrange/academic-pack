@@ -63,10 +63,15 @@ async def serve_article_page(category: str, slug: str):
     if not cat_obj:
         raise HTTPException(status_code=404, detail="Category not found")
 
+    slug = slug.strip("/")
     # Check for compiled static file
     static_file = BLOG_OUTPUT_DIR / category / slug / "index.html"
     if static_file.exists():
         return FileResponse(str(static_file), media_type="text/html; charset=utf-8")
+
+    direct_file = BLOG_OUTPUT_DIR / category / f"{slug}.html"
+    if direct_file.exists():
+        return FileResponse(str(direct_file), media_type="text/html; charset=utf-8")
 
     # On-demand SSR
     article = get_article_by_slug(slug, include_drafts=False)
