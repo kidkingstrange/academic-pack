@@ -389,6 +389,145 @@
         </div>
       </div>
 
+      <!-- ═════════════════════════════════════════════════════════════════
+           READER DISCUSSION, TAKEAWAYS & TOPIC REQUEST ENGINE
+           ═════════════════════════════════════════════════════════════════ -->
+      <section class="blog-community-section" id="community">
+        <div class="blog-community-tabs">
+          <button type="button" class="comm-tab active" data-target="tab-comments" onclick="window.switchCommunityTab('tab-comments')">
+            <i class="bi bi-chat-quote-fill"></i> Reader Takeaways &amp; Discussion (<span class="comment-count-badge">0</span>)
+          </button>
+          <button type="button" class="comm-tab" data-target="tab-topics" onclick="window.switchCommunityTab('tab-topics')">
+            <i class="bi bi-lightbulb-fill"></i> Request a Topic for Itoya David
+          </button>
+        </div>
+
+        <!-- Tab 1: Reader Comments & What I Liked -->
+        <div id="tab-pane-comments" class="comm-tab-pane">
+          <div class="comm-form-wrap">
+            <div class="comm-form-header">
+              <h3 class="comm-form-title">What Did You Like Most About This Guide?</h3>
+              <p class="comm-form-sub">Share your favorite takeaway, a study technique you tested, or ask a question.</p>
+            </div>
+
+            <form onsubmit="window.submitBlogComment(event)">
+              <input type="hidden" id="comment-slug" value="returning-to-university-after-sick-leave">
+              <input type="hidden" id="comment-article-title" value="Re-entering Class After Disciplinary or Medical Leave">
+
+              <!-- Logged-in reader badge -->
+              <div id="comment-author-badge" class="comment-author-badge" style="display:none;"></div>
+
+              <!-- Guest email/name fields if not logged in -->
+              <div id="comment-guest-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+                <div>
+                  <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Your Email <span style="color:#f87171">*</span></label>
+                  <input type="email" id="guest-email" class="comment-input" placeholder="e.g. name@gmail.com">
+                </div>
+                <div>
+                  <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Name or Campus Alias</label>
+                  <input type="text" id="guest-name" class="comment-input" placeholder="e.g. Chinedu (UNILAG)">
+                </div>
+              </div>
+
+              <!-- What I Liked Selector -->
+              <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">What resonated most with you?</label>
+                <select id="comment-what-liked" class="comment-select">
+                  <option value="Active Recall & Spaced Repetition">Active Recall &amp; Spaced Repetition Protocol</option>
+                  <option value="Actionable Exam Strategy">Actionable Exam Preparation Tactics</option>
+                  <option value="Mathematical CGPA Breakdown">Mathematical CGPA Roadmap &amp; Calculation</option>
+                  <option value="Hostel & Campus Survival Advice">Hostel &amp; Campus Survival Advice</option>
+                  <option value="Mindset & Cognitive Stamina">Mindset &amp; Mental Discipline Shift</option>
+                  <option value="Direct University Realism">Realistic Breakdown of Nigerian Lecturers</option>
+                  <option value="Everything in this Guide">Everything in this Guide!</option>
+                </select>
+              </div>
+
+              <!-- Comment Body -->
+              <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Your Feedback / Question <span style="color:#f87171">*</span></label>
+                <textarea id="comment-content" class="comment-textarea" required placeholder="Tell us how you study, what clicked for you, or ask a question about your semester..."></textarea>
+              </div>
+
+              <div id="comment-status" style="display:none; font-size:0.84rem; margin-bottom:12px;"></div>
+
+              <button type="submit" id="comment-submit-btn" class="btn btn--gold" style="padding:10px 22px; font-size:0.88rem; font-weight:800;">
+                <i class="bi bi-send-fill"></i> Post Takeaway &rarr;
+              </button>
+            </form>
+          </div>
+
+          <!-- Existing Comments List -->
+          <div id="comments-list">
+            <div style="text-align:center; padding:20px; color:#94a3b8;">Loading student discussion...</div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Topic Requests -->
+        <div id="tab-pane-topics" class="comm-tab-pane" style="display:none;">
+          <div class="comm-form-wrap">
+            <div class="comm-form-header">
+              <h3 class="comm-form-title">Have a Topic You'd Love Itoya David to Cover?</h3>
+              <p class="comm-form-sub">Submit your specific academic, hostel, or campus challenge. The community upvotes, and we write deep-dive guides on the top requests.</p>
+            </div>
+
+            <form onsubmit="window.submitTopicRequest(event)">
+              <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px; margin-bottom:14px;">
+                <div>
+                  <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Suggested Topic Title / Question <span style="color:#f87171">*</span></label>
+                  <input type="text" id="topic-title" class="comment-input" required placeholder="e.g. How to recover when a lecturer fails your CA test...">
+                </div>
+                <div>
+                  <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Pillar Category</label>
+                  <select id="topic-category" class="comment-select">
+                    <option value="Academics">Academics</option>
+                    <option value="Hostel & Accommodation">Hostel &amp; Accommodation</option>
+                    <option value="Finances">Student Finances</option>
+                    <option value="Mental Health">Mental Health</option>
+                    <option value="Work & School">Work &amp; School</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Topic email if guest -->
+              <div id="topic-guest-fields" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px;">
+                <div>
+                  <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Your Email (for notification when published) <span style="color:#f87171">*</span></label>
+                  <input type="email" id="topic-guest-email" class="comment-input" placeholder="e.g. yourname@gmail.com">
+                </div>
+                <div>
+                  <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Your Name / University</label>
+                  <input type="text" id="topic-guest-name" class="comment-input" placeholder="e.g. Tobi (FUTA)">
+                </div>
+              </div>
+
+              <div style="margin-bottom:14px;">
+                <label style="display:block; font-size:0.78rem; font-weight:700; color:#cbd5e1; margin-bottom:4px;">Why does this matter to you? <span style="color:#f87171">*</span></label>
+                <textarea id="topic-why" class="comment-textarea" required placeholder="Explain why students struggle with this on your campus..."></textarea>
+              </div>
+
+              <div id="topic-status" style="display:none; font-size:0.84rem; margin-bottom:12px;"></div>
+
+              <button type="submit" id="topic-submit-btn" class="btn btn--gold" style="padding:10px 22px; font-size:0.88rem; font-weight:800;">
+                <i class="bi bi-lightbulb-fill"></i> Submit Topic Request &rarr;
+              </button>
+            </form>
+          </div>
+
+          <!-- Community Roadmap Topics List with Upvoting -->
+          <div style="margin-top:24px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+              <h4 style="color:#fff; font-size:1rem; font-weight:800; margin:0;">
+                <i class="bi bi-fire" style="color:#f59e0b"></i> Student Topic Leaderboard (Upvote to Prioritize)
+              </h4>
+            </div>
+            <div id="topics-list">
+              <div style="text-align:center; padding:20px; color:#94a3b8;">Loading community roadmap...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </article>
 
     <!-- Sidebar / Related Articles -->
@@ -400,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -481,6 +620,7 @@
   </footer>
 
   <script src="/js/blog-audio.js" defer></script>
+  <script src="/js/blog-community.js" defer></script>
   <!-- Theme Toggle Controller -->
   <script>
     (function() {

@@ -97,6 +97,11 @@ async def connect_db():
             db.reviews.create_index("payment_reference"),
             db.coupons.create_index("code", unique=True),
             db.coupons.create_index("issued_to"),
+            # Blog community indexes
+            db.readers.create_index("email", unique=True),
+            db.blog_comments.create_index([("slug", 1), ("approved", 1), ("created_at", -1)]),
+            db.blog_topics.create_index([("votes", -1)]),
+            db.blog_topics.create_index("category"),
         )
         print("✅ MongoDB connected")
     except Exception as e:

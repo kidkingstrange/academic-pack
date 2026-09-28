@@ -23,6 +23,7 @@ from .routes import (
     affiliates, affiliate_public, affiliate_dashboard, tracking,
     admin_payouts, sales as sales_router, admin_email_delivery,
     admin_abandoned, preorders, lead_magnet, reviews,
+    blog, blog_community, blog_admin,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
@@ -101,6 +102,9 @@ app.include_router(admin_abandoned.router)
 app.include_router(preorders.router)
 app.include_router(lead_magnet.router)
 app.include_router(reviews.router)
+app.include_router(blog.router)
+app.include_router(blog_community.router)
+app.include_router(blog_admin.router)
 
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
