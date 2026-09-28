@@ -785,12 +785,6 @@ def render_article_page(article: Dict[str, Any], categories: List[Dict[str, Any]
         </article>
         """
 
-    # Categories navigation pills
-    cat_nav_html = ""
-    for cat in categories:
-        active_cls = " active" if cat["slug"] == article["category"] else ""
-        cat_nav_html += f'<a href="/blog/{cat["slug"]}/" class="cat-pill{active_cls}"><i class="bi {cat["icon"]}"></i> {cat["name"]}</a>'
-
     featured_img = article.get("featured_image", "")
     if not featured_img or "bookcover.webp" in featured_img:
         social_img = f"{SITE_URL}/assets/images/scale-logo-512.png"
@@ -845,17 +839,9 @@ def render_article_page(article: Dict[str, Any], categories: List[Dict[str, Any]
 {json_ld}
   </script>
 </head>
-<body class="blog-body">
+<body class="blog-body article-reading-page">
 
 {get_global_blog_header()}
-
-  <!-- Categories Sub-Nav -->
-  <div class="cat-bar">
-    <div class="blog-container cat-bar__inner">
-      <a href="/blog/" class="cat-pill"><i class="bi bi-grid-fill"></i> All Topics</a>
-      {cat_nav_html}
-    </div>
-  </div>
 
   <!-- Main Article Layout -->
   <main class="blog-container blog-article-layout">
@@ -865,12 +851,12 @@ def render_article_page(article: Dict[str, Any], categories: List[Dict[str, Any]
       <nav class="breadcrumbs" aria-label="Breadcrumb">
         <ol>
           <li><a href="/">Home</a></li>
-          <li><i class="bi bi-chevron-right"></i></li>
+          <li class="breadcrumb-separator"><i class="bi bi-chevron-right"></i></li>
           <li><a href="/blog/">Blog</a></li>
-          <li><i class="bi bi-chevron-right"></i></li>
+          <li class="breadcrumb-separator"><i class="bi bi-chevron-right"></i></li>
           <li><a href="/blog/{article['category']}/">{article['category_name']}</a></li>
-          <li><i class="bi bi-chevron-right"></i></li>
-          <li aria-current="page">{article['title']}</li>
+          <li class="breadcrumb-separator breadcrumb-separator--last"><i class="bi bi-chevron-right"></i></li>
+          <li class="breadcrumb-current" aria-current="page">{article['title']}</li>
         </ol>
       </nav>
 

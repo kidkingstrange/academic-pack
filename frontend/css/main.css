@@ -526,6 +526,29 @@ button{font-family:inherit;cursor:pointer}
   .global-brand__badge {
     display: none;
   }
+
+  /* Compact Announcement Bar on Mobile */
+  .global-top-bar {
+    padding: 6px 12px;
+  }
+  .global-top-bar__inner {
+    font-size: 0.78rem;
+    gap: 8px;
+    line-height: 1.35;
+    justify-content: center;
+  }
+  .global-top-bar__badge {
+    display: none !important;
+  }
+  .global-top-bar__cta {
+    padding: 3px 10px;
+    font-size: 0.72rem;
+  }
+
+  /* On article reading pages on mobile, hide the announcement bar so readers immediately see content */
+  .article-reading-page .global-top-bar {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {
