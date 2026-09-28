@@ -112,10 +112,11 @@
   }
 
   /* Hero */
+  /* Hero Section */
   .hero-section {
-    padding: 56px 24px 32px;
+    padding: 64px 24px 40px;
     text-align: center;
-    max-width: 960px;
+    max-width: 1200px;
     margin: 0 auto;
   }
   .hero-badge {
@@ -125,21 +126,22 @@
     background: var(--gold-dim);
     border: 1px solid var(--gold);
     color: var(--gold-bright);
-    padding: 6px 16px;
+    padding: 7px 18px;
     border-radius: 50px;
-    font-size: 0.85rem;
-    font-weight: 700;
+    font-size: 0.82rem;
+    font-weight: 800;
     margin-bottom: 20px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
   }
   .hero-title {
     font-family: 'Inter', sans-serif;
-    font-size: 2.75rem;
+    font-size: clamp(2.3rem, 4.5vw, 3.4rem);
     font-weight: 900;
     color: #ffffff;
-    line-height: 1.2;
-    margin-bottom: 16px;
+    line-height: 1.18;
+    margin-bottom: 18px;
+    letter-spacing: -0.5px;
   }
   .hero-title em {
     font-style: normal;
@@ -150,9 +152,177 @@
   }
   .hero-subtitle {
     font-size: 1.15rem;
-    color: var(--text-muted);
-    max-width: 720px;
-    margin: 0 auto 24px;
+    color: #cbd5e1;
+    max-width: 840px;
+    margin: 0 auto 36px;
+    line-height: 1.65;
+  }
+  .hero-subtitle strong {
+    color: #ffffff;
+  }
+
+  /* Next Level Persona Cards Grid */
+  .next-level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    text-align: left;
+    margin: 36px auto 36px;
+  }
+  @media (max-width: 980px) {
+    .next-level-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  .next-level-card {
+    background: linear-gradient(180deg, #171a24 0%, #0f121a 100%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 18px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  .next-level-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212, 166, 58, 0.5);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  }
+  .next-level-card--flagship {
+    border-color: rgba(212, 166, 58, 0.4);
+    background: linear-gradient(180deg, #1d1912 0%, #11141c 100%);
+    box-shadow: 0 4px 20px rgba(212, 166, 58, 0.08);
+  }
+  .next-level-card--flagship:hover {
+    border-color: #f3c659;
+    box-shadow: 0 16px 40px rgba(212, 166, 58, 0.22);
+  }
+
+  .next-level-card__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .next-level-card__persona {
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .next-level-card__persona--student {
+    background: rgba(212, 166, 58, 0.16);
+    border: 1px solid #d4a63a;
+    color: #f3c659;
+  }
+  .next-level-card__persona--career {
+    background: rgba(56, 189, 248, 0.14);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
+  }
+  .next-level-card__persona--business {
+    background: rgba(34, 197, 94, 0.14);
+    border: 1px solid rgba(34, 197, 94, 0.4);
+    color: #4ade80;
+  }
+  .next-level-card__title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.18rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.35;
+    margin: 0 0 16px 0;
+  }
+
+  .next-level-contrast {
+    background: rgba(8, 10, 15, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 14px 15px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .next-level-contrast__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .next-level-contrast__icon--stuck {
+    color: #f87171;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .next-level-contrast__icon--level {
+    color: #4ade80;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .next-level-contrast__text {
+    color: #94a3b8;
+  }
+  .next-level-contrast__text strong {
+    color: #ffffff;
+  }
+
+  .next-level-card__vehicle {
+    background: rgba(255, 255, 255, 0.03);
+    border-left: 3px solid #d4a63a;
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    line-height: 1.45;
+  }
+  .next-level-card__vehicle strong {
+    color: #f3c659;
+  }
+
+  .next-level-card__btn {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 0.86rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .next-level-card__btn--gold {
+    background: linear-gradient(135deg, #c9973a, #f3c659);
+    color: #0c0e14;
+    box-shadow: 0 4px 16px rgba(201, 151, 58, 0.3);
+  }
+  .next-level-card__btn--gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(201, 151, 58, 0.45);
+  }
+  .next-level-card__btn--outline {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #f1f5f9;
+  }
+  .next-level-card__btn--outline:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
   }
 
   /* Social Proof Bar */
@@ -165,6 +335,7 @@
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.85);
     font-weight: 600;
+    margin-top: 10px;
     margin-bottom: 32px;
   }
   .social-proof-item {
@@ -870,24 +1041,133 @@
   </div>
 </header>
 
-<!-- Hero Section -->
+<!-- Apex Hero Section: Dedicated to Getting You To Your Next Level -->
 <section class="hero-section">
   <div class="hero-badge">
-    <i class="bi bi-lightning-charge-fill"></i> SCALE GROUP EXECUTIVE DIGITAL SYSTEMS
+    <i class="bi bi-rocket-takeoff-fill"></i> SCALE GROUP MISSION: YOUR NEXT LEVEL
   </div>
   <h1 class="hero-title">
-    Tactical Systems For High Performance — <em>In School, Business &amp; Career.</em>
+    We Are Dedicated To Getting You To Your <em>Next Level.</em>
   </h1>
   <p class="hero-subtitle">
-    Scale Group equips students, creators, and ambitious operators with zero-fluff execution blueprints, cognitive retention protocols, and revenue systems. Read in 45 minutes, deploy today.
+    "The next level" isn't a vague motivational slogan. At <strong>Scale Group</strong>, it is an engineered transformation—a tactical bridge from where you feel trapped or stagnant today to measurable, high-performing mastery tomorrow. High performance looks different depending on your battlefield:
   </p>
+
+  <!-- Next Level Category Persona Matrix -->
+  <div class="next-level-grid">
+    <!-- Category 1: University Students (Flagship) -->
+    <div class="next-level-card next-level-card--flagship">
+      <div class="next-level-card__top">
+        <span class="next-level-card__persona next-level-card__persona--student">
+          <i class="bi bi-mortarboard-fill"></i> For University Students
+        </span>
+        <span style="font-size: 0.7rem; font-weight: 900; color: #f5c862; background: rgba(201,151,58,0.2); border: 1px solid #d4a63a; padding: 2px 8px; border-radius: 12px; letter-spacing: 0.5px;">
+          FLAGSHIP FOCUS
+        </span>
+      </div>
+      <h3 class="next-level-card__title">
+        From Low CGPA &amp; Panic Cramming &rarr; To Calm, First-Class Mastery
+      </h3>
+      <div class="next-level-contrast">
+        <div class="next-level-contrast__row">
+          <i class="bi bi-x-circle-fill next-level-contrast__icon--stuck"></i>
+          <div class="next-level-contrast__text">
+            <strong>Where You're Stuck:</strong> 10-hour all-nighters, exam hall memory blackouts, erratic lecturers, and the terrifying dread of carryovers or graduating with a 3rd class.
+          </div>
+        </div>
+        <div class="next-level-contrast__row">
+          <i class="bi bi-check-circle-fill next-level-contrast__icon--level"></i>
+          <div class="next-level-contrast__text">
+            <strong>Your Next Level:</strong> Deep active recall, mathematical CGPA turnaround, total exam composure under pressure, and graduating with honors and job readiness.
+          </div>
+        </div>
+      </div>
+      <div class="next-level-card__vehicle">
+        <strong>Scale Flagship System:</strong> The Academic Comeback Package™ (₦2,000 complete 7-in-1 study &amp; recovery system) + 201+ free campus audio guides.
+      </div>
+      <a href="#academic-comeback" class="next-level-card__btn next-level-card__btn--gold">
+        <i class="bi bi-mortarboard-fill"></i> Explore Flagship System (₦2k) &rarr;
+      </a>
+    </div>
+
+    <!-- Category 2: Jobseekers & Early Career Climbers -->
+    <div class="next-level-card">
+      <div class="next-level-card__top">
+        <span class="next-level-card__persona next-level-card__persona--career">
+          <i class="bi bi-briefcase-fill"></i> For Career Climbers
+        </span>
+        <span style="font-size: 0.7rem; font-weight: 800; color: #38bdf8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 12px;">
+          GLOBAL ROLES
+        </span>
+      </div>
+      <h3 class="next-level-card__title">
+        From Invisible CVs &amp; Stagnant Wages &rarr; To High-Paying Remote Roles
+      </h3>
+      <div class="next-level-contrast">
+        <div class="next-level-contrast__row">
+          <i class="bi bi-x-circle-fill next-level-contrast__icon--stuck"></i>
+          <div class="next-level-contrast__text">
+            <strong>Where You're Stuck:</strong> Sending dozens of ignored CVs into black holes, underemployed on stagnant local naira salaries, and capped by office bureaucracy.
+          </div>
+        </div>
+        <div class="next-level-contrast__row">
+          <i class="bi bi-check-circle-fill next-level-contrast__icon--level"></i>
+          <div class="next-level-contrast__text">
+            <strong>Your Next Level:</strong> High-demand tech positioning, inbound recruiter attraction on LinkedIn, executive salary negotiation, and earning foreign remote income.
+          </div>
+        </div>
+      </div>
+      <div class="next-level-card__vehicle">
+        <strong>Scale Solution:</strong> Tactical Career Masterclasses on remote work acquisition, high-ticket positioning, and corporate leverage.
+      </div>
+      <a href="#masterclasses" onclick="filterCategory('career')" class="next-level-card__btn next-level-card__btn--outline">
+        <i class="bi bi-arrow-up-right"></i> Explore Career Blueprints &rarr;
+      </a>
+    </div>
+
+    <!-- Category 3: Freelancers, Creators & Digital Operators -->
+    <div class="next-level-card">
+      <div class="next-level-card__top">
+        <span class="next-level-card__persona next-level-card__persona--business">
+          <i class="bi bi-graph-up-arrow"></i> For Operators &amp; Creators
+        </span>
+        <span style="font-size: 0.7rem; font-weight: 800; color: #4ade80; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 12px;">
+          REVENUE SYSTEMS
+        </span>
+      </div>
+      <h3 class="next-level-card__title">
+        From Dry DMs &amp; Trading Hours &rarr; To Scalable Automated Cashflow
+      </h3>
+      <div class="next-level-contrast">
+        <div class="next-level-contrast__row">
+          <i class="bi bi-x-circle-fill next-level-contrast__icon--stuck"></i>
+          <div class="next-level-contrast__text">
+            <strong>Where You're Stuck:</strong> Feast-or-famine gig cycles, underpricing your work, ghosted proposals in social media DMs, and exchanging exhausting hours for tiny checks.
+          </div>
+        </div>
+        <div class="next-level-contrast__row">
+          <i class="bi bi-check-circle-fill next-level-contrast__icon--level"></i>
+          <div class="next-level-contrast__text">
+            <strong>Your Next Level:</strong> Closing high-ticket foreign clients directly in the DMs, launching digital assets globally, and building 24/7 automated WhatsApp sales funnels.
+          </div>
+        </div>
+      </div>
+      <div class="next-level-card__vehicle">
+        <strong>Scale Solution:</strong> Execution playbooks on DM Closing Scripts, High-Converting WhatsApp Funnels &amp; Selling Digital Products Globally.
+      </div>
+      <a href="#masterclasses" onclick="filterCategory('sales')" class="next-level-card__btn next-level-card__btn--outline">
+        <i class="bi bi-arrow-up-right"></i> Explore Revenue Playbooks &rarr;
+      </a>
+    </div>
+  </div>
 
   <!-- Social Proof Bar -->
   <div class="social-proof-bar">
-    <div class="social-proof-item"><i class="bi bi-people-fill"></i> <strong>4,200+</strong> Active Students &amp; Readers</div>
+    <div class="social-proof-item"><i class="bi bi-people-fill"></i> <strong>4,200+</strong> Students &amp; Operators Trained</div>
     <div class="social-proof-item"><i class="bi bi-star-fill"></i> <strong>4.9 / 5</strong> Reader Rating</div>
-    <div class="social-proof-item"><i class="bi bi-award-fill"></i> <strong>Flagship:</strong> Academic Comeback (₦2,000)</div>
-    <div class="social-proof-item"><i class="bi bi-headphones"></i> <strong>201+</strong> Free Audio Guides</div>
+    <div class="social-proof-item"><i class="bi bi-award-fill"></i> <strong>Flagship Offer:</strong> Academic Comeback (₦2,000)</div>
+    <div class="social-proof-item"><i class="bi bi-book-half"></i> <strong>30</strong> Tactical Masterclasses</div>
+    <div class="social-proof-item"><i class="bi bi-headphones"></i> <strong>201+</strong> Free Campus Audio Guides</div>
   </div>
 </section>
 
