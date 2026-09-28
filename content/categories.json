@@ -1,0 +1,52 @@
+[
+  {
+    "slug": "academics",
+    "name": "Academics & Study Systems",
+    "short_desc": "Tactical study systems, active recall protocols, exam hall execution, and CGPA comeback frameworks tailored for Nigerian university students.",
+    "intro": "Navigating the rigorous academic demands of Nigerian federal, state, and private universities requires more than just cramming or overnight TDB (Till Day Break) marathons. This pillar provides evidence-based study systems, active recall workflows, mark-maximization strategies for marking schemes, and practical CGPA recovery roadmaps tested across institutions like UNILAG, UI, OAU, UNIBEN, and FUTO.",
+    "icon": "bi-mortarboard-fill",
+    "color": "#b45309",
+    "bg_color": "#fef3c7",
+    "border_color": "#fde68a"
+  },
+  {
+    "slug": "hostel-and-accommodation",
+    "name": "Hostel & Accommodation Life",
+    "short_desc": "Practical survival guides for campus hostels, off-campus lodges, power outages, noise management, and roommate harmony in Nigerian universities.",
+    "intro": "From securing a decent campus bedspace to surviving prolonged power outages, water shortages, noisy neighbors, and volatile roommate dynamics, hostel life heavily influences your academic productivity. Explore tested strategies to create a distraction-free, safe, and cost-effective living environment both on and off campus.",
+    "icon": "bi-house-door-fill",
+    "color": "#0369a1",
+    "bg_color": "#e0f2fe",
+    "border_color": "#bae6fd"
+  },
+  {
+    "slug": "mental-health",
+    "name": "Student Mental Health & Well-being",
+    "short_desc": "Actionable mental health support, anxiety relief, burnout prevention, and emotional resilience guides for Nigerian undergraduates.",
+    "intro": "The high-pressure environment of tertiary education in Nigeria—unpredictable academic calendars, difficult course loads, and intense peer pressure—can take a severe toll on mental well-being. This section delivers compassionate, actionable advice on managing exam panic, combating chronic semester fatigue, overcoming imposter syndrome, and building mental endurance.",
+    "icon": "bi-heart-pulse-fill",
+    "color": "#be185d",
+    "bg_color": "#fce7f3",
+    "border_color": "#fbcfe8"
+  },
+  {
+    "slug": "finances",
+    "name": "Student Finances & Budgeting",
+    "short_desc": "Smart budgeting frameworks, student savings strategies, inflation-hedging, and meal planning hacks for Nigerian campus life.",
+    "intro": "With inflation and rising living costs across Nigeria, making your monthly pocket money or allowance stretch across food, textbooks, departmental dues, and transport requires disciplined financial management. Here you will find campus budgeting templates, emergency fund plans, smart bulk-buying hacks, and money-saving tactics built for the realities of Nigerian students.",
+    "icon": "bi-wallet2",
+    "color": "#15803d",
+    "bg_color": "#dcfce7",
+    "border_color": "#bbf7d0"
+  },
+  {
+    "slug": "balancing-work-and-school",
+    "name": "Balancing Work & School",
+    "short_desc": "Operating frameworks for student entrepreneurs, freelancers, tech interns, and creatives building income while protecting their GPA.",
+    "intro": "More Nigerian undergraduates than ever are running side businesses, freelance digital services, or tech apprenticeships alongside full-time degree programs. This section provides time-blocking protocols, client boundary systems, and energy management frameworks to ensure your professional hustle never compromises your academic degree.",
+    "icon": "bi-briefcase-fill",
+    "color": "#7e22ce",
+    "bg_color": "#f3e8ff",
+    "border_color": "#e9d5ff"
+  }
+]

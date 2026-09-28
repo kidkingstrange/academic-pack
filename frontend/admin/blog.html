@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & Content CMS | Academic Comeback Admin</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <style>
+    :root {
+      --bg: #0a0d14;
+      --surface: #111522;
+      --surface-elevated: #161c2e;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(212, 166, 58, 0.35);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --gold: #c9973a;
+      --gold-l: #e0b354;
+      --gold-bright: #f3c659;
+      --green: #22c55e;
+      --red: #ef4444;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+      width: 260px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+    }
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      margin-bottom: 32px;
+      padding-left: 8px;
+    }
+    .admin-brand__logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-l));
+      color: #0c0e14;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Clash Display', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+    .admin-brand__title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .sidebar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(212, 166, 58, 0.12);
+      color: var(--gold-bright);
+    }
+    .sidebar-link i { font-size: 1.1rem; }
+
+    /* Main Area */
+    .admin-main {
+      flex-grow: 1;
+      padding: 32px 40px;
+      overflow-y: auto;
+      max-width: 1400px;
+    }
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .page-title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .page-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+    .actions-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-l));
+      color: #0c0e14;
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(201,151,58,0.3); }
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* KPI Summary Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .stat-card__label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      font-weight: 700;
+    }
+    .stat-card__val {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 6px 0 2px;
+    }
+
+    /* Table */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .table-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .table-title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th {
+      padding: 12px 24px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-published { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+    .badge-draft { background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
+
+    /* Modal / Form Drawer */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .editor-modal {
+      background: var(--surface);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px;
+      position: relative;
+    }
+    .editor-modal__title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+    }
+    textarea {
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      min-height: 240px;
+      line-height: 1.5;
+    }
+    .faq-row {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .char-counter {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: right;
+      margin-top: 4px;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--gold);
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      z-index: 2000;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <a href="/admin/dashboard" class="admin-brand">
+      <div class="admin-brand__logo">A</div>
+      <div class="admin-brand__title">Admin CMS</div>
+    </a>
+    <ul class="sidebar-nav">
+      <li><a href="/admin/dashboard" class="sidebar-link"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+      <li><a href="/admin/blog" class="sidebar-link active"><i class="bi bi-journal-richtext"></i> Blog Articles</a></li>
+      <li><a href="/blog/" target="_blank" class="sidebar-link"><i class="bi bi-box-arrow-up-right"></i> View Live Blog</a></li>
+      <li><a href="/" target="_blank" class="sidebar-link"><i class="bi bi-house"></i> View Store</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Area -->
+  <main class="admin-main">
+    <div class="top-bar">
+      <div>
+        <h1 class="page-title">Blog Content Management</h1>
+        <p class="page-sub">Manage, draft, publish, and index study guides for Nigerian university students.</p>
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-secondary" onclick="rebuildAll()"><i class="bi bi-arrow-repeat"></i> Rebuild &amp; Sync Sitemap</button>
+        <button class="btn btn-gold" onclick="openNewArticleModal()"><i class="bi bi-plus-circle"></i> Create New Article</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card__label">Published Articles</div>
+        <div class="stat-card__val" id="stat-published">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Draft Articles</div>
+        <div class="stat-card__val" id="stat-drafts">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Pillar Categories</div>
+        <div class="stat-card__val" id="stat-categories">5</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__label">Search Index Status</div>
+        <div class="stat-card__val" style="font-size: 1.4rem; color: #4ade80;">Active (Sitemap Synced)</div>
+      </div>
+    </div>
+
+    <!-- Articles Table -->
+    <div class="table-card">
+      <div class="table-header">
+        <h3 class="table-title">All Articles</h3>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Title &amp; URL Slug</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Author</th>
+            <th>Published Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="articles-table-body">
+          <tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">Loading articles...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Article Editor Modal -->
+  <div class="modal-overlay" id="editor-modal">
+    <div class="editor-modal">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h2 class="editor-modal__title" id="modal-heading">Create New Article</h2>
+        <button class="btn btn-secondary" onclick="closeEditorModal()" style="padding: 6px 12px;"><i class="bi bi-x-lg"></i></button>
+      </div>
+
+      <form id="article-form" onsubmit="handleSaveArticle(event)">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Article Title (Primary keyword near front, max 60 chars)</label>
+            <input type="text" id="f-title" required oninput="autoSlug(this.value)" placeholder="e.g. How to Recover from Low CGPA: Nigerian University Guide">
+            <div class="char-counter"><span id="title-count">0</span> / 60 chars</div>
+          </div>
+
+          <div class="form-group">
+            <label>URL Slug (lowercase, hyphenated)</label>
+            <input type="text" id="f-slug" required placeholder="how-to-recover-from-low-cgpa">
+          </div>
+
+          <div class="form-group">
+            <label>Pillar Category</label>
+            <select id="f-category" required>
+              <option value="academics">Academics &amp; Study Systems</option>
+              <option value="hostel-and-accommodation">Hostel &amp; Accommodation Life</option>
+              <option value="mental-health">Student Mental Health &amp; Well-being</option>
+              <option value="finances">Student Finances &amp; Budgeting</option>
+              <option value="balancing-work-and-school">Balancing Work &amp; School</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Publication Status</label>
+            <select id="f-status">
+              <option value="published">Published (Live &amp; Crawlable)</option>
+              <option value="draft">Draft (Queued / Hidden)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Author Byline</label>
+            <input type="text" id="f-author" value="Itoya David">
+          </div>
+
+          <div class="form-group full">
+            <label>Meta Description (150-160 chars written to earn clicks)</label>
+            <textarea id="f-desc" rows="2" style="min-height: 70px;" oninput="updateDescCount(this.value)" placeholder="Discover practical steps to bounce back from poor grades..."></textarea>
+            <div class="char-counter"><span id="desc-count">0</span> / 160 chars</div>
+          </div>
+
+          <div class="form-group">
+            <label>Featured Image Path (Optional)</label>
+            <input type="text" id="f-image" value="" placeholder="/assets/images/blog/your-image.webp">
+          </div>
+
+          <div class="form-group">
+            <label>Estimated Read Time</label>
+            <input type="text" id="f-read-time" value="6 min read">
+          </div>
+        </div>
+
+        <!-- FAQ Builder -->
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <label>Frequently Asked Questions (Generates Google FAQPage Schema)</label>
+            <button type="button" class="btn btn-secondary" style="font-size:0.75rem; padding:4px 10px;" onclick="addFaqRow()"><i class="bi bi-plus"></i> Add Question</button>
+          </div>
+          <div id="faq-container"></div>
+        </div>
+
+        <!-- Markdown Content -->
+        <div class="form-group">
+          <label>Markdown Content Body (Supports H2, H3, lists, blockquotes, internal links)</label>
+          <textarea id="f-content" required placeholder="Write your full guide in Markdown here..."></textarea>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+          <button type="button" class="btn btn-secondary" onclick="closeEditorModal()">Cancel</button>
+          <button type="submit" class="btn btn-gold" id="save-btn"><i class="bi bi-cloud-arrow-up-fill"></i> Save &amp; Compile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const token = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
+    
+    // Auth guard
+    if (!token) {
+      window.location.href = '/admin';
+    }
+
+    function authHeaders() {
+      return {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      };
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 4000);
+    }
+
+    async function loadArticles() {
+      try {
+        const res = await fetch('/api/admin/blog/articles', { headers: authHeaders() });
+        if (res.status === 401) { window.location.href = '/admin'; return; }
+        const data = await res.json();
+        
+        let publishedCount = 0;
+        let draftCount = 0;
+        const tbody = document.getElementById('articles-table-body');
+        
+        if (!data.articles || data.articles.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-dim);">No articles found. Click "Create New Article" to add one!</td></tr>';
+          return;
+        }
+
+        let html = '';
+        data.articles.forEach(art => {
+          if (art.status === 'published') publishedCount++; else draftCount++;
+          const statusBadge = art.status === 'published' 
+            ? '<span class="badge badge-published">Published</span>' 
+            : '<span class="badge badge-draft">Draft</span>';
+          
+          const viewLink = art.status === 'published' 
+            ? `<a href="/blog/${art.category}/${art.slug}" target="_blank" style="color:var(--gold-bright); margin-right:8px;"><i class="bi bi-eye"></i> View</a>` 
+            : '';
+
+          html += `
+            <tr>
+              <td>
+                <div style="font-weight:700; color:#fff;">${art.title}</div>
+                <div style="font-size:0.8rem; color:var(--text-dim); font-family:monospace;">/blog/${art.category}/${art.slug}</div>
+              </td>
+              <td><span style="color:var(--gold-bright); font-weight:600;">${art.category_name}</span></td>
+              <td>${statusBadge}</td>
+              <td>${art.author}</td>
+              <td>${art.date_published}</td>
+              <td>
+                ${viewLink}
+                <button class="btn btn-secondary" style="padding:4px 8px; font-size:0.8rem; margin-right:6px;" onclick="editArticle('${art.slug}')"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="deleteArticle('${art.slug}')"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+          `;
+        });
+
+        tbody.innerHTML = html;
+        document.getElementById('stat-published').innerText = publishedCount;
+        document.getElementById('stat-drafts').innerText = draftCount;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function autoSlug(title) {
+      document.getElementById('title-count').innerText = title.length;
+      const slugInput = document.getElementById('f-slug');
+      if (!slugInput.dataset.manual) {
+        slugInput.value = title.toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+      }
+    }
+
+    document.getElementById('f-slug').addEventListener('input', function() {
+      this.dataset.manual = 'true';
+    });
+
+    function updateDescCount(val) {
+      document.getElementById('desc-count').innerText = val.length;
+    }
+
+    function addFaqRow(q = '', a = '') {
+      const container = document.getElementById('faq-container');
+      const div = document.createElement('div');
+      div.className = 'faq-row';
+      div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <input type="text" class="faq-q" placeholder="Question" value="${q.replace(/"/g, '&quot;')}" style="margin-bottom:6px;">
+          <button type="button" class="btn btn-danger" style="padding:2px 8px; font-size:0.75rem; margin-left:8px;" onclick="this.parentElement.parentElement.remove()">Remove</button>
+        </div>
+        <textarea class="faq-a" placeholder="Answer..." rows="2" style="min-height:50px;">${a}</textarea>
+      `;
+      container.appendChild(div);
+    }
+
+    function openNewArticleModal() {
+      document.getElementById('article-form').reset();
+      document.getElementById('faq-container').innerHTML = '';
+      document.getElementById('f-slug').dataset.manual = '';
+      document.getElementById('modal-heading').innerText = 'Create New Article';
+      document.getElementById('editor-modal').classList.add('open');
+    }
+
+    function closeEditorModal() {
+      document.getElementById('editor-modal').classList.remove('open');
+    }
+
+    async function editArticle(slug) {
+      try {
+        const res = await fetch(`/api/admin/blog/articles/${slug}`, { headers: authHeaders() });
+        const data = await res.json();
+        const a = data.article;
+        
+        document.getElementById('modal-heading').innerText = 'Edit Article';
+        document.getElementById('f-title').value = a.title;
+        document.getElementById('title-count').innerText = a.title.length;
+        document.getElementById('f-slug').value = a.slug;
+        document.getElementById('f-slug').dataset.manual = 'true';
+        document.getElementById('f-category').value = a.category;
+        document.getElementById('f-status').value = a.status;
+        document.getElementById('f-author').value = a.author;
+        document.getElementById('f-desc').value = a.description;
+        document.getElementById('desc-count').innerText = a.description.length;
+        document.getElementById('f-image').value = a.featured_image;
+        document.getElementById('f-read-time').value = a.read_time;
+        document.getElementById('f-content').value = a.raw_markdown;
+
+        const faqContainer = document.getElementById('faq-container');
+        faqContainer.innerHTML = '';
+        if (a.faq && a.faq.length > 0) {
+          a.faq.forEach(f => addFaqRow(f.question, f.answer));
+        }
+
+        document.getElementById('editor-modal').classList.add('open');
+      } catch (err) {
+        showToast('Error loading article details: ' + err.message);
+      }
+    }
+
+    async function handleSaveArticle(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('save-btn');
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = 'Compiling...';
+
+      // Gather FAQs
+      const faqs = [];
+      document.querySelectorAll('.faq-row').forEach(row => {
+        const q = row.querySelector('.faq-q').value.trim();
+        const a = row.querySelector('.faq-a').value.trim();
+        if (q && a) faqs.push({ question: q, answer: a });
+      });
+
+      const payload = {
+        title: document.getElementById('f-title').value.trim(),
+        slug: document.getElementById('f-slug').value.trim(),
+        category: document.getElementById('f-category').value,
+        status: document.getElementById('f-status').value,
+        author: document.getElementById('f-author').value.trim(),
+        description: document.getElementById('f-desc').value.trim(),
+        featured_image: document.getElementById('f-image').value.trim(),
+        read_time: document.getElementById('f-read-time').value.trim(),
+        faq: faqs,
+        content: document.getElementById('f-content').value.trim()
+      };
+
+      try {
+        const res = await fetch('/api/admin/blog/articles', {
+          method: 'POST',
+          headers: authHeaders(),
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.detail || 'Save failed');
+
+        showToast('Article saved & pages recompiled!');
+        closeEditorModal();
+        loadArticles();
+      } catch (err) {
+        alert('Error saving article: ' + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="bi bi-cloud-arrow-up-fill"></i> Save & Compile';
+      }
+    }
+
+    async function deleteArticle(slug) {
+      if (!confirm(`Are you sure you want to delete article '${slug}'? This cannot be undone.`)) return;
+      try {
+        const res = await fetch(`/api/admin/blog/articles/${slug}`, {
+          method: 'DELETE',
+          headers: authHeaders()
+        });
+        if (!res.ok) throw new Error('Delete failed');
+        showToast('Article deleted.');
+        loadArticles();
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    async function rebuildAll() {
+      try {
+        const res = await fetch('/api/admin/blog/rebuild', { method: 'POST', headers: authHeaders() });
+        const data = await res.json();
+        showToast('All blog pages and sitemap.xml successfully rebuilt!');
+        loadArticles();
+      } catch (err) {
+        alert('Rebuild error: ' + err.message);
+      }
+    }
+
+    loadArticles();
+  </script>
+</body>
+</html>

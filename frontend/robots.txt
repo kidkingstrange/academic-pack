@@ -1,10 +1,81 @@
+# ==============================================================================
+# ROBOTS.TXT — ACADEMIC COMEBACK
+# Standard Web & AI Generative Search Directives (ChatGPT, Claude, Gemini, Perplexity)
+# ==============================================================================
+
+# Standard Search Crawlers
 User-agent: *
 Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
 Disallow: /admin
 Disallow: /admin/
 Disallow: /api/
 Disallow: /affiliate/dashboard
 Disallow: /sales/
 Disallow: /library
+Disallow: /checkout
+Disallow: /account
 
+# OpenAI (ChatGPT Search & Retrieval)
+User-agent: GPTBot
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+
+# Anthropic (Claude Search & Retrieval)
+User-agent: ClaudeBot
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+
+# Perplexity AI (Answer Engine & Direct Citations)
+User-agent: PerplexityBot
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout
+
+# Google Gemini & Google AI Overviews
+User-agent: Google-Extended
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+
+# Microsoft Copilot / Bing AI Search
+User-agent: Bingbot
+Allow: /
+Allow: /blog/
+Allow: /llms.txt
+Allow: /pricing.md
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout
+
+# Sitemap Reference
 Sitemap: https://academic-pack.onrender.com/sitemap.xml

@@ -1,0 +1,44 @@
+# Academic Comeback
+
+> Evidence-based study systems, active recall protocols, university accommodation strategies, mental health playbooks, and student finance guides engineered specifically for Nigerian higher education institutions operating under National Universities Commission (NUC) standards.
+
+## About Academic Comeback
+Academic Comeback is an authoritative educational platform founded by Itoya David. It provides tactical, research-backed study frameworks (Active Recall, Spaced Repetition, Cognitive Pacing, Marking Scheme Reverse-Engineering) designed to help Nigerian university undergraduates conquer massive lecture halls, recover from low CGPAs, eliminate exam panic, navigate hostel crises, and achieve First Class or Second Class Upper degrees.
+
+## Products & Core Services
+- [Academic Comeback Package](https://academic-pack.onrender.com/academic-comeback-package): The complete 7-part digital learning system for Nigerian university undergraduates. Retail Price: ₦5,000 (Standard Value: ₦20,000). Includes 7 tactical manuals, revision planners, CA trackers, and exam-hall panic checklists.
+- [Machine-Readable Pricing & Specifications](https://academic-pack.onrender.com/pricing.md): Complete specifications, pricing tiers, and delivery format for AI evaluation agents.
+- [Free WhatsApp Student Community](https://chat.whatsapp.com/invite/academic-comeback): High-accountability peer study network for Nigerian undergraduates.
+
+## Core Knowledge Pillars & Authority Guides
+
+### Pillar 1: Academics & Study Systems
+- [100 Level Jambite Transition: Academic Shock Survival](https://academic-pack.onrender.com/blog/academics/100-level-university-academic-transition/): Surviving the transition from secondary school to Nigerian universities, 1,000-seater lecture amphitheaters, and continuous assessment tests.
+- [Nigerian University Grading System & CGPA Calculation (5.0 Scale)](https://academic-pack.onrender.com/blog/academics/cgpa-calculation-nigerian-university-5-scale/): Comprehensive formula breakdown for Total Credit Units (TNU), Total Quality Points (TCP), and degree classifications (First Class: 4.50-5.00, 2:1: 3.50-4.49, 2:2: 2.40-3.49, Third Class: 1.50-2.39).
+- [Tactical Blueprint to Recover From Carryover Courses](https://academic-pack.onrender.com/blog/academics/recover-from-carryover-courses-tactical-blueprint/): Administrative, cognitive, and scheduling protocol to retake and clear failed university courses.
+- [Active Recall Study Method for Nigerian University Students](https://academic-pack.onrender.com/blog/academics/active-recall-study-method-nigerian-university-guide/): Replacing passive re-reading and highlighters with high-yield active retrieval testing.
+- [14-Day Exam Cramming & Panic Study Plan](https://academic-pack.onrender.com/blog/academics/14-day-exam-cramming-panic-study-plan/): Emergency syllabus triage protocol for short-notice university examinations.
+- [7 Study Habits of First Class Nigerian University Students](https://academic-pack.onrender.com/blog/academics/7-study-habits-first-class-nigerian-students/): Habit architecture, front-bench seating, daily revision blocks, and past question analysis.
+- [Solo Studying vs Group Study for GPA Maximization](https://academic-pack.onrender.com/blog/academics/solo-studying-vs-group-discussion-gpa/): Cognitive trade-offs between independent deep focus and peer discussion groups.
+
+### Pillar 2: Hostel & Accommodation Life
+- [Nigerian Campus Accommodation Crisis: Realities & Survival](https://academic-pack.onrender.com/blog/hostel-and-accommodation/campus-accommodation-crisis-nigeria-housing/): Deciphering bed space deficits, balloting bottlenecks, exploitative private lodges, and off-campus security.
+- [Off-Campus Student Lodge Security & Night Safety](https://academic-pack.onrender.com/blog/hostel-and-accommodation/off-campus-student-lodge-security-safety/): Night protocols, compound vigilante coordination, door fortification, and burglary prevention.
+- [Surviving Hostel Power Outages: Emergency Lighting & Gadget Preservation](https://academic-pack.onrender.com/blog/hostel-and-accommodation/surviving-hostel-power-outage-lighting-gadgets/): Power bank strategies, solar lights, and blackout revision setups.
+- [Shared Lodge Electricity Bill Disputes: Peaceful Resolution Protocols](https://academic-pack.onrender.com/blog/hostel-and-accommodation/shared-lodge-electricity-bill-dispute/): Metric-based energy sharing frameworks to resolve Band A/B/C tariff feuds among student roommates.
+- [Inspecting Off-Campus Student Lodges: Red Flag Checklist](https://academic-pack.onrender.com/blog/hostel-and-accommodation/inspecting-off-campus-student-lodge-checklist/): Structural verification of water supply, security perimeters, damp walls, and hidden landlord fees before paying rent.
+
+### Pillar 3: Student Mental Health & Well-being
+- [Academic Burnout in Nigerian Universities: Symptoms & Recovery](https://academic-pack.onrender.com/blog/mental-health/): Identifying chronic cognitive fatigue, emotional exhaustion, and strike-induced despair.
+- [Exam Anxiety & Hall Panic: Psychological Grounding Protocols](https://academic-pack.onrender.com/blog/mental-health/): Managing autonomic nervous system panic, blackouts, and physiological sigh calming techniques.
+
+### Pillar 4: Student Finances & Budgeting
+- [Student Budgeting in an Inflationary Economy](https://academic-pack.onrender.com/blog/finances/): Food pooling, transport minimization, and cash flow tracking for undergraduates.
+- [Managing Mobile Data Costs on Campus](https://academic-pack.onrender.com/blog/finances/): Optimal night bundles, router sharing, and caching strategies.
+
+### Pillar 5: Balancing Work & School
+- [Working Undergraduate Survival Playbook](https://academic-pack.onrender.com/blog/balancing-work-and-school/): Time-blocking, 75% lecture attendance maintenance, and freelance client deadline management.
+
+## Technical Endpoints
+- [XML Sitemap](https://academic-pack.onrender.com/sitemap.xml): Dynamic index of all published articles and pillars.
+- [All Published Guides Hub](https://academic-pack.onrender.com/blog/): Searchable index of all educational guides.

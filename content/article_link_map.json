@@ -1,0 +1,1402 @@
+{
+  "1": {
+    "num": 1,
+    "category": "academics",
+    "slug": "cgpa-calculation-nigerian-university-5-scale",
+    "published": true,
+    "title": "CGPA Calculation: How NUC 5.0 Grade Scale Works"
+  },
+  "2": {
+    "num": 2,
+    "category": "academics",
+    "slug": "low-cgpa-university-first-year-breakdown",
+    "published": true,
+    "title": "Low CGPA in University: Why First Year Breaks Students"
+  },
+  "3": {
+    "num": 3,
+    "category": "academics",
+    "slug": "active-recall-study-method-nigerian-university-guide",
+    "published": true,
+    "title": "Active Recall Study Method: Nigerian University Guide"
+  },
+  "4": {
+    "num": 4,
+    "category": "academics",
+    "slug": "7-study-habits-first-class-nigerian-students",
+    "published": true,
+    "title": "7 Study Habits of First Class Nigerian Students"
+  },
+  "5": {
+    "num": 5,
+    "category": "academics",
+    "slug": "exam-panic-blackouts-why-prepared-students-blank",
+    "published": true,
+    "title": "Exam Panic and Blackouts: Why Prepared Students Blank"
+  },
+  "6": {
+    "num": 6,
+    "category": "academics",
+    "slug": "spaced-repetition-exam-revision-plan",
+    "published": true,
+    "title": "Spaced Repetition for Exams: Realistic Revision Plan"
+  },
+  "7": {
+    "num": 7,
+    "category": "academics",
+    "slug": "reading-mistakes-causing-low-university-exam-scores",
+    "published": true,
+    "title": "5 Reading Mistakes Causing Low University Exam Scores"
+  },
+  "8": {
+    "num": 8,
+    "category": "academics",
+    "slug": "asuu-strike-academic-momentum-loss",
+    "published": true,
+    "title": "ASUU Strike Disruptions: Academic Momentum Loss"
+  },
+  "9": {
+    "num": 9,
+    "category": "academics",
+    "slug": "past-questions-study-strategy-avoiding-memorization",
+    "published": true,
+    "title": "Past Questions Study Strategy: Avoiding Memorization"
+  },
+  "10": {
+    "num": 10,
+    "category": "academics",
+    "slug": "nigerian-university-grading-system-second-class-lower-guide",
+    "published": true,
+    "title": "University Grading System: What Second Class Lower Means"
+  },
+  "11": {
+    "num": 11,
+    "category": "academics",
+    "slug": "recover-from-carryover-courses-tactical-blueprint",
+    "published": true,
+    "title": "Recovering from Carryover Courses: Tactical Blueprint"
+  },
+  "12": {
+    "num": 12,
+    "category": "academics",
+    "slug": "calculate-semester-target-gpa-step-by-step-tool",
+    "published": true,
+    "title": "Calculating Semester Target GPA: Step-by-Step Tool"
+  },
+  "13": {
+    "num": 13,
+    "category": "academics",
+    "slug": "university-group-assignment-conflict-ghost-teammates",
+    "published": true,
+    "title": "Group Assignment Conflict: Handling Ghost Teammates"
+  },
+  "14": {
+    "num": 14,
+    "category": "academics",
+    "slug": "14-day-exam-cramming-panic-study-plan",
+    "published": true,
+    "title": "14-Day Exam Cramming Panic: Last Minute Damage Control"
+  },
+  "15": {
+    "num": 15,
+    "category": "academics",
+    "slug": "unfair-lecturer-grading-university",
+    "published": true,
+    "title": "Unfair Lecturer Grading: What You Can Actually Do"
+  },
+  "16": {
+    "num": 16,
+    "category": "academics",
+    "slug": "missing-continuous-assessment-ca-recovery",
+    "published": true,
+    "title": "Missing Continuous Assessment (CA): Recovery Options"
+  },
+  "17": {
+    "num": 17,
+    "category": "academics",
+    "slug": "practical-lab-reports-writing-fast-without-penalties",
+    "published": true,
+    "title": "Practical Lab Reports: Writing Fast Without Penalties"
+  },
+  "18": {
+    "num": 18,
+    "category": "academics",
+    "slug": "university-study-timetable-mistakes",
+    "published": true,
+    "title": "6 Signs Your Study Timetable Is Set Up to Fail"
+  },
+  "19": {
+    "num": 19,
+    "category": "academics",
+    "slug": "university-academic-probation",
+    "published": true,
+    "title": "Academic Probation Warning: Reversing Withdrawal Risk"
+  },
+  "20": {
+    "num": 20,
+    "category": "academics",
+    "slug": "final-year-project-defense-prep",
+    "published": true,
+    "title": "Defending Your Final Year Project: Presentation Prep"
+  },
+  "21": {
+    "num": 21,
+    "category": "academics",
+    "slug": "100-level-university-academic-transition",
+    "published": true,
+    "title": "100 Level Jambite Transition: Academic Shock Survival"
+  },
+  "22": {
+    "num": 22,
+    "category": "academics",
+    "slug": "direct-entry-academic-adjustment",
+    "published": true,
+    "title": "Direct Entry Students: Catching Up to 200L Coursework"
+  },
+  "23": {
+    "num": 23,
+    "category": "academics",
+    "slug": "engineering-student-study-method",
+    "published": true,
+    "title": "Engineering Student Survival: Cracking Math Heavy Courses"
+  },
+  "24": {
+    "num": 24,
+    "category": "academics",
+    "slug": "pre-med-study-techniques-nigeria",
+    "published": true,
+    "title": "Pre-Med and Nursing Students: Anatomy Memory Protocols"
+  },
+  "25": {
+    "num": 25,
+    "category": "academics",
+    "slug": "law-student-case-law-memory",
+    "published": true,
+    "title": "Law Faculty Success: Case Law Memorization System"
+  },
+  "26": {
+    "num": 26,
+    "category": "academics",
+    "slug": "study-routine-working-student",
+    "published": true,
+    "title": "Working Students: Studying on 2 Hours Daily"
+  },
+  "27": {
+    "num": 27,
+    "category": "academics",
+    "slug": "introverted-student-presentation-anxiety",
+    "published": true,
+    "title": "Introverted Students: Surviving Oral Presentations"
+  },
+  "28": {
+    "num": 28,
+    "category": "academics",
+    "slug": "resuming-after-asuu-strike-7-day-brain-reactivation",
+    "published": true,
+    "title": "Resuming After Long Strike: 7-Day Brain Reactivation"
+  },
+  "29": {
+    "num": 29,
+    "category": "academics",
+    "slug": "studying-without-electricity-hostel-blackouts",
+    "published": true,
+    "title": "Night Shift Hosteller: Studying Despite Power Outages"
+  },
+  "30": {
+    "num": 30,
+    "category": "academics",
+    "slug": "nigerian-university-final-clearance-delays",
+    "published": true,
+    "title": "Final Year Clearance Hurdles: Avoiding Graduation Delays"
+  },
+  "31": {
+    "num": 31,
+    "category": "academics",
+    "slug": "tdb-all-nighters-vs-sleep-exam-memory",
+    "published": true,
+    "title": "TDB All-Nighters vs 5-Hour Sleep: Exam Memory Impact"
+  },
+  "32": {
+    "num": 32,
+    "category": "academics",
+    "slug": "solo-studying-vs-group-discussion-gpa",
+    "published": true,
+    "title": "Solo Studying vs Group Discussion: When Groups Harm GPA"
+  },
+  "33": {
+    "num": 33,
+    "category": "academics",
+    "slug": "lecture-handouts-vs-textbooks-exam-revision",
+    "published": true,
+    "title": "Handouts vs Textbooks: Efficient Revision Strategy"
+  },
+  "34": {
+    "num": 34,
+    "category": "academics",
+    "slug": "dropping-university-elective-credit-unit-maths",
+    "published": true,
+    "title": "Dropping an Elective vs Risking a D: Credit Unit Maths"
+  },
+  "35": {
+    "num": 35,
+    "category": "academics",
+    "slug": "digital-notes-vs-handwritten-study-retention",
+    "published": true,
+    "title": "Digital Note-Taking vs Pen and Paper: Exam Retention"
+  },
+  "36": {
+    "num": 36,
+    "category": "academics",
+    "slug": "becoming-course-rep-pros-cons-cgpa",
+    "published": true,
+    "title": "Course Rep Role: Leadership Value vs CGPA Sacrifice"
+  },
+  "37": {
+    "num": 37,
+    "category": "academics",
+    "slug": "departmental-vs-main-library-noise-seating",
+    "published": true,
+    "title": "Departmental Library vs Main Library: Noise & Seating"
+  },
+  "38": {
+    "num": 38,
+    "category": "academics",
+    "slug": "anki-flashcards-vs-summary-notebooks-revision",
+    "published": true,
+    "title": "Anki Flashcards vs Summary Notebooks: What Works Fast"
+  },
+  "39": {
+    "num": 39,
+    "category": "academics",
+    "slug": "changing-department-200-level-university-nigeria",
+    "published": true,
+    "title": "Changing Course in 200 Level vs Pushing Through"
+  },
+  "40": {
+    "num": 40,
+    "category": "academics",
+    "slug": "campus-tutorial-centers-vs-self-study",
+    "published": true,
+    "title": "Paid Tutorial Centers vs Self-Directed Syllabus Study"
+  },
+  "41": {
+    "num": 41,
+    "category": "hostel-and-accommodation",
+    "slug": "campus-accommodation-crisis-nigeria-housing",
+    "published": true,
+    "title": "Campus Accommodation Crisis: Reality of Student Housing"
+  },
+  "42": {
+    "num": 42,
+    "category": "hostel-and-accommodation",
+    "slug": "university-hostel-balloting-tips-bed-space",
+    "published": true,
+    "title": "Hostel Balloting Online: Securing a Bed Space Fast"
+  },
+  "43": {
+    "num": 43,
+    "category": "hostel-and-accommodation",
+    "slug": "inspecting-off-campus-student-lodge-checklist",
+    "published": true,
+    "title": "8 Essential Things to Inspect in Off-Campus Lodges"
+  },
+  "44": {
+    "num": 44,
+    "category": "hostel-and-accommodation",
+    "slug": "hostel-roommate-tension-causes-solutions",
+    "published": true,
+    "title": "Roommate Tension: Why Cleanliness & Boundaries Clash"
+  },
+  "45": {
+    "num": 45,
+    "category": "hostel-and-accommodation",
+    "slug": "surviving-hostel-power-outage-lighting-gadgets",
+    "published": true,
+    "title": "Surviving Hostel Blackouts: Lighting & Gadget Backup"
+  },
+  "46": {
+    "num": 46,
+    "category": "hostel-and-accommodation",
+    "slug": "nigerian-university-hostel-rules-to-avoid",
+    "published": true,
+    "title": "7 University Hostel Rules You Will Regret Breaking"
+  },
+  "47": {
+    "num": 47,
+    "category": "hostel-and-accommodation",
+    "slug": "off-campus-student-lodge-security-safety",
+    "published": true,
+    "title": "Off-Campus Safety Realities: Security Measures for Lodges"
+  },
+  "48": {
+    "num": 48,
+    "category": "hostel-and-accommodation",
+    "slug": "hostel-cooking-setup-small-space",
+    "published": true,
+    "title": "Hostel Kitchen Setup: Cooking in Tight Spaces Safely"
+  },
+  "49": {
+    "num": 49,
+    "category": "hostel-and-accommodation",
+    "slug": "exploitative-student-lodge-landlord",
+    "published": true,
+    "title": "6 Signs Your Off-Campus Landlord Is Exploitative"
+  },
+  "50": {
+    "num": 50,
+    "category": "hostel-and-accommodation",
+    "slug": "squatting-university-hostel-risks",
+    "published": true,
+    "title": "Squatting in University Hostels: Legal & Social Risks"
+  },
+  "51": {
+    "num": 51,
+    "category": "hostel-and-accommodation",
+    "slug": "failed-hostel-balloting-options",
+    "published": true,
+    "title": "What to Do When Hostel Balloting Fails: Emergency Plan"
+  },
+  "52": {
+    "num": 52,
+    "category": "hostel-and-accommodation",
+    "slug": "hostel-water-scarcity-coping",
+    "published": true,
+    "title": "Surviving Hostel Water Scarcity: 5 Bucket Survival"
+  },
+  "53": {
+    "num": 53,
+    "category": "hostel-and-accommodation",
+    "slug": "roommate-stealing-food-hostel",
+    "published": true,
+    "title": "Confronting a Roommate Who Steals Food and Supplies"
+  },
+  "54": {
+    "num": 54,
+    "category": "hostel-and-accommodation",
+    "slug": "cooking-without-gas-hostel-ban",
+    "published": true,
+    "title": "Cooking Without Gas: Managing Electric Hotplate Bans"
+  },
+  "55": {
+    "num": 55,
+    "category": "hostel-and-accommodation",
+    "slug": "student-lodge-rent-increase",
+    "published": true,
+    "title": "Dealing with Sudden Lodge Rent Hikes Mid-Session"
+  },
+  "56": {
+    "num": 56,
+    "category": "hostel-and-accommodation",
+    "slug": "student-lodge-burglary-what-to-do",
+    "published": true,
+    "title": "Handling Lodge Burglary: Immediate Recovery Steps"
+  },
+  "57": {
+    "num": 57,
+    "category": "hostel-and-accommodation",
+    "slug": "roommate-overnight-guests-boundary",
+    "published": true,
+    "title": "Roommate Bringing Unwanted Overnight Guests: Solutions"
+  },
+  "58": {
+    "num": 58,
+    "category": "hostel-and-accommodation",
+    "slug": "protecting-gadgets-power-surges-hostel",
+    "published": true,
+    "title": "Protecting Laptops from Voltage Surges in Hostels"
+  },
+  "59": {
+    "num": 59,
+    "category": "hostel-and-accommodation",
+    "slug": "hostel-bedbug-infestation-removal",
+    "published": true,
+    "title": "Bedbug Infestation in Hostels: Eradication Steps"
+  },
+  "60": {
+    "num": 60,
+    "category": "hostel-and-accommodation",
+    "slug": "shared-lodge-electricity-bill-dispute",
+    "published": true,
+    "title": "Electricity Bill Feuds in Shared Lodges: Peaceful Fixes"
+  },
+  "61": {
+    "num": 61,
+    "category": "hostel-and-accommodation",
+    "slug": "fresher-hostel-packing-checklist-nigeria",
+    "published": true,
+    "title": "100L Freshers: First-Time Hostel Packing Checklist"
+  },
+  "62": {
+    "num": 62,
+    "category": "hostel-and-accommodation",
+    "slug": "surviving-squatting-university-hostel",
+    "published": true,
+    "title": "Legal Squatters: Managing Life in an Overcrowded Room"
+  },
+  "63": {
+    "num": 63,
+    "category": "hostel-and-accommodation",
+    "slug": "female-university-hostel-survival",
+    "published": true,
+    "title": "Female Hostels: Privacy & Sanitation Survival Guide"
+  },
+  "64": {
+    "num": 64,
+    "category": "hostel-and-accommodation",
+    "slug": "commuting-off-campus-to-morning-lectures",
+    "published": true,
+    "title": "Off-Campus Students: Commuting 10km to Early Classes"
+  },
+  "65": {
+    "num": 65,
+    "category": "hostel-and-accommodation",
+    "slug": "introvert-living-with-loud-roommates",
+    "published": true,
+    "title": "Introverted Roommates: Creating Quiet Study Sanctuaries"
+  },
+  "66": {
+    "num": 66,
+    "category": "hostel-and-accommodation",
+    "slug": "final-year-single-room-accommodation",
+    "published": true,
+    "title": "Final Year Students: Securing Single-Room Productivity"
+  },
+  "67": {
+    "num": 67,
+    "category": "hostel-and-accommodation",
+    "slug": "campus-hard-water-skin-reaction",
+    "published": true,
+    "title": "Sensitive Skin Students: Water Allergies & Hostel Bathing"
+  },
+  "68": {
+    "num": 68,
+    "category": "hostel-and-accommodation",
+    "slug": "isolated-off-campus-lodge-security",
+    "published": true,
+    "title": "Isolated Lodges: Night Security Protocols for Students"
+  },
+  "69": {
+    "num": 69,
+    "category": "hostel-and-accommodation",
+    "slug": "religious-student-fellowship-hostels",
+    "published": true,
+    "title": "Muslim & Christian Fellowship Hostels: Navigating Codes"
+  },
+  "70": {
+    "num": 70,
+    "category": "hostel-and-accommodation",
+    "slug": "student-couples-renting-off-campus",
+    "published": true,
+    "title": "Student Couples Living Off-Campus: The Hidden Traps"
+  },
+  "71": {
+    "num": 71,
+    "category": "hostel-and-accommodation",
+    "slug": "school-hostel-vs-off-campus-lodge-cost",
+    "published": true,
+    "title": "School Hostel vs Off-Campus Lodge: Real Cost Breakdown"
+  },
+  "72": {
+    "num": 72,
+    "category": "hostel-and-accommodation",
+    "slug": "private-campus-hostel-vs-school-hall",
+    "published": true,
+    "title": "Private Hostel on Campus vs Federal Hall: Worth Rent?"
+  },
+  "73": {
+    "num": 73,
+    "category": "hostel-and-accommodation",
+    "slug": "self-contain-vs-room-and-parlour-student",
+    "published": true,
+    "title": "Self-Contained Apartment vs Room-and-Parlour Flat"
+  },
+  "74": {
+    "num": 74,
+    "category": "hostel-and-accommodation",
+    "slug": "walking-distance-lodge-vs-far-cheap-lodge",
+    "published": true,
+    "title": "Walking Distance Lodge vs Cheap Far Lodge with Bike Cost"
+  },
+  "75": {
+    "num": 75,
+    "category": "hostel-and-accommodation",
+    "slug": "living-with-relatives-vs-campus-lodge",
+    "published": true,
+    "title": "Staying with Relatives in Town vs Paying Campus Rent"
+  },
+  "76": {
+    "num": 76,
+    "category": "hostel-and-accommodation",
+    "slug": "choosing-roommate-vs-random-allocation",
+    "published": true,
+    "title": "Roommate by Choice vs Random Hall Allocation: Outcomes"
+  },
+  "77": {
+    "num": 77,
+    "category": "hostel-and-accommodation",
+    "slug": "gas-cylinder-vs-electric-hotplate-student",
+    "published": true,
+    "title": "Gas Cylinder vs Electric Stove: Speed, Cost, & Safety"
+  },
+  "78": {
+    "num": 78,
+    "category": "hostel-and-accommodation",
+    "slug": "furnished-lodge-vs-unfurnished-student",
+    "published": true,
+    "title": "Furnished Lodge vs Empty Room: Buying Mattress & Rug"
+  },
+  "79": {
+    "num": 79,
+    "category": "hostel-and-accommodation",
+    "slug": "solar-inverter-vs-generator-student-lodge",
+    "published": true,
+    "title": "Solar Inverter Power vs Small Generator: Student Setup"
+  },
+  "80": {
+    "num": 80,
+    "category": "hostel-and-accommodation",
+    "slug": "renewing-student-lodge-vs-moving-out",
+    "published": true,
+    "title": "Renewing Current Lodge vs Moving to New Compound: Signs"
+  },
+  "81": {
+    "num": 81,
+    "category": "mental-health",
+    "slug": "imposter-syndrome-university-nigeria",
+    "published": true,
+    "title": "Imposter Syndrome: Why University Makes You Feel Dumb"
+  },
+  "82": {
+    "num": 82,
+    "category": "mental-health",
+    "slug": "academic-burnout-student-symptoms",
+    "published": true,
+    "title": "Academic Burnout: Why You Cannot Bring Yourself to Read"
+  },
+  "83": {
+    "num": 83,
+    "category": "mental-health",
+    "slug": "exam-anxiety-university-students",
+    "published": true,
+    "title": "Exam Anxiety vs Normal Nerves: How Your Body Reacts"
+  },
+  "84": {
+    "num": 84,
+    "category": "mental-health",
+    "slug": "coping-with-failing-university-exams",
+    "published": true,
+    "title": "Failure Shame: Rebuilding Self-Worth After Bad Results"
+  },
+  "85": {
+    "num": 85,
+    "category": "mental-health",
+    "slug": "student-brain-fog-fatigue-causes",
+    "published": true,
+    "title": "Brain Fog During Study: Physical Causes You Overlook"
+  },
+  "86": {
+    "num": 86,
+    "category": "mental-health",
+    "slug": "lecturer-intimidation-student-mental-health",
+    "published": true,
+    "title": "Lecturer Intimidation: The Psychological Toll on Campus"
+  },
+  "87": {
+    "num": 87,
+    "category": "mental-health",
+    "slug": "campus-loneliness-university-students",
+    "published": true,
+    "title": "Social Isolation: Why Campus Can Feel Intensely Lonely"
+  },
+  "88": {
+    "num": 88,
+    "category": "mental-health",
+    "slug": "lack-of-privacy-hostel-mental-toll",
+    "published": true,
+    "title": "Shared Space Exhaustion: Mental Cost of No Privacy"
+  },
+  "89": {
+    "num": 89,
+    "category": "mental-health",
+    "slug": "asuu-strike-depression-uncertainty",
+    "published": true,
+    "title": "Strike Depression: Coping When Your Life Is Put on Pause"
+  },
+  "90": {
+    "num": 90,
+    "category": "mental-health",
+    "slug": "parental-expectations-academic-pressure",
+    "published": true,
+    "title": "Disappointing Parents Over Grades: Breaking the Guilt"
+  },
+  "91": {
+    "num": 91,
+    "category": "mental-health",
+    "slug": "panic-attack-in-exam-hall",
+    "published": true,
+    "title": "Calming an Active Panic Attack in Exam Hall: 3 Steps"
+  },
+  "92": {
+    "num": 92,
+    "category": "mental-health",
+    "slug": "falling-behind-university-syllabus-catchup",
+    "published": true,
+    "title": "Resetting When You Fall 3 Weeks Behind in Lectures"
+  },
+  "93": {
+    "num": 93,
+    "category": "mental-health",
+    "slug": "night-before-exam-insomnia-causes",
+    "published": true,
+    "title": "Night Before Exam Insomnia: Why Sleep Vanishes"
+  },
+  "94": {
+    "num": 94,
+    "category": "mental-health",
+    "slug": "mental-resilience-hostel-amenity-crisis",
+    "published": true,
+    "title": "Hostel Amenity Collapse: Coping When Water & Light Fail"
+  },
+  "95": {
+    "num": 95,
+    "category": "mental-health",
+    "slug": "handling-difficult-project-supervisor",
+    "published": true,
+    "title": "Project Supervisor Trauma: Protecting Your Peace"
+  },
+  "96": {
+    "num": 96,
+    "category": "mental-health",
+    "slug": "emotional-shock-semester-gpa-drop",
+    "published": true,
+    "title": "Overcoming Paralysis After Seeing Semester GPA Drop"
+  },
+  "97": {
+    "num": 97,
+    "category": "mental-health",
+    "slug": "religious-guilt-academic-failure",
+    "published": true,
+    "title": "Religious Guilt Around Bad Grades: Faith & Hard Work"
+  },
+  "98": {
+    "num": 98,
+    "category": "mental-health",
+    "slug": "fixing-sleep-schedule-student-hostel",
+    "published": true,
+    "title": "Restoring Sleep Schedule After Hostel Disruption"
+  },
+  "99": {
+    "num": 99,
+    "category": "mental-health",
+    "slug": "friends-graduating-while-on-carryover",
+    "published": true,
+    "title": "Dealing with Friends Moving Ahead While You Stagnate"
+  },
+  "100": {
+    "num": 100,
+    "category": "mental-health",
+    "slug": "family-poverty-pressure-study-anxiety",
+    "published": true,
+    "title": "Family Financial Pressure Triggering Study Anxiety"
+  },
+  "101": {
+    "num": 101,
+    "category": "mental-health",
+    "slug": "first-generation-university-student-pressure",
+    "published": true,
+    "title": "First-Generation Students: Weight of Family Hope"
+  },
+  "102": {
+    "num": 102,
+    "category": "mental-health",
+    "slug": "coping-with-trauma-campus-burglary",
+    "published": true,
+    "title": "Trauma Recovery After Campus Robbery or Attack"
+  },
+  "103": {
+    "num": 103,
+    "category": "mental-health",
+    "slug": "top-high-school-student-failing-university",
+    "published": true,
+    "title": "High School Star to University Average: Identity Crisis"
+  },
+  "104": {
+    "num": 104,
+    "category": "mental-health",
+    "slug": "studying-with-chronic-illness-campus",
+    "published": true,
+    "title": "Chronic Health Challenges: Studying While Managing Illness"
+  },
+  "105": {
+    "num": 105,
+    "category": "mental-health",
+    "slug": "eldest-child-pressure-university-student",
+    "published": true,
+    "title": "Eldest Child Syndrome: Sending Pocket Money Home"
+  },
+  "106": {
+    "num": 106,
+    "category": "mental-health",
+    "slug": "campus-relationship-breakup-exam-focus",
+    "published": true,
+    "title": "Breakups in University: Recovering Your Academic Focus"
+  },
+  "107": {
+    "num": 107,
+    "category": "mental-health",
+    "slug": "protecting-boundaries-campus-exploitation",
+    "published": true,
+    "title": "Campus Bullying & Exploitation: Setting Hard Boundaries"
+  },
+  "108": {
+    "num": 108,
+    "category": "mental-health",
+    "slug": "adhd-studying-nigerian-university",
+    "published": true,
+    "title": "Neurodivergent Students: ADHD Study Obstacles in Nigeria"
+  },
+  "109": {
+    "num": 109,
+    "category": "mental-health",
+    "slug": "returning-to-university-after-sick-leave",
+    "published": true,
+    "title": "Re-entering Class After Disciplinary or Medical Leave"
+  },
+  "110": {
+    "num": 110,
+    "category": "mental-health",
+    "slug": "campus-cultism-security-anxiety-student",
+    "published": true,
+    "title": "Fear of Campus Cultism: Managing Anxiety and Vigilance"
+  },
+  "111": {
+    "num": 111,
+    "category": "mental-health",
+    "slug": "campus-counselor-vs-senior-mentor",
+    "published": true,
+    "title": "University Guidance Counselor vs Trusted Senior Friend"
+  },
+  "112": {
+    "num": 112,
+    "category": "mental-health",
+    "slug": "pushing-through-study-fatigue-vs-rest",
+    "published": true,
+    "title": "Pushing Through Exhaustion vs Taking Sick Day: Rules"
+  },
+  "113": {
+    "num": 113,
+    "category": "mental-health",
+    "slug": "deferring-university-semester-nigeria",
+    "published": true,
+    "title": "Deferring a Semester vs Staying Enrolled on Bad GPA"
+  },
+  "114": {
+    "num": 114,
+    "category": "mental-health",
+    "slug": "caffeine-vs-power-nap-study-focus",
+    "published": true,
+    "title": "Caffeine Pills vs Energy Drinks vs Power Naps: Safety"
+  },
+  "115": {
+    "num": 115,
+    "category": "mental-health",
+    "slug": "telling-nigerian-parents-about-depression",
+    "published": true,
+    "title": "Opening Up to Parents About Depression vs Keeping Quiet"
+  },
+  "116": {
+    "num": 116,
+    "category": "mental-health",
+    "slug": "studying-alone-vs-library-mental-focus",
+    "published": true,
+    "title": "Studying in Room Alone vs Crowded Library with Peers"
+  },
+  "117": {
+    "num": 117,
+    "category": "mental-health",
+    "slug": "deleting-social-media-during-exams",
+    "published": true,
+    "title": "Quitting Social Media During Exams vs Strict App Timers"
+  },
+  "118": {
+    "num": 118,
+    "category": "mental-health",
+    "slug": "reporting-lecturer-victimization-risks",
+    "published": true,
+    "title": "Reporting Lecturer Harassment vs Quiet Self-Protection"
+  },
+  "119": {
+    "num": 119,
+    "category": "mental-health",
+    "slug": "rewriting-jamb-vs-finishing-degree",
+    "published": true,
+    "title": "Continuing Unwanted Degree vs Starting Fresh with JAMB"
+  },
+  "120": {
+    "num": 120,
+    "category": "mental-health",
+    "slug": "journaling-vs-venting-campus-stress",
+    "published": true,
+    "title": "Venting to Roommates vs Journaling: Emotional Safety"
+  },
+  "121": {
+    "num": 121,
+    "category": "finances",
+    "slug": "monthly-student-budget-30000-naira",
+    "published": true,
+    "title": "Monthly Student Budget Plan: \u20a630,000 Living Survival"
+  },
+  "122": {
+    "num": 122,
+    "category": "finances",
+    "slug": "hidden-university-expenses-nigeria",
+    "published": true,
+    "title": "Hidden University Costs: Fees Beyond Main School Tuition"
+  },
+  "123": {
+    "num": 123,
+    "category": "finances",
+    "slug": "food-inflation-nigerian-university-campus",
+    "published": true,
+    "title": "Inflation on Campus: Why Pocket Money Vanishes in 10 Days"
+  },
+  "124": {
+    "num": 124,
+    "category": "finances",
+    "slug": "negotiating-student-lodge-rent",
+    "published": true,
+    "title": "Negotiating Lodge Rent: Talking Down Landlord Extra Fees"
+  },
+  "125": {
+    "num": 125,
+    "category": "finances",
+    "slug": "student-black-tax-managing-demands",
+    "published": true,
+    "title": "Black Tax on Students: Managing Extended Family Demands"
+  },
+  "126": {
+    "num": 126,
+    "category": "finances",
+    "slug": "campus-money-scams-students-nigeria",
+    "published": true,
+    "title": "7 Campus Scams Targeting Broke Students Looking for Cash"
+  },
+  "127": {
+    "num": 127,
+    "category": "finances",
+    "slug": "batch-cooking-food-saving-campus",
+    "published": true,
+    "title": "Batch Cooking Strategy: Slashing Weekly Feeding Expenses"
+  },
+  "128": {
+    "num": 128,
+    "category": "finances",
+    "slug": "student-gas-cylinder-refill-management",
+    "published": true,
+    "title": "Gas Refill Economics: Tracking Usage to Stop Gas Theft"
+  },
+  "129": {
+    "num": 129,
+    "category": "finances",
+    "slug": "freshers-money-mistakes-university",
+    "published": true,
+    "title": "5 Costly Freshers Mistakes That Drain Money in First Month"
+  },
+  "130": {
+    "num": 130,
+    "category": "finances",
+    "slug": "student-emergency-fund-saving",
+    "published": true,
+    "title": "Emergency Fund for Students: Saving When You Have Little"
+  },
+  "131": {
+    "num": 131,
+    "category": "finances",
+    "slug": "saving-money-phone-charging-pos-outages",
+    "published": true,
+    "title": "Phone Battery & POS Costs: Surviving Campus Power Outages"
+  },
+  "132": {
+    "num": 132,
+    "category": "finances",
+    "slug": "surviving-on-2000-naira-campus",
+    "published": true,
+    "title": "Surviving Campus Week with Only \u20a62,000 Left: Rationing"
+  },
+  "133": {
+    "num": 133,
+    "category": "finances",
+    "slug": "fixing-student-laptop-screen-cheap",
+    "published": true,
+    "title": "Broken Phone or Laptop Screen: Fast Affordable Repair"
+  },
+  "134": {
+    "num": 134,
+    "category": "finances",
+    "slug": "bulk-food-buying-hostel-roommates",
+    "published": true,
+    "title": "Bulk Food Buying Groups: Teaming Up with 3 Roommates"
+  },
+  "135": {
+    "num": 135,
+    "category": "finances",
+    "slug": "splitting-bills-roommates-fairly",
+    "published": true,
+    "title": "Splitting Hostel Utilities Fairly Without Losing Friends"
+  },
+  "136": {
+    "num": 136,
+    "category": "finances",
+    "slug": "delayed-pocket-money-survival-tips",
+    "published": true,
+    "title": "Delay in Pocket Money Transfer: Ethical Emergency Coping"
+  },
+  "137": {
+    "num": 137,
+    "category": "finances",
+    "slug": "nelfund-student-loan-application-guide",
+    "published": true,
+    "title": "NELFUND Student Loan: Eligibility & Application Walkthrough"
+  },
+  "138": {
+    "num": 138,
+    "category": "finances",
+    "slug": "paying-departmental-dues-compulsory",
+    "published": true,
+    "title": "Departmental Due Disputes: Legitimate Fees vs Extortion"
+  },
+  "139": {
+    "num": 139,
+    "category": "finances",
+    "slug": "failed-pos-debit-transaction-student-bank",
+    "published": true,
+    "title": "Recovering from Failed POS Debit on Campus: Bank Escalation"
+  },
+  "140": {
+    "num": 140,
+    "category": "finances",
+    "slug": "final-year-clearance-project-costs",
+    "published": true,
+    "title": "Budgeting for Final Year Clearance, Project Binding & Gown"
+  },
+  "141": {
+    "num": 141,
+    "category": "finances",
+    "slug": "self-sponsoring-university-nigeria",
+    "published": true,
+    "title": "Self-Sponsored Students: Funding School Fees & Living Costs"
+  },
+  "142": {
+    "num": 142,
+    "category": "finances",
+    "slug": "undergraduate-scholarships-nigeria",
+    "published": true,
+    "title": "Scholarship Applications for Undergrads: Winning Formats"
+  },
+  "143": {
+    "num": 143,
+    "category": "finances",
+    "slug": "navigating-wealth-gap-campus-peers",
+    "published": true,
+    "title": "Students from Low-Income Families: Navigating Rich Peers"
+  },
+  "144": {
+    "num": 144,
+    "category": "finances",
+    "slug": "commuter-student-transport-budgeting",
+    "published": true,
+    "title": "Commuter Students: Budgeting Daily Bus & Bike Fares"
+  },
+  "145": {
+    "num": 145,
+    "category": "finances",
+    "slug": "making-money-on-campus-student-skills",
+    "published": true,
+    "title": "Creative Students: Monetizing Skills on Campus Ethically"
+  },
+  "146": {
+    "num": 146,
+    "category": "finances",
+    "slug": "single-student-cooking-without-waste",
+    "published": true,
+    "title": "Cooking for One in Lodges: Slashing Food Waste & Expenses"
+  },
+  "147": {
+    "num": 147,
+    "category": "finances",
+    "slug": "international-students-budgeting-nigeria",
+    "published": true,
+    "title": "International or Expat Students in Nigeria: Currency Tips"
+  },
+  "148": {
+    "num": 148,
+    "category": "finances",
+    "slug": "student-business-bookkeeping-basics",
+    "published": true,
+    "title": "Student Entrepreneurs: Separating Business Cash from Food"
+  },
+  "149": {
+    "num": 149,
+    "category": "finances",
+    "slug": "state-bursaries-university-students",
+    "published": true,
+    "title": "5 High-Value Federal & State Bursaries Undergrads Ignore"
+  },
+  "150": {
+    "num": 150,
+    "category": "finances",
+    "slug": "borrowing-lending-money-campus-friends",
+    "published": true,
+    "title": "Borrowing Money on Campus: Agreements That Protect Trust"
+  },
+  "151": {
+    "num": 151,
+    "category": "finances",
+    "slug": "cooking-vs-eating-at-campus-bukka",
+    "published": true,
+    "title": "Cooking Every Meal vs Campus Bukka Eating: Real Math"
+  },
+  "152": {
+    "num": 152,
+    "category": "finances",
+    "slug": "taking-student-loan-vs-gap-year",
+    "published": true,
+    "title": "Taking Student Loans vs Pausing for Gap Year Hustle"
+  },
+  "153": {
+    "num": 153,
+    "category": "finances",
+    "slug": "campus-bicycle-vs-shuttle-transport",
+    "published": true,
+    "title": "Buying a Campus Bicycle vs Paying Daily Shuttle Buses"
+  },
+  "154": {
+    "num": 154,
+    "category": "finances",
+    "slug": "buying-student-fridge-vs-ice-blocks",
+    "published": true,
+    "title": "Shared Fridge with Roommate vs Buying Ice Blocks Daily"
+  },
+  "155": {
+    "num": 155,
+    "category": "finances",
+    "slug": "printing-lecture-notes-vs-pdf-reading",
+    "published": true,
+    "title": "Buying Soft-Copy PDF Handouts vs Printing Hard Copies"
+  },
+  "156": {
+    "num": 156,
+    "category": "finances",
+    "slug": "corporate-scholarships-vs-state-bursary",
+    "published": true,
+    "title": "Private Corporate Scholarships vs Government Bursaries"
+  },
+  "157": {
+    "num": 157,
+    "category": "finances",
+    "slug": "best-student-bank-account-nigeria",
+    "published": true,
+    "title": "Kuda vs OPay vs Traditional Banks: Lowest Student Charges"
+  },
+  "158": {
+    "num": 158,
+    "category": "finances",
+    "slug": "mobile-data-bundles-student-saving",
+    "published": true,
+    "title": "Daily Mobile Data Bundles vs Monthly Night Plans"
+  },
+  "159": {
+    "num": 159,
+    "category": "finances",
+    "slug": "annual-lodge-rent-vs-installment-payment",
+    "published": true,
+    "title": "Paying Full Lodge Rent Upfront vs 2-Installment Plan"
+  },
+  "160": {
+    "num": 160,
+    "category": "finances",
+    "slug": "student-investing-crypto-vs-savings-app",
+    "published": true,
+    "title": "Investing Pocket Money in Crypto vs High-Yield PiggyVest"
+  },
+  "161": {
+    "num": 161,
+    "category": "balancing-work-and-school",
+    "slug": "working-while-studying-university-nigeria",
+    "published": true,
+    "title": "The Working Student Dilemma: Why Juggling Both Strains GPA"
+  },
+  "162": {
+    "num": 162,
+    "category": "balancing-work-and-school",
+    "slug": "online-side-hustles-for-students",
+    "published": true,
+    "title": "8 Realistic Online Hustles for Nigerian University Students"
+  },
+  "163": {
+    "num": 163,
+    "category": "balancing-work-and-school",
+    "slug": "time-blocking-for-working-students",
+    "published": true,
+    "title": "Time-Blocking for Hustlers: Managing 8am-4pm Classes & Gigs"
+  },
+  "164": {
+    "num": 164,
+    "category": "balancing-work-and-school",
+    "slug": "night-freelancing-and-morning-exams",
+    "published": true,
+    "title": "Generator Noise, Night Work, & Morning Test Performance"
+  },
+  "165": {
+    "num": 165,
+    "category": "balancing-work-and-school",
+    "slug": "building-skills-during-asuu-strike",
+    "published": true,
+    "title": "ASUU Strike Skill Building: Launching Gigs Without Delays"
+  },
+  "166": {
+    "num": 166,
+    "category": "balancing-work-and-school",
+    "slug": "side-hustle-hurting-university-grades",
+    "published": true,
+    "title": "6 Signs Your Side Hustle Is Ruining Your Academic Standing"
+  },
+  "167": {
+    "num": 167,
+    "category": "balancing-work-and-school",
+    "slug": "mental-context-switching-work-study",
+    "published": true,
+    "title": "Cognitive Fatigue: Switching Brains from Client to Syllabus"
+  },
+  "168": {
+    "num": 168,
+    "category": "balancing-work-and-school",
+    "slug": "managing-client-deadlines-during-exams",
+    "published": true,
+    "title": "Negotiating Flexible Client Deadlines During Exam Month"
+  },
+  "169": {
+    "num": 169,
+    "category": "balancing-work-and-school",
+    "slug": "high-income-student-skills-90-days",
+    "published": true,
+    "title": "5 High-Paying Skills Students Can Learn in 90 Days"
+  },
+  "170": {
+    "num": 170,
+    "category": "balancing-work-and-school",
+    "slug": "final-year-project-and-working",
+    "published": true,
+    "title": "Final Year Project vs Freelancing: The Burnout Collision"
+  },
+  "171": {
+    "num": 171,
+    "category": "balancing-work-and-school",
+    "slug": "client-emergency-on-university-exam-day",
+    "published": true,
+    "title": "What to Do When a Client Demands Revision on Exam Day"
+  },
+  "172": {
+    "num": 172,
+    "category": "balancing-work-and-school",
+    "slug": "studying-difficult-courses-while-working",
+    "published": true,
+    "title": "Passing Math/Science Courses While Working 20 Hours Weekly"
+  },
+  "173": {
+    "num": 173,
+    "category": "balancing-work-and-school",
+    "slug": "recovering-from-student-work-sleep-debt",
+    "published": true,
+    "title": "Recovering Your Sleep Debt After Heavy Client Rush Week"
+  },
+  "174": {
+    "num": 174,
+    "category": "balancing-work-and-school",
+    "slug": "meeting-75-percent-university-attendance",
+    "published": true,
+    "title": "Attendance Requirements: Hitting 75% Lecture While Working"
+  },
+  "175": {
+    "num": 175,
+    "category": "balancing-work-and-school",
+    "slug": "group-assignment-clashes-with-job-shift",
+    "published": true,
+    "title": "Handling Group Project Deadlines When Your Shift Clashes"
+  },
+  "176": {
+    "num": 176,
+    "category": "balancing-work-and-school",
+    "slug": "micro-studying-between-university-classes",
+    "published": true,
+    "title": "Study Micro-Sessions: Learning in 15-Minute Lecture Breaks"
+  },
+  "177": {
+    "num": 177,
+    "category": "balancing-work-and-school",
+    "slug": "pausing-client-work-for-exams",
+    "published": true,
+    "title": "Pausing Client Work for Exams: 14-Day Ramp Down Protocol"
+  },
+  "178": {
+    "num": 178,
+    "category": "balancing-work-and-school",
+    "slug": "cheap-data-management-remote-student",
+    "published": true,
+    "title": "Managing High Internet Data Costs for Online Remote Jobs"
+  },
+  "179": {
+    "num": 179,
+    "category": "balancing-work-and-school",
+    "slug": "hiding-student-hustle-from-parents",
+    "published": true,
+    "title": "Explaining Grade Dips to Parents When Working Secretly"
+  },
+  "180": {
+    "num": 180,
+    "category": "balancing-work-and-school",
+    "slug": "tutoring-junior-students-on-campus",
+    "published": true,
+    "title": "Turning Academic Knowledge into Paid Tutoring for Juniors"
+  },
+  "181": {
+    "num": 181,
+    "category": "balancing-work-and-school",
+    "slug": "student-tech-freelancer-balancing-school",
+    "published": true,
+    "title": "Tech Freelancers: Balancing Coding Bootcamps & Exams"
+  },
+  "182": {
+    "num": 182,
+    "category": "balancing-work-and-school",
+    "slug": "student-graphic-designer-time-management",
+    "published": true,
+    "title": "Graphic Designers & Video Editors: Meeting Tight Deadlines"
+  },
+  "183": {
+    "num": 183,
+    "category": "balancing-work-and-school",
+    "slug": "running-salon-in-university-hostel",
+    "published": true,
+    "title": "Student Barbers & Hairdressers: Running a Hostel Salon"
+  },
+  "184": {
+    "num": 184,
+    "category": "balancing-work-and-school",
+    "slug": "selling-food-snacks-on-campus",
+    "published": true,
+    "title": "Campus Bakers & Food Sellers: Packaging Food Around Classes"
+  },
+  "185": {
+    "num": 185,
+    "category": "balancing-work-and-school",
+    "slug": "running-pos-business-student-campus",
+    "published": true,
+    "title": "POS Business Operators: Managing Liquidity Between Lectures"
+  },
+  "186": {
+    "num": 186,
+    "category": "balancing-work-and-school",
+    "slug": "student-dropshipping-delivery-hostel",
+    "published": true,
+    "title": "Dropshipping from Hostels: Managing Student Deliveries"
+  },
+  "187": {
+    "num": 187,
+    "category": "balancing-work-and-school",
+    "slug": "student-night-shift-worker-survival",
+    "published": true,
+    "title": "Night Shift Student Workers: Staying Awake for 8am Class"
+  },
+  "188": {
+    "num": 188,
+    "category": "balancing-work-and-school",
+    "slug": "student-content-creator-time-allocation",
+    "published": true,
+    "title": "Campus Content Creators: Protecting Study Time from Gigs"
+  },
+  "189": {
+    "num": 189,
+    "category": "balancing-work-and-school",
+    "slug": "crypto-trading-stress-during-exams",
+    "published": true,
+    "title": "Crypto Traders & Web3 Students: Managing Volatility Stress"
+  },
+  "190": {
+    "num": 190,
+    "category": "balancing-work-and-school",
+    "slug": "student-shop-owner-exam-week-delegation",
+    "published": true,
+    "title": "Student Shop Owners: Delegating Operations on Exam Week"
+  },
+  "191": {
+    "num": 191,
+    "category": "balancing-work-and-school",
+    "slug": "campus-work-study-vs-online-freelancing",
+    "published": true,
+    "title": "Campus Work-Study vs Remote Freelance Gigs: Best Option"
+  },
+  "192": {
+    "num": 192,
+    "category": "balancing-work-and-school",
+    "slug": "turning-down-client-gig-during-exams",
+    "published": true,
+    "title": "Turning Down a \u20a6100,000 Gig vs Risking an Exam Carryover"
+  },
+  "193": {
+    "num": 193,
+    "category": "balancing-work-and-school",
+    "slug": "evening-revision-vs-weekend-study-blocks",
+    "published": true,
+    "title": "Evening Classes vs Weekend Batch Study for Working Students"
+  },
+  "194": {
+    "num": 194,
+    "category": "balancing-work-and-school",
+    "slug": "upwork-fiverr-vs-direct-campus-clients",
+    "published": true,
+    "title": "Upwork & Fiverr vs Direct Campus Clients: What Pays Faster"
+  },
+  "195": {
+    "num": 195,
+    "category": "balancing-work-and-school",
+    "slug": "physical-goods-vs-digital-services-student",
+    "published": true,
+    "title": "Physical Product Hustle vs Digital Services for Students"
+  },
+  "196": {
+    "num": 196,
+    "category": "balancing-work-and-school",
+    "slug": "buying-work-laptop-vs-shared-computer",
+    "published": true,
+    "title": "Buying a Dedicated Work Laptop vs Managing Shared Devices"
+  },
+  "197": {
+    "num": 197,
+    "category": "balancing-work-and-school",
+    "slug": "pausing-side-hustle-final-year",
+    "published": true,
+    "title": "Pausing Side Hustles in Final Year vs Working Post-Grad"
+  },
+  "198": {
+    "num": 198,
+    "category": "balancing-work-and-school",
+    "slug": "whatsapp-marketing-vs-instagram-ads-student",
+    "published": true,
+    "title": "WhatsApp Status vs Instagram Ads: Best Student Marketing"
+  },
+  "199": {
+    "num": 199,
+    "category": "balancing-work-and-school",
+    "slug": "solo-student-business-vs-partnership",
+    "published": true,
+    "title": "Sole Proprietor Hustle vs Partnering with Classmate"
+  },
+  "200": {
+    "num": 200,
+    "category": "balancing-work-and-school",
+    "slug": "2-1-degree-with-money-vs-first-class-broke",
+    "published": true,
+    "title": "2:1 Degree with Hustle Income vs First Class with No Cash"
+  }
+}
