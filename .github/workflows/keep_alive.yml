@@ -1,0 +1,30 @@
+name: Always-On Website Keep-Alive Cron
+
+on:
+  schedule:
+    # Runs every 10 minutes (Render spins down after 15 minutes of inactivity)
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+    # Allows manual trigger at any time from GitHub Actions UI
+
+concurrency:
+  group: keep-alive-cron
+  cancel-in-progress: true
+
+jobs:
+  ping-websites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Execute Keep-Alive Ping Cycle
+        run: |
+          python scripts/keep_alive.py

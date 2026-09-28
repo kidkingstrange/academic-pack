@@ -76,6 +76,10 @@ async def connect_db():
             # referrals by created_at range with no matching index — a full
             # collection scan on every admin Affiliate Health panel load.
             db.referrals.create_index("created_at"),
+            # Viral Referral Leads indexes
+            db.referral_leads.create_index("friend_email", unique=True),
+            db.referral_leads.create_index([("referred_by", 1), ("created_at", -1)]),
+            db.referral_leads.create_index("created_at"),
             db.payout_batches.create_index([("created_at", -1)]),
             db.payout_batches.create_index([("status", 1)]),
             db.settlement_withdrawals.create_index([("created_at", -1)]),

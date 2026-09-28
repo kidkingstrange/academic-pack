@@ -163,11 +163,13 @@ async def serve_index():
     return FileResponse(str(frontend_path / "index.html"))
 
 @app.get("/academic-comeback-package", include_in_schema=False)
+@app.get("/academic-comeback-package.html", include_in_schema=False)
 @app.get("/academic-comeback", include_in_schema=False)
 async def serve_acp_landing():
     return FileResponse(str(frontend_path / "academic-comeback-package.html"))
 
 @app.get("/us", include_in_schema=False)
+@app.get("/us.html", include_in_schema=False)
 async def serve_us_landing():
     return FileResponse(str(frontend_path / "us.html"))
 
@@ -186,10 +188,18 @@ async def serve_welcome(token: str = ""):
     return RedirectResponse(url=f"/library{suffix}", status_code=302)
 
 @app.get("/library", include_in_schema=False)
+@app.get("/library.html", include_in_schema=False)
 async def serve_library():
     return FileResponse(str(frontend_path / "library.html"))
 
+@app.get("/review", include_in_schema=False)
+@app.get("/review.html", include_in_schema=False)
+async def serve_review():
+    return FileResponse(str(frontend_path / "review.html"))
+
 @app.get("/admin", include_in_schema=False)
+@app.get("/admin/", include_in_schema=False)
+@app.get("/admin/index.html", include_in_schema=False)
 async def serve_admin():
     return FileResponse(
         str(frontend_path / "admin" / "index.html"),
@@ -197,6 +207,7 @@ async def serve_admin():
     )
 
 @app.get("/admin/dashboard", include_in_schema=False)
+@app.get("/admin/dashboard.html", include_in_schema=False)
 async def serve_dashboard():
     return FileResponse(
         str(frontend_path / "admin" / "dashboard.html"),
@@ -215,6 +226,8 @@ async def serve_admin_site_registry():
     )
 
 @app.get("/affiliate/register", include_in_schema=False)
+@app.get("/affiliate-register", include_in_schema=False)
+@app.get("/affiliate-register.html", include_in_schema=False)
 async def serve_affiliate_register():
     return FileResponse(
         str(frontend_path / "affiliate-register.html"),
@@ -222,6 +235,8 @@ async def serve_affiliate_register():
     )
 
 @app.get("/affiliate/dashboard", include_in_schema=False)
+@app.get("/affiliate-dashboard", include_in_schema=False)
+@app.get("/affiliate-dashboard.html", include_in_schema=False)
 async def serve_affiliate_dashboard():
     return FileResponse(
         str(frontend_path / "affiliate-dashboard.html"),

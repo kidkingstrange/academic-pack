@@ -15,5 +15,6 @@ everything-design-taste/
 package-lock.json
 last_7_sales_*.json
 scratch/
-
-
+*.log
+backend/data/*.log
+launch_managed_chrome.bat

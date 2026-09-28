@@ -42,6 +42,7 @@ async def initialize_transaction(
     channels: Optional[List[str]] = None,
     currency: Optional[str] = None,
     subaccount: Optional[str] = None,
+    transaction_charge: Optional[int] = None,
 ) -> Dict[str, Any]:
     """
     Initialize a Paystack payment transaction.
@@ -54,6 +55,11 @@ async def initialize_transaction(
     so the platform absorbs the Paystack processing fee, not the
     affiliate — matches how commission has always been calculated on
     the full sale amount, never net of fees.
+
+    transaction_charge: A flat fee in kobo sent to the MAIN account,
+    overriding the subaccount percentage_charge for this specific
+    transaction. Used for viral friend discounts so the affiliate
+    subaccount receives their full, non-discounted commission cut.
     """
     amount_kobo = int(round(amount_naira * 100))
     payload = {
@@ -70,6 +76,8 @@ async def initialize_transaction(
         payload["channels"] = channels
     if subaccount:
         payload["subaccount"] = subaccount
+    if transaction_charge is not None:
+        payload["transaction_charge"] = transaction_charge
 
     client = get_http_client()
     resp = await client.post(

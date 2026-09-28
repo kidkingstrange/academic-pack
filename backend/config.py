@@ -41,6 +41,11 @@ class Settings(BaseSettings):
     PRODUCT_PRICE_RETAIL_USD: float = 100.0  # $100 standard retail / after 48h affiliate expiry
     USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
 
+    # ── Viral Referral Discount & Affiliate Commission ───────────────
+    DEFAULT_AFFILIATE_COMMISSION_PERCENT: float = 60.0
+    REFERRAL_DISCOUNT_NAIRA: float = 1000.0
+    REFERRAL_DISCOUNT_FRIENDS_COUNT: int = 3
+
     # ── Tiered Pricing Structure ─────────────────────────────────────
     TIER_STARTER_PRICE_NAIRA: int = 3500
     TIER_STARTER_PRICE_USD: float = 22.0

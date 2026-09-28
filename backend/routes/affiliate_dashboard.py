@@ -46,7 +46,7 @@ async def get_my_stats(token: str, db=Depends(get_db)):
     sales = [
         {
             "date": r["created_at"],
-            "amount": r.get("amount", 0),
+            "amount": r.get("amount_paid") or r.get("amount_charged") or r.get("amount", 0),
             "commission_amount": r.get("commission_amount", 0),
             "status": r.get("commission_status", "unpaid"),
         }

@@ -4,9 +4,12 @@ Payment routes — Paystack payment flow.
 import base64
 import hashlib
 import hmac
+import re
 import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
+
+EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
 from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
 from ..schemas.schemas import (
     PaymentInitRequest, PaymentInitResponse,
@@ -101,18 +104,81 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     amount, referred_by = await compute_price_and_referral(
         db, body.email, body.client_expiry, body.referral_code, currency=currency, tier=tier_requested
     )
+    base_price_before_discount = float(amount)
+    friend_discount_applied = False
+    valid_friend_emails = []
 
-    # ── Instant affiliate split ────────────────────────────────────────
-    # If this affiliate has a Paystack subaccount set up (bank details
-    # complete — see services/affiliate_service.py), split the sale at
-    # the point of payment instead of tracking it as manual unpaid
-    # commission for a later batch transfer. An affiliate without a
-    # subaccount yet still works exactly as before.
+    # ── Viral Referral Discount Validation: Exactly 3 Friends' Emails ─────────
+    if body.friend_emails is not None:
+        raw_emails = [e.strip().lower() for e in body.friend_emails if isinstance(e, str) and e.strip()]
+        if len(raw_emails) > 0:
+            if len(raw_emails) != settings.REFERRAL_DISCOUNT_FRIENDS_COUNT:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Please provide exactly {settings.REFERRAL_DISCOUNT_FRIENDS_COUNT} friends' email addresses to unlock the ₦1,000 discount."
+                )
+
+            for fe in raw_emails:
+                if not EMAIL_REGEX.match(fe):
+                    raise HTTPException(
+                        status_code=400,
+                        detail=f"'{fe}' is not a valid email address. Please check and re-enter."
+                    )
+
+            if len(set(raw_emails)) != len(raw_emails):
+                raise HTTPException(
+                    status_code=400,
+                    detail="All 3 friend email addresses must be unique and distinct."
+                )
+
+            buyer_email_clean = body.email.strip().lower()
+            if buyer_email_clean in raw_emails:
+                raise HTTPException(
+                    status_code=400,
+                    detail="You cannot enter your own email address as one of your 3 friends."
+                )
+
+            for fe in raw_emails:
+                existing_purchase = await db.payments.find_one({"email": fe, "status": "success"})
+                if existing_purchase:
+                    raise HTTPException(
+                        status_code=400,
+                        detail=f"Your friend '{fe}' has already purchased this package. Please enter another friend's email to claim your discount."
+                    )
+
+            # Validated: apply ₦1,000 discount
+            friend_discount_applied = True
+            valid_friend_emails = raw_emails
+            discount_naira = float(settings.REFERRAL_DISCOUNT_NAIRA)
+            amount = max(500.0, amount - discount_naira)
+
+    # ── Instant affiliate split & Commission Override ──────────────────
     subaccount_code = None
+    affiliate_commission_override = None
+    transaction_charge = None
+
     if referred_by:
         referring_affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
         if referring_affiliate:
             subaccount_code = referring_affiliate.get("subaccount_code")
+            rate = float(
+                referring_affiliate.get("commission_percent", settings.DEFAULT_AFFILIATE_COMMISSION_PERCENT) 
+                or settings.DEFAULT_AFFILIATE_COMMISSION_PERCENT
+            )
+            # CRITICAL RULE: Commission is ALWAYS computed on base_price_before_discount (₦5,000), never discounted price
+            affiliate_commission_override = round(base_price_before_discount * rate / 100.0, 2)
+
+    # Splits settle to an NGN bank account — not meaningful for a USD charge.
+    split_applied = bool(subaccount_code) and currency != "USD"
+    if split_applied:
+        if friend_discount_applied and affiliate_commission_override is not None:
+            # Paystack routes transaction_charge (kobo) to MAIN account, remainder to subaccount.
+            # We want affiliate subaccount to receive their full affiliate_commission_override (₦3,000).
+            # Seller keeps: amount - affiliate_commission_override (e.g. 4,000 - 3,000 = 1,000).
+            charge_naira = max(0.0, amount - affiliate_commission_override)
+            transaction_charge = int(round(charge_naira * 100))  # in kobo (100,000 kobo = ₦1,000)
+        else:
+            transaction_charge = None
 
     # ── Upsert lead ───────────────────────────────────────────────────
     await db.leads.update_one(
@@ -127,6 +193,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                 "price_offered": amount,
                 "currency": currency,
                 "tier": tier,
+                "friend_discount_applied": friend_discount_applied,
             },
             "$setOnInsert": {"created_at": now},
         },
@@ -141,11 +208,6 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         # Prioritize Bank Transfer / Instant Transfer first for fastest approval
         channels = ["bank_transfer", "bank", "card", "ussd", "qr"]
 
-    # Splits settle to an NGN bank account — not meaningful for a USD
-    # charge, so a referred USD sale just stays on the manual commission
-    # path rather than guessing at untested cross-currency behavior.
-    split_applied = bool(subaccount_code) and currency != "USD"
-
     callback_url = f"{settings.APP_URL}/api/payments/callback"
     try:
         tx_data = await initialize_transaction(
@@ -153,10 +215,19 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             amount_naira=amount,
             reference=reference,
             callback_url=callback_url,
-            metadata={"name": body.name, "payment_method": payment_method, "currency": currency},
+            metadata={
+                "name": body.name,
+                "payment_method": payment_method,
+                "currency": currency,
+                "friend_discount_applied": friend_discount_applied,
+                "friend_emails": valid_friend_emails,
+                "commission_base_price": base_price_before_discount,
+                "amount_paid": amount,
+            },
             channels=channels,
             currency=currency if currency == "USD" else None,
             subaccount=subaccount_code if split_applied else None,
+            transaction_charge=transaction_charge,
         )
     except Exception as e:
         err_msg = str(e)
@@ -169,9 +240,19 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
                     amount_naira=ngn_equivalent,
                     reference=reference,
                     callback_url=callback_url,
-                    metadata={"name": body.name, "payment_method": payment_method, "original_currency": "USD", "usd_amount": amount},
+                    metadata={
+                        "name": body.name,
+                        "payment_method": payment_method,
+                        "original_currency": "USD",
+                        "usd_amount": amount,
+                        "friend_discount_applied": friend_discount_applied,
+                        "friend_emails": valid_friend_emails,
+                        "commission_base_price": base_price_before_discount,
+                    },
                     channels=channels,
                     currency=None,
+                    subaccount=subaccount_code if split_applied else None,
+                    transaction_charge=transaction_charge,
                 )
             except Exception as fallback_err:
                 print(f"❌ Paystack initiation fallback error: {fallback_err}")
@@ -186,19 +267,24 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     await db.pending_payments.update_one(
         {"reference": reference},
         {"$set": {
-            "reference":      reference,
-            "charge_id":      access_code,
-            "va_id":          None,
-            "payment_method": payment_method,
-            "email":          body.email.lower(),
-            "name":           body.name,
-            "base_price":     amount,
-            "amount":         amount,
-            "currency":       currency,
-            "created_at":     now,
-            "referred_by":    referred_by,
-            "split_applied":  split_applied,
-            "tier":           tier,
+            "reference":                  reference,
+            "charge_id":                  access_code,
+            "va_id":                      None,
+            "payment_method":             payment_method,
+            "email":                      body.email.lower(),
+            "name":                       body.name,
+            "base_price":                 amount,
+            "commission_base_price":      base_price_before_discount,
+            "amount":                     amount,
+            "amount_paid":                amount,
+            "currency":                   currency,
+            "created_at":                 now,
+            "referred_by":                referred_by,
+            "split_applied":              split_applied,
+            "tier":                       tier,
+            "friend_discount_applied":    friend_discount_applied,
+            "friend_emails":              valid_friend_emails,
+            "affiliate_commission_override": affiliate_commission_override,
         }},
         upsert=True,
     )
@@ -278,6 +364,15 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
 
     amount_paid = data.get("amount", 0) / 100.0
     now = datetime.now(timezone.utc)
+
+    # ── Verify amount matches expected pending amount (prevent tampering) ──
+    pending = await db.pending_payments.find_one({"reference": body.reference})
+    expected_amount = float(pending.get("amount", 0) or 0) if pending else 0
+    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+        return PaymentVerifyResponse(
+            success=False,
+            message="Payment amount does not match expected order total. Please contact support."
+        )
 
     completion = await complete_payment(
         db,
@@ -392,6 +487,22 @@ async def process_webhook_payment(payload: dict, db):
         amount_paid = (data.get("amount") or 0) / 100.0 or pending.get("amount", 2000)
         charge_id = str(data.get("id")) or pending.get("charge_id")
         payment_method = pending.get("payment_method")
+
+        # ── Verify amount paid matches expected pending amount (prevent tampering) ──
+        expected_amount = float(pending.get("amount", 0) or 0)
+        actual_paid = float((data.get("amount") or 0) / 100.0)
+        if expected_amount > 0 and actual_paid > 0 and abs(actual_paid - expected_amount) > 1.0:
+            print(f"⚠️ Webhook: Amount mismatch for {ref}! Expected {expected_amount}, received {actual_paid}. Flagging for manual review.")
+            await db.flagged_payments.insert_one({
+                "reference": ref,
+                "reason": "amount_mismatch",
+                "expected_amount": expected_amount,
+                "amount_paid": actual_paid,
+                "payload": data,
+                "flagged_at": datetime.now(timezone.utc),
+                "resolved": False,
+            })
+            return
 
     if not email:
         print(f"⚠️ Webhook: Missing customer email for {ref}")

@@ -3,10 +3,13 @@ Admin routes — login, customers, payments, analytics, product upload.
 All routes require admin JWT.
 """
 import asyncio
+import csv
+import io
 import os, shutil
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Request
+from fastapi.responses import Response
 from fastapi.concurrency import run_in_threadpool
 from bson import ObjectId
 from ..middleware.auth import require_admin
@@ -1303,3 +1306,40 @@ async def get_master_overview(force: bool = False, current_user=Depends(require_
     _master_overview_cache["data"] = data
     _master_overview_cache["cached_at"] = now
     return data
+
+
+# ── Referral Leads CSV Export ───────────────────────────────────────────────
+@router.get("/referral-leads/export")
+async def export_referral_leads_csv(current_user=Depends(require_admin), db=Depends(get_db)):
+    """Export referral_leads collection as a downloadable CSV."""
+    cursor = db.referral_leads.find().sort("created_at", -1)
+    leads = await cursor.to_list(100000)
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["friend_email", "referred_by", "order_reference", "affiliate_code", "created_at", "status"])
+
+    for lead in leads:
+        created_at_str = ""
+        ca = lead.get("created_at")
+        if isinstance(ca, datetime):
+            created_at_str = ca.isoformat()
+        elif ca:
+            created_at_str = str(ca)
+
+        writer.writerow([
+            lead.get("friend_email", ""),
+            lead.get("referred_by", ""),
+            lead.get("order_reference", ""),
+            lead.get("affiliate_code", "") or "",
+            created_at_str,
+            lead.get("status", "new"),
+        ])
+
+    csv_data = output.getvalue()
+    filename = f"referral_leads_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    return Response(
+        content=csv_data,
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
+    )

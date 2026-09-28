@@ -78,6 +78,10 @@ async def complete_payment(
     # The unique index on payments.reference (see database.py) makes this
     # the real concurrency guard, unlike a find-then-insert check which
     # has a race window between the read and the write.
+    commission_base = float(pending.get("commission_base_price", resolved_base_price) if pending else resolved_base_price)
+    friend_discount_applied = bool(pending.get("friend_discount_applied", False)) if pending else False
+    friend_emails = list(pending.get("friend_emails", [])) if pending else []
+
     try:
         await db.payments.insert_one({
             "reference": reference,
@@ -85,8 +89,10 @@ async def complete_payment(
             "email": email,
             "name": name,
             "base_price": resolved_base_price,
+            "commission_base_price": commission_base,
             "amount_charged": amount_charged,
             "amount": resolved_base_price,
+            "amount_paid": amount_charged or resolved_base_price,
             "currency": currency,
             "gateway": "paystack",
             "payment_method": payment_method,
@@ -98,6 +104,8 @@ async def complete_payment(
             "ip_address": ip_address,
             "completed_via": completed_via,
             "tier": (pending.get("tier") if pending else "complete"),
+            "friend_discount_applied": friend_discount_applied,
+            "friend_emails": friend_emails,
         })
         claimed = True
     except DuplicateKeyError:
@@ -172,25 +180,24 @@ async def complete_payment(
         # pending_payments doc. The commission rate is locked in at the
         # affiliate's *current* rate at this exact moment — a later edit
         # to their rate never retroactively changes what this sale owes.
-        # Commission is ALWAYS computed on base_price, method-agnostic.
+        # CRITICAL RULE: Commission is ALWAYS computed on commission_base_price (₦5,000), method-agnostic.
         referred_by = pending.get("referred_by") if pending else None
         if referred_by:
             affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
             if affiliate:
-                rate = affiliate.get("commission_percent", 0) or 0
-                commission_amount = round(resolved_base_price * rate / 100, 2)
+                rate = float(
+                    affiliate.get("commission_percent", settings.DEFAULT_AFFILIATE_COMMISSION_PERCENT) 
+                    or settings.DEFAULT_AFFILIATE_COMMISSION_PERCENT
+                )
+                if pending and pending.get("affiliate_commission_override") is not None:
+                    commission_amount = float(pending["affiliate_commission_override"])
+                else:
+                    commission_amount = round(commission_base * rate / 100, 2)
+
                 # split_applied means Paystack already sent the affiliate
                 # their cut directly at the point of payment (see
                 # routes/payments.py + services/affiliate_service.py).
-                # Recorded as commission_status="paid" (it genuinely is —
-                # every existing "commission paid" total across the admin
-                # and affiliate dashboards does an exact match on "paid")
-                # with payout_method distinguishing how, purely for audit
-                # visibility. Critically, this also means
-                # build_pending_batch()'s {"commission_status": "unpaid"}
-                # query skips it — without that, the affiliate would be
-                # paid twice: once instantly via the split, once again in
-                # the next manual batch transfer.
+                # Recorded as commission_status="paid" with payout_method distinguishing how.
                 split_applied = bool(pending.get("split_applied")) if pending else False
                 try:
                     await db.referrals.insert_one({
@@ -198,8 +205,10 @@ async def complete_payment(
                         "affiliate_code": referred_by,
                         "email": email,
                         "name": name,
-                        "base_price": resolved_base_price,
+                        "base_price": commission_base,
+                        "commission_base_price": commission_base,
                         "amount_charged": amount_charged,
+                        "amount_paid": amount_charged or resolved_base_price,
                         "amount": resolved_base_price,
                         "currency": currency,
                         "commission_rate": rate,
@@ -208,6 +217,8 @@ async def complete_payment(
                         "payout_method": "instant_split" if split_applied else "manual_batch",
                         "paid_at": now if split_applied else None,
                         "created_at": now,
+                        "friend_discount_applied": friend_discount_applied,
+                        "friend_emails": friend_emails,
                     })
                 except DuplicateKeyError:
                     pass
@@ -215,6 +226,28 @@ async def complete_payment(
                 # ── Check and Trigger 10-Sale Milestone / Recruiter Bonuses ───
                 from .affiliate_milestone_service import check_and_trigger_milestones
                 await check_and_trigger_milestones(db, referred_by)
+
+        # ── Viral Referral Leads (Saved ONLY after payment is verified) ──
+        # Guarantees abandoned checkouts never gain entry into referral_leads.
+        # Idempotent via unique index on friend_email.
+        if friend_emails and isinstance(friend_emails, list):
+            for fe in friend_emails:
+                if not fe or not isinstance(fe, str):
+                    continue
+                fe_clean = fe.strip().lower()
+                try:
+                    await db.referral_leads.insert_one({
+                        "friend_email": fe_clean,
+                        "referred_by": email,
+                        "order_reference": reference,
+                        "affiliate_code": referred_by,
+                        "created_at": now,
+                        "status": "new",
+                    })
+                except DuplicateKeyError:
+                    # Same friend was already referred by an earlier buyer.
+                    # Keep track of first referrer as per spec.
+                    pass
 
         # Server-side conversion confirmation — fires exactly once per
         # real payment (guarded by `claimed`, same as everything else in

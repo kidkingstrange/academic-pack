@@ -29,6 +29,7 @@ class PaymentInitRequest(BaseModel):
     country: Optional[str] = "NG"
     currency: Optional[str] = "NGN"
     tier: Optional[str] = None  # Explicitly set only by recovery flows ("starter" | "complete" | "vip")
+    friend_emails: Optional[List[str]] = None
 
 
 class PaymentInitResponse(BaseModel):
