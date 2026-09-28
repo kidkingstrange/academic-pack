@@ -1621,19 +1621,25 @@ def save_article_markdown(article_data: Dict[str, Any]) -> str:
             faq_yaml += f'  - question: "{q}"\n'
             faq_yaml += f'    answer: "{a}"\n'
 
+    safe_title = str(article_data.get('title', '')).replace('"', '\\"')
+    safe_description = str(article_data.get('description', '')).replace('"', '\\"')
+    safe_author = str(article_data.get('author', 'Itoya David')).replace('"', '\\"')
+    safe_author_role = str(article_data.get('author_role', 'Academic Strategist & Founder')).replace('"', '\\"')
+    safe_image_alt = str(article_data.get('featured_image_alt', article_data.get('title', ''))).replace('"', '\\"')
+
     frontmatter = f"""---
-title: "{article_data.get('title', '').replace('"', '\\"')}"
-description: "{article_data.get('description', '').replace('"', '\\"')}"
+title: "{safe_title}"
+description: "{safe_description}"
 slug: "{slug}"
 category: "{article_data.get('category', 'academics')}"
-author: "{article_data.get('author', 'Itoya David').replace('"', '\\"')}"
-author_role: "{article_data.get('author_role', 'Academic Strategist & Founder').replace('"', '\\"')}"
+author: "{safe_author}"
+author_role: "{safe_author_role}"
 date_published: "{article_data.get('date_published', datetime.now().strftime('%Y-%m-%d'))}"
 date_modified: "{datetime.now().strftime('%Y-%m-%d')}"
 status: "{article_data.get('status', 'draft')}"
 read_time: "{article_data.get('read_time', '5 min read')}"
 featured_image: "{article_data.get('featured_image', '')}"
-featured_image_alt: "{article_data.get('featured_image_alt', article_data.get('title', '')).replace('"', '\\"')}"
+featured_image_alt: "{safe_image_alt}"
 {faq_yaml}---
 
 {article_data.get('content', '').strip()}
