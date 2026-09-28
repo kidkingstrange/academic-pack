@@ -59,6 +59,39 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   <p style="font-weight:600; color:var(--gray-l)">Loading your library...</p>
 </div>
 
+<!-- Unified Global Site Header -->
+<header class="global-site-header">
+  <div class="global-header-inner">
+    <a href="/" class="global-brand">
+      <img src="assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="23" height="28">
+      <span>SCALE GROUP</span>
+      <span class="global-brand__badge">DIGITAL SYSTEMS</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="global-nav">
+      <a href="/academic-comeback-package" class="global-nav__flagship">
+        <span class="global-nav__flagship-dot"></span>
+        <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
+      </a>
+      <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
+      <a href="/blog/" class="global-nav__link">201+ Free Guides</a>
+      <a href="/library" class="global-nav__link" style="color:#fff;">My Library</a>
+      <a href="/?support=true" class="global-nav__link">Support</a>
+    </nav>
+
+    <!-- Mobile Action Items -->
+    <div class="global-header-mobile-actions">
+      <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
+        <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+      </a>
+      <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
 <header class="lib-header">
   <div class="container">
     <h1 id="user-name">Your Library</h1>
@@ -340,5 +373,74 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     loadLibrary();
   }
 </script>
+
+<!-- Mobile Drawer Backdrop -->
+<div class="global-drawer-backdrop" id="global-drawer-backdrop" onclick="closeGlobalDrawer()"></div>
+
+<!-- Mobile Navigation Drawer -->
+<aside class="global-drawer" id="global-drawer" aria-label="Mobile Navigation">
+  <div class="drawer-header">
+    <a href="/" class="global-brand" onclick="closeGlobalDrawer()">
+      <img src="assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="22" height="26">
+      <span>SCALE GROUP</span>
+    </a>
+    <button class="drawer-close" onclick="closeGlobalDrawer()" aria-label="Close menu">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Flagship Highlight Card Inside Drawer -->
+  <div class="drawer-flagship-card">
+    <div class="drawer-flagship-tag">
+      <i class="bi bi-award-fill"></i> FLAGSHIP OFFER
+    </div>
+    <div class="drawer-flagship-title">Academic Comeback Package</div>
+    <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
+    <div class="drawer-flagship-price">
+      <span class="drawer-flagship-old">₦20,000</span>
+      <span class="drawer-flagship-new">₦2,000</span>
+      <span class="drawer-flagship-discount">SAVE 90%</span>
+    </div>
+    <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
+      Claim Flagship Package &rarr;
+    </a>
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">EXPLORE PLATFORM</div>
+    <a href="/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
+    </a>
+    <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+    </a>
+    <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>
+    </a>
+    <a href="/blog/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-journal-richtext"></i> <span>201+ Free Campus Guides</span>
+    </a>
+  </div>
+
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">BUYER &amp; STUDENT TOOLS</div>
+    <a href="/library" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-folder-check"></i> <span>My Download Library</span>
+    </a>
+    <a href="/affiliate/dashboard" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-wallet2" style="color:#4ade80;"></i> <span>Ambassador Program (Earn ₦3,000)</span>
+    </a>
+    <a href="javascript:void(0)" onclick="openSupportModalFromDrawer()" class="drawer-nav-item">
+      <i class="bi bi-headset"></i> <span>Order Lookup &amp; Support</span>
+    </a>
+  </div>
+
+  <div class="drawer-footer">
+    ⭐ 4.9/5 Rating · 4,200+ Readers · Paystack Secured<br>© 2026 Scale Group
+  </div>
+</aside>
+
+<script src="/js/global-nav.js"></script>
 </body>
 </html>

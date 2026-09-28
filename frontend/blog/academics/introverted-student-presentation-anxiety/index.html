@@ -151,15 +151,35 @@
 </head>
 <body class="blog-body">
 
-  <!-- Navigation -->
-  <header class="blog-header">
-    <div class="blog-container blog-header__inner">
-      <a href="/" class="blog-brand">
-        <span class="blog-brand__logo">A</span>
-        <span class="blog-brand__name">Academic Comeback</span>
+
+  <!-- Top Flagship Announcement Bar -->
+  <div class="global-top-bar">
+    <div class="global-top-bar__inner">
+      <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Unified Global Site Header -->
+  <header class="global-site-header">
+    <div class="global-header-inner">
+      <a href="/" class="global-brand">
+        <img src="/assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="23" height="28">
+        <span>SCALE GROUP</span>
+        <span class="global-brand__badge">STUDY &amp; GUIDES</span>
       </a>
-      <nav class="blog-nav">
-        <a href="/blog/" class="blog-nav__link active">All Articles</a>
+
+      <!-- Desktop Navigation -->
+      <nav class="global-nav">
+        <a href="/academic-comeback-package" class="global-nav__flagship">
+          <span class="global-nav__flagship-dot"></span>
+          <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
+        </a>
+        <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
+        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/library" class="global-nav__link">My Library</a>
+        <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
           <span class="theme-toggle__icon-wrap">
             <i class="bi bi-moon-stars-fill theme-toggle__moon" aria-hidden="true"></i>
@@ -167,10 +187,27 @@
           </span>
           <span class="theme-toggle__text">Theme</span>
         </button>
-        <a href="/academic-comeback-package" class="blog-nav__btn">The Comeback System &rarr;</a>
       </nav>
+
+      <!-- Mobile Action Items -->
+      <div class="global-header-mobile-actions">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle light or dark theme" title="Toggle theme">
+          <span class="theme-toggle__icon-wrap">
+            <i class="bi bi-moon-stars-fill theme-toggle__moon" aria-hidden="true"></i>
+            <i class="bi bi-sun-fill theme-toggle__sun" aria-hidden="true"></i>
+          </span>
+          <span class="theme-toggle__text">Theme</span>
+        </button>
+        <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+        </a>
+        <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
     </div>
   </header>
+
 
   <!-- Categories Sub-Nav -->
   <div class="cat-bar">
@@ -475,17 +512,19 @@ What the Audience Sees: "A student standing at a podium pausing for two seconds 
   <footer class="blog-footer">
     <div class="blog-container blog-footer__inner">
       <div class="blog-footer__brand">
-        <span class="brand-text">Academic Comeback</span>
+        <span class="brand-text">SCALE GROUP</span>
         <p>Evidence-based study systems, active recall protocols, and campus survival strategies for Nigerian higher institutions.</p>
       </div>
       <div class="blog-footer__links">
         <a href="/">Home</a>
-        <a href="/blog/">All Articles</a>
-        <a href="/academic-comeback-package">Get The System</a>
-        <a href="/affiliate/register">Affiliate Program</a>
+        <a href="/academic-comeback-package">Academic Comeback Package</a>
+        <a href="/#masterclasses">30 Masterclasses</a>
+        <a href="/blog/">All 201+ Guides</a>
+        <a href="/library">My Library</a>
+        <a href="/affiliate/dashboard">Ambassador Program</a>
       </div>
       <div class="blog-footer__copy">
-        &copy; 2026 Academic Comeback. All rights reserved.
+        &copy; 2026 Scale Group. All rights reserved.
       </div>
     </div>
   </footer>
@@ -557,5 +596,74 @@ What the Audience Sees: "A student standing at a podium pausing for two seconds 
       });
     })();
   </script>
+
+<!-- Mobile Drawer Backdrop -->
+<div class="global-drawer-backdrop" id="global-drawer-backdrop" onclick="closeGlobalDrawer()"></div>
+
+<!-- Mobile Navigation Drawer -->
+<aside class="global-drawer" id="global-drawer" aria-label="Mobile Navigation">
+  <div class="drawer-header">
+    <a href="/" class="global-brand" onclick="closeGlobalDrawer()">
+      <img src="/assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="22" height="26">
+      <span>SCALE GROUP</span>
+    </a>
+    <button class="drawer-close" onclick="closeGlobalDrawer()" aria-label="Close menu">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Flagship Highlight Card Inside Drawer -->
+  <div class="drawer-flagship-card">
+    <div class="drawer-flagship-tag">
+      <i class="bi bi-award-fill"></i> FLAGSHIP OFFER
+    </div>
+    <div class="drawer-flagship-title">Academic Comeback Package</div>
+    <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
+    <div class="drawer-flagship-price">
+      <span class="drawer-flagship-old">₦20,000</span>
+      <span class="drawer-flagship-new">₦2,000</span>
+      <span class="drawer-flagship-discount">SAVE 90%</span>
+    </div>
+    <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
+      Claim Flagship Package &rarr;
+    </a>
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">EXPLORE PLATFORM</div>
+    <a href="/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
+    </a>
+    <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+    </a>
+    <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>
+    </a>
+    <a href="/blog/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-journal-richtext"></i> <span>201+ Free Campus Guides</span>
+    </a>
+  </div>
+
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">BUYER &amp; STUDENT TOOLS</div>
+    <a href="/library" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-folder-check"></i> <span>My Download Library</span>
+    </a>
+    <a href="/affiliate/dashboard" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-wallet2" style="color:#4ade80;"></i> <span>Ambassador Program (Earn ₦3,000)</span>
+    </a>
+    <a href="/?support=true" class="drawer-nav-item">
+      <i class="bi bi-headset"></i> <span>Order Lookup &amp; Support</span>
+    </a>
+  </div>
+
+  <div class="drawer-footer">
+    ⭐ 4.9/5 Rating · 4,200+ Readers · Paystack Secured<br>© 2026 Scale Group
+  </div>
+</aside>
+<script src="/js/global-nav.js" defer></script>
+
 </body>
 </html>

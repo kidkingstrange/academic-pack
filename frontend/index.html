@@ -828,49 +828,321 @@
   <span>Welcome back! You own <strong id="owned-count-display">0</strong> Masterclasses in your library. <a href="/library">Go to My Library →</a></span>
 </div>
 
-<!-- Header -->
-<header class="site-header">
-  <div class="header-inner">
-    <a href="/" class="brand-logo">
-      <img src="assets/images/scale-logo-cutout.png" alt="" width="23" height="28">
+<!-- Top Flagship Announcement Bar -->
+<div class="global-top-bar">
+  <div class="global-top-bar__inner">
+    <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
+    <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
+    <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+  </div>
+</div>
+
+<!-- Unified Global Site Header -->
+<header class="global-site-header">
+  <div class="global-header-inner">
+    <a href="/" class="global-brand">
+      <img src="assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="23" height="28">
       <span>SCALE GROUP</span>
+      <span class="global-brand__badge">DIGITAL SYSTEMS</span>
     </a>
-    <div class="nav-links">
-      <a href="/academic-comeback-package" class="nav-link" style="background: rgba(212, 166, 58, 0.15); border: 1px solid var(--gold); color: var(--gold-bright); padding: 6px 14px; border-radius: 20px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-        <i class="bi bi-mortarboard-fill"></i> Academic Comeback Package (₦2,000)
+
+    <!-- Desktop Navigation -->
+    <nav class="global-nav">
+      <a href="/academic-comeback-package" class="global-nav__flagship">
+        <span class="global-nav__flagship-dot"></span>
+        <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
       </a>
-      <a href="javascript:void(0)" onclick="openRefundModal()" class="nav-link nav-link--support">Check Status / Support</a>
+      <a href="#masterclasses" class="global-nav__link">30 Masterclasses</a>
+      <a href="/blog/" class="global-nav__link">201+ Free Guides</a>
+      <a href="/library" class="global-nav__link">My Library</a>
+      <a href="javascript:void(0)" onclick="openRefundModal()" class="global-nav__link">Support</a>
+    </nav>
+
+    <!-- Mobile Action Items -->
+    <div class="global-header-mobile-actions">
+      <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
+        <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+      </a>
+      <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
+        <i class="bi bi-list"></i>
+      </button>
     </div>
   </div>
 </header>
 
-<!-- Free Lead Magnet Announcement Bar -->
-<div class="lead-magnet-bar" style="background: linear-gradient(90deg, #1e1b4b 0%, #0f172a 100%); border-bottom: 1px solid rgba(129, 140, 248, 0.3); padding: 10px 16px; text-align: center;">
-  <div style="max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-size: 0.88rem; color: #e0e7ff;">
-    <span>🎁 <strong>100% FREE SCRIPT:</strong> The DM Sales Script: 5 Copy-Paste Messages That Turn 'How Much?' Into Bank Transfers (Without Getting Ghosted)</span>
-    <button onclick="openLeadMagnetModal()" class="btn" style="background: #4f46e5; color: #fff; border: none; padding: 5px 14px; border-radius: 20px; font-weight: 800; font-size: 0.78rem; cursor: pointer; transition: background 0.2s;">
-      GET FREE DOWNLOAD &rarr;
-    </button>
-  </div>
-</div>
-
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="hero-badge">
-    <i class="bi bi-lightning-charge-fill"></i> TACTICAL EXECUTION BLUEPRINTS
+    <i class="bi bi-lightning-charge-fill"></i> SCALE GROUP EXECUTIVE DIGITAL SYSTEMS
   </div>
   <h1 class="hero-title">
-    Stop Guessing Your Growth. Deploy Proven Systems That Generate <em>Clients, Revenue & Top Marks.</em>
+    Tactical Systems For High Performance — <em>In School, Business &amp; Career.</em>
   </h1>
   <p class="hero-subtitle">
-    Zero-fluff masterclass playbooks packed with copy-paste DM scripts, high-converting ad frameworks, corporate advancement tactics, and top-tier exam retention protocols. Read in 45 minutes, execute today.
+    Scale Group equips students, creators, and ambitious operators with zero-fluff execution blueprints, cognitive retention protocols, and revenue systems. Read in 45 minutes, deploy today.
   </p>
 
   <!-- Social Proof Bar -->
   <div class="social-proof-bar">
+    <div class="social-proof-item"><i class="bi bi-people-fill"></i> <strong>4,200+</strong> Active Students &amp; Readers</div>
     <div class="social-proof-item"><i class="bi bi-star-fill"></i> <strong>4.9 / 5</strong> Reader Rating</div>
-    <div class="social-proof-item"><i class="bi bi-people-fill"></i> <strong>4,200+</strong> Active Readers</div>
-    <div class="social-proof-item"><i class="bi bi-lightning-charge-fill"></i> <strong>Instant Access</strong> Delivery</div>
+    <div class="social-proof-item"><i class="bi bi-award-fill"></i> <strong>Flagship:</strong> Academic Comeback (₦2,000)</div>
+    <div class="social-proof-item"><i class="bi bi-headphones"></i> <strong>201+</strong> Free Audio Guides</div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     FLAGSHIP OFFER SHOWCASE: THE ACADEMIC COMEBACK PACKAGE
+     ===================================================================== -->
+<section class="flagship-spotlight-section" id="academic-comeback">
+  <div class="flagship-card-wrap">
+    <div class="flagship-grid">
+      <!-- Left Column: The Offer & Curriculum -->
+      <div>
+        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 12px;">
+          <span style="background: rgba(212, 166, 58, 0.18); border: 1.5px solid #d4a63a; color: #f3c659; font-size: 0.75rem; font-weight: 900; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="bi bi-award-fill"></i> SCALE GROUP FLAGSHIP OFFER
+          </span>
+          <span style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); color: #4ade80; font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px;">
+            <i class="bi bi-people-fill"></i> 4,200+ NIGERIAN STUDENTS
+          </span>
+        </div>
+
+        <h2 style="font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.5rem); font-weight: 900; color: #ffffff; line-height: 1.2; margin: 0 0 10px 0;">
+          The Academic Comeback Package™
+        </h2>
+        <p style="font-size: 1.05rem; color: #f5c862; font-weight: 700; margin: 0 0 14px 0; line-height: 1.4;">
+          Stop Studying 10 Hours a Day Just to Blank Out on Exam Day. Start Learning Smarter.
+        </p>
+        <p style="font-size: 0.92rem; color: #cbd5e1; line-height: 1.6; margin: 0 0 18px 0;">
+          The complete 7-in-1 digital study system engineered specifically for Nigerian university students fighting tough lecturers, exhausting timetables, and low GPAs. Install active recall, retain what you read under pressure, and engineer your academic turnaround this semester.
+        </p>
+
+        <!-- 7-in-1 System Breakdown -->
+        <div style="background: rgba(15, 18, 25, 0.85); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 16px 18px; margin-bottom: 22px;">
+          <div style="font-size: 0.78rem; font-weight: 900; color: #f3c659; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <i class="bi bi-layers-fill"></i> WHAT'S INCLUDED IN THE 7-PART SYSTEM:
+          </div>
+          <ul class="flagship-stack-list">
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>1. Get Good at Hard Things:</strong> The Core Cognitive Study &amp; Mindset Protocol.</span>
+            </li>
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>2. The CGPA Recovery Protocol:</strong> Mathematical roadmap to turn 2.0s into First-Class.</span>
+            </li>
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>3. Nigerian University Survival Compendium:</strong> Handling lecturers, departmental politics &amp; hostels.</span>
+            </li>
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>4. Exam Week Execution Blueprint:</strong> 72-hour triage formula that cures panic cramming.</span>
+            </li>
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>5. Active Recall &amp; Spaced Repetition Engine:</strong> Encode memory so you recall concepts under stress.</span>
+            </li>
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>6. 100+ High-Yield AI Study Prompts:</strong> Custom ChatGPT/Claude prompts for fast coursework summarization.</span>
+            </li>
+            <li class="flagship-stack-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span><strong>7. The First-Class Notion Workspace:</strong> Pre-built digital academic dashboard and second brain.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Value & Price Callout -->
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 22px; flex-wrap: wrap;">
+          <div>
+            <span style="font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; font-weight: 700; display: block;">Standard Retail Value</span>
+            <span style="font-size: 1.15rem; color: #64748b; text-decoration: line-through; font-weight: 700;">₦20,000</span>
+          </div>
+          <div style="height: 36px; width: 1px; background: rgba(255, 255, 255, 0.1);"></div>
+          <div>
+            <span style="font-size: 0.75rem; color: #4ade80; text-transform: uppercase; font-weight: 800; display: flex; align-items: center; gap: 4px;">
+              <i class="bi bi-tag-fill"></i> One-Time Student Price (90% OFF)
+            </span>
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span style="font-size: 2.2rem; font-weight: 900; color: #ffffff; font-family: 'Clash Display', 'Inter', sans-serif;">₦2,000</span>
+              <span style="font-size: 0.78rem; color: #cbd5e1;">Lifetime Access</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action Buttons -->
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <a href="/academic-comeback-package" class="btn btn--gold" style="padding: 14px 28px; font-weight: 900; font-size: 1rem; box-shadow: 0 4px 20px rgba(201,151,58,0.35);">
+            Claim Academic Comeback Package — ₦2,000 &rarr;
+          </a>
+          <a href="/academic-comeback-package" class="btn btn--outline" style="padding: 14px 22px; font-size: 0.9rem;">
+            See Full Curriculum &amp; Reviews
+          </a>
+        </div>
+
+        <!-- Microproof -->
+        <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 16px; font-size: 0.78rem; color: #94a3b8;">
+          <span><i class="bi bi-lightning-charge-fill" style="color: #f3c659;"></i> Instant PDF &amp; Notion Delivery</span>
+          <span><i class="bi bi-shield-check" style="color: #4ade80;"></i> Paystack 256-Bit Security</span>
+          <span><i class="bi bi-cash-coin" style="color: #4ade80;"></i> Earn ₦3,000/sale Ambassador Access</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Visual Showcase Card -->
+      <div style="display: flex; justify-content: center; position: relative;">
+        <div style="background: rgba(15, 18, 26, 0.95); border: 1.5px solid rgba(212, 166, 58, 0.4); border-radius: 20px; padding: 24px; width: 100%; max-width: 440px; box-shadow: 0 16px 40px rgba(0,0,0,0.7); position: relative;">
+          <!-- Floating Highlight Pill -->
+          <div style="position: absolute; top: -14px; right: 16px; background: linear-gradient(135deg, #c9973a, #f5c862); color: #0c0e14; font-size: 0.72rem; font-weight: 900; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 12px rgba(201,151,58,0.4);">
+            🔥 7-IN-1 COMPLETE BUNDLE
+          </div>
+
+          <!-- Featured Flagship Book Image -->
+          <div style="text-align: center; margin-bottom: 18px;">
+            <img src="assets/images/bookcover.webp" alt="Get Good at Hard Things" style="width: 170px; height: auto; margin: 0 auto; border-radius: 8px; box-shadow: 0 12px 28px rgba(0,0,0,0.8); border: 1px solid rgba(212,166,58,0.3);">
+            <div style="font-weight: 800; font-size: 0.95rem; color: #ffffff; margin-top: 10px;">Get Good at Hard Things</div>
+            <div style="font-size: 0.75rem; color: #f3c659;">Core Manual + 6 Tactical Action Guides</div>
+          </div>
+
+          <!-- Mini Grid of Companion Guides -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px;">
+            <div style="text-align: center;">
+              <img src="assets/images/bookcover1.webp" alt="CGPA Recovery" style="width: 100%; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+              <span style="font-size: 0.65rem; color: #94a3b8; display: block; margin-top: 4px;">CGPA Plan</span>
+            </div>
+            <div style="text-align: center;">
+              <img src="assets/images/bookcover2.webp" alt="Campus Survival" style="width: 100%; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+              <span style="font-size: 0.65rem; color: #94a3b8; display: block; margin-top: 4px;">Survival</span>
+            </div>
+            <div style="text-align: center;">
+              <img src="assets/images/bookcover3.webp" alt="Exam Blueprint" style="width: 100%; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+              <span style="font-size: 0.65rem; color: #94a3b8; display: block; margin-top: 4px;">Exam Triage</span>
+            </div>
+            <div style="text-align: center;">
+              <img src="assets/images/bookcoverlandscape.webp" alt="Active Recall" style="width: 100%; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.5);">
+              <span style="font-size: 0.65rem; color: #94a3b8; display: block; margin-top: 4px;">Recall Engine</span>
+            </div>
+          </div>
+
+          <!-- Quick Stat Callout Inside Card -->
+          <div style="background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem;">
+            <span style="color: #cbd5e1;">Deliverables:</span>
+            <span style="color: #f3c659; font-weight: 800;">7 Files (PDF + Notion)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION: 201+ FREE CAMPUS & ACADEMIC GUIDES (WITH VOICE AUDIO)
+     ===================================================================== -->
+<section class="free-guides-section" id="free-guides">
+  <div style="text-align: center; max-width: 820px; margin: 0 auto 32px;">
+    <span style="background: rgba(212, 166, 58, 0.15); border: 1px solid rgba(212, 166, 58, 0.35); color: #f3c659; font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.6px; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;">
+      <i class="bi bi-journal-bookmark-fill"></i> FREE CAMPUS KNOWLEDGE ENGINE
+    </span>
+    <h2 style="font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 3.2vw, 2.4rem); font-weight: 900; color: #ffffff; line-height: 1.2; margin: 0 0 10px 0;">
+      201+ University Survival &amp; Academic Guides
+    </h2>
+    <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6; margin: 0;">
+      Field-tested guides on CGPA turnaround, hostel life, feeding hacks, student budgeting, and mental endurance across Nigerian higher institutions. <strong>Every guide includes our 1-tap Smart Audio Reader</strong> so you can listen anywhere.
+    </p>
+  </div>
+
+  <!-- Audio Spotlight Card -->
+  <div style="background: linear-gradient(90deg, rgba(30, 27, 75, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(129, 140, 248, 0.3); border-radius: 16px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="width: 42px; height: 42px; border-radius: 50%; background: #4f46e5; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;">
+        <i class="bi bi-headphones"></i>
+      </div>
+      <div>
+        <strong style="color: #ffffff; font-size: 0.92rem; display: block;">Too Tired or Busy to Read? Listen With 1 Tap.</strong>
+        <span style="color: #cbd5e1; font-size: 0.82rem;">Zero-data Smart Voice Reader built into every single guide. Perfect for bus rides, hostel chores, or late-night listening.</span>
+      </div>
+    </div>
+    <a href="/blog/" class="btn" style="background: #4f46e5; color: #ffffff; font-size: 0.82rem; font-weight: 800; padding: 8px 18px; border-radius: 20px;">
+      Browse All Guides &rarr;
+    </a>
+  </div>
+
+  <!-- 5 Category Pillars Grid -->
+  <div class="free-guides-grid">
+    <a href="/blog/academics/" class="free-guide-card">
+      <div class="free-guide-card__icon" style="background: rgba(212, 166, 58, 0.15); color: #f5c862;">
+        <i class="bi bi-mortarboard-fill"></i>
+      </div>
+      <h3 class="free-guide-card__title">Academic Excellence</h3>
+      <p class="free-guide-card__desc">Active recall, spaced repetition, past questions, and GPA recovery strategies.</p>
+      <span class="free-guide-card__link">View Guides &rarr;</span>
+    </a>
+
+    <a href="/blog/hostels/" class="free-guide-card">
+      <div class="free-guide-card__icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">
+        <i class="bi bi-building-fill"></i>
+      </div>
+      <h3 class="free-guide-card__title">Hostel Living</h3>
+      <p class="free-guide-card__desc">Roommate conflicts, off-campus accommodation, power cuts, and security.</p>
+      <span class="free-guide-card__link">View Guides &rarr;</span>
+    </a>
+
+    <a href="/blog/finances/" class="free-guide-card">
+      <div class="free-guide-card__icon" style="background: rgba(34, 197, 94, 0.15); color: #4ade80;">
+        <i class="bi bi-wallet2"></i>
+      </div>
+      <h3 class="free-guide-card__title">Student Finances</h3>
+      <p class="free-guide-card__desc">Food budgeting, cooking vs buying, emergency funds, and money management.</p>
+      <span class="free-guide-card__link">View Guides &rarr;</span>
+    </a>
+
+    <a href="/blog/mental-health/" class="free-guide-card">
+      <div class="free-guide-card__icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;">
+        <i class="bi bi-heart-pulse-fill"></i>
+      </div>
+      <h3 class="free-guide-card__title">Mental Health</h3>
+      <p class="free-guide-card__desc">Beating academic burnout, campus depression, exam anxiety, and focus.</p>
+      <span class="free-guide-card__link">View Guides &rarr;</span>
+    </a>
+
+    <a href="/blog/balancing-work-and-school/" class="free-guide-card">
+      <div class="free-guide-card__icon" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">
+        <i class="bi bi-briefcase-fill"></i>
+      </div>
+      <h3 class="free-guide-card__title">Work &amp; School</h3>
+      <p class="free-guide-card__desc">Freelancing, remote tech gigs, and campus side-hustles without tanking your GPA.</p>
+      <span class="free-guide-card__link">View Guides &rarr;</span>
+    </a>
+  </div>
+</section>
+
+<!-- =====================================================================
+     SECTION: 30 TACTICAL DIGITAL MASTERCLASSES & BLUEPRINTS
+     ===================================================================== -->
+<section id="masterclasses" style="padding: 20px 24px 40px; max-width: 1140px; margin: 0 auto;">
+  <div style="text-align: center; max-width: 820px; margin: 0 auto 28px;">
+    <span class="hero-badge">
+      <i class="bi bi-collection-play-fill"></i> SCALE GROUP EXECUTION BLUEPRINTS
+    </span>
+    <h2 style="font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 3.2vw, 2.4rem); font-weight: 900; color: #ffffff; line-height: 1.2; margin: 0 0 10px 0;">
+      30 Tactical Digital Masterclasses
+    </h2>
+    <p style="font-size: 0.95rem; color: #94a3b8; line-height: 1.6; margin: 0 auto;">
+      Beyond academics: Field-tested playbooks for sales, client acquisition, Meta ads, corporate advancement, and wealth generation. Pick any single book for <strong>₦ 5,000</strong> or save with the 3-book bundle.
+    </p>
+  </div>
+
+  <!-- Multi-Book Bundle Offer Banner -->
+  <div class="bundle-banner" style="margin-bottom:20px;">
+    <div class="bundle-content">
+      <h3>🔥 SPECIAL BUNDLE: Pick Any 3 Masterclasses for <span class="naira">₦</span> 12,000</h3>
+      <p>Select any 3 books of your choice and save <span class="naira">₦</span> 3,000 instantly (20% OFF). Includes instant delivery &amp; lifetime access.</p>
+    </div>
+    <button class="bundle-btn" onclick="openPreorderModal('bundle_3')">
+      Claim 3-Book Bundle — <span class="naira">₦</span> 12,000
+    </button>
   </div>
 
   <!-- 3-Step How It Works Banner -->
@@ -905,17 +1177,6 @@
     </div>
   </div>
 
-  <!-- Multi-Book Bundle Offer Banner -->
-  <div class="bundle-banner" style="margin-bottom:20px;">
-    <div class="bundle-content">
-      <h3>🔥 SPECIAL BUNDLE: Pick Any 3 Masterclasses for <span class="naira">₦</span> 12,000</h3>
-      <p>Select any 3 books of your choice and save <span class="naira">₦</span> 3,000 instantly (20% OFF). Includes instant delivery & lifetime access.</p>
-    </div>
-    <button class="bundle-btn" onclick="openPreorderModal('bundle_3')">
-      Claim 3-Book Bundle — <span class="naira">₦</span> 12,000
-    </button>
-  </div>
-
   <!-- Actionable Implementation Guarantee Bar -->
   <div style="background:rgba(201,151,58,0.08); border:1px solid rgba(201,151,58,0.25); border-radius:12px; padding:12px 18px; max-width:900px; margin:0 auto 32px; display:flex; align-items:center; justify-content:center; gap:10px; text-align:center;">
     <i class="bi bi-shield-check" style="color:var(--gold-bright); font-size:1.2rem; flex-shrink:0;"></i>
@@ -948,11 +1209,83 @@
 <!-- Footer -->
 <footer class="site-footer">
   <div class="footer-links">
-    <a href="/academic-comeback-package">Academic Comeback Package</a>
+    <a href="/academic-comeback-package">Academic Comeback Package (Flagship)</a>
+    <a href="#masterclasses">30 Masterclasses &amp; Blueprints</a>
+    <a href="/blog/">201+ Free University Guides</a>
+    <a href="/library">My Download Library</a>
+    <a href="/affiliate/dashboard">Ambassador Program</a>
     <a href="javascript:void(0)" onclick="openRefundModal()">Customer Support / Order Lookup</a>
   </div>
   <p>© 2026 Scale Group. All rights reserved. Secured by Paystack 256-bit Encryption.</p>
 </footer>
+
+<!-- Mobile Drawer Backdrop -->
+<div class="global-drawer-backdrop" id="global-drawer-backdrop" onclick="closeGlobalDrawer()"></div>
+
+<!-- Mobile Navigation Drawer -->
+<aside class="global-drawer" id="global-drawer" aria-label="Mobile Navigation">
+  <div class="drawer-header">
+    <a href="/" class="global-brand" onclick="closeGlobalDrawer()">
+      <img src="assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="22" height="26">
+      <span>SCALE GROUP</span>
+    </a>
+    <button class="drawer-close" onclick="closeGlobalDrawer()" aria-label="Close menu">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Flagship Highlight Card Inside Drawer -->
+  <div class="drawer-flagship-card">
+    <div class="drawer-flagship-tag">
+      <i class="bi bi-award-fill"></i> FLAGSHIP OFFER
+    </div>
+    <div class="drawer-flagship-title">Academic Comeback Package</div>
+    <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
+    <div class="drawer-flagship-price">
+      <span class="drawer-flagship-old">₦20,000</span>
+      <span class="drawer-flagship-new">₦2,000</span>
+      <span class="drawer-flagship-discount">SAVE 90%</span>
+    </div>
+    <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
+      Claim Flagship Package &rarr;
+    </a>
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">EXPLORE PLATFORM</div>
+    <a href="/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
+    </a>
+    <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+    </a>
+    <a href="#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>
+    </a>
+    <a href="/blog/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-journal-richtext"></i> <span>201+ Free Campus Guides</span>
+    </a>
+  </div>
+
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">BUYER &amp; STUDENT TOOLS</div>
+    <a href="/library" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-folder-check"></i> <span>My Download Library</span>
+    </a>
+    <a href="/affiliate/dashboard" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-wallet2" style="color:#4ade80;"></i> <span>Ambassador Program (Earn ₦3,000)</span>
+    </a>
+    <a href="javascript:void(0)" onclick="openSupportModalFromDrawer()" class="drawer-nav-item">
+      <i class="bi bi-headset"></i> <span>Order Lookup &amp; Support</span>
+    </a>
+  </div>
+
+  <div class="drawer-footer">
+    ⭐ 4.9/5 Rating · 4,200+ Readers · Paystack Secured<br>© 2026 Scale Group
+  </div>
+</aside>
+
 
 <!-- Book Details & Conversion Overview Modal -->
 <div class="modal-overlay" id="book-details-modal">
@@ -1268,6 +1601,7 @@
   </div>
 </div>
 
+<script src="/js/global-nav.js"></script>
 <script src="/js/home.js"></script>
 </body>
 </html>
