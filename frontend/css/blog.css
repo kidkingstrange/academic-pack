@@ -1209,7 +1209,10 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-.blog-card__date, .blog-card__read {
+.blog-card__date {
+  display: none !important;
+}
+.blog-card__read {
   color: var(--blog-text-dim);
 }
 .blog-card__title {

@@ -777,7 +777,7 @@ def render_article_page(article: Dict[str, Any], categories: List[Dict[str, Any]
         <article class="blog-card" tabindex="0">
           <div class="blog-card__meta">
             <span class="blog-card__tag" style="color:{rel.get('category_color', '#d4a63a')}">{rel['category_name']}</span>
-            <span class="blog-card__date">{rel['date_published']}</span>
+            <span class="blog-card__read">{rel['read_time']}</span>
           </div>
           <h4 class="blog-card__title"><a href="{rel_url}">{rel['title']}</a></h4>
           <p class="blog-card__desc">{rel['description']}</p>
@@ -866,7 +866,6 @@ def render_article_page(article: Dict[str, Any], categories: List[Dict[str, Any]
           <a href="/blog/{article['category']}/" class="article-category-badge" style="background:{category.get('bg_color', '#fef3c7')}; color:{category.get('color', '#b45309')}; border-color:{category.get('border_color', '#fde68a')};">
             <i class="bi {category['icon']}"></i> {article['category_name']}
           </a>
-          <span class="article-meta__item"><i class="bi bi-calendar3"></i> {article['date_published']}</span>
           <span class="article-meta__item"><i class="bi bi-clock"></i> {article['read_time']}</span>
         </div>
 
@@ -1149,7 +1148,6 @@ def render_category_pillar_page(category: Dict[str, Any], articles: List[Dict[st
             <article class="blog-card" tabindex="0">
               <div class="blog-card__meta">
                 <span class="blog-card__tag" style="color:{category['color']}">{category['name']}</span>
-                <span class="blog-card__date">{art['date_published']}</span>
                 <span class="blog-card__read">{art['read_time']}</span>
               </div>
               <h3 class="blog-card__title"><a href="{art_url}">{art['title']}</a></h3>
@@ -1323,7 +1321,6 @@ def render_blog_hub_page(articles: List[Dict[str, Any]], categories: List[Dict[s
         <article class="blog-card" tabindex="0">
           <div class="blog-card__meta">
             <span class="blog-card__tag" style="color:{art.get('category_color', '#d4a63a')}">{art['category_name']}</span>
-            <span class="blog-card__date">{art['date_published']}</span>
             <span class="blog-card__read">{art['read_time']}</span>
           </div>
           <h3 class="blog-card__title"><a href="{art_url}">{art['title']}</a></h3>
