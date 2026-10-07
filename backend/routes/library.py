@@ -13,6 +13,7 @@ from pydantic import BaseModel, EmailStr
 from bson import ObjectId
 from ..utils.security import create_download_token, verify_token
 from ..utils.error_pages import expired_link_page
+from ..utils.product_delivery import resolve_product_pdf_path
 from ..database import get_db
 from ..config import get_settings
 from ..workers.email_scheduler import process_email_queue
@@ -181,12 +182,16 @@ async def download_file(signed_token: str, db=Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    file_path = Path(settings.UPLOADS_DIR) / product["file_path"]
-    if not file_path.exists():
+    file_path = resolve_product_pdf_path(product, settings.UPLOADS_DIR)
+    if not file_path or not file_path.exists():
         raise HTTPException(status_code=404, detail="File not available yet")
+
+    download_filename = (product.get("title") or file_path.stem).replace(" ", "_")
+    if not download_filename.lower().endswith(".pdf"):
+        download_filename += ".pdf"
 
     return FileResponse(
         path=str(file_path),
         media_type="application/pdf",
-        filename=product["title"].replace(" ", "_") + ".pdf",
+        filename=download_filename,
     )
