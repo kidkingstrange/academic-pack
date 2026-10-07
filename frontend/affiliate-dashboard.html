@@ -99,6 +99,17 @@
 
 <header class="lib-header" id="lib-header" style="display:none">
   <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+      <span style="font-size:0.78rem; font-weight:700; color:var(--gold-l); text-transform:uppercase; letter-spacing:1px; background:rgba(201,151,58,0.12); border:1px solid rgba(201,151,58,0.25); padding:4px 12px; border-radius:50px;">
+        <i class="bi bi-shield-check"></i> Verified Ambassador Portal
+      </span>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <a href="/affiliate/login" id="header-login-link" style="color:var(--gray-l); font-size:0.85rem; text-decoration:none; display:none;"><i class="bi bi-box-arrow-in-right"></i> Log In</a>
+        <button onclick="logoutAffiliate()" id="header-logout-btn" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); color:#fff; padding:6px 14px; border-radius:50px; font-size:0.82rem; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+          <i class="bi bi-box-arrow-right"></i> Log Out
+        </button>
+      </div>
+    </div>
     <h1 id="aff-name">Affiliate Dashboard</h1>
     <p>Your referral link — share this to earn commission on every conversion.</p>
     <div class="aff-link-row">
@@ -287,7 +298,35 @@
   }
 
   const params = new URLSearchParams(window.location.search);
-  const token = params.get('token');
+  let token = params.get('token');
+  const sessionJwt = localStorage.getItem('affiliate_token');
+  const storedDashboardToken = localStorage.getItem('affiliate_dashboard_token');
+
+  if (token) {
+    localStorage.setItem('affiliate_dashboard_token', token);
+  } else if (storedDashboardToken) {
+    token = storedDashboardToken;
+  }
+
+  function getAuthHeaders(extraHeaders = {}) {
+    const headers = { ...extraHeaders };
+    if (sessionJwt) {
+      headers['Authorization'] = `Bearer ${sessionJwt}`;
+    }
+    return headers;
+  }
+
+  function getAuthedUrl(path) {
+    if (!token) return path;
+    const sep = path.includes('?') ? '&' : '?';
+    return `${path}${sep}token=${encodeURIComponent(token)}`;
+  }
+
+  function logoutAffiliate() {
+    localStorage.removeItem('affiliate_token');
+    localStorage.removeItem('affiliate_dashboard_token');
+    window.location.href = '/affiliate/login';
+  }
 
   function showAccessError() {
     document.getElementById('loader').style.display = 'none';
@@ -295,9 +334,13 @@
     main.innerHTML = `
       <div style="max-width: 500px; margin: 80px auto; padding: 40px; background: var(--ink2); border: 1px solid rgba(255,255,255,.08); border-radius: var(--radius-lg); text-align: center;">
         <div style="font-size: 3rem; color: var(--gold); margin-bottom: 20px;"><i class="bi bi-shield-lock"></i></div>
-        <h2 style="font-family: 'Clash Display', sans-serif; font-size: 1.6rem; font-weight: 600; color: #fff; margin-bottom: 16px;">Dashboard Link Required</h2>
-        <p style="color: var(--gray-l); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">Please use the personal dashboard link sent to you after registering as an affiliate.</p>
-        <a href="/affiliate/register" class="btn btn--gold" style="display: inline-block; text-decoration: none;">Become an Affiliate</a>
+        <h2 style="font-family: 'Clash Display', sans-serif; font-size: 1.6rem; font-weight: 600; color: #fff; margin-bottom: 12px;">Affiliate Login Required</h2>
+        <p style="color: var(--gray-l); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">Please sign in to access your partner dashboard, or activate your existing account if you haven't set a password yet.</p>
+        <div style="display:flex; flex-direction:column; gap:12px; max-width:320px; margin:0 auto 20px;">
+          <a href="/affiliate/login" class="btn btn--gold" style="display: block; text-decoration: none; padding:12px; font-weight:700;">Log In to Dashboard</a>
+          <a href="/affiliate/activate" style="display: block; text-decoration: none; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #fff; padding: 12px; border-radius: 50px; font-size: 0.9rem; font-weight: 600;">Activate Existing Account</a>
+        </div>
+        <p style="font-size:0.82rem; color:var(--gray-l); margin-top:20px;">Not an ambassador yet? <a href="/affiliate/register" style="color:var(--gold-l);">Register here</a></p>
       </div>
     `;
   }
@@ -307,11 +350,17 @@
   }
 
   async function loadDashboard() {
-    if (!token) { showAccessError(); return; }
+    if (!token && !sessionJwt) { showAccessError(); return; }
     try {
-      const res = await fetch(`/api/affiliate/me?token=${encodeURIComponent(token)}`);
+      const res = await fetch(getAuthedUrl('/api/affiliate/me'), {
+        headers: getAuthHeaders()
+      });
       if (!res.ok) throw new Error('Unauthorized');
       const data = await res.json();
+      if (data.dashboard_token) {
+        token = data.dashboard_token;
+        localStorage.setItem('affiliate_dashboard_token', token);
+      }
 
       document.getElementById('aff-name').textContent = `Welcome, ${data.name.split(' ')[0]}`;
       const referralLink = `${window.location.origin}/r/${data.code}`;
@@ -347,8 +396,9 @@
       // Log video materials clicks (counts as activation signal)
       videoMaterialsBtn.addEventListener('click', async function() {
         try {
-          await fetch(`/api/affiliate/video-click?token=${encodeURIComponent(token)}`, {
-            method: 'POST'
+          await fetch(getAuthedUrl('/api/affiliate/video-click'), {
+            method: 'POST',
+            headers: getAuthHeaders()
           });
         } catch (err) {
           // non-critical — do not block the redirection
@@ -474,9 +524,9 @@
 
   async function logAssetDownload(assetName) {
     try {
-      await fetch(`/api/affiliate/marketing-assets/log-download?token=${encodeURIComponent(token)}`, {
+      await fetch(getAuthedUrl('/api/affiliate/marketing-assets/log-download'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ asset_name: assetName }),
       });
     } catch (err) { /* non-critical — don't block the download/copy over a logging failure */ }
@@ -484,7 +534,9 @@
 
   async function loadMarketingAssets() {
     try {
-      const res = await fetch(`/api/affiliate/marketing-assets?token=${encodeURIComponent(token)}`);
+      const res = await fetch(getAuthedUrl('/api/affiliate/marketing-assets'), {
+        headers: getAuthHeaders()
+      });
       if (!res.ok) return;
       const data = await res.json();
       const assets = data.assets || [];
@@ -582,9 +634,9 @@
     submitBtn.textContent = 'Saving...';
 
     try {
-      const res = await fetch(`/api/affiliate/bank-details?token=${encodeURIComponent(token)}`, {
+      const res = await fetch(getAuthedUrl('/api/affiliate/bank-details'), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ bank_name, account_number, account_name })
       });
       const data = await res.json();

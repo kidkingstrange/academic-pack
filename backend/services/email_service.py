@@ -335,3 +335,31 @@ async def send_lead_magnet_welcome_email(name: str, email: str, ref_code: str, r
     })
     subject = "[FREE DOWNLOAD] Your 15-Minute DM Objection Matrix Cheat Sheet"
     return await send_email(email, subject, html_body)
+
+
+async def send_affiliate_activation_email(name: str, email: str, code: str, activation_link: str):
+    """Send account activation email with secure single-use link."""
+    html_body = render_template("affiliate_activation.html", {
+        "name": name,
+        "email": email,
+        "code": code,
+        "activation_link": activation_link,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    subject = "Activate Your Affiliate Account"
+    return await send_email(email, subject, html_body)
+
+
+async def send_affiliate_password_reset_email(name: str, email: str, reset_link: str):
+    """Send password reset email with secure single-use link."""
+    html_body = render_template("affiliate_password_reset.html", {
+        "name": name,
+        "email": email,
+        "reset_link": reset_link,
+        "app_name": settings.APP_NAME,
+        "app_url": settings.APP_URL,
+    })
+    subject = "Reset Your Affiliate Account Password"
+    return await send_email(email, subject, html_body)
+

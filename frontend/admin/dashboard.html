@@ -3048,6 +3048,15 @@
         ? `<div style="font-size:0.72rem;color:var(--green);font-weight:600;margin-top:2px"><i class="bi bi-people-fill"></i> ${a.recruited_count} downline recruit${a.recruited_count === 1 ? '' : 's'}</div>`
         : '';
 
+      let activationBadge = '';
+      if (a.activation_status === 'active' || a.account_activated) {
+        activationBadge = `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);padding:2px 6px;border-radius:4px;font-size:0.68rem;font-weight:700;margin-top:4px"><i class="bi bi-check-circle-fill"></i> Active</span>`;
+      } else if (a.activation_status === 'pending') {
+        activationBadge = `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(201,151,58,0.15);color:var(--gold-l);border:1px solid rgba(201,151,58,0.3);padding:2px 6px;border-radius:4px;font-size:0.68rem;font-weight:700;margin-top:4px"><i class="bi bi-hourglass-split"></i> Activation Pending</span>`;
+      } else {
+        activationBadge = `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(239,68,68,0.12);color:#f87171;border:1px solid rgba(239,68,68,0.25);padding:2px 6px;border-radius:4px;font-size:0.68rem;font-weight:700;margin-top:4px"><i class="bi bi-exclamation-circle-fill"></i> Not Activated</span>`;
+      }
+
       return `
       <tr onclick="inspectAffiliate('${escapeJs(a.id)}')">
         <td>${new Date(a.created_at).toLocaleDateString()}</td>
@@ -3058,6 +3067,7 @@
           <div style="font-size:0.75rem;color:var(--gray-l)">${escapeHtml(a.email)}</div>
           ${inviteInfo}
           ${recruitInfo}
+          <div>${activationBadge}</div>
         </td>
         <td>
           <div style="font-weight:600;font-size:0.82rem;color:#fff">${a.bank_name ? escapeHtml(a.bank_name) : '<span style="color:var(--gray-l)">Not provided</span>'}</div>
@@ -3079,7 +3089,10 @@
         <td>${money(a.commission_paid)}</td>
         <td style="color:var(--gold-light);font-weight:800">${money(a.commission_owed)}</td>
         <td>
-          ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 10px;font-size:0.75rem" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid</button>` : `<span style="font-size:0.75rem;color:var(--gray-l)">Settled</span>`}
+          <div style="display:flex; flex-direction:column; gap:4px">
+            ${a.commission_owed > 0 ? `<button class="btn-action" style="padding:4px 8px;font-size:0.72rem" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid</button>` : `<span style="font-size:0.72rem;color:var(--gray-l)">Settled</span>`}
+            ${(!a.account_activated || a.activation_status !== 'active') ? `<button class="btn-action" style="padding:3px 8px;font-size:0.7rem;background:rgba(201,151,58,0.15);color:var(--gold-l);border:1px solid rgba(201,151,58,0.3)" onclick="event.stopPropagation(); resendActivation('${escapeJs(a.id)}', '${escapeJs(a.email)}')"><i class="bi bi-envelope-check-fill"></i> Resend Activation</button>` : ''}
+          </div>
         </td>
       </tr>
     `}).join('');
@@ -3098,6 +3111,9 @@
       const payBtn = owed
         ? `<button class="record-card__action" style="background:rgba(201,151,58,.12);color:var(--gold-light);border-color:rgba(201,151,58,.35)" onclick="event.stopPropagation(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>`
         : '';
+      const actBtn = (!a.account_activated || a.activation_status !== 'active')
+        ? `<button class="record-card__action" style="background:rgba(201,151,58,.15);color:var(--gold-l);border-color:rgba(201,151,58,.3);margin-top:6px" onclick="event.stopPropagation(); resendActivation('${escapeJs(a.id)}', '${escapeJs(a.email)}')"><i class="bi bi-envelope-check-fill"></i> Resend Activation</button>`
+        : '';
       const badgeText = a.source === 'customer_buyer' ? '<i class="bi bi-patch-check-fill" style="color:var(--gold-l);margin-right:4px"></i> VIP Buyer' : (a.source === 'admin_created' ? 'Admin' : 'Organic');
       return `
       <div class="record-card record-card--${statusClass}" onclick="inspectAffiliate('${escapeJs(a.id)}')">
@@ -3110,6 +3126,7 @@
           <span class="record-card__meta">${splitBadge}</span>
         </div>
         ${payBtn}
+        ${actBtn}
       </div>`;
     }).join('');
   }
@@ -3135,6 +3152,7 @@
           <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(a.email)}</div></div>
           <div><div class="detail-label">Code</div><div class="detail-val"><code style="color:var(--gold-light);font-weight:700">${escapeHtml(a.code)}</code></div></div>
           <div><div class="detail-label">Joined</div><div class="detail-val">${new Date(a.created_at).toLocaleDateString()}</div></div>
+          <div style="grid-column:span 2"><div class="detail-label">Account Activation</div><div class="detail-val">${a.account_activated || a.activation_status === 'active' ? '<span style="color:#4ade80;font-weight:700"><i class="bi bi-check-circle-fill"></i> Activated (Password Established)</span>' : '<span style="color:var(--gold-l);font-weight:700"><i class="bi bi-exclamation-circle-fill"></i> Not Activated / Password Not Set</span>'}</div></div>
         </div>
       </div>
 
@@ -3170,11 +3188,23 @@
 
       <div style="display:flex; flex-direction:column; gap:10px">
         <button class="btn-action" style="background:linear-gradient(135deg, var(--gold), var(--gold-l));color:var(--ink);width:100%;justify-content:center" onclick="window.open('/affiliate/dashboard?token=${escapeJs(a.dashboard_token || '')}', '_blank')"><i class="bi bi-box-arrow-up-right"></i> Open Partner Dashboard</button>
+        ${(!a.account_activated || a.activation_status !== 'active') ? `<button class="btn-action" style="background:rgba(201,151,58,0.15);color:var(--gold-l);border:1px solid rgba(201,151,58,0.3);width:100%;justify-content:center" onclick="closeDrawer(); resendActivation('${escapeJs(a.id)}', '${escapeJs(a.email)}')"><i class="bi bi-envelope-check-fill"></i> Resend Activation Link</button>` : ''}
         <button class="btn-action btn-secondary" onclick="closeDrawer(); editCommissionRate('${escapeJs(a.id)}', ${a.commission_percent})">Edit Commission Rate</button>
         ${a.commission_owed > 0 ? `<button class="btn-action" onclick="closeDrawer(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>` : ''}
       </div>
     `;
     openDrawer();
+  }
+
+  async function resendActivation(affiliateId, email) {
+    if (!confirm(`Send an account activation link to ${email}?\n\nThis will email them a secure, single-use link to set their password.`)) return;
+    try {
+      const res = await apiCall(`/api/admin/affiliates/${affiliateId}/resend-activation`, 'POST', {});
+      alert(`✅ ${res.message || 'Activation email sent successfully.'}`);
+      loadAffiliatesView();
+    } catch(err) {
+      alert(`Could not send activation email: ${err.message || 'Unknown error'}`);
+    }
   }
 
   async function editCommissionRate(affiliateId, currentRate) {

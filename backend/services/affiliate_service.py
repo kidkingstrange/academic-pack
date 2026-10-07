@@ -36,6 +36,8 @@ async def create_affiliate_record(
     account_number: str = None,
     account_name: str = None,
     invited_by: str = None,
+    password_hash: str = None,
+    account_activated: bool = False,
 ) -> dict:
     """
     Insert a new affiliate. Raises ValueError("duplicate_email") or
@@ -81,6 +83,8 @@ async def create_affiliate_record(
         "commission_percent": resolved_commission,
         "dashboard_token": secrets.token_urlsafe(24),
         "invited_by": parent_code,
+        "account_activated": bool(account_activated or password_hash),
+        "password_hash": password_hash,
         "created_at": now,
     }
     if registration_ip:

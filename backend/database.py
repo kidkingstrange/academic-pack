@@ -67,6 +67,8 @@ async def connect_db():
             db.affiliates.create_index("email", unique=True),
             db.affiliates.create_index("dashboard_token", unique=True),
             db.affiliates.create_index("invited_by"),
+            db.affiliates.create_index("activation_token_hash", sparse=True),
+            db.affiliates.create_index("reset_token_hash", sparse=True),
             db.affiliate_milestones.create_index([("affiliate_code", 1), ("type", 1), ("subaffiliate_code", 1)], unique=True),
             db.affiliate_milestones.create_index([("status", 1), ("created_at", -1)]),
             db.referral_clicks.create_index([("affiliate_code", 1), ("created_at", -1)]),

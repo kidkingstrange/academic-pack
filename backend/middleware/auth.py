@@ -28,6 +28,9 @@ async def _account_still_active(db, user_id: str, role: str) -> bool:
     if role == "sales_rep":
         rep = await db.sales_reps.find_one({"_id": oid, "active": True})
         return rep is not None
+    if role == "affiliate":
+        aff = await db.affiliates.find_one({"_id": oid, "active": True})
+        return aff is not None
     user = await db.users.find_one({"_id": oid, "is_active": True})
     return user is not None
 
@@ -65,4 +68,10 @@ async def require_admin(current_user=Depends(get_current_user)):
 async def require_sales_rep(current_user=Depends(get_current_user)):
     if current_user.get("role") not in ["sales_rep", "admin"]:
         raise HTTPException(status_code=403, detail="Sales Representative access required")
+    return current_user
+
+
+async def require_affiliate(current_user=Depends(get_current_user)):
+    if current_user.get("role") not in ["affiliate", "admin"]:
+        raise HTTPException(status_code=403, detail="Affiliate access required")
     return current_user

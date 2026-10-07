@@ -23,7 +23,7 @@ from .routes import (
     affiliates, affiliate_public, affiliate_dashboard, tracking,
     admin_payouts, sales as sales_router, admin_email_delivery,
     admin_abandoned, preorders, lead_magnet, reviews,
-    blog, blog_community, blog_admin,
+    blog, blog_community, blog_admin, affiliate_auth,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
@@ -105,6 +105,7 @@ app.include_router(reviews.router)
 app.include_router(blog.router)
 app.include_router(blog_community.router)
 app.include_router(blog_admin.router)
+app.include_router(affiliate_auth.router)
 
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
@@ -242,6 +243,28 @@ async def serve_affiliate_dashboard():
         str(frontend_path / "affiliate-dashboard.html"),
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
+
+@app.get("/affiliate/activate", include_in_schema=False)
+@app.get("/affiliate-activate", include_in_schema=False)
+@app.get("/affiliate-activate.html", include_in_schema=False)
+async def serve_affiliate_activate():
+    return FileResponse(
+        str(frontend_path / "affiliate-activate.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/affiliate/login", include_in_schema=False)
+@app.get("/affiliate-login", include_in_schema=False)
+@app.get("/affiliate-login.html", include_in_schema=False)
+async def serve_affiliate_login():
+    return FileResponse(
+        str(frontend_path / "affiliate-login.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/affiliate/forgot-password", include_in_schema=False)
+async def serve_affiliate_forgot_password():
+    return RedirectResponse(url="/affiliate/activate?mode=reset", status_code=302)
 
 @app.get("/sales", include_in_schema=False)
 async def serve_sales_login():

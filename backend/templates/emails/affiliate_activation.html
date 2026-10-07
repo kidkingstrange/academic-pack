@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block subject %}Activate Your Affiliate Account{% endblock %}
+{% block content %}
+<p style="font-size:16px;color:#333;margin:0 0 16px">Hello {{ name }},</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  Your affiliate account with <strong>Scale Group</strong> already exists! We have upgraded our affiliate portal to provide a secure login system.
+</p>
+
+<p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 20px">
+  All your existing affiliate data — including your referral code <strong>({{ code }})</strong>, commissions, clicks, and earnings — are fully connected to your account. You simply need to set your password to access your dashboard.
+</p>
+
+<!-- Activation CTA box -->
+<table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(201,151,58,0.08);border:1px solid rgba(201,151,58,0.3);border-radius:12px;margin:0 0 24px">
+  <tr><td style="padding:24px 20px;text-align:center">
+    <p style="font-weight:700;color:#1a1a1a;margin:0 0 14px;font-size:16px">Set Up Your Password & Access Your Dashboard</p>
+    <a href="{{ activation_link }}" style="display:inline-block;background:linear-gradient(135deg,#d4a63a,#e8bf5a);color:#0d0f14;font-weight:800;font-size:15px;padding:14px 32px;border-radius:50px;text-decoration:none;box-shadow:0 4px 14px rgba(212,166,58,0.35)">
+      Activate My Affiliate Account →
+    </a>
+    <p style="color:#777;font-size:12px;margin:16px 0 0">
+      ⏱️ For your security, this link is single-use and will expire in 60 minutes.
+    </p>
+  </td></tr>
+</table>
+
+<p style="font-size:13px;color:#777;line-height:1.6;margin:0 0 12px">
+  If the button above does not work, copy and paste this secure link into your browser:
+</p>
+<p style="font-size:12px;color:#888;word-break:break-all;font-family:monospace;background:#f7f6f2;padding:10px 14px;border-radius:8px;margin:0 0 24px">
+  {{ activation_link }}
+</p>
+
+<p style="font-size:13px;color:#999;line-height:1.5;margin:0 0 20px">
+  If you did not request this activation email, you can safely ignore this message. Your account remains secure.
+</p>
+
+<p style="font-size:15px;color:#333;margin:24px 0 0">
+  — Itoya David<br>
+  <span style="color:#999;font-size:13px">Founder, Scale Group · First Class Graduate</span>
+</p>
+{% endblock %}

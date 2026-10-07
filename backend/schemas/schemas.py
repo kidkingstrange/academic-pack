@@ -158,3 +158,28 @@ class AffiliateBankDetailsUpdateRequest(BaseModel):
 
 class AffiliateCommissionUpdateRequest(BaseModel):
     commission_percent: float = Field(..., ge=0, le=100)
+
+
+class AffiliateActivationRequest(BaseModel):
+    email: EmailStr
+
+
+class AffiliateSetPasswordRequest(BaseModel):
+    token: str = Field(..., min_length=10)
+    password: str = Field(..., min_length=8, max_length=128)
+
+
+class AffiliateLoginRequest(BaseModel):
+    email: EmailStr
+    password: str = Field(..., min_length=1, max_length=128)
+    remember_me: Optional[bool] = False
+
+
+class AffiliateForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+class AffiliateResetPasswordRequest(BaseModel):
+    token: str = Field(..., min_length=10)
+    password: str = Field(..., min_length=8, max_length=128)
+

@@ -10,6 +10,7 @@ from ..services.email_service import (
     send_email,
     send_sequence_email, send_welcome_email, send_affiliate_welcome_email, send_affiliate_nudge_email,
     send_affiliate_direct_milestone_email, send_affiliate_parent_referral_bonus_email,
+    send_affiliate_activation_email, send_affiliate_password_reset_email,
 )
 
 scheduler = AsyncIOScheduler()
@@ -272,7 +273,8 @@ async def process_email_queue():
         pending = []
         TRANSACTIONAL_KINDS = (
             "welcome", "affiliate_welcome", "affiliate_nudge",
-            "affiliate_direct_milestone", "affiliate_parent_referral_bonus"
+            "affiliate_direct_milestone", "affiliate_parent_referral_bonus",
+            "affiliate_activation", "affiliate_password_reset"
         )
 
         # Step 1: Claim high-priority transactional emails first
@@ -367,6 +369,19 @@ async def process_email_queue():
                         transfer_reference=item.get("transfer_reference", ""),
                         bank_name=item.get("bank_name", ""),
                         account_number=item.get("account_number", ""),
+                    )
+                elif kind == "affiliate_activation":
+                    success, error_msg = await send_affiliate_activation_email(
+                        name=item["name"],
+                        email=item["email"],
+                        code=item["code"],
+                        activation_link=item["activation_link"],
+                    )
+                elif kind == "affiliate_password_reset":
+                    success, error_msg = await send_affiliate_password_reset_email(
+                        name=item["name"],
+                        email=item["email"],
+                        reset_link=item["reset_link"],
                     )
                 elif item.get("template_name") == "welcome_lead_magnet":
                     ctx = item.get("context", {})

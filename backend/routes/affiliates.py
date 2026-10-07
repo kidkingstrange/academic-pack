@@ -16,17 +16,23 @@ Referral attribution itself happens in payments.py (capturing the code
 at checkout) and payment_completion.py (recording the conversion and
 locking in the commission amount at that affiliate's rate at the time).
 """
-from datetime import datetime, timezone
+import asyncio
+import hashlib
+import secrets
+from datetime import datetime, timedelta, timezone
 
 from bson import ObjectId
 from fastapi import APIRouter, Depends, HTTPException
 
+from ..config import get_settings
 from ..middleware.auth import require_admin
 from ..database import get_db
 from ..schemas.schemas import AffiliateCreateRequest, AffiliateCommissionUpdateRequest
 from ..services.affiliate_service import create_affiliate_record, ensure_affiliate_subaccount
+from ..workers.email_scheduler import process_email_queue
 
 router = APIRouter(prefix="/api/admin/affiliates", tags=["affiliates"])
+settings = get_settings()
 
 
 @router.post("")
@@ -117,11 +123,25 @@ async def list_affiliates(
     }
 
     out = []
+    now = datetime.now(timezone.utc)
     for a in affiliates:
         code = a["code"]
         stats = referral_stats.get(code, {})
         earned = stats.get("commission_earned", 0) or 0
         paid = stats.get("commission_paid", 0) or 0
+
+        is_activated = bool(a.get("account_activated") or a.get("password_hash"))
+        if is_activated:
+            act_status = "active"
+        elif a.get("activation_token_hash"):
+            exp = a.get("activation_token_expires_at")
+            if exp and (exp.replace(tzinfo=timezone.utc) if exp.tzinfo is None else exp) > now:
+                act_status = "pending"
+            else:
+                act_status = "not_activated"
+        else:
+            act_status = "not_activated"
+
         out.append({
             "id": str(a["_id"]),
             "code": code,
@@ -144,6 +164,9 @@ async def list_affiliates(
             "account_number": a.get("account_number", ""),
             "account_name": a.get("account_name", ""),
             "has_instant_split": bool(a.get("subaccount_code")),
+            "activation_status": act_status,
+            "account_activated": is_activated,
+            "last_login": a.get("last_login"),
         })
     return {"affiliates": out, "total": total, "page": page, "pages": -(-total // limit)}
 
@@ -219,3 +242,63 @@ async def mark_commission_paid(
         {"$set": {"commission_status": "paid", "paid_at": now, "payout_reference": payout_ref}},
     )
     return {"success": True, "amount_marked_paid": total, "paid_at": now, "payout_reference": payout_ref}
+
+
+@router.post("/{affiliate_id}/resend-activation")
+async def resend_affiliate_activation(
+    affiliate_id: str,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Manually triggers or resends an account activation email to an affiliate.
+    Generates a secure 60-minute single-use token and queues an activation email.
+    """
+    try:
+        oid = ObjectId(affiliate_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid affiliate id")
+
+    affiliate = await db.affiliates.find_one({"_id": oid})
+    if not affiliate:
+        raise HTTPException(status_code=404, detail="Affiliate not found")
+
+    email = affiliate.get("email")
+    if not email:
+        raise HTTPException(status_code=400, detail="Affiliate has no email address configured")
+
+    raw_token = secrets.token_urlsafe(32)
+    token_hash = hashlib.sha256(raw_token.strip().encode("utf-8")).hexdigest()
+    now = datetime.now(timezone.utc)
+    expires_at = now + timedelta(minutes=60)
+
+    await db.affiliates.update_one(
+        {"_id": oid},
+        {"$set": {
+            "activation_token_hash": token_hash,
+            "activation_token_expires_at": expires_at,
+        }}
+    )
+
+    activation_link = f"{settings.APP_URL}/affiliate/activate?token={raw_token}"
+
+    await db.email_queue.insert_one({
+        "kind": "affiliate_activation",
+        "email": affiliate["email"],
+        "name": affiliate["name"],
+        "code": affiliate["code"],
+        "activation_link": activation_link,
+        "scheduled_at": now,
+        "status": "pending",
+        "retry_count": 0,
+        "sent_at": None,
+        "error": None,
+    })
+    asyncio.create_task(process_email_queue())
+
+    return {
+        "success": True,
+        "message": f"Activation email sent to {affiliate['email']}",
+        "activation_link": activation_link,
+    }
+
