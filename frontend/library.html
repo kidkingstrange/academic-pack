@@ -7,32 +7,33 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
-<link rel="stylesheet" href="css/main.css?v=4">
+<link rel="stylesheet" href="css/main.css?v=swiss-20261008">
 <style>
-  body { background: #f8f9fa; color: #0f172a; padding-bottom: 80px; font-family: 'Manrope', sans-serif; }
-  .lib-header { background: #ffffff; color: #0f172a; padding: 48px 0; border-bottom: 1px solid #e2e8f0; margin-bottom: 48px; }
-  .lib-header h1 { font-family: 'Clash Display', sans-serif; font-size: 2.2rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.5px; color: #0f172a; }
-  .lib-header p { color: #475569; font-size: .95rem; }
+  body { background: #f9f9f9; color: #0a0a0a; padding-bottom: 80px; font-family: 'Inter', -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  .lib-header { background: #ffffff; color: #0a0a0a; padding: 48px 0; border-bottom: 1px solid #e5e5e5; margin-bottom: 48px; }
+  .lib-header h1 { font-family: 'Inter', sans-serif; font-size: 2.2rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.035em; color: #0a0a0a; }
+  .lib-header p { color: #595959; font-size: 0.95rem; }
   .lib-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 24px; }
-  .lib-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: var(--radius-lg); padding: 28px 24px; display: flex; flex-direction: column; transition: all var(--transition); box-shadow: 0 4px 16px rgba(15,23,42,0.04); }
-  .lib-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(201,151,58,0.18); border-color: var(--gold); }
-  .lib-card__title { font-family: 'Clash Display', sans-serif; font-size: 1.15rem; font-weight: 600; color: #0f172a; margin-bottom: 10px; line-height: 1.3; }
-  .lib-card__desc { font-size: .88rem; color: #475569; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
-  .download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #f1f5f9; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 14px; border-radius: var(--radius); font-weight: 700; font-size: .9rem; cursor: pointer; transition: all var(--transition); }
-  .download-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: #0c0e12; border-color: transparent; box-shadow: 0 4px 14px rgba(201,151,58,.3); }
-  .download-btn:disabled { opacity: .7; cursor: default; }
-  .download-btn--ready { background: linear-gradient(135deg, var(--gold), var(--gold-l)); color: #0c0e12; border-color: transparent; box-shadow: 0 4px 16px rgba(201,151,58,.3); }
-  .download-btn--ready:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(201,151,58,.45); }
-  .loader-page { position: fixed; inset: 0; background: #f8f9fa; display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
-  .spinner { width: 40px; height: 40px; border: 3px solid rgba(0,0,0,.1); border-top-color: var(--gold); border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
+  .lib-card { background: #ffffff; border: 1px solid #e5e5e5; border-radius: 0; padding: 28px 24px; display: flex; flex-direction: column; transition: border-color 0.15s ease; box-shadow: none; }
+  .lib-card:hover { border-color: #0a0a0a; box-shadow: none; transform: none; }
+  .lib-card__title { font-family: 'Inter', sans-serif; font-size: 1.15rem; font-weight: 600; color: #0a0a0a; margin-bottom: 10px; line-height: 1.3; letter-spacing: -0.02em; }
+  .lib-card__desc { font-size: 0.88rem; color: #595959; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
+  .download-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; background: #0a0a0a; border: 1px solid #0a0a0a; color: #ffffff; padding: 12px 20px; border-radius: 9999px; font-weight: 600; font-size: 0.88rem; font-family: 'Inter', sans-serif; cursor: pointer; transition: background 0.15s ease, border-color 0.15s ease; box-shadow: none; }
+  .download-btn:hover { background: #262626; border-color: #262626; color: #ffffff; box-shadow: none; transform: none; }
+  .download-btn:disabled { opacity: 0.6; cursor: default; }
+  .download-btn--ready { background: #0a0a0a; color: #ffffff; border-color: #0a0a0a; box-shadow: none; }
+  .download-btn--ready:hover { background: #262626; border-color: #262626; box-shadow: none; transform: none; }
+  .loader-page { position: fixed; inset: 0; background: #f9f9f9; display: flex; align-items: center; justify-content: center; z-index: 9999; flex-direction: column; }
+  .spinner { width: 40px; height: 40px; border: 3px solid #e5e5e5; border-top-color: #0a0a0a; border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .welcome-banner { display: flex; align-items: center; gap: 16px; max-width: 1120px; margin: 0 auto 32px; padding: 20px 24px; background: #fffdf5; border: 1px solid #fde68a; border-radius: var(--radius-lg); box-shadow: 0 4px 16px rgba(201,151,58,0.08); }
-  .welcome-banner i { font-size: 1.6rem; color: var(--gold); flex-shrink: 0; }
-  .welcome-banner strong { display: block; font-family: 'Clash Display', sans-serif; font-size: 1.05rem; color: #0f172a; margin-bottom: 2px; }
-  .welcome-banner span { font-size: .88rem; color: #475569; }
+  .welcome-banner { display: flex; align-items: center; gap: 16px; max-width: 1120px; margin: 0 auto 32px; padding: 20px 24px; background: #ffffff; border: 1px solid #e5e5e5; border-radius: 0; box-shadow: none; }
+  .welcome-banner i { font-size: 1.6rem; color: #0a0a0a; flex-shrink: 0; }
+  .welcome-banner strong { display: block; font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: #0a0a0a; margin-bottom: 2px; letter-spacing: -0.02em; }
+  .welcome-banner span { font-size: 0.88rem; color: #595959; }
 </style>
 <!-- Meta Pixel Code -->
 <script>
@@ -112,7 +113,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     </div>
     
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:14px; width:100%; margin-top:4px;">
-      <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:14px 16px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+      <div style="background:#ffffff; border:1px solid #e5e5e5; border-radius:0; padding:16px; box-shadow:none;">
         <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">📍 STEP 1 (STUDY FIRST)</div>
         <div style="color:#0f172a; font-size:0.9rem; font-weight:700; margin-bottom:4px;">Download <em>Get Good at Hard Things</em></div>
         <p style="color:#475569; font-size:0.82rem; line-height:1.5; margin:0;">
@@ -120,7 +121,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
         </p>
       </div>
 
-      <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; padding:14px 16px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:0 2px 8px rgba(34,197,94,0.06);">
+      <div style="background:#ffffff; border:1px solid #e5e5e5; border-radius:0; padding:16px; display:flex; flex-direction:column; justify-content:space-between; box-shadow:none;">
         <div>
           <div style="color:#16a34a; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px;">💸 STEP 2 (GET 150% CASH BACK)</div>
           <div style="color:#0f172a; font-size:0.9rem; font-weight:700; margin-bottom:4px;">Earn ₦3,000 Per Referral</div>
@@ -128,7 +129,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
             As a student owner, your Ambassador link is active. Share with 1 friend to pocket ₦3,000 instant direct bank payout.
           </p>
         </div>
-        <a href="/affiliate/dashboard" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#16a34a; color:#ffffff; font-size:0.8rem; font-weight:800; padding:8px 14px; border-radius:8px; text-decoration:none; transition:all 0.2s;">
+        <a href="/affiliate/dashboard" style="display:inline-flex; align-items:center; justify-content:center; gap:6px; background:#0a0a0a; color:#ffffff; font-size:0.8rem; font-weight:600; padding:8px 16px; border:1px solid #0a0a0a; border-radius:9999px; text-decoration:none; transition:all 0.2s;">
           <i class="bi bi-wallet2"></i> Open Ambassador Dashboard &rarr;
         </a>
       </div>
@@ -176,16 +177,16 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     const main = document.querySelector('main.container');
     if (main) {
       main.innerHTML = `
-        <div style="max-width: 500px; margin: 80px auto; padding: 40px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; text-align: center; box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);">
-          <div style="font-size: 3rem; color: var(--gold); margin-bottom: 20px;"><i class="bi bi-shield-lock"></i></div>
-          <h2 style="font-family: 'Clash Display', sans-serif; font-size: 1.8rem; font-weight: 600; color: #0f172a; margin-bottom: 16px;">Access Link Required</h2>
-          <p style="color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">Please use the direct library access link sent to your email after purchase. If you just purchased, wait a few seconds and check your inbox (and spam folder) for your welcome email.</p>
-          <a href="/" class="btn btn--gold" style="display: inline-block; text-decoration: none; width: 100%; text-align: center; margin-bottom: 20px; padding: 14px; font-weight: 800;">Go to Homepage</a>
-          <div style="border-top: 1px solid #e2e8f0; padding-top: 20px;">
-            <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 12px;">Lost your access link? Enter the email you purchased with:</p>
+        <div style="max-width: 500px; margin: 80px auto; padding: 40px; background: #ffffff; border: 1px solid #e5e5e5; border-radius: 0; text-align: center; box-shadow: none;">
+          <div style="font-size: 2.5rem; color: #0a0a0a; margin-bottom: 20px;"><i class="bi bi-shield-lock"></i></div>
+          <h2 style="font-family: 'Inter', sans-serif; font-size: 1.8rem; font-weight: 600; color: #0a0a0a; margin-bottom: 16px; letter-spacing: -0.035em;">Access Link Required</h2>
+          <p style="color: #595959; font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px;">Please use the direct library access link sent to your email after purchase. If you just purchased, wait a few seconds and check your inbox (and spam folder) for your welcome email.</p>
+          <a href="/" class="btn" style="display: inline-block; text-decoration: none; width: 100%; text-align: center; margin-bottom: 20px; padding: 12px 20px; font-weight: 600; background: #0a0a0a; color: #ffffff; border-radius: 9999px; border: 1px solid #0a0a0a; font-family: 'Inter', sans-serif;">Go to Homepage</a>
+          <div style="border-top: 1px solid #e5e5e5; padding-top: 20px;">
+            <p style="color: #8c8c8c; font-size: 0.85rem; margin-bottom: 12px;">Lost your access link? Enter the email you purchased with:</p>
             <form id="resend-link-form" style="display: flex; gap: 8px;">
-              <input type="email" id="resend-link-email" required placeholder="you@example.com" style="flex: 1; padding: 10px 14px; border-radius: 8px; border: 1.5px solid #cbd5e1; background: #f8fafc; color: #0f172a; font-size: 0.9rem;">
-              <button type="submit" class="btn btn--gold" style="white-space: nowrap; padding: 10px 18px; font-weight: 800;">Resend</button>
+              <input type="email" id="resend-link-email" required placeholder="you@example.com" style="flex: 1; padding: 10px 14px; border-radius: 0; border: 1px solid #e5e5e5; background: #ffffff; color: #0a0a0a; font-size: 0.9rem; font-family: 'Inter', sans-serif;">
+              <button type="submit" class="btn" style="white-space: nowrap; padding: 10px 18px; font-weight: 600; background: #0a0a0a; color: #ffffff; border-radius: 9999px; border: 1px solid #0a0a0a; font-family: 'Inter', sans-serif;">Resend</button>
             </form>
             <p id="resend-link-status" style="font-size: 0.85rem; margin-top: 10px; display: none;"></p>
           </div>
@@ -237,23 +238,23 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
       const data = await res.json();
       const userFirstName = data.user_name ? data.user_name.split(' ')[0] : 'there';
-      document.getElementById('user-name').innerHTML = `Welcome, ${userFirstName} ${data.is_vip ? '<span style="font-size:0.55em; vertical-align:middle; background:linear-gradient(135deg,#c9973a,#e5b85c); color:#0c0e14; padding:4px 10px; border-radius:20px; font-weight:800; letter-spacing:0.5px; margin-left:8px;"><i class="bi bi-star-fill"></i> VIP ACCELERATOR</span>' : ''}`;
+      document.getElementById('user-name').innerHTML = `Welcome, ${userFirstName} ${data.is_vip ? '<span style="font-size:11px; vertical-align:middle; background:#0a0a0a; color:#ffffff; padding:4px 10px; border-radius:9999px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; margin-left:8px;"><i class="bi bi-star-fill"></i> VIP ACCELERATOR</span>' : ''}`;
       
       // Inject VIP Community banner if user is VIP
       if (data.is_vip && data.whatsapp_community_link) {
         const vipBanner = document.createElement('div');
-        vipBanner.style.cssText = 'background: linear-gradient(135deg, rgba(201,151,58,0.15), rgba(201,151,58,0.05)); border: 1px solid rgba(201,151,58,0.4); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(201,151,58,0.15);';
+        vipBanner.style.cssText = 'background: #ffffff; border: 1px solid #e5e5e5; border-radius: 0; padding: 20px 24px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; box-shadow: none;';
         vipBanner.innerHTML = `
           <div style="display:flex; align-items:center; gap:14px;">
-            <div style="width:48px; height:48px; border-radius:50%; background:rgba(201,151,58,0.2); color:var(--gold-l); display:flex; align-items:center; justify-content:center; font-size:1.5rem; flex-shrink:0;">
+            <div style="width:44px; height:44px; border-radius:50%; background:#f3f3f4; color:#0a0a0a; border: 1px solid #e5e5e5; display:flex; align-items:center; justify-content:center; font-size:1.3rem; flex-shrink:0;">
               <i class="bi bi-broadcast"></i>
             </div>
             <div>
-              <strong style="color:#fff; font-size:1.05rem; display:block; margin-bottom:2px;">VIP Masterclass Community Access</strong>
-              <span style="color:var(--gray-l); font-size:0.85rem;">Join the private live Wednesday 8PM sessions with Itoya David & the inner circle.</span>
+              <strong style="color:#0a0a0a; font-size:1.05rem; display:block; margin-bottom:2px; font-weight:600; letter-spacing:-0.02em;">VIP Masterclass Community Access</strong>
+              <span style="color:#595959; font-size:0.85rem;">Join the private live Wednesday 8PM sessions with Itoya David & the inner circle.</span>
             </div>
           </div>
-          <a href="${data.whatsapp_community_link}" target="_blank" rel="noopener noreferrer" style="background:linear-gradient(135deg,var(--gold),var(--gold-l)); color:var(--ink); font-weight:800; font-size:0.88rem; padding:12px 20px; border-radius:var(--radius); text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:0 4px 14px rgba(201,151,58,0.3);">
+          <a href="${data.whatsapp_community_link}" target="_blank" rel="noopener noreferrer" style="background:#0a0a0a; color:#ffffff; font-weight:600; font-size:0.88rem; padding:10px 20px; border-radius:9999px; border:1px solid #0a0a0a; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:none;">
             <i class="bi bi-whatsapp"></i> Enter VIP WhatsApp Community &rarr;
           </a>
         `;
@@ -264,15 +265,15 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       grid.innerHTML = data.products.map(p => {
         if (p.locked) {
           return `
-            <div class="lib-card" style="opacity: 0.85; border-style: dashed; border-color: rgba(255,255,255,0.15); background: rgba(14,17,24,0.6);">
+            <div class="lib-card" style="opacity: 0.9; border: 1px dashed #e5e5e5; background: #f8f8f8;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <span style="font-size:0.72rem; font-weight:700; color:#ef4444; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.25); padding:3px 8px; border-radius:4px; display:inline-flex; align-items:center; gap:4px;">
+                <span style="font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:#ba1a1a; background:#ffdad6; border:1px solid #c4c7c7; padding:3px 8px; border-radius:9999px; display:inline-flex; align-items:center; gap:4px;">
                   <i class="bi bi-lock-fill"></i> Complete Pack Exclusive
                 </span>
               </div>
-              <h3 class="lib-card__title" style="color: rgba(255,255,255,0.7);">${p.title}</h3>
-              <p class="lib-card__desc" style="color: rgba(255,255,255,0.45);">${p.description}</p>
-              <a href="/academic-comeback-package.html#pricing" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:rgba(201,151,58,0.1); border:1px solid rgba(201,151,58,0.3); color:var(--gold-l); padding:14px; border-radius:var(--radius); font-weight:700; font-size:0.88rem; text-decoration:none; transition:all 0.2s;">
+              <h3 class="lib-card__title" style="color: #0a0a0a;">${p.title}</h3>
+              <p class="lib-card__desc" style="color: #595959;">${p.description}</p>
+              <a href="/academic-comeback-package.html#pricing" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:#0a0a0a; border:1px solid #0a0a0a; color:#ffffff; padding:12px 20px; border-radius:9999px; font-weight:600; font-size:0.88rem; text-decoration:none; transition:background 0.15s ease;">
                 <i class="bi bi-unlock-fill"></i> Upgrade to Unlock
               </a>
             </div>

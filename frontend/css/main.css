@@ -5,49 +5,151 @@
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --ink:#0c0e12;--ink2:#1a1d24;--ink3:#252833;
-  --surface:#f7f6f2;--surface2:#eeece6;--white:#ffffff;
-  --gold:#c9973a;--gold-l:#e3b55a;--gold-d:#a87830;
-  --green:#22c55e;--red:#ef4444;
-  --gray:#64748b;--gray-l:#94a3b8;--gray-ll:#cbd5e1;
-  --text:#1e2028;--text2:#475569;
-  --radius:12px;--radius-lg:20px;--radius-xl:28px;--radius-full:999px;
-  --shadow-sm:0 2px 8px rgba(0,0,0,.06);
-  --shadow:0 4px 20px rgba(0,0,0,.08);
-  --shadow-lg:0 12px 40px rgba(0,0,0,.12);
-  --gold-glow:0 0 40px rgba(201,151,58,.18);
-  --transition:.22s cubic-bezier(.4,0,.2,1);
+  /* ── Swiss Modernist Editorial Palette ── */
+  --surface: #f9f9f9;
+  --surface-dim: #dadada;
+  --surface-bright: #f9f9f9;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f3f3f4;
+  --surface-container: #eeeeee;
+  --surface-container-high: #e8e8e8;
+  --surface-container-highest: #e2e2e2;
+  --on-surface: #1a1c1c;
+  --on-surface-variant: #444748;
+  --inverse-surface: #2f3131;
+  --inverse-on-surface: #f0f1f1;
+  
+  --outline: #747878;
+  --outline-variant: #c4c7c7;
+  --border-hairline: #e5e5e5;
+  --border-subtle: #cccccc;
+  --surface-tint: #5f5e5e;
+
+  --primary: #000000;
+  --on-primary: #ffffff;
+  --primary-container: #1c1b1b;
+  --on-primary-container: #858383;
+  --inverse-primary: #c9c6c5;
+  --action-primary: #0a0a0a;
+  --action-hover: #262626;
+
+  --secondary: #5e5e5e;
+  --on-secondary: #ffffff;
+  --secondary-container: #e1dfdf;
+  --on-secondary-container: #636262;
+
+  --tertiary: #000000;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #1b1c1c;
+  --on-tertiary-container: #848484;
+
+  --text-primary: #0a0a0a;
+  --text-secondary: #595959;
+  --text-tertiary: #8c8c8c;
+
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  --background: #f9f9f9;
+  --on-background: #1a1c1c;
+  --surface-variant: #e2e2e2;
+
+  /* Universal mapping aliases for existing layouts */
+  --ink: #0a0a0a;
+  --ink2: #1a1c1c;
+  --ink3: #2f3131;
+  --surface2: #f3f3f4;
+  --white: #ffffff;
+  --gold: #0a0a0a;
+  --gold-l: #262626;
+  --gold-d: #000000;
+  --gold-bright: #0a0a0a;
+  --gold-glow: none;
+  --green: #0a0a0a;
+  --red: #ba1a1a;
+  --gray: #595959;
+  --gray-l: #8c8c8c;
+  --gray-ll: #e5e5e5;
+  --text: #0a0a0a;
+  --text2: #595959;
+
+  /* Shapes & Radii: Swiss Modernist Pill for actions, Cartesian 0px/subtle for structure */
+  --radius-sm: 0.5rem;
+  --radius: 1rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 2rem;
+  --radius-xl: 3rem;
+  --radius-full: 9999px;
+
+  /* Elevation: Swiss Modernism strictly rejects blur drop shadows */
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: none;
+
+  --transition: 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Spacing */
+  --gutter: 2rem;
+  --gutter-mobile: 1rem;
+  --margin: 4rem;
+  --margin-mobile: 1.25rem;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 3rem;
 }
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden;width:100%}
-body{font-family:'Manrope',sans-serif;color:var(--text);background:var(--surface);overflow-x:hidden;width:100%;position:relative;line-height:1.6}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden;width:100%}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text);background:var(--surface);overflow-x:hidden;width:100%;position:relative;line-height:1.5}
 img{max-width:100%;display:block}
 a{text-decoration:none;color:inherit}
 button{font-family:inherit;cursor:pointer}
 
 /* ── Container ── */
-.container{width:100%;max-width:1100px;margin:0 auto;padding:0 24px}
+.container{width:100%;max-width:1160px;margin:0 auto;padding:0 var(--gutter)}
+@media(max-width:768px){.container{padding:0 var(--gutter-mobile)}}
 .container--sm{max-width:760px}
 .container--xs{max-width:560px}
 
-/* ── Buttons ── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:700;font-size:1rem;padding:16px 36px;border-radius:var(--radius-full);border:none;transition:var(--transition);cursor:pointer;white-space:nowrap}
-.btn--gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--ink);box-shadow:0 4px 24px rgba(201,151,58,.3)}
-.btn--gold:hover{transform:translateY(-2px);box-shadow:0 8px 36px rgba(201,151,58,.4)}
-.btn--outline{background:transparent;border:2px solid rgba(255,255,255,.2);color:#fff}
-.btn--outline:hover{background:rgba(255,255,255,.08)}
-.btn--green{background:#25d366;color:#fff;box-shadow:0 4px 20px rgba(37,211,102,.25)}
-.btn--green:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.35)}
+/* ── Buttons (Swiss Modernist Pill) ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;letter-spacing:-0.01em;padding:12px 24px;border-radius:var(--radius-full);border:1px solid transparent;transition:var(--transition);cursor:pointer;white-space:nowrap;line-height:1}
+.btn--gold,.btn--primary{background:var(--action-primary);color:var(--on-primary);border:1px solid var(--action-primary);box-shadow:none !important}
+.btn--gold:hover,.btn--primary:hover{background:var(--action-hover);border-color:var(--action-hover);color:var(--on-primary);transform:none;box-shadow:none !important}
+.btn--outline,.btn--secondary{background:transparent;border:1px solid var(--border-hairline);color:var(--action-primary)}
+.btn--outline:hover,.btn--secondary:hover{background:var(--surface-container-low);border-color:var(--action-primary);color:var(--action-primary);transform:none}
+.btn--green{background:var(--action-primary);color:var(--on-primary);border:1px solid var(--action-primary);box-shadow:none !important}
+.btn--green:hover{background:var(--action-hover);transform:none;box-shadow:none !important}
 .btn--full{width:100%;max-width:440px}
 .btn svg,.btn i{flex-shrink:0;font-size:1.1em}
 
-/* ── Badge ── */
-.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,151,58,.12);border:1px solid rgba(201,151,58,.25);color:var(--gold-l);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:var(--radius-full);letter-spacing:.8px;text-transform:uppercase}
+/* ── Badge (Swiss Modernist Micro Capsule) ── */
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--surface-container-low);border:1px solid var(--border-hairline);color:var(--text-primary);font-family:'Inter',sans-serif;font-size:11px;font-weight:600;line-height:14px;letter-spacing:0.08em;padding:5px 12px;border-radius:var(--radius-full);text-transform:uppercase}
 
-/* ── Section titles ── */
-.section-label{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
-.section-title{font-family:'Clash Display',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:600;line-height:1.18;color:var(--ink);letter-spacing:-.5px}
-.section-title--light{color:#fff}
-.section-sub{font-size:1rem;color:var(--text2);line-height:1.7;max-width:540px}
+/* ── Section Titles & Typographic Hierarchy ── */
+.section-label{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;line-height:14px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary);margin-bottom:12px;display:block}
+.section-title{font-family:'Inter',sans-serif;font-size:clamp(1.85rem,3.5vw,2.5rem);font-weight:600;line-height:1.15;color:var(--text-primary);letter-spacing:-0.035em}
+.section-title--light{color:var(--text-primary)}
+.section-sub{font-family:'Inter',sans-serif;font-size:16px;color:var(--text-secondary);line-height:1.55;letter-spacing:-0.01em;max-width:580px}
+
+/* ── Swiss Modernist Typography Utilities ── */
+.display-hero{font-family:'Inter',sans-serif;font-size:56px;font-weight:600;line-height:62px;letter-spacing:-0.04em;color:var(--text-primary)}
+@media(max-width:768px){.display-hero{font-size:36px;line-height:42px;letter-spacing:-0.03em}}
+.headline-lg{font-family:'Inter',sans-serif;font-size:40px;font-weight:500;line-height:46px;letter-spacing:-0.035em;color:var(--text-primary)}
+@media(max-width:768px){.headline-lg{font-size:28px;line-height:34px;letter-spacing:-0.025em}}
+.headline-md{font-family:'Inter',sans-serif;font-size:24px;font-weight:500;line-height:30px;letter-spacing:-0.02em;color:var(--text-primary)}
+.headline-sm{font-family:'Inter',sans-serif;font-size:18px;font-weight:500;line-height:24px;letter-spacing:-0.015em;color:var(--text-primary)}
+.body-lead{font-family:'Inter',sans-serif;font-size:24px;font-weight:400;line-height:34px;letter-spacing:-0.015em;color:var(--text-secondary)}
+@media(max-width:768px){.body-lead{font-size:18px;line-height:26px;letter-spacing:-0.01em}}
+.body-md{font-family:'Inter',sans-serif;font-size:15px;font-weight:400;line-height:22px;letter-spacing:-0.005em;color:var(--text-secondary)}
+.body-sm{font-family:'Inter',sans-serif;font-size:13px;font-weight:400;line-height:18px;letter-spacing:0em;color:var(--text-secondary)}
+.label-code{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:400;line-height:16px;letter-spacing:0.02em;color:var(--text-tertiary)}
+.label-caps{font-family:'Inter',sans-serif;font-size:11px;font-weight:600;line-height:14px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-tertiary)}
+
+/* Swiss Hairline Dividers & Dot Anchors */
+.hairline-divider{border:0;border-top:1px solid var(--border-hairline);margin:var(--space-lg) 0}
+.dot-anchor{display:inline-block;width:6px;height:6px;background-color:var(--action-primary);border-radius:50%;vertical-align:middle}
 
 /* ── AOS reset ── */
 [data-aos]{opacity:0;transition-property:opacity,transform}
@@ -61,36 +163,37 @@ button{font-family:inherit;cursor:pointer}
 /* ── Bank Transfer Panel (Flutterwave) ─────────────────────────────────────── */
 .bank-details-panel { margin-top: 20px; }
 .bank-details-card {
-  background: var(--ink3);
-  border: 1px dashed rgba(255,255,255,0.18);
-  border-radius: 16px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0;
   padding: 24px 20px;
 }
-.bank-details-title { font-size: .95rem; color: rgba(255,255,255,.9); margin-bottom: 16px; text-align: center; }
+.bank-details-title { font-size: .95rem; color: var(--text-primary); margin-bottom: 16px; text-align: center; font-weight: 600; }
 .bank-detail-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid var(--border-hairline);
 }
 .bank-detail-row:last-of-type { border-bottom: none; }
-.bank-detail-label { font-size: .82rem; color: var(--gray-l); }
-.bank-detail-value { font-size: .95rem; color: #fff; font-weight: 600; }
-.acct-number { letter-spacing: 1.5px; font-size: 1.1rem; color: var(--gold-l); }
-.gold { color: var(--gold-l); }
-.bank-details-note { font-size: .78rem; color: var(--gray-l); margin: 16px 0; line-height: 1.6; text-align: center; }
+.bank-detail-label { font-size: .82rem; color: var(--text-tertiary); font-family: 'Inter', sans-serif; }
+.bank-detail-value { font-size: .95rem; color: var(--text-primary); font-weight: 600; }
+.acct-number { letter-spacing: 0.08em; font-size: 1.1rem; color: var(--text-primary); font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.gold { color: var(--text-primary); }
+.bank-details-note { font-size: .78rem; color: var(--text-secondary); margin: 16px 0; line-height: 1.6; text-align: center; }
 .poll-checking {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   font-size: .88rem;
-  color: var(--gold-l);
+  color: var(--text-primary);
   margin-bottom: 16px;
   padding: 12px;
-  background: rgba(201,151,58,.08);
-  border-radius: 8px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0;
 }
 .poll-checking__status-row {
   display: flex;
@@ -100,24 +203,24 @@ button{font-family:inherit;cursor:pointer}
 }
 .poll-checking__warning {
   font-size: .78rem;
-  font-weight: 800;
-  color: #f59e0b;
+  font-weight: 600;
+  color: var(--text-primary);
   text-align: center;
   line-height: 1.5;
   margin: 0;
 }
 .poll-checking__tip {
   font-size: .76rem;
-  font-weight: 500;
-  color: var(--gray-l);
+  font-weight: 400;
+  color: var(--text-secondary);
   text-align: center;
   line-height: 1.5;
   margin: 0;
 }
 .mini-spinner {
   width: 18px; height: 18px;
-  border: 2px solid rgba(255,255,255,.1);
-  border-top-color: var(--gold);
+  border: 2px solid var(--border-hairline);
+  border-top-color: var(--action-primary);
   border-radius: 50%;
   animation: spin .7s linear infinite;
   flex-shrink: 0;
@@ -125,29 +228,35 @@ button{font-family:inherit;cursor:pointer}
 .btn-check-payment {
   width: 100%;
   padding: 14px;
-  border-radius: 50px;
-  font-weight: 800;
+  border-radius: var(--radius-full);
+  font-weight: 600;
   font-size: .95rem;
   cursor: pointer;
-  border: none;
-  background: linear-gradient(135deg, var(--gold), var(--gold-l));
-  color: var(--ink);
-  box-shadow: 0 4px 16px rgba(201,151,58,.25);
-  transition: all var(--transition);
+  border: 1px solid var(--action-primary);
+  background: var(--action-primary);
+  color: var(--on-primary);
+  box-shadow: none !important;
+  transition: var(--transition);
 }
 .btn-check-payment:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(201,151,58,.4);
+  background: var(--action-hover);
+  border-color: var(--action-hover);
+  transform: none;
+  box-shadow: none !important;
 }
 
 /* ==========================================================================
    GLOBAL UNIFIED SITE HEADER & MOBILE NAVIGATION DRAWER
    ========================================================================== */
 
+/* ==========================================================================
+   GLOBAL UNIFIED SITE HEADER & MOBILE NAVIGATION DRAWER (Swiss Modernist)
+   ========================================================================== */
+
 /* Top Flagship Announcement Bar */
 .global-top-bar {
-  background: linear-gradient(90deg, #11141c 0%, #1e192c 50%, #11141c 100%);
-  border-bottom: 1px solid rgba(212, 166, 58, 0.25);
+  background: var(--surface-container-low);
+  border-bottom: 1px solid var(--border-hairline);
   padding: 8px 16px;
   position: relative;
   z-index: 1010;
@@ -161,49 +270,55 @@ button{font-family:inherit;cursor:pointer}
   gap: 12px;
   flex-wrap: wrap;
   font-size: 0.84rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   text-align: center;
 }
+.global-top-bar__inner strong {
+  color: var(--text-primary);
+}
 .global-top-bar__badge {
-  background: rgba(212, 166, 58, 0.18);
-  border: 1px solid #d4a63a;
-  color: #f3c659;
-  font-weight: 800;
-  font-size: 0.72rem;
-  padding: 2px 10px;
-  border-radius: 20px;
-  letter-spacing: 0.5px;
+  background: var(--surface-container-highest);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.68rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 .global-top-bar__cta {
-  background: linear-gradient(135deg, #c9973a 0%, #f5c862 100%);
-  color: #0c0e14;
-  font-weight: 800;
+  background: var(--action-primary);
+  color: var(--on-primary);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   font-size: 0.75rem;
-  padding: 4px 12px;
-  border-radius: 20px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(201, 151, 58, 0.3);
+  transition: var(--transition);
+  box-shadow: none;
 }
 .global-top-bar__cta:hover {
-  transform: scale(1.04);
-  box-shadow: 0 4px 12px rgba(201, 151, 58, 0.4);
+  background: var(--action-hover);
+  color: var(--on-primary);
+  transform: none;
+  box-shadow: none;
 }
 
 /* Site Header */
 .global-site-header {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-hairline);
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
+  box-shadow: none;
 }
 .global-header-inner {
   max-width: 1200px;
@@ -219,28 +334,21 @@ button{font-family:inherit;cursor:pointer}
   align-items: center;
   gap: 10px;
   text-decoration: none;
-  color: #0f172a;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 1.15rem;
-  font-weight: 900;
-  letter-spacing: 2px;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   flex-shrink: 0;
 }
 .global-brand img {
-  height: 26px;
+  height: 24px;
   width: auto;
   display: block;
 }
 .global-brand__badge {
-  font-size: 0.65rem;
-  color: #92400e;
-  background: #fef3c7;
-  border: 1px solid #fde68a;
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
-  margin-left: 4px;
+  display: none;
 }
 
 /* Desktop Nav Links */
@@ -250,47 +358,47 @@ button{font-family:inherit;cursor:pointer}
   gap: 10px;
 }
 .global-nav__link {
-  color: #475569;
+  color: var(--text-secondary);
   text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
   white-space: nowrap;
 }
 .global-nav__link:hover {
-  color: #0f172a;
-  background: rgba(15, 23, 42, 0.05);
+  color: var(--text-primary);
+  background: var(--surface-container-low);
 }
 .global-nav__flagship {
-  background: #fef3c7;
-  border: 1.5px solid #d97706;
-  color: #92400e !important;
-  font-size: 0.88rem;
-  font-weight: 800;
-  padding: 7px 16px;
-  border-radius: 50px;
+  background: var(--action-primary);
+  border: 1px solid var(--action-primary);
+  color: var(--on-primary) !important;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 18px;
+  border-radius: var(--radius-full);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
-  transition: all 0.2s ease;
+  box-shadow: none;
+  transition: var(--transition);
   white-space: nowrap;
 }
 .global-nav__flagship:hover {
-  background: #fde68a;
-  color: #78350f !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);
+  background: var(--action-hover);
+  border-color: var(--action-hover);
+  color: var(--on-primary) !important;
+  transform: none;
+  box-shadow: none;
 }
 .global-nav__flagship-dot {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 8px #10b981;
+  background: #ffffff;
 }
 
 /* Mobile Actions */
@@ -300,13 +408,13 @@ button{font-family:inherit;cursor:pointer}
   gap: 10px;
 }
 .global-nav__mobile-flagship {
-  background: #fef3c7;
-  border: 1px solid #d97706;
-  color: #92400e;
+  background: var(--action-primary);
+  border: 1px solid var(--action-primary);
+  color: var(--on-primary);
   font-size: 0.75rem;
-  font-weight: 800;
-  padding: 5px 10px;
-  border-radius: 20px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -314,29 +422,27 @@ button{font-family:inherit;cursor:pointer}
   white-space: nowrap;
 }
 .global-nav__toggle {
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  color: #0f172a;
+  background: transparent;
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
   font-size: 1.35rem;
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-full);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: var(--transition);
 }
 .global-nav__toggle:hover {
-  background: #e2e8f0;
+  background: var(--surface-container-low);
 }
 
 /* Mobile Navigation Drawer */
 .global-drawer-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(10, 10, 10, 0.4);
   z-index: 9998;
   opacity: 0;
   pointer-events: none;
@@ -354,15 +460,15 @@ button{font-family:inherit;cursor:pointer}
   width: 88vw;
   max-width: 360px;
   background: #ffffff;
-  border-left: 1px solid #e2e8f0;
+  border-left: 1px solid var(--border-hairline);
   z-index: 9999;
   transform: translateX(100%);
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.15);
-  color: #0f172a;
+  box-shadow: none;
+  color: var(--text-primary);
 }
 .global-drawer.is-open {
   transform: translateX(0);
@@ -372,57 +478,58 @@ button{font-family:inherit;cursor:pointer}
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--border-hairline);
 }
 .drawer-close {
   background: transparent;
-  border: 1px solid #cbd5e1;
-  color: #475569;
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
   font-size: 1.1rem;
   width: 34px;
   height: 34px;
-  border-radius: 8px;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: var(--transition);
 }
 .drawer-close:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--surface-container-low);
 }
 
 /* Flagship Card inside Drawer */
 .drawer-flagship-card {
   margin: 16px 16px 12px;
-  background: linear-gradient(145deg, #fffdfa 0%, #fef8ee 100%);
-  border: 1.5px solid rgba(212, 166, 58, 0.45);
-  border-radius: 14px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0;
   padding: 16px;
-  box-shadow: 0 4px 16px rgba(201, 151, 58, 0.1);
+  box-shadow: none;
 }
 .drawer-flagship-tag {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   font-size: 0.68rem;
-  font-weight: 800;
-  color: #b45309;
+  font-weight: 600;
+  color: var(--text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
   margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
 }
 .drawer-flagship-title {
   font-size: 1.05rem;
-  font-weight: 900;
-  color: #0f172a;
+  font-weight: 600;
+  color: var(--text-primary);
   margin: 0 0 4px 0;
   line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 .drawer-flagship-desc {
   font-size: 0.78rem;
-  color: #475569;
+  color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 12px;
 }
@@ -435,34 +542,41 @@ button{font-family:inherit;cursor:pointer}
 .drawer-flagship-old {
   font-size: 0.85rem;
   text-decoration: line-through;
-  color: #94a3b8;
+  color: var(--text-tertiary);
+  font-family: 'JetBrains Mono', monospace;
 }
 .drawer-flagship-new {
-  font-size: 1.3rem;
-  font-weight: 900;
-  color: #b45309;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-family: 'JetBrains Mono', monospace;
 }
 .drawer-flagship-discount {
-  background: #dcfce7;
-  color: #15803d;
+  background: var(--surface-container-high);
+  color: var(--text-primary);
   font-size: 0.68rem;
-  font-weight: 800;
+  font-weight: 600;
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: var(--radius-full);
 }
 .drawer-flagship-btn {
   display: block;
   width: 100%;
   text-align: center;
-  background: linear-gradient(135deg, #c9973a 0%, #f5c862 100%);
-  color: #0c0e14;
-  font-weight: 800;
+  background: var(--action-primary);
+  color: var(--on-primary);
+  font-weight: 600;
   font-size: 0.85rem;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-full);
   text-decoration: none;
-  box-shadow: 0 4px 14px rgba(201, 151, 58, 0.25);
+  box-shadow: none;
   box-sizing: border-box;
+  transition: var(--transition);
+}
+.drawer-flagship-btn:hover {
+  background: var(--action-hover);
+  color: var(--on-primary);
 }
 
 /* Drawer Nav Links */
@@ -470,49 +584,50 @@ button{font-family:inherit;cursor:pointer}
   padding: 8px 16px;
 }
 .drawer-group-title {
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.08em;
   margin: 12px 6px 6px;
+  font-family: 'Inter', sans-serif;
 }
 .drawer-nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  color: #334155;
+  color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 600;
-  border-radius: 8px;
-  transition: all 0.15s ease;
+  font-weight: 500;
+  border-radius: 0;
+  transition: var(--transition);
 }
 .drawer-nav-item:hover {
-  background: rgba(15, 23, 42, 0.05);
-  color: #0f172a;
+  background: var(--surface-container-low);
+  color: var(--text-primary);
 }
 .drawer-nav-item i {
   font-size: 1.1rem;
-  color: #b45309;
+  color: var(--text-tertiary);
   width: 20px;
   text-align: center;
   flex-shrink: 0;
 }
 .drawer-nav-item--highlight {
-  background: #fef3c7;
-  border: 1px solid #fde68a;
-  color: #92400e;
+  background: var(--surface-container-low);
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
 }
 
 /* Drawer Footer */
 .drawer-footer {
   margin-top: auto;
   padding: 16px 20px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid var(--border-hairline);
   font-size: 0.78rem;
-  color: #64748b;
+  color: var(--text-tertiary);
   text-align: center;
 }
 
@@ -545,7 +660,6 @@ button{font-family:inherit;cursor:pointer}
     font-size: 0.72rem;
   }
 
-  /* On article reading pages on mobile, hide the announcement bar so readers immediately see content */
   .article-reading-page .global-top-bar {
     display: none !important;
   }
@@ -557,12 +671,12 @@ button{font-family:inherit;cursor:pointer}
     gap: 8px;
   }
   .global-brand {
-    font-size: 1.02rem;
-    letter-spacing: 1px;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
     gap: 8px;
   }
   .global-brand img {
-    height: 23px;
+    height: 22px;
   }
   .global-header-mobile-actions {
     gap: 6px;
@@ -575,7 +689,7 @@ button{font-family:inherit;cursor:pointer}
 
 @media (max-width: 380px) {
   .global-brand span {
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
   .global-nav__mobile-flagship {
     padding: 5px 6px;
@@ -584,33 +698,24 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ==========================================================================
-   HOMEPAGE FLAGSHIP SPOTLIGHT SECTION
+   HOMEPAGE FLAGSHIP SPOTLIGHT SECTION (Swiss Modernist)
    ========================================================================== */
 .flagship-spotlight-section {
-  padding: 20px 20px 60px;
+  padding: 40px 20px 60px;
   max-width: 1160px;
   margin: 0 auto;
 }
 .flagship-card-wrap {
-  background: radial-gradient(130% 110% at 50% 0%, #161b28 0%, #0c0e14 100%);
-  border: 1.5px solid rgba(212, 166, 58, 0.45);
-  border-radius: 24px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0;
   padding: 40px 36px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 24px 60px -10px rgba(0, 0, 0, 0.8),
-              0 0 36px rgba(212, 166, 58, 0.15),
-              inset 0 1px 0 rgba(255, 235, 180, 0.35);
+  box-shadow: none;
 }
 .flagship-card-wrap::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 15%;
-  right: 15%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(245, 200, 98, 0.95), transparent);
-  pointer-events: none;
+  display: none;
 }
 .flagship-grid {
   display: grid;
@@ -625,7 +730,6 @@ button{font-family:inherit;cursor:pointer}
   }
   .flagship-card-wrap {
     padding: 24px 18px;
-    border-radius: 18px;
   }
 }
 
@@ -643,17 +747,17 @@ button{font-family:inherit;cursor:pointer}
   align-items: flex-start;
   gap: 10px;
   font-size: 0.88rem;
-  color: #e2e8f0;
+  color: var(--text-secondary);
   line-height: 1.45;
 }
 .flagship-stack-item i {
-  color: #4ade80;
+  color: var(--text-primary);
   font-size: 0.95rem;
   margin-top: 2px;
   flex-shrink: 0;
 }
 .flagship-stack-item strong {
-  color: #ffffff;
+  color: var(--text-primary);
 }
 
 /* Free Guides Hub Grid on Homepage */
@@ -669,47 +773,54 @@ button{font-family:inherit;cursor:pointer}
   margin-top: 24px;
 }
 .free-guide-card {
-  background: #141722;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 18px 16px;
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--border-hairline);
+  border-radius: 0;
+  padding: 20px 18px;
   text-decoration: none;
-  transition: all 0.25s ease;
+  transition: var(--transition);
   display: flex;
   flex-direction: column;
+  box-shadow: none;
 }
 .free-guide-card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(212, 166, 58, 0.5);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+  border-color: var(--border-subtle);
+  background: var(--surface-container-low);
+  transform: none;
+  box-shadow: none;
 }
 .free-guide-card__icon {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.1rem;
   margin-bottom: 12px;
+  background: var(--surface-container-low);
+  border: 1px solid var(--border-hairline);
+  color: var(--text-primary);
 }
 .free-guide-card__title {
-  color: #ffffff;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   margin: 0 0 6px 0;
 }
 .free-guide-card__desc {
-  color: #94a3b8;
+  color: var(--text-secondary);
   font-size: 0.78rem;
   line-height: 1.4;
   margin: 0 0 12px 0;
   flex-grow: 1;
 }
 .free-guide-card__link {
-  color: #f3c659;
+  color: var(--text-primary);
   font-size: 0.78rem;
-  font-weight: 800;
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 4px;

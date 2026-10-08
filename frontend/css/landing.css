@@ -1999,6 +1999,513 @@ html, body { overflow-x: hidden !important; width: 100%; max-width: 100vw; }
   vertical-align: middle;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   SWISS MODERNIST EDITORIAL DESIGN SYSTEM ENFORCEMENT
+   International Typographic Style: High contrast, strict Cartesian geometry,
+   asymmetric baseline rhythm, hairline constructivism, zero blur shadows.
+   ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ── Universal Surface & Typography ── */
+body, html {
+  background-color: var(--surface, #f9f9f9) !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+}
 
+/* Eschew all blur shadows, faux glow, and ambient halos */
+*, *::before, *::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
 
+/* ── Typographic Hierarchy ── */
+h1, h2, h3, h4, h5, h6,
+.hero__headline,
+.sec__headline,
+.section-title,
+.roadmap-box__title,
+.phase-card__title,
+.reframe__title,
+.product-card__title,
+.pricing__name,
+.faq__q,
+.modal__title,
+.final-cta__headline,
+.mid-cta__headline,
+.two-choices-title,
+.choice-card__heading,
+.guarantee-box__title,
+.community__headline {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.035em !important;
+  color: var(--text-primary, #0a0a0a) !important;
+}
+
+.hero__headline em,
+.mid-cta__headline em,
+.final-cta__headline em {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text-secondary, #595959) !important;
+  font-style: normal !important;
+  letter-spacing: -0.03em !important;
+}
+
+.section-sub,
+.hero__sub,
+.mid-cta__sub,
+.final-cta__sub,
+.two-choices-sub,
+.roadmap-box__sub {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text-secondary, #595959) !important;
+  font-size: 1.05rem !important;
+  line-height: 1.6 !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Mechanical Monospace Indicators */
+.label-code,
+.pillar__amount,
+.price-current,
+.old-price,
+.new-price,
+.mid-cta__new,
+.mid-cta__old,
+.value-table__price,
+.urgency-bar strong,
+.urgency-bar__timer,
+.step-num,
+.drawer-flagship-price,
+.mobile-price-new,
+.mobile-price-old,
+.pillar__anchor-del {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* Tracked Uppercase Micro-Labels */
+.badge,
+.hero__eyebrow,
+.section-label,
+.ledger__tag-text,
+.ledger__ratio-pill,
+.pillar__eyebrow,
+.pillar__micro-tag,
+.pillar__badge,
+.price-badge-tag,
+.mobile-price-tag,
+.choice-card__tag,
+.phase-card__badge,
+.showcase__pill-badge,
+.product-card__tag,
+.testi-badge,
+.testi-metric,
+.community-bonus__badge,
+.guarantee-box__badge,
+.drawer-flagship-tag,
+.drawer-group-title,
+.trust-bar__chip {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+/* Geometric circular dots */
+.ledger__pulse-dot,
+.bullet-dot,
+.dot-anchor {
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: var(--text-primary, #0a0a0a) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* ── Urgency Bar: Crisp High-Contrast Editorial Banner ── */
+.urgency-bar {
+  background: var(--text-primary, #0a0a0a) !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid var(--border-hairline, #e5e5e5) !important;
+  box-shadow: none !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.urgency-bar strong,
+.urgency-bar__timer {
+  color: #ffffff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.urgency-bar__cta {
+  background: #ffffff !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  border-radius: 9999px !important;
+  border: 1px solid #ffffff !important;
+  box-shadow: none !important;
+  animation: none !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  padding: 6px 14px !important;
+}
+
+.urgency-bar__cta:hover {
+  background: #f3f3f4 !important;
+  color: #000000 !important;
+  transform: none !important;
+}
+
+/* ── Global Header & Navigation ── */
+.nav,
+.global-site-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--border-hairline, #e5e5e5) !important;
+  box-shadow: none !important;
+}
+
+/* ── Cartesian Rectangular Containers (0px Border Radius & Hairline) ── */
+.hero__ledger,
+.ledger__pillar,
+.ledger__pillar--sunk,
+.ledger__pillar--claim,
+.reframe__pillar,
+.product-card,
+.product-card--featured,
+.phase-card,
+.roadmap-box,
+.value-table,
+.value-table__row,
+.guarantee-box,
+.testi-card,
+.faq-item,
+.author,
+.choice-card,
+.choice-card--bad,
+.choice-card--good,
+.modal,
+.modal-card,
+.community-bonus-cta-box,
+.mobile-book-card,
+.mobile-visual-flow,
+.drawer-flagship-card {
+  border-radius: 0 !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+/* Remove decorative gradient pseudo-elements */
+.hero__ledger::before,
+.mid-cta__glow,
+.btn--mega::after {
+  display: none !important;
+}
+
+/* ── Value Comparison Ledger ── */
+.hero__ledger {
+  background: #ffffff !important;
+  padding: 24px !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+}
+
+.ledger__header {
+  border-bottom: 1px solid var(--border-hairline, #e5e5e5) !important;
+  padding-bottom: 12px !important;
+}
+
+.ledger__pillar--sunk {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  padding: 16px !important;
+}
+
+.ledger__pillar--claim {
+  background: #ffffff !important;
+  border: 1px solid var(--text-primary, #0a0a0a) !important;
+  padding: 16px !important;
+}
+
+.pillar__eyebrow--gold,
+.pillar__desc--gold {
+  color: var(--text-secondary, #595959) !important;
+}
+
+.pillar__micro-tag--gold {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+}
+
+.pillar__badge--claim,
+.pillar__badge--sunk {
+  background: var(--text-primary, #0a0a0a) !important;
+  color: #ffffff !important;
+  border-radius: 9999px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.ledger__divider-node {
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  background: #ffffff !important;
+  color: var(--text-primary, #0a0a0a) !important;
+}
+
+.ledger__divider-line {
+  background: var(--border-hairline, #e5e5e5) !important;
+}
+
+.ledger__footer {
+  border-top: 1px solid var(--border-hairline, #e5e5e5) !important;
+  color: var(--text-tertiary, #8c8c8c) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 12px !important;
+}
+
+/* ── Value Stack & Value Table ── */
+.value-table {
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  background: #ffffff !important;
+}
+
+.value-table__row {
+  border-bottom: 1px solid var(--border-hairline, #e5e5e5) !important;
+  padding: 14px 18px !important;
+  background: #ffffff !important;
+}
+
+.value-table__row--total {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  border-top: 2px solid var(--text-primary, #0a0a0a) !important;
+}
+
+.value-table__row--total span {
+  color: var(--text-primary, #0a0a0a) !important;
+}
+
+.value-table__row--final {
+  background: #ffffff !important;
+  border-top: 1px solid var(--border-hairline, #e5e5e5) !important;
+}
+
+.value-table__row--final span,
+.value-table__row--final .value-table__price {
+  color: var(--text-primary, #0a0a0a) !important;
+}
+
+/* ── Testimonials & Proof ── */
+.testi-card {
+  background: #ffffff !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  padding: 24px !important;
+}
+
+.testi-card__stars i {
+  color: var(--text-primary, #0a0a0a) !important;
+}
+
+.testi-card__author {
+  color: var(--text-secondary, #595959) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+}
+
+.testi-badge,
+.testi-metric {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-radius: 9999px !important;
+}
+
+/* ── FAQ Section ── */
+.faq-item {
+  background: #ffffff !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  margin-bottom: 8px !important;
+}
+
+.faq-question {
+  background: #ffffff !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  padding: 18px 20px !important;
+}
+
+.faq-answer {
+  background: #ffffff !important;
+  color: var(--text-secondary, #595959) !important;
+  border-top: 1px solid var(--border-hairline, #e5e5e5) !important;
+  padding: 18px 20px !important;
+  line-height: 1.6 !important;
+}
+
+/* ── Mid CTA, Final CTA & Choices ── */
+.mid-cta,
+.final-cta {
+  background: #ffffff !important;
+  border-top: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-bottom: 1px solid var(--border-hairline, #e5e5e5) !important;
+  padding: 64px 0 !important;
+}
+
+.choice-card--bad {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+}
+
+.choice-card--good {
+  background: #ffffff !important;
+  border: 2px solid var(--text-primary, #0a0a0a) !important;
+}
+
+/* ── Buttons & CTAs: Strict Pill Geometry ── */
+.btn--mega,
+.btn--gold,
+.btn--primary,
+.btn--full,
+.modal__submit,
+.btn-submit,
+.drawer-flagship-btn {
+  background: var(--action-primary, #0a0a0a) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--action-primary, #0a0a0a) !important;
+  border-radius: 9999px !important;
+  box-shadow: none !important;
+  animation: none !important;
+  transition: background 0.15s ease, border-color 0.15s ease !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.btn--mega:hover,
+.btn--gold:hover,
+.btn--primary:hover,
+.btn--full:hover,
+.modal__submit:hover,
+.btn-submit:hover,
+.drawer-flagship-btn:hover {
+  background: var(--action-hover, #262626) !important;
+  border-color: var(--action-hover, #262626) !important;
+  color: #ffffff !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-mega__price {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.btn-mega__price del {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.btn-mega__price .price-current {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+.btn-mega__text {
+  color: #ffffff !important;
+  text-shadow: none !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* ── Checkout & Support Modals: Swiss Modernist Architecture ── */
+.modal-overlay {
+  background: rgba(10, 10, 10, 0.5) !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+.modal,
+.modal-card {
+  background: #ffffff !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-radius: 0 !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  box-shadow: none !important;
+}
+
+.modal__close,
+.modal-close {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  border-radius: 50% !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+}
+
+.modal__progress-dot {
+  background: var(--border-hairline, #e5e5e5) !important;
+  border-radius: 0 !important;
+}
+
+.modal__progress-dot.active,
+.modal__progress-dot.done {
+  background: var(--text-primary, #0a0a0a) !important;
+}
+
+.modal-trust-box {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  color: var(--text-secondary, #595959) !important;
+  border-radius: 0 !important;
+}
+
+.modal-trust-box i {
+  color: var(--text-primary, #0a0a0a) !important;
+}
+
+.form-group input,
+.form-input,
+.viral-friend-email {
+  background: #ffffff !important;
+  color: var(--text-primary, #0a0a0a) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 15px !important;
+}
+
+.form-group input:focus,
+.form-input:focus,
+.viral-friend-email:focus {
+  border-color: var(--text-primary, #0a0a0a) !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.viral-discount-box {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-radius: 0 !important;
+}
+
+.viral-custom-check {
+  border-radius: 0 !important;
+  border: 1.5px solid var(--text-primary, #0a0a0a) !important;
+}
+
+.checkout-methods-banner {
+  background: var(--surface-container-low, #f3f3f4) !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-radius: 0 !important;
+}
+
+.cm-pill {
+  background: #ffffff !important;
+  border: 1px solid var(--border-hairline, #e5e5e5) !important;
+  border-radius: 9999px !important;
+  color: var(--text-secondary, #595959) !important;
+}

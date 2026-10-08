@@ -5,24 +5,24 @@
  */
 
 :root {
-  --us-bg-dark: #faf9f6;
+  --us-bg-dark: #f9f9f9;
   --us-bg-card: #ffffff;
-  --us-bg-card-hover: #f8fafc;
-  --us-border: #e2e8f0;
-  --us-border-highlight: rgba(99, 102, 241, 0.35);
-  --us-text-main: #0f172a;
-  --us-text-sub: #475569;
-  --us-text-muted: #64748b;
-  --us-indigo: #4f46e5;
-  --us-indigo-glow: rgba(79, 70, 229, 0.18);
-  --us-violet: #7c3aed;
-  --us-emerald: #059669;
-  --us-amber: #d97706;
-  --us-gold: #b45309;
-  --us-radius-sm: 8px;
-  --us-radius-md: 16px;
-  --us-radius-lg: 24px;
-  --us-font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif;
+  --us-bg-card-hover: #f3f3f4;
+  --us-border: #e5e5e5;
+  --us-border-highlight: #0a0a0a;
+  --us-text-main: #0a0a0a;
+  --us-text-sub: #595959;
+  --us-text-muted: #8c8c8c;
+  --us-indigo: #0a0a0a;
+  --us-indigo-glow: none;
+  --us-violet: #262626;
+  --us-emerald: #0a0a0a;
+  --us-amber: #0a0a0a;
+  --us-gold: #0a0a0a;
+  --us-radius-sm: 0px;
+  --us-radius-md: 0px;
+  --us-radius-lg: 0px;
+  --us-font-heading: 'Inter', -apple-system, sans-serif;
   --us-font-body: 'Inter', -apple-system, sans-serif;
 }
 
@@ -751,4 +751,150 @@ body {
     flex-wrap: wrap;
     font-size: 0.8rem;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SWISS MODERNIST EDITORIAL OVERRIDES FOR US LANDING
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+body {
+  background-color: #f9f9f9 !important;
+  color: #0a0a0a !important;
+  font-family: 'Inter', -apple-system, sans-serif !important;
+}
+
+/* ── Typography ── */
+.us-hero__headline,
+.us-section-title,
+.us-problem-card h3,
+.us-stack-card h4,
+.us-modal-card h3 {
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: -0.035em !important;
+  font-weight: 600 !important;
+  color: #0a0a0a !important;
+}
+
+.us-hero__headline em {
+  font-family: 'Inter', sans-serif !important;
+  color: #595959 !important;
+  -webkit-text-fill-color: #595959 !important;
+}
+
+.us-price-current,
+.us-price-original,
+.us-urgency-banner__timer {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.us-hero__eyebrow,
+.us-stack-card__tag,
+.us-exams__title,
+.us-urgency-banner__badge {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Banner ── */
+.us-urgency-banner {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+}
+
+.us-urgency-banner__badge {
+  background: #262626 !important;
+  color: #ffffff !important;
+  border-radius: 9999px !important;
+}
+
+.us-urgency-banner__btn {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+  border-radius: 9999px !important;
+  border: 1px solid #ffffff !important;
+}
+
+.us-urgency-banner__btn:hover {
+  background: #f3f3f4 !important;
+  color: #000000 !important;
+}
+
+/* ── Cartesian Containers ── */
+.us-hero__card,
+.us-problem-card,
+.us-stack-card,
+.us-proof-pill,
+.us-exam-chip,
+.us-modal-card,
+.us-exams-section,
+.us-value-stack {
+  border-radius: 0 !important;
+  border: 1px solid #e5e5e5 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+.us-problem-icon {
+  border-radius: 0 !important;
+  background: #f3f3f4 !important;
+  color: #0a0a0a !important;
+}
+
+/* ── Buttons ── */
+.us-btn-primary,
+.us-btn-mega {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+  border: 1px solid #0a0a0a !important;
+  border-radius: 9999px !important;
+  box-shadow: none !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em !important;
+  transition: background 0.15s ease !important;
+}
+
+.us-btn-primary:hover,
+.us-btn-mega:hover {
+  background: #262626 !important;
+  border-color: #262626 !important;
+  color: #ffffff !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Inputs & Modals ── */
+.us-modal-overlay {
+  background: rgba(10, 10, 10, 0.5) !important;
+}
+
+.us-modal-close {
+  border-radius: 50% !important;
+  border: 1px solid #e5e5e5 !important;
+  background: #f3f3f4 !important;
+  color: #0a0a0a !important;
+}
+
+.us-form-input {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 0 !important;
+  color: #0a0a0a !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.us-form-input:focus {
+  border-color: #0a0a0a !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  outline: none !important;
 }

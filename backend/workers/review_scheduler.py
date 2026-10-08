@@ -97,6 +97,9 @@ async def start_review_scheduler(db):
     Continuous background worker that checks once an hour.
     """
     print("🚀 Automated Review Request Scheduler started.")
+    if db is None:
+        print("ℹ️ Review scheduler skipped: MongoDB connection is not active.")
+        return
     while True:
         try:
             await process_review_requests(db)

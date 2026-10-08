@@ -140,8 +140,8 @@ uploads_path.mkdir(parents=True, exist_ok=True)
 
 if frontend_path.exists():
     app.mount("/assets", CachedStaticFiles(directory=str(frontend_path / "assets"), cache_control="public, max-age=31536000, immutable"), name="assets")
-    app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="public, max-age=86400"), name="css")
-    app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="public, max-age=86400"), name="js")
+    app.mount("/css", CachedStaticFiles(directory=str(frontend_path / "css"), cache_control="no-cache, must-revalidate"), name="css")
+    app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="no-cache, must-revalidate"), name="js")
     app.mount("/book-covers", CachedStaticFiles(directory=str(frontend_path / "book-covers"), cache_control="public, max-age=31536000, immutable"), name="book-covers")
 
 if uploads_path.exists():
@@ -167,18 +167,27 @@ async def serve_sitemap():
 # ── SPA-style Page Routes ─────────────────────────────────────────────────────
 @app.get("/", include_in_schema=False)
 async def serve_index():
-    return FileResponse(str(frontend_path / "index.html"))
+    return FileResponse(
+        str(frontend_path / "index.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/academic-comeback-package", include_in_schema=False)
 @app.get("/academic-comeback-package.html", include_in_schema=False)
 @app.get("/academic-comeback", include_in_schema=False)
 async def serve_acp_landing():
-    return FileResponse(str(frontend_path / "academic-comeback-package.html"))
+    return FileResponse(
+        str(frontend_path / "academic-comeback-package.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/us", include_in_schema=False)
 @app.get("/us.html", include_in_schema=False)
 async def serve_us_landing():
-    return FileResponse(str(frontend_path / "us.html"))
+    return FileResponse(
+        str(frontend_path / "us.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/usa", include_in_schema=False)
 @app.get("/united-states", include_in_schema=False)
@@ -197,12 +206,18 @@ async def serve_welcome(token: str = ""):
 @app.get("/library", include_in_schema=False)
 @app.get("/library.html", include_in_schema=False)
 async def serve_library():
-    return FileResponse(str(frontend_path / "library.html"))
+    return FileResponse(
+        str(frontend_path / "library.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/review", include_in_schema=False)
 @app.get("/review.html", include_in_schema=False)
 async def serve_review():
-    return FileResponse(str(frontend_path / "review.html"))
+    return FileResponse(
+        str(frontend_path / "review.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
 
 @app.get("/admin", include_in_schema=False)
 @app.get("/admin/", include_in_schema=False)
