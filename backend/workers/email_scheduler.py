@@ -414,8 +414,12 @@ async def process_email_queue():
                         {"_id": item["_id"]},
                         {"$set": {"status": "sent", "sent_at": now}}
                     )
-                    if kind not in ("welcome", "affiliate_welcome", "affiliate_nudge"):
-                        # Advance subscriber position
+                    if item.get("subscriber_id") and kind not in (
+                        "welcome", "affiliate_welcome", "affiliate_nudge",
+                        "affiliate_activation", "affiliate_password_reset",
+                        "affiliate_direct_milestone", "affiliate_parent_referral_bonus"
+                    ):
+                        # Advance subscriber position for sequence drip emails only
                         await db.subscribers.update_one(
                             {"_id": item["subscriber_id"]},
                             {"$inc": {"sequence_position": 1}}

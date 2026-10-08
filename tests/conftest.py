@@ -53,7 +53,27 @@ from backend.main import app  # noqa: E402
 
 @pytest_asyncio.fixture
 async def test_db():
-    mongo_url = os.environ.get("MONGODB_URL") or os.environ.get("MONGO_URI", "mongodb://127.0.0.1:27017")
+    mongo_url = os.environ.get("MONGODB_URL") or os.environ.get("MONGO_URI")
+    use_mock = False
+    if not mongo_url:
+        try:
+            from mongomock_motor import AsyncMongoMockClient
+            use_mock = True
+        except ImportError:
+            mongo_url = "mongodb://127.0.0.1:27017"
+
+    if use_mock:
+        conn = AsyncMongoMockClient()
+        db_name = f"acp_test_{uuid.uuid4().hex[:16]}"
+        scratch = conn[db_name]
+        prev_client, prev_db = database.client, database.db
+        database.client, database.db = conn, scratch
+        try:
+            yield scratch
+        finally:
+            database.client, database.db = prev_client, prev_db
+        return
+
     # Short prefix + a slice of uuid4 hex, not a millisecond timestamp —
     # tests in the same file can start within the same millisecond and
     # would otherwise collide onto the same scratch database name, leaking
@@ -68,7 +88,10 @@ async def test_db():
     try:
         yield scratch
     finally:
-        await conn.drop_database(db_name)
+        try:
+            await conn.drop_database(db_name)
+        except Exception:
+            pass
         conn.close()
         database.client, database.db = prev_client, prev_db
 

@@ -323,6 +323,11 @@
   const token = (urlParams.get('token') || '').trim();
   const mode = (urlParams.get('mode') || '').trim().toLowerCase(); // 'reset' or ''
   const isResetMode = mode === 'reset';
+  const emailParam = (urlParams.get('email') || '').trim();
+  if (emailParam) {
+    const emailInput = document.getElementById('request-email');
+    if (emailInput) emailInput.value = emailParam;
+  }
 
   // Toggle mode visuals if in reset mode
   if (isResetMode) {

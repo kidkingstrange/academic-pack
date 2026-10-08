@@ -20,6 +20,8 @@ async def process_review_requests(db) -> int:
     generates secure review tokens, and dispatches the review request email.
     Returns count of review request emails successfully queued/sent.
     """
+    if db is None:
+        return 0
     now = datetime.now(timezone.utc)
     five_days_ago = now - timedelta(days=5)
     seven_days_ago = now - timedelta(days=7)

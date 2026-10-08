@@ -312,6 +312,15 @@
 
 <script>
   const urlParams = new URLSearchParams(window.location.search);
+  const emailParam = urlParams.get('email');
+  if (emailParam) {
+    const emailInput = document.getElementById('login-email');
+    if (emailInput) emailInput.value = emailParam.trim();
+    const activateLink = document.getElementById('activate-existing-link');
+    if (activateLink) {
+      activateLink.href = `/affiliate/activate?email=${encodeURIComponent(emailParam.trim())}`;
+    }
+  }
   if (urlParams.get('activated') === '1') {
     showAlert('login-alert', '✅ Password set successfully! Please log in with your new password.', 'success');
   }

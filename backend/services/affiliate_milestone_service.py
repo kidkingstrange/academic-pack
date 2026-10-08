@@ -298,7 +298,7 @@ async def check_and_trigger_milestones(db, affiliate_code: str) -> dict:
         # ── 2. Recruiter Bonus for Parent Affiliate (₦5,000) ──────────────────
         parent_code = affiliate.get("invited_by")
         if parent_code:
-            parent_affiliate = await db.affiliates.find_one({"code": parent_code, "active": True})
+            parent_affiliate = await db.affiliates.find_one({"code": parent_code, "active": {"$ne": False}})
             if parent_affiliate:
                 existing_parent_bonus = await db.affiliate_milestones.find_one({
                     "affiliate_code": parent_code,

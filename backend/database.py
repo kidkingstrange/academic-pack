@@ -42,7 +42,7 @@ async def connect_db():
         # to Atlas measurably added to cold-start time on top of Render's
         # own free-tier sleep/wake delay; index creation on different (and
         # even the same) collections is safe to run concurrently.
-        await asyncio.gather(
+        index_results = await asyncio.gather(
             db.users.create_index("email", unique=True),
             db.leads.create_index("email"),
             db.payments.create_index("reference", unique=True),
@@ -108,10 +108,16 @@ async def connect_db():
             db.blog_comments.create_index([("slug", 1), ("approved", 1), ("created_at", -1)]),
             db.blog_topics.create_index([("votes", -1)]),
             db.blog_topics.create_index("category"),
+            return_exceptions=True,
         )
-        print("✅ MongoDB connected")
+        for res in index_results:
+            if isinstance(res, Exception):
+                print(f"[Warning] Index creation note: {res}")
+        print("[DB] MongoDB connected")
     except Exception as e:
-        print(f"⚠️ Warning: Could not connect to MongoDB ({e}). Running in UI-only mode.")
+        print(f"[Warning] Could not connect to MongoDB ({e}). Running in UI-only mode.")
+        db = None
+        client = None
 
 
 async def disconnect_db():

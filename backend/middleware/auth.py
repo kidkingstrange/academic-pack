@@ -29,7 +29,7 @@ async def _account_still_active(db, user_id: str, role: str) -> bool:
         rep = await db.sales_reps.find_one({"_id": oid, "active": True})
         return rep is not None
     if role == "affiliate":
-        aff = await db.affiliates.find_one({"_id": oid, "active": True})
+        aff = await db.affiliates.find_one({"_id": oid, "active": {"$ne": False}})
         return aff is not None
     user = await db.users.find_one({"_id": oid, "is_active": True})
     return user is not None

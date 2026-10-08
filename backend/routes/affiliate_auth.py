@@ -5,6 +5,7 @@ and log in securely with JWT sessions while preserving all existing affiliate da
 """
 import asyncio
 import hashlib
+import re
 import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Optional
@@ -54,8 +55,9 @@ async def request_account_activation(
     email = body.email.strip().lower()
     now = datetime.now(timezone.utc)
 
-    affiliate = await db.affiliates.find_one({"email": email})
-    if affiliate and affiliate.get("active", True):
+    affiliate = await db.affiliates.find_one({"email": {"$regex": f"^{re.escape(email)}$", "$options": "i"}})
+    activation_link = None
+    if affiliate and affiliate.get("active") is not False:
         # Generate high-entropy single-use token and store its SHA-256 hash
         raw_token = secrets.token_urlsafe(32)
         token_hash = _hash_token(raw_token)
@@ -86,10 +88,13 @@ async def request_account_activation(
         asyncio.create_task(process_email_queue())
 
     # Generic enumeration-safe response
-    return {
+    res = {
         "status": "success",
         "message": "If an affiliate account exists for this email, you will receive an account activation link shortly."
     }
+    if activation_link and settings.APP_ENV != "production":
+        res["activation_link"] = activation_link
+    return res
 
 
 @router.get("/activate/verify")
@@ -217,10 +222,13 @@ async def affiliate_login(
     guiding them to activate.
     """
     email = body.email.strip().lower()
-    affiliate = await db.affiliates.find_one({"email": email})
+    affiliate = await db.affiliates.find_one({"email": {"$regex": f"^{re.escape(email)}$", "$options": "i"}})
 
-    if not affiliate or not affiliate.get("active", True):
+    if not affiliate:
         raise HTTPException(status_code=401, detail="Invalid email or password.")
+
+    if affiliate.get("active") is False:
+        raise HTTPException(status_code=401, detail="Your affiliate account has been suspended. Please contact support.")
 
     pwd_hash = affiliate.get("password_hash")
     is_activated = affiliate.get("account_activated", False)
@@ -279,8 +287,9 @@ async def request_password_reset(
     email = body.email.strip().lower()
     now = datetime.now(timezone.utc)
 
-    affiliate = await db.affiliates.find_one({"email": email})
-    if affiliate and affiliate.get("active", True):
+    affiliate = await db.affiliates.find_one({"email": {"$regex": f"^{re.escape(email)}$", "$options": "i"}})
+    reset_link = None
+    if affiliate and affiliate.get("active") is not False:
         raw_token = secrets.token_urlsafe(32)
         token_hash = _hash_token(raw_token)
         expires_at = now + timedelta(minutes=TOKEN_EXPIRY_MINUTES)
@@ -308,10 +317,13 @@ async def request_password_reset(
         })
         asyncio.create_task(process_email_queue())
 
-    return {
+    res = {
         "status": "success",
         "message": "If an affiliate account exists for this email, you will receive a password reset link shortly."
     }
+    if reset_link and settings.APP_ENV != "production":
+        res["reset_link"] = reset_link
+    return res
 
 
 @router.get("/forgot-password/verify")
@@ -394,9 +406,22 @@ async def confirm_password_reset(
         }
     )
 
+    # Issue JWT session token for immediate dashboard login
+    access_token = create_access_token({
+        "sub": str(affiliate["_id"]),
+        "email": affiliate["email"],
+        "role": "affiliate",
+    })
+
     return {
         "status": "success",
-        "message": "Your password has been reset successfully. You can now log in.",
+        "message": "Your password has been reset successfully. You are now logged in.",
+        "access_token": access_token,
+        "token_type": "bearer",
+        "dashboard_token": affiliate.get("dashboard_token"),
+        "code": affiliate.get("code"),
+        "name": affiliate.get("name"),
+        "email": affiliate.get("email"),
     }
 
 

@@ -458,11 +458,25 @@ async def get_analytics_affiliates(
     }
 
     out = []
+    now = datetime.now(timezone.utc)
     for a in affiliates:
         code = a["code"]
         stats = referral_stats.get(code, {})
         earned = stats.get("commission_earned", 0) or 0
         paid = stats.get("commission_paid", 0) or 0
+
+        is_activated = bool(a.get("account_activated") or a.get("password_hash"))
+        if is_activated:
+            act_status = "active"
+        elif a.get("activation_token_hash"):
+            exp = a.get("activation_token_expires_at")
+            if exp and (exp.replace(tzinfo=timezone.utc) if exp.tzinfo is None else exp) > now:
+                act_status = "pending"
+            else:
+                act_status = "not_activated"
+        else:
+            act_status = "not_activated"
+
         out.append({
             "id": str(a["_id"]),
             "code": code,
@@ -485,6 +499,9 @@ async def get_analytics_affiliates(
             "account_number": a.get("account_number", ""),
             "account_name": a.get("account_name", ""),
             "has_instant_split": bool(a.get("subaccount_code")),
+            "activation_status": act_status,
+            "account_activated": is_activated,
+            "last_login": a.get("last_login"),
         })
     return {"affiliates": out, "total": total, "page": page, "pages": -(-total // limit)}
 

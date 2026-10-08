@@ -27,7 +27,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from ..config import get_settings
 from ..middleware.auth import require_admin
 from ..database import get_db
-from ..schemas.schemas import AffiliateCreateRequest, AffiliateCommissionUpdateRequest
+from ..schemas.schemas import (
+    AffiliateCreateRequest,
+    AffiliateCommissionUpdateRequest,
+    AffiliateStatusUpdateRequest,
+    AffiliateDetailsUpdateRequest,
+)
 from ..services.affiliate_service import create_affiliate_record, ensure_affiliate_subaccount
 from ..workers.email_scheduler import process_email_queue
 
@@ -49,6 +54,11 @@ async def create_affiliate(
             source="admin_created",
             code=body.code,
             commission_percent=body.commission_percent,
+            bank_name=body.bank_name,
+            bank_code=body.bank_code,
+            account_number=body.account_number,
+            account_name=body.account_name,
+            invited_by=body.invited_by,
         )
     except ValueError as e:
         reason = str(e)
@@ -59,6 +69,38 @@ async def create_affiliate(
         raise HTTPException(status_code=500, detail="Could not generate a unique affiliate code")
 
     affiliate = await ensure_affiliate_subaccount(db, affiliate)
+
+    # Automatically generate activation token and send activation email
+    raw_token = secrets.token_urlsafe(32)
+    token_hash = hashlib.sha256(raw_token.strip().encode("utf-8")).hexdigest()
+    now = datetime.now(timezone.utc)
+    expires_at = now + timedelta(minutes=60)
+
+    oid = ObjectId(affiliate["id"])
+    await db.affiliates.update_one(
+        {"_id": oid},
+        {"$set": {
+            "activation_token_hash": token_hash,
+            "activation_token_expires_at": expires_at,
+        }}
+    )
+
+    activation_link = f"{settings.APP_URL}/affiliate/activate?token={raw_token}"
+    referral_link = f"{settings.APP_URL}/r/{affiliate['code']}"
+
+    await db.email_queue.insert_one({
+        "kind": "affiliate_activation",
+        "email": affiliate["email"],
+        "name": affiliate["name"],
+        "code": affiliate["code"],
+        "activation_link": activation_link,
+        "scheduled_at": now,
+        "status": "pending",
+        "retry_count": 0,
+        "sent_at": None,
+        "error": None,
+    })
+    asyncio.create_task(process_email_queue())
 
     return {
         "id": affiliate["id"],
@@ -75,6 +117,14 @@ async def create_affiliate(
         "commission_earned": 0,
         "commission_paid": 0,
         "commission_owed": 0,
+        "bank_name": affiliate.get("bank_name", ""),
+        "account_number": affiliate.get("account_number", ""),
+        "account_name": affiliate.get("account_name", ""),
+        "has_instant_split": bool(affiliate.get("subaccount_code")),
+        "activation_link": activation_link,
+        "referral_link": referral_link,
+        "activation_status": "pending",
+        "account_activated": False,
     }
 
 
@@ -300,5 +350,109 @@ async def resend_affiliate_activation(
         "success": True,
         "message": f"Activation email sent to {affiliate['email']}",
         "activation_link": activation_link,
+    }
+
+
+@router.patch("/{affiliate_id}/status")
+async def update_affiliate_status(
+    affiliate_id: str,
+    body: AffiliateStatusUpdateRequest,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Toggle affiliate active/suspended status.
+    Suspended affiliates cannot log in, track clicks, or receive referrals.
+    """
+    try:
+        oid = ObjectId(affiliate_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid affiliate id")
+
+    result = await db.affiliates.update_one(
+        {"_id": oid},
+        {"$set": {"active": body.active}}
+    )
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Affiliate not found")
+
+    return {
+        "success": True,
+        "active": body.active,
+        "message": "Affiliate activated successfully" if body.active else "Affiliate suspended successfully"
+    }
+
+
+@router.patch("/{affiliate_id}/details")
+async def update_affiliate_details(
+    affiliate_id: str,
+    body: AffiliateDetailsUpdateRequest,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Update partner profile details: name, email, bank details, or commission percentage.
+    Automatically re-synchronizes Paystack subaccount if bank info or commission changes.
+    """
+    try:
+        oid = ObjectId(affiliate_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid affiliate id")
+
+    affiliate = await db.affiliates.find_one({"_id": oid})
+    if not affiliate:
+        raise HTTPException(status_code=404, detail="Affiliate not found")
+
+    update_fields = {}
+    if body.name is not None and body.name.strip():
+        update_fields["name"] = body.name.strip()
+
+    if body.email is not None:
+        new_email = str(body.email).strip().lower()
+        if new_email != affiliate["email"].lower():
+            existing = await db.affiliates.find_one({"email": new_email, "_id": {"$ne": oid}})
+            if existing:
+                raise HTTPException(status_code=409, detail="An affiliate with this email already exists")
+            update_fields["email"] = new_email
+
+    if body.bank_name is not None:
+        update_fields["bank_name"] = body.bank_name.strip()
+    if body.bank_code is not None:
+        update_fields["bank_code"] = body.bank_code.strip()
+    if body.account_number is not None:
+        clean_num = body.account_number.strip()
+        if clean_num and not clean_num.isdigit():
+            raise HTTPException(status_code=400, detail="Account number must contain digits only")
+        update_fields["account_number"] = clean_num
+    if body.account_name is not None:
+        update_fields["account_name"] = body.account_name.strip()
+    if body.commission_percent is not None:
+        update_fields["commission_percent"] = body.commission_percent
+
+    if not update_fields:
+        return {"success": True, "message": "No changes provided"}
+
+    await db.affiliates.update_one({"_id": oid}, {"$set": update_fields})
+    updated = await db.affiliates.find_one({"_id": oid})
+
+    # If bank details or commission changed, re-sync Paystack subaccount
+    if any(k in update_fields for k in ["bank_name", "bank_code", "account_number", "account_name", "commission_percent"]):
+        updated = await ensure_affiliate_subaccount(db, updated)
+
+    return {
+        "success": True,
+        "message": "Affiliate details updated successfully",
+        "affiliate": {
+            "id": str(updated["_id"]),
+            "code": updated["code"],
+            "name": updated["name"],
+            "email": updated["email"],
+            "commission_percent": updated.get("commission_percent", 50.0),
+            "bank_name": updated.get("bank_name", ""),
+            "bank_code": updated.get("bank_code", ""),
+            "account_number": updated.get("account_number", ""),
+            "account_name": updated.get("account_name", ""),
+            "has_instant_split": bool(updated.get("subaccount_code")),
+        }
     }
 

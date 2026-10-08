@@ -44,7 +44,7 @@ async def compute_price_and_referral(
     if referral_code:
         candidate = referral_code.strip().upper()
         if candidate:
-            affiliate = await db.affiliates.find_one({"code": candidate, "active": True})
+            affiliate = await db.affiliates.find_one({"code": candidate, "active": {"$ne": False}})
             if affiliate:
                 referred_by = candidate
 
@@ -82,8 +82,13 @@ async def compute_price_and_referral(
         )
         return amount, referred_by
     else:
-        # ── Direct / Organic Pathway: ₦2,000 Student Price ──
-        base_price = float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+        # ── Direct / Organic Pathway: ₦2,000 Student Price (₦5,000 after 24h expiry) ──
+        direct_expired = bool(client_expiry and client_expiry < now.timestamp() * 1000)
+        base_price = (
+            float(settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA)
+            if direct_expired
+            else float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+        )
         return base_price, referred_by
 
 
@@ -158,7 +163,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     transaction_charge = None
 
     if referred_by:
-        referring_affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
+        referring_affiliate = await db.affiliates.find_one({"code": referred_by, "active": {"$ne": False}})
         if referring_affiliate:
             subaccount_code = referring_affiliate.get("subaccount_code")
             rate = float(

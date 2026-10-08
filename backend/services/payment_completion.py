@@ -183,7 +183,7 @@ async def complete_payment(
         # CRITICAL RULE: Commission is ALWAYS computed on commission_base_price (₦5,000), method-agnostic.
         referred_by = pending.get("referred_by") if pending else None
         if referred_by:
-            affiliate = await db.affiliates.find_one({"code": referred_by, "active": True})
+            affiliate = await db.affiliates.find_one({"code": referred_by, "active": {"$ne": False}})
             if affiliate:
                 rate = float(
                     affiliate.get("commission_percent", settings.DEFAULT_AFFILIATE_COMMISSION_PERCENT) 

@@ -14,6 +14,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from ..database import get_db
 from ..config import get_settings
 from ..utils.rate_limit import get_real_client_ip
+from ..utils.security import hash_password, create_access_token
 from ..schemas.schemas import AffiliateRegisterRequest
 from ..services.affiliate_service import create_affiliate_record, ensure_affiliate_subaccount
 from ..services.meta_capi import send_complete_registration_event
@@ -41,12 +42,15 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
     if recent >= REGISTRATIONS_PER_IP_PER_HOUR:
         raise HTTPException(status_code=429, detail="Too many registrations from this network. Please try again later.")
 
+    pwd_hash = hash_password(body.password) if body.password else None
     try:
         affiliate = await create_affiliate_record(
             db, name=body.name, email=body.email, source="self_registered",
             registration_ip=ip, bank_name=body.bank_name, bank_code=body.bank_code,
             account_number=body.account_number, account_name=body.account_name,
             invited_by=body.invited_by,
+            password_hash=pwd_hash,
+            account_activated=bool(pwd_hash),
         )
     except ValueError as e:
         if str(e) == "duplicate_email":
@@ -96,7 +100,15 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
     })
     asyncio.create_task(process_email_queue())
 
-    return {
+    access_token = None
+    if pwd_hash:
+        access_token = create_access_token({
+            "sub": str(affiliate["_id"]),
+            "email": affiliate["email"],
+            "role": "affiliate",
+        })
+
+    response_data = {
         "code": affiliate["code"],
         "referral_link": referral_link,
         "affiliate_invite_link": affiliate_invite_link,
@@ -105,6 +117,11 @@ async def register_affiliate(body: AffiliateRegisterRequest, request: Request, d
         "email": affiliate["email"],
         "invited_by": affiliate.get("invited_by"),
     }
+    if access_token:
+        response_data["access_token"] = access_token
+        response_data["token_type"] = "bearer"
+
+    return response_data
 
 
 @router.get("/banks")

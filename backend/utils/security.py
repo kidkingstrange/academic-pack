@@ -5,6 +5,10 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Dict, Any
 from jose import JWTError, jwt
+import bcrypt
+if not hasattr(bcrypt, "__about__"):
+    bcrypt.__about__ = type("about", (), {"__version__": getattr(bcrypt, "__version__", "4.0.0")})()
+
 from passlib.context import CryptContext
 from ..config import get_settings
 

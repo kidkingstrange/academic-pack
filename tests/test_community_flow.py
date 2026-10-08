@@ -1,6 +1,16 @@
 import urllib.request
+import urllib.error
 import json
+import pytest
 
+try:
+    with urllib.request.urlopen('http://localhost:8080/blog/', timeout=1) as resp:
+        server_running = (resp.status == 200)
+except Exception:
+    server_running = False
+
+
+@pytest.mark.skipif(not server_running, reason="dev_server.py on port 8080 is not running")
 def test():
     # 1. Article page verification
     req_art = urllib.request.urlopen('http://localhost:8080/blog/academics/100-level-university-academic-transition')

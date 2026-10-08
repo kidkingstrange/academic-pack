@@ -96,6 +96,24 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
         <label for="aff-email">Email Address</label>
         <input type="email" id="aff-email" placeholder="your@email.com" required>
       </div>
+      <div class="form-group" style="position:relative;">
+        <label for="aff-password">Password (min. 8 characters)</label>
+        <div style="position:relative; display:flex; align-items:center;">
+          <input type="password" id="aff-password" placeholder="Create a password" required minlength="8" autocomplete="new-password" style="width:100%; padding-right:42px;">
+          <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('aff-password', this)" style="position:absolute; right:12px; background:none; border:none; color:var(--gray-l); cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Password">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+      </div>
+      <div class="form-group" style="position:relative;">
+        <label for="aff-confirm-password">Confirm Password</label>
+        <div style="position:relative; display:flex; align-items:center;">
+          <input type="password" id="aff-confirm-password" placeholder="Re-enter your password" required minlength="8" autocomplete="new-password" style="width:100%; padding-right:42px;">
+          <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('aff-confirm-password', this)" style="position:absolute; right:12px; background:none; border:none; color:var(--gray-l); cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Password">
+            <i class="bi bi-eye"></i>
+          </button>
+        </div>
+      </div>
 
       <div style="margin:20px 0 12px; font-size:.82rem; font-weight:700; color:var(--gold-l); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,.08); padding-bottom:6px">Payout Bank Details (Instant Direct Deposits)</div>
 
@@ -157,9 +175,14 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
       <span class="aff-link-value" id="aff-dashboard-text"></span>
       <button class="copy-btn" id="aff-dashboard-copy-btn" title="Copy portal link"><i class="bi bi-copy"></i></button>
     </div>
+    <div style="margin: 20px 0 16px;">
+      <a id="aff-portal-direct-btn" href="/affiliate/dashboard" class="modal__submit" style="display:block; text-align:center; text-decoration:none; padding:13px; font-weight:700;">
+        Open My Ambassador Portal Now →
+      </a>
+    </div>
     <p class="aff-dashboard-note">Open your portal to copy done-for-you WhatsApp status captions, download flyer designs, and watch your live sales & bonus payouts.</p>
     <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,.08); text-align:center; font-size:0.85rem; color:var(--gray-l);">
-      Want to log in with a password anytime? <a href="/affiliate/activate" style="color:var(--gold-l); font-weight:700;">Set up your password here</a>
+      Already have your credentials? <a href="/affiliate/login" style="color:var(--gold-l); font-weight:700;">Log In Anytime</a>
     </div>
   </div>
 </div>
@@ -455,10 +478,23 @@ function formatApiError(detail, fallback) {
 
     const name = document.getElementById('aff-name').value.trim();
     const email = document.getElementById('aff-email').value.trim();
+    const password = document.getElementById('aff-password').value;
+    const confirmPassword = document.getElementById('aff-confirm-password').value;
     const bankName = bankInput.value.trim();
     const bankCode = bankCodeInput.value;
     const accountNum = document.getElementById('aff-acct-num').value.trim().replace(/\D/g, '');
     const accountName = document.getElementById('aff-acct-name').value.trim();
+
+    if (password && password.length < 8) {
+      errEl.textContent = 'Password must be at least 8 characters long.';
+      errEl.style.display = 'block';
+      return;
+    }
+    if (password && password !== confirmPassword) {
+      errEl.textContent = 'Passwords do not match. Please re-enter them.';
+      errEl.style.display = 'block';
+      return;
+    }
 
     if (accountNum.length !== 10) {
       errEl.textContent = 'Account number must be exactly 10 digits.';
@@ -478,6 +514,9 @@ function formatApiError(detail, fallback) {
         account_number: accountNum,
         account_name: accountName,
       };
+      if (password) {
+        payload.password = password;
+      }
       if (inviteCode) {
         payload.invited_by = inviteCode;
       }
@@ -490,11 +529,30 @@ function formatApiError(detail, fallback) {
       const data = await res.json();
       if (!res.ok) throw new Error(formatApiError(data.detail, 'Registration failed'));
 
+      // If session tokens were returned, save immediately for frictionless access
+      if (data.access_token) {
+        localStorage.setItem('affiliate_token', data.access_token);
+      }
+      if (data.dashboard_link) {
+        try {
+          const urlObj = new URL(data.dashboard_link, window.location.origin);
+          const dToken = urlObj.searchParams.get('token');
+          if (dToken) {
+            localStorage.setItem('affiliate_dashboard_token', dToken);
+          }
+        } catch (_) {}
+      }
+
       fireCompleteRegistration(data.code);
 
       document.getElementById('aff-form-state').style.display = 'none';
       const successEl = document.getElementById('aff-success');
       successEl.style.display = 'block';
+
+      const portalDirectBtn = document.getElementById('aff-portal-direct-btn');
+      if (portalDirectBtn && data.dashboard_link) {
+        portalDirectBtn.href = data.dashboard_link;
+      }
 
       const linkText = document.getElementById('aff-link-text');
       linkText.textContent = data.referral_link;
@@ -526,6 +584,19 @@ function formatApiError(detail, fallback) {
       submitBtn.textContent = 'Get My Referral Link →';
     }
   });
+
+  window.togglePasswordVisibility = function(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('i');
+    if (!input || !icon) return;
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.className = 'bi bi-eye-slash';
+    } else {
+      input.type = 'password';
+      icon.className = 'bi bi-eye';
+    }
+  };
 
   // ── Copy-to-clipboard (same pattern used in js/checkout.js and the
   // admin dashboard's Affiliates tab) ──

@@ -142,6 +142,7 @@ class AffiliateRegisterRequest(BaseModel):
     # details on hand yet and optional stays correct.
     name: str = Field(..., min_length=2, max_length=100)
     email: EmailStr
+    password: Optional[str] = Field(None, min_length=8, max_length=128)
     bank_name: str = Field(..., min_length=2, max_length=100)
     bank_code: Optional[str] = Field(None, max_length=20)
     account_number: str = Field(..., min_length=10, max_length=20)
@@ -158,6 +159,20 @@ class AffiliateBankDetailsUpdateRequest(BaseModel):
 
 class AffiliateCommissionUpdateRequest(BaseModel):
     commission_percent: float = Field(..., ge=0, le=100)
+
+
+class AffiliateStatusUpdateRequest(BaseModel):
+    active: bool
+
+
+class AffiliateDetailsUpdateRequest(BaseModel):
+    name: Optional[str] = Field(None, min_length=2, max_length=100)
+    email: Optional[EmailStr] = None
+    bank_name: Optional[str] = Field(None, max_length=100)
+    bank_code: Optional[str] = Field(None, max_length=20)
+    account_number: Optional[str] = Field(None, max_length=20)
+    account_name: Optional[str] = Field(None, max_length=100)
+    commission_percent: Optional[float] = Field(None, ge=0, le=100)
 
 
 class AffiliateActivationRequest(BaseModel):

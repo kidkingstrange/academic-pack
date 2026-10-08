@@ -13,7 +13,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from ..config import get_settings
 from ..database import get_db
 from ..schemas.schemas import AffiliateBankDetailsUpdateRequest
-from ..services.affiliate_service import ensure_affiliate_subaccount
+from ..services.affiliate_service import ensure_affiliate_subaccount, resolve_bank_code_by_name
 from ..services.marketing_assets import get_asset, list_assets_for_affiliate
 from ..utils.security import verify_token
 
@@ -38,14 +38,23 @@ async def _resolve_affiliate(
             user_id = payload.get("sub")
             try:
                 oid = ObjectId(user_id)
-                affiliate = await db.affiliates.find_one({"_id": oid, "active": True})
+                affiliate = await db.affiliates.find_one({"_id": oid, "active": {"$ne": False}})
                 if affiliate:
                     return affiliate
             except Exception:
                 pass
 
+            if payload.get("role") == "admin":
+                if token and token.strip():
+                    affiliate = await db.affiliates.find_one({"dashboard_token": token.strip()})
+                    if affiliate:
+                        return affiliate
+                affiliate = await db.affiliates.find_one({"active": {"$ne": False}})
+                if affiliate:
+                    return affiliate
+
     if token and token.strip():
-        affiliate = await db.affiliates.find_one({"dashboard_token": token.strip()})
+        affiliate = await db.affiliates.find_one({"dashboard_token": token.strip(), "active": {"$ne": False}})
         if affiliate:
             return affiliate
 
@@ -143,6 +152,11 @@ async def update_my_bank_details(
 
     if not account_number.isdigit():
         raise HTTPException(status_code=400, detail="Account number must contain digits only")
+
+    if not bank_code:
+        resolved = await resolve_bank_code_by_name(bank_name)
+        if resolved:
+            bank_code = resolved
 
     update_fields = {
         "bank_name": bank_name,

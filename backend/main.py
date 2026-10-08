@@ -2,6 +2,12 @@
 FastAPI application entry point.
 Run with: uvicorn backend.main:app --reload --port 8000
 """
+import sys
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 from fastapi import FastAPI, Request, Depends, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
@@ -310,7 +316,7 @@ async def track_referral(code: str, request: Request, db=Depends(get_db)):
     shown to the visitor — attribution is a nice-to-have, never a gate.
     """
     normalized = code.strip().upper()
-    affiliate = await db.affiliates.find_one({"code": normalized, "active": True})
+    affiliate = await db.affiliates.find_one({"code": normalized, "active": {"$ne": False}})
     if affiliate:
         await db.referral_clicks.insert_one({
             "affiliate_code": normalized,
@@ -451,7 +457,7 @@ def check_admin_password_rotated(settings):
     if settings.ADMIN_PASSWORD != DEFAULT_ADMIN_PASSWORD:
         return
     warning = (
-        "🚨 ADMIN_PASSWORD is still the shipped default — anyone who reads "
+        "[Security Warning] ADMIN_PASSWORD is still the shipped default — anyone who reads "
         "the public source has full admin access. Set a strong, unique "
         "ADMIN_PASSWORD immediately."
     )
@@ -470,7 +476,7 @@ def check_cors_configured_for_production(settings):
     origins = settings.cors_origins_list
     if origins and all("localhost" in o or "127.0.0.1" in o for o in origins):
         print(
-            "🚨 CORS_ORIGINS is running in production with only localhost/127.0.0.1 "
+            "[Security Warning] CORS_ORIGINS is running in production with only localhost/127.0.0.1 "
             f"origins allowed ({origins}) — set it to the real production domain(s) "
             "or every browser request from the live site will be blocked."
         )
@@ -505,10 +511,10 @@ async def startup():
         start_abandoned_recovery_scheduler()
         from .database import db as main_db
         app.state.review_scheduler_task = asyncio.create_task(start_review_scheduler(main_db))
-        print("⏰ Background schedulers started")
+        print("[Schedulers] Background schedulers started")
     else:
-        print("⏸️ Background schedulers disabled (RUN_SCHEDULERS=false)")
-    print(f"🚀 {settings.APP_NAME} API started")
+        print("[Schedulers] Background schedulers disabled (RUN_SCHEDULERS=false)")
+    print(f"[API] {settings.APP_NAME} API started")
 
 @app.on_event("shutdown")
 async def shutdown():

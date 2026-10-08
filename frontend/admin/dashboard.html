@@ -3152,7 +3152,8 @@
           <div><div class="detail-label">Email</div><div class="detail-val">${escapeHtml(a.email)}</div></div>
           <div><div class="detail-label">Code</div><div class="detail-val"><code style="color:var(--gold-light);font-weight:700">${escapeHtml(a.code)}</code></div></div>
           <div><div class="detail-label">Joined</div><div class="detail-val">${new Date(a.created_at).toLocaleDateString()}</div></div>
-          <div style="grid-column:span 2"><div class="detail-label">Account Activation</div><div class="detail-val">${a.account_activated || a.activation_status === 'active' ? '<span style="color:#4ade80;font-weight:700"><i class="bi bi-check-circle-fill"></i> Activated (Password Established)</span>' : '<span style="color:var(--gold-l);font-weight:700"><i class="bi bi-exclamation-circle-fill"></i> Not Activated / Password Not Set</span>'}</div></div>
+          <div><div class="detail-label">Account Status</div><div class="detail-val">${a.active !== false ? '<span style="color:#4ade80;font-weight:700"><i class="bi bi-check-circle-fill"></i> Active</span>' : '<span style="color:#f87171;font-weight:700"><i class="bi bi-slash-circle"></i> Suspended</span>'}</div></div>
+          <div><div class="detail-label">Account Activation</div><div class="detail-val">${a.account_activated || a.activation_status === 'active' ? '<span style="color:#4ade80;font-weight:700"><i class="bi bi-check-circle-fill"></i> Activated (Password Set)</span>' : '<span style="color:var(--gold-l);font-weight:700"><i class="bi bi-exclamation-circle-fill"></i> Not Activated / Password Not Set</span>'}</div></div>
         </div>
       </div>
 
@@ -3189,11 +3190,93 @@
       <div style="display:flex; flex-direction:column; gap:10px">
         <button class="btn-action" style="background:linear-gradient(135deg, var(--gold), var(--gold-l));color:var(--ink);width:100%;justify-content:center" onclick="window.open('/affiliate/dashboard?token=${escapeJs(a.dashboard_token || '')}', '_blank')"><i class="bi bi-box-arrow-up-right"></i> Open Partner Dashboard</button>
         ${(!a.account_activated || a.activation_status !== 'active') ? `<button class="btn-action" style="background:rgba(201,151,58,0.15);color:var(--gold-l);border:1px solid rgba(201,151,58,0.3);width:100%;justify-content:center" onclick="closeDrawer(); resendActivation('${escapeJs(a.id)}', '${escapeJs(a.email)}')"><i class="bi bi-envelope-check-fill"></i> Resend Activation Link</button>` : ''}
-        <button class="btn-action btn-secondary" onclick="closeDrawer(); editCommissionRate('${escapeJs(a.id)}', ${a.commission_percent})">Edit Commission Rate</button>
-        ${a.commission_owed > 0 ? `<button class="btn-action" onclick="closeDrawer(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')">Mark Paid — ${money(a.commission_owed)} owed</button>` : ''}
+        <button class="btn-action btn-secondary" onclick="openEditAffiliateModal('${escapeJs(a.id)}')"><i class="bi bi-person-lines-fill"></i> Edit Partner Profile & Bank Details</button>
+        <button class="btn-action btn-secondary" onclick="closeDrawer(); editCommissionRate('${escapeJs(a.id)}', ${a.commission_percent})"><i class="bi bi-percent"></i> Edit Commission Rate</button>
+        ${a.commission_owed > 0 ? `<button class="btn-action" onclick="closeDrawer(); markPayout('${escapeJs(a.id)}', '${escapeJs(a.name)}')"><i class="bi bi-check2-circle"></i> Mark Paid — ${money(a.commission_owed)} owed</button>` : ''}
+        ${a.active !== false
+          ? `<button class="btn-action" style="background:rgba(239,68,68,0.12);color:#f87171;border:1px solid rgba(239,68,68,0.3);width:100%;justify-content:center" onclick="closeDrawer(); toggleAffiliateStatus('${escapeJs(a.id)}', false, '${escapeJs(a.name)}')"><i class="bi bi-slash-circle"></i> Suspend / Deactivate Partner</button>`
+          : `<button class="btn-action" style="background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3);width:100%;justify-content:center" onclick="closeDrawer(); toggleAffiliateStatus('${escapeJs(a.id)}', true, '${escapeJs(a.name)}')"><i class="bi bi-check-circle"></i> Reactivate Partner</button>`}
       </div>
     `;
     openDrawer();
+  }
+
+  async function toggleAffiliateStatus(affiliateId, newStatus, name) {
+    const action = newStatus ? 'Reactivate' : 'Suspend';
+    if (!confirm(`${action} affiliate partner "${name}"?\n\n${newStatus ? 'They will be able to log in, track clicks, and receive sales.' : 'Their referral links will stop tracking and their portal login will be blocked.'}`)) return;
+    try {
+      const res = await apiCall(`/api/admin/affiliates/${affiliateId}/status`, 'PATCH', { active: newStatus });
+      showToast(res.message || `Partner ${newStatus ? 'activated' : 'suspended'} successfully`, 'success');
+      loadAffiliatesView();
+    } catch(err) {
+      alert(`Could not update partner status: ${err.message || 'Unknown error'}`);
+    }
+  }
+
+  function openEditAffiliateModal(affiliateId) {
+    const a = allAffiliatesData.find(x => x.id === affiliateId);
+    if (!a) return;
+    document.getElementById('drawer-title').textContent = `Edit Partner: ${escapeHtml(a.code)}`;
+    document.getElementById('drawer-content').innerHTML = `
+      <form onsubmit="submitEditAffiliate(event, '${escapeJs(a.id)}')">
+        <div class="drawer-section">
+          <div class="drawer-section-title">Partner Information</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <label class="detail-label" for="aff-edit-name" style="margin-bottom:6px">Full Name</label>
+              <input type="text" id="aff-edit-name" class="input-control" style="width:100%" value="${escapeHtml(a.name || '')}" required>
+            </div>
+            <div>
+              <label class="detail-label" for="aff-edit-email" style="margin-bottom:6px">Email Address</label>
+              <input type="email" id="aff-edit-email" class="input-control" style="width:100%" value="${escapeHtml(a.email || '')}" required>
+            </div>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-section-title">Payout Bank Account</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <label class="detail-label" for="aff-edit-bank" style="margin-bottom:6px">Bank Name</label>
+              <input type="text" id="aff-edit-bank" class="input-control" style="width:100%" value="${escapeHtml(a.bank_name || '')}" placeholder="e.g. Access Bank, Kuda, GTBank">
+            </div>
+            <div>
+              <label class="detail-label" for="aff-edit-acct-num" style="margin-bottom:6px">Account Number</label>
+              <input type="text" id="aff-edit-acct-num" class="input-control" style="width:100%" value="${escapeHtml(a.account_number || '')}" placeholder="10-digit NUBAN">
+            </div>
+            <div>
+              <label class="detail-label" for="aff-edit-acct-name" style="margin-bottom:6px">Account Name</label>
+              <input type="text" id="aff-edit-acct-name" class="input-control" style="width:100%" value="${escapeHtml(a.account_name || '')}" placeholder="Name on bank account">
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn-action" style="width:100%;justify-content:center;margin-top:10px"><i class="bi bi-check-lg"></i> Save Partner Details</button>
+      </form>
+    `;
+    openDrawer();
+  }
+
+  async function submitEditAffiliate(e, affiliateId) {
+    e.preventDefault();
+    const name = document.getElementById('aff-edit-name').value.trim();
+    const email = document.getElementById('aff-edit-email').value.trim();
+    const bank_name = document.getElementById('aff-edit-bank').value.trim();
+    const account_number = document.getElementById('aff-edit-acct-num').value.trim();
+    const account_name = document.getElementById('aff-edit-acct-name').value.trim();
+
+    try {
+      const res = await apiCall(`/api/admin/affiliates/${affiliateId}/details`, 'PATCH', {
+        name,
+        email,
+        bank_name: bank_name || null,
+        account_number: account_number || null,
+        account_name: account_name || null
+      });
+      showToast(res.message || 'Partner updated successfully', 'success');
+      closeDrawer();
+      loadAffiliatesView();
+    } catch(err) {
+      alert(`Could not update affiliate: ${err.message || 'Unknown error'}`);
+    }
   }
 
   async function resendActivation(affiliateId, email) {
@@ -3251,6 +3334,27 @@
               <label class="detail-label" for="aff-create-rate" style="margin-bottom:6px">Commission Rate (%)</label>
               <input type="number" id="aff-create-rate" class="input-control" style="width:100%" value="50" min="0" max="100" step="0.5" required>
             </div>
+            <div>
+              <label class="detail-label" for="aff-create-invited" style="margin-bottom:6px">Recruited By Code (Optional)</label>
+              <input type="text" id="aff-create-invited" class="input-control" style="width:100%" placeholder="e.g. PARENT123">
+            </div>
+          </div>
+        </div>
+        <div class="drawer-section">
+          <div class="drawer-section-title">Payout Bank Account (Optional)</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <label class="detail-label" for="aff-create-bank" style="margin-bottom:6px">Bank Name</label>
+              <input type="text" id="aff-create-bank" class="input-control" style="width:100%" placeholder="e.g. Access Bank, GTBank, Kuda">
+            </div>
+            <div>
+              <label class="detail-label" for="aff-create-acct-num" style="margin-bottom:6px">Account Number</label>
+              <input type="text" id="aff-create-acct-num" class="input-control" style="width:100%" placeholder="10-digit NUBAN">
+            </div>
+            <div>
+              <label class="detail-label" for="aff-create-acct-name" style="margin-bottom:6px">Account Name</label>
+              <input type="text" id="aff-create-acct-name" class="input-control" style="width:100%" placeholder="Full account name">
+            </div>
           </div>
         </div>
         <button type="submit" class="btn-action" style="width:100%;justify-content:center;margin-top:10px"><i class="bi bi-person-check-fill"></i> Create Affiliate Partner</button>
@@ -3265,10 +3369,15 @@
     const email = document.getElementById('aff-create-email').value.trim();
     const code = document.getElementById('aff-create-code').value.trim() || undefined;
     const commission_percent = Number(document.getElementById('aff-create-rate').value) || 50.0;
+    const invited_by = document.getElementById('aff-create-invited').value.trim() || undefined;
+    const bank_name = document.getElementById('aff-create-bank').value.trim() || undefined;
+    const account_number = document.getElementById('aff-create-acct-num').value.trim() || undefined;
+    const account_name = document.getElementById('aff-create-acct-name').value.trim() || undefined;
 
-    const res = await apiCall('/api/admin/affiliates', 'POST', { name, email, code, commission_percent });
+    const payload = { name, email, code, commission_percent, invited_by, bank_name, account_number, account_name };
+    const res = await apiCall('/api/admin/affiliates', 'POST', payload);
     if (res.code) {
-      showToast(`Affiliate '${res.name}' created successfully (Code: ${res.code})`, 'success');
+      showToast(`Affiliate '${res.name}' created! Activation email dispatched (Code: ${res.code})`, 'success');
       closeDrawer();
       loadAffiliatesView();
     } else {

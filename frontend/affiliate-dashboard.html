@@ -264,9 +264,11 @@
     <h3>Update Bank Details</h3>
     <p class="bank-modal-sub">This is where your commission payouts are sent.</p>
     <form id="bank-details-form">
-      <div class="form-group">
+      <div class="form-group" style="position:relative;">
         <label for="bank-name-input">Bank Name</label>
-        <input type="text" id="bank-name-input" placeholder="e.g. Access Bank, GTBank, Kuda" minlength="2" maxlength="100" required>
+        <input type="text" id="bank-name-input" placeholder="Start typing your bank name (e.g. Access, GTBank, Kuda)..." autocomplete="off" minlength="2" maxlength="100" required>
+        <input type="hidden" id="bank-code-input" value="">
+        <div id="dashboard-bank-suggestions" style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:50; background:var(--ink-mid); border:1px solid rgba(201,151,58,.3); border-radius:10px; max-height:200px; overflow-y:auto; box-shadow:0 12px 28px rgba(0,0,0,.6);"></div>
       </div>
       <div class="form-group">
         <label for="bank-acct-num-input">Account Number</label>
@@ -612,9 +614,62 @@
     }
   }
 
+  let dashboardBanks = [];
+  async function loadDashboardBanks() {
+    try {
+      const res = await fetch('/api/affiliates/banks');
+      const data = await res.json();
+      if (Array.isArray(data.banks)) {
+        dashboardBanks = data.banks;
+      }
+    } catch(e) {}
+  }
+  loadDashboardBanks();
+
+  const bankNameInput = document.getElementById('bank-name-input');
+  const bankCodeInput = document.getElementById('bank-code-input');
+  const bankSuggestions = document.getElementById('dashboard-bank-suggestions');
+
+  if (bankNameInput && bankSuggestions) {
+    bankNameInput.addEventListener('input', () => {
+      bankCodeInput.value = '';
+      const q = bankNameInput.value.trim().toLowerCase();
+      if (!q) {
+        bankSuggestions.style.display = 'none';
+        bankSuggestions.innerHTML = '';
+        return;
+      }
+      const matches = dashboardBanks.filter(b => (b.name || '').toLowerCase().includes(q)).slice(0, 15);
+      if (!matches.length) {
+        bankSuggestions.style.display = 'none';
+        return;
+      }
+      bankSuggestions.innerHTML = matches.map(b => `
+        <div class="dash-bank-opt" style="padding:10px 14px; cursor:pointer; font-size:.88rem; color:#fff; border-bottom:1px solid rgba(255,255,255,.05);" data-name="${escapeHtml(b.name)}" data-code="${escapeHtml(b.code || '')}">${escapeHtml(b.name)}</div>
+      `).join('');
+      bankSuggestions.style.display = 'block';
+
+      bankSuggestions.querySelectorAll('.dash-bank-opt').forEach(opt => {
+        opt.addEventListener('click', () => {
+          bankNameInput.value = opt.getAttribute('data-name');
+          bankCodeInput.value = opt.getAttribute('data-code');
+          bankSuggestions.style.display = 'none';
+        });
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!bankNameInput.contains(e.target) && !bankSuggestions.contains(e.target)) {
+        bankSuggestions.style.display = 'none';
+      }
+    });
+  }
+
   function editMyBankDetails() {
     document.getElementById('bank-modal-error').style.display = 'none';
     document.getElementById('bank-details-form').reset();
+    if (bankCodeInput) bankCodeInput.value = '';
+    if (bankSuggestions) bankSuggestions.style.display = 'none';
     document.getElementById('bank-modal-overlay').classList.add('open');
   }
 
@@ -625,6 +680,7 @@
   document.getElementById('bank-details-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const bank_name = document.getElementById('bank-name-input').value.trim();
+    const bank_code = (document.getElementById('bank-code-input').value || '').trim() || undefined;
     const account_number = document.getElementById('bank-acct-num-input').value.trim();
     const account_name = document.getElementById('bank-acct-name-input').value.trim();
     const errEl = document.getElementById('bank-modal-error');
@@ -637,7 +693,7 @@
       const res = await fetch(getAuthedUrl('/api/affiliate/bank-details'), {
         method: 'POST',
         headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify({ bank_name, account_number, account_name })
+        body: JSON.stringify({ bank_name, bank_code, account_number, account_name })
       });
       const data = await res.json();
       if (!res.ok) throw new Error(formatApiError(data.detail, 'Could not save bank details'));

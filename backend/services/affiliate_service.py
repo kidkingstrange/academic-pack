@@ -66,7 +66,7 @@ async def create_affiliate_record(
     parent_code = None
     if invited_by:
         clean_invite = invited_by.strip().upper()
-        parent = await db.affiliates.find_one({"code": clean_invite, "active": True})
+        parent = await db.affiliates.find_one({"code": clean_invite, "active": {"$ne": False}})
         if parent:
             parent_code = clean_invite
 
@@ -110,6 +110,104 @@ async def create_affiliate_record(
     return doc
 
 
+import re
+from typing import Optional
+
+POPULAR_NIGERIAN_BANK_CODES = {
+    "access": "044",
+    "accessbank": "044",
+    "accessdiamond": "063",
+    "diamond": "063",
+    "alat": "035",
+    "alatbywema": "035",
+    "carbon": "100026",
+    "citibank": "023",
+    "ecobank": "050",
+    "fairmoney": "51318",
+    "fidelity": "070",
+    "fidelitybank": "070",
+    "firstbank": "011",
+    "firstbankofnigeria": "011",
+    "fcmb": "214",
+    "firstcitymonument": "214",
+    "firstcitymonumentbank": "214",
+    "globus": "00103",
+    "globusbank": "00103",
+    "gtb": "058",
+    "gtbank": "058",
+    "guarantytrust": "058",
+    "guarantytrustbank": "058",
+    "heritage": "030",
+    "heritagebank": "030",
+    "jaiz": "301",
+    "jaizbank": "301",
+    "keystone": "082",
+    "keystonebank": "082",
+    "kuda": "50211",
+    "kudabank": "50211",
+    "lotus": "303",
+    "lotusbank": "303",
+    "moniepoint": "50515",
+    "moniepointmfb": "50515",
+    "opay": "999992",
+    "paycom": "999992",
+    "palmpay": "999991",
+    "polaris": "076",
+    "polarisbank": "076",
+    "providus": "101",
+    "providusbank": "101",
+    "rubies": "125",
+    "sparkle": "51310",
+    "stanbic": "039",
+    "stanbicibtc": "039",
+    "standardchartered": "068",
+    "sterling": "232",
+    "sterlingbank": "232",
+    "taj": "302",
+    "tajbank": "302",
+    "titan": "102",
+    "titantrust": "102",
+    "union": "032",
+    "unionbank": "032",
+    "uba": "033",
+    "unitedbankforafrica": "033",
+    "unity": "215",
+    "unitybank": "215",
+    "vfd": "566",
+    "vbank": "566",
+    "wema": "035",
+    "wemabank": "035",
+    "zenith": "057",
+    "zenithbank": "057",
+}
+
+
+async def resolve_bank_code_by_name(bank_name: str) -> Optional[str]:
+    """
+    Attempt to map a Nigerian bank name or colloquial alias to its Paystack NUBAN bank code.
+    Checks static canonical dictionary first, then falls back to Paystack's live bank API.
+    """
+    if not bank_name:
+        return None
+    raw = bank_name.strip().lower()
+    norm = re.sub(r"[^a-z0-9]", "", raw)
+    if norm in POPULAR_NIGERIAN_BANK_CODES:
+        return POPULAR_NIGERIAN_BANK_CODES[norm]
+    for key, code in POPULAR_NIGERIAN_BANK_CODES.items():
+        if key in norm:
+            return code
+    try:
+        from ..services.paystack import list_banks
+        banks = await list_banks()
+        for b in banks:
+            b_norm = re.sub(r"[^a-z0-9]", "", (b.get("name") or "").lower())
+            if norm == b_norm or norm in b_norm or b_norm in norm:
+                return str(b.get("code") or "")
+    except Exception:
+        pass
+    return None
+
+
 async def ensure_affiliate_subaccount(db, affiliate: dict) -> dict:
     """
     Create or update this affiliate's Paystack subaccount so future
@@ -127,6 +225,22 @@ async def ensure_affiliate_subaccount(db, affiliate: dict) -> dict:
 
     bank_code = (affiliate.get("bank_code") or "").strip()
     account_number = (affiliate.get("account_number") or "").strip()
+    bank_name = (affiliate.get("bank_name") or "").strip()
+
+    if not bank_code and bank_name:
+        resolved = await resolve_bank_code_by_name(bank_name)
+        if resolved:
+            bank_code = resolved
+            affiliate["bank_code"] = bank_code
+            if db is not None and "_id" in affiliate:
+                try:
+                    await db.affiliates.update_one(
+                        {"_id": affiliate["_id"]},
+                        {"$set": {"bank_code": bank_code}}
+                    )
+                except Exception:
+                    pass
+
     if not bank_code or not account_number:
         return affiliate
 

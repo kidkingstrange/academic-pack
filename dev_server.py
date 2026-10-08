@@ -209,15 +209,23 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
             return str(html_target)
 
         # Check special route aliases
-        if clean_path == "/affiliate/register":
+        if clean_path in ("/affiliate/register", "/affiliate/register/"):
             p = DIRECTORY / "affiliate-register.html"
             if p.is_file():
                 return str(p)
-        if clean_path == "/affiliate/dashboard":
+        if clean_path in ("/affiliate/login", "/affiliate/login/"):
+            p = DIRECTORY / "affiliate-login.html"
+            if p.is_file():
+                return str(p)
+        if clean_path in ("/affiliate/activate", "/affiliate/activate/"):
+            p = DIRECTORY / "affiliate-activate.html"
+            if p.is_file():
+                return str(p)
+        if clean_path in ("/affiliate/dashboard", "/affiliate/dashboard/"):
             p = DIRECTORY / "affiliate-dashboard.html"
             if p.is_file():
                 return str(p)
-        if clean_path == "/admin/blog":
+        if clean_path in ("/admin/blog", "/admin/blog/"):
             p = DIRECTORY / "admin" / "blog.html"
             if p.is_file():
                 return str(p)
