@@ -3386,9 +3386,12 @@
   }
 
   // ── 4B. AUTOMATED MILESTONE BONUS RELEASES ────────────────────────────────
+  let currentMilestonesData = [];
+
   async function loadMilestonePayouts() {
     const res = await apiCall('/api/admin/payouts/milestones?limit=50');
     const milestones = res.milestones || [];
+    currentMilestonesData = milestones;
     const tbody = document.querySelector('#table-payout-milestones tbody');
     const cardList = document.getElementById('cards-payout-milestones');
     if (!tbody) return;
@@ -3430,7 +3433,7 @@
         : `<span style="color:var(--gray-l);font-size:0.78rem">—</span>`;
 
       return `
-        <tr>
+        <tr style="cursor:pointer" onclick="inspectMilestone('${escapeJs(m.id)}')">
           <td>${new Date(m.created_at).toLocaleDateString()}</td>
           <td>${typeLabels[m.type] || escapeHtml(m.type)}</td>
           <td>
@@ -3441,7 +3444,7 @@
           <td>${bankInfo}</td>
           <td>${refInfo}</td>
           <td>${statusBadge}</td>
-          <td>${actionBtn}</td>
+          <td onclick="event.stopPropagation()">${actionBtn}</td>
         </tr>
       `;
     }).join('');
@@ -3451,7 +3454,7 @@
         const isPaid = m.status === 'paid';
         const statusClass = isPaid ? 'success' : (m.status === 'failed' ? 'failed' : 'pending');
         return `
-          <div class="record-card record-card--${statusClass}">
+          <div class="record-card record-card--${statusClass}" style="cursor:pointer" onclick="inspectMilestone('${escapeJs(m.id)}')">
             <div class="record-card__row1">
               <span class="record-card__primary">${escapeHtml(m.affiliate_name)} (${escapeHtml(m.affiliate_code)})</span>
               <span class="record-card__amount">${money(m.amount_naira)}</span>
@@ -3463,6 +3466,120 @@
           </div>
         `;
       }).join('');
+    }
+  }
+
+  function inspectMilestone(id) {
+    const m = currentMilestonesData.find(x => x.id === id);
+    if (!m) return;
+
+    const isPaid = m.status === 'paid';
+    const isDirect = m.type === 'direct_10_sales';
+    const typeLabel = isDirect 
+      ? '<span style="color:var(--gold-l);font-weight:700"><i class="bi bi-bullseye" style="margin-right:4px"></i> Direct 10-Sales Bonus</span>' 
+      : '<span style="color:var(--green);font-weight:700"><i class="bi bi-people-fill" style="margin-right:4px"></i> Recruiter Referral Bonus</span>';
+
+    const statusPill = isPaid
+      ? '<span class="status-pill success"><i class="bi bi-check-circle-fill"></i> Paid (Disbursed)</span>'
+      : (m.status === 'processing'
+        ? '<span class="status-pill pending"><i class="bi bi-arrow-repeat"></i> Transfer In Flight</span>'
+        : (m.status === 'failed'
+          ? '<span class="status-pill failed"><i class="bi bi-x-circle-fill"></i> Transfer Failed</span>'
+          : '<span class="status-pill pending"><i class="bi bi-clock-history"></i> Unlocked (Waiting Payout)</span>'));
+
+    const bankDetailsHtml = m.account_number
+      ? `<div style="font-weight:700;font-size:0.95rem;color:#fff">${escapeHtml(m.bank_name || 'Bank')}</div>
+         <div style="font-size:0.88rem;color:var(--gold-light);font-family:monospace;margin-top:2px">${escapeHtml(m.account_number)}</div>
+         <div style="font-size:0.8rem;color:var(--gray-l);margin-top:2px">Name: ${escapeHtml(m.account_name || m.affiliate_name)}</div>
+         ${m.bank_code ? `<div style="font-size:0.75rem;color:var(--gray-l);margin-top:2px">Bank Code: <code>${escapeHtml(m.bank_code)}</code></div>` : ''}`
+      : `<span style="color:#f87171;font-weight:600"><i class="bi bi-exclamation-triangle-fill"></i> No bank details registered yet</span>`;
+
+    document.getElementById('drawer-title').textContent = `Milestone: ${escapeHtml(m.affiliate_name)}`;
+    document.getElementById('drawer-content').innerHTML = `
+      <div class="drawer-section">
+        <div class="drawer-section-title">Milestone Overview</div>
+        <div class="drawer-detail-grid">
+          <div><div class="detail-label">Partner</div><div class="detail-val" style="font-weight:700">${escapeHtml(m.affiliate_name)}</div></div>
+          <div><div class="detail-label">Referral Code</div><div class="detail-val"><code style="color:var(--gold-light);font-weight:700">${escapeHtml(m.affiliate_code)}</code></div></div>
+          <div><div class="detail-label">Partner Email</div><div class="detail-val" style="word-break:break-all">${m.affiliate_email ? escapeHtml(m.affiliate_email) : '—'}</div></div>
+          <div><div class="detail-label">Bonus Category</div><div class="detail-val">${typeLabel}</div></div>
+          <div><div class="detail-label">Bonus Amount</div><div class="detail-val" style="font-size:1.25rem;font-weight:800;color:var(--gold-l)">${money(m.amount_naira)}</div></div>
+          <div><div class="detail-label">Payout Status</div><div class="detail-val">${statusPill}</div></div>
+          <div><div class="detail-label">Unlocked On</div><div class="detail-val">${m.created_at ? new Date(m.created_at).toLocaleString() : '—'}</div></div>
+          <div><div class="detail-label">Paid / Settled On</div><div class="detail-val">${m.paid_at ? new Date(m.paid_at).toLocaleString() : '<span style="color:var(--gray-l)">Not yet disbursed</span>'}</div></div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Payout Bank Account</div>
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px">
+          ${bankDetailsHtml}
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Transfer & Audit Trail</div>
+        <div class="drawer-detail-grid">
+          <div style="grid-column:span 2">
+            <div class="detail-label">Transfer Reference</div>
+            <div class="detail-val" style="font-family:monospace;font-size:0.84rem;color:var(--gold-light)">${m.transfer_reference ? escapeHtml(m.transfer_reference) : '<span style="color:var(--gray-l)">Pending generation</span>'}</div>
+          </div>
+          ${m.transfer_code ? `<div><div class="detail-label">Paystack Transfer Code</div><div class="detail-val" style="font-family:monospace"><code>${escapeHtml(m.transfer_code)}</code></div></div>` : ''}
+          ${m.paystack_transfer_id ? `<div><div class="detail-label">Transfer ID</div><div class="detail-val"><code>${escapeHtml(m.paystack_transfer_id)}</code></div></div>` : ''}
+          <div style="grid-column:span 2">
+            <div class="detail-label">System Note / Diagnostics</div>
+            <div class="detail-val" style="font-size:0.82rem">${m.last_error ? `<span style="color:#f87171"><i class="bi bi-info-circle"></i> ${escapeHtml(m.last_error)}</span>` : '<span style="color:var(--gray-l)">None (Ready / Validated)</span>'}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="drawer-section-title">Triggering Achievement</div>
+        <div style="font-size:0.86rem;color:var(--gray-l);line-height:1.6">
+          ${isDirect 
+            ? `<strong>${escapeHtml(m.affiliate_name)}</strong> reached <strong>10 verified study package sales</strong>, qualifying for the <strong>₦10,000 extra cash milestone reward</strong>.`
+            : `Awarded to <strong>${escapeHtml(m.affiliate_name)}</strong> because their recruited sub-affiliate <strong>${escapeHtml(m.subaffiliate_name || m.subaffiliate_code)}</strong> hit 10 sales.`
+          }
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:10px">
+        ${!isPaid ? `
+          <button class="btn-action" style="background:linear-gradient(135deg, var(--gold), var(--gold-l));color:var(--ink);width:100%;justify-content:center;font-weight:700" onclick="closeDrawer(); retryMilestoneTransfer('${escapeJs(m.id)}')">
+            <i class="bi bi-send-fill"></i> Disburse Automated Transfer via Paystack
+          </button>
+          <button class="btn-action btn-secondary" style="width:100%;justify-content:center" onclick="closeDrawer(); markMilestonePaidManual('${escapeJs(m.id)}', '${escapeJs(m.affiliate_name)}')">
+            <i class="bi bi-check-circle-fill" style="color:var(--green)"></i> Mark as Paid Manually (Bank App)
+          </button>
+        ` : `
+          <div style="padding:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.25);border-radius:10px;text-align:center;color:#4ade80;font-weight:700;font-size:0.86rem">
+            <i class="bi bi-check-circle-fill"></i> This milestone reward has been fully disbursed
+          </div>
+        `}
+        ${m.affiliate_id ? `
+          <button class="btn-action btn-secondary" style="width:100%;justify-content:center" onclick="closeDrawer(); inspectAffiliate('${escapeJs(m.affiliate_id)}')">
+            <i class="bi bi-person-badge"></i> View Partner Profile & Recruiter Tree
+          </button>
+        ` : ''}
+        ${m.dashboard_token ? `
+          <button class="btn-action btn-secondary" style="width:100%;justify-content:center" onclick="window.open('/affiliate/dashboard?token=${escapeJs(m.dashboard_token)}', '_blank')">
+            <i class="bi bi-box-arrow-up-right"></i> Open Partner Portal
+          </button>
+        ` : ''}
+      </div>
+    `;
+    openDrawer();
+  }
+
+  async function markMilestonePaidManual(milestoneId, name) {
+    if (!confirm(`Mark this milestone bonus for "${name}" as paid manually (via your bank app)?`)) return;
+    try {
+      const res = await apiCall(`/api/admin/payouts/milestones/${milestoneId}/mark-paid`, 'POST', {});
+      showToast(res.message || 'Milestone marked as paid', 'success');
+      loadMilestonePayouts();
+      loadAffiliatesView();
+    } catch(err) {
+      alert('Could not update milestone: ' + (err.message || err));
     }
   }
 

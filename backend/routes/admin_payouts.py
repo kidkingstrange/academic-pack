@@ -221,26 +221,60 @@ async def list_milestone_payouts(limit: int = 50, current_user=Depends(require_a
     out = []
     for m in milestones:
         aff = aff_map.get(m.get("affiliate_code"), {})
+        default_bonus = 10000.0 if m.get("type") == "direct_10_sales" else 5000.0
+        amount = float(m.get("amount") or m.get("amount_naira") or default_bonus)
+
         out.append({
             "id": str(m["_id"]),
+            "affiliate_id": str(aff.get("_id", "")),
             "affiliate_code": m.get("affiliate_code"),
             "affiliate_name": aff.get("name", m.get("affiliate_code")),
             "affiliate_email": aff.get("email", ""),
+            "dashboard_token": aff.get("dashboard_token", ""),
             "type": m.get("type"),
-            "amount_naira": m.get("amount_naira", 0.0),
+            "amount_naira": amount,
             "status": m.get("status", "unlocked"),
             "subaffiliate_code": m.get("subaffiliate_code"),
+            "subaffiliate_name": m.get("subaffiliate_name", ""),
+            "sales_count": m.get("sales_count", 10),
+            "description": m.get("description", ""),
             "bank_name": m.get("bank_name") or aff.get("bank_name", ""),
+            "bank_code": m.get("bank_code") or aff.get("bank_code", ""),
             "account_number": m.get("account_number") or aff.get("account_number", ""),
             "account_name": m.get("account_name") or aff.get("account_name", ""),
             "transfer_reference": m.get("transfer_reference", ""),
             "transfer_code": m.get("transfer_code", ""),
             "paystack_transfer_id": m.get("paystack_transfer_id"),
             "paid_at": m.get("paid_at"),
-            "error_detail": m.get("error_detail"),
+            "last_error": m.get("last_error") or m.get("error_detail") or "",
             "created_at": m.get("created_at"),
         })
     return {"milestones": out, "total": len(out)}
+
+
+@router.post("/milestones/{milestone_id}/mark-paid")
+async def mark_milestone_payout_manual(milestone_id: str, current_user=Depends(require_admin), db=Depends(get_db)):
+    """
+    Mark an unlocked or failed milestone bonus as paid manually (e.g. transferred via bank app).
+    """
+    try:
+        oid = ObjectId(milestone_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid milestone ID format")
+
+    now = datetime.now(timezone.utc)
+    res = await db.affiliate_milestones.update_one(
+        {"_id": oid},
+        {"$set": {
+            "status": "paid",
+            "paid_at": now,
+            "transfer_reference": f"MANUAL-{now.strftime('%Y%m%d%H%M%S')}",
+            "payment_method": "manual_bank_transfer",
+        }}
+    )
+    if res.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Milestone not found")
+    return {"status": "ok", "message": "Milestone marked as paid successfully"}
 
 
 @router.post("/milestones/{milestone_id}/retry")
