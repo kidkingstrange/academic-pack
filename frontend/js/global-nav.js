@@ -86,7 +86,7 @@
     try {
       saved = localStorage.getItem('academic_blog_theme');
     } catch(err) {}
-    var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    var preferred = saved === 'dark' ? 'dark' : 'light';
     
     // Ensure document has attribute set
     var current = document.documentElement.getAttribute('data-theme');

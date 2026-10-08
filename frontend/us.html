@@ -121,7 +121,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       <p class="hero__sub">You aren't struggling because you're lazy. You're struggling because nobody taught you how the human brain retains complex information under intense test pressure. Cut your study time in half, retain 100% of what you read in lectures, and boost your board/exam scores in one semester.</p>
       
       <!-- Instant Trust Cues -->
-      <div class="hero__trust-bar" style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; font-size: 0.85rem; color: rgba(255,255,255,0.85); font-weight: 600;">
+      <div class="hero__trust-bar" style="display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; font-size: 0.85rem; color: #475569; font-weight: 600;">
         <span style="display: flex; align-items: center; gap: 6px;"><i class="bi bi-people-fill" style="color: var(--gold-l);"></i> Over 4,200 US Students</span>
         <span style="display: flex; align-items: center; gap: 6px;"><i class="bi bi-mortarboard-fill" style="color: var(--gold-l);"></i> Science-Backed Systems</span>
         <span style="display: flex; align-items: center; gap: 6px;"><i class="bi bi-shield-check" style="color: var(--gold-l);"></i> 100% Risk-Free</span>
@@ -385,7 +385,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       </div>
       <!-- 6 -->
       <div class="product-card" data-aos="fade-up" data-aos-delay="600">
-        <div class="product-card__img" style="background: linear-gradient(135deg, #1e293b, #0f172a); display:flex; align-items:center; justify-content:center;"><i class="bi bi-calendar-check" style="font-size:4rem;color:#e3b55a"></i></div>
+        <div class="product-card__img" style="background: linear-gradient(135deg, #f1f5f9, #e2e8f0); display:flex; align-items:center; justify-content:center;"><i class="bi bi-calendar-check" style="font-size:4rem;color:#d97706"></i></div>
         <div class="product-card__body">
           <div class="product-card__tag">Bonus #5</div>
           <h3 class="product-card__title">Study Tracker</h3>
@@ -684,33 +684,33 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </footer>
 
 <!-- Support / Order Lookup Modal -->
-<div class="modal-overlay" id="refund-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(10, 14, 22, 0.85); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 16px; box-sizing: border-box;">
-  <div class="modal-card" style="background: #161922; border: 1px solid #2a2e3d; border-radius: 20px; max-width: 480px; width: 100%; padding: 32px; position: relative; color: #fff; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);">
-    <button class="modal-close" onclick="closeRefundModal()" style="position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.1); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;"><i class="bi bi-x-lg"></i></button>
-    <h3 style="font-size: 1.35rem; font-weight: 800; color: #fff; margin-top: 0; margin-bottom: 8px;">Order Lookup / Customer Support</h3>
-    <p style="font-size: 0.875rem; color: #9ca3af; margin-bottom: 20px;">
+<div class="modal-overlay" id="refund-modal" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; padding: 16px; box-sizing: border-box;">
+  <div class="modal-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px; max-width: 480px; width: 100%; padding: 32px; position: relative; color: #0f172a; box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);">
+    <button class="modal-close" onclick="closeRefundModal()" style="position: absolute; top: 16px; right: 16px; background: #f1f5f9; border: none; color: #64748b; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;"><i class="bi bi-x-lg"></i></button>
+    <h3 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-top: 0; margin-bottom: 8px;">Order Lookup / Customer Support</h3>
+    <p style="font-size: 0.875rem; color: #64748b; margin-bottom: 20px;">
       If you need assistance with an order or wish to request support, submit your details below.
     </p>
 
     <form id="refund-form" onsubmit="handleRefundSubmit(event)">
       <div style="margin-bottom: 16px;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #9ca3af; margin-bottom: 6px;">Order Reference Code (e.g. ACP-PRE-XXXX or ACP-LIVE-XXXX)</label>
-        <input type="text" id="refund-ref" class="form-input" placeholder="ACP-..." required style="width: 100%; background: #0d0f14; border: 1px solid #2a2e3d; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #475569; margin-bottom: 6px;">Order Reference Code (e.g. ACP-PRE-XXXX or ACP-LIVE-XXXX)</label>
+        <input type="text" id="refund-ref" class="form-input" placeholder="ACP-..." required style="width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
       </div>
 
       <div style="margin-bottom: 16px;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #9ca3af; margin-bottom: 6px;">Customer Email Address</label>
-        <input type="email" id="refund-email" class="form-input" placeholder="email@example.com" required style="width: 100%; background: #0d0f14; border: 1px solid #2a2e3d; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #475569; margin-bottom: 6px;">Customer Email Address</label>
+        <input type="email" id="refund-email" class="form-input" placeholder="email@example.com" required style="width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;">
       </div>
 
       <div style="margin-bottom: 16px;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #9ca3af; margin-bottom: 6px;">Message / Reason</label>
-        <textarea id="refund-reason" class="form-input" rows="3" placeholder="How can we help you?" required style="width: 100%; background: #0d0f14; border: 1px solid #2a2e3d; color: #fff; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;"></textarea>
+        <label style="display: block; font-size: 0.85rem; font-weight: 700; color: #475569; margin-bottom: 6px;">Message / Reason</label>
+        <textarea id="refund-reason" class="form-input" rows="3" placeholder="How can we help you?" required style="width: 100%; background: #f8fafc; border: 1.5px solid #cbd5e1; color: #0f172a; padding: 12px 16px; border-radius: 8px; font-size: 0.95rem; box-sizing: border-box;"></textarea>
       </div>
 
       <div id="refund-status-msg" style="padding: 12px; border-radius: 8px; font-size: 0.875rem; font-weight: 600; margin-top: 12px; display: none;"></div>
 
-      <button type="submit" class="btn-submit" id="submit-refund-btn" style="width: 100%; background: #d4a63a; color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 12px;">
+      <button type="submit" class="btn-submit" id="submit-refund-btn" style="width: 100%; background: linear-gradient(135deg, #f59e0b, #d97706); color: #ffffff; border: none; padding: 14px; border-radius: 10px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 12px; box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);">
         Submit Request
       </button>
     </form>

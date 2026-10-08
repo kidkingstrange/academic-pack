@@ -34,14 +34,14 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 <style>
   :root {
-    --bg-dark: #0d0f14;
-    --card-bg: #161922;
-    --card-border: #2a2e3d;
-    --gold: #d4a63a;
-    --gold-bright: #f3c659;
-    --gold-dim: rgba(212, 166, 58, 0.15);
-    --text-light: #f3f4f6;
-    --text-muted: #9ca3af;
+    --bg-dark: #f8f9fa;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --gold: #b45309;
+    --gold-bright: #d97706;
+    --gold-dim: rgba(245, 158, 11, 0.1);
+    --text-light: #0f172a;
+    --text-muted: #475569;
   }
 
   body {
@@ -83,7 +83,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
   /* Header */
   .site-header {
-    background: rgba(13, 15, 20, 0.95);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--card-border);
     position: sticky;
@@ -104,7 +104,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     align-items: center;
     gap: 12px;
     text-decoration: none;
-    color: #fff;
+    color: #0f172a;
     font-weight: 800;
     font-size: 1.25rem;
   }
@@ -465,8 +465,8 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
   /* Bundle Offer Card */
   .bundle-banner {
-    background: linear-gradient(135deg, #241c0e 0%, #161922 100%);
-    border: 1px solid var(--gold);
+    background: linear-gradient(135deg, #fffdf5 0%, #ffffff 100%);
+    border: 1.5px solid #fde68a;
     border-radius: 16px;
     padding: 20px 28px;
     max-width: 900px;
@@ -475,11 +475,11 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    box-shadow: 0 10px 30px rgba(212, 166, 58, 0.15);
+    box-shadow: 0 10px 30px rgba(180, 83, 9, 0.08);
   }
   .bundle-content h3 {
     margin: 0 0 4px 0;
-    color: var(--gold-bright);
+    color: #0f172a;
     font-size: 1.15rem;
     font-weight: 800;
   }
@@ -489,8 +489,8 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     font-size: 0.9rem;
   }
   .bundle-btn {
-    background: var(--gold);
-    color: #000;
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+    color: #ffffff;
     border: none;
     padding: 12px 20px;
     border-radius: 10px;
@@ -501,7 +501,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     transition: background 0.2s;
   }
   .bundle-btn:hover {
-    background: var(--gold-bright);
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
   }
 
   /* Search & Category Filter Section */
@@ -525,9 +525,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   }
   .search-input {
     width: 100%;
-    background: #161922;
-    border: 1px solid var(--card-border);
-    color: #fff;
+    background: #ffffff;
+    border: 1.5px solid #cbd5e1;
+    color: #0f172a;
     padding: 14px 20px 14px 48px;
     border-radius: 50px;
     font-size: 1rem;
@@ -548,8 +548,8 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     flex-wrap: wrap;
   }
   .filter-tab {
-    background: #161922;
-    border: 1px solid var(--card-border);
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
     color: var(--text-muted);
     padding: 8px 18px;
     border-radius: 30px;
@@ -752,7 +752,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   }
   .book-card__btn {
     background: var(--gold);
-    color: #0d0f14;
+    color: #ffffff;
     border: none;
     padding: 10px 18px;
     border-radius: 8px;
@@ -874,9 +874,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   }
   .form-input {
     width: 100%;
-    background: #0d0f14;
-    border: 1px solid var(--card-border);
-    color: #fff;
+    background: #f8fafc;
+    border: 1.5px solid #cbd5e1;
+    color: #0f172a;
     padding: 12px 16px;
     border-radius: 8px;
     font-size: 0.95rem;
@@ -884,6 +884,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   }
   .form-input:focus {
     border-color: var(--gold);
+    background: #ffffff;
     outline: none;
   }
   .pm-selector {
@@ -893,8 +894,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     margin-bottom: 20px;
   }
   .pm-option {
-    border: 1px solid var(--card-border);
-    background: #0d0f14;
+    border: 1.5px solid #cbd5e1;
+    background: #f8fafc;
+    color: #0f172a;
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
@@ -1111,16 +1113,16 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
      PREMIUM LUXURY DESIGN SYSTEM (OVERRIDE & ELEVATION)
      ===================================================================== */
   :root {
-    --bg-dark: #07090e;
-    --card-bg: rgba(14, 18, 27, 0.75);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --card-border-hover: rgba(212, 166, 58, 0.4);
-    --gold: #d4a63a;
-    --gold-bright: #f5c862;
-    --gold-glow: rgba(212, 166, 58, 0.25);
-    --gold-dim: rgba(212, 166, 58, 0.08);
-    --text-light: #f8fafc;
-    --text-muted: #94a3b8;
+    --bg-dark: #f8f9fa;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --card-border-hover: rgba(180, 83, 9, 0.4);
+    --gold: #b45309;
+    --gold-bright: #d97706;
+    --gold-glow: rgba(217, 119, 6, 0.2);
+    --gold-dim: rgba(245, 158, 11, 0.08);
+    --text-light: #0f172a;
+    --text-muted: #475569;
     --text-dim: #64748b;
   }
 
@@ -1139,10 +1141,8 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
   /* ── Sleek Minimalist Top Announcement Bar ─────────────────────── */
   .global-top-bar {
-    background: rgba(10, 13, 19, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
     padding: 8px 16px;
     font-size: 0.82rem;
   }
@@ -1157,9 +1157,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     color: var(--text-muted);
   }
   .global-top-bar__badge {
-    background: rgba(212, 166, 58, 0.12);
-    border: 1px solid rgba(212, 166, 58, 0.3);
-    color: #f5c862;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    color: #92400e;
     font-size: 0.7rem;
     font-weight: 800;
     padding: 2px 10px;
@@ -1168,13 +1168,13 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     text-transform: uppercase;
   }
   .global-top-bar strong {
-    color: #ffffff;
+    color: #0f172a;
     font-weight: 700;
   }
   .global-top-bar__cta {
-    color: #f5c862;
-    background: transparent;
-    border: 1px solid rgba(212, 166, 58, 0.4);
+    color: #92400e;
+    background: #fffdf5;
+    border: 1px solid #fde68a;
     box-shadow: none;
     font-size: 0.74rem;
     font-weight: 700;
@@ -1184,19 +1184,18 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     text-decoration: none;
   }
   .global-top-bar__cta:hover {
-    background: rgba(212, 166, 58, 0.15);
-    border-color: #f5c862;
-    color: #ffffff;
+    background: #fef3c7;
+    border-color: #d97706;
+    color: #92400e;
     transform: none;
-    box-shadow: 0 0 12px rgba(212, 166, 58, 0.2);
   }
 
   /* ── Refined Luxury Site Header ────────────────────────────────── */
   .global-site-header {
-    background: rgba(7, 9, 14, 0.8);
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -1215,7 +1214,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     align-items: center;
     gap: 12px;
     text-decoration: none;
-    color: #ffffff;
+    color: #0f172a;
     font-family: 'Inter', sans-serif;
     font-size: 1.15rem;
     font-weight: 900;
@@ -1244,13 +1243,13 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     text-decoration: none;
   }
   .global-nav__link:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.05);
+    color: #0f172a;
+    background: rgba(15, 23, 42, 0.05);
   }
   .global-nav__flagship {
-    background: rgba(212, 166, 58, 0.08);
-    border: 1px solid rgba(212, 166, 58, 0.35);
-    color: #f5c862 !important;
+    background: #fef3c7;
+    border: 1px solid #d97706;
+    color: #92400e !important;
     font-size: 0.84rem;
     font-weight: 700;
     padding: 6px 16px;
@@ -1262,11 +1261,11 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     transition: all 0.2s ease;
   }
   .global-nav__flagship:hover {
-    background: rgba(212, 166, 58, 0.16);
-    border-color: #f5c862;
-    color: #ffffff !important;
+    background: #fde68a;
+    border-color: #b45309;
+    color: #78350f !important;
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(212, 166, 58, 0.25);
+    box-shadow: 0 4px 16px rgba(217, 119, 6, 0.2);
   }
   .global-nav__flagship-dot {
     width: 6px;
@@ -1860,305 +1859,498 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
 
   /* =====================================================================
-     LUXURY LIGHTING, AURORA LUMINESCENCE & SPECULAR GLASS SYSTEM
+     PREMIUM LIGHT MODE ELEVATION & EDITORIAL GLASS SYSTEM
      ===================================================================== */
   :root {
-    --bg-dark: #0d121f;
-    --card-bg: rgba(22, 29, 46, 0.78);
-    --card-border: rgba(255, 255, 255, 0.12);
-    --card-border-hover: rgba(245, 200, 98, 0.55);
-    --gold: #d4a63a;
-    --gold-bright: #f5c862;
-    --gold-glow: rgba(245, 200, 98, 0.35);
-    --gold-dim: rgba(212, 166, 58, 0.12);
-    --text-light: #f8fafc;
-    --text-muted: #a3b3cc;
-    --text-dim: #718096;
+    --bg-dark: #f8f9fa;
+    --card-bg: #ffffff;
+    --card-border: #e2e8f0;
+    --card-border-hover: rgba(180, 83, 9, 0.45);
+    --gold: #b45309;
+    --gold-bright: #d97706;
+    --gold-glow: rgba(217, 119, 6, 0.2);
+    --gold-dim: rgba(245, 158, 11, 0.1);
+    --text-light: #0f172a;
+    --text-muted: #475569;
+    --text-dim: #64748b;
   }
 
   body {
-    background-color: var(--bg-dark) !important;
+    background-color: #f8f9fa !important;
     background-image: 
-      /* Apex Hero Zenith Spotlight */
-      radial-gradient(ellipse 85% 50% at 50% 8%, rgba(245, 200, 98, 0.26) 0%, rgba(212, 166, 58, 0.09) 45%, transparent 75%),
-      /* Left Flank Electric Sapphire Glow */
-      radial-gradient(circle 800px at 8% 24%, rgba(56, 189, 248, 0.12) 0%, transparent 100%),
-      /* Right Flank Amethyst Radiance */
-      radial-gradient(circle 800px at 92% 34%, rgba(168, 85, 247, 0.11) 0%, transparent 100%),
-      /* Mid-Page Flagship Golden Bath */
-      radial-gradient(ellipse 85% 55% at 50% 60%, rgba(245, 200, 98, 0.18) 0%, rgba(212, 166, 58, 0.06) 50%, transparent 80%),
-      /* Lower Catalog Azure Ambience */
-      radial-gradient(circle 900px at 50% 88%, rgba(56, 189, 248, 0.09) 0%, transparent 85%) !important;
+      /* Apex Zenith Amber Ambient Wash */
+      radial-gradient(ellipse 85% 45% at 50% 0%, rgba(245, 158, 11, 0.07) 0%, transparent 70%),
+      /* Left Flank Subtle Sky Tint */
+      radial-gradient(circle 800px at 5% 20%, rgba(56, 189, 248, 0.04) 0%, transparent 100%),
+      /* Right Flank Warm Amber Tint */
+      radial-gradient(circle 800px at 95% 30%, rgba(245, 158, 11, 0.05) 0%, transparent 100%),
+      /* Mid-Page Flagship Warm Glow */
+      radial-gradient(ellipse 85% 50% at 50% 60%, rgba(217, 119, 6, 0.04) 0%, transparent 80%) !important;
     background-attachment: fixed !important;
-    color: var(--text-light) !important;
+    color: #0f172a !important;
   }
 
-  /* Apex Hero Typography & Ambient Glow */
+  /* Returning Visitor Banner */
+  .returning-banner {
+    background: #f0fdf4 !important;
+    border-bottom: 1px solid #bbf7d0 !important;
+    color: #166534 !important;
+  }
+  .returning-banner a {
+    color: #15803d !important;
+  }
+
+  /* Apex Hero Typography & Badges */
+  .hero-badge {
+    background: #fef3c7 !important;
+    border: 1px solid #fde68a !important;
+    color: #92400e !important;
+    box-shadow: 0 2px 8px rgba(180, 83, 9, 0.08) !important;
+  }
+  .hero-badge__dot {
+    background: #d97706 !important;
+    box-shadow: 0 0 6px #d97706 !important;
+  }
   .hero-title {
-    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), 0 0 40px rgba(245, 200, 98, 0.2) !important;
+    color: #0f172a !important;
+    text-shadow: none !important;
+  }
+  .hero-title em,
+  .hero-title-accent {
+    background: linear-gradient(135deg, #0f172a 0%, #b45309 50%, #d97706 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    display: inline-block !important;
   }
   .hero-subtitle {
-    color: #cbd5e1 !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+    color: #475569 !important;
+    text-shadow: none !important;
+  }
+  .hero-subtitle strong {
+    color: #0f172a !important;
   }
 
   /* Radiant Hero Buttons */
   .hero-btn--primary {
-    background: linear-gradient(135deg, #f5c862 0%, #d4a63a 50%, #b88628 100%) !important;
-    color: #0b0e14 !important;
-    box-shadow: 0 10px 28px rgba(212, 166, 58, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(180, 83, 9, 0.28) !important;
     font-weight: 800 !important;
     border: none !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
   .hero-btn--primary:hover {
     transform: translateY(-2px) !important;
-    box-shadow: 0 14px 36px rgba(245, 200, 98, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
-    color: #000000 !important;
+    box-shadow: 0 8px 24px rgba(180, 83, 9, 0.4) !important;
+    color: #ffffff !important;
   }
   .hero-btn--secondary {
-    background: rgba(255, 255, 255, 0.08) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 8px 20px rgba(0, 0, 0, 0.25) !important;
-    backdrop-filter: blur(12px) !important;
-    transition: all 0.25s ease !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: 1.5px solid #cbd5e1 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05) !important;
+    backdrop-filter: none !important;
   }
   .hero-btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.14) !important;
-    border-color: rgba(255, 255, 255, 0.35) !important;
-    color: #ffffff !important;
+    background: #f8fafc !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
     transform: translateY(-2px) !important;
   }
 
-  /* Luminous Minimalist Social Proof Strip */
-  .social-proof-strip {
-    background: rgba(25, 33, 52, 0.72) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
-    backdrop-filter: blur(14px) !important;
+  /* Minimalist Social Proof Strip */
+  .social-proof-strip,
+  .social-proof-bar {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04) !important;
+    color: #475569 !important;
   }
-  .proof-pill {
+  .proof-pill,
+  .social-proof-item {
+    color: #475569 !important;
+  }
+  .proof-pill strong,
+  .social-proof-item strong {
+    color: #0f172a !important;
+  }
+  .proof-pill i,
+  .social-proof-item i {
+    color: #d97706 !important;
+  }
+  .proof-divider {
     color: #cbd5e1 !important;
   }
-  .proof-pill strong {
-    color: #ffffff !important;
-  }
-  .proof-pill i {
-    color: #f5c862 !important;
-  }
 
-  /* ── Bento Persona Deck: Diamond-Cut Frosted Glass ────────────────── */
+  /* ── Bento Persona Deck: Pristine White Cards ────────────────── */
+  .bento-section-label,
+  .bento-section-title {
+    color: #b45309 !important;
+  }
   .next-level-card {
-    background: linear-gradient(180deg, rgba(28, 36, 56, 0.85) 0%, rgba(19, 25, 40, 0.92) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.13) !important;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
-    backdrop-filter: blur(16px) !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+    backdrop-filter: none !important;
   }
   .next-level-card:hover {
-    box-shadow: 0 26px 56px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.32) !important;
+    border-color: rgba(180, 83, 9, 0.4) !important;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08) !important;
   }
   .next-level-card__title {
-    color: #ffffff !important;
+    color: #0f172a !important;
   }
   .next-level-card__desc {
-    color: #cbd5e1 !important;
+    color: #475569 !important;
+  }
+  .next-level-card__desc strong {
+    color: #0f172a !important;
   }
   .next-level-card__system {
-    background: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-    color: #e2e8f0 !important;
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #334155 !important;
+    box-shadow: none !important;
+  }
+  .next-level-card__system i {
+    color: #d97706 !important;
   }
   .next-level-card--flagship {
-    background: radial-gradient(120% 120% at 50% 0%, rgba(54, 43, 22, 0.85) 0%, rgba(22, 28, 44, 0.92) 100%) !important;
-    border-color: rgba(245, 200, 98, 0.45) !important;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 0 35px rgba(245, 200, 98, 0.15) !important;
+    background: linear-gradient(180deg, #fffdf8 0%, #ffffff 100%) !important;
+    border-color: #fde68a !important;
+    box-shadow: 0 8px 24px rgba(180, 83, 9, 0.08) !important;
+  }
+  .next-level-card--flagship:hover {
+    border-color: #d97706 !important;
+    box-shadow: 0 16px 40px rgba(180, 83, 9, 0.16) !important;
+  }
+  .next-level-card__icon-badge--gold {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a !important;
+  }
+  .next-level-card__icon-badge--blue {
+    background: #e0f2fe !important;
+    color: #0284c7 !important;
+    border: 1px solid #bae6fd !important;
+  }
+  .next-level-card__icon-badge--green {
+    background: #dcfce7 !important;
+    color: #16a34a !important;
+    border: 1px solid #bbf7d0 !important;
+  }
+  .next-level-card__tag--gold {
+    background: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a !important;
+  }
+  .next-level-card__tag--blue {
+    background: #e0f2fe !important;
+    color: #0284c7 !important;
+    border: 1px solid #bae6fd !important;
+  }
+  .next-level-card__tag--green {
+    background: #dcfce7 !important;
+    color: #16a34a !important;
+    border: 1px solid #bbf7d0 !important;
+  }
+  .next-level-card__btn--gold {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(180, 83, 9, 0.25) !important;
+  }
+  .next-level-card__btn--gold:hover {
+    color: #ffffff !important;
+    box-shadow: 0 6px 20px rgba(180, 83, 9, 0.35) !important;
+  }
+  .next-level-card__btn--outline {
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+  .next-level-card__btn--outline:hover {
+    background: #f8fafc !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
   }
 
-  /* ── Flagship Showcase: Radiant "Light Island" ───────────────────── */
+  /* ── Flagship Showcase: Warm Editorial Light Card ─────────────────── */
   .flagship-card-wrap {
-    background: 
-      radial-gradient(ellipse 90% 70% at 88% 15%, rgba(245, 200, 98, 0.25) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 50% at 10% 90%, rgba(56, 189, 248, 0.1) 0%, transparent 60%),
-      linear-gradient(180deg, rgba(28, 36, 58, 0.94) 0%, rgba(16, 21, 34, 0.97) 100%) !important;
-    border: 1px solid rgba(245, 200, 98, 0.45) !important;
-    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 0 65px rgba(245, 200, 98, 0.16) !important;
-    backdrop-filter: blur(20px) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #fffdf8 100%) !important;
+    border: 1.5px solid #fde68a !important;
+    box-shadow: 0 16px 48px rgba(15, 23, 42, 0.08), 0 0 30px rgba(180, 83, 9, 0.04) !important;
+    backdrop-filter: none !important;
+  }
+  .flagship-card-wrap h2,
+  .flagship-card-wrap h3 {
+    color: #0f172a !important;
+  }
+  .flagship-card-wrap p {
+    color: #475569 !important;
   }
 
-  /* 4 Pillars: Luminous Frosted Glass Tiles */
+  /* 4 Pillars: Crisp Frosted Tiles */
   .flagship-pillars-grid .flagship-pillar-item {
-    background: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.14) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 18px rgba(0, 0, 0, 0.2) !important;
-    backdrop-filter: blur(14px) !important;
-    transition: all 0.25s ease !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+    backdrop-filter: none !important;
+    color: #475569 !important;
   }
   .flagship-pillars-grid .flagship-pillar-item:hover {
-    background: rgba(255, 255, 255, 0.09) !important;
-    border-color: rgba(245, 200, 98, 0.5) !important;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-    transform: translateY(-2px) !important;
+    background: #fffdf8 !important;
+    border-color: #d97706 !important;
+    box-shadow: 0 8px 20px rgba(180, 83, 9, 0.08) !important;
   }
   .flagship-pillar-item strong {
-    color: #ffffff !important;
+    color: #0f172a !important;
   }
   .flagship-pillar-item span {
-    color: #cbd5e1 !important;
+    color: #475569 !important;
   }
   .flagship-pillar-item i {
-    color: #4ade80 !important;
-    text-shadow: 0 0 10px rgba(74, 222, 128, 0.4) !important;
+    color: #16a34a !important;
+    text-shadow: none !important;
   }
 
   /* Right Visual Showcase Card */
   .flagship-visual-card {
-    background: radial-gradient(circle at 50% 32%, rgba(245, 200, 98, 0.28) 0%, rgba(212, 166, 58, 0.08) 45%, rgba(20, 26, 44, 0.92) 100%) !important;
-    border: 1px solid rgba(245, 200, 98, 0.42) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #fde68a !important;
     border-radius: 22px !important;
     padding: 28px !important;
-    width: 100% !important;
-    max-width: 440px !important;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 0 50px rgba(245, 200, 98, 0.18) !important;
-    position: relative !important;
-    backdrop-filter: blur(16px) !important;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08) !important;
+    backdrop-filter: none !important;
+    color: #0f172a !important;
   }
 
   /* ── Multi-Book Bundle Offer Banner ───────────────────────────────── */
   .bundle-banner {
-    background: linear-gradient(135deg, rgba(48, 38, 18, 0.85) 0%, rgba(22, 28, 46, 0.92) 100%) !important;
-    border: 1px solid rgba(245, 200, 98, 0.48) !important;
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 0 35px rgba(245, 200, 98, 0.14) !important;
-    backdrop-filter: blur(16px) !important;
+    background: linear-gradient(135deg, #fffdf5 0%, #ffffff 100%) !important;
+    border: 1.5px solid #fde68a !important;
+    box-shadow: 0 10px 30px rgba(180, 83, 9, 0.08) !important;
+    backdrop-filter: none !important;
   }
   .bundle-banner h3 {
-    color: #ffffff !important;
+    color: #0f172a !important;
   }
   .bundle-banner p {
-    color: #cbd5e1 !important;
+    color: #475569 !important;
+  }
+  .bundle-btn {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+  }
+  .bundle-btn:hover {
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%) !important;
   }
 
-  /* ── Catalog Search & Specular Filter Pills ────────────────────────── */
+  /* ── Catalog Search & Filter Tabs ─────────────────────────────────── */
   .search-input {
-    background: rgba(26, 34, 54, 0.85) !important;
-    border: 1px solid rgba(255, 255, 255, 0.16) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
-    color: #ffffff !important;
-    border-radius: 30px !important;
-    padding: 14px 22px 14px 44px !important;
-    font-size: 0.92rem !important;
-    transition: all 0.25s ease !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04) !important;
+    color: #0f172a !important;
   }
   .search-input:focus {
-    border-color: #f5c862 !important;
-    box-shadow: 0 0 25px rgba(245, 200, 98, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-    outline: none !important;
-    background: rgba(30, 40, 64, 0.95) !important;
+    border-color: #d97706 !important;
+    box-shadow: 0 0 16px rgba(217, 119, 6, 0.2) !important;
+    background: #ffffff !important;
   }
   .search-box-wrap i {
-    color: #f5c862 !important;
+    color: #d97706 !important;
   }
 
   .filter-tabs {
     gap: 10px !important;
   }
   .filter-tab {
-    background: rgba(26, 34, 54, 0.8) !important;
-    border: 1px solid rgba(255, 255, 255, 0.13) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 4px 12px rgba(0, 0, 0, 0.2) !important;
-    color: #cbd5e1 !important;
-    padding: 9px 20px !important;
-    border-radius: 30px !important;
-    font-size: 0.86rem !important;
-    font-weight: 600 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    cursor: pointer !important;
-    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    background: #ffffff !important;
+    border: 1.5px solid #cbd5e1 !important;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04) !important;
+    color: #475569 !important;
   }
   .filter-tab i {
-    font-size: 0.88rem !important;
-    color: #94a3b8 !important;
-    transition: color 0.2s ease !important;
+    color: #64748b !important;
   }
   .filter-tab:hover {
-    border-color: rgba(255, 255, 255, 0.3) !important;
-    color: #ffffff !important;
-    background: rgba(255, 255, 255, 0.12) !important;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 6px 18px rgba(0, 0, 0, 0.25) !important;
-    transform: translateY(-1px) !important;
+    border-color: #94a3b8 !important;
+    color: #0f172a !important;
+    background: #f8fafc !important;
   }
   .filter-tab:hover i {
-    color: #f5c862 !important;
+    color: #d97706 !important;
   }
   .filter-tab.active {
-    background: linear-gradient(135deg, rgba(245, 200, 98, 0.25) 0%, rgba(212, 166, 58, 0.15) 100%) !important;
-    border-color: #f5c862 !important;
-    color: #f5c862 !important;
-    box-shadow: 0 0 22px rgba(245, 200, 98, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+    background: #fef3c7 !important;
+    border-color: #d97706 !important;
+    color: #92400e !important;
+    box-shadow: 0 2px 10px rgba(217, 119, 6, 0.15) !important;
     font-weight: 700 !important;
   }
   .filter-tab.active i {
-    color: #f5c862 !important;
+    color: #92400e !important;
   }
 
-  /* ── 30-Book Masterclass Cards: High-Prestige Luminous Glass ───────── */
+  /* ── 30-Book Masterclass Cards: Clean Editorial White ────────────── */
   .book-card {
-    background: linear-gradient(180deg, rgba(28, 36, 56, 0.85) 0%, rgba(18, 23, 38, 0.92) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
     border-radius: 16px !important;
-    backdrop-filter: blur(14px) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: none !important;
   }
   .book-card:hover {
-    transform: translateY(-5px) !important;
-    border-color: rgba(245, 200, 98, 0.5) !important;
-    box-shadow: 0 26px 54px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 32px rgba(245, 200, 98, 0.16) !important;
+    transform: translateY(-4px) !important;
+    border-color: #d97706 !important;
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.1), 0 0 20px rgba(217, 119, 6, 0.08) !important;
+  }
+  .book-card__category {
+    color: #b45309 !important;
   }
   .book-card__title {
-    color: #ffffff !important;
+    color: #0f172a !important;
+  }
+  .book-card:hover .book-card__title {
+    color: #d97706 !important;
   }
   .book-card__desc {
-    color: #cbd5e1 !important;
+    color: #475569 !important;
   }
   .book-card__price {
-    color: #ffffff !important;
+    color: #0f172a !important;
     font-weight: 900 !important;
   }
+  .book-card__currency {
+    color: #b45309 !important;
+  }
   .book-card__btn {
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 2px 10px rgba(180, 83, 9, 0.2) !important;
+  }
+  .book-card__btn:hover {
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%) !important;
   }
   .book-card__badge {
-    background: rgba(245, 200, 98, 0.15) !important;
-    border: 1px solid rgba(245, 200, 98, 0.4) !important;
-    color: #f5c862 !important;
+    background: #fef3c7 !important;
+    border: 1px solid #fde68a !important;
+    color: #92400e !important;
+    backdrop-filter: none !important;
   }
-  /* ── Free Campus Guides & Smart Audio Engine: Specular Glass ──────── */
+  .book-card__badge--owned {
+    background: #dcfce7 !important;
+    border: 1px solid #bbf7d0 !important;
+    color: #16a34a !important;
+  }
+  .book-card__footer {
+    border-top: 1px solid #f1f5f9 !important;
+  }
+  .book-card__details-action {
+    color: #b45309 !important;
+  }
+  .book-card__details-action:hover {
+    color: #d97706 !important;
+  }
+
+  /* ── Free Campus Guides Cards ─────────────────────────────────────── */
   .free-guide-card {
-    background: linear-gradient(180deg, rgba(28, 36, 56, 0.82) 0%, rgba(18, 23, 38, 0.9) 100%) !important;
-    border: 1px solid rgba(255, 255, 255, 0.12) !important;
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
     border-radius: 16px !important;
-    backdrop-filter: blur(14px) !important;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    backdrop-filter: none !important;
+    color: #0f172a !important;
   }
   .free-guide-card:hover {
     transform: translateY(-4px) !important;
-    border-color: rgba(245, 200, 98, 0.5) !important;
-    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 28px rgba(245, 200, 98, 0.14) !important;
+    border-color: #d97706 !important;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08) !important;
+    background: #fffdf8 !important;
   }
   .free-guide-card__desc {
-    color: #cbd5e1 !important;
+    color: #475569 !important;
   }
   .free-guide-card__title {
-    color: #ffffff !important;
+    color: #0f172a !important;
   }
   .free-guide-card__link {
-    color: #f5c862 !important;
+    color: #b45309 !important;
     font-weight: 800 !important;
+  }
+
+  /* ── Modals & Checkout Forms ──────────────────────────────────────── */
+  .modal-overlay {
+    background: rgba(15, 23, 42, 0.6) !important;
+    backdrop-filter: blur(8px) !important;
+  }
+  .modal-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15) !important;
+  }
+  .modal-title {
+    color: #0f172a !important;
+  }
+  .modal-close {
+    background: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+  .modal-close:hover {
+    background: #e2e8f0 !important;
+  }
+  .modal-notice {
+    background: #fef3c7 !important;
+    border: 1px solid #fde68a !important;
+    color: #92400e !important;
+  }
+  .form-label {
+    color: #334155 !important;
+  }
+  .form-input {
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+  .form-input:focus {
+    border-color: #d97706 !important;
+    background: #ffffff !important;
+  }
+  .pm-selector {
+    gap: 12px !important;
+  }
+  .pm-option {
+    background: #f8fafc !important;
+    border: 1.5px solid #cbd5e1 !important;
+    color: #0f172a !important;
+  }
+  .btn-submit {
+    background: linear-gradient(135deg, #b45309 0%, #d97706 100%) !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+  }
+  .btn-submit:hover {
+    background: linear-gradient(135deg, #92400e 0%, #b45309 100%) !important;
+  }
+  .bullets-list li {
+    color: #334155 !important;
+  }
+  .bullets-list li i {
+    color: #16a34a !important;
+  }
+
+  /* ── Footer ───────────────────────────────────────────────────────── */
+  .site-footer {
+    border-top: 1px solid #e2e8f0 !important;
+    color: #64748b !important;
+    background: #ffffff !important;
+  }
+  .footer-links a {
+    color: #64748b !important;
+  }
+  .footer-links a:hover {
+    color: #b45309 !important;
   }
 
   /* ── COMPREHENSIVE RESPONSIVE & MOBILE POLISH ─────────────────────── */
@@ -2982,19 +3174,19 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     </div>
 
     <!-- Key Takeaway Bullets -->
-    <div style="background: #161922; border: 1px solid var(--card-border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
-      <h4 style="margin: 0 0 12px 0; color: #fff; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
+    <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+      <h4 style="margin: 0 0 12px 0; color: #0f172a; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">
         ⚡ Copy-Paste Tactics & Action Playbooks Included:
       </h4>
       <ul id="details-takeaways" style="margin: 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px;"></ul>
     </div>
 
     <!-- Who Should Read This Section -->
-    <div style="background: rgba(212, 166, 58, 0.08); border: 1px solid var(--gold-dim); border-radius: 10px; padding: 14px 18px; margin-bottom: 24px;">
-      <div style="font-weight: 800; color: var(--gold-bright); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+    <div style="background: #fffdf5; border: 1px solid #fde68a; border-radius: 10px; padding: 14px 18px; margin-bottom: 24px;">
+      <div style="font-weight: 800; color: #92400e; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
         <i class="bi bi-person-check-fill"></i> Who Should Read This
       </div>
-      <p id="details-who-should-read" style="margin: 0; font-size: 0.88rem; color: #cbd5e1; line-height: 1.5;"></p>
+      <p id="details-who-should-read" style="margin: 0; font-size: 0.88rem; color: #475569; line-height: 1.5;"></p>
     </div>
 
     <!-- Modal Action Buttons -->
@@ -3002,7 +3194,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       <button id="details-buy-btn" class="btn btn--gold" style="flex: 2; min-width: 200px; padding: 14px 20px; font-weight: 900; font-size: 1rem; text-align: center; border-radius: 10px;">
         Buy Playbook Now — <span class="naira">₦</span> 5,000
       </button>
-      <button class="btn" onclick="closeBookDetailsModal()" style="flex: 1; min-width: 120px; background: #161922; border: 1px solid var(--card-border); color: var(--text-muted); padding: 14px 20px; font-weight: 700; border-radius: 10px;">
+      <button class="btn" onclick="closeBookDetailsModal()" style="flex: 1; min-width: 120px; background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; padding: 14px 20px; font-weight: 700; border-radius: 10px;">
         Close Preview
       </button>
     </div>
@@ -3014,7 +3206,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   <div class="modal-card">
     <button class="modal-close" onclick="closePreorderModal()"><i class="bi bi-x-lg"></i></button>
     <div style="display:flex; gap:16px; align-items:center; margin-bottom:16px;">
-      <img id="modal-book-cover" src="" style="width:70px; height:90px; object-fit:contain; border-radius:8px; border:1px solid var(--card-border); background:#11141c; padding:4px;">
+      <img id="modal-book-cover" src="" style="width:70px; height:90px; object-fit:contain; border-radius:8px; border:1px solid #e2e8f0; background:#f8fafc; padding:4px;">
       <div>
         <h3 class="modal-title" id="modal-book-title">Book Title</h3>
         <div style="font-size:1.25rem; font-weight:900; color:var(--gold-bright);" id="modal-book-price-display"><span class="naira">₦</span> 5,000</div>
@@ -3023,31 +3215,31 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     <p id="modal-book-desc" style="font-size:0.875rem; color:var(--text-muted); margin-bottom:12px;"></p>
 
     <!-- Interactive 3-Book Selector (Only visible for 3-Book Bundle) -->
-    <div id="bundle-selector-container" style="display:none; background:#11141c; border:1px solid var(--gold); border-radius:12px; padding:16px; margin-bottom:20px;">
-      <div style="font-weight:800; color:var(--gold-bright); font-size:0.95rem; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+    <div id="bundle-selector-container" style="display:none; background:#fffdf5; border:1.5px solid #fde68a; border-radius:12px; padding:16px; margin-bottom:20px;">
+      <div style="font-weight:800; color:#92400e; font-size:0.95rem; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
         <i class="bi bi-collection-play-fill"></i> Choose Your 3 Masterclasses:
       </div>
 
       <!-- Thumbnails Preview Row -->
       <div id="bundle-thumbs-row" style="display:flex; gap:12px; justify-content:center; margin-bottom:16px;">
-        <img id="bundle-thumb-1" src="" style="width:58px; height:78px; object-fit:fill; border-radius:6px; border:1px solid var(--gold); background:#161922;">
-        <img id="bundle-thumb-2" src="" style="width:58px; height:78px; object-fit:fill; border-radius:6px; border:1px solid var(--gold); background:#161922;">
-        <img id="bundle-thumb-3" src="" style="width:58px; height:78px; object-fit:fill; border-radius:6px; border:1px solid var(--gold); background:#161922;">
+        <img id="bundle-thumb-1" src="" style="width:58px; height:78px; object-fit:fill; border-radius:6px; border:1px solid var(--gold); background:#ffffff;">
+        <img id="bundle-thumb-2" src="" style="width:58px; height:78px; object-fit:fill; border-radius:6px; border:1px solid var(--gold); background:#ffffff;">
+        <img id="bundle-thumb-3" src="" style="width:58px; height:78px; object-fit:fill; border-radius:6px; border:1px solid var(--gold); background:#ffffff;">
       </div>
 
       <div class="form-group" style="margin-bottom:12px;">
-        <label class="form-label" style="color:var(--gold-bright); font-weight:800;">Book #1 Selection</label>
-        <select id="bundle-book-1" class="form-input" onchange="updateBundlePreviews()" style="background:#161922; color:#fff; border-color:var(--card-border); font-size:0.875rem;"></select>
+        <label class="form-label" style="color:#0f172a; font-weight:800;">Book #1 Selection</label>
+        <select id="bundle-book-1" class="form-input" onchange="updateBundlePreviews()" style="background:#ffffff; color:#0f172a; border-color:#cbd5e1; font-size:0.875rem;"></select>
       </div>
 
       <div class="form-group" style="margin-bottom:12px;">
-        <label class="form-label" style="color:var(--gold-bright); font-weight:800;">Book #2 Selection</label>
-        <select id="bundle-book-2" class="form-input" onchange="updateBundlePreviews()" style="background:#161922; color:#fff; border-color:var(--card-border); font-size:0.875rem;"></select>
+        <label class="form-label" style="color:#0f172a; font-weight:800;">Book #2 Selection</label>
+        <select id="bundle-book-2" class="form-input" onchange="updateBundlePreviews()" style="background:#ffffff; color:#0f172a; border-color:#cbd5e1; font-size:0.875rem;"></select>
       </div>
 
       <div class="form-group" style="margin-bottom:0;">
-        <label class="form-label" style="color:var(--gold-bright); font-weight:800;">Book #3 Selection</label>
-        <select id="bundle-book-3" class="form-input" onchange="updateBundlePreviews()" style="background:#161922; color:#fff; border-color:var(--card-border); font-size:0.875rem;"></select>
+        <label class="form-label" style="color:#0f172a; font-weight:800;">Book #3 Selection</label>
+        <select id="bundle-book-3" class="form-input" onchange="updateBundlePreviews()" style="background:#ffffff; color:#0f172a; border-color:#cbd5e1; font-size:0.875rem;"></select>
       </div>
     </div>
 
@@ -3198,7 +3390,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
       <div class="form-group">
         <label class="form-label">Primary Goal / Focus Area</label>
-        <select id="lm-category" class="form-input" style="background:#0d0f14; color:#fff;">
+        <select id="lm-category" class="form-input" style="background:#ffffff; color:#0f172a; border: 1.5px solid #cbd5e1;">
           <option value="Sales & DM Closing">Sales, DM Closing & Client Acquisition</option>
           <option value="Business & Scale">Business Growth, SOPs & Cash Flow</option>
           <option value="Career Acceleration">Corporate Promotions & Workplace Strategy</option>
@@ -3208,7 +3400,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
       <div id="lm-status-msg" class="status-msg"></div>
 
-      <button type="submit" class="btn-submit" id="submit-lm-btn" style="background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%); color: #fff; font-weight: 800;">
+      <button type="submit" class="btn-submit" id="submit-lm-btn" style="background: linear-gradient(135deg, #b45309 0%, #d97706 100%); color: #fff; font-weight: 800;">
         Send Me The Free Cheat Sheet &rarr;
       </button>
     </form>
@@ -3223,20 +3415,20 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     <div style="font-size: 3rem; color: #22c55e; margin-bottom: 12px;"><i class="bi bi-envelope-check-fill"></i></div>
     <h3 class="modal-title">Cheat Sheet Sent To Your Inbox!</h3>
     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
-      We just dispatched <strong style="color: #fff;">The DM Sales Script</strong> to <span id="lm-success-email" style="color: var(--gold-bright);">your email</span>.
+      We just dispatched <strong style="color: #0f172a;">The DM Sales Script</strong> to <span id="lm-success-email" style="color: var(--gold-bright);">your email</span>.
     </p>
 
     <!-- Viral Milestone Referral Card (SparkLoop Model) -->
-    <div style="background: #11141c; border: 1px solid var(--gold); border-radius: 14px; padding: 20px; text-align: left; margin-bottom: 20px;">
-      <div style="display: flex; gap: 8px; align-items: center; font-weight: 800; color: var(--gold-bright); font-size: 0.92rem; margin-bottom: 8px;">
+    <div style="background: #fffdf5; border: 1.5px solid #fde68a; border-radius: 14px; padding: 20px; text-align: left; margin-bottom: 20px;">
+      <div style="display: flex; gap: 8px; align-items: center; font-weight: 800; color: #92400e; font-size: 0.92rem; margin-bottom: 8px;">
         <i class="bi bi-gift-fill" style="font-size: 1.1rem;"></i> WANT TO UNLOCK A FREE EXECUTION PLAYBOOK?
       </div>
-      <p style="font-size: 0.83rem; color: #cbd5e1; margin-bottom: 14px; line-height: 1.4;">
+      <p style="font-size: 0.83rem; color: #475569; margin-bottom: 14px; line-height: 1.4;">
         Share your personal invite link below with 2 friends. When they claim their free cheat sheet, you instantly unlock <strong>The Naira Ads Setup Guide</strong> for free!
       </p>
 
       <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-        <input type="text" id="subscriber-referral-link" class="form-input" readonly style="background: #161922; color: var(--gold-bright); font-weight: 700; font-size: 0.82rem;" value="https://edgepack.thescaleconference.com/?ref=SCALE-VIP">
+        <input type="text" id="subscriber-referral-link" class="form-input" readonly style="background: #ffffff; color: var(--gold-bright); font-weight: 700; font-size: 0.82rem; border: 1.5px solid #cbd5e1;" value="https://edgepack.thescaleconference.com/?ref=SCALE-VIP">
         <button onclick="copyReferralLink()" class="btn btn--gold" style="white-space: nowrap; padding: 10px 14px; font-size: 0.8rem;">
           <i class="bi bi-clipboard"></i> Copy
         </button>
@@ -3252,7 +3444,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       </div>
     </div>
 
-    <button class="btn-submit" onclick="closeLeadMagnetSuccessModal()" style="background: #161922; border: 1px solid var(--card-border); color: #fff;">
+    <button class="btn-submit" onclick="closeLeadMagnetSuccessModal()" style="background: #f1f5f9; border: 1px solid #cbd5e1; color: #0f172a; font-weight: 700;">
       Return to Storefront
     </button>
   </div>
