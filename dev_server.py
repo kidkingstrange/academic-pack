@@ -92,6 +92,30 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
         if clean_path == "/api/blog/auth/me":
             return self._send_json({"success": True, "user": None})
 
+        # API: Admin Master Overview
+        if clean_path.startswith("/api/admin/master-overview"):
+            return self._send_json({
+                "revenue_today": "₦42,000",
+                "sales_today": 21,
+                "active_affiliates": 18,
+                "total_customers": 4200,
+                "mrr": "₦180,000",
+                "open_reviews_count": 0,
+                "failed_delivery_alerts_count": 0
+            })
+
+        # API: Admin Analytics Overview
+        if clean_path.startswith("/api/admin/analytics/overview"):
+            return self._send_json({
+                "period": "all",
+                "total_revenue": 8400000,
+                "total_orders": 4200,
+                "avg_order_value": 2000,
+                "conversion_rate": 3.8,
+                "sales_count": 4200,
+                "recent_sales": []
+            })
+
         # Static clean URL routing
         super().do_GET()
 
@@ -104,6 +128,14 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
             body = json.loads(raw_body)
         except Exception:
             body = {}
+
+        # API: Admin Login
+        if clean_path == "/api/admin/login":
+            return self._send_json({
+                "access_token": "dev-admin-jwt-token-access",
+                "token_type": "bearer",
+                "role": "admin"
+            })
 
         # API: Reader Login
         if clean_path == "/api/blog/auth/login":

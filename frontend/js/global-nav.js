@@ -101,6 +101,90 @@
     btns.forEach(function(btn) {
       btn.onclick = toggleGlobalTheme;
     });
+
+    // Ensure affiliate registration link exists across every page
+    ensureAffiliateLinks();
+
+    // Ensure universal affiliate registration modal script is loaded
+    ensureAffiliateModalScript();
+  }
+
+  function ensureAffiliateModalScript() {
+    if (window.openAffiliateRegisterModal) return;
+    if (document.querySelector('script[src*="affiliate-modal.js"]')) return;
+    var script = document.createElement('script');
+    script.src = '/js/affiliate-modal.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+
+  // ── Universal Affiliate Links Injection ──────────────────────────────────
+  function ensureAffiliateLinks() {
+    var regHref = '/affiliate-register.html';
+
+    // 0. Safety Cleanup: Brand elements must strictly contain only brand text/logo
+    var brandEls = document.querySelectorAll('.footer__brand, .nav__brand, .global-brand, .blog-footer__brand');
+    brandEls.forEach(function(b) {
+      var rogue = b.querySelectorAll('a[href*="affiliate"], a[href*="affiliates"]');
+      rogue.forEach(function(r) { r.remove(); });
+    });
+
+    // 1. Footers across all page layouts (target only link rows, never brand headers)
+    var footers = document.querySelectorAll('.site-footer .footer-links, .blog-footer__links, .footer-links, .footer__links');
+    footers.forEach(function(f) {
+      if (f.classList.contains('footer__brand') || f.closest('.footer__brand') || f.classList.contains('nav__brand')) return;
+      var parentFooter = f.closest('footer');
+      if (parentFooter && parentFooter.querySelector('a[href*="affiliate-register"]')) return;
+      if (f.querySelectorAll && !f.querySelector('a[href*="affiliate-register"]')) {
+        var a = document.createElement('a');
+        a.href = regHref;
+        a.textContent = 'Become an Affiliate';
+        var amb = f.querySelector('a[href*="affiliate/dashboard"]');
+        if (amb) {
+          f.insertBefore(a, amb);
+        } else {
+          f.appendChild(a);
+        }
+      }
+    });
+
+    // 2. Mobile Drawer Navigation
+    var drawerGroups = document.querySelectorAll('.drawer-nav-group');
+    drawerGroups.forEach(function(group) {
+      var title = group.querySelector('.drawer-group-title');
+      if (title && (title.textContent.indexOf('BUYER') !== -1 || title.textContent.indexOf('EXPLORE') !== -1)) {
+        if (!group.querySelector('a[href*="affiliate-register"]')) {
+          var a = document.createElement('a');
+          a.href = regHref;
+          a.className = 'drawer-nav-item';
+          a.onclick = closeDrawer;
+          a.innerHTML = '<i class="bi bi-gift-fill" style="color:var(--gold,#f59e0b)"></i> <span>Become an Affiliate (Earn 60%)</span>';
+          var amb = group.querySelector('a[href*="affiliate/dashboard"]');
+          if (amb) {
+            group.insertBefore(a, amb);
+          } else {
+            group.appendChild(a);
+          }
+        }
+      }
+    });
+
+    // 3. Desktop Navigation Header
+    var navs = document.querySelectorAll('.global-nav');
+    navs.forEach(function(nav) {
+      if (!nav.querySelector('a[href*="affiliate-register"]')) {
+        var a = document.createElement('a');
+        a.href = regHref;
+        a.className = 'global-nav__link';
+        a.textContent = 'Affiliates';
+        var cta = nav.querySelector('.global-nav__cta-pill') || nav.querySelector('.reader-auth-btn');
+        if (cta) {
+          nav.insertBefore(a, cta);
+        } else {
+          nav.appendChild(a);
+        }
+      }
+    });
   }
 
   // Bind on DOM ready and immediately if document is ready

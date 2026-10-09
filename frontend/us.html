@@ -282,7 +282,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </section>
 
 <!-- Reframe Section -->
-<section class="reframe">
+<section class="reframe" id="reframe">
   <div class="container">
     <div class="reframe__inner">
       <div data-aos="fade-right">
@@ -294,52 +294,217 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
           This package isn't a collection of motivational tricks or generic advice. It is a <strong>complete, repeatable learning system</strong> engineered specifically for higher education courses. When you replace passive reading with active retrieval and structured focus loops, high grades become the natural outcome.
         </p>
       </div>
-      <div class="reframe__pillars" data-aos="fade-left">
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
-              <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
-              <path d="M12 5v13"/>
-              <path d="M12 7h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1"/>
-              <path d="M12 11h-1a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h1"/>
-            </svg>
+      <div class="reframe-slider-container" data-aos="fade-left">
+        <div class="reframe-slider-top">
+          <div class="reframe-slider-controls">
+            <button type="button" class="reframe-arrow-btn reframe-arrow-prev" id="reframePrevBtn" aria-label="Previous">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button type="button" class="reframe-arrow-btn reframe-arrow-next" id="reframeNextBtn" aria-label="Next">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
-          <h4>Active Retrieval</h4>
-          <p>Learn how to force your brain to remember information during exams.</p>
         </div>
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <circle cx="12" cy="12" r="6"/>
-              <circle cx="12" cy="12" r="2"/>
-            </svg>
+
+        <div class="reframe-slider-viewport" id="reframeViewport">
+          <div class="reframe-slider-track" id="reframeTrack">
+            <!-- Pillar 1 -->
+            <div class="reframe-slide" data-index="0">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+                      <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+                      <path d="M12 5v13"/>
+                      <path d="M12 7h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1"/>
+                      <path d="M12 11h-1a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h1"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 01 · RETENTION</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Active Retrieval</h4>
+                  <p class="reframe__pillar-summary">Force your brain to extract information from memory under pressure, replacing passive rereading with unbreakable recall.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Feynman Recall:</strong> Articulate complex syllabus concepts clearly with zero notes open.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Closed-Book Dumps:</strong> Expose hidden conceptual blindspots days before entering the exam room.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Trigger Anchors:</strong> Install retrieval cues so you never freeze or blank out under test pressure.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> 3.8x Retention vs. Highlighting</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 01</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="reframe-slide" data-index="1">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <circle cx="12" cy="12" r="6"/>
+                      <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 02 · NEURAL FOCUS</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Deep Focus</h4>
+                  <p class="reframe__pillar-summary">Techniques to study for 90 minutes straight without distraction, screen relapse, or mental fatigue.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Ultradian Sprints:</strong> Align deep work sessions with natural human cognitive peak cycles.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Dopamine & Phone Reset:</strong> Permanently shut down subconscious notification checking and tab drift.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>5-Min Resistance Breaker:</strong> Bypass study inertia and enter effortless flow without willpower drag.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> 90-Min Unbroken Flow State</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 02</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="reframe-slide" data-index="2">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m17 2 4 4-4 4"/>
+                      <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+                      <path d="m7 22-4-4 4-4"/>
+                      <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 03 · PERMANENT RECALL</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Spaced Repetition</h4>
+                  <p class="reframe__pillar-summary">The scientifically proven protocol to invert the forgetting curve and lock information into permanent memory.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Decay Interval Scheduling:</strong> Review course notes at mathematically calculated memory decay points.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>High-Yield Card Synthesis:</strong> Condense 100 pages of dense textbooks into 20 high-leverage prompts.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>15-Minute Daily Loops:</strong> Maintain total mastery across every module with rapid morning review circuits.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> 85%+ Long-Term Recall</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 03</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="reframe-slide" data-index="3">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                      <polyline points="16 7 22 7 22 13"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 04 · EXECUTION MATRIX</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Exam Strategy</h4>
+                  <p class="reframe__pillar-summary">How to structure and execute exam answers to extract maximum points and top-band grades from examiners.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Mark-Scheme Decoding:</strong> Target the exact criteria and technical keywords examiners score against.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Time-Budgeting Framework:</strong> Eliminate exam panic and ensure high-mark sections get full priority.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Model Answer Blueprints:</strong> Plug facts into battle-tested structure templates for essays & calculations.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> +15–25% Average Grade Uplift</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 04</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <h4>Deep Focus</h4>
-          <p>Techniques to study for 90 minutes straight without distraction.</p>
         </div>
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m17 2 4 4-4 4"/>
-              <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
-              <path d="m7 22-4-4 4-4"/>
-              <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
-            </svg>
-          </div>
-          <h4>Spaced Repetition</h4>
-          <p>The scientifically proven way to never forget what you read.</p>
-        </div>
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-              <polyline points="16 7 22 7 22 13"/>
-            </svg>
-          </div>
-          <h4>Exam Strategy</h4>
-          <p>How to actually answer questions to get maximum marks.</p>
+
+        <div class="reframe-slider-dots" id="reframeDots">
+          <button type="button" class="reframe-dot active" aria-label="Go to Pillar 1"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 2"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 3"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 4"></button>
         </div>
       </div>
     </div>
@@ -501,64 +666,110 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
     <div style="text-align:center; margin-top:32px" data-aos="fade-up" data-aos-delay="200">
       <button class="btn btn--gold btn--full" onclick="openUSCheckout()">Get The Complete Package Now</button>
-      <div class="cta-microcopy" style="color: var(--text2);">
-        <span><i class="bi bi-shield-check"></i> 100% Risk-Free Guarantee</span>
-        <span><i class="bi bi-lightning-charge-fill"></i> Instant Library Access</span>
-      </div>
       <p class="price-warning-notice" style="color: #ef4444; font-size: 0.85rem; font-weight: 700; margin-top: 16px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.5;">Notice: The $15 launch price is valid for your 24-hour window, after which the price steps up to $30.</p>
     </div>
   </div>
 </section>
 
 <!-- Testimonials -->
-<section class="testimonials">
-  <div class="container container--sm">
+<section class="testimonials" id="testimonials">
+  <div class="container">
     <div class="testimonials__header" data-aos="fade-up">
-      <span class="section-label">Proof</span>
-      <h2 class="section-title">Real results from real students</h2>
+      <div class="testimonials__header-text">
+        <span class="section-label">Proof</span>
+        <h2 class="section-title">Real results from real students</h2>
+      </div>
+      <div class="testi-slider-controls">
+        <button type="button" class="testi-arrow-btn testi-arrow-prev" id="testiPrevBtn" aria-label="Previous testimonials">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button type="button" class="testi-arrow-btn testi-arrow-next" id="testiNextBtn" aria-label="Next testimonials">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
     </div>
     
-    <div class="testi-grid">
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="testi-card__quote-mark">"</div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"The Active Recall Blueprint changed how I studied for USMLE Step 1. Instead of drowning in First Aid pages, I focused on high-yield retrieval. My practice scores jumped 22 points in 3 weeks."</p>
-        <div class="testi-card__author">Emily R. — USMLE Step 1 Candidate (Johns Hopkins)</div>
-      </div>
+    <div class="testi-slider-container" data-aos="fade-up" data-aos-delay="100">
+      <div class="testi-slider-viewport" id="testiViewport">
+        <div class="testi-slider-track" id="testiTrack">
+          <!-- Card 1: Emily R. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Candidate</span>
+                <span class="testi-metric"><i class="bi bi-graph-up-arrow"></i> +22 Practice Score</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"The Active Recall Blueprint changed how I studied for USMLE Step 1. Instead of drowning in First Aid pages, I focused on high-yield retrieval. <strong>My practice scores jumped 22 points in 3 weeks.</strong>"</p>
+            <div class="testi-card__author">Emily R. — USMLE Step 1 Candidate (Johns Hopkins)</div>
+          </div>
 
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="testi-card__quote-mark">"</div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"Logical Reasoning used to give me immense anxiety. The mental models in 'Get Good at Hard Things' helped me break down complex analytical logic systematically. Best $15 I've spent."</p>
-        <div class="testi-card__author">Jacob T. — Law Student (LSAT 172, NYU Law)</div>
-      </div>
+          <!-- Card 2: Jacob T. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-award-fill"></i> LSAT 172 Score</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"Logical Reasoning used to give me immense anxiety. The mental models in 'Get Good at Hard Things' helped me break down complex analytical logic systematically. <strong>Best $15 I've spent.</strong>"</p>
+            <div class="testi-card__author">Jacob T. — Law Student (LSAT 172, NYU Law)</div>
+          </div>
 
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
-        <div class="testi-card__quote-mark">"</div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"Nursing school pharmacology was overwhelming until I implemented the spaced repetition framework. Passed NCLEX-RN on my first attempt with 85 questions!"</p>
-        <div class="testi-card__author">Sarah M. — BSN Student (UCLA School of Nursing)</div>
-      </div>
+          <!-- Card 3: Sarah M. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified BSN</span>
+                <span class="testi-metric"><i class="bi bi-check2-circle"></i> Passed NCLEX 1st Try</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"Nursing school pharmacology was overwhelming until I implemented the spaced repetition framework. <strong>Passed NCLEX-RN on my first attempt with 85 questions!</strong>"</p>
+            <div class="testi-card__author">Sarah M. — BSN Student (UCLA School of Nursing)</div>
+          </div>
 
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
-        <div class="testi-card__quote-mark">"</div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"Studying for FAR while working 50+ hours a week was brutal. This system taught me how to maximize 90-minute hyper-focused study blocks after work. Passed all 4 CPA sections."</p>
-        <div class="testi-card__author">Michael K. — CPA Candidate &amp; Senior Accountant</div>
-      </div>
+          <!-- Card 4: Michael K. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified CPA</span>
+                <span class="testi-metric"><i class="bi bi-shield-check"></i> Passed All 4 Sections</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"Studying for FAR while working 50+ hours a week was brutal. This system taught me how to maximize 90-minute hyper-focused study blocks after work. <strong>Passed all 4 CPA sections.</strong>"</p>
+            <div class="testi-card__author">Michael K. — CPA Candidate &amp; Senior Accountant</div>
+          </div>
 
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="500">
-        <div class="testi-card__quote-mark">"</div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"Balancing corporate finance coursework, networking, and group projects was chaotic. The time architecture module gave me back 10+ hours a week without sacrificing my GPA."</p>
-        <div class="testi-card__author">Ashley D. — MBA Student (Northwestern Kellogg)</div>
-      </div>
+          <!-- Card 5: Ashley D. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified MBA</span>
+                <span class="testi-metric"><i class="bi bi-clock-history"></i> +10 Hrs Saved / Wk</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"Balancing corporate finance coursework, networking, and group projects was chaotic. <strong>The time architecture module gave me back 10+ hours a week without sacrificing my GPA.</strong>"</p>
+            <div class="testi-card__author">Ashley D. — MBA Student (Northwestern Kellogg)</div>
+          </div>
 
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="600">
-        <div class="testi-card__quote-mark">"</div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"My GPA dropped to a 2.6 in sophomore year because of algorithms. Used this system to overhaul my study methods and pulled off a 3.9 GPA last semester."</p>
-        <div class="testi-card__author">Daniel B. — Computer Science Junior (UT Austin)</div>
+          <!-- Card 6: Daniel B. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-graph-up-arrow"></i> GPA: 2.6 → 3.9</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"My GPA dropped to a 2.6 in sophomore year because of algorithms. Used this system to overhaul my study methods and <strong>pulled off a 3.9 GPA last semester.</strong>"</p>
+            <div class="testi-card__author">Daniel B. — Computer Science Junior (UT Austin)</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -725,8 +936,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <footer class="footer">
   <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
     <div class="footer__brand">SCALE GROUP</div>
-    <div>
-      <a href="javascript:void(0)" onclick="openRefundModal()" style="color: var(--gold-l); font-size: 0.875rem; text-decoration: none; font-weight: 600;">Check Order Status / Customer Support</a>
+    <div class="footer-links" style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; font-size: 0.875rem;">
+      <a href="/affiliate-register.html" style="color: var(--gold-l); text-decoration: none; font-weight: 600;">Become an Affiliate</a>
+      <a href="javascript:void(0)" onclick="openRefundModal()" style="color: var(--gold-l); text-decoration: none; font-weight: 600;">Check Order Status / Customer Support</a>
     </div>
     <p class="footer__copy">© 2026 Scale Group. All rights reserved.</p>
   </div>
@@ -1135,12 +1347,199 @@ async function handleRefundSubmit(e) {
     startTimer();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroDeck);
-  } else {
+  function initReframeSlider() {
+    var container = document.querySelector('.reframe-slider-container');
+    if (!container) return;
+    var viewport = container.querySelector('.reframe-slider-viewport');
+    var track = container.querySelector('.reframe-slider-track');
+    var slides = container.querySelectorAll('.reframe-slide');
+    var dots = container.querySelectorAll('.reframe-dot');
+    var prevBtn = container.querySelector('.reframe-arrow-prev');
+    var nextBtn = container.querySelector('.reframe-arrow-next');
+    var counter = container.querySelector('.reframe-slider-counter');
+    var total = slides.length;
+    if (total === 0) return;
+    var currentIdx = 0;
+    var timer = null;
+    var isPaused = false;
+
+    function goToSlide(idx) {
+      currentIdx = (idx + total) % total;
+      var slideWidth = viewport ? viewport.getBoundingClientRect().width : container.getBoundingClientRect().width;
+      track.style.transform = 'translateX(-' + (currentIdx * slideWidth) + 'px)';
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('active', i === currentIdx);
+      });
+      if (counter) {
+        counter.textContent = '0' + (currentIdx + 1) + ' / 0' + total;
+      }
+    }
+
+    window.addEventListener('resize', function() {
+      goToSlide(currentIdx);
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        goToSlide(currentIdx - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        goToSlide(currentIdx + 1);
+      });
+    }
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() {
+        goToSlide(i);
+      });
+    });
+
+    var startX = 0;
+    var currentX = 0;
+    track.addEventListener('touchstart', function(e) {
+      isPaused = true;
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchmove', function(e) {
+      currentX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchend', function() {
+      isPaused = false;
+      var diffX = startX - currentX;
+      if (Math.abs(diffX) > 40 && currentX !== 0) {
+        if (diffX > 0) {
+          goToSlide(currentIdx + 1);
+        } else {
+          goToSlide(currentIdx - 1);
+        }
+      }
+      startX = 0;
+      currentX = 0;
+    }, { passive: true });
+
+    container.addEventListener('mouseenter', function() { isPaused = true; });
+    container.addEventListener('mouseleave', function() { isPaused = false; });
+
+    timer = setInterval(function() {
+      if (!isPaused) {
+        goToSlide(currentIdx + 1);
+      }
+    }, 4000);
+
+    goToSlide(0);
+
+    window.reframeSlider = {
+      goToSlide: goToSlide,
+      get currentIdx() { return currentIdx; },
+      total: total
+    };
+  }
+
+  function initTestimonialsSlider() {
+    var viewport = document.getElementById('testiViewport');
+    var prevBtn = document.getElementById('testiPrevBtn');
+    var nextBtn = document.getElementById('testiNextBtn');
+    if (!viewport) return;
+
+    var step = 450;
+    var autoPlayTimer = null;
+    var isHovered = false;
+
+    function scrollNext() {
+      var maxScroll = viewport.scrollWidth - viewport.clientWidth;
+      if (viewport.scrollLeft >= maxScroll - 15) {
+        viewport.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        viewport.scrollBy({ left: step, behavior: 'smooth' });
+      }
+    }
+
+    function scrollPrev() {
+      if (viewport.scrollLeft <= 15) {
+        viewport.scrollTo({ left: viewport.scrollWidth, behavior: 'smooth' });
+      } else {
+        viewport.scrollBy({ left: -step, behavior: 'smooth' });
+      }
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        scrollNext();
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        scrollPrev();
+      });
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayTimer = setInterval(function() {
+        if (!isHovered) {
+          scrollNext();
+        }
+      }, 3800);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    viewport.addEventListener('mouseenter', function() { isHovered = true; });
+    viewport.addEventListener('mouseleave', function() { isHovered = false; });
+    viewport.addEventListener('touchstart', function() { isHovered = true; }, { passive: true });
+    viewport.addEventListener('touchend', function() { isHovered = false; }, { passive: true });
+
+    var isDown = false;
+    var startX = 0;
+    var scrollLeftPos = 0;
+
+    viewport.addEventListener('mousedown', function(e) {
+      isDown = true;
+      isHovered = true;
+      viewport.style.cursor = 'grabbing';
+      startX = e.pageX - viewport.offsetLeft;
+      scrollLeftPos = viewport.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', function() {
+      if (!isDown) return;
+      isDown = false;
+      isHovered = false;
+      if (viewport) viewport.style.cursor = 'grab';
+    });
+
+    viewport.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - viewport.offsetLeft;
+      var walk = (x - startX) * 1.5;
+      viewport.scrollLeft = scrollLeftPos - walk;
+    });
+
+    startAutoPlay();
+  }
+
+  function initAll() {
     initHeroDeck();
+    initReframeSlider();
+    initTestimonialsSlider();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 })();
 </script>
+<script src="/js/global-nav.js"></script>
+<script src="/js/affiliate-modal.js" defer></script>
 </body>
 </html>

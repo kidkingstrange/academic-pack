@@ -79,6 +79,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       <a href="/#masterclasses" class="global-nav__link">Masterclasses</a>
       <a href="/blog/" class="global-nav__link">Campus Guides</a>
       <a href="/library" class="global-nav__link">My Library</a>
+      <a href="/affiliate-register.html" class="global-nav__link">Affiliates</a>
       <button class="global-nav__cta-pill" onclick="openCheckout()">
         Get started <span class="cta-arrow">↗</span>
       </button>
@@ -112,9 +113,6 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
         <span class="hero-editorial-lead">One complete package.</span>
         <span class="hero-price-line">
           <span class="hero-electric-badge">
-            <span class="hero-electric-badge__icon">
-              <i class="bi bi-bar-chart-fill"></i>
-            </span>
             <span class="hero-electric-badge__amount"><span class="price-current">₦2,000</span></span>
           </span>
           <span class="hero-price-line__suffix">lifetime access.</span>
@@ -262,7 +260,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 </section>
 
 <!-- Reframe Section -->
-<section class="reframe">
+<section class="reframe" id="reframe">
   <div class="container">
     <div class="reframe__inner">
       <div data-aos="fade-right">
@@ -274,52 +272,217 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
           This package isn't a collection of motivational tricks or generic advice. It is a <strong>complete, repeatable learning system</strong> engineered specifically for higher education courses. When you replace passive reading with active retrieval and structured focus loops, high grades become the natural outcome.
         </p>
       </div>
-      <div class="reframe__pillars" data-aos="fade-left">
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
-              <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
-              <path d="M12 5v13"/>
-              <path d="M12 7h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1"/>
-              <path d="M12 11h-1a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h1"/>
-            </svg>
+      <div class="reframe-slider-container" data-aos="fade-left">
+        <div class="reframe-slider-top">
+          <div class="reframe-slider-controls">
+            <button type="button" class="reframe-arrow-btn reframe-arrow-prev" id="reframePrevBtn" aria-label="Previous">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button type="button" class="reframe-arrow-btn reframe-arrow-next" id="reframeNextBtn" aria-label="Next">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
-          <h4>Active Retrieval</h4>
-          <p>Learn how to force your brain to remember information during exams.</p>
         </div>
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <circle cx="12" cy="12" r="6"/>
-              <circle cx="12" cy="12" r="2"/>
-            </svg>
+
+        <div class="reframe-slider-viewport" id="reframeViewport">
+          <div class="reframe-slider-track" id="reframeTrack">
+            <!-- Pillar 1 -->
+            <div class="reframe-slide" data-index="0">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+                      <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+                      <path d="M12 5v13"/>
+                      <path d="M12 7h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1"/>
+                      <path d="M12 11h-1a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h1"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 01 · RETENTION</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Active Retrieval</h4>
+                  <p class="reframe__pillar-summary">Force your brain to extract information from memory under pressure, replacing passive rereading with unbreakable recall.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Feynman Recall:</strong> Articulate complex syllabus concepts clearly with zero notes open.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Closed-Book Dumps:</strong> Expose hidden conceptual blindspots days before entering the exam room.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Trigger Anchors:</strong> Install retrieval cues so you never freeze or blank out under test pressure.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> 3.8x Retention vs. Highlighting</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 01</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="reframe-slide" data-index="1">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <circle cx="12" cy="12" r="6"/>
+                      <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 02 · NEURAL FOCUS</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Deep Focus</h4>
+                  <p class="reframe__pillar-summary">Techniques to study for 90 minutes straight without distraction, screen relapse, or mental fatigue.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Ultradian Sprints:</strong> Align deep work sessions with natural human cognitive peak cycles.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Dopamine & Phone Reset:</strong> Permanently shut down subconscious notification checking and tab drift.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>5-Min Resistance Breaker:</strong> Bypass study inertia and enter effortless flow without willpower drag.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> 90-Min Unbroken Flow State</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 02</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="reframe-slide" data-index="2">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="m17 2 4 4-4 4"/>
+                      <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+                      <path d="m7 22-4-4 4-4"/>
+                      <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 03 · PERMANENT RECALL</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Spaced Repetition</h4>
+                  <p class="reframe__pillar-summary">The scientifically proven protocol to invert the forgetting curve and lock information into permanent memory.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Decay Interval Scheduling:</strong> Review course notes at mathematically calculated memory decay points.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>High-Yield Card Synthesis:</strong> Condense 100 pages of dense textbooks into 20 high-leverage prompts.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>15-Minute Daily Loops:</strong> Maintain total mastery across every module with rapid morning review circuits.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> 85%+ Long-Term Recall</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 03</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="reframe-slide" data-index="3">
+              <div class="reframe__pillar-card">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                      <polyline points="16 7 22 7 22 13"/>
+                    </svg>
+                  </div>
+                  <span class="reframe__pillar-tag">PILLAR 04 · EXECUTION MATRIX</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Exam Strategy</h4>
+                  <p class="reframe__pillar-summary">How to structure and execute exam answers to extract maximum points and top-band grades from examiners.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Mark-Scheme Decoding:</strong> Target the exact criteria and technical keywords examiners score against.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Time-Budgeting Framework:</strong> Eliminate exam panic and ensure high-mark sections get full priority.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Model Answer Blueprints:</strong> Plug facts into battle-tested structure templates for essays & calculations.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    <span><strong>Key Outcome:</strong> +15–25% Average Grade Uplift</span>
+                  </div>
+                  <span class="reframe__pillar-module">SYSTEM GUIDE 04</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <h4>Deep Focus</h4>
-          <p>Techniques to study for 90 minutes straight without distraction.</p>
         </div>
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="m17 2 4 4-4 4"/>
-              <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
-              <path d="m7 22-4-4 4-4"/>
-              <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
-            </svg>
-          </div>
-          <h4>Spaced Repetition</h4>
-          <p>The scientifically proven way to never forget what you read.</p>
-        </div>
-        <div class="reframe__pillar">
-          <div class="reframe__pillar-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-              <polyline points="16 7 22 7 22 13"/>
-            </svg>
-          </div>
-          <h4>Exam Strategy</h4>
-          <p>How to actually answer questions to get maximum marks.</p>
+
+        <div class="reframe-slider-dots" id="reframeDots">
+          <button type="button" class="reframe-dot active" aria-label="Go to Pillar 1"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 2"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 3"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 4"></button>
         </div>
       </div>
     </div>
@@ -449,9 +612,6 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       <div class="pricing-showcase-card">
         <div class="pricing-showcase-pill-wrap">
           <span class="hero-electric-badge">
-            <span class="hero-electric-badge__icon">
-              <i class="bi bi-mortarboard-fill"></i>
-            </span>
             <span class="hero-electric-badge__amount"><span class="price-current">₦2,000</span></span>
           </span>
           <span class="hero-price-line__suffix" style="font-size: clamp(1.4rem, 2.5vw, 2rem);">one-time student rate.</span>
@@ -462,9 +622,6 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
         <button class="hero-pill-btn hero-pill-btn--primary" onclick="openCheckout()" style="width: 100%; max-width: 380px; justify-content: center; padding: 14px 28px;">
           Claim Access for <span class="price-current">₦2,000</span> <span class="hero-pill-arrow">↗</span>
         </button>
-        <div style="margin-top: 14px; font-size: 0.82rem; color: #747878; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <i class="bi bi-shield-check" style="color: #0a0a0a;"></i> 100% Risk-Free 30-Day Money-Back Guarantee
-        </div>
       </div>
     </div>
     <div class="value-table-wrap">
@@ -529,91 +686,159 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 
     <div style="text-align:center; margin-top:32px" data-aos="fade-up" data-aos-delay="200">
       <button class="btn btn--gold btn--full" onclick="openCheckout()">Get The Complete Package Now <span class="hero-pill-arrow">↗</span></button>
-      <div class="cta-microcopy" style="color: var(--text2);">
-        <span><i class="bi bi-shield-check"></i> 100% Risk-Free Guarantee</span>
-        <span><i class="bi bi-lightning-charge-fill"></i> Instant Library Access</span>
-      </div>
       <p class="price-warning-notice" style="color: #ef4444; font-size: 0.85rem; font-weight: 700; margin-top: 16px; max-width: 440px; margin-left: auto; margin-right: auto; line-height: 1.5;">Notice: The ₦2,000 early-bird price step is valid for your 24-hour window, after which the price steps up to the standard ₦5,000.</p>
     </div>
   </div>
 </section>
 
 <!-- Testimonials -->
-<section class="testimonials">
-  <div class="container container--sm">
+<section class="testimonials" id="testimonials">
+  <div class="container">
     <div class="testimonials__header" data-aos="fade-up">
-      <span class="section-label">Proof</span>
-      <h2 class="section-title">Real results from real students</h2>
+      <div class="testimonials__header-text">
+        <span class="section-label">Proof</span>
+        <h2 class="section-title">Real results from real students</h2>
+      </div>
+      <div class="testi-slider-controls">
+        <button type="button" class="testi-arrow-btn testi-arrow-prev" id="testiPrevBtn" aria-label="Previous testimonials">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button type="button" class="testi-arrow-btn testi-arrow-next" id="testiNextBtn" aria-label="Next testimonials">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
     </div>
     
-    <div class="testi-screenshots" data-aos="fade-up" data-aos-delay="100">
-      <div class="testi-screenshot"><img src="assets/images/test1.webp" alt="Testimonial" loading="lazy"></div>
-      <div class="testi-screenshot"><img src="assets/images/test2.webp" alt="Testimonial" loading="lazy"></div>
-    </div>
+    <div class="testi-slider-container" data-aos="fade-up" data-aos-delay="100">
+      <div class="testi-slider-viewport" id="testiViewport">
+        <div class="testi-slider-track" id="testiTrack">
+          <!-- Card 1: WhatsApp Screenshot 1 -->
+          <div class="testi-card testi-card--screenshot">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge testi-badge--wa"><i class="bi bi-whatsapp"></i> WhatsApp Proof</span>
+                <span class="testi-metric testi-metric--wa"><i class="bi bi-check-all"></i> Verified Chat</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <div class="testi-card__ss-body">
+              <img src="assets/images/test1.webp" alt="WhatsApp student feedback screenshot" loading="lazy">
+            </div>
+            <div class="testi-card__ss-footer">
+              <span><i class="bi bi-shield-check"></i> Unedited Student Feedback</span>
+              <span>11:45 AM</span>
+            </div>
+          </div>
 
-    <div class="testi-grid">
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-graph-up-arrow"></i> CGPA: 2.8 → 3.4</span>
+          <!-- Card 2: WhatsApp Screenshot 2 -->
+          <div class="testi-card testi-card--screenshot">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge testi-badge--wa"><i class="bi bi-whatsapp"></i> WhatsApp Proof</span>
+                <span class="testi-metric testi-metric--wa"><i class="bi bi-check-all"></i> Verified Chat</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <div class="testi-card__ss-body">
+              <img src="assets/images/test2.webp" alt="WhatsApp student feedback screenshot" loading="lazy">
+            </div>
+            <div class="testi-card__ss-footer">
+              <span><i class="bi bi-shield-check"></i> Unedited Student Feedback</span>
+              <span>2:36 PM</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Emmanuel K. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-graph-up-arrow"></i> CGPA: 2.8 → 3.4</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"I was carrying two Cs and a D going into my second semester. I just applied the Active Retrieval framework from Chapter 2. <strong>By the time results came out, my CGPA went from 2.8 to 3.4.</strong>"</p>
+            <div class="testi-card__author">Emmanuel K. — 200L Engineering (UNILAG)</div>
+          </div>
+
+          <!-- Card 4: Tolu A. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-award-fill"></i> Top of Class</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"I actually study LESS now. I used to do 6-hour night classes and retain nothing. <strong>Now I do two 90-minute focused blocks using the Focus Template, and I'm top of my class.</strong>"</p>
+            <div class="testi-card__author">Tolu A. — 300L Medicine (UI)</div>
+          </div>
+
+          <!-- Card 5: Gideon O. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-lightning-charge-fill"></i> Faster Recall</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"Major mindset shift. When I couldn't recall what I read, I'd feel frustrated. Now I see recall as an exercise for my brain. <strong>This has really helped me study faster and retain information better.</strong>"</p>
+            <div class="testi-card__author">Gideon O. — 300L Computer Science (UI)</div>
+          </div>
+
+          <!-- Card 6: Chioma E. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-check2-circle"></i> Best Semester Ever</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"What hit me was the chapter on passive studying. I used to read the same page four times and wonder why nothing stuck. <strong>My exam performance this semester was the best I've ever had.</strong>"</p>
+            <div class="testi-card__author">Chioma E. — 300L Law (UNIZIK)</div>
+          </div>
+
+          <!-- Card 7: Babatunde R. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-star-fill"></i> 4.1 GPA Balance</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"I run a business and was failing because I couldn't manage both. The balance book gave me structure. <strong>Last semester I made profit and still finished with a 4.1 GPA.</strong>"</p>
+            <div class="testi-card__author">Babatunde R. — 400L Economics (UNILORIN)</div>
+          </div>
+
+          <!-- Card 8: Amina Y. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-shield-check"></i> Zero Exam Panic</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"I used to read from morning to night and underperform. The Exam Survival Guide helped me stop confusing busyness with preparation. <strong>Calmer, more focused, better results.</strong>"</p>
+            <div class="testi-card__author">Amina Y. — 200L Biochemistry (ABU)</div>
+          </div>
+
+          <!-- Card 9: Chidi O. -->
+          <div class="testi-card">
+            <div class="testi-card__header">
+              <div class="testi-card__badges">
+                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
+                <span class="testi-metric"><i class="bi bi-clock-history"></i> 90-Min Focus Routine</span>
+              </div>
+              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+            </div>
+            <p class="testi-card__text">"The Focus Template alone is worth it. I used to spend the first 45 minutes distracted. <strong>My study sessions went from 4 scattered hours to 90 focused minutes that produce results.</strong>"</p>
+            <div class="testi-card__author">Chidi O. — 300L Accounting (FUTO)</div>
+          </div>
         </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"I was carrying two Cs and a D going into my second semester. I didn't even read the whole package—I just applied the Active Retrieval framework from Chapter 2. <strong>By the time results came out, my CGPA went from 2.8 to 3.4.</strong> I honestly didn't think it was possible that fast."</p>
-        <div class="testi-card__author">Emmanuel K. — 200L Engineering (UNILAG)</div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-award-fill"></i> Top of Class</span>
-        </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"I actually study LESS now. I used to do 6-hour night classes and retain nothing. <strong>Now I do two 90-minute focused blocks using the Focus Template, and I'm top of my class.</strong> This system actually works."</p>
-        <div class="testi-card__author">Tolu A. — 300L Medicine (UI)</div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-lightning-charge-fill"></i> Faster Recall</span>
-        </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"One major thing the book helped me with was a mindset shift. Previously, when I tried to recall what I read but couldn't, I would feel frustrated. Now I see recall as an exercise for my brain. <strong>This change has really helped me study faster and retain information better.</strong>"</p>
-        <div class="testi-card__author">Gideon O. — 300L Computer Science (UI)</div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-check2-circle"></i> Best Semester Ever</span>
-        </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"What hit me was the chapter on passive studying. I used to read the same page four or five times and wonder why nothing was sticking. This book explained exactly why that happens and gave me methods that actually work. My exam performance this semester was the best I've ever had."</p>
-        <div class="testi-card__author">Chioma E. — 300L Law (UNIZIK)</div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-star-fill"></i> 4.1 GPA Balance</span>
-        </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"I run a small business and I was failing academically because I couldn't manage both. The balance book gave me a structure I could actually follow. Last semester I made profit and still finished with a 4.1 GPA. The bundle for 2k is almost embarrassing — it should cost more."</p>
-        <div class="testi-card__author">Babatunde R. — 400L Economics (UNILORIN)</div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="300">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-shield-check"></i> Zero Exam Panic</span>
-        </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"I have always been the type to read from morning to night before exams and still underperform. After going through the Exam Survival Guide, I understood for the first time that I was confusing busyness with actual preparation. My last exam season was completely different. Calmer, more focused, better results."</p>
-        <div class="testi-card__author">Amina Y. — 200L Biochemistry (ABU)</div>
-      </div>
-      <div class="testi-card" data-aos="fade-up" data-aos-delay="400">
-        <div class="testi-header-row">
-          <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Student</span>
-          <span class="testi-metric"><i class="bi bi-clock-history"></i> 90-Min Focus Routine</span>
-        </div>
-        <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-        <p class="testi-card__text">"The Focus Template alone is worth the 2k. I used to sit down to study and spend the first 45 minutes just getting distracted. Now I have a system. I know exactly what I'm doing before I open a single textbook. My study sessions went from 4 scattered hours to 90 focused minutes that actually produce results."</p>
-        <div class="testi-card__author">Chidi O. — 300L Accounting (FUTO)</div>
       </div>
     </div>
   </div>
@@ -712,21 +937,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <section class="community-bonus-section" id="community-bonus">
   <div class="container" data-aos="fade-up">
     <div class="community__inner" style="text-align: center;">
-      <div class="community-bonus__badge">
-        <i class="bi bi-gift-fill"></i> BONUS INCLUDED FREE TODAY (VALUED AT ₦10,000)
-      </div>
       <h2 class="community__headline">Exclusive Academic Comeback Community &amp; Weekly Live Coaching</h2>
       <p class="community__sub">Before you can master your studies, your business, or your future — you have to master yourself. When you claim the package today, you unlock free lifetime access to our private student network and our live weekly masterclasses from <a href="https://open.spotify.com/show/3acaVWiSODnDjuLZhODV9w?si=ea03c1d707974e8d" target="_blank" style="color:var(--gold-l);text-decoration:underline">Scale: The How to Build Podcast</a>. Join hundreds of students live every Wednesday at 8PM to learn the foundational self-management and high-performance study systems that make top grades possible.</p>
       <div class="community-bonus-cta-box">
         <button class="btn btn--gold btn--mega" onclick="openCheckout()" style="width: 100%;">
           <span class="btn-mega__text">CLAIM PACKAGE + FREE COMMUNITY ACCESS <i class="bi bi-arrow-right"></i></span>
         </button>
-      </div>
-
-      <div class="community__trust" style="margin-top: 24px; justify-content: center;">
-        <span><i class="bi bi-people-fill"></i> Active Student Network</span>
-        <span><i class="bi bi-patch-check-fill"></i> First-Class Mentorship</span>
-        <span><i class="bi bi-shield-lock-fill"></i> Exclusive to Buyers</span>
       </div>
     </div>
   </div>
@@ -774,11 +990,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <footer class="footer">
   <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
     <div class="footer__brand">SCALE GROUP</div>
-    <div style="display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-size: 0.88rem;">
+    <div class="footer-links" style="display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-size: 0.88rem;">
       <a href="/" style="color: var(--gray-l); text-decoration: none;">Home (All Products)</a>
       <a href="/#masterclasses" style="color: var(--gray-l); text-decoration: none;">Masterclasses</a>
       <a href="/blog/" style="color: var(--gray-l); text-decoration: none;">Campus Guides</a>
       <a href="/library" style="color: var(--gray-l); text-decoration: none;">My Library</a>
+      <a href="/affiliate-register.html" style="color: var(--gray-l); text-decoration: none;">Become an Affiliate</a>
       <a href="/affiliate/dashboard" style="color: var(--gray-l); text-decoration: none;">Ambassador Program</a>
       <a href="javascript:void(0)" onclick="openRefundModal()" style="color: var(--gold-l); text-decoration: none; font-weight: 600;">Check Order Status / Support</a>
     </div>
@@ -836,6 +1053,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     <div class="drawer-group-title">BUYER &amp; STUDENT TOOLS</div>
     <a href="/library" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-folder-check"></i> <span>My Download Library</span>
+    </a>
+    <a href="/affiliate-register.html" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-gift-fill" style="color:var(--gold,#f59e0b);"></i> <span>Become an Affiliate (Earn 60%)</span>
     </a>
     <a href="/affiliate/dashboard" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-wallet2" style="color:#4ade80;"></i> <span>Ambassador Program (Earn ₦3,000)</span>
@@ -1411,13 +1631,199 @@ async function handleRefundSubmit(e) {
     startTimer();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroDeck);
-  } else {
+  function initReframeSlider() {
+    var container = document.querySelector('.reframe-slider-container');
+    if (!container) return;
+    var viewport = container.querySelector('.reframe-slider-viewport');
+    var track = container.querySelector('.reframe-slider-track');
+    var slides = container.querySelectorAll('.reframe-slide');
+    var dots = container.querySelectorAll('.reframe-dot');
+    var prevBtn = container.querySelector('.reframe-arrow-prev');
+    var nextBtn = container.querySelector('.reframe-arrow-next');
+    var counter = container.querySelector('.reframe-slider-counter');
+    var total = slides.length;
+    if (total === 0) return;
+    var currentIdx = 0;
+    var timer = null;
+    var isPaused = false;
+
+    function goToSlide(idx) {
+      currentIdx = (idx + total) % total;
+      var slideWidth = viewport ? viewport.getBoundingClientRect().width : container.getBoundingClientRect().width;
+      track.style.transform = 'translateX(-' + (currentIdx * slideWidth) + 'px)';
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('active', i === currentIdx);
+      });
+      if (counter) {
+        counter.textContent = '0' + (currentIdx + 1) + ' / 0' + total;
+      }
+    }
+
+    window.addEventListener('resize', function() {
+      goToSlide(currentIdx);
+    });
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        goToSlide(currentIdx - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        goToSlide(currentIdx + 1);
+      });
+    }
+
+    dots.forEach(function(dot, i) {
+      dot.addEventListener('click', function() {
+        goToSlide(i);
+      });
+    });
+
+    var startX = 0;
+    var currentX = 0;
+    track.addEventListener('touchstart', function(e) {
+      isPaused = true;
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchmove', function(e) {
+      currentX = e.touches[0].clientX;
+    }, { passive: true });
+    track.addEventListener('touchend', function() {
+      isPaused = false;
+      var diffX = startX - currentX;
+      if (Math.abs(diffX) > 40 && currentX !== 0) {
+        if (diffX > 0) {
+          goToSlide(currentIdx + 1);
+        } else {
+          goToSlide(currentIdx - 1);
+        }
+      }
+      startX = 0;
+      currentX = 0;
+    }, { passive: true });
+
+    container.addEventListener('mouseenter', function() { isPaused = true; });
+    container.addEventListener('mouseleave', function() { isPaused = false; });
+
+    timer = setInterval(function() {
+      if (!isPaused) {
+        goToSlide(currentIdx + 1);
+      }
+    }, 4000);
+
+    goToSlide(0);
+
+    window.reframeSlider = {
+      goToSlide: goToSlide,
+      get currentIdx() { return currentIdx; },
+      total: total
+    };
+  }
+
+  function initTestimonialsSlider() {
+    var viewport = document.getElementById('testiViewport');
+    var prevBtn = document.getElementById('testiPrevBtn');
+    var nextBtn = document.getElementById('testiNextBtn');
+    if (!viewport) return;
+
+    var step = 450;
+    var autoPlayTimer = null;
+    var isHovered = false;
+
+    function scrollNext() {
+      var maxScroll = viewport.scrollWidth - viewport.clientWidth;
+      if (viewport.scrollLeft >= maxScroll - 15) {
+        viewport.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        viewport.scrollBy({ left: step, behavior: 'smooth' });
+      }
+    }
+
+    function scrollPrev() {
+      if (viewport.scrollLeft <= 15) {
+        viewport.scrollTo({ left: viewport.scrollWidth, behavior: 'smooth' });
+      } else {
+        viewport.scrollBy({ left: -step, behavior: 'smooth' });
+      }
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', function() {
+        scrollNext();
+      });
+    }
+    if (prevBtn) {
+      prevBtn.addEventListener('click', function() {
+        scrollPrev();
+      });
+    }
+
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayTimer = setInterval(function() {
+        if (!isHovered) {
+          scrollNext();
+        }
+      }, 3800);
+    }
+
+    function stopAutoPlay() {
+      if (autoPlayTimer) {
+        clearInterval(autoPlayTimer);
+        autoPlayTimer = null;
+      }
+    }
+
+    viewport.addEventListener('mouseenter', function() { isHovered = true; });
+    viewport.addEventListener('mouseleave', function() { isHovered = false; });
+    viewport.addEventListener('touchstart', function() { isHovered = true; }, { passive: true });
+    viewport.addEventListener('touchend', function() { isHovered = false; }, { passive: true });
+
+    var isDown = false;
+    var startX = 0;
+    var scrollLeftPos = 0;
+
+    viewport.addEventListener('mousedown', function(e) {
+      isDown = true;
+      isHovered = true;
+      viewport.style.cursor = 'grabbing';
+      startX = e.pageX - viewport.offsetLeft;
+      scrollLeftPos = viewport.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', function() {
+      if (!isDown) return;
+      isDown = false;
+      isHovered = false;
+      if (viewport) viewport.style.cursor = 'grab';
+    });
+
+    viewport.addEventListener('mousemove', function(e) {
+      if (!isDown) return;
+      e.preventDefault();
+      var x = e.pageX - viewport.offsetLeft;
+      var walk = (x - startX) * 1.5;
+      viewport.scrollLeft = scrollLeftPos - walk;
+    });
+
+    startAutoPlay();
+  }
+
+  function initAll() {
     initHeroDeck();
+    initReframeSlider();
+    initTestimonialsSlider();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
   }
 })();
 </script>
 <script src="/js/global-nav.js"></script>
+<script src="/js/affiliate-modal.js" defer></script>
 </body>
 </html>
