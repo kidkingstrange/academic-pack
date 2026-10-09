@@ -342,6 +342,23 @@
       animation: slideIn 0.3s ease;
     }
     @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    @media (max-width: 900px) {
+      body { flex-direction: column; }
+      .admin-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); padding: 16px; }
+      .sidebar-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+      .sidebar-link { padding: 8px 12px; }
+      .top-bar { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .actions-row { width: 100%; flex-wrap: wrap; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .editor-modal { padding: 20px 16px; }
+      input, select, textarea { font-size: 16px !important; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .admin-main { padding: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -398,21 +415,23 @@
       <div class="table-header">
         <h3 class="table-title">All Articles</h3>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Title &amp; URL Slug</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Author</th>
-            <th>Published Date</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="articles-table-body">
-          <tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">Loading articles...</td></tr>
-        </tbody>
-      </table>
+      <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+        <table>
+          <thead>
+            <tr>
+              <th>Title &amp; URL Slug</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Author</th>
+              <th>Published Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="articles-table-body">
+            <tr><td colspan="6" style="text-align:center; padding: 40px; color: var(--text-dim);">Loading articles...</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 

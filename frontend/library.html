@@ -34,6 +34,20 @@
   .welcome-banner i { font-size: 1.6rem; color: #0a0a0a; flex-shrink: 0; }
   .welcome-banner strong { display: block; font-family: 'Inter', sans-serif; font-size: 1.05rem; font-weight: 600; color: #0a0a0a; margin-bottom: 2px; letter-spacing: -0.02em; }
   .welcome-banner span { font-size: 0.88rem; color: #595959; }
+
+  /* ── Mobile Responsive Overrides ── */
+  @media (max-width: 768px) {
+    .lib-header { padding: 32px 0; margin-bottom: 24px; }
+    .lib-header h1 { font-size: clamp(24px, 6vw, 32px); }
+    .lib-grid { grid-template-columns: 1fr; gap: 16px; }
+    .lib-card { padding: 20px 16px; }
+    .welcome-banner { padding: 16px; margin-bottom: 24px; }
+  }
+  @media (max-width: 480px) {
+    .lib-header { padding: 24px 0; margin-bottom: 20px; }
+    .lib-card { padding: 18px 14px; }
+    .download-btn { min-height: 44px; padding: 12px 16px; font-size: 0.85rem; }
+  }
 </style>
 <!-- Meta Pixel Code -->
 <script>

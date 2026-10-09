@@ -11,8 +11,8 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
-<link rel="stylesheet" href="/css/main.css?v=4">
-<link rel="stylesheet" href="/css/landing.css?v=4">
+<link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
+<link rel="stylesheet" href="/css/landing.css?v=swiss-20261008">
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -54,6 +54,18 @@ src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
   .aff-bank-option:hover { background: rgba(201,151,58,.12) !important; }
   #aff-bank-suggestions::-webkit-scrollbar { width: 8px; }
   #aff-bank-suggestions::-webkit-scrollbar-thumb { background: rgba(201,151,58,.3); border-radius: 4px; }
+
+  /* ── Mobile Responsive Overrides ── */
+  @media (max-width: 480px) {
+    body { padding: 16px 12px; }
+    .aff-card { padding: 24px 16px; border-radius: 12px; }
+    h1.aff-title { font-size: 1.35rem; }
+    .aff-sub { font-size: 0.85rem; }
+    .aff-input, input[type="text"], input[type="email"], input[type="tel"] { font-size: 16px !important; }
+    .aff-submit-btn, button[type="submit"] { min-height: 44px; padding: 12px; font-size: 0.95rem; }
+    .aff-link-row { flex-direction: column; gap: 8px; }
+    .aff-link-value { width: 100%; word-break: break-all; }
+  }
 </style>
 </head>
 <body>

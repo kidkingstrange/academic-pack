@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
-<link rel="stylesheet" href="/css/main.css?v=4">
+<link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
 <style>
   body {
     background: linear-gradient(160deg, var(--ink) 0%, #0f1320 60%, #131826 100%);
@@ -249,6 +249,15 @@
     color: var(--gold-l);
     font-weight: 700;
     text-decoration: underline;
+  }
+
+  /* ── Mobile Responsive Overrides ── */
+  @media (max-width: 480px) {
+    body { padding: 16px 12px; }
+    .auth-card { padding: 24px 18px; border-radius: 12px; }
+    h1.auth-title { font-size: 1.4rem; }
+    .input-wrap input, input[type="text"], input[type="password"] { font-size: 16px !important; }
+    .btn-submit { min-height: 44px; padding: 12px; font-size: 0.95rem; }
   }
 </style>
 </head>

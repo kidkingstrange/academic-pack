@@ -825,3 +825,182 @@ button{font-family:inherit;cursor:pointer}
   align-items: center;
   gap: 4px;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE MOBILE OPTIMIZATION SYSTEM (Swiss Modernist)
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Prevent horizontal scroll bleed across all devices */
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Responsive Table Wrapper */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+/* iOS Safari form zoom prevention (<16px triggers automatic zoom) */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Tablet & Mobile Breakpoints (<= 768px) */
+@media (max-width: 768px) {
+  :root {
+    --gutter: 1rem;
+    --margin: 1.5rem;
+  }
+
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Fluid Display Headers */
+  .display-hero {
+    font-size: clamp(30px, 8vw, 42px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.035em !important;
+  }
+  .headline-lg {
+    font-size: clamp(24px, 6vw, 32px) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.025em !important;
+  }
+  .headline-md {
+    font-size: 20px !important;
+    line-height: 26px !important;
+  }
+  .body-lead {
+    font-size: 17px !important;
+    line-height: 25px !important;
+  }
+
+  /* Flagship Offer Container */
+  .flagship-spotlight-section {
+    padding: 24px 12px 40px !important;
+  }
+  .flagship-card-wrap {
+    padding: 22px 16px !important;
+  }
+  .flagship-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .flagship-pillars-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .flagship-companion-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .flagship-cta-buttons {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .flagship-cta-buttons .hero-btn,
+  .flagship-cta-buttons .btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+  .flagship-visual-card {
+    max-width: 100% !important;
+    padding: 20px 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Free Guides Grid */
+  .free-guides-section {
+    padding: 36px 16px 48px !important;
+  }
+  .free-guides-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Bank Details Panel */
+  .bank-details-card {
+    padding: 16px 14px !important;
+  }
+  .bank-detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 0;
+  }
+  .bank-detail-value {
+    word-break: break-all;
+  }
+}
+
+/* Small Smartphone Breakpoints (<= 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Micro Touch Targets & Headers */
+  .global-site-header {
+    border-bottom-width: 1px;
+  }
+  .global-header-inner {
+    padding: 8px 12px !important;
+  }
+  .global-brand {
+    font-size: 0.95rem !important;
+  }
+  .global-brand img {
+    height: 20px !important;
+  }
+  .global-nav__mobile-flagship {
+    font-size: 0.68rem !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Drawer full touch experience */
+  .global-drawer {
+    width: 92vw !important;
+    max-width: 320px !important;
+  }
+  .drawer-header {
+    padding: 14px 16px !important;
+  }
+  .drawer-flagship-card {
+    margin: 12px 12px 8px !important;
+    padding: 14px !important;
+  }
+  .drawer-nav-group {
+    padding: 6px 12px !important;
+  }
+
+  /* Button touch optimization */
+  .btn {
+    min-height: 44px;
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+
+  .hairline-divider {
+    margin: var(--space-md) 0;
+  }
+}

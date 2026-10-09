@@ -831,7 +831,7 @@ def render_article_page(article: Dict[str, Any], categories: List[Dict[str, Any]
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   
 {THEME_HEAD_SCRIPT}
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -1225,7 +1225,7 @@ def render_category_pillar_page(category: Dict[str, Any], articles: List[Dict[st
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   
 {THEME_HEAD_SCRIPT}
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <script type="application/ld+json">
@@ -1414,7 +1414,7 @@ def render_blog_hub_page(articles: List[Dict[str, Any]], categories: List[Dict[s
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   
 {THEME_HEAD_SCRIPT}
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <script type="application/ld+json">

@@ -10,8 +10,8 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
-<link rel="stylesheet" href="/css/main.css">
-<link rel="stylesheet" href="/css/landing.css">
+<link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
+<link rel="stylesheet" href="/css/landing.css?v=swiss-20261008">
 <style>
   body { background: linear-gradient(160deg,var(--ink) 0%,#0f1320 60%,#131826 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
   .login-card { background: linear-gradient(160deg,#0c0e14 0%,#131826 55%,#0f1520 100%); border: 1px solid rgba(201,151,58,.15); border-radius: var(--radius-xl); max-width: 420px; width: 100%; padding: 44px 36px; box-shadow: 0 24px 60px rgba(0,0,0,.6), var(--gold-glow); position: relative; overflow: hidden; }
@@ -21,6 +21,14 @@
   h1.login-title { font-family: 'Clash Display', sans-serif; font-size: 1.8rem; font-weight: 600; color: #fff; text-align: center; margin-bottom: 8px; letter-spacing: -.5px; }
   .login-sub { font-size: .95rem; color: var(--gray-l); text-align: center; line-height: 1.7; margin-bottom: 28px; }
   .login-err { color: var(--red); font-size: .82rem; margin-top: 6px; text-align: center; display: none; }
+  @media (max-width: 480px) {
+    body { padding: 20px 12px; }
+    .login-card { padding: 28px 18px; border-radius: 16px; }
+    h1.login-title { font-size: 1.5rem; }
+    .login-sub { font-size: 0.88rem; margin-bottom: 20px; }
+    input { font-size: 16px !important; }
+    .modal__submit { min-height: 44px; }
+  }
 </style>
 </head>
 <body>

@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
-<link rel="stylesheet" href="/css/main.css?v=4">
+<link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
 <style>
   body { background: var(--ink); color: #fff; padding-bottom: 80px; font-family: 'Manrope', sans-serif; }
   .lib-header { background: var(--ink2); color: #fff; padding: 48px 0; border-bottom: 1px solid rgba(255,255,255,.06); margin-bottom: 48px; }
@@ -88,6 +88,37 @@
   .bank-modal label { display: block; font-size: .82rem; color: var(--gray-l); margin-bottom: 6px; font-weight: 600; }
   .bank-modal input { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.03); color: #fff; font-size: .9rem; font-family: inherit; }
   .bank-modal input:focus { outline: none; border-color: var(--gold); }
+
+  /* ── Mobile Responsive Overrides ── */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 768px) {
+    .lib-header { padding: 32px 0; margin-bottom: 28px; }
+    .lib-header h1 { font-size: clamp(24px, 6vw, 32px); }
+    .aff-link-row { width: 100%; box-sizing: border-box; flex-wrap: wrap; }
+    .aff-link-value { word-break: break-all; white-space: normal; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+    .stat-card { padding: 16px 14px !important; }
+    .stat-card .val { font-size: 1.35rem !important; }
+    .recruiter-header { flex-direction: column; align-items: flex-start; }
+    .recruiter-share-row { flex-direction: column; width: 100%; }
+    .recruiter-link-wrap { width: 100%; box-sizing: border-box; min-width: 0; }
+    .btn-whatsapp { width: 100%; justify-content: center; box-sizing: border-box; }
+    table { min-width: 480px; }
+    th, td { padding: 12px 10px; font-size: 0.8rem; }
+  }
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+    .stat-card { padding: 12px 10px !important; }
+    .stat-card h3 { font-size: 0.68rem !important; }
+    .stat-card .val { font-size: 1.15rem !important; }
+    .bank-modal { padding: 22px 16px !important; }
+    input[type="text"], input { font-size: 16px !important; }
+  }
 </style>
 </head>
 <body>
@@ -218,10 +249,12 @@
     </div>
 
     <h4 style="font-size:.95rem; font-weight:700; margin:24px 0 12px; color:#fff;">Your Recruited Affiliates</h4>
-    <table id="recruits-table">
-      <thead><tr><th>Affiliate</th><th>Date Joined</th><th>Their Sales Progress</th><th>Your Recruiter Bonus</th></tr></thead>
-      <tbody><tr><td colspan="4" style="text-align:center; color:var(--gray-l)">You haven't invited any affiliates yet. Share your invite link above to start earning ₦5,000 per active recruit!</td></tr></tbody>
-    </table>
+    <div class="table-responsive">
+      <table id="recruits-table">
+        <thead><tr><th>Affiliate</th><th>Date Joined</th><th>Their Sales Progress</th><th>Your Recruiter Bonus</th></tr></thead>
+        <tbody><tr><td colspan="4" style="text-align:center; color:var(--gray-l)">You haven't invited any affiliates yet. Share your invite link above to start earning ₦5,000 per active recruit!</td></tr></tbody>
+      </table>
+    </div>
   </div>
 
   <div style="background:var(--ink2); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-lg); padding:24px; margin-bottom:40px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
@@ -237,10 +270,12 @@
   <!-- Milestone Bonuses Earned Section -->
   <div class="sales-section" id="milestones-section" style="margin-bottom:40px;">
     <h2>Milestone Cash Bonuses Earned</h2>
-    <table id="milestones-table">
-      <thead><tr><th>Bonus Type</th><th>Amount</th><th>Date Unlocked</th><th>Status</th></tr></thead>
-      <tbody><!-- Injected --></tbody>
-    </table>
+    <div class="table-responsive">
+      <table id="milestones-table">
+        <thead><tr><th>Bonus Type</th><th>Amount</th><th>Date Unlocked</th><th>Status</th></tr></thead>
+        <tbody><!-- Injected --></tbody>
+      </table>
+    </div>
   </div>
 
   <div class="assets-section">
@@ -251,10 +286,12 @@
 
   <div class="sales-section">
     <h2>Your Sales</h2>
-    <table id="sales-table">
-      <thead><tr><th>Date</th><th>Sale Amount</th><th>Your Commission</th><th>Status</th></tr></thead>
-      <tbody><!-- Injected --></tbody>
-    </table>
+    <div class="table-responsive">
+      <table id="sales-table">
+        <thead><tr><th>Date</th><th>Sale Amount</th><th>Your Commission</th><th>Status</th></tr></thead>
+        <tbody><!-- Injected --></tbody>
+      </table>
+    </div>
   </div>
 </main>
 

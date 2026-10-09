@@ -75,11 +75,12 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     <!-- Desktop Navigation -->
     <nav class="global-nav">
       <a href="/" class="global-nav__link">Home</a>
+      <a href="/academic-comeback-package" class="global-nav__link active">Package</a>
       <a href="/#masterclasses" class="global-nav__link">Masterclasses</a>
       <a href="/blog/" class="global-nav__link">Campus Guides</a>
       <a href="/library" class="global-nav__link">My Library</a>
-      <button class="btn btn--gold" onclick="openCheckout()" style="padding: 7px 18px; font-size: 0.85rem; font-weight: 800; border-radius: 50px;">
-        Get The Package — <span class="price-current">₦2,000</span>
+      <button class="global-nav__cta-pill" onclick="openCheckout()">
+        Get started <span class="cta-arrow">↗</span>
       </button>
     </nav>
 
@@ -99,107 +100,43 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <section class="hero">
   <div class="container hero__grid">
     <div class="hero__content">
-      <div class="badge hero__eyebrow">📚 7-PART DIGITAL STUDY SYSTEM FOR NIGERIAN UNDERGRADUATES</div>
-      <h1 class="hero__headline">Stop Cramming All Night &amp; Blanking Out in Exams.<em>The 7-in-1 Study System to Raise Your CGPA This Semester.</em></h1>
-      
-      <!-- High-Impact Campus Highlights -->
-      <div class="hero__highlights">
-        <div class="highlight-item">
-          <i class="bi bi-lightning-charge-fill"></i>
-          <div><strong>20-Minute Emergency Protocol:</strong> Retain 60-page PDF lecture handouts in 45 minutes without exhausting night classes.</div>
-        </div>
-        <div class="highlight-item">
-          <i class="bi bi-target"></i>
-          <div><strong>Exam Hall Execution:</strong> Structure theory &amp; OBJ answers to extract maximum lecturer marks even if you didn't finish the syllabus.</div>
-        </div>
-        <div class="highlight-item">
-          <i class="bi bi-shield-check"></i>
-          <div><strong>Active Recall Loops:</strong> Eliminate panic blankouts and install deep memory retention for your hardest courses.</div>
-        </div>
+      <!-- Eyebrow Breadcrumb inspired by MBPREP / PRICING -->
+      <div class="hero-breadcrumb">
+        <span class="hero-breadcrumb__tag">ACADEMIC COMEBACK</span>
+        <span class="hero-breadcrumb__sep">/</span>
+        <span class="hero-breadcrumb__sub">7-IN-1 STUDY SYSTEM</span>
       </div>
 
-      <!-- Primary Elevated CTA (Immediate Mobile & Desktop Conversion) -->
-      <div class="hero__ctas">
-        <button class="btn btn--gold btn--mega" onclick="openCheckout()">
-          <span class="btn-mega__price"><del>₦20,000</del> → <span class="price-current">₦2,000</span> (90% OFF TODAY)</span>
-          <span class="btn-mega__text">GET THE COMPLETE PACKAGE NOW <i class="bi bi-arrow-right"></i></span>
+      <!-- Monumental Editorial Headline inspired by reference image -->
+      <h1 class="hero-editorial-title">
+        <span class="hero-editorial-lead">One complete package.</span>
+        <span class="hero-price-line">
+          <span class="hero-electric-badge">
+            <span class="hero-electric-badge__icon">
+              <i class="bi bi-bar-chart-fill"></i>
+            </span>
+            <span class="hero-electric-badge__amount"><span class="price-current">₦2,000</span></span>
+          </span>
+          <span class="hero-price-line__suffix">lifetime access.</span>
+        </span>
+      </h1>
+
+      <!-- High-Clarity Subtitle -->
+      <p class="hero-monumental-sub">
+        Premium access to all 7 digital study blueprints, active recall systems, and exam execution templates from day one: <strong><span class="price-current">₦2,000</span> one-time</strong>, instead of <del style="color: var(--text-tertiary, #8c8c8c); text-decoration: line-through;">₦20,000</del> when purchased separately.
+      </p>
+
+      <!-- Sleek Pill Actions -->
+      <div class="hero-monumental-actions">
+        <button class="hero-pill-btn hero-pill-btn--primary" onclick="openCheckout()">
+          Start for <span class="price-current">₦2,000</span> <span class="hero-pill-arrow">↗</span>
         </button>
-        <div class="cta-microcopy">
-          <span><i class="bi bi-phone-fill"></i> Instant Access on Phone, Tablet &amp; Laptop</span>
-          <span><i class="bi bi-shield-fill-check"></i> 30-Day Money-Back Guarantee</span>
-          <span><i class="bi bi-clock-history"></i> One-Time Payment, Lifetime Access</span>
-        </div>
+        <a href="#value-stack" class="hero-pill-btn hero-pill-btn--secondary">
+          Explore the 7 blueprints <i class="bi bi-arrow-down-short"></i>
+        </a>
       </div>
 
-      <!-- Instant Trust Cues (Distinct & Verifiable) -->
-      <div class="hero__trust-bar" style="margin-top: 20px;">
-        <span class="trust-bar__chip"><i class="bi bi-people-fill"></i> Over 3,000 Students</span>
-        <span class="trust-bar__chip"><i class="bi bi-clock-history"></i> 20-Min Quick-Start Guide</span>
-        <span class="trust-bar__chip"><i class="bi bi-shield-check"></i> 30-Day Money-Back Guarantee</span>
-      </div>
 
-      <!-- THE BIG THING: Value Comparison Card (In-Depth Proof) -->
-      <div class="hero__ledger">
-        <div class="ledger__header">
-          <div class="ledger__tag">
-            <span class="ledger__pulse-dot"></span>
-            <span class="ledger__tag-text">STANDARD RETAIL VALUE VS. STUDENT ACCESS</span>
-          </div>
-          <div class="ledger__ratio">
-            <span class="ledger__ratio-pill"><i class="bi bi-tag-fill"></i> ONE-TIME STUDENT PRICE</span>
-          </div>
-        </div>
-
-        <div class="ledger__body">
-          <!-- Pillar 1: Total Separate Retail Value -->
-          <div class="ledger__pillar ledger__pillar--sunk">
-            <div class="pillar__header-row">
-              <span class="pillar__eyebrow">STANDARD RETAIL VALUE</span>
-              <span class="pillar__micro-tag">SEPARATE VALUE</span>
-            </div>
-            <div class="pillar__amount pillar__amount--sunk">₦20,000</div>
-            <div class="pillar__desc">All 7 Resources Sold Individually</div>
-            <div class="pillar__badge pillar__badge--sunk">
-              <i class="bi bi-collection-fill"></i> Total Separate Value
-            </div>
-          </div>
-
-          <!-- Center Bridge -->
-          <div class="ledger__divider">
-            <div class="ledger__divider-line"></div>
-            <div class="ledger__divider-node" title="Your Shortcut">
-              <i class="bi bi-arrow-right"></i>
-            </div>
-            <div class="ledger__divider-line"></div>
-          </div>
-
-          <!-- Pillar 2: Student Bundle Price -->
-          <div class="ledger__pillar ledger__pillar--claim">
-            <div class="pillar__header-row">
-              <span class="pillar__eyebrow pillar__eyebrow--gold">STUDENT ACCESS TODAY</span>
-              <span class="pillar__micro-tag pillar__micro-tag--gold"><i class="bi bi-check2-circle"></i> ALL 7 INCLUDED</span>
-            </div>
-            <div class="pillar__pricing-box">
-              <del class="pillar__anchor-del">₦20,000 VALUE</del>
-              <div class="pillar__amount pillar__amount--gold"><span class="price-current">₦2,000</span></div>
-            </div>
-            <div class="pillar__desc pillar__desc--gold">Instant Digital Access to All 7 Resources</div>
-            <div class="pillar__badge pillar__badge--claim">
-              <i class="bi bi-download"></i> 90% Off Today
-            </div>
-          </div>
-        </div>
-
-        <!-- Ledger Specs Strip -->
-        <div class="ledger__footer">
-          <span><i class="bi bi-file-earmark-pdf"></i> Instant PDF Download</span>
-          <span>•</span>
-          <span>Readable on Phone, Tablet &amp; Laptop</span>
-        </div>
-      </div>
-
-      <!-- Hero Subtitle (Empathetic & Grounded) -->
-      <p class="hero__sub hero__sub--tight">You aren't struggling because you're not smart enough. Nobody taught you how to study with real cognitive science. This package replaces passive re-reading with tested active recall protocols and exam execution frameworks so you retain complex material, study fewer hours, and secure top grades.</p>
 
       <!-- MOBILE-ONLY HERO VISUAL FLOW -->
       <div class="mobile-visual-flow">
@@ -242,22 +179,45 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       </div>
     </div>
     <div class="hero__visual">
-      <div class="hero__books">
-        <!-- Floating Price Badge -->
-        <div class="hero__price-float">
-          <div class="price-badge-tag">COMPLETE 7-PART SYSTEM</div>
-          <div class="old-price">₦20,000</div>
-          <div class="new-price price-current">₦2,000</div>
-          <div class="discount-badge">90% OFF STUDENT SPECIAL</div>
+      <div class="hero-deck-stage" id="heroDeckStage" aria-label="Interactive 3D Book Showcase">
+        <div class="hero-deck-container" id="heroDeckContainer">
+          <div class="hero-deck-card pos-center hero-deck-card--center" data-idx="0">
+            <span class="hero-deck-badge">Flagship Book</span>
+            <img src="assets/images/bookcover.webp" srcset="assets/images/bookcover-mobile.webp 380w, assets/images/bookcover.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="Get Good at Hard Things" loading="eager">
+          </div>
+          <div class="hero-deck-card pos-right-1" data-idx="1">
+            <span class="hero-deck-badge">Bonus #1</span>
+            <img src="assets/images/bookcover1.webp" srcset="assets/images/bookcover1-mobile.webp 380w, assets/images/bookcover1.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="How to Score High" loading="eager">
+          </div>
+          <div class="hero-deck-card pos-right-2" data-idx="2">
+            <span class="hero-deck-badge">Bonus #2</span>
+            <img src="assets/images/bookcover2.webp" srcset="assets/images/bookcover2-mobile.webp 380w, assets/images/bookcover2.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="Balance Academics" loading="eager">
+          </div>
+          <div class="hero-deck-card pos-hidden" data-idx="3">
+            <span class="hero-deck-badge">Bonus #3</span>
+            <img src="assets/images/bookcover3.webp" srcset="assets/images/bookcover3-mobile.webp 380w, assets/images/bookcover3.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="Results-Oriented Learning" loading="eager">
+          </div>
+          <div class="hero-deck-card pos-hidden" data-idx="4">
+            <span class="hero-deck-badge">Bonus #4</span>
+            <img src="assets/images/bookcoverlandscape.webp" srcset="assets/images/bookcoverlandscape-mobile.webp 380w, assets/images/bookcoverlandscape.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="Focus Template" loading="eager">
+          </div>
+          <div class="hero-deck-card pos-left-2" data-idx="5">
+            <span class="hero-deck-badge">Bonus #5</span>
+            <img src="assets/images/bookcover4.webp" srcset="assets/images/bookcover4-mobile.webp 380w, assets/images/bookcover4.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="Exam Survival Guide" loading="eager">
+          </div>
+          <div class="hero-deck-card pos-left-1" data-idx="6">
+            <span class="hero-deck-badge">Bonus #6</span>
+            <img src="assets/images/bookcover5.webp" srcset="assets/images/bookcover5-mobile.webp 380w, assets/images/bookcover5.webp 600w" sizes="(max-width: 899px) 200px, 270px" alt="Study Tracker" loading="eager">
+          </div>
         </div>
-        <div class="hero__book hero__book--b1"><img src="assets/images/bookcover3.webp" srcset="assets/images/bookcover3-mobile.webp 380w, assets/images/bookcover3.webp 600w" sizes="(max-width: 899px) 190px, 400px" alt="Bonus Book"></div>
-        <div class="hero__book hero__book--b2"><img src="assets/images/bookcoverlandscape.webp" srcset="assets/images/bookcoverlandscape-mobile.webp 380w, assets/images/bookcoverlandscape.webp 600w" sizes="(max-width: 899px) 190px, 400px" alt="Bonus Book"></div>
-        <div class="hero__book hero__book--b3"><img src="assets/images/bookcover1.webp" srcset="assets/images/bookcover1-mobile.webp 380w, assets/images/bookcover1.webp 600w" sizes="(max-width: 899px) 190px, 400px" alt="Bonus Book"></div>
-        <div class="hero__book hero__book--b4"><img src="assets/images/bookcover2.webp" srcset="assets/images/bookcover2-mobile.webp 380w, assets/images/bookcover2.webp 600w" sizes="(max-width: 899px) 190px, 400px" alt="Bonus Book"></div>
-
-        <div class="hero__book hero__book--main">
-          <img src="assets/images/bookcover.webp" srcset="assets/images/bookcover-mobile.webp 380w, assets/images/bookcover.webp 600w" sizes="(max-width: 899px) 190px, 400px" alt="Get Good at Hard Things">
-          <div class="hero__badge">Flagship Book</div>
+        <div class="hero-deck-dots" id="heroDeckDots">
+          <button type="button" class="hero-deck-dot active" aria-label="Cover 1"></button>
+          <button type="button" class="hero-deck-dot" aria-label="Cover 2"></button>
+          <button type="button" class="hero-deck-dot" aria-label="Cover 3"></button>
+          <button type="button" class="hero-deck-dot" aria-label="Cover 4"></button>
+          <button type="button" class="hero-deck-dot" aria-label="Cover 5"></button>
+          <button type="button" class="hero-deck-dot" aria-label="Cover 6"></button>
+          <button type="button" class="hero-deck-dot" aria-label="Cover 7"></button>
         </div>
       </div>
     </div>
@@ -316,22 +276,48 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       </div>
       <div class="reframe__pillars" data-aos="fade-left">
         <div class="reframe__pillar">
-          <div class="reframe__pillar-icon">🧠</div>
+          <div class="reframe__pillar-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+              <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+              <path d="M12 5v13"/>
+              <path d="M12 7h1a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-1"/>
+              <path d="M12 11h-1a2 2 0 0 0-2 2v0a2 2 0 0 0 2 2h1"/>
+            </svg>
+          </div>
           <h4>Active Retrieval</h4>
           <p>Learn how to force your brain to remember information during exams.</p>
         </div>
         <div class="reframe__pillar">
-          <div class="reframe__pillar-icon">🎯</div>
+          <div class="reframe__pillar-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </div>
           <h4>Deep Focus</h4>
           <p>Techniques to study for 90 minutes straight without distraction.</p>
         </div>
         <div class="reframe__pillar">
-          <div class="reframe__pillar-icon">⏳</div>
+          <div class="reframe__pillar-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m17 2 4 4-4 4"/>
+              <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+              <path d="m7 22-4-4 4-4"/>
+              <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+            </svg>
+          </div>
           <h4>Spaced Repetition</h4>
           <p>The scientifically proven way to never forget what you read.</p>
         </div>
         <div class="reframe__pillar">
-          <div class="reframe__pillar-icon">📈</div>
+          <div class="reframe__pillar-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+              <polyline points="16 7 22 7 22 13"/>
+            </svg>
+          </div>
           <h4>Exam Strategy</h4>
           <p>How to actually answer questions to get maximum marks.</p>
         </div>
@@ -448,75 +434,87 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- Value Stack -->
-<section class="value-stack">
+<!-- Value Stack & Pricing Section -->
+<section class="value-stack" id="value-stack">
   <div class="container container--sm">
     <div class="value-stack__header" data-aos="fade-up">
-      <h2 class="section-title">What you're getting today</h2>
-      <div style="background: #ffffff; border: 1px solid #e5e5e5; border-radius: 0; padding: 28px 30px; margin-top: 24px; text-align: left; max-width: 660px; margin-left: auto; margin-right: auto; box-shadow: none;">
-        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 14px;">
-          <span style="font-size: 1.4rem;">🎯</span>
-          <h4 style="color: #0a0a0a; font-family: 'Inter', sans-serif; font-size: 1.28rem; font-weight: 600; margin: 0; letter-spacing: -0.03em;">The Complete Academic Performance Stack (₦20,000 Total Value)</h4>
+      <div class="hero-breadcrumb" style="justify-content: center; margin-bottom: 14px;">
+        <span class="hero-breadcrumb__tag">PRICING</span>
+        <span class="hero-breadcrumb__sep">/</span>
+        <span class="hero-breadcrumb__sub">STUDENT ACCESS</span>
+      </div>
+      <h2 class="section-title">One simple investment. Everything included.</h2>
+      
+      <!-- High-Impact Editorial Pricing Showcase inspired by reference -->
+      <div class="pricing-showcase-card">
+        <div class="pricing-showcase-pill-wrap">
+          <span class="hero-electric-badge">
+            <span class="hero-electric-badge__icon">
+              <i class="bi bi-mortarboard-fill"></i>
+            </span>
+            <span class="hero-electric-badge__amount"><span class="price-current">₦2,000</span></span>
+          </span>
+          <span class="hero-price-line__suffix" style="font-size: clamp(1.4rem, 2.5vw, 2rem);">one-time student rate.</span>
         </div>
-        <p style="color: #595959; font-size: 0.96rem; line-height: 1.75; margin-bottom: 14px;">
-          Each book and template in this package was built to eliminate one specific point of failure in higher institution academics—from passive reading and low retention to exam hall anxiety and lack of study focus. Sold separately, these 7 resources retail for <strong style="color: #0a0a0a; font-family: 'JetBrains Mono', monospace;">₦20,000</strong>.
+        <p style="color: var(--text-secondary, #595959); font-size: 0.98rem; line-height: 1.65; margin: 0 auto 22px; max-width: 540px;">
+          All 7 core study blueprints, exam frameworks, and semester trackers included. Separate retail value is <del style="color: var(--text-tertiary, #8c8c8c); font-family: 'JetBrains Mono', monospace;">₦20,000</del>. One-time payment with lifetime access.
         </p>
-        <p style="color: #595959; font-size: 0.96rem; line-height: 1.75; margin-bottom: 14px;">
-          To ensure price is never an obstacle for any committed student, you can claim all 7 digital resources today for a one-time student rate of just <strong style="color: #0a0a0a; font-family: 'JetBrains Mono', monospace;">₦2,000</strong> (less than the cost of a single printed course handout).
-        </p>
-        <div style="background: #f3f3f4; border-left: 3px solid #0a0a0a; padding: 12px 16px; border-radius: 0; margin-top: 14px;">
-          <p style="color: #0a0a0a; font-size: 0.95rem; font-weight: 600; line-height: 1.6; margin: 0;">
-            "You get the exact frameworks used by First-Class students to retain technical lecture notes and maximize exam marks—for just <span class="price-current" style="font-family: 'JetBrains Mono', monospace;">₦2,000</span>."
-          </p>
+        <button class="hero-pill-btn hero-pill-btn--primary" onclick="openCheckout()" style="width: 100%; max-width: 380px; justify-content: center; padding: 14px 28px;">
+          Claim Access for <span class="price-current">₦2,000</span> <span class="hero-pill-arrow">↗</span>
+        </button>
+        <div style="margin-top: 14px; font-size: 0.82rem; color: #747878; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <i class="bi bi-shield-check" style="color: #0a0a0a;"></i> 100% Risk-Free 30-Day Money-Back Guarantee
         </div>
       </div>
     </div>
-    <div class="value-table" data-aos="fade-up" data-aos-delay="100">
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-book"></i> Get Good at Hard Things (The Flagship Deep Work &amp; Active Recall Engine)</div>
-        <div class="value-table__price">₦6,000 Value</div>
-      </div>
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-file-earmark-pdf"></i> How to Score High in Any Exam (Hall Combat &amp; Mark-Maximization Protocol)</div>
-        <div class="value-table__price">₦3,000 Value</div>
-      </div>
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-briefcase-fill"></i> Balance Academics &amp; Business (Dual High-Performance Framework)</div>
-        <div class="value-table__price">₦3,000 Value</div>
-      </div>
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-lightbulb-fill"></i> Results-Oriented Learning (Stop Unproductive Busyness &amp; Maximize Retention)</div>
-        <div class="value-table__price">₦2,000 Value</div>
-      </div>
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-shield-check"></i> Exam Survival Guide (Mental Reset, Panic Eradication &amp; Day-Of Checklist)</div>
-        <div class="value-table__price">₦2,000 Value</div>
-      </div>
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-ui-checks"></i> Focus Template (Printable Deep Work Session Planner)</div>
-        <div class="value-table__price">₦2,000 Value</div>
-      </div>
-      <div class="value-table__row">
-        <div class="value-table__label"><i class="bi bi-calendar-check"></i> 30-Day Semester Study Tracker (Consistent Daily Execution System)</div>
-        <div class="value-table__price">₦2,000 Value</div>
-      </div>
-      <div class="value-table__row value-table__row--total">
-        <div class="value-table__label">
-          <div>
-            <span style="color: #fff !important; font-weight: 800; font-size: 1.02rem;">Total Standard Retail Value</span>
-            <div style="font-size: 0.8rem; font-weight: 400; color: rgba(255,255,255,0.85); margin-top: 3px;">All 7 resources sold separately at full retail price</div>
-          </div>
+    <div class="value-table-wrap">
+      <div class="value-table" data-aos="fade-up" data-aos-delay="100">
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-book"></i> Get Good at Hard Things (The Flagship Deep Work &amp; Active Recall Engine)</div>
+          <div class="value-table__price">₦6,000 Value</div>
         </div>
-        <div class="value-table__price" style="text-decoration: line-through; font-size: 1.15rem; white-space: nowrap; color: rgba(255,255,255,0.7) !important;">₦20,000</div>
-      </div>
-      <div class="value-table__row value-table__row--final">
-        <div class="value-table__label">
-          <div>
-            <span style="color: #0c0e12 !important; font-weight: 900; font-size: 1.05rem;">Your Student Price Today (90% OFF)</span>
-            <div style="font-size: 0.8rem; font-weight: 600; color: #3a3224; margin-top: 3px;">Instant digital download on phone, tablet &amp; laptop</div>
-          </div>
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-file-earmark-pdf"></i> How to Score High in Any Exam (Hall Combat &amp; Mark-Maximization Protocol)</div>
+          <div class="value-table__price">₦3,000 Value</div>
         </div>
-        <div class="value-table__price price-current" style="font-size: 1.45rem; font-weight: 900; color: #0c0e12 !important;">₦2,000</div>
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-briefcase-fill"></i> Balance Academics &amp; Business (Dual High-Performance Framework)</div>
+          <div class="value-table__price">₦3,000 Value</div>
+        </div>
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-lightbulb-fill"></i> Results-Oriented Learning (Stop Unproductive Busyness &amp; Maximize Retention)</div>
+          <div class="value-table__price">₦2,000 Value</div>
+        </div>
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-shield-check"></i> Exam Survival Guide (Mental Reset, Panic Eradication &amp; Day-Of Checklist)</div>
+          <div class="value-table__price">₦2,000 Value</div>
+        </div>
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-ui-checks"></i> Focus Template (Printable Deep Work Session Planner)</div>
+          <div class="value-table__price">₦2,000 Value</div>
+        </div>
+        <div class="value-table__row">
+          <div class="value-table__label"><i class="bi bi-calendar-check"></i> 30-Day Semester Study Tracker (Consistent Daily Execution System)</div>
+          <div class="value-table__price">₦2,000 Value</div>
+        </div>
+        <div class="value-table__row value-table__row--total">
+          <div class="value-table__label">
+            <div>
+              <span style="color: var(--text-primary, #0a0a0a) !important; font-weight: 700; font-size: 1rem;">Total Standard Retail Value</span>
+              <div style="font-size: 0.78rem; font-weight: 400; color: var(--text-secondary, #595959); margin-top: 2px;">All 7 resources sold separately at full retail price</div>
+            </div>
+          </div>
+          <div class="value-table__price" style="text-decoration: line-through; font-size: 1.1rem; white-space: nowrap; color: var(--text-tertiary, #8c8c8c) !important;">₦20,000</div>
+        </div>
+        <div class="value-table__row value-table__row--final">
+          <div class="value-table__label">
+            <div>
+              <span style="color: var(--text-primary, #0a0a0a) !important; font-weight: 700; font-size: 1.05rem;">Your Student Price Today (90% OFF)</span>
+              <div style="font-size: 0.78rem; font-weight: 400; color: var(--text-secondary, #595959); margin-top: 2px;">Instant digital download on phone, tablet &amp; laptop</div>
+            </div>
+          </div>
+          <div class="value-table__price price-current" style="font-size: 1.45rem; font-weight: 700; color: var(--text-primary, #0a0a0a) !important;">₦2,000</div>
+        </div>
       </div>
     </div>
 
@@ -530,7 +528,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     </div>
 
     <div style="text-align:center; margin-top:32px" data-aos="fade-up" data-aos-delay="200">
-      <button class="btn btn--gold btn--full" onclick="openCheckout()">Get The Complete Package Now</button>
+      <button class="btn btn--gold btn--full" onclick="openCheckout()">Get The Complete Package Now <span class="hero-pill-arrow">↗</span></button>
       <div class="cta-microcopy" style="color: var(--text2);">
         <span><i class="bi bi-shield-check"></i> 100% Risk-Free Guarantee</span>
         <span><i class="bi bi-lightning-charge-fill"></i> Instant Library Access</span>
@@ -720,12 +718,7 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
       <h2 class="community__headline">Exclusive Academic Comeback Community &amp; Weekly Live Coaching</h2>
       <p class="community__sub">Before you can master your studies, your business, or your future — you have to master yourself. When you claim the package today, you unlock free lifetime access to our private student network and our live weekly masterclasses from <a href="https://open.spotify.com/show/3acaVWiSODnDjuLZhODV9w?si=ea03c1d707974e8d" target="_blank" style="color:var(--gold-l);text-decoration:underline">Scale: The How to Build Podcast</a>. Join hundreds of students live every Wednesday at 8PM to learn the foundational self-management and high-performance study systems that make top grades possible.</p>
       <div class="community-bonus-cta-box">
-        <div class="bonus-tag-row">
-          <span><i class="bi bi-check-circle-fill" style="color:#4ade80"></i> Included 100% Free with Today's ₦2,000 Order</span>
-          <span><i class="bi bi-shield-check" style="color:var(--gold-bright)"></i> Instant Community Invite Link in Your Digital Library</span>
-          <span><i class="bi bi-broadcast" style="color:#38bdf8"></i> Weekly Wednesday 8PM Live Strategy &amp; Q&amp;A Calls</span>
-        </div>
-        <button class="btn btn--gold btn--mega" onclick="openCheckout()" style="margin-top: 20px; width: 100%;">
+        <button class="btn btn--gold btn--mega" onclick="openCheckout()" style="width: 100%;">
           <span class="btn-mega__text">CLAIM PACKAGE + FREE COMMUNITY ACCESS <i class="bi bi-arrow-right"></i></span>
         </button>
       </div>
@@ -771,10 +764,9 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
     <h2 class="final-cta__headline">Stop Guessing.<br><em>Start Dominating Exams.</em></h2>
     <p class="final-cta__sub">You are 60 seconds away from unlocking the exact frameworks used by First-Class graduates. <strong class="price-urgency-badge">The early-bird discount window is active.</strong></p>
     <button class="btn btn--gold btn--full" onclick="openCheckout()">
-      Unlock The Complete Package Now
-      <i class="bi bi-arrow-right"></i>
+      Unlock The Complete Package Now <span class="hero-pill-arrow">↗</span>
     </button>
-    <p class="final-cta__price">🔒 256-bit Encrypted Checkout • Instant Digital Access • 100% Risk-Free Guarantee • Only <strong class="price-current">₦2,000</strong></p>
+    <p class="final-cta__price">Only <strong class="price-current">₦2,000</strong></p>
   </div>
 </section>
 
@@ -1343,6 +1335,88 @@ async function handleRefundSubmit(e) {
     btn.textContent = 'Submit Request';
   }
 }
+</script>
+
+<!-- 3D Rotating Hero Deck Controller (1s per cover with 3D rotation) -->
+<script>
+(function() {
+  function initHeroDeck() {
+    var stage = document.getElementById('heroDeckStage');
+    if (!stage) return;
+    var cards = stage.querySelectorAll('.hero-deck-card');
+    var dots = stage.querySelectorAll('.hero-deck-dot');
+    var total = cards.length;
+    if (total === 0) return;
+    var currentIdx = 0;
+    var timer = null;
+    var isPaused = false;
+
+    function updatePositions() {
+      cards.forEach(function(card, i) {
+        card.className = 'hero-deck-card';
+        var rel = (i - currentIdx + total) % total;
+        if (rel === 0) {
+          card.classList.add('pos-center', 'hero-deck-card--center');
+        } else if (rel === 1) {
+          card.classList.add('pos-right-1');
+        } else if (rel === 2) {
+          card.classList.add('pos-right-2');
+        } else if (rel === total - 1) {
+          card.classList.add('pos-left-1');
+        } else if (rel === total - 2) {
+          card.classList.add('pos-left-2');
+        } else {
+          card.classList.add('pos-hidden');
+        }
+      });
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('active', i === currentIdx);
+      });
+    }
+
+    function nextCover() {
+      currentIdx = (currentIdx + 1) % total;
+      updatePositions();
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(function() {
+        if (!isPaused) {
+          nextCover();
+        }
+      }, 1000);
+    }
+
+    cards.forEach(function(card, idx) {
+      card.addEventListener('click', function() {
+        currentIdx = idx;
+        updatePositions();
+      });
+    });
+
+    dots.forEach(function(dot, idx) {
+      dot.addEventListener('click', function() {
+        currentIdx = idx;
+        updatePositions();
+      });
+    });
+
+    stage.addEventListener('mouseenter', function() { isPaused = true; });
+    stage.addEventListener('mouseleave', function() { isPaused = false; });
+    stage.addEventListener('touchstart', function() { isPaused = true; }, { passive: true });
+    stage.addEventListener('touchend', function() { isPaused = false; }, { passive: true });
+
+    updatePositions();
+    startTimer();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroDeck);
+  } else {
+    initHeroDeck();
+  }
+})();
 </script>
 <script src="/js/global-nav.js"></script>
 </body>
