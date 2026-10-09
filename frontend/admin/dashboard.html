@@ -1550,6 +1550,14 @@
     </button>
   </div>
 
+  <div class="nav-group">
+    <div class="nav-group-label"><span>Content & Growth</span></div>
+    <button class="nav-item" onclick="switchSection('blog')">
+      <div class="nav-item-content"><i class="bi bi-journal-richtext"></i> <span>Blog & Content CMS</span></div>
+      <span class="nav-badge gold" id="nav-badge-blog-count">200+</span>
+    </button>
+  </div>
+
   <!-- User Scope Card -->
   <div class="sidebar-user">
     <div class="user-pill">
@@ -2123,6 +2131,63 @@
       </div>
     </div>
 
+    <!-- ── VIEW: BLOG & CONTENT CMS ──────────────── -->
+    <div id="view-blog" class="section">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-title">Total Articles</div><div class="kpi-val" id="blog-kpi-total">201</div></div>
+        <div class="kpi-card"><div class="kpi-title">Published Guides</div><div class="kpi-val green" id="blog-kpi-published">201</div></div>
+        <div class="kpi-card"><div class="kpi-title">Draft Guides</div><div class="kpi-val gold" id="blog-kpi-drafts">0</div></div>
+        <div class="kpi-card"><div class="kpi-title">Pillar Categories</div><div class="kpi-val" id="blog-kpi-categories">5</div></div>
+        <div class="kpi-card"><div class="kpi-title">Search Index Status</div><div class="kpi-val green" style="font-size:1.1rem;display:flex;align-items:center;gap:6px"><i class="bi bi-patch-check-fill"></i> Synced &amp; Active</div></div>
+      </div>
+
+      <div style="padding:18px 24px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; flex:1">
+          <div style="position:relative; min-width:260px; max-width:380px; width:100%">
+            <i class="bi bi-search" style="position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--gray-muted)"></i>
+            <input type="text" class="input-control" id="blog-search-input" placeholder="Search guides by title or slug..." style="padding-left:38px; width:100%" oninput="filterBlogArticles()">
+          </div>
+          <select class="input-control" id="blog-category-filter" style="width:210px" onchange="filterBlogArticles()">
+            <option value="">All Categories</option>
+            <option value="academics">Academics &amp; Study</option>
+            <option value="hostel-and-accommodation">Hostel &amp; Accommodation</option>
+            <option value="mental-health">Mental Health</option>
+            <option value="finances">Student Finances</option>
+            <option value="balancing-work-and-school">Work &amp; Study</option>
+          </select>
+          <select class="input-control" id="blog-status-filter" style="width:140px" onchange="filterBlogArticles()">
+            <option value="">All Statuses</option>
+            <option value="published">Published</option>
+            <option value="draft">Drafts</option>
+          </select>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <button class="btn-action btn-secondary" onclick="window.open('/admin/blog','_blank')" title="Launch distraction-free Markdown editor &amp; FAQ compiler"><i class="bi bi-box-arrow-up-right"></i> Open Full CMS Studio</button>
+          <button class="btn-action btn-secondary" onclick="window.open('/blog/','_blank')"><i class="bi bi-newspaper"></i> View Live Blog</button>
+          <button class="btn-action btn-gold" onclick="window.open('/admin/blog?new=1','_blank')"><i class="bi bi-plus-circle-fill"></i> New Article</button>
+        </div>
+      </div>
+
+      <div class="data-table-container has-mobile-cards">
+        <table class="data-table" id="table-blog-articles">
+          <thead>
+            <tr>
+              <th onclick="sortTable('table-blog-articles', 0)" style="cursor:pointer">Article Title &amp; Slug <i class="bi bi-arrow-down-up"></i></th>
+              <th onclick="sortTable('table-blog-articles', 1)" style="cursor:pointer">Category <i class="bi bi-arrow-down-up"></i></th>
+              <th>Status</th>
+              <th>Author</th>
+              <th onclick="sortTable('table-blog-articles', 4)" style="cursor:pointer">Read Time <i class="bi bi-arrow-down-up"></i></th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-blog-articles">
+            <tr><td colspan="6" style="text-align:center; padding:30px; color:var(--gray-l)">Loading blog articles...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="record-card-list" id="cards-blog-articles"></div>
+    </div>
+
   </div>
 </div>
 
@@ -2179,6 +2244,7 @@
       <div class="shortcut-row"><span>Jump to Sales</span> <kbd>G then S</kbd></div>
       <div class="shortcut-row"><span>Jump to Customers</span> <kbd>G then C</kbd></div>
       <div class="shortcut-row"><span>Jump to Affiliates &amp; Bonuses</span> <kbd>G then A</kbd></div>
+      <div class="shortcut-row"><span>Jump to Blog &amp; Content CMS</span> <kbd>G then B</kbd></div>
       <div class="shortcut-row"><span>Close Modal / Drawer</span> <kbd>ESC</kbd></div>
       <div class="shortcut-row"><span>Show Shortcuts</span> <kbd>?</kbd></div>
     </div>
@@ -2265,7 +2331,8 @@
       sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend", group: 'System & Funnels' },
       'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks', group: 'System & Funnels' },
       abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences', group: 'System & Funnels' },
-      preorders: { title: 'Pre-Orders Fulfillment Tracking', sub: 'Track multi-book pre-orders, days since purchase, customer refund requests, and mark orders as delivered', group: 'Money & Orders' }
+      preorders: { title: 'Pre-Orders Fulfillment Tracking', sub: 'Track multi-book pre-orders, days since purchase, customer refund requests, and mark orders as delivered', group: 'Money & Orders' },
+      blog: { title: 'Blog & Content CMS', sub: 'Manage, edit, publish study guides, and sync SEO rankings across 5 Nigerian university pillars', group: 'Content & Growth' }
     };
 
     const meta = titles[viewId] || { title: 'Admin Suite', sub: '', group: 'Console' };
@@ -2291,6 +2358,7 @@
     if(currentView === 'email-delivery') loadEmailDeliveryView();
     if(currentView === 'abandoned') loadAbandonedView();
     if(currentView === 'preorders') loadPreordersView();
+    if(currentView === 'blog') loadBlogView();
   }
 
 
@@ -4536,6 +4604,152 @@
   }
 
 
+  // ── BLOG & CONTENT CMS MODULE ─────────────────────────────────────────────
+  let allBlogArticlesData = [];
+
+  async function loadBlogView() {
+    const tbody = document.getElementById('tbody-blog-articles');
+    if (tbody && !allBlogArticlesData.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--gray-l)">Loading blog articles...</td></tr>';
+    }
+
+    try {
+      const res = await apiCall('/api/admin/blog/articles');
+      const articles = res.articles || [];
+      allBlogArticlesData = articles;
+
+      // Update badge in sidebar and KPIs
+      const badge = document.getElementById('nav-badge-blog-count');
+      if (badge) badge.textContent = articles.length;
+
+      const kpiTotal = document.getElementById('blog-kpi-total');
+      if (kpiTotal) kpiTotal.textContent = articles.length;
+
+      let published = 0;
+      let drafts = 0;
+      const cats = new Set();
+      articles.forEach(a => {
+        if (a.status === 'published') published++; else drafts++;
+        if (a.category) cats.add(a.category);
+      });
+
+      const kpiPub = document.getElementById('blog-kpi-published');
+      if (kpiPub) kpiPub.textContent = published;
+
+      const kpiDraft = document.getElementById('blog-kpi-drafts');
+      if (kpiDraft) kpiDraft.textContent = drafts;
+
+      const kpiCats = document.getElementById('blog-kpi-categories');
+      if (kpiCats) kpiCats.textContent = cats.size || 5;
+
+      renderBlogArticlesView(articles);
+    } catch (err) {
+      console.warn('Failed to load blog articles:', err);
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--red)">Failed to load articles. <button class="btn-action btn-secondary" onclick="loadBlogView()" style="margin-left:8px">Retry</button></td></tr>';
+      }
+    }
+  }
+
+  function filterBlogArticles() {
+    const q = (document.getElementById('blog-search-input')?.value || '').toLowerCase().trim();
+    const cat = document.getElementById('blog-category-filter')?.value || '';
+    const status = document.getElementById('blog-status-filter')?.value || '';
+
+    const filtered = allBlogArticlesData.filter(a => {
+      const matchQ = !q || (a.title && a.title.toLowerCase().includes(q)) || (a.slug && a.slug.toLowerCase().includes(q)) || (a.category_name && a.category_name.toLowerCase().includes(q));
+      const matchCat = !cat || a.category === cat;
+      const matchStatus = !status || a.status === status;
+      return matchQ && matchCat && matchStatus;
+    });
+
+    renderBlogArticlesView(filtered);
+  }
+
+  function renderBlogArticlesView(articles) {
+    const tbody = document.getElementById('tbody-blog-articles');
+    const cardsContainer = document.getElementById('cards-blog-articles');
+    if (!tbody) return;
+
+    if (!articles.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:30px; color:var(--gray-l)">No articles found matching filters.</td></tr>';
+      if (cardsContainer) cardsContainer.innerHTML = '<div style="text-align:center; padding:24px; color:var(--gray-l)">No articles found matching filters.</div>';
+      return;
+    }
+
+    tbody.innerHTML = articles.map(art => {
+      const isPub = art.status === 'published';
+      const statusBadge = isPub 
+        ? '<span class="badge badge-green"><i class="bi bi-check-circle-fill"></i> Published</span>' 
+        : '<span class="badge badge-gold"><i class="bi bi-file-earmark-text"></i> Draft</span>';
+
+      const liveUrl = `/blog/${art.category}/${art.slug}`;
+      const viewBtn = isPub
+        ? `<button class="btn-action btn-secondary" onclick="window.open('${escapeJs(liveUrl)}','_blank')" style="font-size:0.78rem; padding:4px 8px;" title="View Live Guide"><i class="bi bi-box-arrow-up-right"></i> View</button>`
+        : '';
+
+      const editBtn = `<button class="btn-action btn-secondary" onclick="window.open('/admin/blog?edit=${encodeURIComponent(art.slug)}','_blank')" style="font-size:0.78rem; padding:4px 8px;" title="Edit Guide in CMS Studio"><i class="bi bi-pencil-square"></i> Edit</button>`;
+      const copyBtn = `<button class="btn-action btn-secondary" onclick="copyArticleLink('${escapeJs(liveUrl)}')" style="font-size:0.78rem; padding:4px 8px;" title="Copy Live URL"><i class="bi bi-link-45deg"></i> Copy</button>`;
+
+      return `
+        <tr>
+          <td>
+            <div style="font-weight:600; color:#fff">${escapeHtml(art.title)}</div>
+            <div style="font-size:0.8rem; color:var(--gray-l); font-family:monospace">/blog/${escapeHtml(art.category)}/${escapeHtml(art.slug)}</div>
+          </td>
+          <td><span class="badge badge-gold" style="font-size:0.78rem">${escapeHtml(art.category_name || art.category)}</span></td>
+          <td>${statusBadge}</td>
+          <td style="color:var(--gray-l); font-size:0.85rem">${escapeHtml(art.author || 'Itoya David')}</td>
+          <td style="color:var(--gray-muted); font-size:0.85rem">${escapeHtml(art.read_time || '5 min')}</td>
+          <td>
+            <div style="display:flex; gap:6px; align-items:center">
+              ${viewBtn}
+              ${editBtn}
+              ${copyBtn}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+
+    if (cardsContainer) {
+      cardsContainer.innerHTML = articles.map(art => {
+        const isPub = art.status === 'published';
+        const liveUrl = `/blog/${art.category}/${art.slug}`;
+        return `
+          <div class="record-card record-card--${isPub ? 'success' : 'pending'}">
+            <div class="record-card__row1">
+              <span class="record-card__primary">${escapeHtml(art.title)}</span>
+              <span class="status-pill ${isPub ? 'success' : 'pending'}">${isPub ? 'Published' : 'Draft'}</span>
+            </div>
+            <div class="record-card__row2">
+              <span>Category: ${escapeHtml(art.category_name || art.category)}</span>
+              <span>${escapeHtml(art.read_time || '5 min')}</span>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:8px">
+              ${isPub ? `<button class="btn-action btn-secondary" onclick="window.open('${escapeJs(liveUrl)}','_blank')"><i class="bi bi-eye"></i> View</button>` : ''}
+              <button class="btn-action btn-secondary" onclick="window.open('/admin/blog?edit=${encodeURIComponent(art.slug)}','_blank')"><i class="bi bi-pencil"></i> Edit</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+
+  function copyArticleLink(url) {
+    const full = window.location.origin + url;
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(full).then(() => {
+        showToast('Article link copied to clipboard!', 'success');
+      }).catch(() => {
+        prompt('Copy article URL:', full);
+      });
+    } else {
+      prompt('Copy article URL:', full);
+    }
+  }
+
+
   // ── Mobile off-canvas sidebar ──────────────────────────────────────────────
   function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
@@ -4593,7 +4807,10 @@
     { title: "Email Delivery Infrastructure Monitor", group: "Navigation", icon: "bi-shield-check", action: () => switchSection('email-delivery') },
     { title: "Abandoned Cart Recovery Pipeline", group: "Navigation", icon: "bi-cart-x", action: () => switchSection('abandoned') },
     { title: "Pre-Orders & Waitlists", group: "Navigation", icon: "bi-box-seam", action: () => switchSection('preorders') },
+    { title: "Blog & Content CMS", group: "Navigation", icon: "bi-journal-richtext", action: () => switchSection('blog') },
     
+    { title: "Open Blog Visual Studio Editor", group: "Quick Actions", icon: "bi-pencil-square", action: () => window.open('/admin/blog', '_blank') },
+    { title: "View Public Live Blog Hub", group: "Quick Actions", icon: "bi-newspaper", action: () => window.open('/blog/', '_blank') },
     { title: "Export Sales Ledger to CSV", group: "Quick Actions", icon: "bi-download", action: () => exportSalesCSV() },
     { title: "Create New Sales Team Member", group: "Quick Actions", icon: "bi-person-plus", action: () => openCreateTeamMemberModal() },
     { title: "Trigger Abandoned Cart Check Sweep", group: "Quick Actions", icon: "bi-arrow-repeat", action: () => triggerAbandonedCheck() },
@@ -4745,6 +4962,7 @@
       else if (k === 's') switchSection('sales');
       else if (k === 'c') switchSection('customers');
       else if (k === 'a' || k === 'p') switchSection('affiliates');
+      else if (k === 'b') switchSection('blog');
     }
   });
 

@@ -218,10 +218,10 @@ async def get_checkout_info(token: str, db=Depends(get_db)):
         "prospect_name": lead["prospect_name"],
         "prospect_email": lead["prospect_email"],
         "prospect_phone": lead["prospect_phone"],
-        "offer_name": offer["name"],
-        "offer_description": offer["description"],
-        "offer_price": offer["price"],
-        "offer_billing_type": offer["billing_type"]
+        "offer_name": offer.get("name", ""),
+        "offer_description": offer.get("description", ""),
+        "offer_price": offer.get("price", 0.0),
+        "offer_billing_type": offer.get("billing_type", "one_time")
     }
 
 @router.post("/checkout/pay")
@@ -345,6 +345,22 @@ async def verify_checkout_payment(body: CheckoutVerifyRequest, db=Depends(get_db
     offer = await db.offers.find_one({"_id": lead["offer_id"]})
     if not offer:
         raise HTTPException(status_code=404, detail="Offer not found")
+
+    # Transaction Integrity Guard: Verify amount paid matches offer price
+    amount_paid = (charge_data.get("amount") or 0) / 100.0
+    expected_amount = float(offer.get("price", 0) or 0)
+    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+        print(f"⚠️ Sales verify: Amount mismatch for {body.reference}. Expected {expected_amount}, got {amount_paid}")
+        await db.flagged_payments.insert_one({
+            "reference": body.reference,
+            "reason": "amount_mismatch",
+            "expected_amount": expected_amount,
+            "amount_paid": amount_paid,
+            "payload": charge_resp,
+            "flagged_at": datetime.now(timezone.utc),
+            "resolved": False,
+        })
+        return {"success": False, "message": "Payment amount does not match expected offer price. Flagged for review."}
 
     now = datetime.now(timezone.utc)
 

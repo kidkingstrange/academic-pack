@@ -145,8 +145,27 @@ const SITE_REGISTRY = [
     target: "abandoned",
     icon: "bi bi-cart-x-fill",
   },
+  {
+    id: "blog",
+    title: "Blog & Content CMS",
+    description: "Manage 200+ study guides and student articles, compile SEO metadata, and publish new content.",
+    category: "Communication",
+    type: "admin-section",
+    target: "blog",
+    icon: "bi bi-journal-richtext",
+    metric: "articles_count",
+  },
 
   // ── Public Pages ─────────────────────────────────────────────────────────
+  {
+    id: "public-blog-hub",
+    title: "Student Blog Hub",
+    description: "The public-facing study guide directory, student questions, and community hub.",
+    category: "Public Pages",
+    type: "public-page",
+    target: "/blog/",
+    icon: "bi bi-newspaper",
+  },
   {
     id: "landing-page",
     title: "Landing Page",

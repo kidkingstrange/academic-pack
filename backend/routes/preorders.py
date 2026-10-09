@@ -49,7 +49,12 @@ async def init_preorder_payment(body: PreorderInitRequest, request: Request, db=
     reference = f"ACP-PRE-{uuid.uuid4().hex[:12].upper()}"
     now = datetime.now(timezone.utc)
     email_clean = body.email.lower().strip()
-    amount = float(body.amount) if body.amount > 0 else 5000.0
+    # Authoritative server-side pricing: enforce single book (₦5,000) or bundle (₦12,000)
+    if body.book_id and str(body.book_id).startswith("bundle_3"):
+        expected_amount = float(settings.PREORDER_BUNDLE_3_PRICE_NAIRA)
+    else:
+        expected_amount = float(settings.PREORDER_BOOK_PRICE_NAIRA)
+    amount = expected_amount
 
     payment_method = (body.payment_method or "pay_with_bank").strip().lower()
     channels = ["bank_transfer"] if payment_method == "bank_transfer" else (["card"] if payment_method == "card" else None)
@@ -143,7 +148,20 @@ async def verify_preorder_payment(body: PreorderVerifyRequest, request: Request,
     book_id = body.book_id or (pending.get("book_id") if pending else "unknown-book")
     book_title = body.book_title or (pending.get("book_title") if pending else "Pre-order Book")
     customer_name = body.name or (pending.get("name") if pending else "Customer")
-    base_price = (pending.get("base_price") if pending and pending.get("base_price") is not None else pending.get("amount")) if pending else amount_paid
+
+    # Authoritative server-side price verification
+    expected_amount = float(pending.get("amount", 0) or 0) if pending else (
+        float(settings.PREORDER_BUNDLE_3_PRICE_NAIRA)
+        if (str(book_id).startswith("bundle_3"))
+        else float(settings.PREORDER_BOOK_PRICE_NAIRA)
+    )
+    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+        return {
+            "success": False,
+            "message": "Payment amount does not match expected order total. Please contact support."
+        }
+
+    base_price = expected_amount
 
     pre_order_doc = {
         "reference": body.reference,
@@ -220,9 +238,18 @@ async def preorder_callback(request: Request, trxref: str = "", reference: str =
         result = await verify_transaction(ref)
         data = result.get("data", {})
         if result.get("status") and data.get("status") == "success":
-            now = datetime.now(timezone.utc)
             amount_paid = data.get("amount", 0) / 100.0
-            base_price = (pending.get("base_price") if pending and pending.get("base_price") is not None else pending.get("amount")) if pending else amount_paid
+            expected_amount = float(pending.get("amount", 0) or 0) if pending else (
+                float(settings.PREORDER_BUNDLE_3_PRICE_NAIRA)
+                if (pending and str(pending.get("book_id", "")).startswith("bundle_3"))
+                else float(settings.PREORDER_BOOK_PRICE_NAIRA)
+            )
+            if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+                print(f"⚠️ Preorder callback: amount mismatch for {ref}. Expected {expected_amount}, got {amount_paid}")
+                return RedirectResponse(f"/?preorder_failed=1&ref={ref}&error=amount_mismatch")
+
+            now = datetime.now(timezone.utc)
+            base_price = expected_amount
             pre_order_doc = {
                 "reference": ref,
                 "charge_id": str(data.get("id")),
@@ -248,7 +275,7 @@ async def preorder_callback(request: Request, trxref: str = "", reference: str =
     except Exception as e:
         print(f"❌ Preorder callback verification error: {e}")
 
-    return RedirectResponse(f"/?preorder_success=1&ref={ref}")
+    return RedirectResponse(f"/?preorder_failed=1&ref={ref}")
 
 
 @router.get("/preorders/status")

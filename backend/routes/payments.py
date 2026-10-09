@@ -430,6 +430,12 @@ async def payment_callback(
     name  = pending["name"]
     amount_paid = data.get("amount", 0) / 100.0
 
+    # ── Verify amount paid matches expected pending amount (prevent tampering) ──
+    expected_amount = float(pending.get("amount", 0) or 0)
+    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+        print(f"⚠️ Payment callback: Amount mismatch for {ref}. Expected {expected_amount}, received {amount_paid}")
+        return RedirectResponse("/academic-comeback-package?error=amount_mismatch")
+
     completion = await complete_payment(
         db,
         reference=ref,
@@ -458,7 +464,148 @@ async def process_webhook_payment(payload: dict, db):
         print("⚠️ Webhook payload missing reference")
         return
 
+    # ── 1. Sales Subscription / Offer Invoices (SUB-*) ────────────────────────
+    if str(ref).startswith("SUB-"):
+        pending_sub = await db.pending_subscription_payments.find_one({"reference": ref})
+        if not pending_sub:
+            print(f"⚠️ Webhook: Unknown SUB reference {ref}")
+            return
+        if pending_sub.get("status") == "success":
+            print(f"ℹ️ Webhook: SUB reference {ref} already marked success")
+            return
+
+        lead = await db.sales_leads.find_one({"generated_link_token": pending_sub["lead_token"]})
+        if not lead:
+            print(f"⚠️ Webhook: Lead not found for {ref}")
+            return
+        offer = await db.offers.find_one({"_id": lead["offer_id"]})
+        if not offer:
+            print(f"⚠️ Webhook: Offer not found for {ref}")
+            return
+
+        actual_paid = float((data.get("amount") or 0) / 100.0)
+        expected_amount = float(offer.get("price", 0) or 0)
+        if expected_amount > 0 and abs(actual_paid - expected_amount) > 1.0:
+            print(f"⚠️ Webhook: Amount mismatch for SUB {ref}! Expected {expected_amount}, received {actual_paid}.")
+            await db.flagged_payments.insert_one({
+                "reference": ref,
+                "reason": "amount_mismatch",
+                "expected_amount": expected_amount,
+                "amount_paid": actual_paid,
+                "payload": data,
+                "flagged_at": datetime.now(timezone.utc),
+                "resolved": False,
+            })
+            return
+
+        auth_info = data.get("authorization", {})
+        card_token = auth_info.get("authorization_code", "")
+        card_last4 = auth_info.get("last4", "")
+        card_brand = auth_info.get("card_type", "")
+        now = datetime.now(timezone.utc)
+
+        await db.pending_subscription_payments.update_one(
+            {"reference": ref},
+            {"$set": {"status": "success", "gateway_response": payload}}
+        )
+        await db.sales_leads.update_one(
+            {"_id": lead["_id"]},
+            {"$set": {"status": "paid"}}
+        )
+        if offer.get("billing_type") == "recurring_monthly":
+            await db.subscriptions.insert_one({
+                "customer_name": lead["prospect_name"],
+                "customer_email": lead["prospect_email"],
+                "customer_phone": lead["prospect_phone"],
+                "offer_id": lead["offer_id"],
+                "sales_rep_id": lead["sales_rep_id"],
+                "card_token": card_token,
+                "card_last4": card_last4,
+                "card_brand": card_brand,
+                "status": "active",
+                "next_charge_date": now + timedelta(days=30),
+                "created_at": now
+            })
+        else:
+            await db.sales_payments.insert_one({
+                "customer_name": lead["prospect_name"],
+                "customer_email": lead["prospect_email"],
+                "offer_id": lead["offer_id"],
+                "sales_rep_id": lead["sales_rep_id"],
+                "amount": actual_paid,
+                "reference": ref,
+                "created_at": now
+            })
+        print(f"✅ Webhook: Sales transaction {ref} processed successfully")
+        return
+
+    # ── 2. Pre-orders & Multi-Book Catalog (ACP-PRE-*) ─────────────────────────
     pending = await db.pending_payments.find_one({"reference": ref})
+    if str(ref).startswith("ACP-PRE-") or (pending and pending.get("is_preorder")):
+        if not pending:
+            print(f"⚠️ Webhook: No pending payment for preorder {ref}")
+            return
+
+        actual_paid = float((data.get("amount") or 0) / 100.0)
+        expected_amount = float(pending.get("amount", 0) or 0)
+        if expected_amount > 0 and abs(actual_paid - expected_amount) > 1.0:
+            print(f"⚠️ Webhook: Amount mismatch for preorder {ref}! Expected {expected_amount}, received {actual_paid}.")
+            await db.flagged_payments.insert_one({
+                "reference": ref,
+                "reason": "amount_mismatch",
+                "expected_amount": expected_amount,
+                "amount_paid": actual_paid,
+                "payload": data,
+                "flagged_at": datetime.now(timezone.utc),
+                "resolved": False,
+            })
+            return
+
+        now = datetime.now(timezone.utc)
+        pre_order_doc = {
+            "reference": ref,
+            "charge_id": str(data.get("id")),
+            "email": pending.get("email", ""),
+            "name": pending.get("name", "Customer"),
+            "book_id": pending.get("book_id", "book"),
+            "book_title": pending.get("book_title", "Pre-order Book"),
+            "base_price": expected_amount,
+            "amount_charged": actual_paid,
+            "amount": expected_amount,
+            "currency": "NGN",
+            "paid_at": now,
+            "created_at": now,
+            "delivered": False,
+            "delivered_at": None,
+            "refund_requested": False,
+            "refund_reason": None,
+            "refund_requested_at": None,
+            "gateway_response": data,
+        }
+        await db.pre_orders.update_one({"reference": ref}, {"$set": pre_order_doc}, upsert=True)
+        await db.payments.update_one(
+            {"reference": ref},
+            {"$set": {
+                "reference": ref,
+                "charge_id": str(data.get("id")),
+                "email": pending.get("email", ""),
+                "name": pending.get("name", "Customer"),
+                "base_price": expected_amount,
+                "amount_charged": actual_paid,
+                "amount": expected_amount,
+                "currency": "NGN",
+                "gateway": "paystack",
+                "status": "success",
+                "type": "preorder",
+                "book_title": pending.get("book_title", "Pre-order Book"),
+                "created_at": now,
+            }},
+            upsert=True,
+        )
+        print(f"✅ Webhook: Preorder {ref} fulfilled into db.pre_orders")
+        return
+
+    # ── 3. Main Funnel Academic Comeback Package (ACP-*) ──────────────────────
     if not pending:
         if not str(ref).startswith("ACP-"):
             print(f"⚠️ Webhook: Unknown non-ACP reference {ref}")

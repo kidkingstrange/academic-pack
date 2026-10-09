@@ -200,7 +200,14 @@ function getActiveBasePrice() {
   const referralCode = localStorage.getItem('ac_referral_code');
   const urlParams = new URLSearchParams(window.location.search);
   const isAff = !!(referralCode || urlParams.get('ref') || urlParams.get('price') === '5000');
-  return isAff ? 5000 : 2000;
+  if (isAff) {
+    const affExpiry = Number(localStorage.getItem('ac_aff_expiry') || 0);
+    if (affExpiry && Date.now() > affExpiry) {
+      return 20000;
+    }
+    return 5000;
+  }
+  return 2000;
 }
 
 function initViralDiscount() {

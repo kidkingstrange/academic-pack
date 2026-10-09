@@ -40,6 +40,8 @@ class Settings(BaseSettings):
     PRODUCT_PRICE_RETAIL_NAIRA: int = 20000  # ₦20,000 standard retail / after 48h affiliate expiry
     PRODUCT_PRICE_RETAIL_USD: float = 100.0  # $100 standard retail / after 48h affiliate expiry
     USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
+    PREORDER_BOOK_PRICE_NAIRA: int = 5000       # Single Masterclass book price
+    PREORDER_BUNDLE_3_PRICE_NAIRA: int = 12000  # 3-Book Masterclass bundle price (₦12,000)
 
     # ── Viral Referral Discount & Affiliate Commission ───────────────
     DEFAULT_AFFILIATE_COMMISSION_PERCENT: float = 60.0

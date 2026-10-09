@@ -101,7 +101,8 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
                 "total_customers": 4200,
                 "mrr": "₦180,000",
                 "open_reviews_count": 0,
-                "failed_delivery_alerts_count": 0
+                "failed_delivery_alerts_count": 0,
+                "articles_count": 201
             })
 
         # API: Admin Analytics Overview
@@ -115,6 +116,36 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
                 "sales_count": 4200,
                 "recent_sales": []
             })
+
+        # API: Admin Blog Categories
+        if clean_path == "/api/admin/blog/categories":
+            try:
+                from backend.services.blog_service import get_categories
+                return self._send_json({"categories": get_categories()})
+            except Exception:
+                return self._send_json({"categories": []})
+
+        # API: Admin Blog Articles
+        if clean_path == "/api/admin/blog/articles":
+            try:
+                from backend.services.blog_service import get_all_articles
+                articles = get_all_articles(include_drafts=True)
+                summary = []
+                for a in articles:
+                    summary.append({
+                        "slug": a["slug"],
+                        "title": a["title"],
+                        "category": a["category"],
+                        "category_name": a["category_name"],
+                        "status": a.get("status", "published"),
+                        "author": a.get("author", "Itoya David"),
+                        "date_published": a.get("date_published", "2026-10-08"),
+                        "read_time": a.get("read_time", "6 min read"),
+                        "url": f"/blog/{a['category']}/{a['slug']}"
+                    })
+                return self._send_json({"articles": summary, "total": len(summary)})
+            except Exception as e:
+                return self._send_json({"articles": [], "total": 0})
 
         # Static clean URL routing
         super().do_GET()

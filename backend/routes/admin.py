@@ -1303,6 +1303,13 @@ async def get_master_overview(force: bool = False, current_user=Depends(require_
         db.affiliates.count_documents({"active": True}),
     )
 
+    articles_count = 0
+    try:
+        from ..services.blog_service import get_all_articles
+        articles_count = len(get_all_articles(include_drafts=True))
+    except Exception:
+        pass
+
     data = {
         "generated_at": now.isoformat(),
         "sales_today": overview["total_sales"],
@@ -1319,6 +1326,7 @@ async def get_master_overview(force: bool = False, current_user=Depends(require_
         "flagged_payments": flagged_payments,
         "new_leads_today": new_leads_today,
         "active_affiliates": active_affiliates,
+        "articles_count": articles_count,
     }
     _master_overview_cache["data"] = data
     _master_overview_cache["cached_at"] = now

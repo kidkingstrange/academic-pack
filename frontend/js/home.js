@@ -1045,6 +1045,11 @@ async function handlePreorderSubmit(e) {
 // Check Success & Refund Request Modals
 function checkSuccessState() {
   const params = new URLSearchParams(window.location.search);
+  if (params.get('preorder_failed') === '1') {
+    alert("Payment could not be confirmed or an amount mismatch occurred. If you were debited, please contact support with your payment receipt.");
+    window.history.replaceState({}, document.title, window.location.pathname);
+    return;
+  }
   if (params.get('preorder_success') === '1') {
     const ref = params.get('ref') || '';
     const title = params.get('title') || 'Your Masterclass';
