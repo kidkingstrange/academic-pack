@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Become an Ambassador — Academic Comeback Package</title>
-<meta name="description" content="Join the Academic Comeback Ambassador program — promote the ultimate CGPA upgrade package to students, earn 60% (₦3,000) on every ₦5,000 sale, and unlock a ₦10,000 cash milestone bonus on your first 10 sales.">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>Become an Ambassador — Scale Group / Academic Comeback</title>
+<meta name="description" content="Join the Academic Comeback Ambassador program — promote the ultimate CGPA upgrade package to students, earn 60% (₦3,000) on every ₦5,000 sale with automated bank deposits straight to your account.">
+<link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
 <link rel="stylesheet" href="/css/landing.css?v=swiss-20261008">
+
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -30,179 +30,470 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1075823608450969&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
+
 <style>
-  body { background: linear-gradient(160deg,var(--ink) 0%,#0f1320 60%,#131826 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
-  .aff-card { background: linear-gradient(160deg,#0c0e14 0%,#131826 55%,#0f1520 100%); border: 1px solid rgba(201,151,58,.2); border-radius: var(--radius-xl); max-width: 480px; width: 100%; padding: 44px 36px; box-shadow: 0 24px 60px rgba(0,0,0,.6), var(--gold-glow); position: relative; overflow: hidden; }
-  .aff-card::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 380px; height: 380px; background: radial-gradient(circle, rgba(201,151,58,.14) 0%, rgba(201,151,58,.04) 45%, transparent 70%); pointer-events: none; }
-  .aff-card > * { position: relative; z-index: 1; }
-  .icon-wrap { width: 64px; height: 64px; background: rgba(201,151,58,.1); color: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 20px; box-shadow: var(--gold-glow); border: 1px solid rgba(201,151,58,.2); }
-  h1.aff-title { font-family: 'Clash Display', sans-serif; font-size: 1.75rem; font-weight: 600; color: #fff; text-align: center; margin-bottom: 8px; letter-spacing: -.5px; }
-  .aff-sub { font-size: .92rem; color: var(--gray-l); text-align: center; line-height: 1.6; margin-bottom: 24px; }
-  .aff-highlight-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(201,151,58,.12); border: 1px solid rgba(201,151,58,.3); color: var(--gold-l); font-size: .78rem; font-weight: 700; padding: 4px 12px; border-radius: 50px; margin-bottom: 16px; }
-  .aff-submit-err { color: var(--red); font-size: .82rem; margin-top: 6px; text-align: center; display: none; }
+  /* ══════════════════════════════════════════════════════════════════════════
+     SWISS MODERNIST EDITORIAL DESIGN SYSTEM (MATCHING HOME PAGE)
+     ══════════════════════════════════════════════════════════════════════════ */
+  :root {
+    --surface: #f9f9f9;
+    --surface-dim: #dadada;
+    --surface-bright: #f9f9f9;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f3f3f4;
+    --surface-container: #eeeeee;
+    --border-hairline: #e5e5e5;
+    --border-subtle: #cccccc;
+    --text-primary: #0a0a0a;
+    --text-secondary: #595959;
+    --text-tertiary: #8c8c8c;
+    --action-primary: #0a0a0a;
+    --action-hover: #262626;
+  }
 
-  /* Confirmation state */
-  #aff-success { display: none; text-align: center; }
-  .aff-link-row { display: flex; align-items: stretch; gap: 8px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; padding: 12px 14px; margin: 20px 0 0; }
-  .aff-link-label { font-size: .72rem; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; font-weight: 700; margin: 18px 0 0; text-align: left; }
-  .aff-link-label:first-of-type { margin-top: 0; }
-  .aff-link-value { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: .82rem; color: var(--gold-l); text-align: left; align-self: center; }
-  .copy-btn { background: none; border: none; padding: 4px; cursor: pointer; display: flex; align-items: center; color: var(--gold-d); font-size: 1.1rem; transition: color .2s; position: relative; flex-shrink: 0; }
-  .copy-btn:hover { color: var(--gold); }
-  .copy-tooltip { position: absolute; top: -32px; left: 50%; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 4px 8px; border-radius: 4px; font-size: .72rem; white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .2s; z-index: 100; }
-  .aff-dashboard-note { font-size: .78rem; color: rgba(255,255,255,.55); margin-top: 20px; line-height: 1.6; }
-  .aff-bank-option:hover { background: rgba(201,151,58,.12) !important; }
-  #aff-bank-suggestions::-webkit-scrollbar { width: 8px; }
-  #aff-bank-suggestions::-webkit-scrollbar-thumb { background: rgba(201,151,58,.3); border-radius: 4px; }
+  body {
+    background: #f9f9f9;
+    color: #0a0a0a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  /* ── Mobile Responsive Overrides ── */
-  @media (max-width: 480px) {
-    body { padding: 16px 12px; }
-    .aff-card { padding: 24px 16px; border-radius: 12px; }
+  .aff-page-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+    box-sizing: border-box;
+  }
+
+  .aff-card {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    max-width: 520px;
+    width: 100%;
+    padding: 40px 36px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  .aff-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #b45309;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+  }
+
+  h1.aff-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: #0a0a0a;
+    text-align: center;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.035em;
+    line-height: 1.25;
+  }
+
+  .aff-sub {
+    font-size: 0.92rem;
+    color: #595959;
+    text-align: center;
+    line-height: 1.55;
+    margin: 0 0 24px 0;
+  }
+
+  .aff-sub strong {
+    color: #0a0a0a;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+    text-align: left;
+    position: relative;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #595959;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+
+  .form-group input {
+    width: 100%;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: #0a0a0a;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.18s, box-shadow 0.18s;
+  }
+
+  .form-group input:focus {
+    border-color: #0a0a0a;
+    box-shadow: 0 0 0 1px #0a0a0a;
+  }
+
+  .form-group input::placeholder {
+    color: #a1a1aa;
+  }
+
+  .section-divider {
+    margin: 24px 0 16px;
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: #71717a;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 6px;
+  }
+
+  .aff-submit-btn {
+    width: 100%;
+    background: #0a0a0a;
+    color: #ffffff;
+    border: 1px solid #0a0a0a;
+    padding: 14px 20px;
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    margin-top: 10px;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .aff-submit-btn:hover {
+    background: #262626;
+    border-color: #262626;
+  }
+
+  .aff-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .aff-submit-err {
+    color: #dc2626;
+    font-size: 0.84rem;
+    margin-top: 10px;
+    text-align: center;
+    display: none;
+    font-weight: 500;
+  }
+
+  /* Bank suggestions typeahead */
+  #aff-bank-suggestions {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  }
+
+  .aff-bank-option {
+    padding: 10px 14px;
+    cursor: pointer;
+    color: #0a0a0a;
+    font-size: 0.88rem;
+    transition: background 0.12s;
+  }
+
+  .aff-bank-option:hover {
+    background: #f4f4f5 !important;
+  }
+
+  /* Success state */
+  #aff-success {
+    display: none;
+    text-align: center;
+  }
+
+  .aff-success-icon {
+    width: 52px;
+    height: 52px;
+    background: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #059669;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 16px;
+  }
+
+  .aff-link-label {
+    font-size: 0.74rem;
+    color: #71717a;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin: 16px 0 6px;
+    text-align: left;
+  }
+
+  .aff-link-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+
+  .aff-link-value {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem;
+    color: #0a0a0a;
+    text-align: left;
+  }
+
+  .copy-btn {
+    background: #0a0a0a;
+    border: 1px solid #0a0a0a;
+    color: #ffffff;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: all 0.18s ease;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .copy-btn:hover {
+    background: #262626;
+  }
+
+  .copy-tooltip {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a0a0a;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 100;
+  }
+
+  @media (max-width: 540px) {
+    .aff-page-wrapper { padding: 24px 14px; }
+    .aff-card { padding: 28px 20px; border-radius: 14px; }
     h1.aff-title { font-size: 1.35rem; }
-    .aff-sub { font-size: 0.85rem; }
-    .aff-input, input[type="text"], input[type="email"], input[type="tel"] { font-size: 16px !important; }
-    .aff-submit-btn, button[type="submit"] { min-height: 44px; padding: 12px; font-size: 0.95rem; }
-    .aff-link-row { flex-direction: column; gap: 8px; }
-    .aff-link-value { width: 100%; word-break: break-all; }
+    .aff-sub { font-size: 0.86rem; }
+    .global-header-inner { padding: 12px 14px; }
   }
 </style>
 </head>
 <body>
 
-<div class="aff-card">
-  <!-- Form state -->
-  <div id="aff-form-state">
-    <div class="icon-wrap"><i class="bi bi-mortarboard-fill"></i></div>
-    <div style="text-align: center;"><span class="aff-highlight-badge">💸 VIP AMBASSADOR NETWORK</span></div>
-    <h1 class="aff-title">Turn Your WhatsApp Status into a ₦50k/Month Income Stream</h1>
-    <p class="aff-sub">Earn <strong style="color:var(--gold-l);">60% (₦3,000)</strong> on every ₦5,000 sale + unlock a <strong style="color:#4ade80;">₦10,000 cash milestone bonus</strong> on your first 10 sales—without chasing people or being a pushy salesman.</p>
-
-    <!-- 4-Part Persuasion Matrix Points -->
-    <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 16px; margin-bottom: 20px; text-align: left; font-size: 0.82rem; line-height: 1.5; color: rgba(255,255,255,0.8);">
-      <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
-        <i class="bi bi-lightning-charge-fill" style="color:var(--gold-l); margin-top:2px;"></i>
-        <span><strong>Automated Bank Deposits:</strong> ₦3,000/sale split instantly + ₦10,000 bonus on your first 10 sales.</span>
-      </div>
-      <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
-        <i class="bi bi-chat-square-quote-fill" style="color:#4ade80; margin-top:2px;"></i>
-        <span><strong>Done-For-You Swipe Kits:</strong> Copy-paste tested status scripts. Zero selling skills needed.</span>
-      </div>
-      <div style="display:flex; align-items:flex-start; gap:8px;">
-        <i class="bi bi-clock-history" style="color:#f87171; margin-top:2px;"></i>
-        <span><strong>Territory Opportunity:</strong> If your coursemates don't get this link from you, they'll buy from someone else.</span>
-      </div>
-    </div>
-
-    <!-- Invite Banner -->
-    <div id="aff-invite-banner" style="display:none; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.3); border-radius:10px; padding:10px 14px; margin-bottom:18px; font-size:0.85rem; color:#4ade80; text-align:center;">
-      <i class="bi bi-person-check-fill"></i> You were invited by ambassador <strong id="invited-by-code-text"></strong>
-    </div>
-
-    <form id="aff-register-form" autocomplete="off">
-      <div class="form-group">
-        <label for="aff-name">Full Name</label>
-        <input type="text" id="aff-name" placeholder="e.g. Chidi Okafor" required>
-      </div>
-      <div class="form-group">
-        <label for="aff-email">Email Address</label>
-        <input type="email" id="aff-email" placeholder="your@email.com" required>
-      </div>
-      <div class="form-group" style="position:relative;">
-        <label for="aff-password">Password (min. 8 characters)</label>
-        <div style="position:relative; display:flex; align-items:center;">
-          <input type="password" id="aff-password" placeholder="Create a password" required minlength="8" autocomplete="new-password" style="width:100%; padding-right:42px;">
-          <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('aff-password', this)" style="position:absolute; right:12px; background:none; border:none; color:var(--gray-l); cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Password">
-            <i class="bi bi-eye"></i>
-          </button>
-        </div>
-      </div>
-      <div class="form-group" style="position:relative;">
-        <label for="aff-confirm-password">Confirm Password</label>
-        <div style="position:relative; display:flex; align-items:center;">
-          <input type="password" id="aff-confirm-password" placeholder="Re-enter your password" required minlength="8" autocomplete="new-password" style="width:100%; padding-right:42px;">
-          <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('aff-confirm-password', this)" style="position:absolute; right:12px; background:none; border:none; color:var(--gray-l); cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Password">
-            <i class="bi bi-eye"></i>
-          </button>
-        </div>
-      </div>
-
-      <div style="margin:20px 0 12px; font-size:.82rem; font-weight:700; color:var(--gold-l); text-transform:uppercase; letter-spacing:1px; border-bottom:1px solid rgba(255,255,255,.08); padding-bottom:6px">Payout Bank Details (Instant Direct Deposits)</div>
-
-      <div class="form-group" style="position:relative;">
-        <label for="aff-bank-name">Bank Name</label>
-        <input type="text" id="aff-bank-name" placeholder="Start typing your bank name..." autocomplete="off" style="width:100%; padding:14px 16px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); border-radius:12px; color:#fff; font-size:.95rem; font-family:inherit; outline:none;" required>
-        <input type="hidden" id="aff-bank-code">
-        <div id="aff-bank-suggestions" style="display:none; position:absolute; top:calc(100% + 6px); left:0; right:0; z-index:20; background:var(--ink); border:1px solid rgba(201,151,58,.25); border-radius:12px; max-height:240px; overflow-y:auto; box-shadow:0 16px 36px rgba(0,0,0,.55);"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="aff-acct-num">10-Digit Account Number</label>
-        <input type="text" id="aff-acct-num" placeholder="e.g. 0123456789" maxlength="10" pattern="[0-9]{10}" required>
-        <div id="aff-acct-status" style="display:none; font-size:0.83rem; margin-top:6px; padding:6px 10px; border-radius:6px; font-weight:600;"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="aff-acct-name">Account Name (Full name on bank account)</label>
-        <input type="text" id="aff-acct-name" placeholder="e.g. Chidi Okafor" required>
-      </div>
-
-      <button type="submit" class="modal__submit" id="aff-submit-btn">Get My Ambassador Link →</button>
-      <p class="aff-submit-err" id="aff-submit-err"></p>
-      <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,.08); text-align:center; font-size:0.85rem; color:var(--gray-l);">
-        Already registered? <a href="/affiliate/login" style="color:var(--gold-l); font-weight:700; text-decoration:none;">Log In Here</a> or <a href="/affiliate/activate" style="color:var(--gold-l); font-weight:700; text-decoration:none;">Activate Account</a>
-      </div>
-    </form>
-  </div>
-
-  <!-- Success state -->
-  <div id="aff-success">
-    <div class="icon-wrap"><i class="bi bi-check-lg"></i></div>
-    <h1 class="aff-title">You're an Official Ambassador!</h1>
-    <p class="aff-sub">Your link is live right now. Share it with students to start earning ₦3,000 on every copy.</p>
-
-    <!-- Save Links Warning Banner -->
-    <div style="background: rgba(201, 151, 58, 0.1); border: 1px solid rgba(201, 151, 58, 0.3); border-radius: 8px; padding: 16px; margin: 24px 0; text-align: left; display: flex; gap: 12px; align-items: flex-start;">
-      <div style="color: var(--gold-l); font-size: 1.3rem; margin-top: -2px; display: flex; align-items: center; justify-content: center;"><i class="bi bi-exclamation-triangle-fill"></i></div>
-      <div>
-        <strong style="color: #fff; font-size: 0.88rem; display: block; margin-bottom: 4px;">⚠️ Action Required: Save Your Links Safely!</strong>
-        <p style="color: var(--gray-l); font-size: 0.82rem; margin: 0; line-height: 1.45;">Copy your links below and save them in your WhatsApp starred messages or notes.</p>
-      </div>
-    </div>
-
-    <p class="aff-link-label">Your Academic Comeback Sales Link (Takes students to ₦5,000 package)</p>
-    <div class="aff-link-row">
-      <span class="aff-link-value" id="aff-link-text"></span>
-      <button class="copy-btn" id="aff-copy-btn" title="Copy sales link"><i class="bi bi-copy"></i></button>
-    </div>
-
-    <p class="aff-link-label" style="color:#4ade80;">Your Ambassador Recruiter Link (Invite other ambassadors & earn ₦5,000 bonus)</p>
-    <div class="aff-link-row" style="border-color:rgba(74,222,128,.3); background:rgba(34,197,94,.05);">
-      <span class="aff-link-value" id="aff-recruiter-text" style="color:#4ade80;"></span>
-      <button class="copy-btn" id="aff-recruiter-copy-btn" title="Copy recruiter link" style="color:#4ade80;"><i class="bi bi-copy"></i></button>
-    </div>
-
-    <p class="aff-link-label">Your Private Ambassador Portal & Promo Kit</p>
-    <div class="aff-link-row">
-      <span class="aff-link-value" id="aff-dashboard-text"></span>
-      <button class="copy-btn" id="aff-dashboard-copy-btn" title="Copy portal link"><i class="bi bi-copy"></i></button>
-    </div>
-    <div style="margin: 20px 0 16px;">
-      <a id="aff-portal-direct-btn" href="/affiliate/dashboard" class="modal__submit" style="display:block; text-align:center; text-decoration:none; padding:13px; font-weight:700;">
-        Open My Ambassador Portal Now →
+<!-- Unified Global Site Header -->
+<header class="global-site-header">
+  <div class="global-header-inner">
+    <a href="/" class="global-brand">
+      <img src="/assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="24" height="28">
+      <span>SCALE GROUP</span>
+    </a>
+    <nav class="global-nav">
+      <a href="/academic-comeback-package" class="global-nav__flagship">
+        <span class="global-nav__flagship-dot"></span>
+        <i class="bi bi-mortarboard-fill"></i> Academic Comeback
+      </a>
+      <a href="/#masterclasses" class="global-nav__link">Masterclasses</a>
+      <a href="/blog/" class="global-nav__link">Campus Guides</a>
+      <a href="/library" class="global-nav__link">My Library</a>
+      <a href="/affiliate/login" class="global-nav__link">Ambassador Login</a>
+    </nav>
+    <div class="global-header-mobile-actions">
+      <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
+        <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+      </a>
+      <a href="/" class="global-nav__link" style="font-size:0.85rem; font-weight:600; text-decoration:none; color:var(--text-primary);">
+        <i class="bi bi-arrow-left"></i> Home
       </a>
     </div>
-    <p class="aff-dashboard-note">Open your portal to copy done-for-you WhatsApp status captions, download flyer designs, and watch your live sales & bonus payouts.</p>
-    <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,.08); text-align:center; font-size:0.85rem; color:var(--gray-l);">
-      Already have your credentials? <a href="/affiliate/login" style="color:var(--gold-l); font-weight:700;">Log In Anytime</a>
+  </div>
+</header>
+
+<div class="aff-page-wrapper">
+  <div class="aff-card">
+    <!-- Form state -->
+    <div id="aff-form-state">
+      <div style="text-align: center;"><span class="aff-badge"><i class="bi bi-award-fill"></i> AMBASSADOR NETWORK</span></div>
+      <h1 class="aff-title">Become an Official Ambassador</h1>
+      <p class="aff-sub">Earn <strong>60% (₦3,000)</strong> on every ₦5,000 sale. Direct automated bank payouts straight to your Nigerian bank account.</p>
+
+      <!-- Invite Banner -->
+      <div id="aff-invite-banner" style="display:none; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; margin-bottom:18px; font-size:0.85rem; color:#15803d; text-align:center;">
+        <i class="bi bi-person-check-fill"></i> You were invited by ambassador <strong id="invited-by-code-text"></strong>
+      </div>
+
+      <form id="aff-register-form" autocomplete="off">
+        <div class="form-group">
+          <label for="aff-name">Full Name</label>
+          <input type="text" id="aff-name" placeholder="e.g. Chidi Okafor" required>
+        </div>
+        <div class="form-group">
+          <label for="aff-email">Email Address</label>
+          <input type="email" id="aff-email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group" style="position:relative;">
+          <label for="aff-password">Password (min. 8 characters)</label>
+          <div style="position:relative; display:flex; align-items:center;">
+            <input type="password" id="aff-password" placeholder="Create a password" required minlength="8" autocomplete="new-password" style="width:100%; padding-right:42px;">
+            <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('aff-password', this)" style="position:absolute; right:12px; background:none; border:none; color:#71717a; cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Password">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group" style="position:relative;">
+          <label for="aff-confirm-password">Confirm Password</label>
+          <div style="position:relative; display:flex; align-items:center;">
+            <input type="password" id="aff-confirm-password" placeholder="Re-enter your password" required minlength="8" autocomplete="new-password" style="width:100%; padding-right:42px;">
+            <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility('aff-confirm-password', this)" style="position:absolute; right:12px; background:none; border:none; color:#71717a; cursor:pointer; font-size:1.1rem; padding:4px;" title="Show/Hide Password">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="section-divider">Payout Bank Details (Instant Direct Deposits)</div>
+
+        <div class="form-group" style="position:relative;">
+          <label for="aff-bank-name">Bank Name</label>
+          <input type="text" id="aff-bank-name" placeholder="Start typing your bank name..." autocomplete="off" required>
+          <input type="hidden" id="aff-bank-code">
+          <div id="aff-bank-suggestions" style="display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; z-index:20; max-height:220px; overflow-y:auto;"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="aff-acct-num">10-Digit Account Number</label>
+          <input type="text" id="aff-acct-num" placeholder="e.g. 0123456789" maxlength="10" pattern="[0-9]{10}" required>
+          <div id="aff-acct-status" style="display:none; font-size:0.83rem; margin-top:6px; padding:8px 12px; border-radius:8px; font-weight:600;"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="aff-acct-name">Account Name (Full name on bank account)</label>
+          <input type="text" id="aff-acct-name" placeholder="Full name on your bank account" required>
+        </div>
+
+        <button type="submit" class="aff-submit-btn" id="aff-submit-btn">Get My Ambassador Link &rarr;</button>
+        <p class="aff-submit-err" id="aff-submit-err"></p>
+        <div style="margin-top:20px; padding-top:16px; border-top:1px solid #e5e5e5; text-align:center; font-size:0.85rem; color:#71717a;">
+          Already registered? <a href="/affiliate/login" style="color:#0a0a0a; font-weight:700; text-decoration:underline;">Log In Here</a> or <a href="/affiliate/activate" style="color:#0a0a0a; font-weight:700; text-decoration:underline;">Activate Account</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success state -->
+    <div id="aff-success">
+      <div class="aff-success-icon"><i class="bi bi-check-lg"></i></div>
+      <h1 class="aff-title">You're an Official Ambassador!</h1>
+      <p class="aff-sub">Your link is live right now. Share it with students to start earning ₦3,000 on every copy.</p>
+
+      <!-- Save Links Warning Banner -->
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin: 20px 0; text-align: left; display: flex; gap: 10px; align-items: flex-start;">
+        <div style="color: #b45309; font-size: 1.15rem; margin-top: -1px;"><i class="bi bi-exclamation-triangle-fill"></i></div>
+        <div>
+          <strong style="color: #0a0a0a; font-size: 0.86rem; display: block; margin-bottom: 3px;">Save Your Links Safely</strong>
+          <p style="color: #595959; font-size: 0.8rem; margin: 0; line-height: 1.45;">Copy your links below and save them in your WhatsApp starred messages or notes for easy access.</p>
+        </div>
+      </div>
+
+      <p class="aff-link-label">Your Academic Comeback Sales Link (Takes students to ₦5,000 package)</p>
+      <div class="aff-link-row">
+        <span class="aff-link-value" id="aff-link-text"></span>
+        <button class="copy-btn" id="aff-copy-btn" title="Copy sales link"><i class="bi bi-copy"></i> Copy</button>
+      </div>
+
+      <p class="aff-link-label" style="color:#15803d;">Your Ambassador Recruiter Link (Invite other ambassadors &amp; earn ₦5,000 bonus)</p>
+      <div class="aff-link-row" style="border-color:#bbf7d0; background:#f0fdf4;">
+        <span class="aff-link-value" id="aff-recruiter-text" style="color:#15803d;"></span>
+        <button class="copy-btn" id="aff-recruiter-copy-btn" title="Copy recruiter link" style="background:#15803d; border-color:#15803d;"><i class="bi bi-copy"></i> Copy</button>
+      </div>
+
+      <p class="aff-link-label">Your Private Ambassador Portal &amp; Promo Kit</p>
+      <div class="aff-link-row">
+        <span class="aff-link-value" id="aff-dashboard-text"></span>
+        <button class="copy-btn" id="aff-dashboard-copy-btn" title="Copy portal link"><i class="bi bi-copy"></i> Copy</button>
+      </div>
+      <div style="margin: 20px 0 16px;">
+        <a id="aff-portal-direct-btn" href="/affiliate/dashboard" class="aff-submit-btn" style="text-decoration:none;">
+          Open My Ambassador Portal Now &rarr;
+        </a>
+      </div>
+      <p style="font-size:0.8rem; color:#71717a; line-height:1.5; margin:16px 0 0;">Open your portal to copy done-for-you WhatsApp status captions, download flyer designs, and watch your live sales &amp; bonus payouts.</p>
+      <div style="margin-top:20px; padding-top:16px; border-top:1px solid #e5e5e5; text-align:center; font-size:0.85rem; color:#71717a;">
+        Already have your credentials? <a href="/affiliate/login" style="color:#0a0a0a; font-weight:700; text-decoration:underline;">Log In Anytime</a>
+      </div>
     </div>
   </div>
 </div>
 
+<footer style="background:#ffffff; border-top:1px solid #e5e5e5; padding:32px 20px; text-align:center; font-size:0.82rem; color:#71717a; margin-top:auto; width:100%; box-sizing:border-box;">
+  <div style="max-width:1200px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:12px;">
+    <div style="display:flex; align-items:center; gap:8px; font-weight:700; color:#0a0a0a; text-transform:uppercase; letter-spacing:-0.01em;">
+      <img src="/assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="18" height="21">
+      <span>Scale Group</span>
+    </div>
+    <p style="margin:0; color:#71717a;">&copy; 2026 Scale Group &amp; Academic Comeback. All rights reserved.</p>
+    <div style="display:flex; gap:16px; flex-wrap:wrap; justify-content:center;">
+      <a href="/" style="color:#595959; text-decoration:none;">Home</a>
+      <a href="/academic-comeback-package" style="color:#595959; text-decoration:none;">Flagship Package</a>
+      <a href="/library" style="color:#595959; text-decoration:none;">Library</a>
+      <a href="/blog/" style="color:#595959; text-decoration:none;">Guides</a>
+      <a href="/affiliate/login" style="color:#595959; text-decoration:none;">Ambassador Login</a>
+    </div>
+  </div>
+</footer>
+
 <script>
-// FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...}
-// objects, not a string — stringifying it directly renders the literal
-// text "[object Object]" to the user.
+// FastAPI/Pydantic 422 responses put `detail` as an array of {msg, ...} objects
 function formatApiError(detail, fallback) {
   fallback = fallback || 'Something went wrong. Please try again.';
   if (!detail) return fallback;
@@ -213,6 +504,7 @@ function formatApiError(detail, fallback) {
   }
   return fallback;
 }
+
 (function() {
   const API_BASE = '/api';
   const form = document.getElementById('aff-register-form');
@@ -227,66 +519,50 @@ function formatApiError(detail, fallback) {
 
   let isAccountVerified = false;
 
-  // Static fallback (no bank codes — same as before the live Flutterwave
-  // list loads) so the field is still usable if the fetch below is slow
-  // or fails outright.
   let allBanks = [
-    { name: 'Access Bank', code: '' },
-    { name: 'Access Bank (Diamond)', code: '' },
-    { name: 'ALAT by Wema', code: '' },
-    { name: 'Amju Unique MFB', code: '' },
-    { name: 'Carbon', code: '' },
-    { name: 'Citibank Nigeria', code: '' },
-    { name: 'Ecobank Nigeria', code: '' },
-    { name: 'FairMoney MFB', code: '' },
-    { name: 'Fidelity Bank', code: '' },
-    { name: 'First Bank of Nigeria', code: '' },
-    { name: 'First City Monument Bank (FCMB)', code: '' },
-    { name: 'Globus Bank', code: '' },
-    { name: 'Guaranty Trust Bank (GTBank)', code: '' },
-    { name: 'Hasal Microfinance Bank', code: '' },
-    { name: 'Heritage Bank', code: '' },
-    { name: 'Hope PSBank', code: '' },
-    { name: 'Jaiz Bank', code: '' },
-    { name: 'Keystone Bank', code: '' },
-    { name: 'Kuda Bank', code: '' },
-    { name: 'Lotus Bank', code: '' },
-    { name: 'Moniepoint Microfinance Bank', code: '' },
-    { name: 'Nova Merchant Bank', code: '' },
-    { name: 'OPay', code: '' },
-    { name: 'Palmpay', code: '' },
-    { name: 'Parallex Bank', code: '' },
-    { name: 'Parkway Readypash', code: '' },
-    { name: 'Paycom (OPay)', code: '' },
-    { name: 'Polaris Bank', code: '' },
-    { name: 'PremiumTrust Bank', code: '' },
-    { name: 'Providus Bank', code: '' },
-    { name: 'Rubies Bank', code: '' },
-    { name: 'SafeHaven MFB', code: '' },
-    { name: 'Sparkle Bank', code: '' },
-    { name: 'Stanbic IBTC Bank', code: '' },
-    { name: 'Standard Chartered Bank', code: '' },
-    { name: 'Sterling Bank', code: '' },
-    { name: 'SunTrust Bank', code: '' },
-    { name: 'TAJBank', code: '' },
-    { name: 'Titan Trust Bank', code: '' },
-    { name: 'Union Bank of Nigeria', code: '' },
-    { name: 'United Bank for Africa (UBA)', code: '' },
-    { name: 'Unity Bank', code: '' },
-    { name: 'VFD Microfinance Bank (VBank)', code: '' },
-    { name: 'Wema Bank', code: '' },
-    { name: 'Zenith Bank', code: '' },
+    { name: 'Access Bank', code: '044' },
+    { name: 'Access Bank (Diamond)', code: '063' },
+    { name: 'ALAT by Wema', code: '035A' },
+    { name: 'Carbon', code: '565' },
+    { name: 'Citibank Nigeria', code: '023' },
+    { name: 'Ecobank Nigeria', code: '050' },
+    { name: 'FairMoney MFB', code: '51318' },
+    { name: 'Fidelity Bank', code: '070' },
+    { name: 'First Bank of Nigeria', code: '011' },
+    { name: 'First City Monument Bank (FCMB)', code: '214' },
+    { name: 'Globus Bank', code: '00103' },
+    { name: 'Guaranty Trust Bank (GTBank)', code: '058' },
+    { name: 'Jaiz Bank', code: '301' },
+    { name: 'Keystone Bank', code: '082' },
+    { name: 'Kuda Bank', code: '50211' },
+    { name: 'Lotus Bank', code: '303' },
+    { name: 'Moniepoint Microfinance Bank', code: '50515' },
+    { name: 'Nova Merchant Bank', code: '561' },
+    { name: 'OPay', code: '999992' },
+    { name: 'Palmpay', code: '999991' },
+    { name: 'Parallex Bank', code: '526' },
+    { name: 'Paycom (OPay)', code: '999992' },
+    { name: 'Polaris Bank', code: '076' },
+    { name: 'PremiumTrust Bank', code: '105' },
+    { name: 'Providus Bank', code: '101' },
+    { name: 'Rubies Bank', code: '125' },
+    { name: 'SafeHaven MFB', code: '51113' },
+    { name: 'Stanbic IBTC Bank', code: '221' },
+    { name: 'Standard Chartered Bank', code: '068' },
+    { name: 'Sterling Bank', code: '232' },
+    { name: 'TAJBank', code: '302' },
+    { name: 'Titan Trust Bank', code: '102' },
+    { name: 'Union Bank of Nigeria', code: '032' },
+    { name: 'United Bank for Africa (UBA)', code: '033' },
+    { name: 'Unity Bank', code: '215' },
+    { name: 'VFD Microfinance Bank (VBank)', code: '566' },
+    { name: 'Wema Bank', code: '035' },
+    { name: 'Zenith Bank', code: '057' },
     { name: 'Other Commercial / Microfinance Bank', code: '' },
   ];
   let filteredBanks = [];
   let activeIndex = -1;
 
-  // Plain substring matching misses common real-world searches: the live
-  // Flutterwave names are spaced/full ("Citi Bank", "Safe Haven MFB",
-  // "Guaranty Trust Bank") while people type them squashed or abbreviated
-  // ("citibank", "safehaven", "gtb"). Normalize away spacing/punctuation
-  // for the match, and alias the handful of genuine abbreviations that
-  // aren't just spacing differences.
   const BANK_ALIASES = {
     gtb: 'guarantytrust',
     gtbank: 'guarantytrust',
@@ -307,8 +583,6 @@ function formatApiError(detail, fallback) {
     return !!(aliasTarget && normName.includes(aliasTarget));
   }
 
-  // Bank list sourced from our own backend (Paystack)
-  // so the bank code values match what /resolve-bank expects.
   async function loadFullNigerianBanks() {
     try {
       const res = await fetch(`${API_BASE}/affiliates/banks`);
@@ -319,12 +593,11 @@ function formatApiError(detail, fallback) {
           .concat([{ name: 'Other Commercial / Microfinance Bank', code: '' }]);
       }
     } catch (e) {
-      // Seamlessly keep static fallback list
+      // Keep static fallback list
     }
   }
   loadFullNigerianBanks();
 
-  // ── Type-ahead bank search — replaces the old 700+ option <select> ──
   function renderSuggestions() {
     if (!filteredBanks.length) {
       bankSuggestions.style.display = 'none';
@@ -332,7 +605,7 @@ function formatApiError(detail, fallback) {
       return;
     }
     bankSuggestions.innerHTML = filteredBanks.map((b, i) => `
-      <div class="aff-bank-option" data-idx="${i}" style="padding:11px 16px; cursor:pointer; color:#fff; font-size:.9rem; ${i === activeIndex ? 'background:rgba(201,151,58,.18);' : ''}">${b.name}</div>
+      <div class="aff-bank-option" data-idx="${i}" style="${i === activeIndex ? 'background:#f4f4f5;' : ''}">${b.name}</div>
     `).join('');
     bankSuggestions.style.display = 'block';
   }
@@ -402,7 +675,6 @@ function formatApiError(detail, fallback) {
     }
   });
 
-  // NUBAN Account Resolution Failsafe
   async function checkAccountDetails() {
     const rawVal = acctNumInput.value.replace(/\D/g, '');
     acctNumInput.value = rawVal;
@@ -416,18 +688,18 @@ function formatApiError(detail, fallback) {
     const bankCode = bankCodeInput.value;
     if (!bankCode) {
       statusDiv.style.display = 'block';
-      statusDiv.style.background = 'rgba(239, 68, 68, 0.15)';
-      statusDiv.style.color = '#f87171';
-      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+      statusDiv.style.background = '#fef2f2';
+      statusDiv.style.color = '#dc2626';
+      statusDiv.style.border = '1px solid #fecaca';
       statusDiv.innerHTML = '⚠️ Please select your bank above first';
       isAccountVerified = false;
       return;
     }
 
     statusDiv.style.display = 'block';
-    statusDiv.style.background = 'rgba(201, 151, 58, 0.15)';
-    statusDiv.style.color = 'var(--gold-l)';
-    statusDiv.style.border = '1px solid rgba(201, 151, 58, 0.3)';
+    statusDiv.style.background = '#fffbeb';
+    statusDiv.style.color = '#b45309';
+    statusDiv.style.border = '1px solid #fde68a';
     statusDiv.innerHTML = '⏱ Verifying account with NIBSS...';
 
     try {
@@ -437,16 +709,16 @@ function formatApiError(detail, fallback) {
         throw new Error(formatApiError(data.detail, 'Invalid account number for selected bank'));
       }
       
-      statusDiv.style.background = 'rgba(34, 197, 94, 0.15)';
-      statusDiv.style.color = '#4ade80';
-      statusDiv.style.border = '1px solid rgba(34, 197, 94, 0.3)';
+      statusDiv.style.background = '#f0fdf4';
+      statusDiv.style.color = '#15803d';
+      statusDiv.style.border = '1px solid #bbf7d0';
       statusDiv.innerHTML = `✅ Account Verified: <strong>${data.account_name}</strong>`;
       acctNameInput.value = data.account_name;
       isAccountVerified = true;
     } catch (err) {
-      statusDiv.style.background = 'rgba(239, 68, 68, 0.15)';
-      statusDiv.style.color = '#f87171';
-      statusDiv.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+      statusDiv.style.background = '#fef2f2';
+      statusDiv.style.color = '#dc2626';
+      statusDiv.style.border = '1px solid #fecaca';
       statusDiv.innerHTML = `❌ ${err.message || 'Invalid account number for selected bank'}`;
       isAccountVerified = false;
     }
@@ -454,25 +726,20 @@ function formatApiError(detail, fallback) {
 
   acctNumInput.addEventListener('input', checkAccountDetails);
 
-  // Client-side Meta Pixel fire — same eventID (the affiliate code) as
-  // the server-side Conversions API fire in affiliate_public.py, so
-  // Meta deduplicates the two into one true conversion. This is the
-  // fragile half (ad blockers, Safari ITP, in-app browsers can all
-  // silently drop it) — the server-side fire is the one that survives.
   function fireCompleteRegistration(code) {
     if (!code) return;
     const guardKey = 'ac_aff_reg_fired_' + code;
     try {
       if (localStorage.getItem(guardKey)) return;
       localStorage.setItem(guardKey, '1');
-    } catch (err) { /* localStorage unavailable — fire anyway, best effort */ }
+    } catch (err) {}
 
     if (typeof fbq === 'function') {
       fbq('track', 'CompleteRegistration', {}, { eventID: code });
     }
   }
 
-  // ── Parse Invite Code from URL ──
+  // Parse invite code from URL
   const urlParams = new URLSearchParams(window.location.search);
   const inviteCode = (urlParams.get('invite') || urlParams.get('ref') || '').trim();
   if (inviteCode) {
@@ -541,7 +808,6 @@ function formatApiError(detail, fallback) {
       const data = await res.json();
       if (!res.ok) throw new Error(formatApiError(data.detail, 'Registration failed'));
 
-      // If session tokens were returned, save immediately for frictionless access
       if (data.access_token) {
         localStorage.setItem('affiliate_token', data.access_token);
       }
@@ -593,7 +859,7 @@ function formatApiError(detail, fallback) {
       errEl.textContent = err.message;
       errEl.style.display = 'block';
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Get My Referral Link →';
+      submitBtn.textContent = 'Get My Ambassador Link →';
     }
   });
 
@@ -610,8 +876,6 @@ function formatApiError(detail, fallback) {
     }
   };
 
-  // ── Copy-to-clipboard (same pattern used in js/checkout.js and the
-  // admin dashboard's Affiliates tab) ──
   window.copyToClipboard = function(text, buttonEl) {
     const icon = buttonEl.querySelector('i');
 
