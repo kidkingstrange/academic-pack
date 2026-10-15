@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,49 +306,51 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="furnished-lodge-vs-empty-room-buying-mattress-rug">Furnished Lodge vs Empty Room: Buying Mattress &amp; Rug</h1>
+        <h1 id="furnished-lodge-vs-empty-room-buying-mattress-rug">Furnished Lodge vs Empty Room: Buying Mattress & Rug</h1>
 <p>When inspecting off-campus student accommodation, caretakers frequently pitch <strong>furnished student apartments</strong>:</p>
 <p><em>"Just bring your clothes and laptop! Everything is already inside: double foam bed, executive reading desk, wardrobe, and window curtains."</em></p>
 <p>For freshers and busy students, moving into a ready-made room sounds effortlessly convenient. You avoid the chaos of visiting timber markets, negotiating mattress transport with motorcycle riders, and hammering nails into bare walls.</p>
 <p>However, the economics and hygiene of pre-furnished student lodges rarely favor the tenant over a multi-year degree program. Here is the realistic cost, hygiene, and asset comparison.</p>
-<hr />
-<h2 id="1-the-sanitation-reality-sleeping-on-another-students-history">1. The Sanitation Reality: Sleeping on Another Student's History</h2>
+<hr>
+<h2 id="1-the-sanitation-reality-sleeping-on-another-student-s-history">1. The Sanitation Reality: Sleeping on Another Student's History</h2>
 <p>The most overlooked aspect of pre-furnished student lodges is <strong>microbiological hygiene</strong>:</p>
 <ul>
-<li><strong>The Bedbug Vector:</strong> In university towns, bedbugs are an endemic residential plague. When an outgoing tenant vacates a furnished room after battling bedbugs for six months, the bugs do not leave with them. They nest deep inside the internal springs and foam core of the provided mattress.</li>
-<li><strong>Skin Allergies and Dander:</strong> Shared mattresses accumulate hundreds of hours of bodily sweat, fungal spores, and skin dander from previous strangers.</li>
+<li>**The Bedbug Vector:** In university towns, bedbugs are an endemic residential plague. When an outgoing tenant vacates a furnished room after battling bedbugs for six months, the bugs do not leave with them. They nest deep inside the internal springs and foam core of the provided mattress.</li>
+<li>**Skin Allergies and Dander:** Shared mattresses accumulate hundreds of hours of bodily sweat, fungal spores, and skin dander from previous strangers.</li>
 </ul>
 <p>Investing ₦65,000 to ₦85,000 in a brand-new, factory-sealed high-density mattress ensures you sleep in a sterile, healthy sanctuary throughout your academic journey.</p>
 <p>Review room inspection guidelines in <a href="/blog/hostel-and-accommodation/inspecting-off-campus-student-lodge-checklist/">8 essential things to inspect in off-campus student lodges</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-4-year-financial-calculus-sunk-rent-vs-tangible-equity">2. The 4-Year Financial Calculus: Sunk Rent vs Tangible Equity</h2>
 <p>Let us examine the financial ledger across a standard 4-year Nigerian university degree:</p>
 <h3 id="option-a-the-furnished-lodge-route">Option A: The Furnished Lodge Route</h3>
 <ul>
-<li><strong>Annual Rental Premium:</strong> ₦180,000 extra per session.</li>
-<li><strong>4-Year Cumulative Extra Rent Paid:</strong> <strong>₦720,000</strong>.</li>
-<li><strong>Value of Furniture Owned on Graduation Day:</strong> <strong>₦0</strong> (The landlord retains every piece).</li>
+<li>**Annual Rental Premium:** ₦180,000 extra per session.</li>
+<li>**4-Year Cumulative Extra Rent Paid:** **₦720,000**.</li>
+<li>**Value of Furniture Owned on Graduation Day:** **₦0** (The landlord retains every piece).</li>
 </ul>
 <h3 id="option-b-the-unfurnished-room-personal-furniture-setup">Option B: The Unfurnished Room + Personal Furniture Setup</h3>
 <ul>
-<li><strong>Brand-New 6-Inch High-Density Foam:</strong> ₦75,000</li>
-<li><strong>Locally Welded Steel/Wood Reading Desk &amp; Chair:</strong> ₦35,000</li>
-<li><strong>Quality Floor Rug &amp; Blackout Curtains:</strong> ₦25,000</li>
-<li><strong>Total One-Time Upfront Capital Outlay:</strong> <strong>₦135,000</strong>.</li>
-<li><strong>4-Year Extra Rent Paid:</strong> <strong>₦0</strong>.</li>
-<li><strong>Resale Salvage Value on Final-Year Clearance:</strong> You can easily resell your mattress and desk to incoming freshers for <strong>₦60,000</strong>.</li>
-<li><strong>Effective Net 4-Year Cost:</strong> <strong>₦75,000</strong> (versus ₦720,000 for furnished rent).</li>
+<li>**Brand-New 6-Inch High-Density Foam:** ₦75,000</li>
+<li>**Locally Welded Steel/Wood Reading Desk & Chair:** ₦35,000</li>
+<li>**Quality Floor Rug & Blackout Curtains:** ₦25,000</li>
+<li>**Total One-Time Upfront Capital Outlay:** **₦135,000**.</li>
+<li>**4-Year Extra Rent Paid:** **₦0**.</li>
+<li>**Resale Salvage Value on Final-Year Clearance:** You can easily resell your mattress and desk to incoming freshers for **₦60,000**.</li>
+<li>**Effective Net 4-Year Cost:** **₦75,000** (versus ₦720,000 for furnished rent).</li>
 </ul>
 <p>Purchasing your own essentials saves you nearly <strong>₦650,000</strong> over your undergraduate degree.</p>
 <p>For student hardware protection against transit shocks, consult our guide on <a href="/blog/finances/">fixing student laptop and phone hardware affordably</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-tenancy-damage-deposit-trap">3. The Tenancy Damage Deposit Trap</h2>
-<p>Landlords love furnished lodges because every scratch becomes a pretext to forfeit your Caution Deposit:<br />
-* If the desk veneer peels from humidity, they deduct ₦25,000.<br />
-* If a curtain hook snaps, they bill you for complete replacement.<br />
-* When you own your furniture, you treat it with respect, rearrange it to suit your revision ergonomics, and leave the apartment cleanly without deposit deductions.</p>
+<p>Landlords love furnished lodges because every scratch becomes a pretext to forfeit your Caution Deposit:</p>
+<ul>
+<li>If the desk veneer peels from humidity, they deduct ₦25,000.</li>
+<li>If a curtain hook snaps, they bill you for complete replacement.</li>
+<li>When you own your furniture, you treat it with respect, rearrange it to suit your revision ergonomics, and leave the apartment cleanly without deposit deductions.</li>
+</ul>
 <p>Compare cohabitation and shared furnishing arrangements in <a href="/blog/hostel-and-accommodation/student-couples-renting-off-campus/">student couples living off-campus: the hidden traps</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-typical-price-premium-for-a-furnished-student-lodge-in-nigeria">What is the typical price premium for a furnished student lodge in Nigeria?</h3>
 <p>A furnished student room typically commands an extra ₦150,000 to ₦300,000 annually over an empty room in the same neighborhood, providing a bed, foam mattress, study table, plastic chair, and mini-wardrobe.</p>
@@ -522,8 +524,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -707,8 +709,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -722,7 +724,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

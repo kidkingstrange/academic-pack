@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,7 +306,7 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="religious-guilt-around-bad-grades-faith-hard-work">Religious Guilt Around Bad Grades: Faith &amp; Hard Work</h1>
+        <h1 id="religious-guilt-around-bad-grades-faith-hard-work">Religious Guilt Around Bad Grades: Faith & Hard Work</h1>
 <p>You spent the entire semester serving faithfully on campus.</p>
 <p>You were an active member of your campus fellowship ushering team or Muslim student society executive council. You attended weekly prayer meetings, paid your tithes, fasted on Wednesdays, and arrived at Sunday services an hour early.</p>
 <p>Yet, when the semester results are posted on the departmental board, you have a <strong>carryover in General Chemistry and a 2.30 GPA</strong>.</p>
@@ -316,39 +316,41 @@
 <p>In deeply religious societies like Nigeria, academic setbacks often trigger <strong>Acute Religious Guilt and Spiritual Identity Crisis</strong>.</p>
 <p>Students are taught that academic excellence is purely a spiritual reward. When results crash, they conclude that their faith was defective.</p>
 <p>It is time to separate spiritual truth from toxic campus dogma, reconcile faith with hard work, and build an unbreakable academic foundation.</p>
-<hr />
+<hr>
 <h2 id="1-the-fallacy-of-the-spiritual-shortcut">1. The Fallacy of the "Spiritual Shortcut"</h2>
 <p>In many campus religious environments, well-meaning spiritual leaders preach an ungrounded doctrine of <strong>academic mysticism</strong>:</p>
-<p><em>"Just pray for 3 hours, tap into divine favor, and the Holy Spirit will reveal the exam answers in the hall!"</em><br />
-<em>"Declare that you are the head and not the tail!"</em></p>
+<p><em>"Just pray for 3 hours, tap into divine favor, and the Holy Spirit will reveal the exam answers in the hall!"</em></p>
+<p><em>"Declare that you are the head and not the tail!"</em></p>
 <p>While faith, prayer, and moral purity are foundational to human flourishing, <strong>God does not violate the universal biological laws of neuro-cognition</strong>:</p>
 <ul>
-<li>The human brain requires <strong>active retrieval practice and spaced repetition</strong> to encode neuronal synaptic pathways.</li>
+<li>The human brain requires **active retrieval practice and spaced repetition** to encode neuronal synaptic pathways.</li>
 <li>If you have not studied the derivation of Schrödinger's wave equation, no amount of emotional tongue-praying will magically imprint quantum mechanics onto your cerebral cortex.</li>
-<li>The Holy Spirit brings to <em>remembrance</em> what you have encoded—not what you completely neglected to read.</li>
+<li>The Holy Spirit brings to *remembrance* what you have encoded—not what you completely neglected to read.</li>
 </ul>
 <p>When an atheist student spends 40 hours actively testing themselves on past exam questions, their brain biologically encodes the material. They score an 'A' because they respected the natural laws of cognitive learning.</p>
 <p>Review the psychological roots of campus imposter feelings in <a href="/blog/mental-health/imposter-syndrome-university-nigeria/">imposter syndrome: why university makes you feel dumb</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-dangerous-exam-week-fasting-trap">2. The Dangerous Exam-Week Fasting Trap</h2>
 <p>One of the most biologically disastrous practices on Nigerian campuses is <strong>dry fasting during examination week</strong>:</p>
 <p>Undergraduates fast for three days straight, praying for <em>"exam favor"</em> while drinking zero water and eating zero glucose.</p>
-<p>Here is what happens inside your skull:<br />
-1. The human brain consumes roughly <strong>20% of your body's total resting glucose energy</strong>.<br />
-2. When you fast while studying analytical calculations, cerebral glycogen reserves deplete within hours.<br />
-3. Without glucose, neurotransmitter synthesis slows down, leading to rapid onset of <strong>brain fog, lethargy, and exam hall memory blackouts</strong>.</p>
+<p>Here is what happens inside your skull:</p>
+<ol>
+<li>The human brain consumes roughly **20% of your body's total resting glucose energy**.</li>
+<li>When you fast while studying analytical calculations, cerebral glycogen reserves deplete within hours.</li>
+<li>Without glucose, neurotransmitter synthesis slows down, leading to rapid onset of **brain fog, lethargy, and exam hall memory blackouts**.</li>
+</ol>
 <p>Fasting is a sacred spiritual discipline for spiritual consecration. <strong>It is not an exam revision tool.</strong> Feed your brain high-protein, clean nutrition during exam weeks, and pray with a sharp, well-fueled mind.</p>
 <p>Learn how to handle parental expectations and disappointment in <a href="/blog/mental-health/parental-expectations-academic-pressure/">disappointing parents over grades: breaking the guilt</a>.</p>
-<hr />
+<hr>
 <h2 id="3-reconciling-faith-with-diligence-the-true-theology-of-work">3. Reconciling Faith with Diligence: The True Theology of Work</h2>
 <p>True spiritual maturity recognizes that <strong>faith and rigorous operational systems are partners, not competitors</strong>:</p>
 <ul>
-<li><strong>Pray with Radical Humility:</strong> Pray for emotional peace, physical health, clarity of mind, and moral protection from corrupt campus syndicates.</li>
-<li><strong>Study with Military Discipline:</strong> Build structured timetables, master active recall, drill past questions for 5 consecutive years, and sit on the front benches during lectures.</li>
+<li>**Pray with Radical Humility:** Pray for emotional peace, physical health, clarity of mind, and moral protection from corrupt campus syndicates.</li>
+<li>**Study with Military Discipline:** Build structured timetables, master active recall, drill past questions for 5 consecutive years, and sit on the front benches during lectures.</li>
 </ul>
 <p>When you unite genuine spiritual peace with elite academic work systems, you eliminate religious guilt and graduate with undeniable distinction.</p>
 <p>For guidelines on living in disciplined spiritual housing, read <a href="/blog/hostel-and-accommodation/religious-student-fellowship-hostels/">Muslim and Christian fellowship hostels: navigating moral codes</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-devout-christian-and-muslim-students-in-nigeria-experience-intense-religious-guilt-over-bad-grades">Why do devout Christian and Muslim students in Nigeria experience intense religious guilt over bad grades?</h3>
 <p>Because campus spiritual cultures often misapply faith doctrines, teaching that academic success is strictly a product of spiritual righteousness and prayer, leading students to conclude that failing a course reflects personal sin or lack of faith.</p>
@@ -522,8 +524,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -707,8 +709,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -722,7 +724,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

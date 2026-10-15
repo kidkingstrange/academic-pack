@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Campus Work-Study vs Remote Freelance Gigs: Best Option",
       "description": "An honest, data-backed comparison between university campus work-study schemes and online remote freelancing for Nigerian students.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,76 +265,37 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>Every semester, thousands of Nigerian undergraduates face the urgent need to earn extra money to fund hostel rent, food inflation, and academic textbooks.</p>
-<p>When looking for options, two distinct paths emerge:<br />
-1. <strong>The Campus Work-Study Scheme:</strong> Official employment offered by the university (working in the central library, administrative records office, ICT laboratories, or campus botanical gardens).<br />
-2. <strong>Online Remote Freelancing:</strong> Offering digital skills (copywriting, UI/UX design, virtual assistance, video editing, or coding) to foreign and local businesses on platforms like Upwork, Fiverr, LinkedIn, or direct outreach.</p>
-<p>Both pathways have passionate defenders. </p>
+<p>When looking for options, two distinct paths emerge:</p>
+<ol>
+<li>**The Campus Work-Study Scheme:** Official employment offered by the university (working in the central library, administrative records office, ICT laboratories, or campus botanical gardens).</li>
+<li>**Online Remote Freelancing:** Offering digital skills (copywriting, UI/UX design, virtual assistance, video editing, or coding) to foreign and local businesses on platforms like Upwork, Fiverr, LinkedIn, or direct outreach.</li>
+</ol>
+<p>Both pathways have passionate defenders.</p>
 <p>Traditional university administrators urge students to join work-study programs for "safety and structured discipline," while campus tech influencers claim anyone not earning in foreign US dollars is wasting their time.</p>
 <p>Which path is truly best for your specific academic schedule, financial goals, and career trajectory?</p>
 <p>Here is the objective, data-backed comparison between campus work-study and remote digital freelancing.</p>
-<hr />
+<hr>
 <h2 id="comprehensive-comparison-matrix">Comprehensive Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Evaluation Metric</th>
-<th style="text-align: left;">Campus Work-Study Scheme</th>
-<th style="text-align: left;">Remote Digital Freelancing</th>
-<th style="text-align: left;">Advantage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Typical Monthly Earning</strong></td>
-<td style="text-align: left;">₦15,000 - ₦35,000</td>
-<td style="text-align: left;">₦80,000 - ₦400,000+ ($100 - $400)</td>
-<td style="text-align: left;"><strong>Freelancing (5x - 10x higher yield)</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Time Flexibility</strong></td>
-<td style="text-align: left;">Rigid physical daytime hours (e.g., 9am - 1pm)</td>
-<td style="text-align: left;">Fully asynchronous; work anytime (e.g., 9pm - 12am)</td>
-<td style="text-align: left;"><strong>Freelancing</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Hardware &amp; Data Dependency</strong></td>
-<td style="text-align: left;">Zero hardware or data cost (uses campus facilities)</td>
-<td style="text-align: left;">Requires laptop, power backup, and monthly data</td>
-<td style="text-align: left;"><strong>Work-Study</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Payment Reliability</strong></td>
-<td style="text-align: left;">Guaranteed institutional payroll (though often delayed)</td>
-<td style="text-align: left;">Dependent on client contracts and platform policies</td>
-<td style="text-align: left;"><strong>Work-Study</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>CV Marketability Post-Grad</strong></td>
-<td style="text-align: left;">Basic administrative credibility</td>
-<td style="text-align: left;">High-demand commercial portfolio and case studies</td>
-<td style="text-align: left;"><strong>Freelancing</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Proximity to Lectures</strong></td>
-<td style="text-align: left;">On-campus; 5-minute walk to lecture halls</td>
-<td style="text-align: left;">Hostel desk or co-working space</td>
-<td style="text-align: left;"><strong>Work-Study</strong></td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Evaluation Metric | Campus Work-Study Scheme | Remote Digital Freelancing | Advantage |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Typical Monthly Earning</strong> | ₦15,000 - ₦35,000 | ₦80,000 - ₦400,000+ ($100 - $400) | <strong>Freelancing (5x - 10x higher yield)</strong> |</p>
+<p>| <strong>Time Flexibility</strong> | Rigid physical daytime hours (e.g., 9am - 1pm) | Fully asynchronous; work anytime (e.g., 9pm - 12am) | <strong>Freelancing</strong> |</p>
+<p>| <strong>Hardware & Data Dependency</strong> | Zero hardware or data cost (uses campus facilities) | Requires laptop, power backup, and monthly data | <strong>Work-Study</strong> |</p>
+<p>| <strong>Payment Reliability</strong> | Guaranteed institutional payroll (though often delayed) | Dependent on client contracts and platform policies | <strong>Work-Study</strong> |</p>
+<p>| <strong>CV Marketability Post-Grad</strong> | Basic administrative credibility | High-demand commercial portfolio and case studies | <strong>Freelancing</strong> |</p>
+<p>| <strong>Proximity to Lectures</strong> | On-campus; 5-minute walk to lecture halls | Hostel desk or co-working space | <strong>Work-Study</strong> |</p>
+<hr>
 <h2 id="when-campus-work-study-is-the-superior-choice">When Campus Work-Study Is the Superior Choice</h2>
 <p>Despite lower financial payouts, the institutional work-study scheme is the superior option under three specific conditions:</p>
 <blockquote>
-<h3 id="when-work-study-is-the-best-choice">When Work-Study Is The Best Choice</h3>
-<ul>
-<li><strong>1.</strong> You have zero laptop or smartphone capable of modern digital work.</li>
-<li><strong>2.</strong> You live in a hostel with extreme power blackouts and cannot afford data.</li>
-<li><strong>3.</strong> You are a 100L freshman who needs to understand campus rhythms before working.</li>
-</ul>
+<p>### When Work-Study Is The Best Choice</p>
+<p>></p>
+<p>* **1.** You have zero laptop or smartphone capable of modern digital work.</p>
+<p>* **2.** You live in a hostel with extreme power blackouts and cannot afford data.</p>
+<p>* **3.** You are a 100L freshman who needs to understand campus rhythms before working.</p>
 </blockquote>
 <p>Furthermore, working inside the <strong>University Central Library</strong> or an <strong>Academic Department Office</strong> gives you unparalleled access to faculty professors, academic journals, and air-conditioned quiet study environments where you can read during slow work shifts.</p>
-<hr />
+<hr>
 <h2 id="when-remote-digital-freelancing-is-the-superior-choice">When Remote Digital Freelancing Is the Superior Choice</h2>
 <p>For students with access to a functioning laptop and basic digital literacy, remote freelancing is overwhelmingly superior for long-term career acceleration:</p>
 <h3 id="1-high-hourly-return-on-invested-time-roi">1. High Hourly Return on Invested Time (ROI)</h3>
@@ -344,17 +305,16 @@
 <h3 id="2-global-currency-hedging">2. Global Currency Hedging</h3>
 <p>Earning in foreign currencies (USD, GBP, EUR) or stablecoins protects your student budget from continuous local currency devaluation.</p>
 <p>If you are looking for high-yield digital skills you can learn in 90 days to transition into remote freelancing, check our guide on <a href="/blog/balancing-work-and-school/high-income-student-skills-90-days/">5 high-paying skills students can master in 90 days</a>.</p>
-<hr />
+<hr>
 <h2 id="the-optimal-hybrid-strategy-for-undergraduates">The Optimal Hybrid Strategy for Undergraduates</h2>
 <p>You do not need to treat this as an all-or-nothing binary choice. The smartest undergraduates execute a <strong>Staged Career Progression</strong>:</p>
 <blockquote>
-<h3 id="the-undergraduate-career-progression">The Undergraduate Career Progression</h3>
-<ul>
-<li>Year 1 (100L): Focus on academics; take a campus work-study role if needed. Year 2 (200L): Learn a high-income digital skill (UI design, writing, coding). Year 3 (300L): Transition fully to remote freelance retainers ($200 - $500/mo). Year 4 (400L): Scale back freelance hours to protect project and graduate strong.</li>
-</ul>
+<p>### The Undergraduate Career Progression</p>
+<p>></p>
+<p>* Year 1 (100L): Focus on academics; take a campus work-study role if needed. Year 2 (200L): Learn a high-income digital skill (UI design, writing, coding). Year 3 (300L): Transition fully to remote freelance retainers ($200 - $500/mo). Year 4 (400L): Scale back freelance hours to protect project and graduate strong.</p>
 </blockquote>
 <p>Choose the model that aligns with your current resources, guard your study hours fiercely, and build an income engine that powers you through graduation.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-deciding-your-work-model">Action Checklist: Deciding Your Work Model</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Audit your hardware and monthly data budget honestly.</li>
@@ -528,8 +488,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -713,8 +673,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -728,7 +688,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

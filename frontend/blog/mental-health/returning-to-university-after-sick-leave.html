@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,79 +308,61 @@
       <div class="article-body">
         <h1 id="re-entering-class-after-disciplinary-or-medical-leave">Re-entering Class After Disciplinary or Medical Leave</h1>
 <p>Walking through the faculty gate after six months—or an entire session—away feels like stepping onto another planet.</p>
-<p>Maybe you were hospitalized for months battling severe typhoid, tuberculosis, or clinical depression. </p>
-<p>Maybe you were placed on a one-session disciplinary suspension following an investigation. </p>
+<p>Maybe you were hospitalized for months battling severe typhoid, tuberculosis, or clinical depression.</p>
+<p>Maybe you were placed on a one-session disciplinary suspension following an investigation.</p>
 <p>Or maybe unpaid school fees and family hardship forced you to defer your admission.</p>
-<p>Whatever the cause, the day of resumption is accompanied by acute dread:<br />
-* Your former classmates are now in 400 Level wearing suits for project defenses, while you are walking back into 300 Level classes.<br />
-* You worry about what rumors were spread in your absence: <em>"Did they say I was expelled? Did they say I lost my mind?"</em><br />
-* Your brain feels rusty, unaccustomed to writing three-hour lecture notes or calculating complex statistics under pressure.</p>
+<p>Whatever the cause, the day of resumption is accompanied by acute dread:</p>
+<ul>
+<li>Your former classmates are now in 400 Level wearing suits for project defenses, while you are walking back into 300 Level classes.</li>
+<li>You worry about what rumors were spread in your absence: *"Did they say I was expelled? Did they say I lost my mind?"*</li>
+<li>Your brain feels rusty, unaccustomed to writing three-hour lecture notes or calculating complex statistics under pressure.</li>
+</ul>
 <p>Re-entry into higher academia is an emotional and bureaucratic obstacle course. Here is how to navigate your return with unshakeable dignity and academic precision.</p>
-<hr />
+<hr>
 <h2 id="1-clearing-administrative-and-medical-roadblocks-first">1. Clearing Administrative and Medical Roadblocks First</h2>
 <p>Do not attend lectures for three weeks before discovering that your portal is blocked or your matriculation number is marked "inactive" in the senate database.</p>
 <p>Execute these institutional clearance steps in week one:</p>
 <blockquote>
-<h3 id="campus-clinic-health-center">Campus Clinic / Health Center</h3>
-<ul>
-<li>Obtain Official "Medical Certificate of Fitness to Resume"</li>
-<li><strong>Departmental Head of Department (HOD)</strong></li>
-<li>Submit Formal "Notice of Resumption of Academic Studies"</li>
-<li><strong>Faculty Dean's Office &amp; Senate Academic Affairs</strong></li>
-<li>Unblock Portal Profile &amp; Activate Course Registration</li>
-</ul>
+<p>### Campus Clinic / Health Center</p>
+<p>></p>
+<p>* Obtain Official "Medical Certificate of Fitness to Resume"</p>
+<p>* **Departmental Head of Department (HOD)**</p>
+<p>* Submit Formal "Notice of Resumption of Academic Studies"</p>
+<p>* **Faculty Dean's Office & Senate Academic Affairs**</p>
+<p>* Unblock Portal Profile & Activate Course Registration</p>
 </blockquote>
 <p>Never rely on verbal assurances from course reps or junior lecturers. Ensure every resumption letter is stamped, dated, and stored safely in your personal academic file.</p>
 <p>Read our definitive recovery model for outstanding prerequisites in <a href="/blog/academics/recover-from-carryover-courses/">how to recover from carryover courses: tactical blueprint</a>.</p>
-<hr />
+<hr>
 <h2 id="2-managing-classroom-rumors-and-the-gossip-mill">2. Managing Classroom Rumors and the Gossip Mill</h2>
 <p>Campus gossip thrives on mystery and defensive over-explaining. When old acquaintances approach you with disguised curiosity (<em>"Ah! Where have you been now? People said you traveled!"</em>):</p>
 <ul>
-<li><strong>The 1-Sentence Boundary:</strong> Maintain an even, pleasant facial expression and say:<blockquote>
-<p><em>"I had some medical and personal matters to finalize off campus. Everything is completely resolved now, and I am locked in for this semester."</em></p>
-</blockquote>
-</li>
-<li><strong>Do Not Overshare Medical Details:</strong> Disclosing vulnerable psychiatric or disciplinary history to casual classmates will only provide fodder for faculty whispers. Keep your private life private.</li>
-<li><strong>Eyes on the Board:</strong> You are not there to win a campus popularity contest. Your singular objective is degree completion.</li>
+<li>**The 1-Sentence Boundary:** Maintain an even, pleasant facial expression and say:</li>
+<blockquote>
+<p>*"I had some medical and personal matters to finalize off campus. Everything is completely resolved now, and I am locked in for this semester."*</p>
+<li>**Do Not Overshare Medical Details:** Disclosing vulnerable psychiatric or disciplinary history to casual classmates will only provide fodder for faculty whispers. Keep your private life private.</li>
+<li>**Eyes on the Board:** You are not there to win a campus popularity contest. Your singular objective is degree completion.</li>
 </ul>
+</blockquote>
 <p>Learn how to rebuild self-worth after academic failure in <a href="/blog/mental-health/coping-with-failing-university-exams/">coping with failing university exams: rebuilding self-worth</a>.</p>
-<hr />
+<hr>
 <h2 id="3-cognitive-reactivation-overcoming-brain-rust">3. Cognitive Reactivation: Overcoming "Brain Rust"</h2>
 <p>When you haven't written an academic essay or solved quantitative formulas in months, the prefrontal cortex experiences severe resistance:</p>
-<table>
-<thead>
-<tr>
-<th>Week</th>
-<th>Phase</th>
-<th>Daily Academic Objective</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Week 1</strong></td>
-<td><strong>Audit &amp; Assembly</strong></td>
-<td>Gather course outlines, syllabus reading lists, and current lecture notes from top students</td>
-</tr>
-<tr>
-<td><strong>Week 2</strong></td>
-<td><strong>Passive to Active Bridge</strong></td>
-<td>Read notes for 60 minutes daily; translate core definitions into personal flashcards</td>
-</tr>
-<tr>
-<td><strong>Week 3</strong></td>
-<td><strong>Timed Retrieval Practice</strong></td>
-<td>Solve 3 past examination questions without looking at reference textbooks</td>
-</tr>
-</tbody>
-</table>
+<p>| Week | Phase | Daily Academic Objective |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Week 1</strong> | <strong>Audit & Assembly</strong> | Gather course outlines, syllabus reading lists, and current lecture notes from top students |</p>
+<p>| <strong>Week 2</strong> | <strong>Passive to Active Bridge</strong> | Read notes for 60 minutes daily; translate core definitions into personal flashcards |</p>
+<p>| <strong>Week 3</strong> | <strong>Timed Retrieval Practice</strong> | Solve 3 past examination questions without looking at reference textbooks |</p>
 <p>Explore upcoming guidance on deciding between continuing an interrupted degree versus rewriting entrance exams in <a href="/blog/mental-health/">continuing unwanted degree vs starting fresh with JAMB</a>.</p>
-<hr />
+<hr>
 <h2 id="4-reclaiming-your-future">4. Reclaiming Your Future</h2>
-<p>Your academic path is not a race against your matriculation cohort.<br />
-* Many students who graduate on an uninterrupted four-year timeline spend years unemployed or directionless.<br />
-* The delay you experienced forced you to confront hardship, develop emotional grit, and understand real-world vulnerability.<br />
-* Carry your journey with pride. Re-entry is not a disgrace; it is the opening chapter of your greatest academic triumph.</p>
-<hr />
+<p>Your academic path is not a race against your matriculation cohort.</p>
+<ul>
+<li>Many students who graduate on an uninterrupted four-year timeline spend years unemployed or directionless.</li>
+<li>The delay you experienced forced you to confront hardship, develop emotional grit, and understand real-world vulnerability.</li>
+<li>Carry your journey with pride. Re-entry is not a disgrace; it is the opening chapter of your greatest academic triumph.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-should-a-returning-student-handle-coursemate-gossip-about-their-absence">How should a returning student handle coursemate gossip about their absence?</h3>
 <p>Never engage in elaborate defensive justifications. Use a concise, closed script: 'I had personal health and family matters to sort out; I am fully back and focused on finishing this session.' Gossip dies when it encounters unreactive confidence.</p>
@@ -554,8 +536,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -739,8 +721,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -754,7 +736,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

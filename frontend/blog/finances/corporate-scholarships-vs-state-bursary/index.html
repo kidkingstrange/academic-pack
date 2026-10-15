@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,96 +310,50 @@
 <p>You need money for university.</p>
 <p>You hear coursemates discussing two different educational funding opportunities on campus:</p>
 <p>On one side: <strong>Private Corporate Scholarships</strong> (NNPC/Shell, Chevron JV, MTN Foundation, TotalEnergies).</p>
-<p>On the other side: <strong>Government &amp; State Bursaries</strong> (Delta State Bursary, Lagos State Scholarship Board, Kano State Educational Grants).</p>
-<p>Both offer non-repayable cash that can transform your student life. </p>
+<p>On the other side: <strong>Government & State Bursaries</strong> (Delta State Bursary, Lagos State Scholarship Board, Kano State Educational Grants).</p>
+<p>Both offer non-repayable cash that can transform your student life.</p>
 <p>Yet, their application requirements, competition intensity, verification processes, and payout sums could not be more different.</p>
 <p>Should you invest your energy preparing for brutal corporate aptitude tests, or should you focus on claiming your statutory state indigene welfare grants?</p>
 <p>Here is the definitive comparative breakdown of <strong>Corporate Scholarships vs. Government Bursaries in Nigeria</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-head-to-head-comparison-matrix">1. The Head-to-Head Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Evaluation Dimension</th>
-<th>Private Corporate Scholarships</th>
-<th>Statutory Government Bursaries</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Annual Payout Size</strong></td>
-<td><strong>High:</strong> ₦150,000 – ₦300,000+</td>
-<td><strong>Moderate to Low:</strong> ₦20,000 – ₦60,000</td>
-</tr>
-<tr>
-<td><strong>Selection Criteria</strong></td>
-<td><strong>Strict Merit:</strong> Minimum 3.50+ CGPA + CBT Test</td>
-<td><strong>Indigene Status:</strong> Verified Certificate of Origin</td>
-</tr>
-<tr>
-<td><strong>Competition Intensity</strong></td>
-<td><strong>Fierce:</strong> 50,000 applicants for 300 slots</td>
-<td><strong>Low to Moderate:</strong> Accessible to all registered indigenes</td>
-</tr>
-<tr>
-<td><strong>Payment Reliability</strong></td>
-<td><strong>Extremely Reliable:</strong> Direct bank transfer annually</td>
-<td><strong>Unpredictable:</strong> Dependent on state treasury liquidity</td>
-</tr>
-<tr>
-<td><strong>Career Advantages</strong></td>
-<td>Direct internship pipelines &amp; graduate fast-tracking</td>
-<td>Pure welfare grant; zero corporate recruitment links</td>
-</tr>
-</tbody>
-</table>
+<p>| Evaluation Dimension | Private Corporate Scholarships | Statutory Government Bursaries |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Annual Payout Size</strong> | <strong>High:</strong> ₦150,000 – ₦300,000+ | <strong>Moderate to Low:</strong> ₦20,000 – ₦60,000 |</p>
+<p>| <strong>Selection Criteria</strong> | <strong>Strict Merit:</strong> Minimum 3.50+ CGPA + CBT Test | <strong>Indigene Status:</strong> Verified Certificate of Origin |</p>
+<p>| <strong>Competition Intensity</strong> | <strong>Fierce:</strong> 50,000 applicants for 300 slots | <strong>Low to Moderate:</strong> Accessible to all registered indigenes |</p>
+<p>| <strong>Payment Reliability</strong> | <strong>Extremely Reliable:</strong> Direct bank transfer annually | <strong>Unpredictable:</strong> Dependent on state treasury liquidity |</p>
+<p>| <strong>Career Advantages</strong> | Direct internship pipelines & graduate fast-tracking | Pure welfare grant; zero corporate recruitment links |</p>
 <p>Review corporate scholarship application formats in <a href="/blog/finances/undergraduate-scholarships-nigeria/">scholarship applications for undergraduates in Nigeria: winning formats</a>.</p>
-<hr />
+<hr>
 <h2 id="2-deciding-where-to-direct-your-application-energy">2. Deciding Where to Direct Your Application Energy</h2>
-<table>
-<thead>
-<tr>
-<th>Academic Standing</th>
-<th>Primary Funding Focus</th>
-<th>Immediate Strategic Steps</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>3.50+ CGPA (2.1 / First Class)</strong></td>
-<td><strong>80% Corporate Scholarships</strong> (NNPC, Chevron, MTN, TotalEnergies, NLNG)</td>
-<td>Master CBT numerical/verbal aptitude tests; maintain clean transcripts; gather LGA letters early</td>
-</tr>
-<tr>
-<td><strong>Below 3.50 CGPA (2.2 / Third Class)</strong></td>
-<td><strong>100% State &amp; LGA Bursaries</strong> (State scholarship boards, DESOPADEC, NDDC)</td>
-<td>Register with indigenous student unions on campus; secure state origin certificates; submit before deadlines</td>
-</tr>
-<tr>
-<td>&gt; * High cash yields (₦200,000+)          • Secure NELFUND interest-free loans</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<p>| Academic Standing | Primary Funding Focus | Immediate Strategic Steps |</p>
+<p>|---|---|---|</p>
+<p>| <strong>3.50+ CGPA (2.1 / First Class)</strong> | <strong>80% Corporate Scholarships</strong> (NNPC, Chevron, MTN, TotalEnergies, NLNG) | Master CBT numerical/verbal aptitude tests; maintain clean transcripts; gather LGA letters early |</p>
+<p>| <strong>Below 3.50 CGPA (2.2 / Third Class)</strong> | <strong>100% State & LGA Bursaries</strong> (State scholarship boards, DESOPADEC, NDDC) | Register with indigenous student unions on campus; secure state origin certificates; submit before deadlines |</p>
+<blockquote>
+<p>* High cash yields (₦200,000+)          • Secure NELFUND interest-free loans</p>
+</blockquote>
 <p>If your CGPA is above 3.50, corporate scholarships provide life-changing funding: winning a single Shell or MTN award completely covers your university tuition, accommodation rent, and feeding for the rest of your academic journey.</p>
 <p>If your CGPA is currently below 3.50, corporate automated screening algorithms will reject your portal application automatically. Directing your energy toward state bursaries guarantees non-competitive financial relief.</p>
 <p>Learn about state bursary application procedures in <a href="/blog/finances/state-bursaries-university-students/">5 high-value federal and state bursaries undergrads ignore</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-stacking-strategy-maximizing-combined-payouts">3. The Stacking Strategy: Maximizing Combined Payouts</h2>
 <p>Smart students do not choose between scholarships and bursaries; they <strong>Stack Allowances Legally</strong>:</p>
 <ol>
-<li><strong>Verify Corporate Exclusivity Clauses:</strong> Read your corporate award letter carefully. Corporate boards mandate: <em>"Awardees must not hold another corporate scholarship concurrently."</em> If you win Chevron, do not apply for Shell.</li>
-<li><strong>Combine with Statutory State Bursaries:</strong> Corporate boards do not classify state indigenous bursaries as conflicting awards. You can collect your ₦250,000 corporate scholarship and your ₦50,000 state bursary concurrently.</li>
-<li><strong>Layer with NELFUND Tuition Support:</strong> Use NELFUND to fund your institutional tuition, allocate corporate scholarship funds into high-yield savings for post-graduation capital, and use bursaries for daily living staples.</li>
+<li>**Verify Corporate Exclusivity Clauses:** Read your corporate award letter carefully. Corporate boards mandate: *"Awardees must not hold another corporate scholarship concurrently."* If you win Chevron, do not apply for Shell.</li>
+<li>**Combine with Statutory State Bursaries:** Corporate boards do not classify state indigenous bursaries as conflicting awards. You can collect your ₦250,000 corporate scholarship and your ₦50,000 state bursary concurrently.</li>
+<li>**Layer with NELFUND Tuition Support:** Use NELFUND to fund your institutional tuition, allocate corporate scholarship funds into high-yield savings for post-graduation capital, and use bursaries for daily living staples.</li>
 </ol>
 <p>Review NELFUND application protocols in <a href="/blog/finances/nelfund-student-loan-application-guide/">NELFUND student loan: eligibility and application walkthrough</a>.</p>
-<hr />
+<hr>
 <h2 id="4-excellence-is-your-greatest-financial-asset">4. Excellence Is Your Greatest Financial Asset</h2>
-<p>Funding is out there for students who combine academic excellence with administrative vigilance:<br />
-* Audit your documents, maintain your transcript, and register with state indigenous unions early.<br />
-* Turn high grades into financial capital, eliminate student poverty, and fund your education with pride.</p>
-<hr />
+<p>Funding is out there for students who combine academic excellence with administrative vigilance:</p>
+<ul>
+<li>Audit your documents, maintain your transcript, and register with state indigenous unions early.</li>
+<li>Turn high grades into financial capital, eliminate student poverty, and fund your education with pride.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="which-pays-more-money-private-corporate-scholarships-or-government-bursaries">Which pays more money: private corporate scholarships or government bursaries?</h3>
 <p>Private corporate scholarships (Shell, Chevron, MTN, TotalEnergies) pay significantly higher amounts (₦150,000 to ₦300,000+ annually) compared to state government bursaries (typically ₦20,000 to ₦50,000 annually).</p>
@@ -407,7 +361,7 @@
 <p>Yes. Most corporate scholarship policies prohibit holding two simultaneous corporate awards (e.g., holding Shell and Chevron together), but permit students to collect statutory state indigenous bursaries.</p>
 <h3 id="what-is-the-primary-selection-criteria-for-corporate-scholarships-vs-bursaries">What is the primary selection criteria for corporate scholarships vs bursaries?</h3>
 <p>Corporate scholarships are strictly merit-driven, requiring a high CGPA (3.50+), aptitude test scoring, and verification. State bursaries are non-competitive welfare grants awarded to verified indigenes of specific regions.</p>
-<h3 id="how-can-an-average-student-win-educational-funding-if-their-cgpa-is-below-350">How can an average student win educational funding if their CGPA is below 3.50?</h3>
+<h3 id="how-can-an-average-student-win-educational-funding-if-their-cgpa-is-below-3-50">How can an average student win educational funding if their CGPA is below 3.50?</h3>
 <p>Focus on state indigenous bursaries, local government educational grants, community town union scholarships, and federal loan facilities like NELFUND which do not enforce high CGPA cutoff barriers.</p>
       </div>
 
@@ -573,8 +527,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -758,8 +712,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -773,7 +727,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

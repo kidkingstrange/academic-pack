@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,114 +307,92 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="digital-note-taking-vs-pen-and-paper-exam-retention">Digital Note-Taking vs Pen and Paper: Exam Retention</h1>
-<p>You sit in a 400-seater faculty amphitheater at 8:30 AM. </p>
+<p>You sit in a 400-seater faculty amphitheater at 8:30 AM.</p>
 <p>On the wooden bench in front of you, a tech-savvy student opens a sleek laptop or iPad with an Apple Pencil. Across the rest of the row, coursemates pull out traditional 60-leaf ruled exercise books and blue Bic ballpoint pens.</p>
-<p>As the lecturer begins writing complex derivations and historical dates across the board, two completely different worlds emerge:<br />
-* The laptop user's fingers fly across the keyboard, typing eighty words per minute.<br />
-* The pen-and-paper student writes deliberately, pausing to draw arrows, circle keywords, and sketch margin summaries.</p>
+<p>As the lecturer begins writing complex derivations and historical dates across the board, two completely different worlds emerge:</p>
+<ul>
+<li>The laptop user's fingers fly across the keyboard, typing eighty words per minute.</li>
+<li>The pen-and-paper student writes deliberately, pausing to draw arrows, circle keywords, and sketch margin summaries.</li>
+</ul>
 <p>By the end of the two-hour lecture, the digital student has captured a 2,500-word verbatim transcript of every word the lecturer uttered. The handwritten student has filled only two pages of concise notes.</p>
 <p>At first glance, the laptop student seems to have won.</p>
 <p>Yet when semester examination results are released, cognitive neuroscience research reveals a shocking reality: <strong>students who take notes by hand consistently outperform laptop typists on conceptual comprehension, analytical derivations, and long-term memory retention.</strong></p>
 <p>In a Nigerian university system where 95% of examinations are physical, handwritten 3-hour written papers, your choice of study medium can make or break your degree.</p>
 <p>Here is the scientific breakdown of <strong>Digital Notes vs. Pen and Paper</strong>, and how to build a high-performance hybrid system.</p>
-<hr />
+<hr>
 <h2 id="1-the-cognitive-science-generative-processing-vs-verbatim-transcription">1. The Cognitive Science: Generative Processing vs. Verbatim Transcription</h2>
 <p>The definitive cognitive study on note-taking mediums, conducted by Mueller and Oppenheimer published in <em>Psychological Science</em>, established why typing harms exam recall:</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>[Typing Speed: ~80 WPM] ➔ Mindless Verbatim Dictation (Shallow Processing) — [Writing Speed: ~25 WPM] ➔ Active Summarization &amp; Synthesis (Deep Processing)</em></p>
+<p>💡 **Key Formula:** *[Typing Speed: ~80 WPM] ➔ Mindless Verbatim Dictation (Shallow Processing) — [Writing Speed: ~25 WPM] ➔ Active Summarization & Synthesis (Deep Processing)*</p>
 </blockquote>
 <h3 id="the-verbatim-trap">The Verbatim Trap:</h3>
 <p>Because human typing speed easily matches conversational speech, laptop users fall into <strong>mindless stenography</strong>. The words travel from the lecturer's mouth, through the student's ears, and straight into their fingers without passing through their cognitive reasoning centers. They produce a perfect transcript, but their brain encoded zero meaning.</p>
 <h3 id="the-handwriting-filter">The Handwriting Filter:</h3>
-<p>Because you cannot write as fast as a lecturer speaks, <strong>handwriting forces your brain to make immediate editorial decisions</strong>:<br />
-* You must listen attentively.<br />
-* You must filter out fluff and identify the core concept.<br />
-* You must paraphrase the idea in your own mental shorthand.</p>
+<p>Because you cannot write as fast as a lecturer speaks, <strong>handwriting forces your brain to make immediate editorial decisions</strong>:</p>
+<ul>
+<li>You must listen attentively.</li>
+<li>You must filter out fluff and identify the core concept.</li>
+<li>You must paraphrase the idea in your own mental shorthand.</li>
+</ul>
 <p>This process of <strong>generative summarization</strong> forces deep neural encoding during the lecture itself. When the handwritten student leaves class, they already understand 60% of the material.</p>
 <p>To combine these notes with high-yield recall drills, review our <a href="/blog/academics/active-recall-study-method-nigerian-university-guide/">active recall study method guide</a>.</p>
-<hr />
+<hr>
 <h2 id="2-head-to-head-comparison-the-nigerian-campus-reality">2. Head-to-Head Comparison: The Nigerian Campus Reality</h2>
-<table>
-<thead>
-<tr>
-<th>Variable</th>
-<th>Digital (Laptops / Tablets)</th>
-<th>Physical (Pen and Paper)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Cognitive Retention</strong></td>
-<td>Moderate to Low (Prone to verbatim typing)</td>
-<td><strong>Very High</strong> (Forced generative synthesis)</td>
-</tr>
-<tr>
-<td><strong>Formula &amp; Derivation Speed</strong></td>
-<td>Clumsy (Typing LaTeX / equations is slow)</td>
-<td><strong>Effortless</strong> (Instant freehand sketches)</td>
-</tr>
-<tr>
-<td><strong>Exam Muscle Conditioning</strong></td>
-<td>Zero (Risk of severe wrist fatigue in exams)</td>
-<td><strong>High</strong> (Conditions hand for 3-hour writing)</td>
-</tr>
-<tr>
-<td><strong>Campus Infrastructure Risk</strong></td>
-<td>High (Power cuts, battery drain, device theft)</td>
-<td><strong>Zero</strong> (Requires no charging, immune to theft)</td>
-</tr>
-<tr>
-<td><strong>Searchability &amp; Storage</strong></td>
-<td>Instant global search across semesters</td>
-<td>Bulky physical exercise books prone to damage</td>
-</tr>
-</tbody>
-</table>
+<p>| Variable | Digital (Laptops / Tablets) | Physical (Pen and Paper) |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Cognitive Retention</strong> | Moderate to Low (Prone to verbatim typing) | <strong>Very High</strong> (Forced generative synthesis) |</p>
+<p>| <strong>Formula & Derivation Speed</strong> | Clumsy (Typing LaTeX / equations is slow) | <strong>Effortless</strong> (Instant freehand sketches) |</p>
+<p>| <strong>Exam Muscle Conditioning</strong> | Zero (Risk of severe wrist fatigue in exams) | <strong>High</strong> (Conditions hand for 3-hour writing) |</p>
+<p>| <strong>Campus Infrastructure Risk</strong> | High (Power cuts, battery drain, device theft) | <strong>Zero</strong> (Requires no charging, immune to theft) |</p>
+<p>| <strong>Searchability & Storage</strong> | Instant global search across semesters | Bulky physical exercise books prone to damage |</p>
 <h3 id="the-exam-hand-fatigue-reality">The "Exam Hand Fatigue" Reality:</h3>
-<p>Nigerian semester examinations require writing continuously for two to three hours with a blue biro on unlined exam answer sheets. </p>
+<p>Nigerian semester examinations require writing continuously for two to three hours with a blue biro on unlined exam answer sheets.</p>
 <p>Students who rely exclusively on laptop typing throughout the semester experience acute <strong>carpal muscle fatigue and hand cramping</strong> after thirty minutes of writing. Their handwriting becomes illegible, causing tired markers to overlook key arguments.</p>
 <p>For students enrolled in engineering, physics, or mathematics where derivations and free-body diagrams dominate, handwritten problem solving is non-negotiable; see our analysis in <a href="/blog/academics/engineering-student-study-method/">engineering student survival for heavy calculations</a>.</p>
-<hr />
-<h2 id="3-the-8020-hybrid-system-best-of-both-worlds">3. The 80/20 Hybrid System: Best of Both Worlds</h2>
+<hr>
+<h2 id="3-the-80-20-hybrid-system-best-of-both-worlds">3. The 80/20 Hybrid System: Best of Both Worlds</h2>
 <p>You do not have to choose between 19th-century notebooks and 21st-century technology. The highest-performing scholars use an <strong>Engineered Hybrid Protocol</strong>:</p>
 <ul>
-<li><strong>In Lecture:</strong> Physical Pen &amp; Ruled Notebook] ➔ [Weekend: Digital Synthesis in Notion / Anki</li>
+<li>**In Lecture:** Physical Pen & Ruled Notebook] ➔ [Weekend: Digital Synthesis in Notion / Anki</li>
 </ul>
 <h3 id="step-1-in-the-classroom-physical-capture">Step 1: In the Classroom (Physical Capture)</h3>
-<p>Use an unlined A4 spiral notebook and a good pen. Use the <strong>Cornell Note-Taking Format</strong>:<br />
-* Main Column (70% width): Record core concepts, diagrams, and formulas in your own words.<br />
-* Cue Column (30% left margin): Write active recall questions (e.g., <em>"What is the second law?"</em>).</p>
+<p>Use an unlined A4 spiral notebook and a good pen. Use the <strong>Cornell Note-Taking Format</strong>:</p>
+<ul>
+<li>Main Column (70% width): Record core concepts, diagrams, and formulas in your own words.</li>
+<li>Cue Column (30% left margin): Write active recall questions (e.g., *"What is the second law?"*).</li>
+</ul>
 <h3 id="step-2-the-weekend-digital-archive">Step 2: The Weekend Digital Archive</h3>
-<p>On Saturday, spend 30 minutes scanning or summarizing the week's handwritten notes into a digital database (like Notion, Google Docs, or Anki flashcards):<br />
-* This review acts as an automatic <strong>spaced repetition checkpoint</strong>.<br />
-* You retain the digital searchability of cloud notes while preserving the profound memory benefits of handwriting.</p>
+<p>On Saturday, spend 30 minutes scanning or summarizing the week's handwritten notes into a digital database (like Notion, Google Docs, or Anki flashcards):</p>
+<ul>
+<li>This review acts as an automatic **spaced repetition checkpoint**.</li>
+<li>You retain the digital searchability of cloud notes while preserving the profound memory benefits of handwriting.</li>
+</ul>
 <p>To avoid the reading mistakes that turn good notes into low exam scores, review <a href="/blog/academics/reading-mistakes-causing-low-university-exam-scores/">reading mistakes causing low exam scores</a>.</p>
-<hr />
+<hr>
 <h2 id="note-taking-audit-checklist">Note-Taking Audit Checklist</h2>
 <p>Audit your note-taking habits against these five rules:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Write by hand during live lectures:</strong> Force your brain to summarize rather than transcribe.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Condition your writing hand:</strong> Practice writing continuous essays by hand to build exam stamina.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Use the Cornell two-column format:</strong> Separate raw lecture concepts from active recall cue questions.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Archive summaries digitally once a week:</strong> Build a searchable cloud backup without sacrificing handwriting benefits.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Eliminate in-class laptop distractions:</strong> If using a laptop, turn off Wi-Fi and close messaging tabs.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Write by hand during live lectures:** Force your brain to summarize rather than transcribe.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Condition your writing hand:** Practice writing continuous essays by hand to build exam stamina.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Use the Cornell two-column format:** Separate raw lecture concepts from active recall cue questions.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Archive summaries digitally once a week:** Build a searchable cloud backup without sacrificing handwriting benefits.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Eliminate in-class laptop distractions:** If using a laptop, turn off Wi-Fi and close messaging tabs.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="master-university-learning-systems">Master University Learning Systems</h2>
 <p>Great grades are not built on expensive gadgets; they are built on scientifically engineered cognitive workflows that optimize memory retention and exam execution.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to master note-taking, eliminate exam anxiety, and graduate with First Class honours.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Focus Template</strong> — Eliminate digital distractions and build deep cognitive retention</li>
-    <li><strong>Get Good at Hard Things</strong> — The cognitive framework to master difficult calculations and complex theory</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer marking rubrics and structure high-scoring written scripts</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to master note-taking, eliminate exam anxiety, and graduate with First Class honours.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Focus Template</strong> — Eliminate digital distractions and build deep cognitive retention</li>
+<li><strong>Get Good at Hard Things</strong> — The cognitive framework to master difficult calculations and complex theory</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer marking rubrics and structure high-scoring written scripts</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-handwritten-notes-produce-higher-memory-retention-than-typing-on-laptops">Why do handwritten notes produce higher memory retention than typing on laptops?</h3>
 <p>Cognitive psychology research shows that handwriting forces 'generative summarization'—your brain must synthesize concepts because you cannot write as fast as the lecturer speaks. Typing encourages mindless verbatim transcription with near-zero cognitive encoding.</p>
@@ -588,8 +566,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -773,8 +751,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -788,7 +766,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

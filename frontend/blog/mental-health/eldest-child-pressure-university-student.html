@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,54 +310,60 @@
 <p>In Nigeria, being the firstborn child is not merely a birth order. It is an unpaid executive job description.</p>
 <p>You are 21 years old, sitting in your 300-level university hostel.</p>
 <p>Your monthly allowance from home—if your parents can afford to send any at all—is barely enough to cover garri, transportation to campus, and photocopies of departmental lecture handouts.</p>
-<p>Yet, your phone rings constantly:<br />
-* Your mother calls: <em>"Your younger sister was sent home from primary school today because of ₦4,500 lesson fees. See if you can hustle small money from your friends and send it."</em><br />
-* Your younger brother texts you asking for shoes for his secondary school debate competition.<br />
-* Your father reminds you during every phone conversation: <em>"You are the head of this family after me. You need to hurry up, finish this university with a good result, and start carrying your siblings."</em></p>
+<p>Yet, your phone rings constantly:</p>
+<ul>
+<li>Your mother calls: *"Your younger sister was sent home from primary school today because of ₦4,500 lesson fees. See if you can hustle small money from your friends and send it."*</li>
+<li>Your younger brother texts you asking for shoes for his secondary school debate competition.</li>
+<li>Your father reminds you during every phone conversation: *"You are the head of this family after me. You need to hurry up, finish this university with a good result, and start carrying your siblings."*</li>
+</ul>
 <p>Instead of focusing your mental energy on fluid mechanics, constitutional law, or organic chemistry, you spend half your waking hours scheming how to raise ₦5,000 to send home.</p>
 <p>You are acting as a secondary parent before you have even secured your own financial footing.</p>
 <p>This is the psychological toll of <strong>Eldest Child Syndrome</strong> in the Nigerian socio-economic landscape. Here is how to navigate this generational burden without sacrificing your academic future.</p>
-<hr />
+<hr>
 <h2 id="1-the-parentification-of-the-nigerian-firstborn">1. The Parentification of the Nigerian Firstborn</h2>
 <p>In developmental psychology, this phenomenon is called <strong>Parentification</strong>: the inversion of roles where a child or young adult takes on physical, financial, or emotional responsibilities that belong to parents.</p>
-<p>In Nigerian cultural contexts, parentification is deeply reinforced:<br />
-* Cultural norms assign firstborns the duty of being the family's financial saviors.<br />
-* Economic inflation and poverty force parents to lean on older children for household subsidies.<br />
-* The eldest child internalizes a chronic <strong>Savior Complex</strong>, believing that any misfortune that befalls their younger siblings is their personal fault.</p>
+<p>In Nigerian cultural contexts, parentification is deeply reinforced:</p>
+<ul>
+<li>Cultural norms assign firstborns the duty of being the family's financial saviors.</li>
+<li>Economic inflation and poverty force parents to lean on older children for household subsidies.</li>
+<li>The eldest child internalizes a chronic **Savior Complex**, believing that any misfortune that befalls their younger siblings is their personal fault.</li>
+</ul>
 <p>The cost to your intellect is severe: chronic sleep deprivation, anxiety during revision, and persistent guilt whenever you spend money on your own basic survival.</p>
 <p>Analyze the emotional impact of family financial distress in <a href="/blog/mental-health/family-poverty-pressure-study-anxiety/">family poverty pressure study anxiety: managing survival stress</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-golden-goose-analogy-protecting-your-productive-capacity">2. The Golden Goose Analogy: Protecting Your Productive Capacity</h2>
 <p>When family demands threaten to drain your last naira during exam preparation, remember Aesop's fable of the Golden Goose:</p>
 <blockquote>
 <p>If the farmer starves the goose to extract eggs faster, the goose dies, and all future golden eggs are lost forever.</p>
 </blockquote>
-<p>In this dynamic, <strong>you are the golden goose</strong>:<br />
-* Your degree, your GPA, your mental health, and your career prospects are the source of your family's future economic liberation.<br />
-* If you starve yourself on campus, develop bleeding stomach ulcers, fail your carryovers, or drop out due to emotional exhaustion, everyone loses.<br />
-* Sacrificing your current academic baseline for small ₦3,000 emergency bailouts is short-sighted economic suicide.</p>
+<p>In this dynamic, <strong>you are the golden goose</strong>:</p>
+<ul>
+<li>Your degree, your GPA, your mental health, and your career prospects are the source of your family's future economic liberation.</li>
+<li>If you starve yourself on campus, develop bleeding stomach ulcers, fail your carryovers, or drop out due to emotional exhaustion, everyone loses.</li>
+<li>Sacrificing your current academic baseline for small ₦3,000 emergency bailouts is short-sighted economic suicide.</li>
+</ul>
 <p>Review how parental expectations trigger study failure in <a href="/blog/mental-health/parental-expectations-academic-pressure/">handling parental expectations and academic pressure in Nigeria</a>.</p>
-<hr />
+<hr>
 <h2 id="3-communication-scripts-for-compassionate-boundaries">3. Communication Scripts for Compassionate Boundaries</h2>
 <p>Saying "no" to your parents or siblings feels like a moral betrayal. The solution is not cold detachment, but <strong>Empathetic Boundary Setting</strong>:</p>
 <h3 id="script-a-when-parents-request-sibling-school-support">Script A: When Parents Request Sibling School Support</h3>
 <blockquote>
-<p><em>"Mum, I understand how difficult things are at home right now, and it breaks my heart that Chinedu is home from school. However, right now in school, my total balance is ₦1,800 to feed through my final exam week. I have no extra money to send without collapsing in the exam hall. Let me finish these examinations with full focus so my results remain intact."</em></p>
+<p>*"Mum, I understand how difficult things are at home right now, and it breaks my heart that Chinedu is home from school. However, right now in school, my total balance is ₦1,800 to feed through my final exam week. I have no extra money to send without collapsing in the exam hall. Let me finish these examinations with full focus so my results remain intact."*</p>
 </blockquote>
 <h3 id="script-b-when-siblings-ask-for-pocket-money">Script B: When Siblings Ask for Pocket Money</h3>
 <blockquote>
-<p><em>"Junior, I love you, but I am currently a student living on bare rations on campus. I don't have personal income yet. Let me push through this session, and once I finish my degree and start working, I will support you properly. For now, we both have to manage."</em></p>
+<p>*"Junior, I love you, but I am currently a student living on bare rations on campus. I don't have personal income yet. Let me push through this session, and once I finish my degree and start working, I will support you properly. For now, we both have to manage."*</p>
 </blockquote>
 <p>Learn more about managing the broader social expectations placed on students in our upcoming pillar guide on <a href="/blog/finances/">student black tax and managing extended family demands</a>.</p>
-<hr />
+<hr>
 <h2 id="4-strategic-rules-for-the-eldest-child-scholar">4. Strategic Rules for the Eldest Child Scholar</h2>
 <p>If you must earn money to support yourself and ease family tension, follow these strict rules:</p>
 <ol>
-<li><strong>Protect the 3-Hour Golden Study Window:</strong> Never take on manual or freelance jobs that consume your peak cognitive hours. Designate 8:00 AM to 12:00 PM strictly for lectures and high-priority coursework.</li>
-<li><strong>Prioritize Skill Leverage Over Low-Pay Chores:</strong> Avoid spending six hours baking meat pies on campus for ₦1,500 profit. Invest time in learning high-income digital skills (copywriting, video editing, UI design, coding) that allow you to charge in foreign currency or higher naira retainers in your spare time.</li>
-<li><strong>Graduate with Honor:</strong> The best gift you will ever give your younger siblings is the living proof that a child from your humble background can triumph in higher academia and break the cycle of poverty with dignity.</li>
+<li>**Protect the 3-Hour Golden Study Window:** Never take on manual or freelance jobs that consume your peak cognitive hours. Designate 8:00 AM to 12:00 PM strictly for lectures and high-priority coursework.</li>
+<li>**Prioritize Skill Leverage Over Low-Pay Chores:** Avoid spending six hours baking meat pies on campus for ₦1,500 profit. Invest time in learning high-income digital skills (copywriting, video editing, UI design, coding) that allow you to charge in foreign currency or higher naira retainers in your spare time.</li>
+<li>**Graduate with Honor:** The best gift you will ever give your younger siblings is the living proof that a child from your humble background can triumph in higher academia and break the cycle of poverty with dignity.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-eldest-child-syndrome-among-nigerian-university-undergraduates">What is 'Eldest Child Syndrome' among Nigerian university undergraduates?</h3>
 <p>The intense psychological burden placed on firstborn sons and daughters who are treated as co-parents, expected to solve family crises, send money to younger siblings, and graduate at top speed to lift the family economically.</p>
@@ -531,8 +537,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -716,8 +722,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -731,7 +737,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

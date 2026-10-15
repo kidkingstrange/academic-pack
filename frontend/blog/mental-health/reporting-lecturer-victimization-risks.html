@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -316,90 +316,48 @@
 <p><strong>Option 1: Official Reporting:</strong> File a formal petition to the Head of Department (HOD) or Dean of Student Affairs, risking institutional cover-ups, victim-blaming, and malicious grade retaliation that could keep you in school for an extra three years.</p>
 <p><strong>Option 2: Quiet Self-Protection:</strong> Avoid direct confrontation, adopt defensive strategies, preserve your personal safety, and fight to get out of the department in one piece.</p>
 <p>Here is the objective risk assessment and strategic playbook for navigating lecturer harassment.</p>
-<hr />
+<hr>
 <h2 id="1-the-institutional-power-reality-on-campus">1. The Institutional Power Reality on Campus</h2>
 <p>Before taking action, you must understand the sociology of the Nigerian academic department:</p>
-<table>
-<thead>
-<tr>
-<th>Academic Actor</th>
-<th>Institutional Position &amp; Power</th>
-<th>Typical Reaction to Student Complaints</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Tenured Senior Lecturer / Professor</strong></td>
-<td>Decades of institutional seniority, union (ASUU/CONUA) protection, personal alliances</td>
-<td>Leverages peer relationships to dismiss student allegations as insubordination</td>
-</tr>
-<tr>
-<td><strong>Departmental HOD &amp; Faculty Dean</strong></td>
-<td>Colleagues on faculty boards, joint research co-authors</td>
-<td>Default instinct is institutional reputation protection; high threshold of skepticism</td>
-</tr>
-<tr>
-<td><strong>Vulnerable Undergrad / Whistleblower</strong></td>
-<td>Temporary student status, highly dependent on internal grading approvals</td>
-<td>High vulnerability to retaliation unless evidence is airtight and escalated through external statutory oversight</td>
-</tr>
-</tbody>
-</table>
-<p>When an undergraduate reports a senior lecturer:<br />
-* Departmental staff often close ranks to protect their colleague and faculty reputation.<br />
-* The accused lecturer may retain control over your upcoming exam scripts or final-year project clearance.<br />
-* Without indisputable digital evidence, petitions are frequently shelved until the student's expected graduation passes.</p>
+<p>| Academic Actor | Institutional Position & Power | Typical Reaction to Student Complaints |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Tenured Senior Lecturer / Professor</strong> | Decades of institutional seniority, union (ASUU/CONUA) protection, personal alliances | Leverages peer relationships to dismiss student allegations as insubordination |</p>
+<p>| <strong>Departmental HOD & Faculty Dean</strong> | Colleagues on faculty boards, joint research co-authors | Default instinct is institutional reputation protection; high threshold of skepticism |</p>
+<p>| <strong>Vulnerable Undergrad / Whistleblower</strong> | Temporary student status, highly dependent on internal grading approvals | High vulnerability to retaliation unless evidence is airtight and escalated through external statutory oversight |</p>
+<p>When an undergraduate reports a senior lecturer:</p>
+<ul>
+<li>Departmental staff often close ranks to protect their colleague and faculty reputation.</li>
+<li>The accused lecturer may retain control over your upcoming exam scripts or final-year project clearance.</li>
+<li>Without indisputable digital evidence, petitions are frequently shelved until the student's expected graduation passes.</li>
+</ul>
 <p>Learn about lecturer intimidation dynamics in <a href="/blog/mental-health/lecturer-intimidation-student-mental-health/">lecturer intimidation and the psychological toll on campus</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-strategic-evaluation-matrix-when-to-report-vs-when-to-defend">2. The Strategic Evaluation Matrix: When to Report vs. When to Defend</h2>
-<table>
-<thead>
-<tr>
-<th>Situation</th>
-<th>Recommended Path</th>
-<th>Primary Tactical Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Verbal innuendo; no physical threat</strong></td>
-<td><strong>Quiet Self-Protection</strong></td>
-<td>Never enter office alone; travel in groups of 3; sit out of eye line</td>
-</tr>
-<tr>
-<td><strong>Systemic grade extortion / Cash for marks</strong></td>
-<td><strong>Collective Class Petition</strong></td>
-<td>Pool complaints across 20+ students to SUG / Anti-Corruption Desk</td>
-</tr>
-<tr>
-<td><strong>Physical stalking or sexual assault threat</strong></td>
-<td><strong>Escalated Official Reporting</strong></td>
-<td>File simultaneous external reports: Police Gender Desk + University Anti-GBV Unit</td>
-</tr>
-<tr>
-<td><strong>Deliberate exam script failure</strong></td>
-<td><strong>Senate Script Remarking</strong></td>
-<td>Pay official fee for Senate external script remarking</td>
-</tr>
-</tbody>
-</table>
+<p>| Situation | Recommended Path | Primary Tactical Action |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Verbal innuendo; no physical threat</strong> | <strong>Quiet Self-Protection</strong> | Never enter office alone; travel in groups of 3; sit out of eye line |</p>
+<p>| <strong>Systemic grade extortion / Cash for marks</strong> | <strong>Collective Class Petition</strong> | Pool complaints across 20+ students to SUG / Anti-Corruption Desk |</p>
+<p>| <strong>Physical stalking or sexual assault threat</strong> | <strong>Escalated Official Reporting</strong> | File simultaneous external reports: Police Gender Desk + University Anti-GBV Unit |</p>
+<p>| <strong>Deliberate exam script failure</strong> | <strong>Senate Script Remarking</strong> | Pay official fee for Senate external script remarking |</p>
 <p>Understand student grading rights in <a href="/blog/academics/unfair-lecturer-grading-university/">unfair lecturer grading: what you can actually do</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-protocol-of-quiet-self-protection">3. The Protocol of "Quiet Self-Protection"</h2>
 <p>If an official report is deemed too dangerous for your immediate graduation timeline, execute these protective shields:</p>
 <ol>
-<li><strong>The Rule of Three:</strong> Never enter the lecturer's office alone under any circumstance. Always bring two coursemates (preferably including a course rep). If the lecturer says, <em>"Tell your friends to wait outside,"</em> leave the door wide open and stand within three feet of the threshold.</li>
-<li><strong>The Digital Paper Trail:</strong> Back up every communication. Never delete WhatsApp messages or voice notes. Save screenshots to Google Drive and email them to an external, secure email address.</li>
-<li><strong>Formal Institutional Remonstration:</strong> If they refuse to submit your Continuous Assessment score, write a formal, polite memo copying your Departmental Staff Adviser: <em>"Inquiry regarding missing CA score for Course Code."</em></li>
+<li>**The Rule of Three:** Never enter the lecturer's office alone under any circumstance. Always bring two coursemates (preferably including a course rep). If the lecturer says, *"Tell your friends to wait outside,"* leave the door wide open and stand within three feet of the threshold.</li>
+<li>**The Digital Paper Trail:** Back up every communication. Never delete WhatsApp messages or voice notes. Save screenshots to Google Drive and email them to an external, secure email address.</li>
+<li>**Formal Institutional Remonstration:** If they refuse to submit your Continuous Assessment score, write a formal, polite memo copying your Departmental Staff Adviser: *"Inquiry regarding missing CA score for Course Code."*</li>
 </ol>
 <p>Learn how to maintain personal boundaries on campus in <a href="/blog/mental-health/protecting-boundaries-campus-exploitation/">campus bullying and exploitation: setting hard boundaries</a>.</p>
-<hr />
+<hr>
 <h2 id="4-when-you-decide-to-blow-the-whistle">4. When You Decide to Blow the Whistle</h2>
-<p>If you choose to file an official report, do not do it alone or unprepared:<br />
-* Enlist the support of external civil society organizations, the National Association of Nigerian Students (NANS) Gender Desk, or verified campus human rights attorneys.<br />
-* External public visibility prevents departmental administrative committees from sweeping evidence under the rug.<br />
-* Your dignity, safety, and bodily integrity are sacred. You did not enter university to be coerced, humiliated, or victimized.</p>
-<hr />
+<p>If you choose to file an official report, do not do it alone or unprepared:</p>
+<ul>
+<li>Enlist the support of external civil society organizations, the National Association of Nigerian Students (NANS) Gender Desk, or verified campus human rights attorneys.</li>
+<li>External public visibility prevents departmental administrative committees from sweeping evidence under the rug.</li>
+<li>Your dignity, safety, and bodily integrity are sacred. You did not enter university to be coerced, humiliated, or victimized.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-happens-when-a-student-reports-a-lecturer-for-victimization-in-a-nigerian-university">What happens when a student reports a lecturer for victimization in a Nigerian university?</h3>
 <p>Without ironclad digital or physical evidence, internal faculty investigations often drag out, exposing the whistleblowing student to institutional retaliation from departmental colleagues of the accused lecturer.</p>
@@ -573,8 +531,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -758,8 +716,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -773,7 +731,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

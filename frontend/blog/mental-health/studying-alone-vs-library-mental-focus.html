@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -315,90 +315,44 @@
 <p>Both environments have ardent defenders on campus.</p>
 <p>Some scholars swear that studying alone is the only way to achieve deep conceptual focus. Others insist that studying in their room always ends in a three-hour accidental nap, and only the intense social pressure of a packed library can force them to read.</p>
 <p>Here is the cognitive science and environmental analysis of <strong>Solo Study vs. Library Study</strong> in Nigerian tertiary institutions.</p>
-<hr />
+<hr>
 <h2 id="1-the-environmental-comparison-matrix">1. The Environmental Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>Solo Room Study</th>
-<th>University Main Library</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Acoustic Control</strong></td>
-<td>Unpredictable (Roommate chatter, generators)</td>
-<td>Generally quiet, though whisper pockets exist</td>
-</tr>
-<tr>
-<td><strong>Procrastination Risk</strong></td>
-<td><strong>Extremely High</strong> (Mattress, snacks, phone nearby)</td>
-<td><strong>Low</strong> (Social contagion; everyone around is reading)</td>
-</tr>
-<tr>
-<td><strong>Power &amp; Lighting</strong></td>
-<td>Dependent on hostel grid or private inverter</td>
-<td>Backed by dedicated campus generators and steady lighting</td>
-</tr>
-<tr>
-<td><strong>Cognitive Freedom</strong></td>
-<td>High: Can recite aloud, walk around, use whiteboards</td>
-<td>Low: Must sit silently; restricted to written retrieval</td>
-</tr>
-<tr>
-<td><strong>Social Fatigue</strong></td>
-<td>Zero social energy expended</td>
-<td>Moderate: Walking past acquaintances, hallway greetings</td>
-</tr>
-</tbody>
-</table>
+<p>| Factor | Solo Room Study | University Main Library |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Acoustic Control</strong> | Unpredictable (Roommate chatter, generators) | Generally quiet, though whisper pockets exist |</p>
+<p>| <strong>Procrastination Risk</strong> | <strong>Extremely High</strong> (Mattress, snacks, phone nearby) | <strong>Low</strong> (Social contagion; everyone around is reading) |</p>
+<p>| <strong>Power & Lighting</strong> | Dependent on hostel grid or private inverter | Backed by dedicated campus generators and steady lighting |</p>
+<p>| <strong>Cognitive Freedom</strong> | High: Can recite aloud, walk around, use whiteboards | Low: Must sit silently; restricted to written retrieval |</p>
+<p>| <strong>Social Fatigue</strong> | Zero social energy expended | Moderate: Walking past acquaintances, hallway greetings |</p>
 <p>Evaluate campus library dynamics in <a href="/blog/academics/campus-library-vs-hostel-study/">campus library vs hostel study: noise, power, and seating</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-power-of-social-facilitation-in-the-library">2. The Power of "Social Facilitation" in the Library</h2>
 <p>In behavioral psychology, the <strong>Hawthorne Effect</strong> and <strong>Social Facilitation Theory</strong> explain why libraries produce intense productivity:</p>
-<table>
-<thead>
-<tr>
-<th>Study Environment</th>
-<th>Behavioral Conditioning</th>
-<th>Resulting Focus &amp; Productivity</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Alone in Hostel Room</strong></td>
-<td>Zero social accountability; bed and phone within arm's reach</td>
-<td>High risk of impulse scrolling ("5 minutes on Instagram" turns into 2 lost hours)</td>
-</tr>
-<tr>
-<td><strong>In Packed Library</strong></td>
-<td>Social facilitation; surrounded by peers deeply immersed in coursework</td>
-<td>Perceived observation mirrors focus; procrastination feels socially awkward; deep work sustained</td>
-</tr>
-</tbody>
-</table>
+<p>| Study Environment | Behavioral Conditioning | Resulting Focus & Productivity |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Alone in Hostel Room</strong> | Zero social accountability; bed and phone within arm's reach | High risk of impulse scrolling ("5 minutes on Instagram" turns into 2 lost hours) |</p>
+<p>| <strong>In Packed Library</strong> | Social facilitation; surrounded by peers deeply immersed in coursework | Perceived observation mirrors focus; procrastination feels socially awkward; deep work sustained |</p>
 <p>When you see fifty other students furiously writing notes, solving engineering equations, and memorizing anatomy diagrams, your brain mirrors their disciplined arousal. Procrastination feels socially unacceptable.</p>
 <p>Furthermore, university main libraries in Nigeria usually have prioritized generator fuel allocation, guaranteeing light and fan ventilation during intense daytime heat.</p>
 <p>Learn how to manage peer loneliness in <a href="/blog/mental-health/campus-loneliness-university-students/">campus loneliness in university: causes and recovery</a>.</p>
-<hr />
+<hr>
 <h2 id="3-when-solo-room-study-beats-the-library">3. When Solo Room Study Beats the Library</h2>
 <p>Despite the library's advantages, studying alone is scientifically superior for specific learning phases:</p>
 <ol>
-<li><strong>Active Vocal Retrieval (Feynman Technique):</strong> You cannot explain quantum mechanics or case law out loud to an empty room inside a silent university library. Solo study allows vocal recitation, which engages auditory memory loops.</li>
-<li><strong>Flashcard Testing &amp; Kinesthetic Pacing:</strong> Walking back and forth while flipping Anki flashcards activates the motor cortex, boosting retention in kinesthetic learners.</li>
-<li><strong>Severe Social Anxiety &amp; Hypervigilance:</strong> For introverted or socially anxious students, the feeling of being watched by peers in a crowded hall consumes cognitive bandwidth, leaving less working memory for academic synthesis.</li>
+<li>**Active Vocal Retrieval (Feynman Technique):** You cannot explain quantum mechanics or case law out loud to an empty room inside a silent university library. Solo study allows vocal recitation, which engages auditory memory loops.</li>
+<li>**Flashcard Testing & Kinesthetic Pacing:** Walking back and forth while flipping Anki flashcards activates the motor cortex, boosting retention in kinesthetic learners.</li>
+<li>**Severe Social Anxiety & Hypervigilance:** For introverted or socially anxious students, the feeling of being watched by peers in a crowded hall consumes cognitive bandwidth, leaving less working memory for academic synthesis.</li>
 </ol>
 <p>Compare solo learning with group revision in <a href="/blog/academics/solo-studying-vs-group-study/">solo studying vs group discussion: when groups harm GPA</a>.</p>
-<hr />
-<h2 id="4-the-8020-hybrid-protocol">4. The 80/20 Hybrid Protocol</h2>
+<hr>
+<h2 id="4-the-80-20-hybrid-protocol">4. The 80/20 Hybrid Protocol</h2>
 <p>The highest-performing students do not restrict themselves to a single environment. They execute a <strong>Bimodal Study Rhythm</strong>:</p>
 <ul>
-<li><strong>Morning Library Block (9:00 AM – 2:00 PM):</strong> Go to the library for heavy, dense information acquisition: reading textbook chapters, summarizing lecture handouts, and solving past question sets. The library's social pressure keeps you locked into deep focus.</li>
-<li><strong>Evening Solo Sprint (5:00 PM – 8:30 PM):</strong> Return to a quiet room or an empty evening classroom for active recall testing: reciting summaries from memory, drawing pathway diagrams on a whiteboard, and taking timed mock tests.</li>
+<li>**Morning Library Block (9:00 AM – 2:00 PM):** Go to the library for heavy, dense information acquisition: reading textbook chapters, summarizing lecture handouts, and solving past question sets. The library's social pressure keeps you locked into deep focus.</li>
+<li>**Evening Solo Sprint (5:00 PM – 8:30 PM):** Return to a quiet room or an empty evening classroom for active recall testing: reciting summaries from memory, drawing pathway diagrams on a whiteboard, and taking timed mock tests.</li>
 </ul>
 <p>Match your study environment to your immediate cognitive task, and watch your retention double.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="is-it-better-to-study-alone-or-in-a-campus-library-for-university-exams">Is it better to study alone or in a campus library for university exams?</h3>
 <p>It depends on the cognitive phase of learning: solo study in a quiet room is superior for dense conceptual encoding and active recall testing. The library is superior for accountability, preventing procrastination, and sustained deep work blocks.</p>
@@ -572,8 +526,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -757,8 +711,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -772,7 +726,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

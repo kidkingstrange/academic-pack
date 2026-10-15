@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,102 +308,66 @@
       <div class="article-body">
         <h1 id="breakups-in-university-recovering-your-academic-focus">Breakups in University: Recovering Your Academic Focus</h1>
 <p>Three weeks before your second-semester examinations, your two-year campus relationship explodes.</p>
-<p>Maybe they sent you a cold, detached WhatsApp breakup paragraph at midnight. </p>
-<p>Maybe you discovered they were secretly dating a senior student in another lodge with a car and an apartment. </p>
+<p>Maybe they sent you a cold, detached WhatsApp breakup paragraph at midnight.</p>
+<p>Maybe you discovered they were secretly dating a senior student in another lodge with a car and an apartment.</p>
 <p>Or maybe the relationship simply deteriorated into bitter arguments, emotional exhaustion, and silence.</p>
-<p>Whatever the cause, the fallout is devastating:<br />
-* You wake up with a physical ache in your chest, nausea in your stomach, and zero appetite.<br />
-* You sit in the lecture hall staring blankly at the blackboard, unable to hear a single word the lecturer speaks.<br />
-* You open your pharmacology or macroeconomics textbook, and within three minutes, your vision blurs with tears.<br />
-* And worse: your ex walks into the same faculty lecture hall, laughing and chatting with mutual friends as if you never existed.</p>
+<p>Whatever the cause, the fallout is devastating:</p>
+<ul>
+<li>You wake up with a physical ache in your chest, nausea in your stomach, and zero appetite.</li>
+<li>You sit in the lecture hall staring blankly at the blackboard, unable to hear a single word the lecturer speaks.</li>
+<li>You open your pharmacology or macroeconomics textbook, and within three minutes, your vision blurs with tears.</li>
+<li>And worse: your ex walks into the same faculty lecture hall, laughing and chatting with mutual friends as if you never existed.</li>
+</ul>
 <p>Every year, thousands of promising Nigerian undergraduates lose their Second Class Upper or First Class standing not because the coursework was too difficult, but because <strong>Acute Emotional Heartbreak</strong> hijacked their prefrontal cortex during exam season.</p>
 <p>Here is the tactical, neurobiological guide to surviving a campus breakup and protecting your academic results.</p>
-<hr />
+<hr>
 <h2 id="1-the-neurobiology-of-heartbreak-it-is-real-physical-pain">1. The Neurobiology of Heartbreak: It Is Real Physical Pain</h2>
 <p>Neuroimaging studies show that romantic rejection activates the exact same brain regions as physical injury—specifically the <strong>Anterior Cingulate Cortex</strong>:</p>
 <ul>
-<li><strong>Dopamine Withdrawal:</strong> When in love, your partner acts as a regular source of dopamine. A sudden breakup triggers the neurochemical equivalent of acute substance withdrawal, causing intense physical cravings, obsessive rumination, and restlessness.</li>
-<li><strong>Prefrontal Executive Impairment:</strong> The brain's limbic system enters a state of panic, redirecting glucose and blood flow away from executive working memory (required for reading and math) toward emotional processing.</li>
-<li><strong>Hostel Environmental Confinement:</strong> Because Nigerian student communities are small and interconnected, you cannot easily escape seeing your ex, which repeatedly triggers the amygdala.</li>
+<li>**Dopamine Withdrawal:** When in love, your partner acts as a regular source of dopamine. A sudden breakup triggers the neurochemical equivalent of acute substance withdrawal, causing intense physical cravings, obsessive rumination, and restlessness.</li>
+<li>**Prefrontal Executive Impairment:** The brain's limbic system enters a state of panic, redirecting glucose and blood flow away from executive working memory (required for reading and math) toward emotional processing.</li>
+<li>**Hostel Environmental Confinement:** Because Nigerian student communities are small and interconnected, you cannot easily escape seeing your ex, which repeatedly triggers the amygdala.</li>
 </ul>
 <p>Understand how emotional exhaustion accelerates student burnout in <a href="/blog/mental-health/academic-burnout-student-symptoms/">academic burnout student symptoms: why you cannot bring yourself to read</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-tactical-rules-for-classroom-and-hostel-defense">2. The 3 Tactical Rules for Classroom and Hostel Defense</h2>
 <p>When your ex attends the same department, faculty, or lodge compound, implement these non-negotiable boundaries:</p>
-<table>
-<thead>
-<tr>
-<th>Protocol Pillar</th>
-<th>Immediate Actions</th>
-<th>Academic Protection Goal</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Digital Lockdown</strong></td>
-<td>• Mute or archive WhatsApp chats and status updates<br>• Temporarily block secondary DMs or log out of social feeds<br>• Turn off notifications from mutual group chats</td>
-<td>Prevents sudden emotional spikes and panic loops while revising lecture notes</td>
-</tr>
-<tr>
-<td><strong>Spatial Reconfiguration</strong></td>
-<td>• Move to a different lecture hall seating row<br>• Switch study zones (use faculty library instead of departmental hall)<br>• Alter daily walking routes across campus</td>
-<td>Eliminates involuntary encounters that trigger acute emotional distress during exam week</td>
-</tr>
-<tr>
-<td>&gt; * Delete shared gallery • Relocate study locations</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
+<p>| Protocol Pillar | Immediate Actions | Academic Protection Goal |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Digital Lockdown</strong> | • Mute or archive WhatsApp chats and status updates<br>• Temporarily block secondary DMs or log out of social feeds<br>• Turn off notifications from mutual group chats | Prevents sudden emotional spikes and panic loops while revising lecture notes |</p>
+<p>| <strong>Spatial Reconfiguration</strong> | • Move to a different lecture hall seating row<br>• Switch study zones (use faculty library instead of departmental hall)<br>• Alter daily walking routes across campus | Eliminates involuntary encounters that trigger acute emotional distress during exam week |</p>
+<blockquote>
+<p>* Delete shared gallery • Relocate study locations</p>
+</blockquote>
 <ul>
-<li><strong>The Digital Air Gap:</strong> Do not check their last seen on WhatsApp. Do not monitor their Instagram stories to see if they look sad. Do not read old screenshots of affectionate chats. Every time you check their profile, you trigger a fresh surge of dopamine withdrawal that resets your emotional healing clock.</li>
-<li><strong>The Opposite Quadrant Seating Rule:</strong> If you take lectures in the same 300-seat auditorium, sit in the opposite quadrant. If they sit near the front right, sit in the middle left. You cannot concentrate on a chemistry lecturer if your peripheral vision is tracking your ex's posture.</li>
-<li><strong>Professional Politeness Only:</strong> If you are forced to interact for group assignments, speak in neutral, brief, business-like tones. Never engage in dramatic hallway confrontations or emotional debates on campus.</li>
+<li>**The Digital Air Gap:** Do not check their last seen on WhatsApp. Do not monitor their Instagram stories to see if they look sad. Do not read old screenshots of affectionate chats. Every time you check their profile, you trigger a fresh surge of dopamine withdrawal that resets your emotional healing clock.</li>
+<li>**The Opposite Quadrant Seating Rule:** If you take lectures in the same 300-seat auditorium, sit in the opposite quadrant. If they sit near the front right, sit in the middle left. You cannot concentrate on a chemistry lecturer if your peripheral vision is tracking your ex's posture.</li>
+<li>**Professional Politeness Only:** If you are forced to interact for group assignments, speak in neutral, brief, business-like tones. Never engage in dramatic hallway confrontations or emotional debates on campus.</li>
 </ul>
 <p>Learn how to manage difficult room dynamics and personal boundaries in <a href="/blog/hostel/handling-unwanted-lodge-guests-squatters/">handling unwanted lodge guests and difficult roommates</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-grief-container-revision-method">3. The "Grief Container" Revision Method</h2>
 <p>Telling a heartbroken student to <em>"just forget about it and read"</em> is clinically useless. The brain will simply rebel with intrusive thoughts.</p>
 <p>Instead, use <strong>Compartmentalized Grieving</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Time Block</th>
-<th>Protocol</th>
-<th>Cognitive Objective</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>6:30 PM - 6:50 PM</strong></td>
-<td><strong>The Grief Container</strong></td>
-<td>Sit alone with a notebook. Cry, journal raw thoughts, scream into a pillow, feel all the pain completely. Set an alarm.</td>
-</tr>
-<tr>
-<td><strong>6:50 PM - 7:00 PM</strong></td>
-<td><strong>Somatic Reset</strong></td>
-<td>Wash face with cold water. Drink 300ml of water. Do 10 slow pushups or deep squats to engage motor cortex.</td>
-</tr>
-<tr>
-<td><strong>7:00 PM - 8:30 PM</strong></td>
-<td><strong>Targeted Study Sprint</strong></td>
-<td>Execute a 90-minute Pomodoro study block on a structured quantitative or past question task that requires active writing.</td>
-</tr>
-</tbody>
-</table>
+<p>| Time Block | Protocol | Cognitive Objective |</p>
+<p>|---|---|---|</p>
+<p>| <strong>6:30 PM - 6:50 PM</strong> | <strong>The Grief Container</strong> | Sit alone with a notebook. Cry, journal raw thoughts, scream into a pillow, feel all the pain completely. Set an alarm. |</p>
+<p>| <strong>6:50 PM - 7:00 PM</strong> | <strong>Somatic Reset</strong> | Wash face with cold water. Drink 300ml of water. Do 10 slow pushups or deep squats to engage motor cortex. |</p>
+<p>| <strong>7:00 PM - 8:30 PM</strong> | <strong>Targeted Study Sprint</strong> | Execute a 90-minute Pomodoro study block on a structured quantitative or past question task that requires active writing. |</p>
 <p>When intrusive thoughts occur during your study block, write them on a scrap notepad and tell yourself: <em>"I will process this during my scheduled grief container tomorrow at 6:30 PM."</em></p>
 <p>Learn how to catch up on coursework quickly after emotional disruption in <a href="/blog/mental-health/falling-behind-university-syllabus-catchup/">falling behind university syllabus: how to catch up</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-long-game-academic-success-is-the-ultimate-comeback">4. The Long Game: Academic Success Is the Ultimate Comeback</h2>
-<p>Right now, your ego feels bruised and discarded. </p>
+<p>Right now, your ego feels bruised and discarded.</p>
 <p>You might feel the urge to send desperate text messages, beg for reconciliation, or skip examinations to nurse your sorrow in a dark hostel room.</p>
-<p>Pause and consider this truth:<br />
-* A relationship may end, but <strong>your academic transcript is permanent</strong>.<br />
-* If you fail your courses this semester, your ex will still move forward, while you will be left dealing with carryovers, financial penalties, and academic probation alone.<br />
-* In six months, the emotional intensity of this breakup will fade into an insignificant memory. Do not sacrifice a four-year degree for a four-week emotional storm.</p>
+<p>Pause and consider this truth:</p>
+<ul>
+<li>A relationship may end, but **your academic transcript is permanent**.</li>
+<li>If you fail your courses this semester, your ex will still move forward, while you will be left dealing with carryovers, financial penalties, and academic probation alone.</li>
+<li>In six months, the emotional intensity of this breakup will fade into an insignificant memory. Do not sacrifice a four-year degree for a four-week emotional storm.</li>
+</ul>
 <p>Wipe your tears, open your books, and let your academic comeback be the definitive answer.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-does-a-university-breakup-feel-so-devastating-during-examination-periods">Why does a university breakup feel so devastating during examination periods?</h3>
 <p>Campus relationships are intensely localized: you share lecture theatres, campus churches, mutual friends, and student lodges. Heartbreak also removes your primary emotional support system right when academic stress peaks.</p>
@@ -577,8 +541,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -762,8 +726,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -777,7 +741,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,97 +307,55 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="cooking-every-meal-vs-campus-bukka-eating-real-math">Cooking Every Meal vs Campus Bukka Eating: Real Math</h1>
-<p>It is 1:30 PM on campus. </p>
+<p>It is 1:30 PM on campus.</p>
 <p>You finish a three-hour marathon lecture. You are famished.</p>
 <p>You stand at the junction between two paths:</p>
 <p><strong>Path A:</strong> Walk into the crowded campus bukka or cafeteria, order a hot plate of jollof rice with fried fish and a cold drink, eat in ten minutes, and walk away with zero dishes to wash.</p>
 <p><strong>Path B:</strong> Walk twenty minutes under the sun back to your hostel, light your gas cooker, chop onions, wash pots, and cook a meal from scratch.</p>
 <p>Path A feels effortless. Path B feels like domestic torture.</p>
 <p>Yet, at the end of every semester, the students who choose Path A have empty bank accounts and crippling financial anxiety, while the students who choose Path B maintain savings and eat healthy.</p>
-<p>Let us dismantle the arguments and examine the <strong>Hard Financial &amp; Cognitive Math: Cooking vs. Campus Bukka Eating.</strong></p>
-<hr />
+<p>Let us dismantle the arguments and examine the <strong>Hard Financial & Cognitive Math: Cooking vs. Campus Bukka Eating.</strong></p>
+<hr>
 <h2 id="1-the-mathematical-financial-showdown">1. The Mathematical Financial Showdown</h2>
 <p>Look at the cold, unvarnished financial numbers over a standard 30-day academic month:</p>
-<table>
-<thead>
-<tr>
-<th>Feeding Model</th>
-<th>Typical Daily / Monthly Items</th>
-<th>Monthly Cost (30 Days)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Campus Bukka / Kiosks</strong> <em>(2 meals daily)</em></td>
-<td>• Morning snack &amp; drink (₦1,200)<br>• Evening plate of rice &amp; protein (₦1,800)<br>• Daily average: ₦3,000</td>
-<td><strong>₦90,000 / month</strong></td>
-</tr>
-<tr>
-<td><strong>Hostel Batch Cooking</strong> <em>(Bulk raw staples)</em></td>
-<td>• Half-paint bucket rice &amp; beans (₦11,000)<br>• Crate of eggs &amp; dried fish (₦6,500)<br>• Gas refill contribution &amp; soup condiments (₦4,500)<br>• Yams, garri &amp; seasonings (₦5,000)</td>
-<td><strong>₦27,000 / month</strong></td>
-</tr>
-<tr>
-<td><strong>Net Financial Advantage</strong></td>
-<td><strong>Cook in lodge to retain cashflow for fees &amp; books</strong></td>
-<td><strong>Save ₦63,000 / month (70% reduction)</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Eating at campus canteens costs <strong>more than triple the price</strong> of cooking your own food. </p>
+<p>| Feeding Model | Typical Daily / Monthly Items | Monthly Cost (30 Days) |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Campus Bukka / Kiosks</strong> <em>(2 meals daily)</em> | • Morning snack & drink (₦1,200)<br>• Evening plate of rice & protein (₦1,800)<br>• Daily average: ₦3,000 | <strong>₦90,000 / month</strong> |</p>
+<p>| <strong>Hostel Batch Cooking</strong> <em>(Bulk raw staples)</em> | • Half-paint bucket rice & beans (₦11,000)<br>• Crate of eggs & dried fish (₦6,500)<br>• Gas refill contribution & soup condiments (₦4,500)<br>• Yams, garri & seasonings (₦5,000) | <strong>₦27,000 / month</strong> |</p>
+<p>| <strong>Net Financial Advantage</strong> | <strong>Cook in lodge to retain cashflow for fees & books</strong> | <strong>Save ₦63,000 / month (70% reduction)</strong> |</p>
+<p>Eating at campus canteens costs <strong>more than triple the price</strong> of cooking your own food.</p>
 <p>Over a four-year degree, the difference amounts to over <strong>₦1,500,000 in evaporated cash</strong>—enough to purchase a high-end coding laptop, fund professional certifications, and pre-pay two years of lodge rent.</p>
 <p>Review batch cooking workflows in <a href="/blog/finances/batch-cooking-food-saving-campus/">batch cooking strategy: slashing weekly feeding expenses</a>.</p>
-<hr />
-<h2 id="2-the-cognitive-performance-health-audit">2. The Cognitive Performance &amp; Health Audit</h2>
+<hr>
+<h2 id="2-the-cognitive-performance-health-audit">2. The Cognitive Performance & Health Audit</h2>
 <p>Beyond the financial disparity, evaluate the impact on your <strong>Brain Function</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Evaluation Metric</th>
-<th>Campus Bukka Food</th>
-<th>Home-Cooked Hostel Food</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Protein Quality</strong></td>
-<td>Tiny, tough meat cubes / microscopic fish</td>
-<td>Generous whole boiled eggs, beans, fish flakes</td>
-</tr>
-<tr>
-<td><strong>Cooking Oil Quality</strong></td>
-<td>Re-used, oxidized, inflammatory vegetable oil</td>
-<td>Fresh palm oil or unheated quality vegetable oil</td>
-</tr>
-<tr>
-<td><strong>Hygiene Standards</strong></td>
-<td>High risk of bacterial contamination &amp; typhoid</td>
-<td>Complete control over water filtration and washing</td>
-</tr>
-<tr>
-<td><strong>Post-Meal Alertness</strong></td>
-<td>Severe carbohydrate coma; 2-hour study slump</td>
-<td>Steady, slow-release energy for afternoon focus</td>
-</tr>
-</tbody>
-</table>
-<p>Bukkas operate on razor-thin commercial profit margins; they cut costs by using heavily oxidized cooking oil and cheap, refined starches. </p>
+<p>| Evaluation Metric | Campus Bukka Food | Home-Cooked Hostel Food |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Protein Quality</strong> | Tiny, tough meat cubes / microscopic fish | Generous whole boiled eggs, beans, fish flakes |</p>
+<p>| <strong>Cooking Oil Quality</strong> | Re-used, oxidized, inflammatory vegetable oil | Fresh palm oil or unheated quality vegetable oil |</p>
+<p>| <strong>Hygiene Standards</strong> | High risk of bacterial contamination & typhoid | Complete control over water filtration and washing |</p>
+<p>| <strong>Post-Meal Alertness</strong> | Severe carbohydrate coma; 2-hour study slump | Steady, slow-release energy for afternoon focus |</p>
+<p>Bukkas operate on razor-thin commercial profit margins; they cut costs by using heavily oxidized cooking oil and cheap, refined starches.</p>
 <p>Eating commercial bukka food daily exposes your brain to systemic inflammation and lethargy.</p>
 <p>Explore emergency rationing tactics in <a href="/blog/finances/surviving-on-2000-naira-campus/">surviving campus week with only ₦2,000 left: rationing blueprint</a>.</p>
-<hr />
-<h2 id="3-the-time-myth-i-dont-have-time-to-cook">3. The Time Myth: "I Don't Have Time to Cook"</h2>
+<hr>
+<h2 id="3-the-time-myth-i-don-t-have-time-to-cook">3. The Time Myth: "I Don't Have Time to Cook"</h2>
 <p>The primary excuse students make is time: <em>"Lectures are too hectic; I don't have two hours to cook daily."</em></p>
-<p>This excuse assumes you cook every meal from scratch:<br />
-* <strong>The Smart 80/20 Solution:</strong> Batch-cook concentrated pepper stew and boiled beans on Sunday afternoon (takes 90 minutes).<br />
-* During the week, preparing a meal means boiling pasta or reheating stew—<strong>it takes exactly 6 minutes</strong>, which is faster than walking to the campus cafeteria and waiting in queue!</p>
+<p>This excuse assumes you cook every meal from scratch:</p>
+<ul>
+<li>**The Smart 80/20 Solution:** Batch-cook concentrated pepper stew and boiled beans on Sunday afternoon (takes 90 minutes).</li>
+<li>During the week, preparing a meal means boiling pasta or reheating stew—**it takes exactly 6 minutes**, which is faster than walking to the campus cafeteria and waiting in queue!</li>
+</ul>
 <p>Learn single-student cooking ergonomics in <a href="/blog/finances/single-student-cooking-without-waste/">cooking for one in lodges: slashing food waste and expenses</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-pragmatic-compromise">4. The Pragmatic Compromise</h2>
-<p>You do not need to become a monastic recluse who never buys food:<br />
-* <strong>The 90/10 Rule:</strong> Cook 90% of your weekly meals in your hostel lodge to protect your health and budget.<br />
-* Reserve 10% (one weekend treat with friends or a quick post-exam celebratory snack) for campus cafeterias.<br />
-* Master your kitchen, protect your capital, and fuel your brain with the premium nutrition required to graduate at the top of your class.</p>
-<hr />
+<p>You do not need to become a monastic recluse who never buys food:</p>
+<ul>
+<li>**The 90/10 Rule:** Cook 90% of your weekly meals in your hostel lodge to protect your health and budget.</li>
+<li>Reserve 10% (one weekend treat with friends or a quick post-exam celebratory snack) for campus cafeterias.</li>
+<li>Master your kitchen, protect your capital, and fuel your brain with the premium nutrition required to graduate at the top of your class.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-a-student-spend-monthly-eating-exclusively-at-campus-bukkas">How much does a student spend monthly eating exclusively at campus bukkas?</h3>
 <p>At an average of ₦1,200 per meal, eating two meals daily at campus bukkas costs between ₦72,000 and ₦85,000 monthly per student.</p>
@@ -571,8 +529,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -756,8 +714,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -771,7 +729,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

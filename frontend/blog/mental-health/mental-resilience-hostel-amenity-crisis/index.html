@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,25 +306,27 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="hostel-amenity-collapse-coping-when-water-light-fail">Hostel Amenity Collapse: Coping When Water &amp; Light Fail</h1>
-<p>It is the middle of the second semester examination week. </p>
+        <h1 id="hostel-amenity-collapse-coping-when-water-light-fail">Hostel Amenity Collapse: Coping When Water & Light Fail</h1>
+<p>It is the middle of the second semester examination week.</p>
 <p>At 5:30 AM, you turn on your room's plastic tap. Nothing happens. Only a dry, hollow hissing sound echoes from the pipe.</p>
 <p>Outside in the hostel quadrangle, chaos has already erupted. Five hundred students are shouting in the pre-dawn darkness, fighting around a single emergency borehole tap that is sputtering murky brown water.</p>
 <p>Meanwhile, the university electrical substation transformer exploded four days ago. Your phone battery sits at 7%, your rechargeable study lamp is dead, and the communal hostel toilets have been unflushed for forty-eight hours.</p>
-<p>In Nigerian universities, academic rigor is rarely the hardest part of earning a degree. </p>
+<p>In Nigerian universities, academic rigor is rarely the hardest part of earning a degree.</p>
 <p>The hardest part is <strong>Infrastructure Survival</strong>—retaining your intellectual focus and human dignity when basic living amenities completely collapse around you.</p>
 <p>Here is how to maintain psychological resilience, protect your physical health, and conquer your semester examinations during severe hostel amenity crises.</p>
-<hr />
+<hr>
 <h2 id="1-the-cognitive-tax-of-living-in-survival-mode">1. The Cognitive Tax of Living in Survival Mode</h2>
 <p>In behavioral psychology, <strong>The Scarcity Trap</strong> explains how physical deprivation drains cognitive horsepower:</p>
-<p>When you spend three hours every day:<br />
-* Hunting for potable water with plastic jerrycans,<br />
-* Queuing at campus commercial centers to charge your phone,<br />
-* Enduring suffocating heat and mosquito swarms in unlit rooms,</p>
+<p>When you spend three hours every day:</p>
+<ul>
+<li>Hunting for potable water with plastic jerrycans,</li>
+<li>Queuing at campus commercial centers to charge your phone,</li>
+<li>Enduring suffocating heat and mosquito swarms in unlit rooms,</li>
+</ul>
 <p>Your brain is trapped in primitive survival mode. Working memory capacity that should be evaluating Organic Synthesis mechanisms is consumed by basic biological logistics.</p>
 <p>Recognizing that <strong>your mental fatigue is an environmental reaction—not personal intellectual weakness</strong>—is critical to preventing despair.</p>
 <p>Review water management strategies in our survival guide on <a href="/blog/hostel-and-accommodation/hostel-water-scarcity-coping/">hostel water scarcity: 5-bucket survival strategy</a>.</p>
-<hr />
+<hr>
 <h2 id="2-sanitation-defense-protecting-your-body-against-disease">2. Sanitation Defense: Protecting Your Body Against Disease</h2>
 <p>When campus hostel infrastructure fails, opportunistic pathogens thrive. Protect your physical health with non-negotiable hygiene protocols:</p>
 <h3 id="the-pure-water-intimate-rule">The "Pure Water" Intimate Rule</h3>
@@ -334,27 +336,29 @@
 <h3 id="water-filtration-tactics">Water Filtration Tactics</h3>
 <p>If you must fetch water from emergency campus tankers or ground wells, filter it through a clean white handkerchief into your storage bucket and add three drops of water purification solution (WaterGuard or sodium hypochlorite).</p>
 <p>For female undergraduates navigating communal sanitation challenges, study our <a href="/blog/hostel-and-accommodation/female-university-hostel-survival/">female university hostels: privacy and sanitation survival guide</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-stoic-framework-managing-the-rage-of-deprivation">3. The Stoic Framework: Managing the Rage of Deprivation</h2>
 <p>When taps run dry, it is easy to succumb to toxic bitterness: <em>"Why am I suffering like this just to get an ordinary degree? Why can't this country fix simple water?"</em></p>
 <p>While your political anger is completely justified, indulging in chronic rage during exam week only drains your remaining dopamine reserves:</p>
 <ol>
-<li><strong>Shift to Radical Tactical Pragmatism:</strong> Acknowledge the failure of the institution, but focus 100% of your energy on what you can control: your water reserves, your charging schedule, and your study routine.</li>
-<li><strong>Build a Living Alliance:</strong> Team up with two reliable roommates. One student handles water hauling while the second guards reading seats in the library, and the third monitors phone charging at the campus fellowship hall.</li>
+<li>**Shift to Radical Tactical Pragmatism:** Acknowledge the failure of the institution, but focus 100% of your energy on what you can control: your water reserves, your charging schedule, and your study routine.</li>
+<li>**Build a Living Alliance:** Team up with two reliable roommates. One student handles water hauling while the second guards reading seats in the library, and the third monitors phone charging at the campus fellowship hall.</li>
 </ol>
 <p>To understand how sensory overload in crowded rooms drains mental health, read <a href="/blog/mental-health/lack-of-privacy-hostel-mental-toll/">shared space exhaustion: the mental cost of no privacy</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-mental-resilience-support-network">🧠 Join the Student Mental Resilience &amp; Support Network</h3>
+<p>### 🧠 Join the Student Mental Resilience & Support Network</p>
 <p>Enduring tough hostel conditions and amenity blackouts?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with verified students from your campus, share genuine hostel leads, and access collective support.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with verified students from your campus, share genuine hostel leads, and access collective support.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-amenity-shock-in-nigerian-university-hostels">What is 'Amenity Shock' in Nigerian university hostels?</h3>
 <p>The physical and emotional burnout caused by the simultaneous collapse of basic survival infrastructure—dry taps, multi-week power blackouts, and overflowing sewage—during intense academic semesters.</p>
-<h3 id="how-does-carrying-water-buckets-before-800-am-lectures-impact-academic-performance">How does carrying water buckets before 8:00 AM lectures impact academic performance?</h3>
+<h3 id="how-does-carrying-water-buckets-before-8-00-am-lectures-impact-academic-performance">How does carrying water buckets before 8:00 AM lectures impact academic performance?</h3>
 <p>Hauling 25-liter jerrycans across multi-story hostel staircases drains physical glucose reserves and causes musculoskeletal fatigue, leaving students physically and mentally depleted before lectures start.</p>
 <h3 id="how-can-female-students-protect-their-hygiene-during-extended-hostel-water-crises">How can female students protect their hygiene during extended hostel water crises?</h3>
 <p>Keep dedicated emergency packs of clean commercial sachet water exclusively for intimate sanitation, maintain antiseptic wet wipes, and use portable hanging toiletry bags.</p>
@@ -524,8 +528,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -709,8 +713,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -724,7 +728,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

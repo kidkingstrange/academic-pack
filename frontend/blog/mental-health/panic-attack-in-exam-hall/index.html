@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,15 +310,17 @@
 <p>You sit at Desk 142 in the university examination hall.</p>
 <p>The chief invigilator shouts: <em>"Turn over your question papers and begin!"</em></p>
 <p>You look down at Question 1. You do not recognize the terms. You look at Question 2; the equations seem blurred.</p>
-<p>Suddenly, a wave of suffocating electricity shoots through your spine.<br />
-* Your throat constricts; you feel like you are breathing through a pinched straw.<br />
-* Your heart pounds so violently you can hear it roaring in your ears.<br />
-* The exam hall begins spinning, and dark tunnel vision closes in around the edges of your eyes.<br />
-* Your mind screams: <em>"I am going to faint. I am having a heart attack. I am failing out of school."</em></p>
+<p>Suddenly, a wave of suffocating electricity shoots through your spine.</p>
+<ul>
+<li>Your throat constricts; you feel like you are breathing through a pinched straw.</li>
+<li>Your heart pounds so violently you can hear it roaring in your ears.</li>
+<li>The exam hall begins spinning, and dark tunnel vision closes in around the edges of your eyes.</li>
+<li>Your mind screams: *"I am going to faint. I am having a heart attack. I am failing out of school."*</li>
+</ul>
 <p>You are having an <strong>Acute Panic Attack inside the Examination Hall</strong>.</p>
-<p>Every second counts. If you surrender to the panic, the adrenaline will incapacitate you for the entire three-hour duration. </p>
+<p>Every second counts. If you surrender to the panic, the adrenaline will incapacitate you for the entire three-hour duration.</p>
 <p>Here is the emergency, step-by-step physiological rescue protocol to stop the panic attack in under 180 seconds and reclaim your cognitive faculties.</p>
-<hr />
+<hr>
 <h2 id="1-step-1-the-bio-mechanical-brake-the-physiological-sigh">1. Step 1: The Bio-Mechanical Brake (The Physiological Sigh)</h2>
 <p>When panic strikes, your breathing automatically turns into shallow, rapid chest panting. This expels excessive carbon dioxide, elevating blood alkalinity and triggering severe dizziness and tingling fingers.</p>
 <p>You cannot think your way out of panic; you must <strong>mechanically force your nervous system to brake</strong>:</p>
@@ -327,22 +329,24 @@
 <li>Inhale deeply through your nose for 3 seconds.</li>
 <li>At the top of your breath, take an immediate, sharp second inhale through your nose to fully expand the alveoli air sacs in your lungs.</li>
 <li>Slowly exhale through pursed lips (as if blowing out a candle) for 6 full seconds.</li>
-<li>Repeat this cycle <strong>three times</strong>.</li>
+<li>Repeat this cycle **three times**.</li>
 </ol>
 <p>Neuroscience research from Stanford University confirms that two consecutive inhales followed by an extended exhale triggers the <strong>vagus nerve</strong>, mechanically decelerating your heart rate within 30 seconds.</p>
 <p>Compare the physiology of panic vs healthy nervousness in <a href="/blog/mental-health/exam-anxiety-university-students/">exam anxiety vs normal nerves: how your body reacts</a>.</p>
-<hr />
+<hr>
 <h2 id="2-step-2-the-5-4-3-2-1-sensory-grounding-lock">2. Step 2: The 5-4-3-2-1 Sensory Grounding Lock</h2>
 <p>Panic lives in catastrophic future projections (<em>"I will fail, my parents will abandon me"</em>). Grounding yanks your prefrontal cortex back into the physical present moment:</p>
-<p>Silently scan your immediate surroundings and count:<br />
-* <strong>5 Things You Can See:</strong> The blue plastic of your Bic biro, the scratch on your desk, the ceiling fan blade, the red shoes of the invigilator, the serial number on your answer booklet.<br />
-* <strong>4 Things You Can Touch:</strong> The cold wooden surface of the table, the texture of your denim jeans, the smoothness of your paper, your fingernails pressing your palm.<br />
-* <strong>3 Things You Can Hear:</strong> The hum of the ceiling fan, the rustle of turning pages, the distant hum of a generator.<br />
-* <strong>2 Things You Can Smell:</strong> The faint scent of paper, the dust on the floor.<br />
-* <strong>1 Thing You Can Taste:</strong> The lingering taste of mint or water on your tongue.</p>
+<p>Silently scan your immediate surroundings and count:</p>
+<ul>
+<li>**5 Things You Can See:** The blue plastic of your Bic biro, the scratch on your desk, the ceiling fan blade, the red shoes of the invigilator, the serial number on your answer booklet.</li>
+<li>**4 Things You Can Touch:** The cold wooden surface of the table, the texture of your denim jeans, the smoothness of your paper, your fingernails pressing your palm.</li>
+<li>**3 Things You Can Hear:** The hum of the ceiling fan, the rustle of turning pages, the distant hum of a generator.</li>
+<li>**2 Things You Can Smell:** The faint scent of paper, the dust on the floor.</li>
+<li>**1 Thing You Can Taste:** The lingering taste of mint or water on your tongue.</li>
+</ul>
 <p>By forcing your brain to process sensory data, you divert neural metabolic energy away from the hyperactive amygdala.</p>
 <p>Understand how preparing for blackouts prevents exam disasters in <a href="/blog/academics/exam-panic-blackouts-why-prepared-students-blank/">exam panic and blackouts: why prepared students blank</a>.</p>
-<hr />
+<hr>
 <h2 id="3-step-3-the-micro-win-protocol-restoring-dopamine">3. Step 3: The Micro-Win Protocol (Restoring Dopamine)</h2>
 <p>Now that your heart rate has stabilized, do not attempt to solve the hardest 20-mark essay question immediately. Your working memory is still recovering from adrenaline shock:</p>
 <ol>
@@ -352,25 +356,24 @@
 </ol>
 <p>Completing one small question releases a micro-dose of dopamine in the brain, dissolving residual cortisol and restoring your analytical confidence.</p>
 <p>If you are running out of preparation time before final papers, deploy <a href="/blog/academics/14-day-exam-cramming-panic-study-plan/">14-day exam cramming panic plan: last minute damage control</a>.</p>
-<hr />
+<hr>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">🚀 IMMUNIZE YOURSELF AGAINST EXAM PANIC</div>
-  <h3 class="blog-cta-box__title">Master Exam Hall Resilience with Proven Cognitive Systems</h3>
-  <p class="blog-cta-box__desc">
-    Panic attacks are predictable physiological events that can be permanently neutralized with cognitive rehearsal and active retrieval training.
-    Discover the battle-tested system Nigerian undergraduates use to eliminate exam hall blackouts and dominate semester examinations.
-  </p>
-  <div class="blog-cta-box__features">
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Physiological Vagus Nerve Protocols</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Timed Active Recall Simulations</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Complete CGPA Recovery Blueprint</div>
-  </div>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">
-    Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i>
-  </a>
+<div class="blog-cta-box__badge">🚀 IMMUNIZE YOURSELF AGAINST EXAM PANIC</div>
+<h3 class="blog-cta-box__title">Master Exam Hall Resilience with Proven Cognitive Systems</h3>
+<p class="blog-cta-box__desc">
+<p>Panic attacks are predictable physiological events that can be permanently neutralized with cognitive rehearsal and active retrieval training.</p>
+<p>Discover the battle-tested system Nigerian undergraduates use to eliminate exam hall blackouts and dominate semester examinations.</p>
+</p>
+<div class="blog-cta-box__features">
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Physiological Vagus Nerve Protocols</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Timed Active Recall Simulations</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Complete CGPA Recovery Blueprint</div>
 </div>
-
-<hr />
+<a href="/academic-comeback-package" class="blog-cta-box__btn">
+<p>Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i></p>
+</a>
+</div>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-are-the-physical-symptoms-of-an-active-panic-attack-in-an-exam-hall">What are the physical symptoms of an active panic attack in an exam hall?</h3>
 <p>Rapid chest hyperventilation, racing heart (tachycardia), feeling of choking, tunnel vision, intense dizziness, trembling hands, and a terrifying sensation of impending death or fainting.</p>
@@ -544,8 +547,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -729,8 +732,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -744,7 +747,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

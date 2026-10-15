@@ -18,7 +18,7 @@ from ..schemas.schemas import (
 from ..services.paystack import (
     initialize_transaction, verify_transaction
 )
-from ..services.payment_completion import complete_payment
+from ..services.payment_completion import complete_payment, is_valid_paid_amount
 from ..services.email_service import send_email
 from ..utils.security import create_access_token
 from ..database import get_db
@@ -82,7 +82,7 @@ async def compute_price_and_referral(
         )
         return amount, referred_by
     else:
-        # ── Direct / Organic Pathway: ₦2,000 Student Price (₦5,000 after 24h expiry) ──
+        # ── Direct / Organic Pathway: ₦5,000 Base Student Price ──
         direct_expired = bool(client_expiry and client_expiry < now.timestamp() * 1000)
         base_price = (
             float(settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA)
@@ -328,19 +328,18 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
     """
     existing_payment = await db.payments.find_one({"reference": body.reference, "status": "success"})
     if existing_payment:
-        existing_sub = await db.subscribers.find_one({"email": body.email.lower()})
-        if existing_sub:
-            user = await db.users.find_one({"email": body.email.lower()})
-            if user:
-                token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
-                access_token = user.get("library_access_token")
-                ml = f"/library?token={access_token}" if access_token else None
-                return PaymentVerifyResponse(success=True, token=token, magic_link=ml, library_token=access_token, amount=existing_payment.get("amount", 0))
+        cust_email = (body.email or existing_payment.get("email") or "").strip().lower()
+        user = await db.users.find_one({"email": cust_email})
+        if user:
+            token = create_access_token({"sub": str(user["_id"]), "email": user["email"], "role": "customer"})
+            access_token = user.get("library_access_token")
+            ml = f"/library?token={access_token}" if access_token else None
+            return PaymentVerifyResponse(success=True, token=token, magic_link=ml, library_token=access_token, amount=existing_payment.get("amount", 0))
         completion = await complete_payment(
             db,
             reference=body.reference,
-            email=body.email,
-            name=body.name,
+            email=cust_email,
+            name=body.name or existing_payment.get("name") or "Student",
             amount=existing_payment.get("amount", 0),
             charge_id=existing_payment.get("charge_id"),
             gateway_response=existing_payment.get("gateway_response", {}),
@@ -368,12 +367,29 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
         )
 
     amount_paid = data.get("amount", 0) / 100.0
+    fee_paid = float((data.get("fees") or 0) / 100.0)
     now = datetime.now(timezone.utc)
 
-    # ── Verify amount matches expected pending amount (prevent tampering) ──
+    # ── Resolve email and name from body, pending_payments, or Paystack customer data ──
     pending = await db.pending_payments.find_one({"reference": body.reference})
+    email = (body.email or "").strip().lower() if body.email else None
+    name = (body.name or "").strip() if body.name else None
+
+    if pending:
+        if not email:
+            email = (pending.get("email") or "").strip().lower()
+        if not name or name == "Student":
+            name = pending.get("name") or name
+
+    cust = data.get("customer", {})
+    if not email:
+        email = (cust.get("email") or "").strip().lower()
+    if not name or name == "Student":
+        name = f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or name or "Student"
+
+    # ── Verify amount matches expected pending amount (prevent tampering) ──
     expected_amount = float(pending.get("amount", 0) or 0) if pending else 0
-    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+    if expected_amount > 0 and not is_valid_paid_amount(amount_paid, expected_amount, fee_paid):
         return PaymentVerifyResponse(
             success=False,
             message="Payment amount does not match expected order total. Please contact support."
@@ -382,14 +398,24 @@ async def verify_payment(body: PaymentVerifyRequest, request: Request, db=Depend
     completion = await complete_payment(
         db,
         reference=body.reference,
-        email=body.email,
-        name=body.name,
+        email=email,
+        name=name,
         amount=amount_paid,
         charge_id=str(data.get("id")),
         gateway_response=data,
         completed_via="polling",
         ip_address=get_real_client_ip(request),
         payment_method=body.payment_method,
+    )
+
+    # Mark resolved if previously flagged
+    await db.flagged_payments.update_one(
+        {"reference": body.reference},
+        {"$set": {
+            "resolved": True,
+            "resolved_at": now,
+            "resolved_by": "polling_verification",
+        }}
     )
 
     ml = f"/library?token={completion['magic_token']}" if completion.get("magic_token") else None
@@ -414,27 +440,29 @@ async def payment_callback(
         return RedirectResponse("/academic-comeback-package?error=missing_reference")
 
     pending = await db.pending_payments.find_one({"reference": ref})
-    if not pending:
-        return RedirectResponse("/academic-comeback-package?error=order_not_found")
 
     try:
         result = await verify_transaction(ref)
         data = result.get("data", {})
     except Exception:
-        return RedirectResponse("/academic-comeback-package?error=verify_failed")
+        return RedirectResponse(f"/academic-comeback-package?error=verify_failed&reference={ref}")
 
     if not result.get("status") or data.get("status") != "success":
-        return RedirectResponse("/academic-comeback-package?error=payment_not_confirmed")
+        return RedirectResponse(f"/academic-comeback-package?error=payment_not_confirmed&reference={ref}")
 
-    email = pending["email"]
-    name  = pending["name"]
+    email = (pending.get("email") if pending else None) or data.get("customer", {}).get("email")
+    if not email:
+        return RedirectResponse(f"/academic-comeback-package?error=order_not_found&reference={ref}")
+
+    name = (pending.get("name") if pending else None) or f"{data.get('customer', {}).get('first_name', '')} {data.get('customer', {}).get('last_name', '')}".strip() or "Student"
     amount_paid = data.get("amount", 0) / 100.0
+    fee_paid = float((data.get("fees") or 0) / 100.0)
 
     # ── Verify amount paid matches expected pending amount (prevent tampering) ──
-    expected_amount = float(pending.get("amount", 0) or 0)
-    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+    expected_amount = float(pending.get("amount", 0) or 0) if pending else 0
+    if expected_amount > 0 and not is_valid_paid_amount(amount_paid, expected_amount, fee_paid):
         print(f"⚠️ Payment callback: Amount mismatch for {ref}. Expected {expected_amount}, received {amount_paid}")
-        return RedirectResponse("/academic-comeback-package?error=amount_mismatch")
+        return RedirectResponse(f"/academic-comeback-package?error=amount_mismatch&reference={ref}")
 
     completion = await complete_payment(
         db,
@@ -446,7 +474,12 @@ async def payment_callback(
         gateway_response=data,
         completed_via="callback",
         ip_address=get_real_client_ip(request),
-        payment_method=pending.get("payment_method", "pay_with_bank"),
+        payment_method=pending.get("payment_method", "bank_transfer") if pending else "bank_transfer",
+    )
+
+    await db.flagged_payments.update_one(
+        {"reference": ref},
+        {"$set": {"resolved": True, "resolved_at": datetime.now(timezone.utc), "resolved_by": "callback"}}
     )
 
     user = await db.users.find_one({"_id": completion["user_id"]})
@@ -484,8 +517,9 @@ async def process_webhook_payment(payload: dict, db):
             return
 
         actual_paid = float((data.get("amount") or 0) / 100.0)
+        fee_paid = float((data.get("fees") or 0) / 100.0)
         expected_amount = float(offer.get("price", 0) or 0)
-        if expected_amount > 0 and abs(actual_paid - expected_amount) > 1.0:
+        if expected_amount > 0 and not is_valid_paid_amount(actual_paid, expected_amount, fee_paid):
             print(f"⚠️ Webhook: Amount mismatch for SUB {ref}! Expected {expected_amount}, received {actual_paid}.")
             await db.flagged_payments.insert_one({
                 "reference": ref,
@@ -547,8 +581,9 @@ async def process_webhook_payment(payload: dict, db):
             return
 
         actual_paid = float((data.get("amount") or 0) / 100.0)
+        fee_paid = float((data.get("fees") or 0) / 100.0)
         expected_amount = float(pending.get("amount", 0) or 0)
-        if expected_amount > 0 and abs(actual_paid - expected_amount) > 1.0:
+        if expected_amount > 0 and not is_valid_paid_amount(actual_paid, expected_amount, fee_paid):
             print(f"⚠️ Webhook: Amount mismatch for preorder {ref}! Expected {expected_amount}, received {actual_paid}.")
             await db.flagged_payments.insert_one({
                 "reference": ref,
@@ -643,7 +678,8 @@ async def process_webhook_payment(payload: dict, db):
         # ── Verify amount paid matches expected pending amount (prevent tampering) ──
         expected_amount = float(pending.get("amount", 0) or 0)
         actual_paid = float((data.get("amount") or 0) / 100.0)
-        if expected_amount > 0 and actual_paid > 0 and abs(actual_paid - expected_amount) > 1.0:
+        fee_paid = float((data.get("fees") or 0) / 100.0)
+        if expected_amount > 0 and actual_paid > 0 and not is_valid_paid_amount(actual_paid, expected_amount, fee_paid):
             print(f"⚠️ Webhook: Amount mismatch for {ref}! Expected {expected_amount}, received {actual_paid}. Flagging for manual review.")
             await db.flagged_payments.insert_one({
                 "reference": ref,

@@ -6,6 +6,7 @@ import asyncio
 import secrets
 from pathlib import Path
 from datetime import datetime, timezone
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -25,6 +26,7 @@ security = HTTPBearer(auto_error=False)
 
 class ResendLibraryLinkRequest(BaseModel):
     email: EmailStr
+    reference: Optional[str] = None
 
 
 @router.post("/resend-link")
@@ -41,6 +43,49 @@ async def resend_library_link(body: ResendLibraryLinkRequest, db=Depends(get_db)
     }
 
     user = await db.users.find_one({"email": email})
+    if not user:
+        # Check if there is an unreconciled payment or flagged payment to auto-heal
+        ref_to_check = (body.reference or "").strip()
+        if not ref_to_check:
+            flagged = await db.flagged_payments.find_one({"payload.customer.email": email, "resolved": {"$ne": True}})
+            if flagged:
+                ref_to_check = flagged.get("reference")
+            else:
+                pending = await db.pending_payments.find_one({"email": email})
+                if pending:
+                    ref_to_check = pending.get("reference")
+
+        if ref_to_check:
+            try:
+                from ..services.paystack import verify_transaction
+                from ..services.payment_completion import complete_payment, is_valid_paid_amount
+                tx = await verify_transaction(ref_to_check)
+                tx_data = tx.get("data", {})
+                if tx.get("status") and tx_data.get("status") == "success":
+                    amount_paid = tx_data.get("amount", 0) / 100.0
+                    fee_paid = float((tx_data.get("fees") or 0) / 100.0)
+                    pending_rec = await db.pending_payments.find_one({"reference": ref_to_check})
+                    expected = float(pending_rec.get("amount", 0)) if pending_rec else 0
+                    if expected == 0 or is_valid_paid_amount(amount_paid, expected, fee_paid):
+                        cust_name = tx_data.get("customer", {}).get("first_name") or (pending_rec.get("name") if pending_rec else "Student")
+                        completion = await complete_payment(
+                            db,
+                            reference=ref_to_check,
+                            email=email,
+                            name=cust_name,
+                            amount=amount_paid,
+                            charge_id=str(tx_data.get("id")),
+                            gateway_response=tx_data,
+                            completed_via="self_service_reconciliation",
+                        )
+                        await db.flagged_payments.update_one(
+                            {"reference": ref_to_check},
+                            {"$set": {"resolved": True, "resolved_at": datetime.now(timezone.utc), "resolved_by": "self_service"}}
+                        )
+                        user = await db.users.find_one({"_id": completion["user_id"]})
+            except Exception as auto_rec_err:
+                print(f"⚠️ Self-service recovery check error for {email}: {auto_rec_err}")
+
     if not user:
         return generic_response
 

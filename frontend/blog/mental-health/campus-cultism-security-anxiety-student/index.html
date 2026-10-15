@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -311,81 +311,59 @@
 <p>Suddenly, two sharp, unmistakable cracks tear through the evening air: <em>Gunfire.</em></p>
 <p>Within ten seconds, street vendors are flipping their tables, keke drivers are abandoning their tricycles in the middle of the road, and hundreds of students are screaming and sprinting in every direction.</p>
 <p>Rumors spread like wildfire across class WhatsApp groups: <em>"Stay indoors! Two rival confraternities are clashing. Someone was hit at the junction!"</em></p>
-<p>For days afterward, the campus is locked in an atmosphere of suffocating tension:<br />
-* Heavily armed police and army checkpoints spring up along university access roads.<br />
-* Every time a motorcycle backfires, your heart jumps into your throat.<br />
-* You dread walking home from evening lectures, watching every group of young men with intense paranoia.<br />
-* And your semester examinations are scheduled to start in ten days.</p>
+<p>For days afterward, the campus is locked in an atmosphere of suffocating tension:</p>
+<ul>
+<li>Heavily armed police and army checkpoints spring up along university access roads.</li>
+<li>Every time a motorcycle backfires, your heart jumps into your throat.</li>
+<li>You dread walking home from evening lectures, watching every group of young men with intense paranoia.</li>
+<li>And your semester examinations are scheduled to start in ten days.</li>
+</ul>
 <p>Living under the shadow of campus cult violence is a psychological trauma experienced by generations of Nigerian undergraduates. Here is how to protect your physical safety and calm the chronic nervous system hypervigilance that destroys academic focus.</p>
-<hr />
+<hr>
 <h2 id="1-the-neurobiology-of-campus-hypervigilance">1. The Neurobiology of Campus Hypervigilance</h2>
 <p>Living in an environment where violence can erupt without warning locks your autonomic nervous system into <strong>Sustained Sympathetic Activation</strong>:</p>
 <ul>
-<li><strong>Elevated Basal Cortisol:</strong> Your adrenal glands continuously pump stress hormones into your blood, keeping your heart rate elevated and muscles tense even when you are resting on your mattress.</li>
-<li><strong>Impaired Working Memory:</strong> The brain's survival circuits prioritize scanning the environment for threats over memorizing thermodynamic formulas or legal principles.</li>
-<li><strong>Agoraphobia &amp; Social Isolation:</strong> Students often retreat into complete lodge isolation, skipping important daytime lectures out of overwhelming fear of stepping outside.</li>
+<li>**Elevated Basal Cortisol:** Your adrenal glands continuously pump stress hormones into your blood, keeping your heart rate elevated and muscles tense even when you are resting on your mattress.</li>
+<li>**Impaired Working Memory:** The brain's survival circuits prioritize scanning the environment for threats over memorizing thermodynamic formulas or legal principles.</li>
+<li>**Agoraphobia & Social Isolation:** Students often retreat into complete lodge isolation, skipping important daytime lectures out of overwhelming fear of stepping outside.</li>
 </ul>
 <p>Learn tactical strategies for personal safety in off-campus university communities in <a href="/blog/hostel/off-campus-safety-female-students-nigeria/">off-campus safety for female students in Nigerian university towns</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-operational-safety-matrix-risk-reduction-rules">2. The Operational Safety Matrix: Risk Reduction Rules</h2>
 <p>Safety on campus is not about luck; it is about disciplined behavioral boundaries:</p>
 <blockquote>
-<h3 id="high-risk-calendars-in-nigerian-universities">High-Risk Calendars In Nigerian Universities</h3>
-<ul>
-<li>Final Year Signing-Out Week (Retaliation clashes)</li>
-<li>Student Union Government (SUG) Elections</li>
-<li>Confraternity Anniversary Dates (e.g., 7/7, 8/8)</li>
-<li>Post-Midnight Off-Campus Bars and Snooker Halls</li>
-</ul>
+<p>### High-Risk Calendars In Nigerian Universities</p>
+<p>></p>
+<p>* Final Year Signing-Out Week (Retaliation clashes)</p>
+<p>* Student Union Government (SUG) Elections</p>
+<p>* Confraternity Anniversary Dates (e.g., 7/7, 8/8)</p>
+<p>* Post-Midnight Off-Campus Bars and Snooker Halls</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Security Dimension</th>
-<th>High-Risk Behavior</th>
-<th>Safe Operational Standard</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Lodge Curfew</strong></td>
-<td>Walking off-campus paths past 8:00 PM</td>
-<td>Inside secure lodge gates strictly before 6:30 PM during tense weeks</td>
-</tr>
-<tr>
-<td><strong>Route Selection</strong></td>
-<td>Walking through isolated bush shortcuts to save 10 minutes</td>
-<td>Walking along well-lit, heavily populated main campus avenues only</td>
-</tr>
-<tr>
-<td><strong>Social Presence</strong></td>
-<td>Flashy display of cash, expensive jewelry, or aggressive posturing</td>
-<td>Low-profile, modest clothing, humble demeanor</td>
-</tr>
-<tr>
-<td><strong>Information Hygiene</strong></td>
-<td>Watching gruesome leaked murder videos on WhatsApp status</td>
-<td>Muting violent graphic status posters; verifying security alerts via SUG official channels</td>
-</tr>
-</tbody>
-</table>
+<p>| Security Dimension | High-Risk Behavior | Safe Operational Standard |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Lodge Curfew</strong> | Walking off-campus paths past 8:00 PM | Inside secure lodge gates strictly before 6:30 PM during tense weeks |</p>
+<p>| <strong>Route Selection</strong> | Walking through isolated bush shortcuts to save 10 minutes | Walking along well-lit, heavily populated main campus avenues only |</p>
+<p>| <strong>Social Presence</strong> | Flashy display of cash, expensive jewelry, or aggressive posturing | Low-profile, modest clothing, humble demeanor |</p>
+<p>| <strong>Information Hygiene</strong> | Watching gruesome leaked murder videos on WhatsApp status | Muting violent graphic status posters; verifying security alerts via SUG official channels |</p>
 <p>Review lodge hardware and burglary protections in <a href="/blog/hostel/hostel-burglary-security-prevention/">hostel burglary security prevention: locks and neighborhood defense</a>.</p>
-<hr />
+<hr>
 <h2 id="3-somatic-protocols-to-settle-acute-cultism-anxiety">3. Somatic Protocols to Settle Acute Cultism Anxiety</h2>
 <p>When rumors of campus clashes trigger panic attacks in your room:</p>
 <ul>
-<li><strong>Execute the Prone De-escalation:</strong> If gunfire or loud disturbances are heard outside, drop to the floor immediately below bed height. Do not stand up to peer through curtains. Breathe slowly through your nose for 4 seconds, holding for 4 seconds, and exhaling for 6 seconds.</li>
-<li><strong>Information Quarantine:</strong> Turn off WhatsApp notifications for 3 hours. Viewing unverified, graphic rumors in panic-filled group chats only amplifies amygdala distress without providing actionable safety information.</li>
-<li><strong>Study in Fortified Daylight Zones:</strong> Relocate your study schedule to daylight hours (8:30 AM to 4:00 PM) inside the well-guarded University Main Library. Campus central zones are significantly more secure than off-campus residential outskirts.</li>
+<li>**Execute the Prone De-escalation:** If gunfire or loud disturbances are heard outside, drop to the floor immediately below bed height. Do not stand up to peer through curtains. Breathe slowly through your nose for 4 seconds, holding for 4 seconds, and exhaling for 6 seconds.</li>
+<li>**Information Quarantine:** Turn off WhatsApp notifications for 3 hours. Viewing unverified, graphic rumors in panic-filled group chats only amplifies amygdala distress without providing actionable safety information.</li>
+<li>**Study in Fortified Daylight Zones:** Relocate your study schedule to daylight hours (8:30 AM to 4:00 PM) inside the well-guarded University Main Library. Campus central zones are significantly more secure than off-campus residential outskirts.</li>
 </ul>
 <p>Learn how to manage persistent loneliness and campus anxiety in <a href="/blog/mental-health/campus-loneliness-university-students/">campus loneliness in university: causes and recovery</a>.</p>
-<hr />
+<hr>
 <h2 id="4-academic-persistence-in-the-face-of-fear">4. Academic Persistence in the Face of Fear</h2>
-<p>Remember that fear is the exact weapon used by violent factions to dominate campus psychology:<br />
-* Do not allow criminal cliques to steal your peace, your education, or your future.<br />
-* Maintain clean, disciplined company. Associate with coursemates whose singular focus is academic excellence, career preparation, and personal integrity.<br />
-* Stay vigilant, adhere to strict safety curfews, and keep your focus locked on the ultimate prize: graduating with pride and leaving the campus jungle behind forever.</p>
-<hr />
+<p>Remember that fear is the exact weapon used by violent factions to dominate campus psychology:</p>
+<ul>
+<li>Do not allow criminal cliques to steal your peace, your education, or your future.</li>
+<li>Maintain clean, disciplined company. Associate with coursemates whose singular focus is academic excellence, career preparation, and personal integrity.</li>
+<li>Stay vigilant, adhere to strict safety curfews, and keep your focus locked on the ultimate prize: graduating with pride and leaving the campus jungle behind forever.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-should-a-student-do-during-an-active-cult-clash-or-gunfire-near-their-lodge">What should a student do during an active cult clash or gunfire near their lodge?</h3>
 <p>Lie flat on the floor below window height immediately. Turn off all lights, silence your phone completely, lock and deadbolt all doors, and do not peek through windows to record videos.</p>
@@ -559,8 +537,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -744,8 +722,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -759,7 +737,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

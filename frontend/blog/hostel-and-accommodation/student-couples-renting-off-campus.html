@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,36 +308,42 @@
       <div class="article-body">
         <h1 id="student-couples-living-off-campus-the-hidden-traps">Student Couples Living Off-Campus: The Hidden Traps</h1>
 <p>In Nigerian university jargon, it is casually referred to as <em>"Campus Marriage"</em>—two undergraduate partners deciding to pool their allowances, rent a private off-campus self-contained room or mini-flat, and live together as a couple.</p>
-<p>On the surface, the logic appears compelling:<br />
-* You slash accommodation costs by splitting rent and utility bills 50/50.<br />
-* You enjoy emotional intimacy, companionship, and homemade meals.<br />
-* You escape the overcrowding and squalor of university halls.</p>
+<p>On the surface, the logic appears compelling:</p>
+<ul>
+<li>You slash accommodation costs by splitting rent and utility bills 50/50.</li>
+<li>You enjoy emotional intimacy, companionship, and homemade meals.</li>
+<li>You escape the overcrowding and squalor of university halls.</li>
+</ul>
 <p>Yet, behind the initial romantic novelty lies one of the highest-friction arrangements in tertiary education. Here is the unvarnished reality of student cohabitation, the hidden academic traps, and why living together often shatters both the relationship and your Cumulative Grade Point Average.</p>
-<hr />
+<hr>
 <h2 id="1-the-domestic-trap-the-illusion-of-married-life-on-a-student-budget">1. The Domestic Trap: The Illusion of Married Life on a Student Budget</h2>
 <p>A university degree demands ruthless intellectual selfishness. You need the flexibility to pull an impromptu 8-hour library sprint, skip dinner to finish an engineering drawing, or travel with a study group for weekend past-question drilling.</p>
-<p>Cohabitation replaces student flexibility with domestic obligations:<br />
-1. <strong>The Chore Division War:</strong> Daily arguments over whose turn it is to wash pots, fetch water during scarcity, sweep the parlor, or refill cooking gas drain immense emotional bandwidth.<br />
-2. <strong>Financial Asymmetry:</strong> Pocket money remittances from home rarely arrive on identical dates. When one partner's allowance is delayed, resentment festers over who is funding food rations, electricity bills, and cooking gas refills.<br />
-3. <strong>Social Isolation from Departmental Peers:</strong> Cohabiting students frequently drift away from departmental study groups and tutorial circles, losing critical intelligence on impending test formats and syllabus changes.</p>
+<p>Cohabitation replaces student flexibility with domestic obligations:</p>
+<ol>
+<li>**The Chore Division War:** Daily arguments over whose turn it is to wash pots, fetch water during scarcity, sweep the parlor, or refill cooking gas drain immense emotional bandwidth.</li>
+<li>**Financial Asymmetry:** Pocket money remittances from home rarely arrive on identical dates. When one partner's allowance is delayed, resentment festers over who is funding food rations, electricity bills, and cooking gas refills.</li>
+<li>**Social Isolation from Departmental Peers:** Cohabiting students frequently drift away from departmental study groups and tutorial circles, losing critical intelligence on impending test formats and syllabus changes.</li>
+</ol>
 <p>For a realistic look at furnishing and running off-campus accommodation without emotional entanglements, read <a href="/blog/hostel-and-accommodation/">furnished lodge vs unfurnished student room</a>.</p>
-<hr />
+<hr>
 <h2 id="2-landlord-and-legal-hazards-in-conservative-environments">2. Landlord and Legal Hazards in Conservative Environments</h2>
 <p>Unlike Western campuses, Nigerian university communities operate in culturally conservative suburban environments. Student cohabitation carries distinct external risks:</p>
 <ul>
-<li><strong>Hostile Landlord Evictions:</strong> Landlords in student towns like Ile-Ife, Ogbomoso, Nsukka, and Zaria frequently insert <em>"No Unmarried Cohabitation"</em> clauses in tenancy agreements. Discovery often leads to verbal harassment and immediate mid-session eviction notices.</li>
-<li><strong>Community Vigilante Stigmatization:</strong> Local vigilante groups and traditional community leaders often view cohabiting student lodges with moral suspicion, making them frequent targets for midnight identification raids and arbitrary compound harassment.</li>
+<li>**Hostile Landlord Evictions:** Landlords in student towns like Ile-Ife, Ogbomoso, Nsukka, and Zaria frequently insert *"No Unmarried Cohabitation"* clauses in tenancy agreements. Discovery often leads to verbal harassment and immediate mid-session eviction notices.</li>
+<li>**Community Vigilante Stigmatization:** Local vigilante groups and traditional community leaders often view cohabiting student lodges with moral suspicion, making them frequent targets for midnight identification raids and arbitrary compound harassment.</li>
 </ul>
 <p>Review essential security and tenancy protection frameworks in <a href="/blog/hostel-and-accommodation/off-campus-student-lodge-security-safety/">off-campus student lodge security and safety</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-breakup-crisis-academic-ruin-mid-semester">3. The Breakup Crisis: Academic Ruin Mid-Semester</h2>
 <p>The most catastrophic scenario in campus cohabitation is an unexpected breakup during the academic session.</p>
-<p>When independent roommates have friction, they can ignore each other until the lease expires. When romantic partners break up in a single 12x12 room:<br />
-* <strong>The Living Hell:</strong> You are forced to sleep in the same room with an ex-partner while preparing for final semester examinations.<br />
-* <strong>The Financial Deficit:</strong> If one partner packs their bags and leaves, the remaining student must absorb the abandoned half of the rent or forfeit the apartment.<br />
-* <strong>The Emotional Crash:</strong> Dealing with acute heartbreak while staring at carryover risk in analytical courses causes profound exam hall panic and cognitive paralysis.</p>
+<p>When independent roommates have friction, they can ignore each other until the lease expires. When romantic partners break up in a single 12x12 room:</p>
+<ul>
+<li>**The Living Hell:** You are forced to sleep in the same room with an ex-partner while preparing for final semester examinations.</li>
+<li>**The Financial Deficit:** If one partner packs their bags and leaves, the remaining student must absorb the abandoned half of the rent or forfeit the apartment.</li>
+<li>**The Emotional Crash:** Dealing with acute heartbreak while staring at carryover risk in analytical courses causes profound exam hall panic and cognitive paralysis.</li>
+</ul>
 <p>If a campus breakup threatens your academic standing or causes severe focus loss, study our psychological recovery guide on <a href="/blog/mental-health/">recovering focus after a university relationship breakup</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-primary-academic-risk-of-student-cohabitation-off-campus">What is the primary academic risk of student cohabitation off-campus?</h3>
 <p>Premature domestic role absorption. Managing cooking, cleaning, emotional disputes, and shared financial stress simulates full marriage without marital maturity, draining 15 to 25 hours weekly from study schedules.</p>
@@ -511,8 +517,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -696,8 +702,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -711,7 +717,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

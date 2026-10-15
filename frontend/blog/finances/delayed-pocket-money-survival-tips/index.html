@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,90 +307,65 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="delay-in-pocket-money-transfer-ethical-emergency-coping">Delay in Pocket Money Transfer: Ethical Emergency Coping</h1>
-<p>The 28th of the month passes. </p>
-<p>Then the 30th. </p>
+<p>The 28th of the month passes.</p>
+<p>Then the 30th.</p>
 <p>Then the 5th of the new month.</p>
 <p>Every morning, you wake up, unlock your phone with trembling fingers, and check your banking app: <strong>₦410.00.</strong></p>
 <p>No credit alert.</p>
 <p>You call your mother. Her voice is strained, exhausted, and apologetic: <em>"My child, your father's state civil service salary has not been paid for two months. The small business money we were expecting did not come through. Please manage whatever you have there for another two weeks. We are praying."</em></p>
 <p>Your heart sinks into your stomach.</p>
 <p>You look at your pantry: two cups of dry garri, half a bottle of vegetable oil, and three seasoning cubes.</p>
-<p>Your Continuous Assessment tests start in six days. </p>
+<p>Your Continuous Assessment tests start in six days.</p>
 <p>How do you survive, feed yourself, and maintain academic sanity when your primary financial lifeline has snapped?</p>
 <p>Here is the ethical, resilient survival protocol for navigating severe pocket money delays on campus.</p>
-<hr />
+<hr>
 <h2 id="1-the-immediate-panic-quarantine">1. The Immediate Panic Quarantine</h2>
-<p>When money doesn't arrive, the human brain enters an acute crisis state:<br />
-* You spend four hours lying on your bed staring at the ceiling, overwhelmed by feelings of doom.<br />
-* You obsessively refresh your banking app every twenty minutes, hoping for an accidental credit alert.<br />
-* You fail to attend lectures because you feel financially humiliated.</p>
-<blockquote>
-<h3 id="pocket-money-delay-notice">Pocket Money Delay Notice</h3>
+<p>When money doesn't arrive, the human brain enters an acute crisis state:</p>
 <ul>
-<li><strong>THE PANIC RESPONSE (Disaster)</strong>        [ THE PROTOCOL RESPONSE (Sovereign) ]</li>
-<li>Skip lectures, hide in bed              • Inventory all remaining raw food</li>
-<li>Borrow from loan shark apps            • Activate 7-day metabolic rationing</li>
-<li>Complain bitterly to stressed parents   • Deploy 48-hour emergency campus skill</li>
+<li>You spend four hours lying on your bed staring at the ceiling, overwhelmed by feelings of doom.</li>
+<li>You obsessively refresh your banking app every twenty minutes, hoping for an accidental credit alert.</li>
+<li>You fail to attend lectures because you feel financially humiliated.</li>
 </ul>
+<blockquote>
+<p>### Pocket Money Delay Notice</p>
+<p>></p>
+<p>* **THE PANIC RESPONSE (Disaster)**        [ THE PROTOCOL RESPONSE (Sovereign) ]</p>
+<p>* Skip lectures, hide in bed              • Inventory all remaining raw food</p>
+<p>* Borrow from loan shark apps            • Activate 7-day metabolic rationing</p>
+<p>* Complain bitterly to stressed parents   • Deploy 48-hour emergency campus skill</p>
 </blockquote>
 <p>Review emergency food rationing rules in <a href="/blog/finances/surviving-on-2000-naira-campus/">surviving campus week with only ₦2,000 left: rationing blueprint</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-48-hour-rapid-monetization-playbook">2. The 48-Hour Rapid Monetization Playbook</h2>
 <p>You do not need to beg or engage in unethical behavior. Every university campus is a high-velocity micro-economy where busy, stressed students will gladly pay for immediate convenience:</p>
-<table>
-<thead>
-<tr>
-<th>Immediate Emergency Gig</th>
-<th>Target Customer</th>
-<th>Turnaround Time</th>
-<th>Realistic Cash Yield</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Assignment Typing &amp; Formatting</strong></td>
-<td>Final-year students, engineering practicals</td>
-<td>12 – 24 hours</td>
-<td>₦3,000 – ₦8,000</td>
-</tr>
-<tr>
-<td><strong>Hostel Laundry Service</strong></td>
-<td>Busy male medical/engineering coursemates</td>
-<td>24 hours</td>
-<td>₦3,500 – ₦6,000</td>
-</tr>
-<tr>
-<td><strong>Hairstyling / Braiding / Barbering</strong></td>
-<td>Female &amp; male hostel residents</td>
-<td>3 – 5 hours</td>
-<td>₦4,000 – ₦10,000</td>
-</tr>
-<tr>
-<td><strong>Past Question Tutoring Sprint</strong></td>
-<td>100L freshers preparing for tough GST/CBT exams</td>
-<td>2-hour session</td>
-<td>₦2,500 – ₦5,000</td>
-</tr>
-</tbody>
-</table>
+<p>| Immediate Emergency Gig | Target Customer | Turnaround Time | Realistic Cash Yield |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Assignment Typing & Formatting</strong> | Final-year students, engineering practicals | 12 – 24 hours | ₦3,000 – ₦8,000 |</p>
+<p>| <strong>Hostel Laundry Service</strong> | Busy male medical/engineering coursemates | 24 hours | ₦3,500 – ₦6,000 |</p>
+<p>| <strong>Hairstyling / Braiding / Barbering</strong> | Female & male hostel residents | 3 – 5 hours | ₦4,000 – ₦10,000 |</p>
+<p>| <strong>Past Question Tutoring Sprint</strong> | 100L freshers preparing for tough GST/CBT exams| 2-hour session | ₦2,500 – ₦5,000 |</p>
 <p>Explore hostel utility management in <a href="/blog/hostel/hostel-laundry-tips-saving-water/">hostel laundry tips and water saving strategies</a>.</p>
-<hr />
+<hr>
 <h2 id="3-how-to-communicate-with-creditors-and-landlords">3. How to Communicate with Creditors and Landlords</h2>
-<p>If pocket money delays cause you to default on lodge rent or bookstore bills, <strong>do not become a ghost</strong>:<br />
-* <strong>The Ghosting Mistake:</strong> Switching off your phone or dodging the caretaker creates suspicion and anger, accelerating eviction threats.<br />
-* <strong>The Sovereign Approach:</strong> Visit the caretaker in person. Say calmly:</p>
+<p>If pocket money delays cause you to default on lodge rent or bookstore bills, <strong>do not become a ghost</strong>:</p>
+<ul>
+<li>**The Ghosting Mistake:** Switching off your phone or dodging the caretaker creates suspicion and anger, accelerating eviction threats.</li>
+<li>**The Sovereign Approach:** Visit the caretaker in person. Say calmly:</li>
 <blockquote>
-<p><em>"Good afternoon, Sir. My family's salary remittance has been delayed by two weeks due to civil service payment backlog. Here is ₦5,000 goodwill commitment from my emergency reserves. The full balance will be cleared immediately upon my family's transfer on the 18th."</em></p>
+<p>*"Good afternoon, Sir. My family's salary remittance has been delayed by two weeks due to civil service payment backlog. Here is ₦5,000 goodwill commitment from my emergency reserves. The full balance will be cleared immediately upon my family's transfer on the 18th."*</p>
+</ul>
 </blockquote>
 <p>Landlords respect honesty and proactive communication. A partial commitment payment combined with a clear deadline disarms confrontation.</p>
 <p>Explore upcoming analysis of student borrowing options in <a href="/blog/finances/">taking student loans vs pausing for a gap year hustle</a>.</p>
-<hr />
+<hr>
 <h2 id="4-channeling-hunger-into-academic-grit">4. Channeling Hunger into Academic Grit</h2>
-<p>Some of the greatest intellectual breakthroughs in human history were achieved during seasons of acute physical hardship:<br />
-* Do not allow an empty pocket to translate into an empty examination script.<br />
-* Drink clean water, study in the well-lit sanctuary of the campus library, and keep your focus locked on the finish line.<br />
-* This delay is temporary; the excellence you forge in the fire of adversity will remain your permanent armor.</p>
-<hr />
+<p>Some of the greatest intellectual breakthroughs in human history were achieved during seasons of acute physical hardship:</p>
+<ul>
+<li>Do not allow an empty pocket to translate into an empty examination script.</li>
+<li>Drink clean water, study in the well-lit sanctuary of the campus library, and keep your focus locked on the finish line.</li>
+<li>This delay is temporary; the excellence you forge in the fire of adversity will remain your permanent armor.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-parents-frequently-delay-student-pocket-money-transfers-in-nigeria">Why do parents frequently delay student pocket money transfers in Nigeria?</h3>
 <p>Unpredictable civil service salary delays, corporate business cashflow shocks, sudden medical emergencies at home, or banking network downtime during month-end payment cycles.</p>
@@ -564,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -749,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -764,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

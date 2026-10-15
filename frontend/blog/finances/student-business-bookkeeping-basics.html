@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,10 +309,12 @@
         <h1 id="student-entrepreneurs-separating-business-cash-from-food">Student Entrepreneurs: Separating Business Cash from Food</h1>
 <p>You started a campus business.</p>
 <p>Maybe you sell thrift vintage hoodies, bake banana bread, sell scented perfumes, or offer phone charging accessories in your hostel corridor.</p>
-<p>Customers transfer money to your account:<br />
-* <em>Credit: ₦4,500 (Hoodie sale).</em><br />
-* <em>Credit: ₦3,000 (Perfume oil).</em><br />
-* <em>Credit: ₦6,500 (Earphones).</em></p>
+<p>Customers transfer money to your account:</p>
+<ul>
+<li>*Credit: ₦4,500 (Hoodie sale).*</li>
+<li>*Credit: ₦3,000 (Perfume oil).*</li>
+<li>*Credit: ₦6,500 (Earphones).*</li>
+</ul>
 <p>You feel wealthy. Your account balance hits ₦35,000.</p>
 <p>On Friday night, you take two friends to an off-campus shawarma spot: <em>Debit ₦5,500.</em> On Saturday morning, you buy internet data and indomie noodles: <em>Debit ₦4,000.</em> On Monday, your departmental dues are due: <em>Debit ₦4,500.</em></p>
 <p>On Wednesday, your wholesale supplier in Lagos calls: <em>"Bros, new stock has arrived. Send ₦25,000 to restock your inventory."</em></p>
@@ -320,107 +322,48 @@
 <p>Your jaw drops. You didn't buy luxury jewelry. You didn't travel. Where did the money go?</p>
 <p>You committed the cardinal sin of the student entrepreneur: <strong>You ate your business working capital.</strong></p>
 <p>Here is the operational bookkeeping framework to separate enterprise revenue from personal survival cash.</p>
-<hr />
+<hr>
 <h2 id="1-the-single-bank-account-trap">1. The Single Bank Account Trap</h2>
 <p>The vast majority of student ventures die not from lack of sales, but from <strong>Financial Co-mingling</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Fund Flow Component</th>
-<th>Without Separation (High Risk)</th>
-<th>The 2-Account Architecture (Protected)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Customer Payments</strong></td>
-<td>Dumped into personal bank account</td>
-<td>Deposited into dedicated <strong>Enterprise Vault</strong> (no ATM card attached)</td>
-</tr>
-<tr>
-<td><strong>Personal Daily Spending</strong></td>
-<td>Swiped from same account, draining working capital</td>
-<td>Financed exclusively from a fixed weekly <strong>CEO Salary</strong> transferred to personal account</td>
-</tr>
-<tr>
-<td><strong>Restock Capital</strong></td>
-<td>Accompanying profit gets spent on food/data, causing inventory starvation</td>
-<td>80% locked automatically for supplier replenishment and growth</td>
-</tr>
-</tbody>
-</table>
+<p>| Fund Flow Component | Without Separation (High Risk) | The 2-Account Architecture (Protected) |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Customer Payments</strong> | Dumped into personal bank account | Deposited into dedicated <strong>Enterprise Vault</strong> (no ATM card attached) |</p>
+<p>| <strong>Personal Daily Spending</strong> | Swiped from same account, draining working capital | Financed exclusively from a fixed weekly <strong>CEO Salary</strong> transferred to personal account |</p>
+<p>| <strong>Restock Capital</strong> | Accompanying profit gets spent on food/data, causing inventory starvation | 80% locked automatically for supplier replenishment and growth |</p>
 <p>When all funds sit in one pool, your brain treats customer sales revenue as spendable profit. In reality, <strong>80% of customer inflows belong to suppliers</strong>, and only 20% is gross profit.</p>
 <p>Review campus skill monetization frameworks in <a href="/blog/finances/making-money-on-campus-student-skills/">creative students: monetizing skills on campus ethically</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-2-account-firewall-architecture">2. The 2-Account Firewall Architecture</h2>
 <p>To protect your business from your stomach, install a <strong>Strict Financial Firewall</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Account Tier</th>
-<th>Designated Platform</th>
-<th>Sole Legal Purpose</th>
-<th>Access Rules</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Account 1: Enterprise Vault</strong></td>
-<td>OPay Business / Kuda Business</td>
-<td>Customer transfers &amp; supplier inventory payments</td>
-<td><strong>NO DEBIT CARD ATTACHED</strong>; zero personal food debits</td>
-</tr>
-<tr>
-<td><strong>Account 2: Personal Survival</strong></td>
-<td>Traditional Bank / Personal Fintech</td>
-<td>Daily feeding, hostel utilities, transport</td>
-<td>Receives fixed weekly "CEO Salary" only</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>Allocation Breakdown</th>
-<th>Share of Revenue</th>
-<th>Purpose</th>
-<th>Destination Account</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Working Capital (Restock)</strong></td>
-<td>80% (e.g. ₦8,000 of ₦10,000)</td>
-<td>Replenishing inventory and paying raw suppliers</td>
-<td>Locked Enterprise Vault</td>
-</tr>
-<tr>
-<td><strong>Owner Draw (Net Profit)</strong></td>
-<td>20% (e.g. ₦2,000 of ₦10,000)</td>
-<td>Discretionary personal income / student allowance</td>
-<td>Transferred to Personal Checking Account</td>
-</tr>
-</tbody>
-</table>
+<p>| Account Tier | Designated Platform | Sole Legal Purpose | Access Rules |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Account 1: Enterprise Vault</strong> | OPay Business / Kuda Business | Customer transfers & supplier inventory payments | <strong>NO DEBIT CARD ATTACHED</strong>; zero personal food debits |</p>
+<p>| <strong>Account 2: Personal Survival</strong> | Traditional Bank / Personal Fintech | Daily feeding, hostel utilities, transport | Receives fixed weekly "CEO Salary" only |</p>
+<p>| Allocation Breakdown | Share of Revenue | Purpose | Destination Account |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Working Capital (Restock)</strong> | 80% (e.g. ₦8,000 of ₦10,000) | Replenishing inventory and paying raw suppliers | Locked Enterprise Vault |</p>
+<p>| <strong>Owner Draw (Net Profit)</strong> | 20% (e.g. ₦2,000 of ₦10,000) | Discretionary personal income / student allowance | Transferred to Personal Checking Account |</p>
 <p>Explore upcoming business management in <a href="/blog/balancing-work-and-school/">generator noise, night work, and morning test performance</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-column-daily-ledger-protocol">3. The 3-Column Daily Ledger Protocol</h2>
 <p>You do not need an accounting degree or complex enterprise software. Keep a small 60-leaf notebook on your desk:</p>
 <ol>
-<li><strong>Date &amp; Description:</strong> (e.g., <em>26/09: Sold 2 bottles perfume to Room 12</em>).</li>
-<li><strong>Cost of Goods Sold (COGS):</strong> Wholesale cost of the items (e.g., <em>₦3,000</em>).</li>
-<li><strong>Retail Sale Price:</strong> Amount collected from customer (e.g., <em>₦5,000</em>).</li>
-<li><strong>Calculated Net Margin:</strong> <em>₦5,000 - ₦3,000 = ₦2,000 profit.</em></li>
+<li>**Date & Description:** (e.g., *26/09: Sold 2 bottles perfume to Room 12*).</li>
+<li>**Cost of Goods Sold (COGS):** Wholesale cost of the items (e.g., *₦3,000*).</li>
+<li>**Retail Sale Price:** Amount collected from customer (e.g., *₦5,000*).</li>
+<li>**Calculated Net Margin:** *₦5,000 - ₦3,000 = ₦2,000 profit.*</li>
 </ol>
 <p>Only that ₦2,000 is eligible for personal use; the ₦3,000 must remain untouched in the Enterprise Vault for next week's inventory restock.</p>
 <p>Explore student entrepreneurship and work-life balance in <a href="/blog/balancing-work-and-school/">student entrepreneurs: separating business cash from food</a>.</p>
-<hr />
+<hr>
 <h2 id="4-run-a-real-enterprise-not-an-expensive-hobby">4. Run a Real Enterprise, Not an Expensive Hobby</h2>
-<p>Separating your business funds transforms your venture from a chaotic hustle into a professional enterprise:<br />
-* Your suppliers will trust you because your restock payments are instant and reliable.<br />
-* You eliminate the gut-wrenching panic of running out of inventory.<br />
-* You graduate with a thriving commercial brand and elite financial discipline that will serve you in corporate and business leadership for life.</p>
-<hr />
+<p>Separating your business funds transforms your venture from a chaotic hustle into a professional enterprise:</p>
+<ul>
+<li>Your suppliers will trust you because your restock payments are instant and reliable.</li>
+<li>You eliminate the gut-wrenching panic of running out of inventory.</li>
+<li>You graduate with a thriving commercial brand and elite financial discipline that will serve you in corporate and business leadership for life.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-most-campus-student-businesses-collapse-within-their-first-semester">Why do most campus student businesses collapse within their first semester?</h3>
 <p>Co-mingling funds: student entrepreneurs deposit customer sales revenues into the same personal bank account used for daily feeding, hostel snacks, and data subscriptions, accidentally eating their working capital.</p>
@@ -594,8 +537,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -779,8 +722,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -794,7 +737,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

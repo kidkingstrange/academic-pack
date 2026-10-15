@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Tech Freelancers: Balancing Coding Bootcamps & Exams",
       "description": "A field guide for student software developers and tech freelancers balancing GitHub commits, client codebases, and rigorous university exams.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,64 +265,74 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>The tech boom on Nigerian university campuses has created a unique subculture: <strong>the student software engineer</strong>.</p>
-<p>You can spot them easily across UNILAG, FUTO, OAU, Covenant, and UI:<br />
-* A backpack containing a sticker-covered ThinkPad or MacBook.<br />
-* A dual-SIM hotspot router in their pocket.<br />
-* Slack and Discord channels pinging with messages from US, UK, and Lagos-based tech startups.<br />
-* Earning between $300 and $1,500 monthly while still enrolled as an undergraduate.</p>
+<p>You can spot them easily across UNILAG, FUTO, OAU, Covenant, and UI:</p>
+<ul>
+<li>A backpack containing a sticker-covered ThinkPad or MacBook.</li>
+<li>A dual-SIM hotspot router in their pocket.</li>
+<li>Slack and Discord channels pinging with messages from US, UK, and Lagos-based tech startups.</li>
+<li>Earning between $300 and $1,500 monthly while still enrolled as an undergraduate.</li>
+</ul>
 <p>Yet behind the enviable Twitter screenshots of foreign wire transfers lies an exhausting, high-stress reality.</p>
-<p>A software engineering job is not like casual campus tutoring. It involves:<br />
-* 9:00 PM sprint review meetings on Zoom.<br />
-* Cryptic production bugs that take 6 hours to troubleshoot.<br />
-* Demanding project managers tracking tickets on Jira.<br />
-* Unrelenting technical debt that invades your thoughts during 8:00 AM Thermodynamics lectures.</p>
+<p>A software engineering job is not like casual campus tutoring. It involves:</p>
+<ul>
+<li>9:00 PM sprint review meetings on Zoom.</li>
+<li>Cryptic production bugs that take 6 hours to troubleshoot.</li>
+<li>Demanding project managers tracking tickets on Jira.</li>
+<li>Unrelenting technical debt that invades your thoughts during 8:00 AM Thermodynamics lectures.</li>
+</ul>
 <p>When semester examinations arrive, student coders often find themselves debugging Docker containers at 3:00 AM while their exam docket sits unsigned on their desk.</p>
 <p>Here is the operational engineering framework for student software developers to maintain high-yield freelance contracts without failing their degree.</p>
-<hr />
+<hr>
 <h2 id="the-developer-dilemma-logic-fatigue-vs-academic-memorization">The Developer Dilemma: Logic Fatigue vs. Academic Memorization</h2>
-<p>The human brain has a finite daily reserve of executive cognitive energy. </p>
+<p>The human brain has a finite daily reserve of executive cognitive energy.</p>
 <p>Writing clean TypeScript, debugging SQL query performance, or building smart contracts burns the exact same prefrontal cortex circuits required to solve engineering mathematics or understand biochemical pathways:</p>
 <blockquote>
-<h3 id="the-developer-cognitive-overdraw">The Developer Cognitive Overdraw</h3>
-<ul>
-<li>4 Hours of Deep Code Refactoring -&gt; Adenosine accumulation in brain ↓ You open 100 pages of university lecture notes at 8:00 PM ↓ Brain enters mental gridlock: Zero memory retention -&gt; Exam panic</li>
-</ul>
+<p>### The Developer Cognitive Overdraw</p>
+<p>></p>
+<p>* 4 Hours of Deep Code Refactoring -> Adenosine accumulation in brain ↓ You open 100 pages of university lecture notes at 8:00 PM ↓ Brain enters mental gridlock: Zero memory retention -> Exam panic</p>
 </blockquote>
 <p>If you spend your best mental daylight hours resolving Jira pull requests, your brain will reject academic study materials in the evening.</p>
-<hr />
+<hr>
 <h2 id="4-engineering-rules-for-student-developers">4 Engineering Rules for Student Developers</h2>
 <h3 id="1-the-pre-exam-git-freeze-protocol">1. The Pre-Exam Git Freeze Protocol</h3>
 <p>The most dangerous thing a student developer can do is push new feature code to production 48 hours before an exam.</p>
 <p>A single unexpected null pointer exception, broken API endpoint, or migration failure will drag you into an emergency 10-hour debugging rabbit hole the night before your test.</p>
-<p><strong>The Golden Law:</strong> Enforce a strict <strong>Deployment Freeze</strong> 5 days before your first paper:<br />
-* Inform your team: <em>"I am merging all completed staging PRs today and freezing major infrastructure deployments for scheduled maintenance."</em><br />
-* Only push code to local or staging branches. Zero Friday afternoon production deployments.</p>
-<blockquote>
-<h3 id="the-pre-exam-git-pipeline">The Pre-Exam Git Pipeline</h3>
+<p><strong>The Golden Law:</strong> Enforce a strict <strong>Deployment Freeze</strong> 5 days before your first paper:</p>
 <ul>
-<li>T - 7 Days: Merge final sprint tickets &amp; deploy stable release T - 5 Days: Git Freeze: Zero production deployments allowed T - 0 Days: Maintain emergency rollback script; 100% focus on exam papers</li>
+<li>Inform your team: *"I am merging all completed staging PRs today and freezing major infrastructure deployments for scheduled maintenance."*</li>
+<li>Only push code to local or staging branches. Zero Friday afternoon production deployments.</li>
 </ul>
+<blockquote>
+<p>### The Pre-Exam Git Pipeline</p>
+<p>></p>
+<p>* T - 7 Days: Merge final sprint tickets & deploy stable release T - 5 Days: Git Freeze: Zero production deployments allowed T - 0 Days: Maintain emergency rollback script; 100% focus on exam papers</p>
 </blockquote>
 <h3 id="2-time-shift-coding-to-bimodal-sprint-windows">2. Time-Shift Coding to 'Bimodal Sprint Windows'</h3>
 <p>Never code in 30-minute fragmented bursts between lectures. Context-switching between university hallways and a React component tree destroys programming productivity.</p>
-<p>Instead, bundle your development hours into <strong>dedicated 3-hour weekend sprints</strong>:<br />
-* <strong>Monday to Thursday:</strong> Focus primarily on lecture attendance, Continuous Assessment tests, and code reviews/PR reviews on your phone.<br />
-* <strong>Friday evening &amp; Saturday:</strong> 8 hours of deep, uninterrupted coding where you build entire features in flow state.</p>
+<p>Instead, bundle your development hours into <strong>dedicated 3-hour weekend sprints</strong>:</p>
+<ul>
+<li>**Monday to Thursday:** Focus primarily on lecture attendance, Continuous Assessment tests, and code reviews/PR reviews on your phone.</li>
+<li>**Friday evening & Saturday:** 8 hours of deep, uninterrupted coding where you build entire features in flow state.</li>
+</ul>
 <p>If you struggle to switch your cognitive gear from software debugging to university handouts, read our guide on <a href="/blog/balancing-work-and-school/mental-context-switching-work-study/">overcoming mental context-switching fatigue</a>.</p>
 <h3 id="3-automate-your-local-dev-environment-for-shaky-power">3. Automate Your Local Dev Environment for Shaky Power</h3>
-<p>Power outages in student hostel lodges are an existential threat to developers. </p>
-<p>If NEPA takes light midway through compiling an image or running tests:<br />
-* Configure automated Git auto-save hooks in VS Code.<br />
-* Keep your laptop battery capped at 80% health using battery management software.<br />
-* Maintain an offline Docker caching setup so you can run local unit tests even when your phone hotspot runs out of data.</p>
-<hr />
+<p>Power outages in student hostel lodges are an existential threat to developers.</p>
+<p>If NEPA takes light midway through compiling an image or running tests:</p>
+<ul>
+<li>Configure automated Git auto-save hooks in VS Code.</li>
+<li>Keep your laptop battery capped at 80% health using battery management software.</li>
+<li>Maintain an offline Docker caching setup so you can run local unit tests even when your phone hotspot runs out of data.</li>
+</ul>
+<hr>
 <h2 id="degree-vs-tech-career-the-long-term-perspective">Degree vs. Tech Career: The Long-Term Perspective</h2>
 <p>Many frustrated student developers ask: <em>"Why am I wasting time learning archaic 1980s Fortran and Pascal in my department when I already earn $1,000 as a React dev?"</em></p>
-<p>Here is the strategic perspective:<br />
-* <strong>The degree is an immigration and leadership passport.</strong> If you want to relocate to Europe or North America on an H-1B, Tech Nation, or Blue Card visa, or become an engineering director at a global enterprise, an accredited bachelor's degree is a non-negotiable statutory requirement.<br />
-* Finishing a Nigerian university degree proves <strong>grit and bureaucratic endurance</strong>—qualities every technical founder needs.</p>
+<p>Here is the strategic perspective:</p>
+<ul>
+<li>**The degree is an immigration and leadership passport.** If you want to relocate to Europe or North America on an H-1B, Tech Nation, or Blue Card visa, or become an engineering director at a global enterprise, an accredited bachelor's degree is a non-negotiable statutory requirement.</li>
+<li>Finishing a Nigerian university degree proves **grit and bureaucratic endurance**—qualities every technical founder needs.</li>
+</ul>
 <p>Protect your degree. Pass your courses with a solid 2:1 or First Class, keep shipping clean code on GitHub, and graduate into the international market with both academic credentials and real-world tech experience.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-student-developer-protocol">Action Checklist: Student Developer Protocol</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Declare a complete production code deployment freeze 5 days before exam week.</li>
@@ -496,8 +506,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -681,8 +691,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -696,7 +706,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,108 +306,60 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="surviving-campus-week-with-only-2000-left-rationing">Surviving Campus Week with Only ₦2,000 Left: Rationing</h1>
-<p>It is Monday morning. </p>
+        <h1 id="surviving-campus-week-with-only-2-000-left-rationing">Surviving Campus Week with Only ₦2,000 Left: Rationing</h1>
+<p>It is Monday morning.</p>
 <p>You open your banking app with a knot in your stomach.</p>
 <p>Account Balance: <strong>₦2,140.00.</strong></p>
 <p>Your next pocket money from home will not arrive until next Monday—seven full days away.</p>
 <p>You have no bread. You have no indomie. You have no meat or fish in your freezer.</p>
-<p>Seven days. Twenty-one meals. One hundred and sixty-eight hours. </p>
+<p>Seven days. Twenty-one meals. One hundred and sixty-eight hours.</p>
 <p>And you have exactly <strong>two thousand naira</strong> to your name.</p>
-<p>Every Nigerian student who has passed through higher education knows this terrifying precipice. </p>
+<p>Every Nigerian student who has passed through higher education knows this terrifying precipice.</p>
 <p>One wrong purchase—a single plate of bukka rice at ₦1,400—and you will spend the remaining six days drinking tap water and begging roommates.</p>
 <p>Here is the tactical, zero-shame survival blueprint to stretch <strong>₦2,000 across seven full days</strong> on campus without starving your brain or losing your dignity.</p>
-<hr />
-<h2 id="1-the-2000-survival-allocation-matrix">1. The ₦2,000 Survival Allocation Matrix</h2>
+<hr>
+<h2 id="1-the-2-000-survival-allocation-matrix">1. The ₦2,000 Survival Allocation Matrix</h2>
 <p>Do not disperse your remaining capital across multiple small impulse items. Execute this <strong>Emergency Grocery Buy</strong> at the local community market:</p>
-<table>
-<thead>
-<tr>
-<th>Item &amp; Measure</th>
-<th>Unit Cost</th>
-<th>Nutritional &amp; Operational Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>4 Dericas of Yellow Garri (or 1 Paint Bucket)</strong></td>
-<td>₦1,100</td>
-<td>Primary daily carbohydrate &amp; calorie foundation (drinking &amp; eba)</td>
-</tr>
-<tr>
-<td><strong>1 Derica of Honey Beans (Oloyin)</strong></td>
-<td>₦600</td>
-<td>High-protein evening satiety; sustains glucose levels across the night</td>
-</tr>
-<tr>
-<td><strong>2 Sachets Salt &amp; Ground Pepper</strong></td>
-<td>₦150</td>
-<td>Electrolyte balance, flavoring, and metabolic preservation</td>
-</tr>
-<tr>
-<td><strong>Emergency Buffer Reserve</strong></td>
-<td>₦150</td>
-<td>Untouchable reserve for critical campus transport or single-sheet assignment printing</td>
-</tr>
-<tr>
-<td><strong>Total Allocation</strong></td>
-<td><strong>₦2,000</strong></td>
-<td><strong>Complete 7-day survival ration basket</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Item & Measure | Unit Cost | Nutritional & Operational Purpose |</p>
+<p>|---|---|---|</p>
+<p>| <strong>4 Dericas of Yellow Garri (or 1 Paint Bucket)</strong> | ₦1,100 | Primary daily carbohydrate & calorie foundation (drinking & eba) |</p>
+<p>| <strong>1 Derica of Honey Beans (Oloyin)</strong> | ₦600 | High-protein evening satiety; sustains glucose levels across the night |</p>
+<p>| <strong>2 Sachets Salt & Ground Pepper</strong> | ₦150 | Electrolyte balance, flavoring, and metabolic preservation |</p>
+<p>| <strong>Emergency Buffer Reserve</strong> | ₦150 | Untouchable reserve for critical campus transport or single-sheet assignment printing |</p>
+<p>| <strong>Total Allocation</strong> | <strong>₦2,000</strong> | <strong>Complete 7-day survival ration basket</strong> |</p>
 <p>Review foundational budget management in <a href="/blog/finances/monthly-student-budget-30000-naira/">monthly student budget plan: ₦30,000 living survival</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-7-day-metabolic-rationing-schedule">2. The 7-Day Metabolic Rationing Schedule</h2>
 <p>When calories are severely constrained, you must align meal timing with <strong>Cognitive Demands</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Time Window</th>
-<th>Survival Meal</th>
-<th>Physiological Rationale</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Morning (7:30 AM)</strong></td>
-<td>500ml pure cold water + mental focus</td>
-<td>Intermittent fasting; preserves alertness for morning lectures</td>
-</tr>
-<tr>
-<td><strong>Afternoon (1:30 PM)</strong></td>
-<td>1 cup soaked yellow garri + cold water</td>
-<td>Fast complex carbohydrate; restores glucose without post-meal fatigue</td>
-</tr>
-<tr>
-<td><strong>Evening (7:00 PM)</strong></td>
-<td>Boiled honey beans porridge with pepper &amp; salt</td>
-<td>High protein &amp; fiber; slow digestion sustains satiety through 8 hours of sleep</td>
-</tr>
-</tbody>
-</table>
+<p>| Time Window | Survival Meal | Physiological Rationale |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Morning (7:30 AM)</strong> | 500ml pure cold water + mental focus | Intermittent fasting; preserves alertness for morning lectures |</p>
+<p>| <strong>Afternoon (1:30 PM)</strong> | 1 cup soaked yellow garri + cold water | Fast complex carbohydrate; restores glucose without post-meal fatigue |</p>
+<p>| <strong>Evening (7:00 PM)</strong> | Boiled honey beans porridge with pepper & salt | High protein & fiber; slow digestion sustains satiety through 8 hours of sleep |</p>
 <blockquote>
-<p><strong>Biological Note:</strong> Do not drink plain white garri on an empty stomach daily; yellow garri contains palm oil beta-carotene which protects the stomach lining against gastric acid irritation.</p>
+<p>**Biological Note:** Do not drink plain white garri on an empty stomach daily; yellow garri contains palm oil beta-carotene which protects the stomach lining against gastric acid irritation.</p>
 </blockquote>
 <p>Explore batch cooking and meal preservation in <a href="/blog/finances/batch-cooking-food-saving-campus/">batch cooking strategy: slashing weekly feeding expenses</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-zero-shame-campus-nutrition-sanctuaries">3. The 3 Zero-Shame Campus Nutrition Sanctuaries</h2>
 <p>When your pantry is bare, swallow your pride and leverage established campus support ecosystems:</p>
 <ol>
-<li><strong>Campus Religious Fellowships:</strong> The vast majority of student Christian fellowships, campus Catholic centers, and Muslim student societies organize <strong>Weekly Fellowship Welfare Refreshments</strong> (free bread, jollof rice, or fruit packs) after midweek prayer meetings. Attend, participate, and eat cleanly.</li>
-<li><strong>Departmental Seminar Leftovers:</strong> Final-year student symposiums, inaugural professor lectures, and departmental seminars routinely produce dozens of untouched takeout boxes. Hanging around event halls as sessions wrap up provides wholesome free meals.</li>
-<li><strong>The Coursemate Exchange:</strong> Offer high-value academic labor in exchange for dinner: <em>"Let me help you draft your 10-page literature review assignment tonight while you cook rice for both of us."</em> You maintain dignity by trading cognitive skill for nutrition.</li>
+<li>**Campus Religious Fellowships:** The vast majority of student Christian fellowships, campus Catholic centers, and Muslim student societies organize **Weekly Fellowship Welfare Refreshments** (free bread, jollof rice, or fruit packs) after midweek prayer meetings. Attend, participate, and eat cleanly.</li>
+<li>**Departmental Seminar Leftovers:** Final-year student symposiums, inaugural professor lectures, and departmental seminars routinely produce dozens of untouched takeout boxes. Hanging around event halls as sessions wrap up provides wholesome free meals.</li>
+<li>**The Coursemate Exchange:** Offer high-value academic labor in exchange for dinner: *"Let me help you draft your 10-page literature review assignment tonight while you cook rice for both of us."* You maintain dignity by trading cognitive skill for nutrition.</li>
 </ol>
 <p>Compare shuttle fares versus walking in <a href="/blog/hostel/campus-shuttle-bus-vs-walking-daily/">campus shuttle buses vs walking daily: transport math</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-mental-game-you-are-in-survival-camp">4. The Mental Game: You Are in Survival Camp</h2>
-<p>Being down to ₦2,000 is not a reflection of your human worth:<br />
-* It is a temporary economic reality experienced by millions of resilient scholars across the nation.<br />
-* Do not panic. Do not sink into depression. Do not download scam loan apps.<br />
-* Guard every kobo, execute your rationing plan with military discipline, and remember: in seven days, this storm will pass, and you will emerge tougher and more resourceful than ever before.</p>
-<hr />
+<p>Being down to ₦2,000 is not a reflection of your human worth:</p>
+<ul>
+<li>It is a temporary economic reality experienced by millions of resilient scholars across the nation.</li>
+<li>Do not panic. Do not sink into depression. Do not download scam loan apps.</li>
+<li>Guard every kobo, execute your rationing plan with military discipline, and remember: in seven days, this storm will pass, and you will emerge tougher and more resourceful than ever before.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<h3 id="what-foods-should-a-student-buy-with-their-last-2000-on-campus">What foods should a student buy with their last ₦2,000 on campus?</h3>
+<h3 id="what-foods-should-a-student-buy-with-their-last-2-000-on-campus">What foods should a student buy with their last ₦2,000 on campus?</h3>
 <p>High-yield caloric and protein staples: 1 paint bucket of yellow garri (₦1,200), half a plastic derica of beans (₦600), and a small sachet of salt/peppers (₦200). This provides 7 days of survival nutrition.</p>
 <h3 id="how-can-a-student-handle-severe-hunger-during-lecture-hours-without-fainting">How can a student handle severe hunger during lecture hours without fainting?</h3>
 <p>Drink 500ml of water before lectures; water fills stomach volume, downregulating ghrelin (the hunger hormone). Drink soaked garri with groundnuts in the late afternoon for slow-digesting complex carbohydrates.</p>
@@ -579,8 +531,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -764,8 +716,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -779,7 +731,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,84 +307,61 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="off-campus-students-commuting-10km-to-early-classes">Off-Campus Students: Commuting 10km to Early Classes</h1>
-<p>It is 6:10 AM. Outside your off-campus lodge window, the street is pitch dark. </p>
+<p>It is 6:10 AM. Outside your off-campus lodge window, the street is pitch dark.</p>
 <p>A light morning drizzle has turned the unpaved laterite road into slick red clay.</p>
 <p>You have an 8:00 AM Continuous Assessment test in <em>Engineering Mechanics</em> at the Faculty Auditorium, exactly 11 kilometers away.</p>
-<p>You step out to the roadside. </p>
-<p>Four other students are already standing in the mud, waving desperately at passing commercial tricycles (Keke NAPEP) that are already packed with market traders. </p>
+<p>You step out to the roadside.</p>
+<p>Four other students are already standing in the mud, waving desperately at passing commercial tricycles (Keke NAPEP) that are already packed with market traders.</p>
 <p>By 6:45 AM, when you finally squeeze into a commercial bus, the traffic jam at the university main gate is backed up for two kilometers.</p>
-<p>At 7:55 AM, you sprint through the faculty corridors, drenched in sweat, your backpack slamming against your ribs, and your heart pounding at 160 beats per minute. </p>
+<p>At 7:55 AM, you sprint through the faculty corridors, drenched in sweat, your backpack slamming against your ribs, and your heart pounding at 160 beats per minute.</p>
 <p>You stumble into the exam hall just as the lecturer is distributing question scripts. Your hands are shaking. Your mind is blank.</p>
 <p>This is the grueling daily ordeal of over 60% of Nigerian university undergraduates: <strong>the long-distance off-campus commuter trap</strong>.</p>
 <p>When students cannot secure on-campus accommodation, they rent cheap rooms in distant satellite villages. But what they save on rent, they pay in brutal physical exhaustion, lost study hours, and missed 8:00 AM lectures.</p>
 <p>Here is the operational blueprint to master the 10km daily campus commute without destroying your health or your CGPA.</p>
-<hr />
+<hr>
 <h2 id="1-the-real-cost-of-the-cheap-distant-lodge">1. The Real Cost of the "Cheap Distant Lodge"</h2>
 <p>Before analyzing transit tactics, calculate the true economic and biological balance sheet of long-distance commuting:</p>
-<p><strong>The 10km Commuter Reality Audit (Per Semester):</strong><br />
-* Financial Transit Drain: ₦1,200/day x 80 days = ₦96,000 in transit fares — Time Liquidation: 2.5 hours/day in transit = 200 lost study hours per semester — Biological Stress: Cortisol spikes, exhaust fumes, heat exhaustion, physical fatigue — Academic Risk: Late arrival at 8:00 AM tests with zero time for mental warm-up</p>
+<p><strong>The 10km Commuter Reality Audit (Per Semester):</strong></p>
+<ul>
+<li>Financial Transit Drain: ₦1,200/day x 80 days = ₦96,000 in transit fares — Time Liquidation: 2.5 hours/day in transit = 200 lost study hours per semester — Biological Stress: Cortisol spikes, exhaust fumes, heat exhaustion, physical fatigue — Academic Risk: Late arrival at 8:00 AM tests with zero time for mental warm-up</li>
+</ul>
 <p>Compare the comprehensive financial trade-offs in our detailed analysis on <a href="/blog/hostel-and-accommodation/">walking distance lodge vs far cheap lodge cost comparison</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-golden-rules-of-long-distance-commuting">2. The 3 Golden Rules of Long-Distance Commuting</h2>
 <p>If living 10km away is unavoidable this session, execute these non-negotiable operational principles:</p>
-<table>
-<thead>
-<tr>
-<th>TIER 1: The "7:15 AM Campus Arrival Window"</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- Never target an 8:00 AM arrival for an 8:00 AM class.</td>
-</tr>
-<tr>
-<td>- Arrive on campus by 7:15 AM. Use the 45-minute buffer to</td>
-</tr>
-<tr>
-<td>cool down, wash your face, review notes, and sit front.</td>
-</tr>
-<tr>
-<td>TIER 2: The "Full-Day Self-Sufficient Backpack"</td>
-</tr>
-<tr>
-<td>- You cannot go back to your room between lectures.</td>
-</tr>
-<tr>
-<td>- Carry: 20,000mAh power bank, packed lunch, water bottle,</td>
-</tr>
-<tr>
-<td>compact umbrella, and light jacket for freezing labs.</td>
-</tr>
-<tr>
-<td>TIER 3: The "Campus Day Basecamp"</td>
-</tr>
-<tr>
-<td>- Establish a dedicated home base between classes:</td>
-</tr>
-<tr>
-<td>Departmental library carrel or quiet reading room.</td>
-</tr>
-<tr>
-<td>- Never loiter aimlessly at canteens wasting hours.</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| TIER 1: The "7:15 AM Campus Arrival Window" |</p>
+<p>| --- |</p>
+<p>| - Never target an 8:00 AM arrival for an 8:00 AM class. |</p>
+<p>| - Arrive on campus by 7:15 AM. Use the 45-minute buffer to |</p>
+<p>| cool down, wash your face, review notes, and sit front. |</p>
+<p>| TIER 2: The "Full-Day Self-Sufficient Backpack" |</p>
+<p>| - You cannot go back to your room between lectures. |</p>
+<p>| - Carry: 20,000mAh power bank, packed lunch, water bottle, |</p>
+<p>| compact umbrella, and light jacket for freezing labs. |</p>
+<p>| TIER 3: The "Campus Day Basecamp" |</p>
+<p>| - Establish a dedicated home base between classes: |</p>
+<p>| Departmental library carrel or quiet reading room. |</p>
+<p>| - Never loiter aimlessly at canteens wasting hours. |</p>
+<hr>
 <h2 id="3-turning-transit-dead-time-into-high-yield-revision">3. Turning Transit Dead-Time into High-Yield Revision</h2>
-<p>Spending 120 minutes every day inside noisy commercial buses and tricycles is dead time—unless you convert it into passive audio learning:<br />
-* <strong>Audio Voice Notes:</strong> Record yourself reading key summary definitions, formula sheets, or legal statutes into your phone voice recorder. Listen to these audio tracks during your morning bus ride with noise-canceling earphones.<br />
-* <strong>Flashcard Speed Runs:</strong> If sitting in a steady campus shuttle, flip through digital flashcard decks on your phone to prime your working memory.</p>
+<p>Spending 120 minutes every day inside noisy commercial buses and tricycles is dead time—unless you convert it into passive audio learning:</p>
+<ul>
+<li>**Audio Voice Notes:** Record yourself reading key summary definitions, formula sheets, or legal statutes into your phone voice recorder. Listen to these audio tracks during your morning bus ride with noise-canceling earphones.</li>
+<li>**Flashcard Speed Runs:** If sitting in a steady campus shuttle, flip through digital flashcard decks on your phone to prime your working memory.</li>
+</ul>
 <p>Learn how to manage water rationing before morning departures in <a href="/blog/hostel-and-accommodation/hostel-water-scarcity-coping/">surviving hostel water scarcity 5 bucket survival</a>, and master time-blocking frameworks designed for busy schedules in <a href="/blog/balancing-work-and-school/">working student daily time management systems</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="commuter-network-ridesharing">🚌 Commuter Network &amp; Ridesharing</h3>
+<p>### 🚌 Commuter Network & Ridesharing</p>
 <p>Tired of fighting for campus shuttle buses every morning?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with students commuting from your neighborhood, coordinate safe shared carpools or cab splits, and get real-time morning traffic updates.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with students commuting from your neighborhood, coordinate safe shared carpools or cab splits, and get real-time morning traffic updates.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<h3 id="what-time-should-an-off-campus-student-leave-home-for-an-800-am-lecture-in-nigeria">What time should an off-campus student leave home for an 8:00 AM lecture in Nigeria?</h3>
+<h3 id="what-time-should-an-off-campus-student-leave-home-for-an-8-00-am-lecture-in-nigeria">What time should an off-campus student leave home for an 8:00 AM lecture in Nigeria?</h3>
 <p>For a 10km commute, leave home by 6:15 AM or 6:30 AM at the latest. This builds a 45-minute buffer against traffic congestion, broken-down campus shuttles, and commercial bus terminal queues.</p>
 <h3 id="how-can-commuting-students-prevent-mental-exhaustion-before-morning-classes-begin">How can commuting students prevent mental exhaustion before morning classes begin?</h3>
 <p>Avoid scrolling stressful social media during transit. Use transit time to listen to recorded audio summaries of lecture topics or practice deep breathing, and hydrate with water upon arrival.</p>
@@ -556,8 +533,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -741,8 +718,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -756,7 +733,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

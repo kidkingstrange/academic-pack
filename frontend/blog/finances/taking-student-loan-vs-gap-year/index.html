@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,86 +308,58 @@
       <div class="article-body">
         <h1 id="taking-student-loans-vs-pausing-for-gap-year-hustle">Taking Student Loans vs Pausing for Gap Year Hustle</h1>
 <p>You sit at your study desk looking at an unpaid tuition bill of <strong>₦85,000</strong> and an off-campus accommodation rent invoice of <strong>₦160,000</strong>.</p>
-<p>Your parents have exhausted their savings. </p>
+<p>Your parents have exhausted their savings.</p>
 <p>You face a profound, life-altering fork in the road:</p>
 <p><strong>Option A: The Loan Route:</strong> Apply for statutory government education funding (such as the <strong>NELFUND Student Loan</strong>), finance your institutional fees, and graduate on time with debt hanging over your future.</p>
 <p><strong>Option B: The Gap Year Hustle:</strong> Apply for an official university leave of absence, spend twelve months working full-time in tech, sales, or trade, save cash, and return to campus as a self-funded scholar.</p>
-<p>Both paths carry monumental consequences. </p>
+<p>Both paths carry monumental consequences.</p>
 <p>One commits your future post-graduation salary to debt servicing; the other delays your entry into the professional workforce by twelve to twenty-four months in an already volatile educational calendar.</p>
 <p>Here is the economic, career, and psychological analysis of <strong>Student Loans vs. The Gap Year Hustle in Nigeria</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-nigerian-academic-timeline-tax">1. The Nigerian Academic Timeline Tax</h2>
 <p>Before analyzing money, you must understand the <strong>Hidden Time Penalty</strong> of the Nigerian tertiary system:</p>
 <blockquote>
-<h3 id="the-standard-4-year-degree-reality">The Standard 4-Year Degree Reality</h3>
-<ul>
-<li>Expected Program Duration: 4 Years (48 Months)</li>
-<li>Actual Reality with ASUU Strikes &amp; Calendar Delays: 5.5 - 6.5 Years</li>
-<li>Adding a 1-Year Gap Year: Pushes Total Duration to 7 - 8 Years!</li>
-<li>Entry Age into Job Market: Moves from 22-23 up to 26-27 (Hitting corporate age limits!)</li>
-</ul>
+<p>### The Standard 4-Year Degree Reality</p>
+<p>></p>
+<p>* Expected Program Duration: 4 Years (48 Months)</p>
+<p>* Actual Reality with ASUU Strikes & Calendar Delays: 5.5 - 6.5 Years</p>
+<p>* Adding a 1-Year Gap Year: Pushes Total Duration to 7 - 8 Years!</p>
+<p>* Entry Age into Job Market: Moves from 22-23 up to 26-27 (Hitting corporate age limits!)</p>
 </blockquote>
-<p>In Nigeria, corporate graduate trainee programs (commercial banks, multinational FMCGs, oil corporations) enforce strict <strong>Age Cutoffs (typically 26 or 27 years max)</strong>. </p>
+<p>In Nigeria, corporate graduate trainee programs (commercial banks, multinational FMCGs, oil corporations) enforce strict <strong>Age Cutoffs (typically 26 or 27 years max)</strong>.</p>
 <p>Taking an optional gap year burns irreplaceable biological time that could disqualify you from lucrative corporate career pipelines.</p>
 <p>Learn about the official NELFUND student loan application process in <a href="/blog/finances/nelfund-student-loan-application-guide/">NELFUND student loan: eligibility and application walkthrough</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-economic-comparison-matrix">2. The Economic Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Critical Dimension</th>
-<th>Statutory Student Loan (NELFUND)</th>
-<th>The Gap Year Work Sabbatical</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Capital Availability</strong></td>
-<td>Immediate 100% tuition clearance</td>
-<td>Gradual, slow monthly cash accumulation</td>
-</tr>
-<tr>
-<td><strong>Interest &amp; Penalty</strong></td>
-<td><strong>0% Interest</strong>; 2-year post-NYSC grace</td>
-<td>Zero debt liability; total financial freedom</td>
-</tr>
-<tr>
-<td><strong>Graduation Speed</strong></td>
-<td>On-schedule graduation</td>
-<td>12 to 24 months delayed graduation</td>
-</tr>
-<tr>
-<td><strong>Real Earning Reality</strong></td>
-<td>Zero distraction from syllabus study</td>
-<td>Low-wage unskilled jobs often eaten by inflation</td>
-</tr>
-<tr>
-<td><strong>Cognitive Momentum</strong></td>
-<td>Continuous academic reading &amp; test skills</td>
-<td>Severe study rust; difficult to re-enter class</td>
-</tr>
-</tbody>
-</table>
+<p>| Critical Dimension | Statutory Student Loan (NELFUND) | The Gap Year Work Sabbatical |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Capital Availability</strong> | Immediate 100% tuition clearance | Gradual, slow monthly cash accumulation |</p>
+<p>| <strong>Interest & Penalty</strong> | <strong>0% Interest</strong>; 2-year post-NYSC grace | Zero debt liability; total financial freedom |</p>
+<p>| <strong>Graduation Speed</strong> | On-schedule graduation | 12 to 24 months delayed graduation |</p>
+<p>| <strong>Real Earning Reality</strong> | Zero distraction from syllabus study | Low-wage unskilled jobs often eaten by inflation |</p>
+<p>| <strong>Cognitive Momentum</strong> | Continuous academic reading & test skills | Severe study rust; difficult to re-enter class |</p>
 <p>Review emergency pocket money survival strategies in <a href="/blog/finances/delayed-pocket-money-survival-tips/">delay in pocket money transfer: ethical emergency coping</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-unskilled-labor-fallacy-in-nigeria">3. The Unskilled Labor Fallacy in Nigeria</h2>
 <p>Many students believe: <em>"I will take a year off, get a job, and save ₦300,000 for school."</em></p>
-<p>In macroeconomic reality:<br />
-* An undergraduate without a degree certificate typically commands minimum wage jobs (supermarket cashier, private school lesson teacher, fuel station attendant) paying <strong>₦40,000 to ₦60,000 monthly</strong>.<br />
-* After paying transport fares, basic feeding, and phone data, <strong>net monthly savings rarely exceed ₦10,000.</strong><br />
-* You spend twelve months exhausting your physical body, only to save ₦100,000—an amount that inflation will devalue by 30% before you resume.</p>
+<p>In macroeconomic reality:</p>
+<ul>
+<li>An undergraduate without a degree certificate typically commands minimum wage jobs (supermarket cashier, private school lesson teacher, fuel station attendant) paying **₦40,000 to ₦60,000 monthly**.</li>
+<li>After paying transport fares, basic feeding, and phone data, **net monthly savings rarely exceed ₦10,000.**</li>
+<li>You spend twelve months exhausting your physical body, only to save ₦100,000—an amount that inflation will devalue by 30% before you resume.</li>
+</ul>
 <blockquote>
-<p><strong>The Exception:</strong> If you possess high-demand digital skills (software engineering, UI/UX, video editing) with verified foreign freelance client contracts, a gap year can generate millions of naira. If your skills are unskilled manual labor, do not pause your degree.</p>
+<p>**The Exception:** If you possess high-demand digital skills (software engineering, UI/UX, video editing) with verified foreign freelance client contracts, a gap year can generate millions of naira. If your skills are unskilled manual labor, do not pause your degree.</p>
 </blockquote>
 <p>Explore upcoming skill building during academic breaks in <a href="/blog/balancing-work-and-school/">ASUU strike skill building: launching gigs without delays</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-decision-verdict">4. The Decision Verdict</h2>
 <ul>
-<li><strong>Choose the NELFUND Loan if:</strong> Your degree is in high-demand disciplines (Medicine, Law, Engineering, Tech), you want to enter the corporate job market before age cutoffs, and statutory interest-free financing is accessible.</li>
-<li><strong>Choose the Gap Year if:</strong> Your mental health is in total collapse, your family faces catastrophic physical bankruptcy, or you have an established commercial venture that is already generating substantial verified income.</li>
+<li>**Choose the NELFUND Loan if:** Your degree is in high-demand disciplines (Medicine, Law, Engineering, Tech), you want to enter the corporate job market before age cutoffs, and statutory interest-free financing is accessible.</li>
+<li>**Choose the Gap Year if:** Your mental health is in total collapse, your family faces catastrophic physical bankruptcy, or you have an established commercial venture that is already generating substantial verified income.</li>
 </ul>
 <p>Make your decision with mathematical clarity. Time is your scarcest asset; invest it where it yields the greatest lifelong dividend.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="is-taking-a-student-loan-in-nigeria-better-than-taking-a-gap-year-to-work">Is taking a student loan in Nigeria better than taking a gap year to work?</h3>
 <p>With statutory, interest-free facilities like NELFUND that defer repayment until two years post-NYSC, taking the loan is generally superior because it prevents graduation delays in an already strike-prone educational calendar.</p>
@@ -561,8 +533,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -746,8 +718,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -761,7 +733,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

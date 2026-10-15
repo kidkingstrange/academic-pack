@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,79 +307,59 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="daily-mobile-data-bundles-vs-monthly-night-plans">Daily Mobile Data Bundles vs Monthly Night Plans</h1>
-<p>It is 10:00 PM. </p>
+<p>It is 10:00 PM.</p>
 <p>You recharge <strong>₦500 airtime</strong> on your smartphone. You activate a "Daily 1GB Data Plan."</p>
-<p>You open WhatsApp to download your lecturer's 40-page biochemistry slide presentation. </p>
+<p>You open WhatsApp to download your lecturer's 40-page biochemistry slide presentation.</p>
 <p>You watch two funny TikTok video reels. You check a message on Instagram.</p>
-<p>At 11:15 PM, your network telecom provider sends a devastating automated SMS:<br />
-<strong>"Y'ello! Your daily data bundle has exhausted. You are now browsing at PAYG rate ₦0.05/MB."</strong></p>
+<p>At 11:15 PM, your network telecom provider sends a devastating automated SMS:</p>
+<p><strong>"Y'ello! Your daily data bundle has exhausted. You are now browsing at PAYG rate ₦0.05/MB."</strong></p>
 <p>Your ₦500 evaporated in seventy-five minutes.</p>
 <p>If you buy ₦500 daily data every day of the month, <strong>you will burn ₦15,000 monthly on mobile internet alone</strong>—half of your entire student allowance!</p>
 <p>In Nigerian tertiary institutions where internet connectivity is a mandatory academic necessity, <strong>Data Bleeding is one of the silent killers of student finances.</strong></p>
 <p>Here is the mathematical and operational guide to slashing your mobile data expenses by over 60%.</p>
-<hr />
+<hr>
 <h2 id="1-the-micro-billing-poverty-trap">1. The Micro-Billing Poverty Trap</h2>
 <p>Telecom operators in Nigeria structure daily micro-plans to extract the highest possible margin from low-income users:</p>
 <blockquote>
-<h3 id="the-daily-micro-data-trap">The Daily Micro-Data Trap</h3>
-<ul>
-<li>Buying 1GB daily @ ₦400/day</li>
-<li>30-Day Monthly Total: ₦12,000 for 30GB</li>
-<li>High risk of expiration before complete usage (Lost megabytes!)</li>
-<li><strong>THE STRATEGIC HYBRID BUNDLE</strong></li>
-<li>1 Monthly Baseline Data Plan (15GB for essential WhatsApp &amp; LMS): ₦4,500</li>
-<li>Night Bundles (MTN Pulse 500MB @ ₦50 for heavy YouTube/PDF downloads): ₦1,000</li>
-<li><strong>TOTAL MONTHLY EXPENDITURE:</strong> ₦5,500 for 30GB+</li>
-<li><strong>NET MONTHLY SAVINGS:</strong> ₦6,500!</li>
-</ul>
+<p>### The Daily Micro-Data Trap</p>
+<p>></p>
+<p>* Buying 1GB daily @ ₦400/day</p>
+<p>* 30-Day Monthly Total: ₦12,000 for 30GB</p>
+<p>* High risk of expiration before complete usage (Lost megabytes!)</p>
+<p>* **THE STRATEGIC HYBRID BUNDLE**</p>
+<p>* 1 Monthly Baseline Data Plan (15GB for essential WhatsApp & LMS): ₦4,500</p>
+<p>* Night Bundles (MTN Pulse 500MB @ ₦50 for heavy YouTube/PDF downloads): ₦1,000</p>
+<p>* **TOTAL MONTHLY EXPENDITURE:** ₦5,500 for 30GB+</p>
+<p>* **NET MONTHLY SAVINGS:** ₦6,500!</p>
 </blockquote>
 <p>Review student banking fee elimination in <a href="/blog/finances/best-student-bank-account-nigeria/">best student bank accounts in Nigeria: lowest charges and card fees</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-master-data-conservation-settings">2. The 3 Master Data Conservation Settings</h2>
 <p>Before activating your next data bundle, configure these three defensive operating system settings:</p>
-<table>
-<thead>
-<tr>
-<th>Operating System Filter</th>
-<th>Action Required</th>
-<th>Data Savings Yield</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>System Data Saver</strong></td>
-<td>Settings ➔ Network ➔ Turn ON "Data Saver"</td>
-<td>Cuts background data leaks by <strong>40%</strong></td>
-</tr>
-<tr>
-<td><strong>WhatsApp Media Auto-Download</strong></td>
-<td>Settings ➔ Storage ➔ When using mobile data: "NO MEDIA"</td>
-<td>Stops heavy video clips from downloading automatically</td>
-</tr>
-<tr>
-<td><strong>YouTube Video Resolution Cap</strong></td>
-<td>Settings ➔ Video Quality ➔ Default to 360p or 480p</td>
-<td>Uses 75% less data than automatic 1080p HD streaming</td>
-</tr>
-</tbody>
-</table>
+<p>| Operating System Filter | Action Required | Data Savings Yield |</p>
+<p>|---|---|---|</p>
+<p>| <strong>System Data Saver</strong> | Settings ➔ Network ➔ Turn ON "Data Saver" | Cuts background data leaks by <strong>40%</strong> |</p>
+<p>| <strong>WhatsApp Media Auto-Download</strong>| Settings ➔ Storage ➔ When using mobile data: "NO MEDIA" | Stops heavy video clips from downloading automatically |</p>
+<p>| <strong>YouTube Video Resolution Cap</strong>| Settings ➔ Video Quality ➔ Default to 360p or 480p | Uses 75% less data than automatic 1080p HD streaming |</p>
 <p>Learn how to recover from failed banking debits in <a href="/blog/finances/failed-pos-debit-transaction-student-bank/">recovering from failed POS debit transactions on campus: bank escalation</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-midnight-download-queue-protocol">3. The Midnight Download Queue Protocol</h2>
 <p>For heavy academic media (downloading 2-hour recorded Zoom lectures, textbook PDFs, software IDEs):</p>
 <ol>
-<li><strong>Queue Links During Daylight:</strong> Bookmark all required video lectures and course files in your browser during the day.</li>
-<li><strong>Deploy Cheap Midnight Bundles:</strong> Between 11:00 PM and 5:00 AM, activate an MTN Pulse Nightlife or Airtel night bundle (costing ₦50 for 500MB).</li>
-<li><strong>Execute High-Speed Batch Downloads:</strong> Download your entire weekly study material for less than ₦200, leaving your daytime data completely untouched.</li>
+<li>**Queue Links During Daylight:** Bookmark all required video lectures and course files in your browser during the day.</li>
+<li>**Deploy Cheap Midnight Bundles:** Between 11:00 PM and 5:00 AM, activate an MTN Pulse Nightlife or Airtel night bundle (costing ₦50 for 500MB).</li>
+<li>**Execute High-Speed Batch Downloads:** Download your entire weekly study material for less than ₦200, leaving your daytime data completely untouched.</li>
 </ol>
 <p>Explore upcoming student tech strategies in <a href="/blog/balancing-work-and-school/">managing generator noise, night work, and morning exams</a>.</p>
-<hr />
+<hr>
 <h2 id="4-protect-your-digital-capital">4. Protect Your Digital Capital</h2>
-<p>Mobile internet is not for passive digital addiction; it is an academic production tool:<br />
-* Eliminate daily micro-recharges that bleed your allowance.<br />
-* Use institutional Wi-Fi, schedule heavy downloads at night, and lock down background app refresh.<br />
-* Control your digital consumption and keep your money where it belongs: powering your academic comeback.</p>
-<hr />
+<p>Mobile internet is not for passive digital addiction; it is an academic production tool:</p>
+<ul>
+<li>Eliminate daily micro-recharges that bleed your allowance.</li>
+<li>Use institutional Wi-Fi, schedule heavy downloads at night, and lock down background app refresh.</li>
+<li>Control your digital consumption and keep your money where it belongs: powering your academic comeback.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-buying-daily-mobile-data-bundles-a-bad-financial-decision-for-students">Why is buying daily mobile data bundles a bad financial decision for students?</h3>
 <p>Daily bundles (e.g., 1GB for ₦350/day) suffer from high micro-billing markup: buying daily costs over ₦10,500 monthly for 30GB, whereas a 30-day monthly plan or combined night bundle delivers double the data for 40% less.</p>
@@ -553,8 +533,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -738,8 +718,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -753,7 +733,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,81 +308,63 @@
       <div class="article-body">
         <h1 id="opening-up-to-parents-about-depression-vs-keeping-quiet">Opening Up to Parents About Depression vs Keeping Quiet</h1>
 <p>You have been lying on your thin hostel mattress for three days.</p>
-<p>You haven't showered. You haven't eaten a proper meal. You missed two mandatory departmental continuous assessment tests. </p>
+<p>You haven't showered. You haven't eaten a proper meal. You missed two mandatory departmental continuous assessment tests.</p>
 <p>When your roommate asks what is wrong, you mutter that you have "malaria."</p>
-<p>In reality, you are trapped in the suffocating grip of <strong>Major Depressive Disorder</strong>. </p>
+<p>In reality, you are trapped in the suffocating grip of <strong>Major Depressive Disorder</strong>.</p>
 <p>Your phone rings. The caller ID displays: <strong>MUM</strong> or <strong>DADDY</strong>.</p>
 <p>Your thumb hovers over the green button. Every fiber of your being wants to cry out: <em>"Mum, I am drowning. I can't breathe. My mind is breaking. I need help."</em></p>
-<p>Yet, a cold wave of cultural reality freezes your throat. </p>
-<p>You picture their reaction:<br />
-* <em>"Depressed? In this family? God forbid! What do you have to be depressed about? Are you paying your own rent?"</em><br />
-* <em>"It is an attack from your father's village. Pack your bags; we are going to a 7-day fasting and deliverance mountain."</em></p>
+<p>Yet, a cold wave of cultural reality freezes your throat.</p>
+<p>You picture their reaction:</p>
+<ul>
+<li>*"Depressed? In this family? God forbid! What do you have to be depressed about? Are you paying your own rent?"*</li>
+<li>*"It is an attack from your father's village. Pack your bags; we are going to a 7-day fasting and deliverance mountain."*</li>
+</ul>
 <p>Should you open up to your Nigerian parents, or should you keep quiet and fight this battle alone?</p>
 <p>Here is the compassionate, realistic framework to navigate this emotional minefield.</p>
-<hr />
+<hr>
 <h2 id="1-the-generational-gap-mental-illness-vs-spiritual-warfare">1. The Generational Gap: Mental Illness vs. Spiritual Warfare</h2>
 <p>To protect yourself, you must understand your parents' cultural paradigm:</p>
 <blockquote>
-<h3 id="your-generational-framework">Your Generational Framework</h3>
-<ul>
-<li>Emotional and psychological health is biological</li>
-<li>Acknowledges trauma, neurotransmitter imbalance, and burnout</li>
-<li>Sees therapy and psychiatric medicine as standard healthcare</li>
-<li><strong>Traditional Nigerian Parental Framework</strong></li>
-<li>Hardship is normal; resilience is mandatory</li>
-<li>Emotional vulnerability is perceived as spiritual weakness or laziness</li>
-<li>Mental illness is classified as demonic possession or ancestral attack</li>
-</ul>
+<p>### Your Generational Framework</p>
+<p>></p>
+<p>* Emotional and psychological health is biological</p>
+<p>* Acknowledges trauma, neurotransmitter imbalance, and burnout</p>
+<p>* Sees therapy and psychiatric medicine as standard healthcare</p>
+<p>* **Traditional Nigerian Parental Framework**</p>
+<p>* Hardship is normal; resilience is mandatory</p>
+<p>* Emotional vulnerability is perceived as spiritual weakness or laziness</p>
+<p>* Mental illness is classified as demonic possession or ancestral attack</p>
 </blockquote>
 <p>When you tell a traditional Nigerian parent you are "depressed," they do not hear that your serotonin levels are depleted; they hear that you are ungrateful for their financial sacrifices or that you have succumbed to demonic attack.</p>
 <p>Understand how parental expectations fuel academic pressure in <a href="/blog/mental-health/parental-expectations-academic-pressure/">handling parental expectations and academic pressure in Nigeria</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-point-parental-safety-assessment">2. The 3-Point Parental Safety Assessment</h2>
 <p>Before disclosing sensitive psychological distress to your family, evaluate their psychological safety:</p>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>High-Safety Parents (Safe to Disclose)</th>
-<th>High-Risk Parents (Keep Quiet &amp; Seek Campus Care)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Response to Past Hardship</strong></td>
-<td>Listened calmly; sought medical doctors</td>
-<td>Yelled, blamed you, or launched into accusations</td>
-</tr>
-<tr>
-<td><strong>View of Healthcare</strong></td>
-<td>Regular use of clinics, hospitals, and therapy</td>
-<td>Rejects hospitals; relies 100% on faith healers</td>
-</tr>
-<tr>
-<td><strong>Financial Weaponization</strong></td>
-<td>Does not threaten school fees when disappointed</td>
-<td>Regularly threatens to withdraw financial support</td>
-</tr>
-</tbody>
-</table>
+<p>| Factor | High-Safety Parents (Safe to Disclose) | High-Risk Parents (Keep Quiet & Seek Campus Care) |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Response to Past Hardship</strong> | Listened calmly; sought medical doctors | Yelled, blamed you, or launched into accusations |</p>
+<p>| <strong>View of Healthcare</strong> | Regular use of clinics, hospitals, and therapy | Rejects hospitals; relies 100% on faith healers |</p>
+<p>| <strong>Financial Weaponization</strong> | Does not threaten school fees when disappointed | Regularly threatens to withdraw financial support |</p>
 <p>If your parents fall into the <strong>High-Risk category</strong>, disclosing your depression will likely increase your psychological distress. You must protect your mental stability first.</p>
 <p>Learn about the emotional pressure on firstborn students in <a href="/blog/mental-health/eldest-child-pressure-university-student/">eldest child pressure in Nigerian universities: sending pocket money home</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-somatic-translation-strategy-how-to-talk-without-triggering-denial">3. The Somatic Translation Strategy: How to Talk Without Triggering Denial</h2>
 <p>If you decide to inform your parents because you need financial assistance for medical treatment or semester deferral, <strong>translate your symptoms into physical language</strong>:</p>
 <blockquote>
-<p><strong>Avoid Clinical Jargon:</strong> <em>"Mum, I have clinical depression, acute anxiety, and executive dysfunction."</em><br />
-<strong>Use Somatic Medical Framing:</strong> <em>"Mum, for the past four weeks, I have developed severe insomnia, acute chest tightness, and sudden memory blackouts during lectures. The doctors at the campus clinic ran blood tests and told me my nervous system is breaking down from physical exhaustion and stress. They advised medical treatment."</em></p>
+<p>**Avoid Clinical Jargon:** *"Mum, I have clinical depression, acute anxiety, and executive dysfunction."*</p>
+<p>**Use Somatic Medical Framing:** *"Mum, for the past four weeks, I have developed severe insomnia, acute chest tightness, and sudden memory blackouts during lectures. The doctors at the campus clinic ran blood tests and told me my nervous system is breaking down from physical exhaustion and stress. They advised medical treatment."*</p>
 </blockquote>
 <p>When framed as an objective physiological breakdown endorsed by university doctors, traditional parents are far more likely to rally with support and funds rather than religious scolding.</p>
 <p>Review the biological reality of pre-exam insomnia in <a href="/blog/mental-health/night-before-exam-insomnia-causes/">night before exam insomnia causes: why sleep vanishes</a>.</p>
-<hr />
+<hr>
 <h2 id="4-your-survival-is-non-negotiable">4. Your Survival Is Non-Negotiable</h2>
-<p>If your family cannot provide the emotional safety you need, find your sanctuary elsewhere:<br />
-* Campus guidance counselors, trusted departmental professors, campus clinic psychiatrists, and empathetic peer communities exist to support you.<br />
-* Your life is infinitely more valuable than any university degree, any examination, or any cultural expectation.<br />
-* You do not need your parents' understanding to heal. You only need the courage to take the first step toward professional care.</p>
-<hr />
+<p>If your family cannot provide the emotional safety you need, find your sanctuary elsewhere:</p>
+<ul>
+<li>Campus guidance counselors, trusted departmental professors, campus clinic psychiatrists, and empathetic peer communities exist to support you.</li>
+<li>Your life is infinitely more valuable than any university degree, any examination, or any cultural expectation.</li>
+<li>You do not need your parents' understanding to heal. You only need the courage to take the first step toward professional care.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-do-traditional-nigerian-parents-typically-react-when-a-child-says-they-are-depressed">How do traditional Nigerian parents typically react when a child says they are depressed?</h3>
 <p>Common cultural responses include spiritualization ('You lack prayers; go for deliverance'), invalidation ('What do you have to be depressed about? Did you pay your own school fees?'), or anger ('Stop speaking negative words into your life').</p>
@@ -556,8 +538,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -741,8 +723,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -756,7 +738,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

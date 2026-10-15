@@ -43,7 +43,7 @@ MARKETING_ASSETS = [
         "type": "caption",
         "label": "WhatsApp Status 1 — The Shawarma vs Carryover Reality Check (Top Converter)",
         "text": (
-            "Coursemates who say ₦2k is too much for an exam prep system will happily spend ₦3,500 on "
+            "Coursemates who say ₦5k is too much for an exam prep system will happily spend ₦7,000 on "
             "shawarma today and ₦150k on hostel rent next year when they get hit with an avoidable "
             "carryover. Don't be that guy. Grab the package here: {link}"
         ),
@@ -64,7 +64,7 @@ MARKETING_ASSETS = [
         "label": "WhatsApp Status 3 — Night Class vs Result Portal Reality",
         "text": (
             "The worst feeling in uni isn't failing an exam you didn't read for. It's reading for 6 "
-            "hours every night and still seeing a D or C on your result sheet. ₦2,000 fixes your "
+            "hours every night and still seeing a D or C on your result sheet. ₦5,000 fixes your "
             "study technique permanently: {link}"
         ),
     },

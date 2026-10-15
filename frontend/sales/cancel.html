@@ -3,30 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cancel Subscription — Academic Comeback</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>Cancel Subscription — Scale Group</title>
+<meta name="description" content="Manage your subscription and billing settings for Scale Group programs.">
+<link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
+<link rel="stylesheet" href="/css/landing.css?v=swiss-20261008">
 <style>
   :root {
-    --bg-card: var(--ink2);
-    --border-color: rgba(255, 255, 255, 0.08);
+    --surface: #f9f9f9;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f3f3f4;
+    --border-hairline: #e5e5e5;
+    --border-subtle: #cccccc;
+    --text-primary: #0a0a0a;
+    --text-secondary: #595959;
+    --action-primary: #0a0a0a;
+    --action-hover: #262626;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: linear-gradient(160deg, var(--ink) 0%, #0f1320 60%, #131826 100%);
-    color: #fff;
-    font-family: 'Manrope', sans-serif;
+    background: #f9f9f9;
+    color: #0a0a0a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .cancel-page-wrapper {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 16px;
+    padding: 48px 20px;
+    box-sizing: border-box;
   }
 
   .cancel-container {
@@ -35,239 +52,317 @@
   }
 
   .cancel-card {
-    background: linear-gradient(160deg, #0c0e14 0%, #131826 55%, #0f1520 100%);
-    border: 1px solid rgba(239, 68, 68, 0.15);
-    border-radius: var(--radius-xl);
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
     padding: 40px 32px;
-    box-shadow: 0 24px 60px rgba(0,0,0,.6);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    box-sizing: border-box;
     position: relative;
-    overflow: hidden;
   }
 
-  .cancel-card::before {
-    content: '';
-    position: absolute;
-    top: -120px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, rgba(239, 68, 68, 0.06) 0%, rgba(239, 68, 68, 0.01) 45%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .cancel-card > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .brand-logo-wrap {
-    width: 54px;
-    height: 54px;
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--red);
-    border-radius: 50%;
-    display: flex;
+  .badge-tag {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin: 0 auto 20px;
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    gap: 6px;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
   }
 
-  .title {
-    font-family: 'Clash Display', sans-serif;
+  .badge-tag--danger {
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid rgba(220, 38, 38, 0.2);
+    color: #dc2626;
+  }
+
+  .badge-tag--success {
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.2);
+    color: #15803d;
+  }
+
+  h1.cancel-title {
+    font-family: 'Inter', sans-serif;
     font-size: 1.65rem;
-    font-weight: 600;
-    color: #fff;
+    font-weight: 800;
+    color: #0a0a0a;
     text-align: center;
-    margin-bottom: 6px;
-    letter-spacing: -.5px;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.035em;
+    line-height: 1.25;
   }
 
-  .subtitle {
-    font-size: 0.9rem;
-    color: var(--gray-l);
+  .cancel-sub {
+    font-size: .92rem;
+    color: #595959;
     text-align: center;
-    line-height: 1.6;
-    margin-bottom: 28px;
+    line-height: 1.55;
+    margin: 0 0 24px 0;
   }
 
   /* ── Details Box ── */
   .details-box {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
+    background: #f3f3f4;
+    border: 1px solid #e5e5e5;
     border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 28px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+    text-align: left;
   }
+
   .details-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-size: 0.9rem;
+    gap: 12px;
   }
+
   .details-row:last-child {
     margin-bottom: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 12px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 10px;
   }
+
   .detail-label {
-    color: var(--gray-l);
-    font-size: 0.8rem;
+    color: #595959;
+    font-size: 0.74rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
   }
+
   .detail-val {
     font-weight: 700;
-    color: #fff;
+    color: #0a0a0a;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .detail-val.price {
+    font-family: 'JetBrains Mono', monospace;
   }
 
   /* ── Form Inputs ── */
   .form-group {
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    text-align: left;
   }
+
   .form-group label {
     display: block;
-    font-size: 0.76rem;
+    font-size: .74rem;
     font-weight: 700;
+    color: #595959;
     text-transform: uppercase;
-    color: var(--gray-l);
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
   }
+
   .input-control {
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    padding: 12px 16px;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
     border-radius: 10px;
-    font-size: 0.9rem;
+    color: #0a0a0a;
+    font-size: 15px;
+    font-family: inherit;
     outline: none;
-    transition: var(--transition);
+    transition: border-color 0.18s, box-shadow 0.18s;
   }
+
   .input-control:focus {
-    border-color: var(--red);
+    border-color: #0a0a0a;
+    box-shadow: 0 0 0 1px #0a0a0a;
   }
 
   .btn-action {
-    background: linear-gradient(135deg, var(--red), #ef4444);
-    color: #fff;
-    font-weight: 700;
+    background: #dc2626;
+    color: #ffffff;
+    font-weight: 600;
     font-size: 0.95rem;
-    padding: 14px;
-    border-radius: var(--radius-full);
-    border: none;
+    padding: 14px 20px;
+    border-radius: 9999px;
+    border: 1px solid #dc2626;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     width: 100%;
-    transition: var(--transition);
+    transition: all 0.18s;
     text-decoration: none;
-    box-shadow: 0 4px 24px rgba(239, 68, 68, 0.2);
+    font-family: inherit;
+    box-sizing: border-box;
   }
-  .btn-action:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 36px rgba(239, 68, 68, 0.3);
+
+  .btn-action:hover:not(:disabled) {
+    background: #b91c1c;
+    border-color: #b91c1c;
   }
+
   .btn-action.secondary {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    box-shadow: none;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    color: #0a0a0a;
+    margin-top: 10px;
   }
+
   .btn-action.secondary:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #f3f3f4;
+    border-color: #cccccc;
+  }
+
+  .btn-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
   /* ── States ── */
   .view-state {
     display: none;
+    text-align: center;
   }
+
   .view-state.active {
     display: block;
   }
 
+  .state-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    margin: 0 auto 20px;
+  }
+
+  .state-icon.danger {
+    background: rgba(220, 38, 38, 0.08);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+  }
+
+  .state-icon.success {
+    background: rgba(22, 163, 74, 0.08);
+    color: #16a34a;
+    border: 1px solid rgba(22, 163, 74, 0.2);
+  }
+
+  .spin {
+    display: inline-block;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   @media (max-width: 480px) {
-    body { padding: 20px 12px; }
-    .cancel-card { padding: 28px 18px; border-radius: 16px; }
-    .title { font-size: 1.4rem; }
-    .subtitle { font-size: 0.85rem; margin-bottom: 20px; }
-    .input-control { font-size: 16px !important; }
-    .btn-action { min-height: 44px; padding: 12px; }
+    .cancel-page-wrapper { padding: 24px 14px; }
+    .cancel-card { padding: 28px 20px; border-radius: 14px; }
+    h1.cancel-title { font-size: 1.35rem; }
   }
 </style>
 </head>
 <body>
 
-<div class="cancel-container">
-  
-  <!-- ── State 1: Request cancel link (No token in URL) ── -->
-  <div class="cancel-card view-state" id="state-request">
-    <div class="brand-logo-wrap"><i class="bi bi-x-circle-fill"></i></div>
-    <h1 class="title">Cancel Subscription</h1>
-    <p class="subtitle">Enter your email address below to receive a secure subscription cancellation confirmation link.</p>
-    
-    <form id="request-form">
-      <div class="form-group">
-        <label for="email-input">Your Registered Email</label>
-        <input type="email" id="email-input" class="input-control" placeholder="e.g. you@example.com" required>
-      </div>
-      <button type="submit" class="btn-action" id="request-btn"><i class="bi bi-envelope-fill"></i> Send Cancellation Link</button>
-    </form>
+<!-- Unified Global Site Header -->
+<header class="global-site-header">
+  <div class="global-header-inner">
+    <a href="/" class="global-brand">
+      <img src="/assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="24" height="28">
+      <span>SCALE GROUP</span>
+    </a>
+    <nav class="global-nav">
+      <a href="/academic-comeback-package" class="global-nav__flagship">
+        <span class="global-nav__flagship-dot"></span>
+        <i class="bi bi-mortarboard-fill"></i> Academic Comeback
+      </a>
+      <a href="/#masterclasses" class="global-nav__link">Masterclasses</a>
+      <a href="/blog/" class="global-nav__link">Campus Guides</a>
+      <a href="/library" class="global-nav__link">My Library</a>
+    </nav>
+    <div class="global-header-mobile-actions">
+      <a href="/" class="global-nav__link" style="font-size:0.85rem; font-weight:600; text-decoration:none; color:var(--text-primary);">
+        <i class="bi bi-arrow-left"></i> Home
+      </a>
+    </div>
   </div>
+</header>
 
-  <!-- ── State 2: Request sent feedback ── -->
-  <div class="cancel-card view-state" id="state-sent">
-    <div class="brand-logo-wrap" style="color:var(--green); background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.2)"><i class="bi bi-send-check-fill"></i></div>
-    <h1 class="title">Cancellation Email Sent</h1>
-    <p class="subtitle" style="margin-bottom:0">We've sent a secure cancellation link to your email address. Please check your inbox (and spam folder) and click the link to confirm.</p>
-  </div>
-
-  <!-- ── State 3: Confirm Cancellation (Token present) ── -->
-  <div class="cancel-card view-state" id="state-confirm">
-    <div class="brand-logo-wrap"><i class="bi bi-exclamation-triangle-fill"></i></div>
-    <h1 class="title">Confirm Cancellation</h1>
-    <p class="subtitle">Please review your subscription details before finalizing the cancellation.</p>
+<div class="cancel-page-wrapper">
+  <div class="cancel-container">
     
-    <div class="details-box">
-      <div class="details-row">
-        <span class="detail-label">Subscription</span>
-        <span class="detail-val" id="sub-offer">Loading...</span>
-      </div>
-      <div class="details-row">
-        <span class="detail-label">Amount</span>
-        <span class="detail-val" id="sub-price">₦0</span>
-      </div>
-      <div class="details-row">
-        <span class="detail-label">Subscriber</span>
-        <span class="detail-val" id="sub-email">you@example.com</span>
-      </div>
+    <!-- ── State 1: Request cancel link (No token in URL) ── -->
+    <div class="cancel-card view-state" id="state-request">
+      <div style="text-align: center;"><span class="badge-tag badge-tag--danger"><i class="bi bi-shield-slash-fill"></i> Subscription Management</span></div>
+      <h1 class="cancel-title">Cancel Subscription</h1>
+      <p class="cancel-sub">Enter your email address below to receive a secure subscription cancellation link.</p>
+      
+      <form id="request-form">
+        <div class="form-group">
+          <label for="email-input">Registered Account Email</label>
+          <input type="email" id="email-input" class="input-control" placeholder="e.g. you@example.com" required autocomplete="email">
+        </div>
+        <button type="submit" class="btn-action" id="request-btn"><i class="bi bi-envelope-fill"></i> Send Cancellation Link</button>
+      </form>
     </div>
 
-    <button type="button" class="btn-action" id="confirm-btn" style="margin-bottom:12px"><i class="bi bi-trash3-fill"></i> Confirm Cancellation</button>
-    <a href="/" class="btn-action secondary">Keep Subscription Active</a>
-  </div>
+    <!-- ── State 2: Request sent feedback ── -->
+    <div class="cancel-card view-state" id="state-sent">
+      <div class="state-icon success"><i class="bi bi-send-check-fill"></i></div>
+      <h1 class="cancel-title">Cancellation Link Sent</h1>
+      <p class="cancel-sub" style="margin-bottom:0">We've sent a secure cancellation link to your registered email address. Please check your inbox (and spam folder) and click the link to confirm.</p>
+    </div>
 
-  <!-- ── State 4: Cancelled successfully feedback ── -->
-  <div class="cancel-card view-state" id="state-success">
-    <div class="brand-logo-wrap" style="color:var(--green); background:rgba(34,197,94,0.1); border-color:rgba(34,197,94,0.2)"><i class="bi bi-check-circle-fill"></i></div>
-    <h1 class="title">Subscription Cancelled</h1>
-    <p class="subtitle" style="margin-bottom:0">Your subscription has been cancelled. You will not be charged again. We are sorry to see you go!</p>
-  </div>
+    <!-- ── State 3: Confirm Cancellation (Token present) ── -->
+    <div class="cancel-card view-state" id="state-confirm">
+      <div style="text-align: center;"><span class="badge-tag badge-tag--danger"><i class="bi bi-exclamation-triangle-fill"></i> Action Required</span></div>
+      <h1 class="cancel-title">Confirm Cancellation</h1>
+      <p class="cancel-sub">Please review your subscription details before finalizing the cancellation.</p>
+      
+      <div class="details-box">
+        <div class="details-row">
+          <span class="detail-label">Subscription Plan</span>
+          <span class="detail-val" id="sub-offer">Loading...</span>
+        </div>
+        <div class="details-row">
+          <span class="detail-label">Billing Amount</span>
+          <span class="detail-val price" id="sub-price">₦0</span>
+        </div>
+        <div class="details-row">
+          <span class="detail-label">Subscriber</span>
+          <span class="detail-val" id="sub-email">you@example.com</span>
+        </div>
+      </div>
 
-  <!-- ── State 5: Error ── -->
-  <div class="cancel-card view-state" id="state-error">
-    <div class="brand-logo-wrap"><i class="bi bi-x-octagon-fill"></i></div>
-    <h1 class="title">Request Failed</h1>
-    <p class="subtitle" id="error-msg">The cancel request failed. The token may be invalid or expired.</p>
-    <button class="btn-action" onclick="window.location.href='/sales/cancel'"><i class="bi bi-arrow-left"></i> Start Over</button>
-  </div>
+      <button type="button" class="btn-action" id="confirm-btn"><i class="bi bi-trash3-fill"></i> Confirm Cancellation</button>
+      <a href="/" class="btn-action secondary"><i class="bi bi-shield-check"></i> Keep Subscription Active</a>
+    </div>
 
+    <!-- ── State 4: Cancelled successfully feedback ── -->
+    <div class="cancel-card view-state" id="state-success">
+      <div class="state-icon success"><i class="bi bi-check-circle-fill"></i></div>
+      <h1 class="cancel-title">Subscription Cancelled</h1>
+      <p class="cancel-sub" style="margin-bottom:0">Your recurring subscription has been cancelled. You will not be charged again. We are sorry to see you go!</p>
+    </div>
+
+    <!-- ── State 5: Error ── -->
+    <div class="cancel-card view-state" id="state-error">
+      <div class="state-icon danger"><i class="bi bi-x-octagon-fill"></i></div>
+      <h1 class="cancel-title">Request Failed</h1>
+      <p class="cancel-sub" id="error-msg">The cancel request failed. The token may be invalid or expired.</p>
+      <button class="btn-action secondary" onclick="window.location.href='/sales/cancel'"><i class="bi bi-arrow-left"></i> Start Over</button>
+    </div>
+
+  </div>
 </div>
 
 <script>
@@ -307,7 +402,7 @@
   // Send request cancel link email
   document.getElementById('request-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = document.getElementById('email-input').value;
+    const email = document.getElementById('email-input').value.trim();
     const btn = document.getElementById('request-btn');
 
     btn.disabled = true;

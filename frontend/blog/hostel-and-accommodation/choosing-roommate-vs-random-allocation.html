@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,47 +308,55 @@
       <div class="article-body">
         <h1 id="roommate-by-choice-vs-random-hall-allocation-outcomes">Roommate by Choice vs Random Hall Allocation: Outcomes</h1>
 <p>In Nigerian tertiary institutions, the person who shares your immediate four walls dictates your sleep quality, emotional sanity, and semester grade trajectory.</p>
-<p>Undergraduates typically arrive at their living arrangements through one of two distinct pathways:<br />
-1. <strong>Roommate by Choice:</strong> Selecting a trusted departmental peer, close secondary school friend, or church member to rent a private room or register for joint hall allocation.<br />
-2. <strong>Random Portal Allocation:</strong> Letting the university's automated hostel balloting algorithm assign you to an unvetted bed space alongside complete strangers.</p>
+<p>Undergraduates typically arrive at their living arrangements through one of two distinct pathways:</p>
+<ol>
+<li>**Roommate by Choice:** Selecting a trusted departmental peer, close secondary school friend, or church member to rent a private room or register for joint hall allocation.</li>
+<li>**Random Portal Allocation:** Letting the university's automated hostel balloting algorithm assign you to an unvetted bed space alongside complete strangers.</li>
+</ol>
 <p>Both systems carry distinct advantages and severe potential pitfalls. Here is how each arrangement impacts your academic performance, and how to safeguard your living space.</p>
-<hr />
+<hr>
 <h2 id="1-the-myth-of-the-best-friend-roommate">1. The Myth of the "Best Friend Roommate"</h2>
 <p>The most common mistake undergraduates make is assuming that because someone is fun to chat with between lectures, they will make an ideal residential roommate.</p>
-<p>Friendship compatibility and domestic compatibility operate on completely different neurological and psychological planes:<br />
-* <strong>The Cleanliness Fracture:</strong> Your friend may be brilliant, witty, and generous—yet leave mouldy pots of soup under the reading desk for four days and refuse to sweep the room.<br />
-* <strong>The Boundary Paralysis:</strong> When a stranger violates your space, you can confront them assertively. When your best friend invites loud friends over while you are preparing for a difficult exam, you hesitate to speak up for fear of damaging the friendship.<br />
-* <strong>The Financial Awkwardness:</strong> If your friend runs out of food or money, you feel morally obligated to sustain them, draining your own semester provisions.</p>
+<p>Friendship compatibility and domestic compatibility operate on completely different neurological and psychological planes:</p>
+<ul>
+<li>**The Cleanliness Fracture:** Your friend may be brilliant, witty, and generous—yet leave mouldy pots of soup under the reading desk for four days and refuse to sweep the room.</li>
+<li>**The Boundary Paralysis:** When a stranger violates your space, you can confront them assertively. When your best friend invites loud friends over while you are preparing for a difficult exam, you hesitate to speak up for fear of damaging the friendship.</li>
+<li>**The Financial Awkwardness:** If your friend runs out of food or money, you feel morally obligated to sustain them, draining your own semester provisions.</li>
+</ul>
 <p>Review our framework for resolving living friction in <a href="/blog/hostel-and-accommodation/hostel-roommate-tension-causes-solutions/">hostel roommate tension causes and solutions</a>.</p>
-<hr />
+<hr>
 <h2 id="2-random-allocation-the-roulette-of-public-campus-halls">2. Random Allocation: The Roulette of Public Campus Halls</h2>
 <p>When university hall portals assign bed spaces at random, you roll a high-stakes psychological dice:</p>
 <h3 id="the-worst-case-scenario">The Worst-Case Scenario</h3>
 <p>You are assigned to a 4-man room where your three roommates are active partygoers, smoke inside the room, host unauthorized overnight visitors until dawn, and bring in illegal squatters that stretch the room occupancy to twelve people. Living in this environment destroys deep study focus and induces chronic sleep deprivation.</p>
 <h3 id="the-hidden-upside-of-strangers">The Hidden Upside of Strangers</h3>
-<p>Paradoxically, rooming with strangers often produces cleaner boundaries:<br />
-1. <strong>Formal Business Relationships:</strong> Because you are not sentimental friends, you can negotiate clear, unemotional rules regarding cleaning rotas, lights-out times, and visitor curfews.<br />
-2. <strong>Expanding Your Network Beyond Your Department:</strong> Living with students from Engineering, Law, Pharmacy, and Arts broadens your campus perspectives and introduces you to diverse career pathways.</p>
+<p>Paradoxically, rooming with strangers often produces cleaner boundaries:</p>
+<ol>
+<li>**Formal Business Relationships:** Because you are not sentimental friends, you can negotiate clear, unemotional rules regarding cleaning rotas, lights-out times, and visitor curfews.</li>
+<li>**Expanding Your Network Beyond Your Department:** Living with students from Engineering, Law, Pharmacy, and Arts broadens your campus perspectives and introduces you to diverse career pathways.</li>
+</ol>
 <p>If you are considering disciplined fellowship housing alternatives, review <a href="/blog/hostel-and-accommodation/religious-student-fellowship-hostels/">religious student fellowship hostels and navigating moral codes</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-5-point-roommate-vetting-checklist">3. The 5-Point Roommate Vetting Checklist</h2>
 <p>If you have the privilege of choosing your roommate for the upcoming session, conduct a 15-minute alignment audit covering these five non-negotiables:</p>
 <ol>
-<li><strong>Sleep Chronotype:</strong> What time do you turn off main lights? (10:00 PM sleeper vs 3:00 AM night owl).</li>
-<li><strong>Overnight Guest Policy:</strong> Are opposite-sex visitors or multi-day guests permitted in the room?</li>
-<li><strong>Noise and Audio Decorum:</strong> Are speakers banned in favour of private headphones during reading hours?</li>
-<li><strong>Food and Cooking Policy:</strong> Are food rations pooled collectively, or does each student cook independently?</li>
-<li><strong>Conflict Resolution:</strong> If one person feels aggrieved, do we address it immediately in person, or let resentment fester?</li>
+<li>**Sleep Chronotype:** What time do you turn off main lights? (10:00 PM sleeper vs 3:00 AM night owl).</li>
+<li>**Overnight Guest Policy:** Are opposite-sex visitors or multi-day guests permitted in the room?</li>
+<li>**Noise and Audio Decorum:** Are speakers banned in favour of private headphones during reading hours?</li>
+<li>**Food and Cooking Policy:** Are food rations pooled collectively, or does each student cook independently?</li>
+<li>**Conflict Resolution:** If one person feels aggrieved, do we address it immediately in person, or let resentment fester?</li>
 </ol>
 <p>To manage the psychological toll of crowded living spaces, read our mental health analysis on <a href="/blog/mental-health/">lack of privacy and hostel mental exhaustion</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-accommodation-safety-network">🏠 Join the Student Accommodation &amp; Safety Network</h3>
+<p>### 🏠 Join the Student Accommodation & Safety Network</p>
 <p>Need help vetting prospective roommates or finding dependable study partners?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with verified students from your campus, share genuine room leads, and find quiet study roommates.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with verified students from your campus, share genuine room leads, and find quiet study roommates.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="is-living-with-your-best-friend-in-a-university-hostel-always-a-good-idea">Is living with your best friend in a university hostel always a good idea?</h3>
 <p>Not necessarily. Great friendships often fracture under 24/7 domestic proximity. Different sleep schedules, personal hygiene standards, and financial friction can ruin both the friendship and your semester study focus.</p>
@@ -522,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -707,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -722,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -313,11 +313,11 @@
 <p>Your supervisor glances at the cover page for four seconds, sneers, and pulls out a red ink pen.</p>
 <p>Without reading a single paragraph of your methodology, they slash a massive red 'X' across the entire title page:</p>
 <p><em>"What is this rubbish? Is this how your mates write research? Everything here is pure garbage. Throw it in the bin and rewrite it completely! Get out of my office!"</em></p>
-<p>You walk down the faculty corridor with hot, bitter tears stinging your eyes. </p>
+<p>You walk down the faculty corridor with hot, bitter tears stinging your eyes.</p>
 <p>Your friends in other departments have already finished Chapter 4 and collected data. Meanwhile, you have been trapped on Chapter 2 for five months, draining your living allowance while your graduation date slips away.</p>
 <p>Welcome to <strong>Final-Year Project Supervisor Trauma</strong>.</p>
 <p>In Nigerian tertiary institutions, your assigned final-year supervisor holds near-absolute authority over your graduation timeline. Surviving a difficult supervisor requires transforming yourself from an emotional victim into a cold, diplomatic political operative.</p>
-<hr />
+<hr>
 <h2 id="1-the-4-archetypes-of-toxic-project-supervisors">1. The 4 Archetypes of Toxic Project Supervisors</h2>
 <p>To navigate your supervisor, you must accurately diagnose their psychological profile:</p>
 <h3 id="archetype-1-the-phantom-the-ghost">Archetype 1: The Phantom (The Ghost)</h3>
@@ -329,32 +329,34 @@
 <h3 id="archetype-4-the-research-hijacker">Archetype 4: The Research Hijacker</h3>
 <p>Forces undergraduates to conduct difficult field data collection or laboratory synthesis solely to harvest the findings for their own journal publications.</p>
 <p>Learn how to defend your research project successfully in <a href="/blog/academics/final-year-project-defense-prep/">defending your final year project: presentation prep</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-diplomatic-operational-playbook">2. The Diplomatic Operational Playbook</h2>
 <p>When dealing with a difficult supervisor, emotional outbursts will ruin your degree. Implement these proven field tactics:</p>
 <ol>
-<li><strong>The Postgraduate Gatekeeper Alliance:</strong> Every difficult professor has trusted Masters (M.Sc.) or Ph.D. research assistants who handle their daily grading. Befriend these postgraduate scholars. Have them review your chapters <em>before</em> presenting them to the professor. If the assistant endorses your work, the professor will sign off with minimal resistance.</li>
-<li><strong>The Timestamped Red-Pen Binder:</strong> When submitting a revised chapter, staple your previous draft (with their red-pen corrections) directly behind the new version. Highlight where you implemented their exact feedback: <em>"Prof, as requested on page 14 of the previous draft, I have added the Chi-Square statistical validation."</em> They cannot accuse you of ignoring feedback when their own handwriting stares back at them.</li>
-<li><strong>The 3-Sentence Status Follow-Up:</strong> Never send vague messages like <em>"Good morning sir, any update?"</em> Send executive, polite emails: <em>"Dear Prof, following our consultation on Oct 12th, Chapter 3 was submitted to your secretary. I am available for corrections whenever convenient for your schedule. Thank you for your continued mentorship."</em></li>
+<li>**The Postgraduate Gatekeeper Alliance:** Every difficult professor has trusted Masters (M.Sc.) or Ph.D. research assistants who handle their daily grading. Befriend these postgraduate scholars. Have them review your chapters *before* presenting them to the professor. If the assistant endorses your work, the professor will sign off with minimal resistance.</li>
+<li>**The Timestamped Red-Pen Binder:** When submitting a revised chapter, staple your previous draft (with their red-pen corrections) directly behind the new version. Highlight where you implemented their exact feedback: *"Prof, as requested on page 14 of the previous draft, I have added the Chi-Square statistical validation."* They cannot accuse you of ignoring feedback when their own handwriting stares back at them.</li>
+<li>**The 3-Sentence Status Follow-Up:** Never send vague messages like *"Good morning sir, any update?"* Send executive, polite emails: *"Dear Prof, following our consultation on Oct 12th, Chapter 3 was submitted to your secretary. I am available for corrections whenever convenient for your schedule. Thank you for your continued mentorship."*</li>
 </ol>
 <p>Understand how institutional authority intimidation affects student mental health in <a href="/blog/mental-health/lecturer-intimidation-student-mental-health/">lecturer intimidation: the psychological toll on campus</a>.</p>
-<hr />
+<hr>
 <h2 id="3-psychological-insulation-it-is-just-a-project">3. Psychological Insulation: It Is Just a Project</h2>
 <p>A final-year undergraduate project is not the Nobel Prize. It is an administrative clearance hurdle required to receive your degree certificate:</p>
 <ul>
 <li>Stop trying to produce groundbreaking, world-changing research that invites scrutiny.</li>
 <li>Deliver simple, clean, methodologically sound research that conforms strictly to their favorite pet theories.</li>
-<li>When they insult your work, maintain a calm, pleasant expression, say <em>"Thank you, Prof, I will adjust it immediately,"</em> and step out of the office. Never internalize their personal bitterness.</li>
+<li>When they insult your work, maintain a calm, pleasant expression, say *"Thank you, Prof, I will adjust it immediately,"* and step out of the office. Never internalize their personal bitterness.</li>
 </ul>
 <p>To accelerate your thesis completion, explore our workflows in <a href="/blog/balancing-work-and-school/">writing your final-year research project fast without burnout</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-final-year-scholars-thesis-network">🧠 Join the Final Year Scholars &amp; Thesis Network</h3>
+<p>### 🧠 Join the Final Year Scholars & Thesis Network</p>
 <p>Struggling with a difficult project supervisor or thesis delays?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with senior scholars, share approved project templates, and graduate on time.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with senior scholars, share approved project templates, and graduate on time.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-makes-final-year-project-supervisors-so-difficult-in-nigerian-universities">What makes final-year project supervisors so difficult in Nigerian universities?</h3>
 <p>Massive student-to-lecturer ratios (supervising 15 to 30 students simultaneously), unpaid research allowances, personal career stress, lack of standardized chapter review timelines, and unchecked discretionary power.</p>
@@ -528,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -713,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -728,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

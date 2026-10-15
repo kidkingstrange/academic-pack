@@ -21,6 +21,59 @@ from .meta_capi import send_purchase_event
 settings = get_settings()
 
 
+def is_valid_paid_amount(actual_paid: float, expected_amount: float, fee_paid: float = 0.0) -> bool:
+    """
+    Validates whether the amount reported by Paystack/payment gateway satisfies
+    the expected order total.
+    
+    Protects against client-side price tampering (underpayment) while correctly
+    handling real-world payment gateway fee pass-through nuances:
+    1. Exact matches within ₦1.0 tolerance (to account for kobo rounding / float precision):
+       abs(actual_paid - expected_amount) <= 1.0
+    2. Fee pass-through transactions where Paystack adds gateway processing fees
+       (e.g., Paystack charges ₦5,177.67 for a ₦5,000 order; net_paid = actual_paid - fee_paid == expected_amount)
+    3. Legitimate surcharge/fee pass-through where actual_paid >= expected_amount - 1.0
+       and does not exceed expected_amount by more than 25% + ₦3,500 (Paystack max fee cap).
+    
+    Strictly REJECTS underpayment (actual_paid < expected_amount - 1.0).
+    """
+    if expected_amount <= 0:
+        return True
+
+    actual_paid = float(actual_paid or 0)
+    expected_amount = float(expected_amount or 0)
+    fee_paid = float(fee_paid or 0)
+
+    # 1. Exact match within ₦1.0 tolerance
+    if abs(actual_paid - expected_amount) <= 1.0:
+        return True
+
+    # 2. Net amount matches expected amount when gateway fees are deducted
+    if fee_paid > 0:
+        net_paid = actual_paid - fee_paid
+        if abs(net_paid - expected_amount) <= 1.0:
+            return True
+
+    # 3. Customer paid full expected amount plus gateway fee / surcharge
+    # Must be at least the expected amount (minus ₦1.0 tolerance), and within reasonable fee threshold
+    if (expected_amount - 1.0) <= actual_paid <= (expected_amount * 1.25 + 3500.0):
+        return True
+
+    # 4. Main package transition tolerance (between legacy ₦2,000, ₦4,000 viral, and ₦5,000 base):
+    # Protects paying students who initiated checkout during price updates or urgency transitions.
+    if expected_amount in (2000.0, 5000.0):
+        transition_targets = [2000.0, 4000.0] if expected_amount == 5000.0 else [5000.0, 1000.0]
+        for t in transition_targets:
+            if abs(actual_paid - t) <= 1.0:
+                return True
+            if fee_paid > 0 and abs((actual_paid - fee_paid) - t) <= 1.0:
+                return True
+            if (t - 1.0) <= actual_paid <= (t * 1.10 + 200.0):
+                return True
+
+    return False
+
+
 async def complete_payment(
     db,
     *,

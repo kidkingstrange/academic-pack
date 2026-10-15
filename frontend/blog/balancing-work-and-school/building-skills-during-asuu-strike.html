@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,84 +309,64 @@
         <h1 id="asuu-strike-skill-building-launching-gigs-without-delays">ASUU Strike Skill Building: Launching Gigs Without Delays</h1>
 <p>The breaking news notification flashes across your phone:</p>
 <p><strong>"ASUU Declares Indefinite Nationwide Strike Action Over Unmet FGN Demands."</strong></p>
-<p>The campus gates are locked with heavy chains. </p>
+<p>The campus gates are locked with heavy chains.</p>
 <p>Hostel porters order all students to vacate their rooms within twenty-four hours.</p>
 <p>You pack your bags, board a crowded interstate bus, and travel back to your parents' house.</p>
-<p>For the first two weeks, it feels like a welcome vacation. </p>
-<p>By Month 2, the novelty wears off. </p>
-<p>By Month 4, severe existential dread sets in:<br />
-* You wake up at 11:00 AM with zero purpose.<br />
-* Your parents look at you with growing irritation, asking when school will resume.<br />
-* You scroll social media watching peers abroad graduate, get jobs, and move forward with their lives while your calendar stands frozen in time.</p>
+<p>For the first two weeks, it feels like a welcome vacation.</p>
+<p>By Month 2, the novelty wears off.</p>
+<p>By Month 4, severe existential dread sets in:</p>
+<ul>
+<li>You wake up at 11:00 AM with zero purpose.</li>
+<li>Your parents look at you with growing irritation, asking when school will resume.</li>
+<li>You scroll social media watching peers abroad graduate, get jobs, and move forward with their lives while your calendar stands frozen in time.</li>
+</ul>
 <p>In Nigeria, industrial union strikes (ASUU, NASU, SSANU) have stolen millions of cumulative years from generations of undergraduates.</p>
-<p>You cannot control union politics. </p>
+<p>You cannot control union politics.</p>
 <p><strong>But you have total sovereignty over how you deploy those six months.</strong></p>
 <p>Here is the operational blueprint to transform an unpredictable university strike from a depressive catastrophe into the greatest financial and professional launchpad of your life.</p>
-<hr />
+<hr>
 <h2 id="1-the-strike-mindset-divergence-victims-vs-builders">1. The Strike Mindset Divergence: Victims vs. Builders</h2>
 <p>When an industrial strike strikes, undergraduates split into two distinct psychological cohorts:</p>
 <blockquote>
-<h3 id="cohort-a-the-victim-spiral-85-of-students">Cohort A: The Victim Spiral (85% Of Students)</h3>
-<ul>
-<li>Sleeps 11 hours daily, watches endless movies, complains on Twitter</li>
-<li>Retains zero academic concepts; gains weight, slips into depression</li>
-<li>Resumes school rusty, shocked, and fails rushed resumption exams</li>
-<li><strong>COHORT B: THE APPRENTICE BUILDER (15% of Students)</strong></li>
-<li>Treats the strike as a fully funded 180-day vocational sabbatical</li>
-<li>Learns one high-income digital skill (Writing, Coding, Design)</li>
-<li>Lands first freelance clients; resumes school earning ₦150,000+ monthly!</li>
-</ul>
+<p>### Cohort A: The Victim Spiral (85% Of Students)</p>
+<p>></p>
+<p>* Sleeps 11 hours daily, watches endless movies, complains on Twitter</p>
+<p>* Retains zero academic concepts; gains weight, slips into depression</p>
+<p>* Resumes school rusty, shocked, and fails rushed resumption exams</p>
+<p>* **COHORT B: THE APPRENTICE BUILDER (15% of Students)**</p>
+<p>* Treats the strike as a fully funded 180-day vocational sabbatical</p>
+<p>* Learns one high-income digital skill (Writing, Coding, Design)</p>
+<p>* Lands first freelance clients; resumes school earning ₦150,000+ monthly!</p>
 </blockquote>
 <p>Understand how strikes destroy academic momentum in <a href="/blog/academics/asuu-strike-academic-momentum/">ASUU strike disruptions: overcoming academic momentum loss</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-90-day-rapid-skill-acquisition-protocol">2. The 90-Day Rapid Skill Acquisition Protocol</h2>
 <p>Do not attempt to learn five different skills simultaneously. Pick <strong>ONE High-Leverage Discipline</strong> and execute this three-phase sprint:</p>
-<table>
-<thead>
-<tr>
-<th>Phase</th>
-<th>Duration</th>
-<th>Core Objective</th>
-<th>Key Milestone Deliverable</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Phase 1: Ingestion</strong></td>
-<td>Days 1 – 30</td>
-<td>Master fundamentals via free YouTube courses &amp; docs</td>
-<td>Complete 1 comprehensive skill course</td>
-</tr>
-<tr>
-<td><strong>Phase 2: Reproduction</strong></td>
-<td>Days 31 – 60</td>
-<td>Clone 5 world-class professional projects</td>
-<td>Build a 3-piece portfolio in Google Drive</td>
-</tr>
-<tr>
-<td><strong>Phase 3: Outreach</strong></td>
-<td>Days 61 – 90</td>
-<td>Send 5 cold pitches daily to businesses &amp; creators</td>
-<td>Land first 2 paying client gigs</td>
-</tr>
-</tbody>
-</table>
+<p>| Phase | Duration | Core Objective | Key Milestone Deliverable |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Phase 1: Ingestion</strong> | Days 1 – 30 | Master fundamentals via free YouTube courses & docs | Complete 1 comprehensive skill course |</p>
+<p>| <strong>Phase 2: Reproduction</strong> | Days 31 – 60 | Clone 5 world-class professional projects | Build a 3-piece portfolio in Google Drive |</p>
+<p>| <strong>Phase 3: Outreach</strong> | Days 61 – 90 | Send 5 cold pitches daily to businesses & creators | Land first 2 paying client gigs |</p>
 <p>Review post-strike cognitive reactivation in <a href="/blog/academics/studying-after-asuu-strike/">resuming after long strikes: 7-day brain reactivation blueprint</a>.</p>
-<hr />
+<hr>
 <h2 id="3-protecting-academic-baseline-during-the-sabbatical">3. Protecting Academic Baseline During the Sabbatical</h2>
-<p>The fatal mistake Cohort B makes is forgetting their university syllabus entirely:<br />
-* When strikes end, university senates routinely announce: <em>"Lectures resume Monday; semester exams begin in fourteen days."</em><br />
-* Students who haven't opened a textbook in six months suffer catastrophic academic collapse.</p>
-<p><strong>The Sunday 2-Hour Retainer Protocol:</strong><br />
-Every Sunday afternoon, dedicate exactly two hours to reviewing your departmental course summaries and past questions. Two hours weekly is sufficient to keep neural synaptic connections active, allowing you to pass rushed resumption exams with effortless ease.</p>
+<p>The fatal mistake Cohort B makes is forgetting their university syllabus entirely:</p>
+<ul>
+<li>When strikes end, university senates routinely announce: *"Lectures resume Monday; semester exams begin in fourteen days."*</li>
+<li>Students who haven't opened a textbook in six months suffer catastrophic academic collapse.</li>
+</ul>
+<p><strong>The Sunday 2-Hour Retainer Protocol:</strong></p>
+<p>Every Sunday afternoon, dedicate exactly two hours to reviewing your departmental course summaries and past questions. Two hours weekly is sufficient to keep neural synaptic connections active, allowing you to pass rushed resumption exams with effortless ease.</p>
 <p>Compare student loan options with gap-year alternatives in <a href="/blog/finances/taking-student-loan-vs-gap-year/">taking student loans vs pausing for a gap year hustle</a>.</p>
-<hr />
+<hr>
 <h2 id="4-turn-crisis-into-your-greatest-triumph">4. Turn Crisis into Your Greatest Triumph</h2>
-<p>ASUU strikes can pause your university registration, but they cannot pause your intellect, your ambition, or your drive:<br />
-* Stop waiting for government communiqués.<br />
-* Pick up your laptop or phone, master a marketable high-income skill, and build your digital portfolio.<br />
-* When the campus gates swing open again, you will walk back onto that campus not as a helpless, broke student, but as a confident, financially independent professional.</p>
-<hr />
+<p>ASUU strikes can pause your university registration, but they cannot pause your intellect, your ambition, or your drive:</p>
+<ul>
+<li>Stop waiting for government communiqués.</li>
+<li>Pick up your laptop or phone, master a marketable high-income skill, and build your digital portfolio.</li>
+<li>When the campus gates swing open again, you will walk back onto that campus not as a helpless, broke student, but as a confident, financially independent professional.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-a-student-avoid-falling-into-depression-when-an-asuu-strike-shuts-down-campus">How can a student avoid falling into depression when an ASUU strike shuts down campus?</h3>
 <p>Establish an immediate daily routine: treat the strike as a funded professional sabbatical. Wake up at 7:00 AM, dedicate 4 hours to high-income skill acquisition (coding, design, writing), and connect with forward-thinking peer communities.</p>
@@ -560,8 +540,8 @@ Every Sunday afternoon, dedicate exactly two hours to reviewing your departmenta
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -745,8 +725,8 @@ Every Sunday afternoon, dedicate exactly two hours to reviewing your departmenta
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -760,7 +740,7 @@ Every Sunday afternoon, dedicate exactly two hours to reviewing your departmenta
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,90 +309,75 @@
         <h1 id="what-to-do-when-hostel-balloting-fails-emergency-plan">What to Do When Hostel Balloting Fails: Emergency Plan</h1>
 <p>The screen on your phone goes red:</p>
 <blockquote>
-<p><em>"Status: ALLOCATED: 0. Better luck next session. All halls of residence for your category are fully booked."</em></p>
+<p>*"Status: ALLOCATED: 0. Better luck next session. All halls of residence for your category are fully booked."*</p>
 </blockquote>
-<p>You lean back against your chair. Your stomach sinks. </p>
+<p>You lean back against your chair. Your stomach sinks.</p>
 <p>You had planned your entire semester around living in Hall 3: cheap ₦30,000 hall fees, 5 minutes walking distance to your 8:00 AM lectures, steady library access, and zero daily transportation costs.</p>
 <p>Now, with resumption only fourteen days away, your housing plan has collapsed.</p>
-<p>Across university campuses in Nigeria, this exact scenario plays out for over 75% of undergraduates every academic session. When balloting portals shut down, panic sets in:<br />
-* Scammers and predatory agents capitalize on student desperation outside campus gates.<br />
-* Substandard lodges double their asking prices overnight.<br />
-* Students who hesitate end up stranded in distant villages 15 kilometers away from faculty lecture halls.</p>
-<p>Do not panic. Balloting failure is not a death sentence for your semester. </p>
+<p>Across university campuses in Nigeria, this exact scenario plays out for over 75% of undergraduates every academic session. When balloting portals shut down, panic sets in:</p>
+<ul>
+<li>Scammers and predatory agents capitalize on student desperation outside campus gates.</li>
+<li>Substandard lodges double their asking prices overnight.</li>
+<li>Students who hesitate end up stranded in distant villages 15 kilometers away from faculty lecture halls.</li>
+</ul>
+<p>Do not panic. Balloting failure is not a death sentence for your semester.</p>
 <p>Here is your <strong>5-Step Emergency Housing Contingency Plan</strong> to secure clean, affordable, and safe accommodation before your first lecture begins.</p>
-<hr />
-<h2 id="1-step-1-monitor-the-mop-up-allocation-cycle-days-17">1. Step 1: Monitor the "Mop-Up" Allocation Cycle (Days 1–7)</h2>
+<hr>
+<h2 id="1-step-1-monitor-the-mop-up-allocation-cycle-days-1-7">1. Step 1: Monitor the "Mop-Up" Allocation Cycle (Days 1–7)</h2>
 <p>Most students do not realize that winning a bed space during online balloting is only provisional:</p>
 <blockquote>
-<p>The Portal Reclamation Cycle:<br />
-Step 1: 1,000 Bed spaces allocated on Balloting Day.<br />
-Step 2: 72-Hour Payment Deadline enforced by University Portal.<br />
-Step 3: 15% to 25% of allocated students fail to pay (financial distress / duplicate accounts).<br />
-Step 4: Database automatically cancels unpaid slots at midnight on Day 4.<br />
-Step 5: Student Affairs opens the silent "Mop-Up" balloting window.</p>
+<p>The Portal Reclamation Cycle:</p>
+<p>Step 1: 1,000 Bed spaces allocated on Balloting Day.</p>
+<p>Step 2: 72-Hour Payment Deadline enforced by University Portal.</p>
+<p>Step 3: 15% to 25% of allocated students fail to pay (financial distress / duplicate accounts).</p>
+<p>Step 4: Database automatically cancels unpaid slots at midnight on Day 4.</p>
+<p>Step 5: Student Affairs opens the silent "Mop-Up" balloting window.</p>
 </blockquote>
 <p>Set calendar alarms and monitor your student portal between 11:30 PM and 1:00 AM on the payment deadline day. Many diligent students pick up premium rooms during unannounced mop-up refreshes without paying an extra Kobo. Review preparation protocols in our guide on <a href="/blog/hostel-and-accommodation/university-hostel-balloting-tips-bed-space/">university hostel balloting tips to secure bed space</a>.</p>
-<hr />
-<h2 id="2-step-2-the-fellowship-association-hostel-lifeline">2. Step 2: The "Fellowship &amp; Association Hostel" Lifeline</h2>
+<hr>
+<h2 id="2-step-2-the-fellowship-association-hostel-lifeline">2. Step 2: The "Fellowship & Association Hostel" Lifeline</h2>
 <p>If public halls are completely locked, pivot immediately to institutional non-profit accommodations:</p>
 <ul>
-<li><strong>Religious Fellowship Hostels:</strong> Large campus fellowships (such as <em>RCF, CASOR, NIFES, BSF, or MSSN</em>) frequently operate subsidized student accommodation houses near campus perimeters. Rents are typically 40% cheaper than commercial lodges, and electricity/water infrastructure is well-maintained.</li>
-<li><strong>Ethnic &amp; State Student Unions:</strong> State student associations (e.g., <em>NAOSS, NUBS, NAES</em>) often maintain community lodge networks or offer emergency housing assistance for distressed indigenous scholars.</li>
-<li><strong>Departmental Senior Networks:</strong> Reach out to your departmental academic executives. Graduating final-year students vacating private lodges often pass their rooms directly to trusted juniors before agents list them publicly.</li>
+<li>**Religious Fellowship Hostels:** Large campus fellowships (such as *RCF, CASOR, NIFES, BSF, or MSSN*) frequently operate subsidized student accommodation houses near campus perimeters. Rents are typically 40% cheaper than commercial lodges, and electricity/water infrastructure is well-maintained.</li>
+<li>**Ethnic & State Student Unions:** State student associations (e.g., *NAOSS, NUBS, NAES*) often maintain community lodge networks or offer emergency housing assistance for distressed indigenous scholars.</li>
+<li>**Departmental Senior Networks:** Reach out to your departmental academic executives. Graduating final-year students vacating private lodges often pass their rooms directly to trusted juniors before agents list them publicly.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="3-step-3-deploy-the-rent-splitting-partnership">3. Step 3: Deploy the "Rent-Splitting" Partnership</h2>
 <p>If you cannot afford a ₦400,000 single self-contain room alone, partner with one or two verified departmental course mates:</p>
-<table>
-<thead>
-<tr>
-<th>Housing Model</th>
-<th>Total Annual Rent</th>
-<th>Cost Per Student</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Solo Self-Contain</td>
-<td>₦450,000</td>
-<td>₦450,000 / year</td>
-</tr>
-<tr>
-<td>2-Person Flat Sharing</td>
-<td>₦500,000 (Larger unit)</td>
-<td>₦250,000 / year</td>
-</tr>
-<tr>
-<td>3-Person Flat Sharing</td>
-<td>₦600,000 (2-Bedroom)</td>
-<td>₦200,000 / year</td>
-</tr>
-</tbody>
-</table>
+<p>| Housing Model | Total Annual Rent | Cost Per Student |</p>
+<p>| --- | --- | --- |</p>
+<p>| Solo Self-Contain | ₦450,000 | ₦450,000 / year |</p>
+<p>| 2-Person Flat Sharing | ₦500,000 (Larger unit) | ₦250,000 / year |</p>
+<p>| 3-Person Flat Sharing | ₦600,000 (2-Bedroom) | ₦200,000 / year |</p>
 <p>Splitting rent, electricity bills, and cooking gas across two or three serious students cuts your annual living overhead by more than 50%, transforming an unaffordable crisis into manageable finances. For a granular financial breakdown, see our analysis on <a href="/blog/hostel-and-accommodation/">school hostel vs off campus lodge real cost breakdown</a>.</p>
-<hr />
+<hr>
 <h2 id="4-step-4-avoid-the-3-post-balloting-scam-traps">4. Step 4: Avoid the 3 Post-Balloting Scam Traps</h2>
 <p>When students are desperate, rogue campus property syndicates strike:</p>
 <ol>
-<li><strong>The "Pay-Before-Inspection" Agent:</strong> Any agent who demands a ₦5,000 "commitment deposit" to show you a video of a lodge on WhatsApp is a fraudster. Never transfer money without physically touching the door handle of the room.</li>
-<li><strong>The "Subletting Senior" Trap:</strong> A student claiming to be graduating offers to "sell" you their remaining lodge rent for ₦100,000. If you do not meet the registered landlord to sign an official tenancy transfer, the landlord will evict you the following week with zero refund.</li>
-<li><strong>The Isolated Bush Lodge:</strong> Do not be tempted by extremely cheap rents (₦80,000) in isolated compounds far from streetlights and main transport routes. The money you save on rent will be spent on commercial bike fares or lost to armed burglary.</li>
+<li>**The "Pay-Before-Inspection" Agent:** Any agent who demands a ₦5,000 "commitment deposit" to show you a video of a lodge on WhatsApp is a fraudster. Never transfer money without physically touching the door handle of the room.</li>
+<li>**The "Subletting Senior" Trap:** A student claiming to be graduating offers to "sell" you their remaining lodge rent for ₦100,000. If you do not meet the registered landlord to sign an official tenancy transfer, the landlord will evict you the following week with zero refund.</li>
+<li>**The Isolated Bush Lodge:** Do not be tempted by extremely cheap rents (₦80,000) in isolated compounds far from streetlights and main transport routes. The money you save on rent will be spent on commercial bike fares or lost to armed burglary.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="5-step-5-temporary-transition-lodging">5. Step 5: Temporary Transition Lodging</h2>
-<p>If lectures begin on Monday and you still have not finalized your lease:<br />
-* Arrange a temporary 7-day stay with a trusted coursemate or relative in town.<br />
-* Store your primary heavy luggage in a secure departmental locker or a friend's room.<br />
-* Spend your lecture afternoons inspecting compounds in person rather than making panicked long-distance rental commitments from home.</p>
+<p>If lectures begin on Monday and you still have not finalized your lease:</p>
+<ul>
+<li>Arrange a temporary 7-day stay with a trusted coursemate or relative in town.</li>
+<li>Store your primary heavy luggage in a secure departmental locker or a friend's room.</li>
+<li>Spend your lecture afternoons inspecting compounds in person rather than making panicked long-distance rental commitments from home.</li>
+</ul>
 <p>For an overarching analysis of why campus accommodation has become so fiercely contested nationally, read our foundational study on <a href="/blog/hostel-and-accommodation/campus-accommodation-crisis-nigeria-housing/">campus accommodation crisis reality of student housing</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="find-verified-roommates-lodge-openings">🏠 Find Verified Roommates &amp; Lodge Openings</h3>
+<p>### 🏠 Find Verified Roommates & Lodge Openings</p>
 <p>Stranded after hostel balloting and need a safe place to stay near campus?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with verified students from your faculty, discover genuine lodge openings without paying agent fees, and find reliable study partners to split rent.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with verified students from your faculty, discover genuine lodge openings without paying agent fees, and find reliable study partners to split rent.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-a-mop-up-hostel-allocation-and-when-does-it-take-place">What is a 'mop-up' hostel allocation and when does it take place?</h3>
 <p>Mop-up allocations occur 2 to 3 weeks after initial balloting, when students who failed to pay accommodation fees within the mandatory deadline forfeit their bed spaces back to the university portal.</p>
@@ -566,8 +551,8 @@ Step 5: Student Affairs opens the silent "Mop-Up" balloting window.</p>
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -751,8 +736,8 @@ Step 5: Student Affairs opens the silent "Mop-Up" balloting window.</p>
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -766,7 +751,7 @@ Step 5: Student Affairs opens the silent "Mop-Up" balloting window.</p>
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

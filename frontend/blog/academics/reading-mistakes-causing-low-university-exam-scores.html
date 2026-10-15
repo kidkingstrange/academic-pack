@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,80 +308,83 @@
       <div class="article-body">
         <p>There is no disappointment quite like putting in what feels like genuine, exhausting effort throughout a university semester, only to open your result portal and see 48% (D), 51% (C), or 58% (C) staring back at you.</p>
 <p>You know you didn’t party every weekend. You didn’t skip all your lectures. You spent countless evenings sitting with stapled 60-page departmental handouts, burning through batteries in your rechargeable reading lamp, and sacrificing your sleep in stuffy hostel rooms. You feel cheated by the university system, convinced that the lecturer graded unfairly or that higher education is an unpredictable gamble.</p>
-<p>Here is the uncomfortable reality that top departmental scholars understand: <strong>Reading is not studying.</strong> In cognitive learning surveys across undergraduate populations (such as Karpicke, Butler &amp; Roediger), over 83% of students report passive rereading and highlighting as their primary revision method, while fewer than 11% systematically test themselves before exam day..</p>
+<p>Here is the uncomfortable reality that top departmental scholars understand: <strong>Reading is not studying.</strong> In cognitive learning surveys across undergraduate populations (such as Karpicke, Butler & Roediger), over 83% of students report passive rereading and highlighting as their primary revision method, while fewer than 11% systematically test themselves before exam day..</p>
 <p>In Nigerian higher institutions, examinations are designed to test synthesis, derivation, structured recall, and specific lecturer marking rubrics. If your reading routine is passive, your brain creates the illusion of mastery without building the neural infrastructure needed to write comprehensive answers on a blank exam script.</p>
 <p>If you are determined to elevate your GPA, you must eliminate these <strong>5 fatal reading mistakes university exams punish</strong> and replace them with high-yield revision protocols.</p>
-<hr />
+<hr>
 <h2 id="1-mistake-1-the-passive-bed-posture-and-environmental-lethargy">1. Mistake 1: The Passive Bed Posture and Environmental Lethargy</h2>
 <p>Walk through any campus hostel between 8:00 PM and midnight, and you will witness the exact same scene: students lying flat on their mattresses, propping a photocopied handout against a pillow, or scrolling through PDF lecture slides on their smartphones.</p>
 <h3 id="why-this-destroys-academic-performance">Why This Destroys Academic Performance</h3>
-<p>Your brain is an energy-conserving organ. When your body is lying down in a bed or slouched on a soft bunk, your autonomic nervous system shifts into parasympathetic relaxation mode. Heart rate slows, alertness plummets, and your brain prepares for sleep. </p>
+<p>Your brain is an energy-conserving organ. When your body is lying down in a bed or slouched on a soft bunk, your autonomic nervous system shifts into parasympathetic relaxation mode. Heart rate slows, alertness plummets, and your brain prepares for sleep.</p>
 <p>Reading in this state reduces your cognitive intake to shallow skimming. Your eyes move across the words, but zero active cognitive encoding occurs. After 45 minutes, you drift into sleep, believing you completed a 45-minute study session when you actually absorbed nothing.</p>
 <h3 id="the-tactical-fix">The Tactical Fix</h3>
 <p>Treat studying like a professional athletic workout. Sit upright at a firm wooden desk or table. Keep your feet planted flat on the floor. Maintain bright, direct lighting on your paper. Physical upright posture signals to your reticular activating system that high alertness is required. Adopting disciplined routines practiced in the <a href="/blog/academics/7-study-habits-first-class-nigerian-students/">study habits of top first-class students</a> begins with where and how you sit.</p>
-<hr />
+<hr>
 <h2 id="2-mistake-2-the-chronological-trap-obsessing-over-chapter-1-while-exams-test-chapter-8">2. Mistake 2: The Chronological Trap: Obsessing Over Chapter 1 While Exams Test Chapter 8</h2>
-<p>A classic failure mode among undergraduates is starting every revision session on page 1 of the syllabus. </p>
+<p>A classic failure mode among undergraduates is starting every revision session on page 1 of the syllabus.</p>
 <p>A student sits down in Week 8, opens their textbook, and reads <em>"Chapter 1: Introduction and Historical Foundations"</em> for the fourth time. They know the introductory history with absolute perfection. But by the time they reach Chapter 7 or 8—the dense, complex mechanisms taught in Week 11—they run out of time or energy.</p>
 <h3 id="the-lecturer-marking-reality">The Lecturer Marking Reality</h3>
 <p>In Nigerian universities, introductory chapters rarely carry heavy examination marks. Lecturers usually award 5 to 10 marks to introductory definitions, while allocating <strong>40 to 60 marks</strong> to the advanced analytical models, clinical applications, or mathematical proofs introduced in the second half of the semester.</p>
-<h3 id="the-tactical-fix_1">The Tactical Fix</h3>
-<p>Reverse your revision order:<br />
-1. <strong>Analyze Past Exams First:</strong> Identify which specific chapters and derivations appeared most frequently over the last 5 years.<br />
-2. <strong>Target High-Yield Advanced Modules First:</strong> Begin your revision with the challenging topics taught from Week 7 onward. <br />
-3. <strong>Review Introductory Concepts Last:</strong> Return to Chapter 1 only after the heavy-credit scoring sections are locked down.</p>
-<hr />
+<h3 id="the-tactical-fix">The Tactical Fix</h3>
+<p>Reverse your revision order:</p>
+<ol>
+<li>**Analyze Past Exams First:** Identify which specific chapters and derivations appeared most frequently over the last 5 years.</li>
+<li>**Target High-Yield Advanced Modules First:** Begin your revision with the challenging topics taught from Week 7 onward.</li>
+<li>**Review Introductory Concepts Last:** Return to Chapter 1 only after the heavy-credit scoring sections are locked down.</li>
+</ol>
+<hr>
 <h2 id="3-mistake-3-the-highlighter-crutch-and-failure-to-practice-closed-book-output">3. Mistake 3: The Highlighter Crutch and Failure to Practice Closed-Book Output</h2>
 <p>Few academic habits create more false confidence than using fluorescent highlighters. Students highlight definitions in yellow, examples in green, and headings in pink. After 2 hours, the entire handout is covered in fluorescent ink, giving the student a powerful psychological sensation of accomplishment.</p>
 <h3 id="why-highlighting-fails">Why Highlighting Fails</h3>
 <p>Highlighting is a purely passive recognition exercise. It requires zero cognitive struggle. When you look at a highlighted line, your eyes recognize the words instantly. You think: <em>"I know this."</em></p>
-<p>However, in an examination hall, <strong>recognition is completely useless.</strong> </p>
+<p>However, in an examination hall, <strong>recognition is completely useless.</strong></p>
 <p>The lecturer gives you a completely blank answer script. They do not show you highlighted paragraphs and ask if you recognize them; they require you to retrieve, structure, and articulate complex explanations from memory. If you never practiced writing answers with your handout closed, your mind will freeze.</p>
-<h3 id="the-tactical-fix_2">The Tactical Fix</h3>
+<h3 id="the-tactical-fix">The Tactical Fix</h3>
 <p>Enforce an <strong>Input-to-Output Ratio of 2:1</strong>. For every 20 minutes you spend reading a concept, spend 10 minutes with the book closed writing out what you learned on scrap paper. If you cannot write it down on a blank sheet without looking, you do not know it. Building this into your weekly routine prevents the traps explained in <a href="/blog/academics/university-study-timetable-mistakes/">why your university study timetable fails</a>.</p>
-<hr />
+<hr>
 <h2 id="4-mistake-4-reading-without-lecturer-profiling-and-departmental-rubrics">4. Mistake 4: Reading Without Lecturer Profiling and Departmental Rubrics</h2>
 <p>Many dedicated students read generic textbooks without understanding the specific biases, terminology, and formatting preferences of the lecturer setting the exam.</p>
-<p>In Nigerian universities, lecturers have distinct academic signatures:<br />
-* <strong>Lecturer A (The Bullet-Point Purist):</strong> Demands concise, numbered points with clear subheadings, and penalizes long-winded prose.<br />
-* <strong>Lecturer B (The Textbook Traditionalist):</strong> Demands exact verbatim definitions and specific legal, mathematical, or scientific citations from their recommended textbook.<br />
-* <strong>Lecturer C (The Real-World Pragmatist):</strong> Awards 70% of marks for contemporary Nigerian case studies, industry applications, and localized examples.</p>
-<h3 id="the-tactical-fix_3">The Tactical Fix</h3>
+<p>In Nigerian universities, lecturers have distinct academic signatures:</p>
+<ul>
+<li>**Lecturer A (The Bullet-Point Purist):** Demands concise, numbered points with clear subheadings, and penalizes long-winded prose.</li>
+<li>**Lecturer B (The Textbook Traditionalist):** Demands exact verbatim definitions and specific legal, mathematical, or scientific citations from their recommended textbook.</li>
+<li>**Lecturer C (The Real-World Pragmatist):** Awards 70% of marks for contemporary Nigerian case studies, industry applications, and localized examples.</li>
+</ul>
+<h3 id="the-tactical-fix">The Tactical Fix</h3>
 <p>Never read a course handout in an academic vacuum. Before reading, consult senior departmental colleagues who earned an 'A' in that course. Ask: <em>"What does this lecturer look for in answer booklets? What formatting mistakes make them dock marks?"</em> Shape your reading notes specifically to match that lecturer’s marking rubric.</p>
-<hr />
+<hr>
 <h2 id="5-mistake-5-attention-residue-from-smartphone-multitasking">5. Mistake 5: Attention Residue from Smartphone Multitasking</h2>
 <p>The modern campus study session is fractured by continuous micro-distractions. A student sits in the library with their handout open, but their smartphone rests face-up on the desk. Every 3 minutes, a notification flashes: a WhatsApp group debate, an Instagram DM, a bank alert, or campus gossip.</p>
 <h3 id="the-science-of-attention-residue">The Science of Attention Residue</h3>
-<p>Cognitive scientists at Georgetown University demonstrated that when you switch your attention from studying to checking a phone notification—even for 15 seconds—your brain leaves <strong>attention residue</strong> behind on that distraction. </p>
+<p>Cognitive scientists at Georgetown University demonstrated that when you switch your attention from studying to checking a phone notification—even for 15 seconds—your brain leaves <strong>attention residue</strong> behind on that distraction.</p>
 <p>$$\text{Frequent Phone Checks} \longrightarrow \text{Cognitive Fragmentation} \longrightarrow \text{Zero Deep Memory Encoding}$$</p>
 <p>Even after returning your eyes to the handout, part of your working memory remains preoccupied with the message you just read. You may sit at your desk for 4 hours, but your brain experiences only 25 minutes of genuine, uninterrupted deep work. Furthermore, endlessly watching peers post study updates on social media triggers <a href="/blog/mental-health/">avoiding academic comparison anxiety</a>.</p>
-<h3 id="the-tactical-fix_4">The Tactical Fix</h3>
+<h3 id="the-tactical-fix">The Tactical Fix</h3>
 <p>Put your smartphone in your backpack on silent mode, or leave it in your hostel room during your 2-hour library deep work blocks. Two hours of single-tasking concentration delivers more long-term retention than six hours of fractured, phone-interrupted reading.</p>
-<hr />
+<hr>
 <h2 id="your-4-step-reading-upgrade-checklist">Your 4-Step Reading Upgrade Checklist</h2>
 <p>Implement these four immediate corrections during your next study session:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Abandon the bed:</strong> Move all reading to an upright chair and wooden table with direct lighting.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Put the highlighters away:</strong> Study with only a blue ballpoint pen and a blank notebook for active recall testing.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Audit the past 5 years of exam papers:</strong> Check where the majority of marks come from before deciding which chapter to read first.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Lock down your phone:</strong> Place your device completely out of sight during your study blocks.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Abandon the bed:** Move all reading to an upright chair and wooden table with direct lighting.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Put the highlighters away:** Study with only a blue ballpoint pen and a blank notebook for active recall testing.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Audit the past 5 years of exam papers:** Check where the majority of marks come from before deciding which chapter to read first.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Lock down your phone:** Place your device completely out of sight during your study blocks.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="upgrade-to-an-engineered-academic-comeback">Upgrade to an Engineered Academic Comeback</h2>
 <p>Eliminating passive reading mistakes is the first step toward reclaiming your GPA, but turning your academic trajectory around requires a complete, repeatable execution system built for Nigerian university standards.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to master deep work, eliminate exam anxiety, and rebuild their academic performance.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Get Good at Hard Things</strong> — Cognitive active recall protocols to master difficult high-credit courses</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking schemes</li>
-    <li><strong>Focus Template</strong> — Rapid cognitive calibration tools for high-stakes test days</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to master deep work, eliminate exam anxiety, and rebuild their academic performance.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Get Good at Hard Things</strong> — Cognitive active recall protocols to master difficult high-credit courses</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking schemes</li>
+<li><strong>Focus Template</strong> — Rapid cognitive calibration tools for high-stakes test days</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-i-read-for-8-hours-but-still-get-c-and-d-grades-in-university-exams">Why do I read for 8 hours but still get C and D grades in university exams?</h3>
 <p>Because most students engage in passive reading—gliding their eyes over text, highlighting sentences, or studying lying down on hostel beds. Exam halls test effortful cognitive retrieval under time pressure, not visual familiarity.</p>
@@ -555,8 +558,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -740,8 +743,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -755,7 +758,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

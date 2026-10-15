@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,30 +310,34 @@
 <p>You walk across the university faculty quadrangle at 1:00 PM.</p>
 <p>Around you, thousands of undergraduates are talking, laughing, taking selfies, and walking in lively groups toward the campus cafeteria. The entire campus feels loud, vibrant, and alive.</p>
 <p>Yet, inside your chest, you feel an aching, hollow emptiness.</p>
-<p>You return to your small off-campus room, lock the door, sit on your mattress, and realize you have not had a single meaningful, authentic conversation with another human being in three weeks. </p>
+<p>You return to your small off-campus room, lock the door, sit on your mattress, and realize you have not had a single meaningful, authentic conversation with another human being in three weeks.</p>
 <p>You have 400 contacts on WhatsApp, but nobody you could call at 10:00 PM if an emotional or academic crisis struck.</p>
 <p>Welcome to the quiet epidemic of higher education: <strong>Campus Social Isolation</strong>.</p>
 <p>In Nigerian tertiary institutions, loneliness is rarely discussed. Culturally, campus is portrayed as the best four years of your youth. Admitting you are deeply lonely feels like admitting personal failure.</p>
 <p>Here is the truth about campus loneliness, why it occurs in crowded environments, and how to build authentic, supportive social connections.</p>
-<hr />
+<hr>
 <h2 id="1-the-paradox-of-hyper-density-crowds-without-connection">1. The Paradox of Hyper-Density: Crowds Without Connection</h2>
 <p>Sociologists define <strong>The Density Paradox</strong>: the more densely populated an environment, the harder it can be to establish genuine human intimacy.</p>
 <p>In secondary school, friendships developed automatically through assigned seating in small classes of 35 students over six consecutive years.</p>
-<p>In a university:<br />
-* You sit in a lecture hall of 600 strangers where students shuffle seats daily.<br />
-* Conversations are transactional: <em>"Excuse me, is this seat taken?"</em> or <em>"Can I snap your note?"</em><br />
-* After lectures, students scatter instantly to distant off-campus lodges across town.</p>
+<p>In a university:</p>
+<ul>
+<li>You sit in a lecture hall of 600 strangers where students shuffle seats daily.</li>
+<li>Conversations are transactional: *"Excuse me, is this seat taken?"* or *"Can I snap your note?"*</li>
+<li>After lectures, students scatter instantly to distant off-campus lodges across town.</li>
+</ul>
 <p>Without deliberate, structured social engineering, it is easy to spend four years in a university without making a single enduring friend.</p>
 <p>For introverted students navigating large presentation rooms, review our guide on <a href="/blog/academics/introverted-student-presentation-anxiety/">introverted students surviving oral presentations</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-toxic-mask-of-campus-social-media">2. The Toxic Mask of Campus Social Media</h2>
-<p>Campus loneliness in Nigeria is severely exacerbated by social media:<br />
-* You scroll through Instagram and TikTok, seeing classmates posting videos at expensive rooftop lounges, faculty dinners, and glamorous campus pageants.<br />
-* You assume everyone else is living an extraordinary, connected student life while you are trapped alone in your room eating dry crackers.</p>
-<p>What you do not see is the reality behind the camera:<br />
-Empirical campus mental health surveys reveal that over <strong>65% of Nigerian undergraduates report experiencing acute periods of loneliness, alienation, and social disconnection</strong> during their degrees. The party photos are often desperate attempts to project social belonging.</p>
+<p>Campus loneliness in Nigeria is severely exacerbated by social media:</p>
+<ul>
+<li>You scroll through Instagram and TikTok, seeing classmates posting videos at expensive rooftop lounges, faculty dinners, and glamorous campus pageants.</li>
+<li>You assume everyone else is living an extraordinary, connected student life while you are trapped alone in your room eating dry crackers.</li>
+</ul>
+<p>What you do not see is the reality behind the camera:</p>
+<p>Empirical campus mental health surveys reveal that over <strong>65% of Nigerian undergraduates report experiencing acute periods of loneliness, alienation, and social disconnection</strong> during their degrees. The party photos are often desperate attempts to project social belonging.</p>
 <p>Learn how introverted roommates carve out mental peace in <a href="/blog/hostel-and-accommodation/introvert-living-with-loud-roommates/">introverted roommates creating quiet study sanctuaries</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-tier-friendship-architecture-how-to-break-isolation">3. The 3-Tier Friendship Architecture: How to Break Isolation</h2>
 <p>Overcoming loneliness does not require becoming an extroverted socialite. It requires finding <strong>two or three aligned people</strong>:</p>
 <h3 id="tier-1-the-academic-ally">Tier 1: The Academic Ally</h3>
@@ -343,14 +347,16 @@ Empirical campus mental health surveys reveal that over <strong>65% of Nigerian 
 <h3 id="tier-3-radical-vulnerability">Tier 3: Radical Vulnerability</h3>
 <p>Friendship begins when one person dares to be honest. When someone asks <em>"How are you?"</em>, instead of the automatic <em>"I'm fine"</em>, try saying: <em>"To be honest, this semester has been really tough and isolating for me."</em> You will be astonished at how quickly others open their hearts in relief.</p>
 <p>If carryovers or delayed graduation have separated you from your original peer group, read our compassionate guide on <a href="/blog/mental-health/">dealing with friends moving ahead while you stagnate</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-mental-health-community-network">🧠 Join the Student Mental Health &amp; Community Network</h3>
+<p>### 🧠 Join the Student Mental Health & Community Network</p>
 <p>Feeling disconnected or lonely on campus? You don't have to navigate university alone.</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with warm, supportive, and verified students who understand your journey.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with warm, supportive, and verified students who understand your journey.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-university-students-feel-lonely-despite-being-surrounded-by-thousands-of-peers">Why do university students feel lonely despite being surrounded by thousands of peers?</h3>
 <p>Proximity is not connection. Crowded lecture halls and packed hostels produce 'hyper-social superficiality'—superficial greetings without deep emotional vulnerability, mutual trust, or shared values.</p>
@@ -524,8 +530,8 @@ Empirical campus mental health surveys reveal that over <strong>65% of Nigerian 
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -709,8 +715,8 @@ Empirical campus mental health surveys reveal that over <strong>65% of Nigerian 
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -724,7 +730,7 @@ Empirical campus mental health surveys reveal that over <strong>65% of Nigerian 
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

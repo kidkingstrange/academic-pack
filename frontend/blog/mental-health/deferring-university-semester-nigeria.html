@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,81 +309,63 @@
         <h1 id="deferring-a-semester-vs-staying-enrolled-on-bad-gpa">Deferring a Semester vs Staying Enrolled on Bad GPA</h1>
 <p>Your cumulative GPA has dropped to 1.62.</p>
 <p>You are on the verge of the dreaded <strong>Academic Probation</strong> warning. If your CGPA remains below 1.50 at the end of the current session, the university Senate will issue a formal withdrawal letter or advise you to transfer to another faculty.</p>
-<p>To make matters worse:<br />
-* You are currently dealing with severe, untreated malaria and clinical exhaustion.<br />
-* Your parents have not paid your second-semester hostel rent or tuition balance.<br />
-* Mid-semester Continuous Assessment tests are scheduled for next week, and you have not attended half the lectures.</p>
+<p>To make matters worse:</p>
+<ul>
+<li>You are currently dealing with severe, untreated malaria and clinical exhaustion.</li>
+<li>Your parents have not paid your second-semester hostel rent or tuition balance.</li>
+<li>Mid-semester Continuous Assessment tests are scheduled for next week, and you have not attended half the lectures.</li>
+</ul>
 <p>You face a defining crossroads:</p>
 <p><strong>Option A:</strong> Force yourself into the exam halls, hoping for a miracle, and risk collecting four 'F' grades that mathematically guarantee your expulsion.</p>
 <p><strong>Option B:</strong> Apply for an official <strong>Senate Deferral of Studies</strong>, pause the academic clock, and return next session with renewed health and financial stability.</p>
 <p>Here is the strategic analysis to help you make this critical life decision.</p>
-<hr />
-<h2 id="1-the-cost-of-the-gamblers-fallacy-on-campus">1. The Cost of the "Gambler's Fallacy" on Campus</h2>
+<hr>
+<h2 id="1-the-cost-of-the-gambler-s-fallacy-on-campus">1. The Cost of the "Gambler's Fallacy" on Campus</h2>
 <p>Many struggling undergraduates push through acute crises because of the <strong>Gambler's Fallacy</strong>: <em>"If I just read all night for seven days, I might scrape 'E's and 'D's."</em></p>
-<p>In the Nigerian 5-point NUC grading system, the arithmetic is ruthless:<br />
-* An 'F' grade awards <strong>0 grade points</strong> while adding 3 or 4 credit units to your total divisor.<br />
-* Sinking your GPA from 1.62 down to 1.18 in a single disastrous semester requires two subsequent years of straight 'A's just to claw back above 2.00.<br />
-* Pushing into exams while physically or emotionally incapacitated is academic suicide.</p>
+<p>In the Nigerian 5-point NUC grading system, the arithmetic is ruthless:</p>
+<ul>
+<li>An 'F' grade awards **0 grade points** while adding 3 or 4 credit units to your total divisor.</li>
+<li>Sinking your GPA from 1.62 down to 1.18 in a single disastrous semester requires two subsequent years of straight 'A's just to claw back above 2.00.</li>
+<li>Pushing into exams while physically or emotionally incapacitated is academic suicide.</li>
+</ul>
 <p>Understand institutional probation rules in <a href="/blog/academics/university-academic-probation/">university academic probation: reversing withdrawal risk</a>.</p>
-<hr />
+<hr>
 <h2 id="2-decision-matrix-when-to-defer-vs-when-to-push-through">2. Decision Matrix: When to Defer vs. When to Push Through</h2>
-<table>
-<thead>
-<tr>
-<th>Critical Factor</th>
-<th>The Green Light to Push Through</th>
-<th>The Mandatory Signal to Defer</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Health Status</strong></td>
-<td>Mild stress, exam nervousness</td>
-<td>Severe psychiatric crisis, major hospitalization</td>
-</tr>
-<tr>
-<td><strong>Financial Balance</strong></td>
-<td>Feeding is tight, but exam docket is signed</td>
-<td>Total fee lockout; barred from sitting exam hall</td>
-</tr>
-<tr>
-<td><strong>Academic Standing</strong></td>
-<td>2.50+ CGPA; buffer exists to absorb a 'C' or 'D'</td>
-<td>Sub-1.60 CGPA; single failing course triggers withdrawal</td>
-</tr>
-<tr>
-<td><strong>Syllabus Progress</strong></td>
-<td>Attended 70%+ lectures; CA tests completed</td>
-<td>Missed all CA tests; zero practical attendance logged</td>
-</tr>
-</tbody>
-</table>
+<p>| Critical Factor | The Green Light to Push Through | The Mandatory Signal to Defer |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Health Status</strong> | Mild stress, exam nervousness | Severe psychiatric crisis, major hospitalization |</p>
+<p>| <strong>Financial Balance</strong> | Feeding is tight, but exam docket is signed | Total fee lockout; barred from sitting exam hall |</p>
+<p>| <strong>Academic Standing</strong> | 2.50+ CGPA; buffer exists to absorb a 'C' or 'D' | Sub-1.60 CGPA; single failing course triggers withdrawal |</p>
+<p>| <strong>Syllabus Progress</strong> | Attended 70%+ lectures; CA tests completed | Missed all CA tests; zero practical attendance logged |</p>
 <p>Learn how to recover from emotional panic when grades drop in <a href="/blog/mental-health/emotional-shock-semester-gpa-drop/">emotional shock after semester GPA drop: recovery steps</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-4-step-bureaucratic-protocol-for-senate-deferral">3. The 4-Step Bureaucratic Protocol for Senate Deferral</h2>
 <p>If deferring is your wisest move, execute the formal administrative process immediately:</p>
 <blockquote>
-<h3 id="step-1-draft-formal-letter">Step 1: Draft Formal Letter</h3>
-<ul>
-<li>State legitimate grounds (Medical, Bereavement, Indigence)</li>
-<li><strong>Step 2: Attach Certified Proof</strong></li>
-<li>Health Center report, financial affidavit, or death certificate</li>
-<li><strong>Step 3: Secure HOD &amp; Dean Endorsement</strong></li>
-<li>Ensure letter is logged into departmental incoming register</li>
-<li><strong>Step 4: Senate Academic Committee Ratification</strong></li>
-<li>Collect official stamped approval letter before leaving campus</li>
-</ul>
-<p><strong>Warning:</strong> Never pack your bags and leave campus without a stamped approval letter from the Registrar's office. An unapproved absence is administratively treated as voluntary withdrawal or abandonment.</p>
+<p>### Step 1: Draft Formal Letter</p>
+<p>></p>
+<p>* State legitimate grounds (Medical, Bereavement, Indigence)</p>
+<p>* **Step 2: Attach Certified Proof**</p>
+<p>* Health Center report, financial affidavit, or death certificate</p>
+<p>* **Step 3: Secure HOD & Dean Endorsement**</p>
+<p>* Ensure letter is logged into departmental incoming register</p>
+<p>* **Step 4: Senate Academic Committee Ratification**</p>
+<p>* Collect official stamped approval letter before leaving campus</p>
+</blockquote>
+<blockquote>
+<p>**Warning:** Never pack your bags and leave campus without a stamped approval letter from the Registrar's office. An unapproved absence is administratively treated as voluntary withdrawal or abandonment.</p>
 </blockquote>
 <p>Learn how to deal with failure shame in <a href="/blog/mental-health/coping-with-failing-university-exams/">coping with failing university exams: rebuilding self-worth</a>.</p>
-<hr />
+<hr>
 <h2 id="4-engineering-your-comeback-during-the-pause">4. Engineering Your Comeback During the Pause</h2>
-<p>Taking a semester off is not a vacation; it is a tactical sabbatical:<br />
-* Recover your physical health and rebuild your nervous system.<br />
-* Work a high-yield remote skill or small business to secure an untouchable financial buffer for school fees.<br />
-* Master the foundational course syllabi before your resumption.</p>
+<p>Taking a semester off is not a vacation; it is a tactical sabbatical:</p>
+<ul>
+<li>Recover your physical health and rebuild your nervous system.</li>
+<li>Work a high-yield remote skill or small business to secure an untouchable financial buffer for school fees.</li>
+<li>Master the foundational course syllabi before your resumption.</li>
+</ul>
 <p>When you return to campus, you need a systematic, scientifically proven framework to ensure you never face academic danger again. The <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It provides the complete active recall, spaced repetition, and exam strategy architecture needed to transform academic distress into a triumphant First Class or Second Class Upper finish.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-official-procedure-to-defer-a-semester-in-a-nigerian-university">What is the official procedure to defer a semester in a Nigerian university?</h3>
 <p>Submit a formal letter for 'Temporary Suspension of Studies' addressed through your Departmental HOD to the Faculty Dean and Senate Academic Board, stating valid medical, financial, or compassionate reasons with supporting evidence before mid-semester.</p>
@@ -557,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -742,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -757,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

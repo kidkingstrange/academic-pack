@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,105 +306,59 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="nelfund-student-loan-eligibility-application-walkthrough">NELFUND Student Loan: Eligibility &amp; Application Walkthrough</h1>
+        <h1 id="nelfund-student-loan-eligibility-application-walkthrough">NELFUND Student Loan: Eligibility & Application Walkthrough</h1>
 <p>For decades, Nigerian undergraduates faced a brutal economic reality: if your parents could not afford university school fees, you were forced to drop out or defer indefinitely.</p>
 <p>In 2024, the Federal Government established the <strong>Nigerian Education Loan Fund (NELFUND)</strong> under the Access to Higher Education Act.</p>
-<p>For the first time in modern Nigerian history:<br />
-* Public university undergraduates can access interest-free loans covering <strong>100% of approved institutional school fees</strong>.<br />
-* Eligible students receive a direct <strong>monthly upkeep allowance of ₦20,000</strong> paid into their bank accounts.<br />
-* Repayment does not begin until <strong>two full years after completing NYSC</strong>.</p>
+<p>For the first time in modern Nigerian history:</p>
+<ul>
+<li>Public university undergraduates can access interest-free loans covering **100% of approved institutional school fees**.</li>
+<li>Eligible students receive a direct **monthly upkeep allowance of ₦20,000** paid into their bank accounts.</li>
+<li>Repayment does not begin until **two full years after completing NYSC**.</li>
+</ul>
 <p>Yet, across university campuses, hundreds of thousands of deserving students have not applied due to confusion, misinformation, or intimidating portal errors.</p>
 <p>Here is the authoritative, step-by-step application walkthrough to successfully secure your NELFUND tuition and upkeep allocation.</p>
-<hr />
-<h2 id="1-eligibility-criteria-verification-prerequisites">1. Eligibility Criteria &amp; Verification Prerequisites</h2>
+<hr>
+<h2 id="1-eligibility-criteria-verification-prerequisites">1. Eligibility Criteria & Verification Prerequisites</h2>
 <p>Before opening the portal, ensure you meet the statutory eligibility requirements:</p>
-<table>
-<thead>
-<tr>
-<th>Eligibility Pillar</th>
-<th>Verification Requirement</th>
-<th>Common Rejection Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Pillar 1: Identity Synchronization</strong></td>
-<td>Full legal name, date of birth, and phone number match 100% across NIN and BVN</td>
-<td>Name arrangement discrepancies (e.g., surname and middle name swapped)</td>
-</tr>
-<tr>
-<td><strong>Pillar 2: JAMB CAPS Admission</strong></td>
-<td>Official JAMB Admission Letter uploaded on JAMB Central Admissions Processing System</td>
-<td>Institutional admission not yet ratified on JAMB portal</td>
-</tr>
-<tr>
-<td><strong>Pillar 3: Senate List Upload</strong></td>
-<td>Verified matriculation number present on the institution's official Senate List sent to NELFUND</td>
-<td>Department has not completed data reconciliation with the central student affairs portal</td>
-</tr>
-</tbody>
-</table>
+<p>| Eligibility Pillar | Verification Requirement | Common Rejection Reason |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Pillar 1: Identity Synchronization</strong> | Full legal name, date of birth, and phone number match 100% across NIN and BVN | Name arrangement discrepancies (e.g., surname and middle name swapped) |</p>
+<p>| <strong>Pillar 2: JAMB CAPS Admission</strong> | Official JAMB Admission Letter uploaded on JAMB Central Admissions Processing System | Institutional admission not yet ratified on JAMB portal |</p>
+<p>| <strong>Pillar 3: Senate List Upload</strong> | Verified matriculation number present on the institution's official Senate List sent to NELFUND | Department has not completed data reconciliation with the central student affairs portal |</p>
 <ol>
-<li><strong>Identity Alignment:</strong> The full name, date of birth, and phone number on your <strong>NIN (National Identity Management Commission)</strong> must match your <strong>BVN (Bank Verification Number)</strong> and <strong>JAMB profile</strong> with zero typographical errors.</li>
-<li><strong>Institutional Accreditation:</strong> You must be enrolled in an accredited Federal or State tertiary institution that has officially uploaded its student data to the NELFUND verification dashboard.</li>
+<li>**Identity Alignment:** The full name, date of birth, and phone number on your **NIN (National Identity Management Commission)** must match your **BVN (Bank Verification Number)** and **JAMB profile** with zero typographical errors.</li>
+<li>**Institutional Accreditation:** You must be enrolled in an accredited Federal or State tertiary institution that has officially uploaded its student data to the NELFUND verification dashboard.</li>
 </ol>
 <p>Understand the psychological pressures facing first-generation students in <a href="/blog/mental-health/first-generation-university-student-pressure/">first-generation university students: the weight of family hope</a>.</p>
-<hr />
+<hr>
 <h2 id="2-step-by-step-portal-application-protocol">2. Step-by-Step Portal Application Protocol</h2>
-<p>Execute your application via the official NELFUND student portal (<code>nelfund.gov.ng</code>):</p>
-<table>
-<thead>
-<tr>
-<th>Step</th>
-<th>Action Required</th>
-<th>Critical Caution Point</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. Account Creation</strong></td>
-<td>Enter NIN to verify citizenship and biological data</td>
-<td>Ensure your registered NIN phone receives the OTP</td>
-</tr>
-<tr>
-<td><strong>2. Academic Verification</strong></td>
-<td>Select your institution and enter your Matriculation Number</td>
-<td>If your matric number displays "Not Found," visit your Dean of Student Affairs</td>
-</tr>
-<tr>
-<td><strong>3. Financial Profiling</strong></td>
-<td>Enter your BVN and verified personal commercial bank account</td>
-<td>Account name must match NIN and university records</td>
-</tr>
-<tr>
-<td><strong>4. Loan Type Selection</strong></td>
-<td>Check boxes for <strong>Institutional Fees</strong> AND <strong>Monthly Upkeep Allowance</strong></td>
-<td>Both can be selected simultaneously</td>
-</tr>
-<tr>
-<td><strong>5. Document Upload</strong></td>
-<td>Upload clear PDF of JAMB admission letter and student ID</td>
-<td>File size must be under 500KB</td>
-</tr>
-</tbody>
-</table>
+<p>Execute your application via the official NELFUND student portal (`nelfund.gov.ng`):</p>
+<p>| Step | Action Required | Critical Caution Point |</p>
+<p>|---|---|---|</p>
+<p>| <strong>1. Account Creation</strong> | Enter NIN to verify citizenship and biological data | Ensure your registered NIN phone receives the OTP |</p>
+<p>| <strong>2. Academic Verification</strong> | Select your institution and enter your Matriculation Number | If your matric number displays "Not Found," visit your Dean of Student Affairs |</p>
+<p>| <strong>3. Financial Profiling</strong> | Enter your BVN and verified personal commercial bank account | Account name must match NIN and university records |</p>
+<p>| <strong>4. Loan Type Selection</strong> | Check boxes for <strong>Institutional Fees</strong> AND <strong>Monthly Upkeep Allowance</strong> | Both can be selected simultaneously |</p>
+<p>| <strong>5. Document Upload</strong> | Upload clear PDF of JAMB admission letter and student ID | File size must be under 500KB |</p>
 <p>Review essential secondary university expenses in <a href="/blog/finances/hidden-university-expenses-nigeria/">hidden university costs: fees beyond main school tuition</a>.</p>
-<hr />
+<hr>
 <h2 id="3-understanding-the-repayment-architecture">3. Understanding the Repayment Architecture</h2>
 <p>Many students fear applying because of predatory loan horror stories:</p>
 <ul>
-<li><strong>Zero Interest Rate:</strong> NELFUND is strictly an <strong>interest-free statutory facility</strong>. You do not pay compound interest, application fees, or hidden administrative charges.</li>
-<li><strong>The 2-Year Post-NYSC Grace Window:</strong> You are legally protected from repayment until twenty-four months after passing out from NYSC.</li>
-<li><strong>The Automated 10% Deduction:</strong> Once employed, your employer deducts 10% of your monthly salary at source toward the Fund. If you are self-employed or unemployed, you submit an affidavit without harassment.</li>
+<li>**Zero Interest Rate:** NELFUND is strictly an **interest-free statutory facility**. You do not pay compound interest, application fees, or hidden administrative charges.</li>
+<li>**The 2-Year Post-NYSC Grace Window:** You are legally protected from repayment until twenty-four months after passing out from NYSC.</li>
+<li>**The Automated 10% Deduction:** Once employed, your employer deducts 10% of your monthly salary at source toward the Fund. If you are self-employed or unemployed, you submit an affidavit without harassment.</li>
 </ul>
 <p>Explore student banking options in our upcoming analysis on <a href="/blog/finances/">best student bank accounts in Nigeria: lowest charges and card fees</a>.</p>
-<hr />
+<hr>
 <h2 id="4-claim-your-educational-right">4. Claim Your Educational Right</h2>
-<p>Higher education is the greatest socio-economic equalizer in modern society:<br />
-* Do not allow temporary family poverty or unpaid tuition fees to extinguish your academic potential.<br />
-* Complete your NELFUND registration with precision.<br />
-* Secure your tuition funding, eliminate the panic of exam docket lockouts, and dedicate 100% of your cognitive energy to graduating with the First Class honors you deserve.</p>
-<hr />
+<p>Higher education is the greatest socio-economic equalizer in modern society:</p>
+<ul>
+<li>Do not allow temporary family poverty or unpaid tuition fees to extinguish your academic potential.</li>
+<li>Complete your NELFUND registration with precision.</li>
+<li>Secure your tuition funding, eliminate the panic of exam docket lockouts, and dedicate 100% of your cognitive energy to graduating with the First Class honors you deserve.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="who-is-eligible-to-apply-for-the-nelfund-student-loan-in-nigeria">Who is eligible to apply for the NELFUND student loan in Nigeria?</h3>
 <p>All registered undergraduate students in recognized federal and state universities, polytechnics, and colleges of education across Nigeria who possess a verified JAMB admission letter, valid NIN, and BVN.</p>
@@ -578,8 +532,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -763,8 +717,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -778,7 +732,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

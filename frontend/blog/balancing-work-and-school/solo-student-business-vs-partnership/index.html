@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Sole Proprietor Hustle vs Partnering with Classmate",
       "description": "How student entrepreneurs can evaluate business partnerships with friends, structure equity splits, and avoid friendship-wrecking disputes.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -266,60 +266,65 @@
       <div class="article-body">
         <p>One of the most exciting moments of undergraduate life is sitting on a hostel bunk bed at 1:00 AM with a brilliant classmate, sketching out a business idea:</p>
 <ul>
-<li><em>"Bro, let's start a digital agency together!"</em></li>
-<li><em>"Let's launch a campus food delivery service!"</em></li>
-<li><em>"You know how to code, I know how to sell—we will dominate the campus and make millions!"</em></li>
+<li>*"Bro, let's start a digital agency together!"*</li>
+<li>*"Let's launch a campus food delivery service!"*</li>
+<li>*"You know how to code, I know how to sell—we will dominate the campus and make millions!"*</li>
 </ul>
 <p>The energy is intoxicating. You shake hands, buy a shared domain name, create a joint WhatsApp Business account, and agree to split everything <strong>50/50</strong>.</p>
-<p>Fast forward five months into the second semester:<br />
-* You are working 15 hours a week handling all customer orders, client calls, and graphic designs.<br />
-* Your friend is sleeping until 11:00 AM, skipping meetings, and playing video games.<br />
-* Yet every time profit is distributed, your partner expects an exact 50% split.<br />
-* Resentment boils over, shouting matches erupt in the hostel room, the business collapses, and a four-year friendship is permanently destroyed.</p>
+<p>Fast forward five months into the second semester:</p>
+<ul>
+<li>You are working 15 hours a week handling all customer orders, client calls, and graphic designs.</li>
+<li>Your friend is sleeping until 11:00 AM, skipping meetings, and playing video games.</li>
+<li>Yet every time profit is distributed, your partner expects an exact 50% split.</li>
+<li>Resentment boils over, shouting matches erupt in the hostel room, the business collapses, and a four-year friendship is permanently destroyed.</li>
+</ul>
 <p>Every year, thousands of promising campus ventures die not from a lack of customers, but from <strong>toxic, unstructured student partnerships</strong>.</p>
-<p>Should you build your student venture as a fierce sole proprietor, or partner with a classmate? </p>
+<p>Should you build your student venture as a fierce sole proprietor, or partner with a classmate?</p>
 <p>Here is the operational guide to making the right choice and structuring partnerships that survive the pressures of university life.</p>
-<hr />
+<hr>
 <h2 id="solo-hustle-vs-partnership-the-strategic-trade-off">Solo Hustle vs. Partnership: The Strategic Trade-Off</h2>
 <blockquote>
-<ul>
-<li>SOLO HUSTLE vs. PARTNERSHIP TRADEOFF</li>
-<li><strong>SOLO PROPRIETOR:</strong> (+) 100% of profits belong to you; zero partner arguments; instant decisions. (-) Zero coverage: If you fall sick or have exams, business stops completely.</li>
-<li><strong>CO-FOUNDER PARTNERSHIP:</strong> (+) Redundancy &amp; scale: Partner runs the shop while you sit in the exam hall. (-) Shared profits; potential resentment if work contributions become unequal.</li>
-</ul>
+<p>* SOLO HUSTLE vs. PARTNERSHIP TRADEOFF</p>
+<p>* **SOLO PROPRIETOR:** (+) 100% of profits belong to you; zero partner arguments; instant decisions. (-) Zero coverage: If you fall sick or have exams, business stops completely.</p>
+<p>* **CO-FOUNDER PARTNERSHIP:** (+) Redundancy & scale: Partner runs the shop while you sit in the exam hall. (-) Shared profits; potential resentment if work contributions become unequal.</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="the-3-non-negotiable-rules-before-partnering-with-a-classmate">The 3 Non-Negotiable Rules Before Partnering with a Classmate</h2>
 <p>Never partner with someone simply because they are your friend, your roommate, or someone you hang out with. Partner only if they pass these three strict tests:</p>
 <h3 id="rule-1-the-complementary-skill-test">Rule 1: The Complementary Skill Test</h3>
 <p>If both of you are graphic designers, you do not need a partnership—you need a freelance network.</p>
-<p>A true partnership requires <strong>complementary operational capabilities</strong>:<br />
-* <strong>Founder A (The Builder):</strong> High technical or creative execution (writes code, bakes food, designs interfaces).<br />
-* <strong>Founder B (The Seller):</strong> High commercial execution (finds clients, manages customer DMs, handles physical deliveries, reconciles finances).</p>
+<p>A true partnership requires <strong>complementary operational capabilities</strong>:</p>
+<ul>
+<li>**Founder A (The Builder):** High technical or creative execution (writes code, bakes food, designs interfaces).</li>
+<li>**Founder B (The Seller):** High commercial execution (finds clients, manages customer DMs, handles physical deliveries, reconciles finances).</li>
+</ul>
 <h3 id="rule-2-the-written-1-page-operating-agreement">Rule 2: The Written 1-Page Operating Agreement</h3>
 <p>Never rely on verbal <em>"we are brothers"</em> agreements. Sit down and write a simple 1-page agreement before launching:</p>
 <blockquote>
-<h3 id="1-page-student-partnership-blueprint">1-Page Student Partnership Blueprint</h3>
-<ul>
-<li><strong>1.</strong> Capital Invested: Exactly how much cash each person contributed.</li>
-<li><strong>2.</strong> Defined Responsibilities: List Founder A's 3 tasks and Founder B's 3 tasks.</li>
-<li><strong>3.</strong> The Exam Coverage Schedule: Who covers operations when exams clash?</li>
-<li><strong>4.</strong> Profit Distribution: Base execution pay + quarterly profit split.</li>
-<li><strong>5.</strong> The Exit Clause: How does a partner leave if they want to focus on grades?</li>
-</ul>
+<p>### 1-Page Student Partnership Blueprint</p>
+<p>></p>
+<p>* **1.** Capital Invested: Exactly how much cash each person contributed.</p>
+<p>* **2.** Defined Responsibilities: List Founder A's 3 tasks and Founder B's 3 tasks.</p>
+<p>* **3.** The Exam Coverage Schedule: Who covers operations when exams clash?</p>
+<p>* **4.** Profit Distribution: Base execution pay + quarterly profit split.</p>
+<p>* **5.** The Exit Clause: How does a partner leave if they want to focus on grades?</p>
 </blockquote>
 <p>Both partners physically sign this document. Having written clarity eliminates 90% of future arguments.</p>
-<h3 id="rule-3-ditch-the-lazy-5050-profit-split">Rule 3: Ditch the Lazy 50/50 Profit Split</h3>
-<p>The root cause of partner bitterness is that <strong>workload is rarely 50/50</strong>:<br />
-* One student takes 24 credit units with intense lab practicals.<br />
-* The other takes 14 credit units of light general electives.</p>
-<p>Replace 50/50 splits with the <strong>Task Wage + Profit Pool Model</strong>:<br />
-1. All business revenues flow into the joint business account.<br />
-2. Pay the executing founder a set task fee (e.g., ₦5,000 per delivery or design).<br />
-3. At the end of the month, whatever net profit remains is split based on equity.</p>
+<h3 id="rule-3-ditch-the-lazy-50-50-profit-split">Rule 3: Ditch the Lazy 50/50 Profit Split</h3>
+<p>The root cause of partner bitterness is that <strong>workload is rarely 50/50</strong>:</p>
+<ul>
+<li>One student takes 24 credit units with intense lab practicals.</li>
+<li>The other takes 14 credit units of light general electives.</li>
+</ul>
+<p>Replace 50/50 splits with the <strong>Task Wage + Profit Pool Model</strong>:</p>
+<ol>
+<li>All business revenues flow into the joint business account.</li>
+<li>Pay the executing founder a set task fee (e.g., ₦5,000 per delivery or design).</li>
+<li>At the end of the month, whatever net profit remains is split based on equity.</li>
+</ol>
 <p>This ensures that the partner who does the heavy lifting is fairly compensated, while the other partner still earns a return on their co-ownership.</p>
 <p>If you are currently deciding how to manage your business time alongside heavy academic coursework, read our guide on <a href="/blog/balancing-work-and-school/time-blocking-for-working-students/">time-blocking schedules for working undergraduates</a>.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-partnership-decision-matrix">Action Checklist: Partnership Decision Matrix</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Audit whether your potential partner brings complementary skills or duplicate skills.</li>
@@ -493,8 +498,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -678,8 +683,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -693,7 +698,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

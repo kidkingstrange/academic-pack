@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -315,17 +315,19 @@
 <p>Meanwhile, you are trapped in your childhood bedroom, answering intrusive questions from relatives: <em>"So which level are you now? When are you people finishing?"</em></p>
 <p>You feel cheated. You feel stagnant. You feel deeply, numbly depressed.</p>
 <p>You are experiencing <strong>Strike-Induced Existential Depression</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-psychology-of-suspended-animation">1. The Psychology of Suspended Animation</h2>
 <p>In clinical psychology, indefinite strikes inflict trauma through <strong>Ambiguous Loss and Suspended Life Momentum</strong>:</p>
 <p>When a student experiences a defined setback (such as repeating a class), the timeline is clear: you repeat for 9 months, then move forward.</p>
-<p>During an ASUU or state university strike:<br />
-* You cannot commit to a corporate 6-month internship because the strike could end next Monday.<br />
-* You cannot study intensively because exams feel distant and abstract.<br />
-* You cannot fully relax because the threat of sudden resumption hangs over your head.</p>
+<p>During an ASUU or state university strike:</p>
+<ul>
+<li>You cannot commit to a corporate 6-month internship because the strike could end next Monday.</li>
+<li>You cannot study intensively because exams feel distant and abstract.</li>
+<li>You cannot fully relax because the threat of sudden resumption hangs over your head.</li>
+</ul>
 <p>Living in chronic limbo paralyses long-term executive planning, triggering profound existential dread and learned helplessness.</p>
 <p>Understand how shutdowns break academic momentum in <a href="/blog/academics/asuu-strike-academic-momentum-loss/">ASUU strike disruptions: academic momentum loss</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-dangerous-traps-of-the-strikebound-student">2. The 3 Dangerous Traps of the Strikebound Student</h2>
 <p>To protect your mental health during prolonged campus shutdowns, avoid these three psychological traps:</p>
 <h3 id="trap-1-the-waiting-room-fallacy">Trap 1: The "Waiting Room" Fallacy</h3>
@@ -335,23 +337,25 @@
 <h3 id="trap-3-total-cognitive-atrophy">Trap 3: Total Cognitive Atrophy</h3>
 <p>Abandoning intellectual rigor entirely for binge-watching Netflix or mindless social media browsing. When resumption suddenly occurs, your de-conditioned brain will suffer severe cognitive resistance.</p>
 <p>Learn how to reboot your brain upon resumption in <a href="/blog/academics/resuming-after-asuu-strike-7-day-brain-reactivation/">resuming after long strike: 7-day brain reactivation</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-counter-offensive-the-self-directed-fellowship-protocol">3. The Counter-Offensive: The Self-Directed Fellowship Protocol</h2>
 <p>Transform an institutional disaster into an unfair competitive advantage:</p>
 <ol>
-<li><strong>Adopt a Secondary Skill Track:</strong> Dedicate 4 hours daily to mastering an income-generating digital or practical craft: software engineering, UI/UX design, performance copywriting, video editing, or data analytics.</li>
-<li><strong>Build an Independent Project:</strong> Do not wait for a final-year supervisor to give you permission to research. Build a portfolio, write case studies, or launch a micro-enterprise.</li>
-<li><strong>Protect Your Peer Network:</strong> Stay connected with serious departmental coursemates. Create a weekly study group or mastermind call to discuss industry trends and keep each other motivated.</li>
+<li>**Adopt a Secondary Skill Track:** Dedicate 4 hours daily to mastering an income-generating digital or practical craft: software engineering, UI/UX design, performance copywriting, video editing, or data analytics.</li>
+<li>**Build an Independent Project:** Do not wait for a final-year supervisor to give you permission to research. Build a portfolio, write case studies, or launch a micro-enterprise.</li>
+<li>**Protect Your Peer Network:** Stay connected with serious departmental coursemates. Create a weekly study group or mastermind call to discuss industry trends and keep each other motivated.</li>
 </ol>
 <p>Explore sustainable freelance strategies during shutdowns in our guide on <a href="/blog/balancing-work-and-school/">freelancing and remote work during campus strikes</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-strike-resilience-career-network">🧠 Join the Strike Resilience &amp; Career Network</h3>
+<p>### 🧠 Join the Strike Resilience & Career Network</p>
 <p>Strikebound and feeling stranded? You are not alone.</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with thousands of proactive undergraduates turning campus delays into career breakthroughs.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with thousands of proactive undergraduates turning campus delays into career breakthroughs.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-strike-depression-among-nigerian-university-undergraduates">What is 'Strike Depression' among Nigerian university undergraduates?</h3>
 <p>A distinct form of situational existential depression triggered by indefinite academic strikes. Students experience helplessness, anger at institutional betrayal, loss of identity, and grief over delayed graduation milestones.</p>
@@ -525,8 +529,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -710,8 +714,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -725,7 +729,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

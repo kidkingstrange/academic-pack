@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Passing Math & Science Courses While Working 20 Hours Weekly",
       "description": "A strategic study system for STEM, engineering, and science undergraduates working part-time jobs and managing demanding calculation courses.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -269,78 +269,56 @@
 <p>When you add a 20-hour weekly remote job or campus business to this equation, conventional academic advice completely shatters.</p>
 <p>Telling a working engineering student to <em>"read for 6 hours every night"</em> is useless when they work until 9:00 PM and have an 8:00 AM thermodynamics class the next morning.</p>
 <p>To graduate with a strong 2:1 or First Class degree in a calculation-heavy course while working, you cannot study like regular students. You must adopt a <strong>high-leverage calculation study framework</strong>.</p>
-<hr />
+<hr>
 <h2 id="why-stem-courses-punish-working-students">Why STEM Courses Punish Working Students</h2>
 <p>Liberal arts, humanities, and management courses rely heavily on conceptual memory and verbal synthesis. If you miss two weeks of sociology lectures, you can read summaries over the weekend and write compelling essay answers.</p>
 <p>Calculation courses operate on <strong>strict sequential dependencies</strong>:</p>
 <blockquote>
-<h3 id="the-stem-knowledge-dependency-chain">The Stem Knowledge Dependency Chain</h3>
-<ul>
-<li>Week 1: First Principles &amp; Basic Derivations ↓ (If you miss this because of client work...) Week 3: Advanced Multivariable Differential Equations ↓ (This becomes completely incomprehensible...) Week 7: Applied Engineering Dynamics &amp; Exam Failure</li>
-</ul>
+<p>### The Stem Knowledge Dependency Chain</p>
+<p>></p>
+<p>* Week 1: First Principles & Basic Derivations ↓ (If you miss this because of client work...) Week 3: Advanced Multivariable Differential Equations ↓ (This becomes completely incomprehensible...) Week 7: Applied Engineering Dynamics & Exam Failure</p>
 </blockquote>
 <p>If you miss the foundational mechanical principles in Week 1, every subsequent lecture sounds like an alien language. You cannot cram 12 weeks of calculus in 48 hours.</p>
 <p>If you struggle to hit the mandatory 75% lecture attendance threshold while working, check our guide on <a href="/blog/balancing-work-and-school/meeting-75-percent-university-attendance/">meeting strict university attendance rules while working</a>.</p>
-<hr />
+<hr>
 <h2 id="the-3-pillars-of-high-leverage-calculation-study">The 3 Pillars of High-Leverage Calculation Study</h2>
 <p>Working students do not have time for passive study. Adopt these three tactical pillars:</p>
 <h3 id="pillar-1-question-led-active-recall-ditch-textbooks">Pillar 1: Question-Led Active Recall (Ditch Textbooks)</h3>
 <p>Stop opening a 600-page <em>Engineering Mathematics by K.A. Stroud</em> from page 1 and reading passively with a yellow highlighter. Highlighting gives the illusion of learning without building neurological problem-solving circuits.</p>
-<p>Instead, use <strong>Reverse Question Ingestion</strong>:<br />
-1. Gather 5 years of past departmental examination papers for the course.<br />
-2. Group the past exam questions by topic (e.g., Laplace Transforms, Eigenvalues, Bernoulli Equations).<br />
-3. Attempt to solve a specific exam question <em>first</em>. When you get stuck at Step 3 of the derivation, consult the textbook specifically to solve that exact bottleneck.</p>
+<p>Instead, use <strong>Reverse Question Ingestion</strong>:</p>
+<ol>
+<li>Gather 5 years of past departmental examination papers for the course.</li>
+<li>Group the past exam questions by topic (e.g., Laplace Transforms, Eigenvalues, Bernoulli Equations).</li>
+<li>Attempt to solve a specific exam question *first*. When you get stuck at Step 3 of the derivation, consult the textbook specifically to solve that exact bottleneck.</li>
+</ol>
 <blockquote>
-<ul>
-<li>TRADITIONAL vs. HIGH-LEVERAGE STUDY Traditional Method: Read 50 pages -&gt; Try problems -&gt; Forget everything in exam Leveraged Method: Pick Past Exam Question -&gt; Isolate formula -&gt; Drill 5 variants</li>
-</ul>
+<p>* TRADITIONAL vs. HIGH-LEVERAGE STUDY Traditional Method: Read 50 pages -> Try problems -> Forget everything in exam Leveraged Method: Pick Past Exam Question -> Isolate formula -> Drill 5 variants</p>
 </blockquote>
 <h3 id="pillar-2-the-formula-sheet-extraction-system">Pillar 2: The Formula Sheet Extraction System</h3>
 <p>Every calculation course in Nigerian tertiary institutions is governed by 15 to 25 core underlying formulas and theorems.</p>
-<p>Create a 2-page handwritten laminated "Master Formula Sheet" for each math/science course during Week 3 of the semester. Include:<br />
-* The core mathematical formula.<br />
-* The SI units for each variable (where many students lose easy marks).<br />
-* The 2 common trick assumptions examiners use (e.g., assuming friction is negligible or temperature is at standard STP).</p>
+<p>Create a 2-page handwritten laminated "Master Formula Sheet" for each math/science course during Week 3 of the semester. Include:</p>
+<ul>
+<li>The core mathematical formula.</li>
+<li>The SI units for each variable (where many students lose easy marks).</li>
+<li>The 2 common trick assumptions examiners use (e.g., assuming friction is negligible or temperature is at standard STP).</li>
+</ul>
 <p>Keep a digital photo of this formula sheet on your phone. Review it during 10-minute transit rides or while waiting for client calls.</p>
 <h3 id="pillar-3-micro-sprint-problem-solving-the-45-minute-block">Pillar 3: Micro-Sprint Problem Solving (The 45-Minute Block)</h3>
-<p>Working 20 hours a week means you will rarely have 4-hour uninterrupted study stretches. </p>
+<p>Working 20 hours a week means you will rarely have 4-hour uninterrupted study stretches.</p>
 <p>Train your brain to solve calculation problems in <strong>45-minute micro-sprints</strong>:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Time Interval</th>
-<th style="text-align: left;">Activity</th>
-<th style="text-align: left;">Focus Level</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>00 - 05 min</strong></td>
-<td style="text-align: left;">Select 1 complex calculation problem from past exams.</td>
-<td style="text-align: left;">High</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>05 - 35 min</strong></td>
-<td style="text-align: left;">Work through the derivation and final arithmetic without looking at solutions.</td>
-<td style="text-align: left;">Maximum (Zero phone/work tabs)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>35 - 45 min</strong></td>
-<td style="text-align: left;">Compare with answer key, identify arithmetic errors, and document the lesson.</td>
-<td style="text-align: left;">Critical Reflection</td>
-</tr>
-</tbody>
-</table>
+<p>| Time Interval | Activity | Focus Level |</p>
+<p>| :--- | :--- | :--- |</p>
+<p>| <strong>00 - 05 min</strong> | Select 1 complex calculation problem from past exams. | High |</p>
+<p>| <strong>05 - 35 min</strong> | Work through the derivation and final arithmetic without looking at solutions. | Maximum (Zero phone/work tabs) |</p>
+<p>| <strong>35 - 45 min</strong> | Compare with answer key, identify arithmetic errors, and document the lesson. | Critical Reflection |</p>
 <p>Two of these 45-minute blocks per day equals 10 complex solved engineering problems per week—exceeding what 80% of full-time idle students achieve.</p>
-<hr />
+<hr>
 <h2 id="weekly-study-work-allocation-for-stem-students">Weekly Study-Work Allocation for STEM Students</h2>
 <p>Here is how a successful 20-hour working STEM undergraduate structures their weekly hours:</p>
 <blockquote>
-<ul>
-<li>20-HOUR WORK + STEM WEEKLY TIME ALLOCATION Physical Lectures &amp; Labs: 24 Hours/week (Monday - Friday mornings) Remote Client Work / Job: 20 Hours/week (Evenings: 4 hrs x 5 days) Calculation Micro-Sprints: 12 Hours/week (Early mornings &amp; Saturday batch) Sleep &amp; Biological Rest: 49 Hours/week (7 Hours/night average) Buffer &amp; Personal Life: 63 Hours/week</li>
-</ul>
+<p>* 20-HOUR WORK + STEM WEEKLY TIME ALLOCATION Physical Lectures & Labs: 24 Hours/week (Monday - Friday mornings) Remote Client Work / Job: 20 Hours/week (Evenings: 4 hrs x 5 days) Calculation Micro-Sprints: 12 Hours/week (Early mornings & Saturday batch) Sleep & Biological Rest: 49 Hours/week (7 Hours/night average) Buffer & Personal Life: 63 Hours/week</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="action-checklist-stem-student-survival-guide">Action Checklist: STEM Student Survival Guide</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Obtain 5 years of past examination questions for every calculation course by Week 2.</li>
@@ -515,8 +493,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -700,8 +678,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -715,7 +693,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

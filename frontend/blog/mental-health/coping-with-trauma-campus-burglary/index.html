@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -312,69 +312,54 @@
 <p>For the next forty-five minutes, your compound is terrorized. Your door is kicked in. Flashlights shine directly into your eyes. You lie face down on the cold floor, heart hammering against your ribs, while your phone, your laptop containing four years of project files, your generator, and every naira in your room are carted away.</p>
 <p>The robbers leave into the darkness.</p>
 <p>The next morning, the police arrive, write statements, and depart. Your landlord promises to "look into the compound gate." Your parents send condolences and prayers.</p>
-<p>Two weeks later, the physical chaos settles, but your mind is in pieces:<br />
-* Every time a motorcycle accelerates outside your window at night, your chest clenches in terror.<br />
-* You cannot sleep without a bright light on.<br />
-* You cannot concentrate on lecture notes for five minutes without picturing the weapon pointed at your face.<br />
-* And your semester examinations begin in eighteen days.</p>
+<p>Two weeks later, the physical chaos settles, but your mind is in pieces:</p>
+<ul>
+<li>Every time a motorcycle accelerates outside your window at night, your chest clenches in terror.</li>
+<li>You cannot sleep without a bright light on.</li>
+<li>You cannot concentrate on lecture notes for five minutes without picturing the weapon pointed at your face.</li>
+<li>And your semester examinations begin in eighteen days.</li>
+</ul>
 <p>This is <strong>Acute Post-Traumatic Stress Disorder (PTSD)</strong>. Here is how to navigate the neurological and psychological aftermath of a campus attack and recover your academic stability.</p>
-<hr />
+<hr>
 <h2 id="1-the-neurobiology-of-acute-campus-trauma">1. The Neurobiology of Acute Campus Trauma</h2>
 <p>During a violent robbery or assault, your brain's amygdala triggers a catastrophic surge of <strong>epinephrine and cortisol</strong>:</p>
 <ul>
-<li><strong>Hypervigilance:</strong> Your nervous system gets locked in "Threat Mode." The brain treats ordinary sounds—a roommate closing an iron gate, footsteps in the dark—as life-threatening predators.</li>
-<li><strong>Intrusive Flashbacks:</strong> The traumatic memory is stored in the hippocampus without normal chronological time tags. When triggered, your body experiences the robbery as if it is happening right now in real time.</li>
-<li><strong>Emotional Detachment &amp; Dissociation:</strong> You may feel numb, distant from friends, and completely indifferent to your studies, as if academic grades no longer matter.</li>
+<li>**Hypervigilance:** Your nervous system gets locked in "Threat Mode." The brain treats ordinary sounds—a roommate closing an iron gate, footsteps in the dark—as life-threatening predators.</li>
+<li>**Intrusive Flashbacks:** The traumatic memory is stored in the hippocampus without normal chronological time tags. When triggered, your body experiences the robbery as if it is happening right now in real time.</li>
+<li>**Emotional Detachment & Dissociation:** You may feel numb, distant from friends, and completely indifferent to your studies, as if academic grades no longer matter.</li>
 </ul>
 <p>Learn how to manage severe social isolation during trauma in <a href="/blog/mental-health/campus-loneliness-university-students/">campus loneliness and emotional recovery for undergraduates</a>.</p>
-<hr />
+<hr>
 <h2 id="2-immediate-tactical-safety-and-academic-protections">2. Immediate Tactical Safety and Academic Protections</h2>
 <p>Do not attempt to "tough it out" alone in a compromised room. Take these four protective steps immediately:</p>
 <h3 id="step-1-relocate-your-physical-sleeping-space">Step 1: Relocate Your Physical Sleeping Space</h3>
 <p>If your door lock is broken or the compound has no perimeter security, do not sleep there. Pack essential clothes and temporarily move in with a trusted friend in a secure, guarded lodge or campus hostel. Physical safety is the non-negotiable prerequisite for nervous system regulation.</p>
 <p>Review comprehensive lodge safety protocols in <a href="/blog/hostel/off-campus-safety-female-students-nigeria/">off-campus safety for students in Nigerian university towns</a>.</p>
 <h3 id="step-2-file-official-documentation-for-academic-leniency">Step 2: File Official Documentation for Academic Leniency</h3>
-<p>Do not wait until after you fail an exam to explain that you were robbed. Within 48 hours of the incident:<br />
-1. File an official police report at the nearest divisional station (keep two signed photocopies).<br />
-2. Visit the University Health Center and Guidance Counseling Unit to document acute stress symptoms.<br />
-3. Submit a formal letter to your Departmental HOD and Faculty Dean requesting test rescheduling or assignment grace periods, attaching your police and medical reports.</p>
+<p>Do not wait until after you fail an exam to explain that you were robbed. Within 48 hours of the incident:</p>
+<ol>
+<li>File an official police report at the nearest divisional station (keep two signed photocopies).</li>
+<li>Visit the University Health Center and Guidance Counseling Unit to document acute stress symptoms.</li>
+<li>Submit a formal letter to your Departmental HOD and Faculty Dean requesting test rescheduling or assignment grace periods, attaching your police and medical reports.</li>
+</ol>
 <p>Discover physical security measures to protect your lodge in <a href="/blog/hostel/hostel-burglary-security-prevention/">hostel burglary security prevention: locking hardware and neighborhood defense</a>.</p>
-<hr />
+<hr>
 <h2 id="3-somatic-protocols-to-settle-a-traumatized-nervous-system">3. Somatic Protocols to Settle a Traumatized Nervous System</h2>
 <p>When panic attacks strike while you are trying to study:</p>
-<table>
-<thead>
-<tr>
-<th>Somatic Intervention</th>
-<th>Execution Method</th>
-<th>Clinical Effect</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>The 5-4-3-2-1 Sensory Grounding</strong></td>
-<td>Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste</td>
-<td>Pulls prefrontal cortex out of flashback loop into present reality</td>
-</tr>
-<tr>
-<td><strong>Bilateral Tactile Stimulation</strong></td>
-<td>Cross arms over chest and alternate tapping left and right shoulders slowly</td>
-<td>Mimics EMDR therapy; stimulates interhemispheric communication</td>
-</tr>
-<tr>
-<td><strong>Extended Exhalation Breathing</strong></td>
-<td>Inhale deeply through nose for 4 seconds; exhale slowly through mouth for 7 seconds</td>
-<td>Directly stimulates vagus nerve to lower elevated heart rate</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Somatic Intervention | Execution Method | Clinical Effect |</p>
+<p>|---|---|---|</p>
+<p>| <strong>The 5-4-3-2-1 Sensory Grounding</strong> | Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste | Pulls prefrontal cortex out of flashback loop into present reality |</p>
+<p>| <strong>Bilateral Tactile Stimulation</strong> | Cross arms over chest and alternate tapping left and right shoulders slowly | Mimics EMDR therapy; stimulates interhemispheric communication |</p>
+<p>| <strong>Extended Exhalation Breathing</strong> | Inhale deeply through nose for 4 seconds; exhale slowly through mouth for 7 seconds | Directly stimulates vagus nerve to lower elevated heart rate |</p>
+<hr>
 <h2 id="4-rebuilding-academic-momentum-from-zero">4. Rebuilding Academic Momentum from Zero</h2>
-<p>Losing your laptop and lecture notes feels like having your academic foundation wiped out:<br />
-* <strong>The Cloud Backup Imperative:</strong> From this day forward, never store lecture notes or project drafts solely on a physical device. Save drafts to Google Drive, Telegram saved messages, or Notion after every study session.<br />
-* <strong>Assemble a Support Study Partner:</strong> Ask a high-performing coursemate to share photocopy access to their comprehensive notebooks. Study in public campus libraries during daylight hours rather than reading late at night in isolation.<br />
-* <strong>Be Gentle with Your Brain:</strong> If you can only study for 25 minutes before panic sets in, celebrate those 25 minutes. Healing from violent trauma is non-linear. Give yourself the grace to recover step by step.</p>
-<hr />
+<p>Losing your laptop and lecture notes feels like having your academic foundation wiped out:</p>
+<ul>
+<li>**The Cloud Backup Imperative:** From this day forward, never store lecture notes or project drafts solely on a physical device. Save drafts to Google Drive, Telegram saved messages, or Notion after every study session.</li>
+<li>**Assemble a Support Study Partner:** Ask a high-performing coursemate to share photocopy access to their comprehensive notebooks. Study in public campus libraries during daylight hours rather than reading late at night in isolation.</li>
+<li>**Be Gentle with Your Brain:** If you can only study for 25 minutes before panic sets in, celebrate those 25 minutes. Healing from violent trauma is non-linear. Give yourself the grace to recover step by step.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-are-the-common-symptoms-of-acute-ptsd-after-a-student-lodge-robbery">What are the common symptoms of acute PTSD after a student lodge robbery?</h3>
 <p>Hypervigilance (jumping at every loud knock or generator rumble), sleep paralysis, recurrent nightmares, inability to read without panic, persistent fear of being alone in your room, and emotional numbness.</p>
@@ -548,8 +533,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -733,8 +718,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -748,7 +733,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

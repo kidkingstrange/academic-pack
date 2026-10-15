@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -314,25 +314,27 @@
 <p>In Nigerian households, bad grades are not treated as a private academic setback. They are treated as a moral transgression—a betrayal of family sacrifice, a public disgrace before extended relatives, and a waste of hard-earned naira.</p>
 <p>For thousands of undergraduates, <strong>Parental Grade Guilt</strong> is far more terrifying than the carryovers themselves.</p>
 <p>Here is how to psychologically navigate parental expectations, deliver painful news constructively, and rebuild family trust.</p>
-<hr />
+<hr>
 <h2 id="1-deconstructing-the-parental-panic-love-wrapped-in-fear">1. Deconstructing the Parental Panic: Love Wrapped in Fear</h2>
 <p>To respond constructively to parental anger, you must understand where it originates:</p>
 <p>In developing nations like Nigeria, there are no state unemployment safety nets, old-age pensions, or institutional welfare. For working-class and middle-class parents, their children's university degree is their <strong>only retirement plan</strong>.</p>
-<p>When your father sees an 'F' or a 2.2 GPA:<br />
-* His anger is rarely about the grade itself.<br />
-* His anger is driven by deep, primal <strong>terror</strong> that you will end up unemployed, impoverished, and dependent in an economy with rampant inflation.</p>
+<p>When your father sees an 'F' or a 2.2 GPA:</p>
+<ul>
+<li>His anger is rarely about the grade itself.</li>
+<li>His anger is driven by deep, primal **terror** that you will end up unemployed, impoverished, and dependent in an economy with rampant inflation.</li>
+</ul>
 <p>Recognizing that their rage is an expression of frantic economic anxiety allows you to stop taking it as a personal attack on your soul.</p>
 <p>Learn how to bounce back from academic failure in <a href="/blog/mental-health/coping-with-failing-university-exams/">failure shame: rebuilding self-worth after bad results</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-worst-mistakes-to-make-when-breaking-bad-results">2. The Worst Mistakes to Make When Breaking Bad Results</h2>
 <p>Avoid these fatal errors when results drop:</p>
 <ol>
-<li><strong>The Deception Trap:</strong> Fabricating results, editing PDFs, or claiming the portal has <em>"server errors"</em> for six months. When the truth inevitably surfaces during final-year clearance, the betrayal shatters parental trust permanently.</li>
-<li><strong>The Defense Reflex:</strong> Screaming that <em>"university is hard"</em> or <em>"the lecturer failed everyone."</em> Defensive excuses signal immaturity and confirm their fear that you are unserious.</li>
-<li><strong>The Silent Withdrawal:</strong> Hiding in your bedroom for two weeks, refusing to speak or eat. Silent withdrawal heightens household tension.</li>
+<li>**The Deception Trap:** Fabricating results, editing PDFs, or claiming the portal has *"server errors"* for six months. When the truth inevitably surfaces during final-year clearance, the betrayal shatters parental trust permanently.</li>
+<li>**The Defense Reflex:** Screaming that *"university is hard"* or *"the lecturer failed everyone."* Defensive excuses signal immaturity and confirm their fear that you are unserious.</li>
+<li>**The Silent Withdrawal:** Hiding in your bedroom for two weeks, refusing to speak or eat. Silent withdrawal heightens household tension.</li>
 </ol>
 <p>If you are considering switching courses to escape academic misery, read <a href="/blog/academics/changing-department-200-level-university-nigeria/">changing course in 200 level vs pushing through</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-step-executive-communication-script">3. The 3-Step Executive Communication Script</h2>
 <p>When presenting bad results to strict parents, use the <strong>Executive Ownership Protocol</strong>:</p>
 <h3 id="step-1-the-direct-statement">Step 1: The Direct Statement</h3>
@@ -343,14 +345,16 @@
 <p><em>"I am not here to make excuses. Here is my written plan for second semester: I have registered for the departmental tutorial group, I have revised my timetable to study 3 hours every evening, and I am retaking this paper next session. Here is the mathematical calculation showing how I will pull my CGPA back to 3.5."</em></p>
 <p>When parents see structured accountability and a concrete roadmap, their panic subsides into cautious support.</p>
 <p>For eldest children burdened with family financial expectations, explore our guide on <a href="/blog/mental-health/">eldest child syndrome: managing financial demands while studying</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-mental-health-family-support-network">🧠 Join the Student Mental Health &amp; Family Support Network</h3>
+<p>### 🧠 Join the Student Mental Health & Family Support Network</p>
 <p>Struggling with intense family pressure and grade anxiety?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with empathetic students who understand the struggle and learn practical coping tools.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with empathetic students who understand the struggle and learn practical coping tools.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-academic-pressure-from-nigerian-parents-so-intense">Why is academic pressure from Nigerian parents so intense?</h3>
 <p>Societal status and lack of social welfare safety nets. In Nigeria, parents view university degrees—particularly in Medicine, Law, and Engineering—as the sole retirement security and social elevation mechanism for the entire family.</p>
@@ -524,8 +528,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -709,8 +713,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -724,7 +728,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,84 +307,65 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="surviving-hostel-water-scarcity-5-bucket-survival">Surviving Hostel Water Scarcity: 5 Bucket Survival</h1>
-<p>It is 5:15 AM on a chilly Monday morning. </p>
+<p>It is 5:15 AM on a chilly Monday morning.</p>
 <p>You wake up, grab your plastic bucket, and walk to the hostel communal bathroom. You turn the brass tap handle:</p>
 <p><em>Hssssssssssssssssssssssssssssssssssss.</em></p>
-<p>A dry, hollow wheeze echoes through the galvanized iron pipes. Not a single drop of water emerges. </p>
+<p>A dry, hollow wheeze echoes through the galvanized iron pipes. Not a single drop of water emerges.</p>
 <p>You walk out to the corridor. Outside, down three flights of concrete stairs, a scene of pure chaos unfolds:</p>
-<p>Over two hundred students—dressed in boxers, wrappers, and pajamas—are gathered around the single emergency ground tap near the porter’s lodge. Buckets, jerrycans, and paint basins are stacked forty deep in a disorderly queue. Arguments break out over who placed their bucket first. </p>
+<p>Over two hundred students—dressed in boxers, wrappers, and pajamas—are gathered around the single emergency ground tap near the porter’s lodge. Buckets, jerrycans, and paint basins are stacked forty deep in a disorderly queue. Arguments break out over who placed their bucket first.</p>
 <p>Someone shouts: <em>"The generator is switching off in ten minutes! If you haven't fetched, you are on your own!"</em></p>
 <p>Welcome to the harsh reality of <strong>campus water scarcity</strong>.</p>
 <p>In Nigerian tertiary institutions, water is not an invisible, automatic utility that flows on demand. When the electrical grid fails, borehole pumps stop running, and overhead storage tanks run dry within hours.</p>
 <p>A student who does not know how to manage water will miss 8:00 AM continuous assessment tests, suffer from painful skin dermatosis, and experience overwhelming mental exhaustion.</p>
 <p>Here is the <strong>5-Bucket Water Survival Protocol</strong> to keep you clean, hydrated, and punctual during the worst campus droughts.</p>
-<hr />
+<hr>
 <h2 id="1-the-anatomy-of-campus-water-rationing">1. The Anatomy of Campus Water Rationing</h2>
 <p>To survive a week-long water drought without hygiene collapse, you must categorize your water inventory into functional priorities:</p>
-<p><strong>Student Water Allocation Hierarchy (Total: 25 Litres / Day):</strong><br />
-* Tier 1: Oral Hygiene &amp; Hydration (Drinking water, tooth brushing) -&gt; 3 Litres (12%) — Tier 2: Culinary Prep &amp; Cooking (Cooking rice/soup, rinsing plates) -&gt; 5 Litres (20%) — Tier 3: Body Sanitation (Targeted sponge bathing) -&gt; 7 Litres (28%) — Tier 4: Utility &amp; Latrine Flushing (Sanitary flushing, laundry) -&gt; 10 Litres (40%)</p>
-<hr />
+<p><strong>Student Water Allocation Hierarchy (Total: 25 Litres / Day):</strong></p>
+<ul>
+<li>Tier 1: Oral Hygiene & Hydration (Drinking water, tooth brushing) -> 3 Litres (12%) — Tier 2: Culinary Prep & Cooking (Cooking rice/soup, rinsing plates) -> 5 Litres (20%) — Tier 3: Body Sanitation (Targeted sponge bathing) -> 7 Litres (28%) — Tier 4: Utility & Latrine Flushing (Sanitary flushing, laundry) -> 10 Litres (40%)</li>
+</ul>
+<hr>
 <h2 id="2-the-5-bucket-inventory-system">2. The "5-Bucket" Inventory System</h2>
 <p>Never rely on a single bucket in your hostel room. If you only own one bucket, fetching water empties your entire supply the moment you take a single bath.</p>
 <p>Invest in a color-coded <strong>3-Tier Storage Matrix</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Container Type</th>
-<th>Capacity</th>
-<th>Designated Operational Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>25-Liter Yellow Jerrycan</td>
-<td>25 Litres (Covered)</td>
-<td>Clean water reserve for cooking &amp; drinks</td>
-</tr>
-<tr>
-<td>Primary Red Bucket (Lid)</td>
-<td>15 Litres (Covered)</td>
-<td>Active bathing and personal hygiene</td>
-</tr>
-<tr>
-<td>Secondary Black Bucket</td>
-<td>15 Litres (Open)</td>
-<td>Latrine flushing &amp; emergency cleaning</td>
-</tr>
-<tr>
-<td>5-Liter Portable Jug</td>
-<td>5 Litres</td>
-<td>Morning face wash, tooth brushing, handrinse</td>
-</tr>
-</tbody>
-</table>
+<p>| Container Type | Capacity | Designated Operational Purpose |</p>
+<p>| --- | --- | --- |</p>
+<p>| 25-Liter Yellow Jerrycan | 25 Litres (Covered) | Clean water reserve for cooking & drinks |</p>
+<p>| Primary Red Bucket (Lid) | 15 Litres (Covered) | Active bathing and personal hygiene |</p>
+<p>| Secondary Black Bucket | 15 Litres (Open) | Latrine flushing & emergency cleaning |</p>
+<p>| 5-Liter Portable Jug | 5 Litres | Morning face wash, tooth brushing, handrinse |</p>
 <h3 id="the-golden-rule-the-24-hour-buffer">The Golden Rule: The 24-Hour Buffer</h3>
 <p>Never go to sleep with empty buckets. Regardless of how tired you feel after evening study sessions, ensure your 25-liter jerrycan is 100% full before you sleep. If water pumps fail overnight, you wake up ready for lectures while your hall mates spend two hours fighting at the well.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-litre-navy-sponge-bath-protocol">3. The 3-Litre "Navy Sponge Bath" Protocol</h2>
 <p>When an entire hostel has only two jerrycans of water to last three days, using a full bucket of water to pour over your head is reckless extravagance.</p>
-<p>Adopt the tactical <strong>Sponge Bath Protocol</strong>:<br />
-1. <strong>The Damp Washcloth Phase (1 Litre):</strong> Wet a small cotton washcloth with soapy water. Thoroughly scrub high-perspiration zones (face, armpits, groin, feet) without pouring running water.<br />
-2. <strong>The Targeted Rinse Phase (2 Litres):</strong> Use a plastic drinking mug (<em>"kofi"</em>) to pour controlled water over your shoulders and body, rinsing away soap lather cleanly with minimal runoff.<br />
-3. You step out of the bathroom refreshed, smelling clean, and ready for classes—having used less than 15% of a standard bucket.</p>
-<hr />
+<p>Adopt the tactical <strong>Sponge Bath Protocol</strong>:</p>
+<ol>
+<li>**The Damp Washcloth Phase (1 Litre):** Wet a small cotton washcloth with soapy water. Thoroughly scrub high-perspiration zones (face, armpits, groin, feet) without pouring running water.</li>
+<li>**The Targeted Rinse Phase (2 Litres):** Use a plastic drinking mug (*"kofi"*) to pour controlled water over your shoulders and body, rinsing away soap lather cleanly with minimal runoff.</li>
+<li>You step out of the bathroom refreshed, smelling clean, and ready for classes—having used less than 15% of a standard bucket.</li>
+</ol>
+<hr>
 <h2 id="4-sanitation-and-disease-prevention">4. Sanitation and Disease Prevention</h2>
 <p>Stagnant, dirty water collected from unverified campus surface wells carries typhoid, cholera, and amoebic dysentery:</p>
 <ul>
-<li><strong>Drinking Water Quarantine:</strong> Never drink raw borehole water from campus hostel taps during dry spells. Boil all drinking water, or invest in sealed sachet water (<em>"pure water"</em>) from verified campus vendors.</li>
-<li><strong>Chemical Purification:</strong> Keep a bottle of water purification solution (such as <em>WaterGuard</em> or chlorine tablets) in your room. Add two drops to your storage jerrycans to eliminate bacterial contaminants.</li>
-<li><strong>Tooth Brushing Safety:</strong> Always brush your teeth with drinking water from your sealed bottle—never use murky latrine water that could introduce oral pathogens.</li>
+<li>**Drinking Water Quarantine:** Never drink raw borehole water from campus hostel taps during dry spells. Boil all drinking water, or invest in sealed sachet water (*"pure water"*) from verified campus vendors.</li>
+<li>**Chemical Purification:** Keep a bottle of water purification solution (such as *WaterGuard* or chlorine tablets) in your room. Add two drops to your storage jerrycans to eliminate bacterial contaminants.</li>
+<li>**Tooth Brushing Safety:** Always brush your teeth with drinking water from your sealed bottle—never use murky latrine water that could introduce oral pathogens.</li>
 </ul>
 <p>Combine water conservation with gadget power strategies in <a href="/blog/hostel-and-accommodation/surviving-hostel-power-outage-lighting-gadgets/">surviving hostel blackouts lighting and gadget backup</a>, and learn how off-campus students manage transport logistics during morning emergencies in <a href="/blog/hostel-and-accommodation/commuting-off-campus-to-morning-lectures/">commuting off campus to morning lectures</a>.</p>
 <p>If the relentless friction of campus living is affecting your mental focus, explore our coping mechanisms in <a href="/blog/mental-health/">student anxiety and burnout recovery</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="share-campus-water-status-borehole-updates">💧 Share Campus Water Status &amp; Borehole Updates</h3>
+<p>### 💧 Share Campus Water Status & Borehole Updates</p>
 <p>Dealing with dry taps and water lines in your hall or faculty lodge?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with students across campus sharing real-time water pumping alerts, working borehole locations, and practical hostel survival hacks.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with students across campus sharing real-time water pumping alerts, working borehole locations, and practical hostel survival hacks.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-university-hostels-experience-severe-water-scarcity-during-exams">Why do university hostels experience severe water scarcity during exams?</h3>
 <p>Water pumping requires high-voltage electricity to power industrial submersible borehole pumps. When national grid power fails or diesel generators run out during exam periods, centralized overhead reservoirs dry out completely.</p>
@@ -558,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -743,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -758,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

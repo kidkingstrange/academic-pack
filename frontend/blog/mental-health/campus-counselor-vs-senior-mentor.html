@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,76 +310,49 @@
 <p>You are drowning.</p>
 <p>Your CGPA is slipping into Second Class Lower. Your parents are fighting at home over money. You cannot sleep without panic attacks, and you feel utterly paralyzed.</p>
 <p>You know you cannot keep carrying this burden alone. You need someone to talk to.</p>
-<p>On one hand, you walk past the signpost near the Senate building: <strong>University Student Guidance &amp; Counseling Unit</strong>.</p>
+<p>On one hand, you walk past the signpost near the Senate building: <strong>University Student Guidance & Counseling Unit</strong>.</p>
 <p>On the other hand, you know a calm, high-achieving 400-level senior student in your department who survived the exact same difficult courses you are taking right now.</p>
 <p>Where do you turn?</p>
 <p>In Nigerian universities, choosing where to seek emotional and academic help is a high-stakes decision. One path offers institutional authority; the other offers lived, practical empathy.</p>
 <p>Here is an objective comparison between an <strong>Official Campus Guidance Counselor</strong> and a <strong>Trusted Senior Coursemate Mentor</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-comparative-evaluation-matrix">1. The Comparative Evaluation Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Factor</th>
-<th>Official Guidance Counselor</th>
-<th>Trusted Senior Student Mentor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Institutional Authority</strong></td>
-<td><strong>High:</strong> Can issue official medical/counseling letters for exam deferrals</td>
-<td><strong>Zero:</strong> Cannot influence Senate decisions or departmental records</td>
-</tr>
-<tr>
-<td><strong>Tactical Course Nuance</strong></td>
-<td><strong>Low:</strong> Usually generic counselors unfamiliar with departmental grading quirks</td>
-<td><strong>High:</strong> Knows exact lecturer marking biases and past question shortcuts</td>
-</tr>
-<tr>
-<td><strong>Confidentiality Security</strong></td>
-<td><strong>Mixed:</strong> Bound by ethics, but generational/religious bias can occur</td>
-<td><strong>Variable:</strong> Risk of peer gossip if the friendship fractures</td>
-</tr>
-<tr>
-<td><strong>Bureaucratic Friction</strong></td>
-<td>Requires formal booking, office queues, and daytime appointments</td>
-<td>Accessible via WhatsApp voice note or evening hostel discussions</td>
-</tr>
-<tr>
-<td><strong>Crisis Intervention</strong></td>
-<td>Trained for clinical trauma, suicide prevention, and major depression</td>
-<td>Limited to informal empathy; unqualified for severe psychiatric crises</td>
-</tr>
-</tbody>
-</table>
+<p>| Factor | Official Guidance Counselor | Trusted Senior Student Mentor |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Institutional Authority</strong> | <strong>High:</strong> Can issue official medical/counseling letters for exam deferrals | <strong>Zero:</strong> Cannot influence Senate decisions or departmental records |</p>
+<p>| <strong>Tactical Course Nuance</strong> | <strong>Low:</strong> Usually generic counselors unfamiliar with departmental grading quirks | <strong>High:</strong> Knows exact lecturer marking biases and past question shortcuts |</p>
+<p>| <strong>Confidentiality Security</strong> | <strong>Mixed:</strong> Bound by ethics, but generational/religious bias can occur | <strong>Variable:</strong> Risk of peer gossip if the friendship fractures |</p>
+<p>| <strong>Bureaucratic Friction</strong> | Requires formal booking, office queues, and daytime appointments | Accessible via WhatsApp voice note or evening hostel discussions |</p>
+<p>| <strong>Crisis Intervention</strong> | Trained for clinical trauma, suicide prevention, and major depression | Limited to informal empathy; unqualified for severe psychiatric crises |</p>
 <p>Understand the psychological origins of academic inadequacy in <a href="/blog/mental-health/imposter-syndrome-university-nigeria/">imposter syndrome in Nigerian universities: why you feel dumb</a>.</p>
-<hr />
+<hr>
 <h2 id="2-when-to-choose-the-official-university-counselor">2. When to Choose the Official University Counselor</h2>
 <p>Do not rely on a fellow 22-year-old student for issues requiring professional intervention:</p>
 <ul>
-<li><strong>Formal Academic Leave Documentation:</strong> If you need to defer examinations due to acute depression, bereavement, or nervous breakdown, only a stamped report from the University Guidance and Counseling Unit (in collaboration with the University Clinic) will be recognized by the Faculty Senate.</li>
-<li><strong>Traumatic Victimization &amp; Sexual Assault:</strong> When dealing with predatory lecturer harassment or gender-based violence, counselors connect directly to the campus legal and security task force.</li>
-<li><strong>Clinical Substance Withdrawal &amp; Severe Self-Harm:</strong> Situations where biological medical intervention is required to protect human life.</li>
+<li>**Formal Academic Leave Documentation:** If you need to defer examinations due to acute depression, bereavement, or nervous breakdown, only a stamped report from the University Guidance and Counseling Unit (in collaboration with the University Clinic) will be recognized by the Faculty Senate.</li>
+<li>**Traumatic Victimization & Sexual Assault:** When dealing with predatory lecturer harassment or gender-based violence, counselors connect directly to the campus legal and security task force.</li>
+<li>**Clinical Substance Withdrawal & Severe Self-Harm:** Situations where biological medical intervention is required to protect human life.</li>
 </ul>
 <p>Explore institutional dynamics in <a href="/blog/mental-health/lecturer-intimidation-student-mental-health/">lecturer intimidation and the psychological toll on campus</a>.</p>
-<hr />
+<hr>
 <h2 id="3-when-to-choose-the-trusted-senior-friend">3. When to Choose the Trusted Senior Friend</h2>
 <p>For day-to-day academic survival and study systems, a senior scholar is vastly superior:</p>
 <ul>
-<li><strong>Syllabus Triage:</strong> A counselor cannot tell you which three chapters of Thermodynamics are guaranteed to appear on the exam; a senior student who scored an 'A' in the course last year can show you their exact handwritten summary notes.</li>
-<li><strong>Lecturer Psychology:</strong> Seniors understand the human quirks of departmental professors—who penalizes late assignment submissions, who demands textbook definitions word-for-word, and who awards bonus marks for active attendance.</li>
-<li><strong>Peer Empathy Without Condescension:</strong> Speaking with someone who recently walked in your shoes eliminates the generational barrier common with older administrative staff.</li>
+<li>**Syllabus Triage:** A counselor cannot tell you which three chapters of Thermodynamics are guaranteed to appear on the exam; a senior student who scored an 'A' in the course last year can show you their exact handwritten summary notes.</li>
+<li>**Lecturer Psychology:** Seniors understand the human quirks of departmental professors—who penalizes late assignment submissions, who demands textbook definitions word-for-word, and who awards bonus marks for active attendance.</li>
+<li>**Peer Empathy Without Condescension:** Speaking with someone who recently walked in your shoes eliminates the generational barrier common with older administrative staff.</li>
 </ul>
 <p>Explore our upcoming guide comparing emotional coping tools in <a href="/blog/mental-health/">venting to roommates vs journaling: emotional safety</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-hybrid-support-system">4. The Hybrid Support System</h2>
-<p>The most resilient undergraduates do not choose between counselors and mentors; they build a <strong>Multi-Tiered Support Network</strong>:<br />
-1. <strong>The Tactical Mentor:</strong> A 400-level or postgraduate departmental scholar for weekly study alignment and course reviews.<br />
-2. <strong>The Institutional Backstop:</strong> An established relationship with the University Counseling Unit or Health Services before a crisis strikes.<br />
-3. <strong>The Accountability Peer:</strong> A disciplined coursemate who shares your target CGPA and keeps you focused during daily revision blocks.</p>
+<p>The most resilient undergraduates do not choose between counselors and mentors; they build a <strong>Multi-Tiered Support Network</strong>:</p>
+<ol>
+<li>**The Tactical Mentor:** A 400-level or postgraduate departmental scholar for weekly study alignment and course reviews.</li>
+<li>**The Institutional Backstop:** An established relationship with the University Counseling Unit or Health Services before a crisis strikes.</li>
+<li>**The Accountability Peer:** A disciplined coursemate who shares your target CGPA and keeps you focused during daily revision blocks.</li>
+</ol>
 <p>Never suffer in isolated silence. Asking for help is not a weakness; it is the ultimate strategy for campus survival.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="are-official-university-guidance-counselors-confidential-in-nigerian-universities">Are official university guidance counselors confidential in Nigerian universities?</h3>
 <p>By professional code, yes. However, in under-resourced Nigerian universities, students often worry that counselors may judge them religiously or share sensitive disciplinary matters with faculty authorities. Clarify explicit confidentiality boundaries during your first 5 minutes.</p>
@@ -553,8 +526,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -738,8 +711,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -753,7 +726,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

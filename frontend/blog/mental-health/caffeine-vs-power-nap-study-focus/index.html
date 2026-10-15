@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -311,118 +311,65 @@
 <p>Your roommate returns from the campus kiosk with a black plastic bag containing two cans of cold energy drinks, three sachets of instant black coffee, and a strip of over-the-counter caffeine tablets purchased from a local chemist.</p>
 <p>Their strategy for tonight's revision is simple: <strong>Chemical Warfare on Sleep.</strong></p>
 <p>Across Nigerian tertiary campuses, students consume cocktails of caffeine, high-sugar energy drinks, and cold water showers to survive night-long cramming marathons.</p>
-<p>Yet, every exam season, campus clinics admit students suffering from:<br />
-* Acute supraventricular tachycardia (racing heart rate exceeding 140 bpm).<br />
-* Severe peptic ulcer flare-ups and acid reflux.<br />
-* Disorienting panic attacks inside the exam hall where hands shake so violently that writing becomes impossible.</p>
+<p>Yet, every exam season, campus clinics admit students suffering from:</p>
+<ul>
+<li>Acute supraventricular tachycardia (racing heart rate exceeding 140 bpm).</li>
+<li>Severe peptic ulcer flare-ups and acid reflux.</li>
+<li>Disorienting panic attacks inside the exam hall where hands shake so violently that writing becomes impossible.</li>
+</ul>
 <p>Before you poison your nervous system tonight, here is the pharmacological reality of <strong>Caffeine Pills vs. Energy Drinks vs. Power Naps</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-pharmacological-comparison-matrix">1. The Pharmacological Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Alertness Tool</th>
-<th>Active Onset</th>
-<th>Peak Duration</th>
-<th>Crash Severity</th>
-<th>Ulcer &amp; Heart Risk</th>
-<th>Cost per Night</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Canned Energy Drinks</strong></td>
-<td>15–20 mins</td>
-<td>90 mins</td>
-<td><strong>Severe</strong> (Sugar crash)</td>
-<td><strong>High</strong> (High acidity + sugar)</td>
-<td>₦800 – ₦1,500</td>
-</tr>
-<tr>
-<td><strong>Instant Black Coffee</strong></td>
-<td>20–30 mins</td>
-<td>3–4 hours</td>
-<td><strong>Moderate</strong></td>
-<td><strong>Moderate</strong> (Stimulates gastric acid)</td>
-<td>₦150 – ₦300</td>
-</tr>
-<tr>
-<td><strong>Caffeine Tablets (100mg)</strong></td>
-<td>25 mins</td>
-<td>4–5 hours</td>
-<td><strong>Low to Mild</strong></td>
-<td><strong>Low</strong> (Zero acid/sugar)</td>
-<td>₦100 – ₦200</td>
-</tr>
-<tr>
-<td><strong>20-Min Power Nap</strong></td>
-<td>Instant</td>
-<td>2–3 hours</td>
-<td><strong>Zero</strong></td>
-<td><strong>None</strong> (Lowers blood pressure)</td>
-<td><strong>₦0 (Free)</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Alertness Tool | Active Onset | Peak Duration | Crash Severity | Ulcer & Heart Risk | Cost per Night |</p>
+<p>|---|---|---|---|---|---|</p>
+<p>| <strong>Canned Energy Drinks</strong> | 15–20 mins | 90 mins | <strong>Severe</strong> (Sugar crash) | <strong>High</strong> (High acidity + sugar) | ₦800 – ₦1,500 |</p>
+<p>| <strong>Instant Black Coffee</strong> | 20–30 mins | 3–4 hours | <strong>Moderate</strong> | <strong>Moderate</strong> (Stimulates gastric acid) | ₦150 – ₦300 |</p>
+<p>| <strong>Caffeine Tablets (100mg)</strong> | 25 mins | 4–5 hours | <strong>Low to Mild</strong> | <strong>Low</strong> (Zero acid/sugar) | ₦100 – ₦200 |</p>
+<p>| <strong>20-Min Power Nap</strong> | Instant | 2–3 hours | <strong>Zero</strong> | <strong>None</strong> (Lowers blood pressure) | <strong>₦0 (Free)</strong> |</p>
 <p>Understand the physiological roots of exam fatigue in <a href="/blog/mental-health/student-brain-fog-fatigue-causes/">student brain fog and fatigue causes: physical triggers you overlook</a>.</p>
-<hr />
+<hr>
 <h2 id="2-why-energy-drinks-are-toxic-for-exam-performance">2. Why Energy Drinks Are Toxic for Exam Performance</h2>
-<p>The average canned energy drink sold around Nigerian hostels contains:<br />
-* <strong>80mg to 160mg of synthetic caffeine.</strong><br />
-* <strong>35g to 54g of refined sugar</strong> (equivalent to 12 sugar cubes).<br />
-* <strong>Glucuronolactone and synthetic taurine.</strong></p>
-<p>When you chug an ice-cold can at midnight:<br />
-1. Blood glucose spikes instantly, providing 45 minutes of artificial hyper-alertness.<br />
-2. The pancreas releases a flood of insulin to bring blood sugar down.<br />
-3. By 1:30 AM, you suffer <strong>Hypoglycemic Reactive Crash</strong>: intense lethargy, trembling hands, brain fog, and an irresistible urge to sleep.<br />
-4. If you drink a second can to counteract the crash, you risk acute gastric ulcer irritation and cardiac arrhythmia.</p>
+<p>The average canned energy drink sold around Nigerian hostels contains:</p>
+<ul>
+<li>**80mg to 160mg of synthetic caffeine.**</li>
+<li>**35g to 54g of refined sugar** (equivalent to 12 sugar cubes).</li>
+<li>**Glucuronolactone and synthetic taurine.**</li>
+</ul>
+<p>When you chug an ice-cold can at midnight:</p>
+<ol>
+<li>Blood glucose spikes instantly, providing 45 minutes of artificial hyper-alertness.</li>
+<li>The pancreas releases a flood of insulin to bring blood sugar down.</li>
+<li>By 1:30 AM, you suffer **Hypoglycemic Reactive Crash**: intense lethargy, trembling hands, brain fog, and an irresistible urge to sleep.</li>
+<li>If you drink a second can to counteract the crash, you risk acute gastric ulcer irritation and cardiac arrhythmia.</li>
+</ol>
 <p>Compare all-nighters to scheduled rest in <a href="/blog/academics/tdb-all-nighters-vs-sleep-exam-memory/">TDB all-nighters vs 5-hour sleep: exam memory impact</a>.</p>
-<hr />
-<h2 id="3-the-power-nap-the-brains-native-adenosine-flush">3. The Power Nap: The Brain's Native Adenosine Flush</h2>
+<hr>
+<h2 id="3-the-power-nap-the-brain-s-native-adenosine-flush">3. The Power Nap: The Brain's Native Adenosine Flush</h2>
 <p>To understand why naps beat stimulants, you must understand <strong>Adenosine</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Physiological Factor</th>
-<th>Biological Mechanism</th>
-<th>Impact on Brain Alertness</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Waking Study Hours</strong></td>
-<td>Adenosine steadily accumulates on neural receptors</td>
-<td>Builds up progressive sleep pressure and mental fog</td>
-</tr>
-<tr>
-<td><strong>Caffeine Ingestion</strong></td>
-<td>Temporarily blocks adenosine receptors without clearing the molecule</td>
-<td>Masks exhaustion; triggers an aggressive crash once the compound metabolizes</td>
-</tr>
-<tr>
-<td><strong>20-Minute Power Nap</strong></td>
-<td>Synapses actively metabolize and clear accumulated adenosine</td>
-<td>Provides true cellular recovery and sharpens working memory without grogginess</td>
-</tr>
-</tbody>
-</table>
+<p>| Physiological Factor | Biological Mechanism | Impact on Brain Alertness |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Waking Study Hours</strong> | Adenosine steadily accumulates on neural receptors | Builds up progressive sleep pressure and mental fog |</p>
+<p>| <strong>Caffeine Ingestion</strong> | Temporarily blocks adenosine receptors without clearing the molecule | Masks exhaustion; triggers an aggressive crash once the compound metabolizes |</p>
+<p>| <strong>20-Minute Power Nap</strong> | Synapses actively metabolize and clear accumulated adenosine | Provides true cellular recovery and sharpens working memory without grogginess |</p>
 <p>Caffeine is merely an antagonist: it hides the fatigue signal. When caffeine wears off, all the accumulated adenosine floods back, knocking you out.</p>
-<p>A <strong>20-Minute Power Nap</strong>, by contrast:<br />
-* Flushes out adenosine naturally.<br />
-* Enhances memory consolidation in the hippocampus.<br />
-* Lowers resting heart rate and reduces pre-exam sympathetic tension.</p>
+<p>A <strong>20-Minute Power Nap</strong>, by contrast:</p>
+<ul>
+<li>Flushes out adenosine naturally.</li>
+<li>Enhances memory consolidation in the hippocampus.</li>
+<li>Lowers resting heart rate and reduces pre-exam sympathetic tension.</li>
+</ul>
 <p>Review insomnia rescue tactics in <a href="/blog/mental-health/night-before-exam-insomnia-causes/">night before exam insomnia causes: why sleep vanishes</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-elite-student-protocol-the-20-minute-caffeine-nap">4. The Elite Student Protocol: The 20-Minute "Caffeine Nap"</h2>
 <p>If you must study late into the night, use the scientifically optimized <strong>Caffeine Nap protocol</strong>:</p>
 <ol>
 <li>At 11:30 PM, drink a single cup of unsweetened black tea or coffee (or 100mg caffeine tablet with water).</li>
-<li>Immediately lie down in the dark, put on an eye mask, and set an alarm for <strong>strictly 20 minutes</strong>.</li>
+<li>Immediately lie down in the dark, put on an eye mask, and set an alarm for **strictly 20 minutes**.</li>
 <li>Do not stress about falling into deep sleep; quiet relaxation is sufficient.</li>
 <li>Because caffeine takes 20 to 25 minutes to pass through the gastrointestinal tract and bind to neural receptors, you will awaken right as the chemical stimulant activates.</li>
 </ol>
 <p>You get the restorative benefits of adenosine clearance combined with the chemical alertness of caffeine—with zero heart palpitations and zero morning crashes.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="are-caffeine-pills-safe-for-nigerian-students-preparing-for-exams">Are caffeine pills safe for Nigerian students preparing for exams?</h3>
 <p>Pure caffeine tablets (typically 100mg-200mg) are pharmacologically cleaner than energy drinks because they contain zero refined sugars. However, exceeding 400mg daily triggers severe tachycardia, hand tremors, and acute panic attacks.</p>
@@ -596,8 +543,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -781,8 +728,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -796,7 +743,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

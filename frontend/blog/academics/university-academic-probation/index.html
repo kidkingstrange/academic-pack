@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,93 +308,64 @@
       <div class="article-body">
         <p>You open your departmental student portal or stand before the locked glass case containing the faculty broad-sheet, and your eyes lock onto the red letters printed beside your matriculation number:</p>
 <blockquote>
-<p><strong>STATUS: ON PROBATION (WARNING)</strong></p>
+<p>**STATUS: ON PROBATION (WARNING)**</p>
 </blockquote>
-<p>A wave of nausea sweeps over you. </p>
+<p>A wave of nausea sweeps over you.</p>
 <p>Your mind races: <em>Will the university expel me? What will I tell my parents? How did a former top secondary school student end up facing academic dismissal?</em></p>
 <p>In the Nigerian tertiary education system, few institutional phrases carry heavier psychological dread than "Academic Probation." Under benchmark regulations enforced by the <a href="https://www.nuc.edu.ng/">National Universities Commission (NUC)</a> and university Senates across federal and state institutions, academic probation is not a gentle disciplinary reminder; it is the final institutional warning bell before formal expulsion.</p>
 <p>If your Cumulative Grade Point Average (CGPA) has slipped below the statutory threshold of <strong>1.50 on the 5.0 scale</strong>, you are standing on the edge of what universities designate as <strong>"Advised to Withdraw" (ATW)</strong>.</p>
 <p>However, an academic probation letter is not a termination certificate. It is a legal window of opportunity. If you understand the mathematics of GPA recovery and enforce strict operational discipline, students reverse probation and graduate with respectable second-class degrees every single year.</p>
 <p>Here is what academic probation actually means under Nigerian university Senate statutes, and the exact roadmap to reverse your withdrawal risk before the clock runs out.</p>
-<hr />
-<h2 id="1-the-statutory-rules-understanding-the-150-cgpa-threshold">1. The Statutory Rules: Understanding the 1.50 CGPA Threshold</h2>
+<hr>
+<h2 id="1-the-statutory-rules-understanding-the-1-50-cgpa-threshold">1. The Statutory Rules: Understanding the 1.50 CGPA Threshold</h2>
 <p>Academic progression in Nigerian universities is strictly mathematical. Under NUC guidelines, undergraduate performance is divided into distinct degree classifications:</p>
-<table>
-<thead>
-<tr>
-<th>Degree Classification</th>
-<th>CGPA Range (5.0 Scale)</th>
-<th>Institutional Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>First Class Honours</strong></td>
-<td>4.50 – 5.00</td>
-<td>Excellent Standing</td>
-</tr>
-<tr>
-<td><strong>Second Class Upper (2:1)</strong></td>
-<td>3.50 – 4.49</td>
-<td>Good Standing</td>
-</tr>
-<tr>
-<td><strong>Second Class Lower (2:2)</strong></td>
-<td>2.40 – 3.49</td>
-<td>Good Standing</td>
-</tr>
-<tr>
-<td><strong>Third Class Honours</strong></td>
-<td>1.50 – 2.39</td>
-<td>Minimum Pass Standing</td>
-</tr>
-<tr>
-<td><strong>Academic Probation (Warning)</strong></td>
-<td><strong>1.00 – 1.49</strong></td>
-<td><strong>High Withdrawal Risk</strong></td>
-</tr>
-<tr>
-<td><strong>Advised to Withdraw (ATW)</strong></td>
-<td><strong>Below 1.00 (or 2 Semesters &lt; 1.50)</strong></td>
-<td><strong>Academic Dismissal</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Degree Classification | CGPA Range (5.0 Scale) | Institutional Status |</p>
+<p>|---|---|---|</p>
+<p>| <strong>First Class Honours</strong> | 4.50 – 5.00 | Excellent Standing |</p>
+<p>| <strong>Second Class Upper (2:1)</strong> | 3.50 – 4.49 | Good Standing |</p>
+<p>| <strong>Second Class Lower (2:2)</strong> | 2.40 – 3.49 | Good Standing |</p>
+<p>| <strong>Third Class Honours</strong> | 1.50 – 2.39 | Minimum Pass Standing |</p>
+<p>| <strong>Academic Probation (Warning)</strong> | <strong>1.00 – 1.49</strong> | <strong>High Withdrawal Risk</strong> |</p>
+<p>| <strong>Advised to Withdraw (ATW)</strong> | <strong>Below 1.00 (or 2 Semesters < 1.50)</strong> | <strong>Academic Dismissal</strong> |</p>
 <h3 id="the-two-semester-statutory-clock">The Two-Semester Statutory Clock</h3>
 <p>When the Faculty Board of Studies places you on probation, University Senate regulations grant you a maximum of <strong>two consecutive semesters</strong> to pull your cumulative score back to <strong>1.50 or above</strong>.</p>
 <p>If at the end of the second probationary semester your CGPA remains at 1.48, the departmental board does not have discretionary power to "pity" you. The result processing software automatically flags your file for ATW, terminating your studentship.</p>
 <p>To understand why so many capable students crash into low GPAs early in their degrees, read our analysis on <a href="/blog/academics/low-cgpa-university-first-year-breakdown/">why first year breaks students and causes low CGPA</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-senate-penalties-of-probation-status">2. The 3 Senate Penalties of Probation Status</h2>
 <p>Being on probation alters your legal standing within the faculty:</p>
 <ol>
-<li><strong>Mandatory Credit Unit Cap:</strong> You are barred from registering the maximum semester credit load (typically 24 units). Most faculties cap probationary students at <strong>15 to 18 credit units</strong> to ensure they do not collapse under excessive coursework.</li>
-<li><strong>Loss of Leadership Eligibility:</strong> You cannot contest for departmental, faculty, or Student Union Government (SUG) executive offices, nor hold course representative positions.</li>
-<li><strong>Restricted Scholarship Access:</strong> Any institutional, state government, or corporate bursary awards requiring good standing are automatically suspended.</li>
+<li>**Mandatory Credit Unit Cap:** You are barred from registering the maximum semester credit load (typically 24 units). Most faculties cap probationary students at **15 to 18 credit units** to ensure they do not collapse under excessive coursework.</li>
+<li>**Loss of Leadership Eligibility:** You cannot contest for departmental, faculty, or Student Union Government (SUG) executive offices, nor hold course representative positions.</li>
+<li>**Restricted Scholarship Access:** Any institutional, state government, or corporate bursary awards requiring good standing are automatically suspended.</li>
 </ol>
-<hr />
-<h2 id="3-the-escape-velocity-mathematics-how-to-break-the-150-barrier">3. The Escape Velocity Mathematics: How to Break the 1.50 Barrier</h2>
+<hr>
+<h2 id="3-the-escape-velocity-mathematics-how-to-break-the-1-50-barrier">3. The Escape Velocity Mathematics: How to Break the 1.50 Barrier</h2>
 <p>Reversing probation requires calculating your <strong>Escape Velocity GPA</strong>—the exact semester GPA (SGPA) you must achieve in your next semester to lift your cumulative standing above 1.50.</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>Required SGPA = [(Target CGPA * Total Cumulative Units) - Current Total Grade Points] / (Semester Registered Units)</em></p>
+<p>💡 **Key Formula:** *Required SGPA = [(Target CGPA * Total Cumulative Units) - Current Total Grade Points] / (Semester Registered Units)*</p>
 </blockquote>
 <h3 id="a-real-campus-case-study">A Real Campus Case Study:</h3>
-<p>Imagine an undergraduate finishing 100 Level with the following record:<br />
-* <strong>Completed Credit Units:</strong> 36 Units<br />
-* <strong>Current Total Grade Points:</strong> 45 Points<br />
-* <strong>Current CGPA:</strong> $45 / 36 = \mathbf{1.25}$ <em>(On Probation)</em></p>
+<p>Imagine an undergraduate finishing 100 Level with the following record:</p>
+<ul>
+<li>**Completed Credit Units:** 36 Units</li>
+<li>**Current Total Grade Points:** 45 Points</li>
+<li>**Current CGPA:** $45 / 36 = \mathbf{1.25}$ *(On Probation)*</li>
+</ul>
 <p>In 200 Level First Semester, the student is restricted to registering <strong>16 credit units</strong>, bringing their new cumulative denominator to $36 + 16 = \mathbf{52\text{ Units}}$.</p>
-<p>To reach the safe threshold of <strong>1.60 CGPA</strong>:<br />
-$$\text{Required Cumulative Points} = 1.60 \times 52 = 83.2\text{ Points}$$<br />
-$$\text{Points Needed This Semester} = 83.2 - 45 = \mathbf{38.2\text{ Points}}$$<br />
-$$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$</p>
-<p>To achieve a 2.39 SGPA in a 16-unit semester, the student does not need straight 'A's. They only need:<br />
-* <strong>Two 'B's</strong> (3-unit courses) = $2 \times 3 \times 4 = 24\text{ points}$<br />
-* <strong>Two 'C's</strong> (3-unit courses) = $2 \times 3 \times 3 = 18\text{ points}$<br />
-* <strong>One 'C'</strong> (2-unit course) = $1 \times 2 \times 3 = 6\text{ points}$<br />
-* <strong>Total Points = 48 Points</strong> $\rightarrow$ <strong>SGPA = 3.00</strong> $\rightarrow$ <strong>New CGPA = 1.78!</strong></p>
+<p>To reach the safe threshold of <strong>1.60 CGPA</strong>:</p>
+<p>$$\text{Required Cumulative Points} = 1.60 \times 52 = 83.2\text{ Points}$$</p>
+<p>$$\text{Points Needed This Semester} = 83.2 - 45 = \mathbf{38.2\text{ Points}}$$</p>
+<p>$$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$</p>
+<p>To achieve a 2.39 SGPA in a 16-unit semester, the student does not need straight 'A's. They only need:</p>
+<ul>
+<li>**Two 'B's** (3-unit courses) = $2 \times 3 \times 4 = 24\text{ points}$</li>
+<li>**Two 'C's** (3-unit courses) = $2 \times 3 \times 3 = 18\text{ points}$</li>
+<li>**One 'C'** (2-unit course) = $1 \times 2 \times 3 = 6\text{ points}$</li>
+<li>**Total Points = 48 Points** $\rightarrow$ **SGPA = 3.00** $\rightarrow$ **New CGPA = 1.78!**</li>
+</ul>
 <p>In a single semester of disciplined execution, the student has completely escaped probation and regained solid academic standing.</p>
-<hr />
+<hr>
 <h2 id="4-the-4-step-probation-escape-protocol">4. The 4-Step Probation Escape Protocol</h2>
 <p>Escaping academic probation is not a matter of luck; it is an engineering problem. Execute these four steps immediately:</p>
 <h3 id="step-1-ruthless-course-pruning">Step 1: Ruthless Course Pruning</h3>
@@ -403,7 +374,7 @@ $$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$<
 <h3 id="step-2-the-level-adviser-confessional">Step 2: The Level Adviser Confessional</h3>
 <p>Within the first week of resumption, visit your departmental Course Level Adviser. Lay out your transcript openly. Ask:</p>
 <blockquote>
-<p><em>"Sir/Ma, I am currently on probation at 1.30 CGPA. I have calculated that I need a 2.60 SGPA this semester across 16 units to clear my warning. Here is my proposed course registration. Which lecturers have the fairest continuous assessment schemes, and which courses should I defer?"</em></p>
+<p>*"Sir/Ma, I am currently on probation at 1.30 CGPA. I have calculated that I need a 2.60 SGPA this semester across 16 units to clear my warning. Here is my proposed course registration. Which lecturers have the fairest continuous assessment schemes, and which courses should I defer?"*</p>
 </blockquote>
 <p>Level advisers know the internal departmental politics. They can advise you on which courses have high pass rates and which lecturers to approach with care.</p>
 <h3 id="step-3-shift-from-passive-reading-to-daily-retrieval">Step 3: Shift from Passive Reading to Daily Retrieval</h3>
@@ -411,32 +382,31 @@ $$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$<
 <h3 id="step-4-neutralize-academic-shame">Step 4: Neutralize Academic Shame</h3>
 <p>The greatest enemy during a probation semester is psychological defeatism. Sitting in a lecture hall feeling like an academic failure creates paralyzing anxiety that impairs working memory.</p>
 <p>To overcome the emotional burden of academic setbacks, implement the mental health protocols in <a href="/blog/mental-health/">psychological recovery from academic failure and grade shame</a>.</p>
-<hr />
+<hr>
 <h2 id="the-probation-recovery-checklist">The Probation Recovery Checklist</h2>
 <p>Follow this emergency checklist starting today:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Verify your official transcript:</strong> Calculate your exact grade points and cumulative credit units.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Calculate your required escape SGPA:</strong> Determine the exact letter grades needed across your registered units.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Cap your semester load at 15 to 18 units:</strong> Strip away all non-compulsory electives.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Hold an alignment session with your Level Adviser:</strong> Secure their sign-off on your pruned course registration.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Commit to 3 hours of daily past question practice:</strong> Enforce closed-book problem solving for every registered course.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Verify your official transcript:** Calculate your exact grade points and cumulative credit units.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Calculate your required escape SGPA:** Determine the exact letter grades needed across your registered units.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Cap your semester load at 15 to 18 units:** Strip away all non-compulsory electives.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Hold an alignment session with your Level Adviser:** Secure their sign-off on your pruned course registration.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Commit to 3 hours of daily past question practice:** Enforce closed-book problem solving for every registered course.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="engineer-your-academic-comeback-today">Engineer Your Academic Comeback Today</h2>
 <p>Academic probation is a high-stakes crossroads. You can allow panic to drive you toward withdrawal, or you can use this moment as the turning point that reshaped your entire university career.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">The complete 7-part digital system created specifically for Nigerian university students facing low CGPA, carryovers, and academic probation who need an engineered recovery blueprint.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Exam Survival Guide</strong> — Emergency triage schedules, Continuous Assessment optimization, and pass formulas</li>
-    <li><strong>Get Good at Hard Things</strong> — The cognitive framework to master difficult calculations and complex theory</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking rubrics and pass criteria</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">The complete 7-part digital system created specifically for Nigerian university students facing low CGPA, carryovers, and academic probation who need an engineered recovery blueprint.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Exam Survival Guide</strong> — Emergency triage schedules, Continuous Assessment optimization, and pass formulas</li>
+<li><strong>Get Good at Hard Things</strong> — The cognitive framework to master difficult calculations and complex theory</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking rubrics and pass criteria</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-exact-cgpa-puts-a-student-on-academic-probation-in-nigeria">What exact CGPA puts a student on academic probation in Nigeria?</h3>
 <p>Under regulations set by the National Universities Commission (NUC) and federal university Senates, an undergraduate is placed on Academic Probation when their Cumulative Grade Point Average (CGPA) falls below 1.50 on the standard 5.0 scale at the end of an academic session.</p>
@@ -610,8 +580,8 @@ $$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$<
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -795,8 +765,8 @@ $$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$<
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -810,7 +780,7 @@ $$\text{Required Semester GPA (SGPA)} = 38.2 / 16 = \mathbf{2.39\text{ SGPA}}$$<
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

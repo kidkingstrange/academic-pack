@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,52 +310,56 @@
 <p>As the academic session draws to a close, a familiar white slip of paper slips under your lodge door:</p>
 <p><em>"Notice of Rent Review and Renewal for the Upcoming Academic Session."</em></p>
 <p>You open it to discover that your landlord has increased your rent by <strong>₦80,000</strong>, added a new <em>"Compound Maintenance Fee"</em>, and expects full payment within 14 days of resumption.</p>
-<p>Instantly, the debate ignites:<br />
-* Should you pay the increased rent and renew your lease?<br />
-* Or should you pack your boxes, hire a logistics mini-truck, and move to a new compound?</p>
+<p>Instantly, the debate ignites:</p>
+<ul>
+<li>Should you pay the increased rent and renew your lease?</li>
+<li>Or should you pack your boxes, hire a logistics mini-truck, and move to a new compound?</li>
+</ul>
 <p>Moving is exhausting, expensive, and risky. But staying in an unlivable compound destroys your academic peace. Here is the strategic 5-point audit to decide whether to renew or relocate.</p>
-<hr />
+<hr>
 <h2 id="1-the-moving-sunk-cost-audit-calculate-the-exit-tax">1. The Moving Sunk-Cost Audit: Calculate the "Exit Tax"</h2>
 <p>Undergraduates often assume moving to a lodge priced ₦40,000 cheaper will save money. They forget the <strong>relocation friction costs</strong>:</p>
 <ul>
-<li><strong>New Agent Registration &amp; Inspection Fee:</strong> ₦5,000 – ₦10,000</li>
-<li><strong>New Agent Commission (10%):</strong> ₦30,000 – ₦45,000</li>
-<li><strong>New Legal/Agreement Fee (10%):</strong> ₦30,000 – ₦45,000</li>
-<li><strong>New Caution Deposit:</strong> ₦25,000 – ₦40,000</li>
-<li><strong>Logistics Truck / Keke Moving Trips:</strong> ₦15,000 – ₦25,000</li>
-<li><strong>Room Cleaning, Minor Plumbing, and Repainting:</strong> ₦15,000</li>
-<li><strong>Total Moving Friction Expense:</strong> <strong>₦120,000 – ₦180,000</strong>.</li>
+<li>**New Agent Registration & Inspection Fee:** ₦5,000 – ₦10,000</li>
+<li>**New Agent Commission (10%):** ₦30,000 – ₦45,000</li>
+<li>**New Legal/Agreement Fee (10%):** ₦30,000 – ₦45,000</li>
+<li>**New Caution Deposit:** ₦25,000 – ₦40,000</li>
+<li>**Logistics Truck / Keke Moving Trips:** ₦15,000 – ₦25,000</li>
+<li>**Room Cleaning, Minor Plumbing, and Repainting:** ₦15,000</li>
+<li>**Total Moving Friction Expense:** **₦120,000 – ₦180,000**.</li>
 </ul>
 <p>If your current landlord's rent increment is ₦50,000, paying the increment is <strong>₦70,000 cheaper</strong> than moving to a new lodge with identical base rent.</p>
 <p>Only move if the new compound delivers massive functional improvements that justify the moving expense.</p>
 <p>Learn how to negotiate rent increases calmly in our guide on <a href="/blog/hostel-and-accommodation/student-lodge-rent-increase/">dealing with sudden student lodge rent hikes</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-4-non-negotiable-signs-you-must-move-out">2. The 4 Non-Negotiable Signs You MUST Move Out</h2>
 <p>There are situations where paying any moving fee is infinitely better than staying:</p>
 <ol>
-<li><strong>Security Vulnerability:</strong> If your compound was burgled during the session and the landlord refused to install security razor wire, iron gate deadbolts, or hire night guards, your life is in danger. Move immediately.</li>
-<li><strong>Permanent Water Collapse:</strong> If the borehole pump has been dead for two months and you spend 90 minutes hauling buckets from neighbouring wells before every 8:00 AM class, your academic stamina is being depleted.</li>
-<li><strong>Chronic Toxic Neighbors:</strong> If adjacent rooms have been rented to disruptive non-students, constant partygoers, or hostile individuals who threaten your safety, no degree of quiet study is possible.</li>
-<li><strong>Predatory Landlord Retaliation:</strong> If the caretaker locks compound water taps or cuts electricity lines whenever tenants raise legitimate maintenance grievances, the relationship is irrecoverable.</li>
+<li>**Security Vulnerability:** If your compound was burgled during the session and the landlord refused to install security razor wire, iron gate deadbolts, or hire night guards, your life is in danger. Move immediately.</li>
+<li>**Permanent Water Collapse:** If the borehole pump has been dead for two months and you spend 90 minutes hauling buckets from neighbouring wells before every 8:00 AM class, your academic stamina is being depleted.</li>
+<li>**Chronic Toxic Neighbors:** If adjacent rooms have been rented to disruptive non-students, constant partygoers, or hostile individuals who threaten your safety, no degree of quiet study is possible.</li>
+<li>**Predatory Landlord Retaliation:** If the caretaker locks compound water taps or cuts electricity lines whenever tenants raise legitimate maintenance grievances, the relationship is irrecoverable.</li>
 </ol>
 <p>Review the signs of bad tenancy in <a href="/blog/hostel-and-accommodation/exploitative-student-lodge-landlord/">6 signs your off-campus landlord is exploitative</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-30-day-tactical-relocation-playbook">3. The 30-Day Tactical Relocation Playbook</h2>
 <p>If you decide to pack out, execute your exit with strategic precision:</p>
 <ul>
-<li><strong>Inspect in June/July, Not October:</strong> Never wait until resumption week when thousands of freshers arrive in town and drive up lodge prices. Scout apartments during the final-year clearance window when prime rooms become vacant.</li>
-<li><strong>Secure Your Caution Deposit Early:</strong> Request an official room inspection from your caretaker three weeks before departure to document that walls and plumbing are intact, ensuring your deposit is refunded.</li>
-<li><strong>Test Utilities at Night:</strong> Before paying for the new room, visit at 8:30 PM. Verify that the compound gate is securely locked, the access street is illuminated, and the borehole pumps clean, odor-free water.</li>
+<li>**Inspect in June/July, Not October:** Never wait until resumption week when thousands of freshers arrive in town and drive up lodge prices. Scout apartments during the final-year clearance window when prime rooms become vacant.</li>
+<li>**Secure Your Caution Deposit Early:** Request an official room inspection from your caretaker three weeks before departure to document that walls and plumbing are intact, ensuring your deposit is refunded.</li>
+<li>**Test Utilities at Night:** Before paying for the new room, visit at 8:30 PM. Verify that the compound gate is securely locked, the access street is illuminated, and the borehole pumps clean, odor-free water.</li>
 </ul>
 <p>Compare mini-flat options with friends in <a href="/blog/hostel-and-accommodation/self-contain-vs-room-and-parlour-student/">self-contained apartment vs room-and-parlour flat</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-accommodation-safety-network">🏠 Join the Student Accommodation &amp; Safety Network</h3>
+<p>### 🏠 Join the Student Accommodation & Safety Network</p>
 <p>Thinking of moving compounds next session?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with verified students from your campus, share genuine lodge reviews, and avoid rogue agents.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with verified students from your campus, share genuine lodge reviews, and avoid rogue agents.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="when-should-you-start-scouting-for-a-new-lodge-if-you-plan-to-move-out">When should you start scouting for a new lodge if you plan to move out?</h3>
 <p>Start inspecting new compounds 6 to 8 weeks before the end of the second semester. Graduating final-year students vacate early, giving you first access to prime rooms before the fresher rush.</p>
@@ -529,8 +533,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -714,8 +718,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -729,7 +733,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

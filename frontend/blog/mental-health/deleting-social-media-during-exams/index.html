@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,81 +309,59 @@
         <h1 id="quitting-social-media-during-exams-vs-strict-app-timers">Quitting Social Media During Exams vs Strict App Timers</h1>
 <p>It is 10:00 PM. You sit down to read for tomorrow's examination.</p>
 <p>You open your phone to check if the course rep posted the exam hall sitting arrangement on the class WhatsApp group.</p>
-<p>You see the announcement. </p>
-<p>Then, you notice a notification badge on Instagram. </p>
+<p>You see the announcement.</p>
+<p>Then, you notice a notification badge on Instagram.</p>
 <p>You tap it. You watch a hilarious 15-second reel. Then you swipe up to watch another. Then another. Then you open TikTok to see what is trending. Then you hop over to X (Twitter) to read a heated political debate.</p>
 <p>When you finally look at the clock, it is <strong>1:15 AM</strong>.</p>
 <p>Three hours have evaporated into thin air. Your textbook is still open to the exact same page. Your eyes burn, your head hurts, and you are filled with sickening self-loathing.</p>
 <p>Smartphone algorithms are engineered by top Silicon Valley neuroscientists to capture human attention. For an exhausted Nigerian undergraduate with a fragile prefrontal cortex during exam week, your willpower stands zero chance.</p>
 <p>The question is: <strong>Do you completely delete all social media apps, or do you rely on screen timers and self-discipline?</strong></p>
 <p>Here is the digital warfare strategy for academic survival.</p>
-<hr />
+<hr>
 <h2 id="1-the-neurological-trap-of-just-5-minutes">1. The Neurological Trap of "Just 5 Minutes"</h2>
 <p>Social media feeds hijack the brain using a <strong>Variable Ratio Schedule of Reinforcement</strong>—the exact mechanism found in casino slot machines:</p>
 <blockquote>
-<h3 id="pull-to-refresh-swipe-up">Pull To Refresh / Swipe Up</h3>
-<ul>
-<li><strong>Unpredictable Dopamine Reward (Funny video, drama, DM)</strong></li>
-<li><strong>Nucleus Accumbens Activated: "Swipe again for next hit"</strong></li>
-<li><strong>Severe Attention Fragmentation &amp; Working Memory Depletion</strong></li>
-</ul>
+<p>### Pull To Refresh / Swipe Up</p>
+<p>></p>
+<p>* **Unpredictable Dopamine Reward (Funny video, drama, DM)**</p>
+<p>* **Nucleus Accumbens Activated: "Swipe again for next hit"**</p>
+<p>* **Severe Attention Fragmentation & Working Memory Depletion**</p>
 </blockquote>
-<p>When you read a dense academic textbook, your brain requires roughly <strong>15 to 20 minutes of uninterrupted focus</strong> to enter the "Deep Work" state. </p>
+<p>When you read a dense academic textbook, your brain requires roughly <strong>15 to 20 minutes of uninterrupted focus</strong> to enter the "Deep Work" state.</p>
 <p>Every single time you glance at a notification for 10 seconds, your brain suffers <strong>Attention Residue</strong>. It takes another 15 minutes to recover your previous depth of thought. If you check your phone every 15 minutes, you never achieve deep memory encoding.</p>
 <p>Explore neurodivergent study obstacles in <a href="/blog/mental-health/adhd-studying-nigerian-university/">neurodivergent students: ADHD study obstacles in Nigeria</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-great-comparison-deletion-vs-app-timers">2. The Great Comparison: Deletion vs. App Timers</h2>
-<table>
-<thead>
-<tr>
-<th>Strategy</th>
-<th>Execution Friction</th>
-<th>Failure Rate</th>
-<th>Best Use Case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>App Timers (Digital Wellbeing / Screen Time)</strong></td>
-<td><strong>Low:</strong> Set 15-minute daily limit on TikTok/Instagram</td>
-<td><strong>Very High (85%+)</strong>: Students easily tap "Ignore limit for 15 mins" when tired</td>
-<td>Casual mid-semester weeks with light reading load</td>
-</tr>
-<tr>
-<td><strong>Temporary App Deletion / Offloading</strong></td>
-<td><strong>Moderate:</strong> Uninstall app from phone; reinstall after final exam</td>
-<td><strong>Low (&lt;15%)</strong>: Reinstalling takes 50MB of mobile data and password re-entry</td>
-<td>Intense 3-week final semester examination season</td>
-</tr>
-<tr>
-<td><strong>Physical Dumbphone Quarantine</strong></td>
-<td><strong>High:</strong> Swap SIM card to cheap button phone; lock smartphone</td>
-<td><strong>Near Zero</strong>: Eliminates internet capability at the hardware level</td>
-<td>High-stakes exams on academic probation</td>
-</tr>
-</tbody>
-</table>
+<p>| Strategy | Execution Friction | Failure Rate | Best Use Case |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>App Timers (Digital Wellbeing / Screen Time)</strong> | <strong>Low:</strong> Set 15-minute daily limit on TikTok/Instagram | <strong>Very High (85%+)</strong>: Students easily tap "Ignore limit for 15 mins" when tired | Casual mid-semester weeks with light reading load |</p>
+<p>| <strong>Temporary App Deletion / Offloading</strong> | <strong>Moderate:</strong> Uninstall app from phone; reinstall after final exam | <strong>Low (<15%)</strong>: Reinstalling takes 50MB of mobile data and password re-entry | Intense 3-week final semester examination season |</p>
+<p>| <strong>Physical Dumbphone Quarantine</strong> | <strong>High:</strong> Swap SIM card to cheap button phone; lock smartphone | <strong>Near Zero</strong>: Eliminates internet capability at the hardware level | High-stakes exams on academic probation |</p>
 <p>Understand how burnout paralyzes motivation in <a href="/blog/mental-health/academic-burnout-student-symptoms/">academic burnout student symptoms: why you cannot bring yourself to read</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-whatsapp-dilemma-the-exception-to-the-rule">3. The WhatsApp Dilemma: The Exception to the Rule</h2>
-<p>In Nigerian universities, completely deleting WhatsApp is impossible:<br />
-* Course reps post urgent morning venue changes at 6:45 AM.<br />
-* Handout PDFs and Continuous Assessment scores are distributed via class groups.</p>
+<p>In Nigerian universities, completely deleting WhatsApp is impossible:</p>
+<ul>
+<li>Course reps post urgent morning venue changes at 6:45 AM.</li>
+<li>Handout PDFs and Continuous Assessment scores are distributed via class groups.</li>
+</ul>
 <p>To neutralize WhatsApp without getting sucked into status updates:</p>
 <ol>
-<li><strong>Mute All Status Updates:</strong> Open WhatsApp settings and mute every single contact's status. Turn status viewing into a conscious, boring effort rather than a colorful feed.</li>
-<li><strong>Archive and Mute Non-Academic Groups:</strong> Archive family chats, secondary school alumni groups, church committees, and banter groups. Unpin everything except the official Departmental Announcements channel.</li>
-<li><strong>Use WhatsApp Web on Laptop:</strong> If you study with a laptop, open WhatsApp Web in a separate pinned tab with notifications silenced. Check it strictly at the top of the hour for 2 minutes.</li>
+<li>**Mute All Status Updates:** Open WhatsApp settings and mute every single contact's status. Turn status viewing into a conscious, boring effort rather than a colorful feed.</li>
+<li>**Archive and Mute Non-Academic Groups:** Archive family chats, secondary school alumni groups, church committees, and banter groups. Unpin everything except the official Departmental Announcements channel.</li>
+<li>**Use WhatsApp Web on Laptop:** If you study with a laptop, open WhatsApp Web in a separate pinned tab with notifications silenced. Check it strictly at the top of the hour for 2 minutes.</li>
 </ol>
 <p>Learn upcoming strategies for managing work and digital boundaries in <a href="/blog/balancing-work-and-school/">balancing digital life and university demands</a>.</p>
-<hr />
+<hr>
 <h2 id="4-reclaiming-your-cognitive-sovereignty">4. Reclaiming Your Cognitive Sovereignty</h2>
-<p>Uninstalling Instagram and TikTok for twenty-one days is not a punishment. It is an act of high-performance liberation:<br />
-* Notice how quiet your mind becomes when it is no longer flooded with hundreds of strangers' curated lives.<br />
-* Watch your reading speed double as your prefrontal cortex regains its natural attention span.<br />
-* Realize that after your final paper, the apps will still be there, but your semester GPA will be locked in stone forever.</p>
+<p>Uninstalling Instagram and TikTok for twenty-one days is not a punishment. It is an act of high-performance liberation:</p>
+<ul>
+<li>Notice how quiet your mind becomes when it is no longer flooded with hundreds of strangers' curated lives.</li>
+<li>Watch your reading speed double as your prefrontal cortex regains its natural attention span.</li>
+<li>Realize that after your final paper, the apps will still be there, but your semester GPA will be locked in stone forever.</li>
+</ul>
 <p>If you want a complete, distraction-free study architecture engineered specifically to transform low grades into First Class results, the <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It equips you with step-by-step active recall schedules, exam triage worksheets, and cognitive recovery systems that maximize every hour of revision.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="should-a-university-student-completely-delete-whatsapp-during-exam-periods">Should a university student completely delete WhatsApp during exam periods?</h3>
 <p>Deleting WhatsApp is dangerous in Nigerian universities because course reps announce emergency venue changes, Continuous Assessment test schedules, and lecture cancellations exclusively via departmental WhatsApp groups. Use WhatsApp Web on laptop or archive non-academic chats instead.</p>
@@ -557,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -742,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -757,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

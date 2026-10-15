@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Attendance Requirements: Hitting 75% Lecture While Working",
       "description": "How working university students can ethically and systematically meet strict 75% lecture attendance thresholds without losing shifts or clients.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -266,81 +266,62 @@
       <div class="article-body">
         <p>Across almost every Nigerian public and private university—from UNILAG and OAU to Covenant and FUTO—a strict regulation hangs over student dockets:</p>
 <blockquote>
-<p><em>"Students must achieve a minimum of 75% physical lecture attendance to be eligible to sit for the end-of-semester examination."</em></p>
+<p>*"Students must achieve a minimum of 75% physical lecture attendance to be eligible to sit for the end-of-semester examination."*</p>
 </blockquote>
 <p>For full-time students with zero financial responsibilities, hitting 75% is simply a matter of waking up in time.</p>
 <p>For working students, however, it is a high-wire balancing act. You might be managing a physical 9:00 AM to 2:00 PM shift at a campus tech hub, troubleshooting client server issues, or running a POS kiosk that pays your accommodation fees.</p>
 <p>Miss one too many classes, and you arrive at the exam hall only to find your matriculation number struck off the official examination register.</p>
 <p>Here is the operational blueprint for hitting 75% lecture attendance systematically while working a job.</p>
-<hr />
+<hr>
 <h2 id="the-mathematics-of-the-75-attendance-threshold">The Mathematics of the 75% Attendance Threshold</h2>
 <p>Understanding the arithmetic behind university attendance prevents accidental disqualification.</p>
 <p>A typical 3-unit course runs for 14 active teaching weeks at 3 lecture hours per week, totaling approximately 14 to 15 lecture sessions:</p>
 <blockquote>
-<h3 id="the-attendance-margin-of-error">The Attendance Margin Of Error</h3>
-<ul>
-<li>Total Course Lecture Sessions: 14 Minimum Required for 75%: 11 Sessions Maximum Allowable Absences: 3 Sessions</li>
-</ul>
+<p>### The Attendance Margin Of Error</p>
+<p>></p>
+<p>* Total Course Lecture Sessions: 14 Minimum Required for 75%: 11 Sessions Maximum Allowable Absences: 3 Sessions</p>
 </blockquote>
 <p>Missing just <strong>four lectures</strong> across an entire semester instantly drops your attendance to 71.4%, making you legally ineligible to sit for the examination.</p>
 <h3 id="attendance-buffer-tracker">Attendance Buffer Tracker</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Course Code</th>
-<th style="text-align: left;">Total Held</th>
-<th style="text-align: left;">Attended</th>
-<th style="text-align: left;">Missed</th>
-<th style="text-align: left;">Current %</th>
-<th style="text-align: left;">Status</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">MTH 201</td>
-<td style="text-align: left;">6</td>
-<td style="text-align: left;">5</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">83.3%</td>
-<td style="text-align: left;">Safe Buffer (2 left)</td>
-</tr>
-<tr>
-<td style="text-align: left;">CHM 211</td>
-<td style="text-align: left;">6</td>
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">66.7%</td>
-<td style="text-align: left;">DEFICIT: MUST ATTEND</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Course Code | Total Held | Attended | Missed | Current % | Status |</p>
+<p>| :--- | :--- | :--- | :--- | :--- | :--- |</p>
+<p>| MTH 201 | 6 | 5 | 1 | 83.3% | Safe Buffer (2 left) |</p>
+<p>| CHM 211 | 6 | 4 | 2 | 66.7% | DEFICIT: MUST ATTEND |</p>
+<hr>
 <h2 id="3-strategies-for-working-students-to-protect-attendance">3 Strategies for Working Students to Protect Attendance</h2>
 <h3 id="1-front-load-attendance-during-weeks-1-through-6">1. Front-Load Attendance During Weeks 1 Through 6</h3>
-<p>Many students skip classes during the first month of the semester because <em>"lecturers are just introducing the course."</em> </p>
-<p>This is a disastrous strategy for working students. By attending 100% of lectures in the first 6 weeks:<br />
-* You accumulate an immediate attendance credit buffer.<br />
-* When client emergencies, project crunches, or sudden shift conflicts occur in Weeks 9 through 12, you can safely miss two classes without breaching the 75% line.</p>
+<p>Many students skip classes during the first month of the semester because <em>"lecturers are just introducing the course."</em></p>
+<p>This is a disastrous strategy for working students. By attending 100% of lectures in the first 6 weeks:</p>
+<ul>
+<li>You accumulate an immediate attendance credit buffer.</li>
+<li>When client emergencies, project crunches, or sudden shift conflicts occur in Weeks 9 through 12, you can safely miss two classes without breaching the 75% line.</li>
+</ul>
 <h3 id="2-identify-the-high-risk-lecturers-early">2. Identify the 'High-Risk' Lecturers Early</h3>
-<p>Not all lecturers take attendance with identical rigor. Categorize your department's lecturers by Week 2:<br />
-* <strong>Strict Gatekeepers:</strong> Lecturers who call the register personally at 8:05 AM and lock classroom doors. <em>Rule: You must attend 100% of these classes in person.</em><br />
-* <strong>Continuous Assessment Integrated:</strong> Lecturers who give random 5-minute unannounced quizzes at the end of class. <em>Rule: Inviolable physical attendance.</em><br />
-* <strong>Informal Roll Calls:</strong> Large faculty-wide GST classes with 800 students where attendance is taken irregularly. <em>Rule: Monitor via class representatives.</em></p>
+<p>Not all lecturers take attendance with identical rigor. Categorize your department's lecturers by Week 2:</p>
+<ul>
+<li>**Strict Gatekeepers:** Lecturers who call the register personally at 8:05 AM and lock classroom doors. *Rule: You must attend 100% of these classes in person.*</li>
+<li>**Continuous Assessment Integrated:** Lecturers who give random 5-minute unannounced quizzes at the end of class. *Rule: Inviolable physical attendance.*</li>
+<li>**Informal Roll Calls:** Large faculty-wide GST classes with 800 students where attendance is taken irregularly. *Rule: Monitor via class representatives.*</li>
+</ul>
 <p>To make the most of short breaks between mandatory physical lectures, explore our framework on <a href="/blog/balancing-work-and-school/micro-studying-between-university-classes/">micro-studying in 15-minute campus gaps</a>.</p>
 <h3 id="3-the-class-rep-intelligence-channel">3. The 'Class Rep' Intelligence Channel</h3>
-<p>Your Departmental Class Representative is the operational hub of academic scheduling. </p>
-<p>Cultivate a supportive relationship with your class rep:<br />
-* Offer genuine value (e.g., share your concise digital study notes or assist with course group logistics).<br />
-* Class reps know in advance when a lecturer has rescheduled an 8:00 AM class to 3:00 PM, allowing you to rearrange client shifts with hours to spare rather than standing outside an empty hall.</p>
-<hr />
+<p>Your Departmental Class Representative is the operational hub of academic scheduling.</p>
+<p>Cultivate a supportive relationship with your class rep:</p>
+<ul>
+<li>Offer genuine value (e.g., share your concise digital study notes or assist with course group logistics).</li>
+<li>Class reps know in advance when a lecturer has rescheduled an 8:00 AM class to 3:00 PM, allowing you to rearrange client shifts with hours to spare rather than standing outside an empty hall.</li>
+</ul>
+<hr>
 <h2 id="why-you-must-avoid-proxy-attendance-signing-for-friends">Why You Must Avoid 'Proxy Attendance' (Signing for Friends)</h2>
 <p>When pressure mounts, many working students ask friends to write their name on the attendance register.</p>
-<p>This is an extremely hazardous gamble:<br />
-1. <strong>Headcount Audits:</strong> Strict lecturers frequently count the physical heads in the room and compare against the total signatures on the sheet.<br />
-2. <strong>Disciplinary Panel Referral:</strong> If your name appears on a sheet when you were not physically present, it constitutes official documentary fraud under university statutes.<br />
-3. <strong>The Risk-to-Reward Ratio:</strong> Risking a 1-year suspension to save a 45-minute lecture is irrational.</p>
+<p>This is an extremely hazardous gamble:</p>
+<ol>
+<li>**Headcount Audits:** Strict lecturers frequently count the physical heads in the room and compare against the total signatures on the sheet.</li>
+<li>**Disciplinary Panel Referral:** If your name appears on a sheet when you were not physically present, it constitutes official documentary fraud under university statutes.</li>
+<li>**The Risk-to-Reward Ratio:** Risking a 1-year suspension to save a 45-minute lecture is irrational.</li>
+</ol>
 <p>If you must miss a class due to an unavoidable work emergency, submit a formal written medical or family notification to the departmental office through legitimate channels.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-75-attendance-defense">Action Checklist: 75% Attendance Defense</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Audit every course on your registration docket and calculate the maximum allowable misses.</li>
@@ -514,8 +495,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -699,8 +680,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -714,7 +695,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

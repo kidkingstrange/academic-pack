@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Crypto Traders & Web3 Students: Managing Volatility Stress",
       "description": "How student cryptocurrency traders and Web3 contributors can manage market volatility, liquidation anxiety, and screen time during exam periods.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,64 +265,76 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>On Nigerian university campuses, cryptocurrency trading, airdrop hunting, and Web3 work have become massive financial phenomena.</p>
-<p>From student hostels in Covenant and UNILAG to off-campus lodges in Ife and Benin:<br />
-* Students monitor Candlestick charts on TradingView between lectures.<br />
-* Engage in high-leverage crypto futures trading on Binance and Bybit.<br />
-* Hunt retro airdrops and farm liquidity on new blockchain testnets.<br />
-* Earn stablecoin bounties in USDT and USDC that shield them from Naira inflation.</p>
+<p>From student hostels in Covenant and UNILAG to off-campus lodges in Ife and Benin:</p>
+<ul>
+<li>Students monitor Candlestick charts on TradingView between lectures.</li>
+<li>Engage in high-leverage crypto futures trading on Binance and Bybit.</li>
+<li>Hunt retro airdrops and farm liquidity on new blockchain testnets.</li>
+<li>Earn stablecoin bounties in USDT and USDC that shield them from Naira inflation.</li>
+</ul>
 <p>However, crypto markets operate on a brutal principle: <strong>they never sleep, and they are extraordinarily volatile</strong>.</p>
-<p>A sudden 15% midnight Bitcoin crash can:<br />
-* Wipe out a student's entire semester savings through a leveraged liquidation.<br />
-* Trigger a state of acute physical panic, nausea, and insomnia at 3:00 AM.<br />
-* Leave a student walking into an 8:00 AM examination with their nervous system in utter ruins.</p>
+<p>A sudden 15% midnight Bitcoin crash can:</p>
+<ul>
+<li>Wipe out a student's entire semester savings through a leveraged liquidation.</li>
+<li>Trigger a state of acute physical panic, nausea, and insomnia at 3:00 AM.</li>
+<li>Leave a student walking into an 8:00 AM examination with their nervous system in utter ruins.</li>
+</ul>
 <p>Every semester, talented students with First Class potential flunk out of university because they were staring at liquidation prices on their phone while their exam papers went unanswered.</p>
 <p>Here is the risk-management framework for student traders to extract profits from Web3 markets without letting volatility wreck their mental health and academic future.</p>
-<hr />
-<h2 id="the-neurological-danger-dopamine-cortisol-overload">The Neurological Danger: Dopamine &amp; Cortisol Overload</h2>
-<p>High-frequency crypto trading triggers extreme neurochemical swings:<br />
-* <strong>The High:</strong> A 200% futures gain releases massive surges of dopamine, making studying a dry physics handout feel painfully unrewarding.<br />
-* <strong>The Crash:</strong> A sudden liquidation releases acute doses of cortisol and adrenaline. The brain's prefrontal cortex shuts down logical working memory, triggering mental paralysis.</p>
-<blockquote>
-<h3 id="the-crypto-traders-academic-spiral">The Crypto Trader'S Academic Spiral</h3>
+<hr>
+<h2 id="the-neurological-danger-dopamine-cortisol-overload">The Neurological Danger: Dopamine & Cortisol Overload</h2>
+<p>High-frequency crypto trading triggers extreme neurochemical swings:</p>
 <ul>
-<li>Open Leveraged Position at 11:00 PM -&gt; Check charts every 8 mins all night ↓ Market dumps at 5:00 AM -&gt; Liquidation notification arrives ↓ Enter exam hall at 8:00 AM in state of grief &amp; shock -&gt; Academic failure</li>
+<li>**The High:** A 200% futures gain releases massive surges of dopamine, making studying a dry physics handout feel painfully unrewarding.</li>
+<li>**The Crash:** A sudden liquidation releases acute doses of cortisol and adrenaline. The brain's prefrontal cortex shuts down logical working memory, triggering mental paralysis.</li>
 </ul>
+<blockquote>
+<p>### The Crypto Trader'S Academic Spiral</p>
+<p>></p>
+<p>* Open Leveraged Position at 11:00 PM -> Check charts every 8 mins all night ↓ Market dumps at 5:00 AM -> Liquidation notification arrives ↓ Enter exam hall at 8:00 AM in state of grief & shock -> Academic failure</p>
 </blockquote>
 <p>You cannot write an analytical exam paper while your life savings are fluctuating on a 50x leverage trade.</p>
-<hr />
+<hr>
 <h2 id="4-rules-of-risk-free-campus-crypto-trading">4 Rules of Risk-Free Campus Crypto Trading</h2>
 <h3 id="1-the-pre-exam-total-de-leveraging-rule-cash-is-king">1. The Pre-Exam Total De-Leveraging Rule (Cash Is King)</h3>
-<p>Fourteen days before your semester examinations commence:<br />
-* <strong>Close all open margin and futures trades.</strong> Convert active speculative trading capital into USD stablecoins (USDT/USDC).<br />
-* Never hold an open position without an ironclad, non-negotiable <strong>Stop-Loss order</strong> already executed on the exchange.<br />
-* When you sit down in an exam hall, your portfolio must be immune to flash crashes.</p>
-<blockquote>
-<h3 id="exam-month-trading-status">Exam Month Trading Status</h3>
+<p>Fourteen days before your semester examinations commence:</p>
 <ul>
-<li>During Normal Semester: Swing Trading (4H/Daily charts), Strict Stop-Losses During Exam Weeks: 100% Capital in Stables or Cold Storage; ZERO Leverage</li>
+<li>**Close all open margin and futures trades.** Convert active speculative trading capital into USD stablecoins (USDT/USDC).</li>
+<li>Never hold an open position without an ironclad, non-negotiable **Stop-Loss order** already executed on the exchange.</li>
+<li>When you sit down in an exam hall, your portfolio must be immune to flash crashes.</li>
 </ul>
+<blockquote>
+<p>### Exam Month Trading Status</p>
+<p>></p>
+<p>* During Normal Semester: Swing Trading (4H/Daily charts), Strict Stop-Losses During Exam Weeks: 100% Capital in Stables or Cold Storage; ZERO Leverage</p>
 </blockquote>
 <h3 id="2-ditch-scalping-shift-to-higher-timeframe-swing-trading">2. Ditch Scalping: Shift to Higher Timeframe Swing Trading</h3>
 <p>Day-trading on 1-minute or 5-minute charts is impossible for a student. It requires staring at screens for 6 hours a day.</p>
-<p>Shift your strategy to <strong>4-Hour and Daily Timeframes</strong>:<br />
-* Perform technical chart analysis only once per day (in the evening between 8:00 PM and 9:00 PM).<br />
-* Set limit entry orders and limit profit targets.<br />
-* Close the app and let the trade execute automatically while you attend classes.</p>
+<p>Shift your strategy to <strong>4-Hour and Daily Timeframes</strong>:</p>
+<ul>
+<li>Perform technical chart analysis only once per day (in the evening between 8:00 PM and 9:00 PM).</li>
+<li>Set limit entry orders and limit profit targets.</li>
+<li>Close the app and let the trade execute automatically while you attend classes.</li>
+</ul>
 <h3 id="3-asynchronous-web3-bounties-over-discord-grinding">3. Asynchronous Web3 Bounties over Discord Grinding</h3>
 <p>If you participate in Web3 ecosystems, avoid roles like "Discord Community Moderator" that require sitting online answering chats 18 hours a day.</p>
-<p>Focus on <strong>Asynchronous Proof-of-Work Bounties</strong>:<br />
-* Writing technical articles and tutorials for Web3 developer grants.<br />
-* Designing UI dashboards and infographics for decentralized protocols.<br />
-* Translation, localization, and documentation writing.</p>
+<p>Focus on <strong>Asynchronous Proof-of-Work Bounties</strong>:</p>
+<ul>
+<li>Writing technical articles and tutorials for Web3 developer grants.</li>
+<li>Designing UI dashboards and infographics for decentralized protocols.</li>
+<li>Translation, localization, and documentation writing.</li>
+</ul>
 <p>These bounties pay in hard stablecoins ($200 to $800 per task) and can be completed asynchronously late at night without real-time pressure.</p>
 <p>To manage your financial reserves responsibly without mixing trading funds with student upkeep, explore our guide on <a href="/blog/finances/student-budgeting-template-nigeria/">student budgeting and financial management</a>.</p>
-<hr />
+<hr>
 <h2 id="how-to-deal-with-a-catastrophic-trading-loss">How to Deal with a Catastrophic Trading Loss</h2>
-<p>If the worst happens and you suffer a devastating financial loss right before an exam paper:<br />
-1. <strong>Understand that the money is already gone.</strong> Staring at the negative balance will not bring back a single cent.<br />
-2. <strong>Accept that markets are permanent.</strong> The cryptocurrency market will still be here next month, next year, and in ten years. Opportunities will always return.<br />
-3. <strong>Do not compound a financial loss with an academic loss.</strong> Losing money is painful; losing your university degree on top of that is catastrophic. Lock down your emotions, write your paper, and rebuild your portfolio after the semester ends.</p>
-<hr />
+<p>If the worst happens and you suffer a devastating financial loss right before an exam paper:</p>
+<ol>
+<li>**Understand that the money is already gone.** Staring at the negative balance will not bring back a single cent.</li>
+<li>**Accept that markets are permanent.** The cryptocurrency market will still be here next month, next year, and in ten years. Opportunities will always return.</li>
+<li>**Do not compound a financial loss with an academic loss.** Losing money is painful; losing your university degree on top of that is catastrophic. Lock down your emotions, write your paper, and rebuild your portfolio after the semester ends.</li>
+</ol>
+<hr>
 <h2 id="action-checklist-student-crypto-trader-protocol">Action Checklist: Student Crypto Trader Protocol</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Transition from stressful 1-minute scalping to higher-timeframe swing trading.</li>
@@ -496,8 +508,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -681,8 +693,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -696,7 +708,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

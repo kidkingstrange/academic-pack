@@ -5,8 +5,8 @@ Validates:
 - Transition to daily recurring drip (every 24h until purchase)
 - Real-time halt on purchase & bonus crediting
 - Unsubscribe halts all sends
-- Main sales page preserves original pricing (₦2,000 early bird)
-- Recovery checkout respects tier pricing (₦3,500 starter, ₦6,000 complete, ₦12,500 vip)
+- Main sales page preserves original pricing (₦5,000 base student price)
+- Recovery checkout respects tier pricing (₦5,000 starter, ₦6,000 complete, ₦12,500 vip)
 """
 import pytest
 from datetime import datetime, timezone, timedelta
@@ -25,10 +25,10 @@ settings = get_settings()
 
 @pytest.mark.asyncio
 async def test_main_sales_page_preserves_standard_price(test_db):
-    """Confirm that organic/direct checkouts without tier continue to use ₦2,000 early-bird price."""
+    """Confirm that organic/direct checkouts without tier continue to use ₦5,000 base student price."""
     email = "new_visitor@example.com"
     amount_ngn, _ = await compute_price_and_referral(test_db, email, currency="NGN", tier=None)
-    assert amount_ngn == float(settings.PRODUCT_PRICE_NAIRA)  # 2,000 NGN
+    assert amount_ngn == float(settings.PRODUCT_PRICE_NAIRA)  # 5,000 NGN
 
     amount_usd, _ = await compute_price_and_referral(test_db, email, currency="USD", tier=None)
     assert amount_usd == float(settings.PRODUCT_PRICE_USD)  # $15 USD
@@ -52,10 +52,10 @@ async def test_affiliate_checkout_preserves_5000_naira(test_db):
     assert amount_ngn == float(settings.PRODUCT_PRICE_LATE_NAIRA)  # Exactly ₦5,000 NGN!
 @pytest.mark.asyncio
 async def test_recovery_tier_pricing(test_db):
-    """Confirm that recovery checkouts with explicit tiers resolve to ₦3,500 / ₦6,000 / ₦12,500."""
+    """Confirm that recovery checkouts with explicit tiers resolve to ₦5,000 / ₦6,000 / ₦12,500."""
     email = "abandoned_lead@example.com"
     starter, _ = await compute_price_and_referral(test_db, email, currency="NGN", tier="starter")
-    assert starter == 3500.0
+    assert starter == 5000.0
 
     complete, _ = await compute_price_and_referral(test_db, email, currency="NGN", tier="complete")
     assert complete == 6000.0

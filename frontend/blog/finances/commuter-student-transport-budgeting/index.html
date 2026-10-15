@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,63 +306,74 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="commuter-students-budgeting-daily-bus-bike-fares">Commuter Students: Budgeting Daily Bus &amp; Bike Fares</h1>
+        <h1 id="commuter-students-budgeting-daily-bus-bike-fares">Commuter Students: Budgeting Daily Bus & Bike Fares</h1>
 <p>It is 6:15 AM.</p>
 <p>You stand by the roadside in the morning fog, waiting for a commercial minibus or tricycle to your campus.</p>
-<p>The rain starts drizzling. </p>
+<p>The rain starts drizzling.</p>
 <p>Immediately, the commercial bus conductors shout their inflated wet-weather fares: <strong>"Campus Gate ₦600! No change! Enter with your ₦1,000!"</strong></p>
 <p>Yesterday, the same trip cost <strong>₦300</strong>.</p>
 <p>If you pay ₦600 to go and ₦600 to return, you will burn <strong>₦1,200 today on transit alone.</strong></p>
-<p>By the time you arrive at your 8:00 AM lecture hall:<br />
-* Your trousers are stained with roadside mud.<br />
-* You spent an hour being jostled in a crowded bus.<br />
-* Your clothes smell of exhaust fumes, and you are already physically drained before the lecturer even picks up chalk.</p>
+<p>By the time you arrive at your 8:00 AM lecture hall:</p>
+<ul>
+<li>Your trousers are stained with roadside mud.</li>
+<li>You spent an hour being jostled in a crowded bus.</li>
+<li>Your clothes smell of exhaust fumes, and you are already physically drained before the lecturer even picks up chalk.</li>
+</ul>
 <p>For hundreds of thousands of Nigerian university students who live off-campus with family or in distant residential towns, <strong>Daily Commuting is a Financial and Physical Vampire.</strong></p>
 <p>Here is how to budget your transport fares, protect your safety, and convert exhausting commute hours into First Class academic results.</p>
-<hr />
+<hr>
 <h2 id="1-the-true-cost-of-daily-commuting-in-nigeria">1. The True Cost of Daily Commuting in Nigeria</h2>
 <blockquote>
-<h3 id="the-daily-commuter-time-financial-leak">The Daily Commuter Time &amp; Financial Leak</h3>
-<ul>
-<li>Daily Transit Fare: ₦800 - ₦1,500</li>
-<li>Monthly Transport Burn: ₦18,000 - ₦35,000 (Matches off-campus lodge rent!)</li>
-<li>Transit Time Lost: 2 - 3.5 hours daily in traffic bottlenecks</li>
-<li>Cognitive Fatigue: Elevated blood cortisol, sensory exhaustion, back pain</li>
-</ul>
+<p>### The Daily Commuter Time & Financial Leak</p>
+<p>></p>
+<p>* Daily Transit Fare: ₦800 - ₦1,500</p>
+<p>* Monthly Transport Burn: ₦18,000 - ₦35,000 (Matches off-campus lodge rent!)</p>
+<p>* Transit Time Lost: 2 - 3.5 hours daily in traffic bottlenecks</p>
+<p>* Cognitive Fatigue: Elevated blood cortisol, sensory exhaustion, back pain</p>
 </blockquote>
 <p>Many students live far from campus believing they are saving money on hostel rent, only to spend the exact same amount on commercial transit while sacrificing twelve hours of study time every week.</p>
 <p>Review common freshers budgeting errors in <a href="/blog/finances/freshers-money-mistakes-university/">5 costly freshers mistakes that drain money in first month</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-master-tactical-transit-strategies">2. The 3 Master Tactical Transit Strategies</h2>
 <p>To take control of commuter economics, execute these operational adjustments:</p>
-<h3 id="strategy-1-timetable-clustering-strategic-absenteeism">Strategy 1: Timetable Clustering &amp; Strategic Absenteeism</h3>
-<p>Audit your course schedule with your coursemates:<br />
-* If you have only a single 1-hour non-credit tutorial on Thursday, do not spend ₦1,500 traveling to campus.<br />
-* Have a trusted classmate record the audio or share photocopy notes.<br />
-* Cluster your on-campus presence to high-density days (e.g., Monday, Wednesday, Friday) with multiple mandatory practicals and Continuous Assessment tests.</p>
+<h3 id="strategy-1-timetable-clustering-strategic-absenteeism">Strategy 1: Timetable Clustering & Strategic Absenteeism</h3>
+<p>Audit your course schedule with your coursemates:</p>
+<ul>
+<li>If you have only a single 1-hour non-credit tutorial on Thursday, do not spend ₦1,500 traveling to campus.</li>
+<li>Have a trusted classmate record the audio or share photocopy notes.</li>
+<li>Cluster your on-campus presence to high-density days (e.g., Monday, Wednesday, Friday) with multiple mandatory practicals and Continuous Assessment tests.</li>
+</ul>
 <h3 id="strategy-2-the-transit-audio-revision-protocol">Strategy 2: The Transit Audio Revision Protocol</h3>
-<p>Never waste an hour sitting passively in traffic looking out the bus window:<br />
-* Record yourself summarizing core lecture formulas on your phone's voice recorder app.<br />
-* Plug in noise-isolating earphones and listen to your own summaries during traffic jams.<br />
-* Auditory spaced repetition converts exhausting transit time into active memory consolidation.</p>
+<p>Never waste an hour sitting passively in traffic looking out the bus window:</p>
+<ul>
+<li>Record yourself summarizing core lecture formulas on your phone's voice recorder app.</li>
+<li>Plug in noise-isolating earphones and listen to your own summaries during traffic jams.</li>
+<li>Auditory spaced repetition converts exhausting transit time into active memory consolidation.</li>
+</ul>
 <h3 id="strategy-3-the-exam-week-campus-evacuation">Strategy 3: The Exam Week Campus Evacuation</h3>
-<p>Never commute from distant towns during final examination week:<br />
-* A single road accident, police checkpoint delay, or morning rainstorm can cause you to arrive thirty minutes late to an exam, resulting in an automatic disqualification.<br />
-* Pack a light bag and lodge with a coursemate on campus or within walking distance of the faculty for the duration of exam week.</p>
+<p>Never commute from distant towns during final examination week:</p>
+<ul>
+<li>A single road accident, police checkpoint delay, or morning rainstorm can cause you to arrive thirty minutes late to an exam, resulting in an automatic disqualification.</li>
+<li>Pack a light bag and lodge with a coursemate on campus or within walking distance of the faculty for the duration of exam week.</li>
+</ul>
 <p>Review motorcycle and commuter transit safety in <a href="/blog/hostel/off-campus-bike-safety-helmet-rules/">off-campus bike safety and helmet rules for Nigerian students</a>.</p>
-<hr />
+<hr>
 <h2 id="3-neighborhood-commuter-carpools">3. Neighborhood Commuter Carpools</h2>
-<p>Identify four students in your residential neighborhood attending the same university:<br />
-* If one student's family has a vehicle, negotiate a weekly petrol contribution pool (saving 50% compared to multiple commercial tricycles).<br />
-* If taking commercial cabs, chartering a single taxi collectively from your junction directly to the campus library bypasses three intermediate bus stops and cuts transit time in half.</p>
+<p>Identify four students in your residential neighborhood attending the same university:</p>
+<ul>
+<li>If one student's family has a vehicle, negotiate a weekly petrol contribution pool (saving 50% compared to multiple commercial tricycles).</li>
+<li>If taking commercial cabs, chartering a single taxi collectively from your junction directly to the campus library bypasses three intermediate bus stops and cuts transit time in half.</li>
+</ul>
 <p>Explore upcoming transport comparisons in our upcoming analysis on <a href="/blog/finances/">buying a campus bicycle vs paying daily shuttle buses</a>.</p>
-<hr />
+<hr>
 <h2 id="4-discipline-wins-the-distance-battle">4. Discipline Wins the Distance Battle</h2>
-<p>Commuting demands exceptional time management:<br />
-* Pack your study bag, charge your devices, and prepare your clothes the night before.<br />
-* Arrive on campus early, find a sanctuary in the university library, and maximize every daylight hour.<br />
-* Distance is merely an obstacle; your determination to excel will carry you across the finish line with honors.</p>
-<hr />
+<p>Commuting demands exceptional time management:</p>
+<ul>
+<li>Pack your study bag, charge your devices, and prepare your clothes the night before.</li>
+<li>Arrive on campus early, find a sanctuary in the university library, and maximize every daylight hour.</li>
+<li>Distance is merely an obstacle; your determination to excel will carry you across the finish line with honors.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-a-daily-commuting-student-spend-on-transport-monthly-in-nigeria">How much does a daily commuting student spend on transport monthly in Nigeria?</h3>
 <p>Depending on distance, commuting students in cities like Lagos, Ibadan, or Port Harcourt spend between ₦18,000 and ₦35,000 monthly on commercial buses (danfos), tricycles (kekes), and motorcycles (okadas).</p>
@@ -536,8 +547,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -721,8 +732,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -736,7 +747,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

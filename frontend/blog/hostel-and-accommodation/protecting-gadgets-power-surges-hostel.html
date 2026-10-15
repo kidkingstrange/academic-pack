@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,89 +307,66 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="protecting-laptops-from-voltage-surges-in-hostels">Protecting Laptops from Voltage Surges in Hostels</h1>
-<p>It is 3:15 PM on a humid Thursday afternoon. </p>
+<p>It is 3:15 PM on a humid Thursday afternoon.</p>
 <p>You are sitting in your hostel room working on your final-year research proposal. Your laptop is plugged into an ordinary white 6-way extension box sitting on your concrete floor.</p>
-<p>The electrical power has been out since morning. </p>
+<p>The electrical power has been out since morning.</p>
 <p>Suddenly, a loud deafening clatter rings out from the hostel corridor as public grid power is restored:</p>
 <p><em>ZAP-POW!</em></p>
-<p>The fluorescent light on your ceiling flashes blindingly white, glowing twice as bright as normal. </p>
+<p>The fluorescent light on your ceiling flashes blindingly white, glowing twice as bright as normal.</p>
 <p>From your extension box, a loud gunshot-like pop echoes across the room, followed immediately by an acrid puff of blue-gray smoke and the unmistakable stench of burning silicon.</p>
-<p>You scream and yank the plug from the wall socket. </p>
-<p>Your laptop screen has gone completely black. The little LED indicator light on the power brick is dead. </p>
+<p>You scream and yank the plug from the wall socket.</p>
+<p>Your laptop screen has gone completely black. The little LED indicator light on the power brick is dead.</p>
 <p>When you rush your computer to the campus engineering village, the technician takes one look at the motherboard and delivers the verdict:</p>
 <blockquote>
-<p><em>"Oga, the surge bypassed your charging brick and fried your power management IC and charging controller. Replacement motherboard is ₦85,000."</em></p>
+<p>*"Oga, the surge bypassed your charging brick and fried your power management IC and charging controller. Replacement motherboard is ₦85,000."*</p>
 </blockquote>
 <p>In Nigerian universities, dirty electricity—massive over-voltage spikes, erratic frequency oscillations, and sudden transformer surges—destroys millions of Naira worth of student tech gear every semester.</p>
 <p>If you cannot afford to replace an ₦85,000 laptop board or a ₦150,000 smartphone right before examinations, you cannot afford to plug your devices directly into wall sockets.</p>
 <p>Here is the engineering guide to protecting your sensitive study hardware from dangerous campus voltage surges on a student budget.</p>
-<hr />
+<hr>
 <h2 id="1-the-anatomy-of-campus-electrical-spikes">1. The Anatomy of Campus Electrical Spikes</h2>
 <p>To protect your hardware, you must understand what happens inside hostel wiring:</p>
-<p><strong>Hostel Voltage Fluctuation Spectrum:</strong><br />
-* Low Voltage (Brownout: 140V – 180V): Gadgets struggle; motors overheat — Normal Operating Window (210V – 230V): Safe charging zone — High Voltage Surge (260V – 320V): Destroys unshielded capacitors — The Post-Restoration Inrush Spike (&gt;400V for 50ms): Frys motherboards instantly</p>
+<p><strong>Hostel Voltage Fluctuation Spectrum:</strong></p>
+<ul>
+<li>Low Voltage (Brownout: 140V – 180V): Gadgets struggle; motors overheat — Normal Operating Window (210V – 230V): Safe charging zone — High Voltage Surge (260V – 320V): Destroys unshielded capacitors — The Post-Restoration Inrush Spike (>400V for 50ms): Frys motherboards instantly</li>
+</ul>
 <p>When public power returns after a 48-hour blackout, the distribution transformer experiences a massive inductive inrush current. If your laptop is plugged in at the exact second the light "drops," that high-frequency spike bypasses cheap internal safety fuses and strikes your laptop motherboard directly.</p>
-<hr />
+<hr>
 <h2 id="2-hardware-defense-the-3-non-negotiable-shielding-layers">2. Hardware Defense: The 3 Non-Negotiable Shielding Layers</h2>
 <p>Never rely on cheap ₦1,500 campus extension cords. Build an impenetrable 3-layer protection shield:</p>
-<table>
-<thead>
-<tr>
-<th>TIER 1: The Automatic Voltage Switcher / Surge Protector</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- High-grade surge strip with Metal Oxide Varistor (MOV)</td>
-</tr>
-<tr>
-<td>- Or automatic voltage guard (e.g., Sollatek Fridge Guard)</td>
-</tr>
-<tr>
-<td>- Automatically disconnects power if voltage exceeds 260V</td>
-</tr>
-<tr>
-<td>TIER 2: Dedicated 500VA Automatic Voltage Stabilizer (AVS)</td>
-</tr>
-<tr>
-<td>- Regulates unstable 160V brownouts up to safe 220V levels</td>
-</tr>
-<tr>
-<td>- Shields high-performance laptops and external monitors</td>
-</tr>
-<tr>
-<td>TIER 3: Buffered USB-C Power Delivery (PD) Power Stations</td>
-</tr>
-<tr>
-<td>- Charge your laptop via a 65W PD Power Bank</td>
-</tr>
-<tr>
-<td>- The power bank acts as an air-gapped galvanic buffer</td>
-</tr>
-<tr>
-<td>- If a surge occurs, only the charger is exposed</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| TIER 1: The Automatic Voltage Switcher / Surge Protector |</p>
+<p>| --- |</p>
+<p>| - High-grade surge strip with Metal Oxide Varistor (MOV) |</p>
+<p>| - Or automatic voltage guard (e.g., Sollatek Fridge Guard) |</p>
+<p>| - Automatically disconnects power if voltage exceeds 260V |</p>
+<p>| TIER 2: Dedicated 500VA Automatic Voltage Stabilizer (AVS) |</p>
+<p>| - Regulates unstable 160V brownouts up to safe 220V levels |</p>
+<p>| - Shields high-performance laptops and external monitors |</p>
+<p>| TIER 3: Buffered USB-C Power Delivery (PD) Power Stations |</p>
+<p>| - Charge your laptop via a 65W PD Power Bank |</p>
+<p>| - The power bank acts as an air-gapped galvanic buffer |</p>
+<p>| - If a surge occurs, only the charger is exposed |</p>
+<hr>
 <h2 id="3-the-4-behavioral-rules-of-safe-hostel-charging">3. The 4 Behavioral Rules of Safe Hostel Charging</h2>
 <p>Hardware shielding is only half the battle. Your daily charging habits must eliminate risk:</p>
 <ol>
-<li><strong>The "60-Second Post-Restoration Wait":</strong> When power is suddenly restored after a blackout, <strong>never plug your laptop in immediately</strong>. Wait at least 60 to 90 seconds for voltage oscillations to stabilize and for the transformer buzz to normalize.</li>
-<li><strong>Never Charge Unattended Overnight:</strong> Unplug all laptops, tablets, and flagship smartphones before going to sleep. Midnight surges while the campus sleeps are responsible for 70% of blown electronics.</li>
-<li><strong>Use the "Air-Gap Power Bank Protocol":</strong> Instead of keeping your laptop tethered to the wall while working, charge a dedicated fast-charging battery bank, and run your laptop off the battery. Learn more gadget survival setups in <a href="/blog/hostel-and-accommodation/surviving-hostel-power-outage-lighting-gadgets/">surviving hostel blackouts lighting and gadget backup</a>.</li>
-<li><strong>Inspect the Wall Socket:</strong> If a wall socket in your room is loose, scorched with black soot marks, or produces visible blue sparks when a plug is inserted, report it immediately to the hall electrician. Loose connections create catastrophic arcing that damages electronics.</li>
+<li>**The "60-Second Post-Restoration Wait":** When power is suddenly restored after a blackout, **never plug your laptop in immediately**. Wait at least 60 to 90 seconds for voltage oscillations to stabilize and for the transformer buzz to normalize.</li>
+<li>**Never Charge Unattended Overnight:** Unplug all laptops, tablets, and flagship smartphones before going to sleep. Midnight surges while the campus sleeps are responsible for 70% of blown electronics.</li>
+<li>**Use the "Air-Gap Power Bank Protocol":** Instead of keeping your laptop tethered to the wall while working, charge a dedicated fast-charging battery bank, and run your laptop off the battery. Learn more gadget survival setups in [surviving hostel blackouts lighting and gadget backup](/blog/hostel-and-accommodation/surviving-hostel-power-outage-lighting-gadgets/).</li>
+<li>**Inspect the Wall Socket:** If a wall socket in your room is loose, scorched with black soot marks, or produces visible blue sparks when a plug is inserted, report it immediately to the hall electrician. Loose connections create catastrophic arcing that damages electronics.</li>
 </ol>
-<p>For remote-working and freelancing students whose laptops are their economic lifeline, review specialized protection workflows in <a href="/blog/balancing-work-and-school/">protecting laptops and phones while working remotely on campus</a>. </p>
+<p>For remote-working and freelancing students whose laptops are their economic lifeline, review specialized protection workflows in <a href="/blog/balancing-work-and-school/">protecting laptops and phones while working remotely on campus</a>.</p>
 <p>To budget for durable, surge-resistant student accessories, explore our curated breakdown of <a href="/blog/finances/">affordable gadgets and tech tools for students</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="protect-your-study-gear-on-campus">⚡ Protect Your Study Gear on Campus</h3>
+<p>### ⚡ Protect Your Study Gear on Campus</p>
 <p>Worried about voltage fluctuations or need recommendations for reliable surge protectors?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with tech-savvy undergraduates sharing tested hardware solutions, campus repair recommendations, and student electronics deals.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with tech-savvy undergraduates sharing tested hardware solutions, campus repair recommendations, and student electronics deals.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-laptop-chargers-explode-or-fry-so-often-in-nigerian-university-hostels">Why do laptop chargers explode or fry so often in Nigerian university hostels?</h3>
 <p>When public power (NEPA/DisCo) is restored after a blackout, or when hostel generators switch phases, the incoming voltage can surge past 300V. This severe voltage spike overwhelms the primary capacitor of unshielded chargers.</p>
@@ -563,8 +540,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -748,8 +725,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -763,7 +740,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

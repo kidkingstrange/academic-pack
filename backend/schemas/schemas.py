@@ -53,8 +53,8 @@ class PaymentVerifyRequest(BaseModel):
     charge_id: Optional[str] = None
     va_id: Optional[str] = None
     reference: str
-    email: EmailStr
-    name: str = Field(..., min_length=2, max_length=100)
+    email: Optional[EmailStr] = None
+    name: Optional[str] = None
     payment_method: Optional[str] = "bank_transfer"
 
 

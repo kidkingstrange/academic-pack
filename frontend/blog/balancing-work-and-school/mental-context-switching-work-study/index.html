@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,98 +307,65 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="cognitive-fatigue-switching-brains-from-client-to-syllabus">Cognitive Fatigue: Switching Brains from Client to Syllabus</h1>
-<p>It is 6:30 PM. </p>
+<p>It is 6:30 PM.</p>
 <p>You just spent three intense hours on your laptop designing a complex corporate branding deck or writing an urgent client copywriting brief.</p>
 <p>You close the work document. You open your 180-page textbook on Molecular Genetics or International Humanitarian Law.</p>
 <p>You stare at the first page.</p>
 <p>Nothing goes in.</p>
-<p>Your eyes move across the lines, but your brain registers nothing. </p>
+<p>Your eyes move across the lines, but your brain registers nothing.</p>
 <p>Your thoughts are still spinning around the client: <em>"Did they approve the logo color? What if they request another revision? Did I attach the invoice?"</em></p>
 <p>You sit at your desk for ninety minutes, growing increasingly frustrated and exhausted. By 8:30 PM, you slam the textbook shut, convinced that you are too stupid or burnt out to learn.</p>
-<p>You are not stupid. </p>
+<p>You are not stupid.</p>
 <p>You are suffering from acute <strong>Cognitive Context Switching Exhaustion</strong>.</p>
 <p>When you shift from high-urgency commercial client problem-solving directly into abstract academic syllabus memorization without a transition buffer, your brain's prefrontal cortex experiences severe cognitive whiplash.</p>
 <p>Here is the neurological science and operational protocol to transition your brain smoothly from <strong>Client Mode</strong> into <strong>Scholar Mode</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-neuroscience-of-attention-residue">1. The Neuroscience of "Attention Residue"</h2>
 <p>Pioneering cognitive science research by Dr. Sophie Leroy explains why multitasking between work and academics fails:</p>
-<table>
-<thead>
-<tr>
-<th>Cognitive Transition</th>
-<th>Neurological Reality</th>
-<th>Academic Performance Penalty</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Abrupt Shift (No Buffer)</strong></td>
-<td>Switching directly from client deliverables to complex academic theory</td>
-<td><strong>High Attention Residue:</strong> Prefrontal cortex operates at 40% efficiency while 60% remains mentally debugging work issues</td>
-</tr>
-<tr>
-<td><strong>Structured Buffer (15-Min Protocol)</strong></td>
-<td>Closing tabs, writing a shutdown checklist, a 10-minute physical walk</td>
-<td><strong>Clean Neural Reset:</strong> Clears active working memory, enabling 100% deep cognitive immersion into study</td>
-</tr>
-</tbody>
-</table>
-<p>When you toggle between work and study, your brain does not switch tasks like a light switch; it shifts like an ocean freight liner. </p>
+<p>| Cognitive Transition | Neurological Reality | Academic Performance Penalty |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Abrupt Shift (No Buffer)</strong> | Switching directly from client deliverables to complex academic theory | <strong>High Attention Residue:</strong> Prefrontal cortex operates at 40% efficiency while 60% remains mentally debugging work issues |</p>
+<p>| <strong>Structured Buffer (15-Min Protocol)</strong> | Closing tabs, writing a shutdown checklist, a 10-minute physical walk | <strong>Clean Neural Reset:</strong> Clears active working memory, enabling 100% deep cognitive immersion into study |</p>
+<p>When you toggle between work and study, your brain does not switch tasks like a light switch; it shifts like an ocean freight liner.</p>
 <p>The faster and more urgent the client work was, the thicker the attention residue that clings to your synapses.</p>
 <p>Review burnout and cognitive exhaustion symptoms in <a href="/blog/mental-health/academic-burnout-student-symptoms/">academic burnout student symptoms: why you cannot bring yourself to read</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-15-minute-decompression-bridge-protocol">2. The 15-Minute Decompression Bridge Protocol</h2>
 <p>Never open a study textbook immediately after closing a client file. Execute this mandatory <strong>15-Minute Sensory Decompression Bridge</strong>:</p>
 <blockquote>
-<h3 id="step-1-the-external-brain-dump-3-minutes">Step 1: The External Brain Dump (3 Minutes)</h3>
-<ul>
-<li>Write every unfinished work thought onto a scrap paper: "Tweak logo colors tomorrow at 5pm."</li>
-<li>Physically closing the loop releases working memory from cognitive open loops (Zeigarnik Effect).</li>
-<li><strong>STEP 2: Somatic Reset (7 Minutes)</strong></li>
-<li>Wash your face with cold water or take a cool shower.</li>
-<li>Drink 300ml of cold water to rehydrate neurons.</li>
-<li>Do 10 slow deep squats or shoulder rolls to discharge muscular tension.</li>
-<li><strong>STEP 3: Environmental State Change (5 Minutes)</strong></li>
-<li>Switch from laptop desk to a quiet reading corner or library chair.</li>
-<li>Light a dim study lamp; put phone on Do Not Disturb.</li>
-</ul>
+<p>### Step 1: The External Brain Dump (3 Minutes)</p>
+<p>></p>
+<p>* Write every unfinished work thought onto a scrap paper: "Tweak logo colors tomorrow at 5pm."</p>
+<p>* Physically closing the loop releases working memory from cognitive open loops (Zeigarnik Effect).</p>
+<p>* **STEP 2: Somatic Reset (7 Minutes)**</p>
+<p>* Wash your face with cold water or take a cool shower.</p>
+<p>* Drink 300ml of cold water to rehydrate neurons.</p>
+<p>* Do 10 slow deep squats or shoulder rolls to discharge muscular tension.</p>
+<p>* **STEP 3: Environmental State Change (5 Minutes)**</p>
+<p>* Switch from laptop desk to a quiet reading corner or library chair.</p>
+<p>* Light a dim study lamp; put phone on Do Not Disturb.</p>
 </blockquote>
 <p>Explore upcoming micro-study techniques in <a href="/blog/balancing-work-and-school/">micro-studying between university classes: 15-minute bursts</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-cognitive-scheduling-rule-study-first-work-second">3. The Cognitive Scheduling Rule: Study First, Work Second</h2>
 <p>If you spend your peak mental energy on clients from 9:00 AM to 5:00 PM, your brain has zero executive glycogen left for evening academic study:</p>
-<table>
-<thead>
-<tr>
-<th>Scheduling Strategy</th>
-<th>Mental Energy Allocation</th>
-<th>Academic Outcome</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Work First, Study at Night</strong></td>
-<td>100% peak energy given to clients; 10% leftover energy for study</td>
-<td>Chronic reading paralysis, test panic, low GPA</td>
-</tr>
-<tr>
-<td><strong>Study First, Work in Evening</strong></td>
-<td><strong>100% peak morning energy given to syllabus active recall</strong>; work done on evening autopilot</td>
-<td><strong>First Class GPA + Flawless Client Delivery</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Scheduling Strategy | Mental Energy Allocation | Academic Outcome |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Work First, Study at Night</strong> | 100% peak energy given to clients; 10% leftover energy for study | Chronic reading paralysis, test panic, low GPA |</p>
+<p>| <strong>Study First, Work in Evening</strong> | <strong>100% peak morning energy given to syllabus active recall</strong>; work done on evening autopilot | <strong>First Class GPA + Flawless Client Delivery</strong> |</p>
 <blockquote>
-<p><strong>The Golden Habit:</strong> Wake up at 5:30 AM. Spend 90 minutes executing high-retention active recall on your course syllabus <em>before you open WhatsApp, email, or client portals.</em> Your degree gets your finest cognitive output; clients get your afternoon execution.</p>
+<p>**The Golden Habit:** Wake up at 5:30 AM. Spend 90 minutes executing high-retention active recall on your course syllabus *before you open WhatsApp, email, or client portals.* Your degree gets your finest cognitive output; clients get your afternoon execution.</p>
 </blockquote>
 <p>Review transit safety and commuting realities in <a href="/blog/hostel/off-campus-bike-safety-helmet-rules/">off-campus bike safety and helmet rules for Nigerian students</a>.</p>
-<hr />
+<hr>
 <h2 id="4-reclaim-your-mental-clarity">4. Reclaim Your Mental Clarity</h2>
-<p>Juggling university and employment is a heroic feat:<br />
-* Do not let cognitive friction convince you that you cannot excel in both worlds.<br />
-* Build your decompression bridge, protect your morning study sanctuary, and switch mental gears with conscious mastery.</p>
+<p>Juggling university and employment is a heroic feat:</p>
+<ul>
+<li>Do not let cognitive friction convince you that you cannot excel in both worlds.</li>
+<li>Build your decompression bridge, protect your morning study sanctuary, and switch mental gears with conscious mastery.</li>
+</ul>
 <p>If you are ready to dismantle study fatigue and install an elite, time-compressed academic operating system that fits seamlessly around demanding freelance client schedules, the <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It provides the step-by-step active recall protocols, lecture triage sheets, and exam battle cards working scholars use to secure First Class degrees on limited study time.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-it-impossible-to-concentrate-on-reading-immediately-after-finishing-client-work">Why is it impossible to concentrate on reading immediately after finishing client work?</h3>
 <p>Cognitive 'Attention Residue': when your prefrontal cortex spends hours engaged in fast-paced tactical client problem solving, neural circuits remain primed for high-stimulus feedback, causing slow-paced textbook reading to feel intolerably boring.</p>
@@ -572,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -757,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -772,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

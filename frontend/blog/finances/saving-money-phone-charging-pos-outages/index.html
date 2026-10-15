@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,86 +306,57 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="phone-battery-pos-costs-surviving-campus-power-outages">Phone Battery &amp; POS Costs: Surviving Campus Power Outages</h1>
+        <h1 id="phone-battery-pos-costs-surviving-campus-power-outages">Phone Battery & POS Costs: Surviving Campus Power Outages</h1>
 <p>The university town's 33KV power transformer blows up with a loud bang.</p>
 <p>The national electricity distribution company (DISCO) announces that repairs will take <em>"four to six weeks."</em></p>
-<p>Within forty-eight hours, your entire student community is thrown into complete darkness:<br />
-* Every morning, a queue of sixty students forms outside the few roadside business centers with running generators.<br />
-* Handwritten cardboard signs pop up: <strong>"CHARGE HERE: Phone ₦200, Power Bank ₦300, Laptop ₦500."</strong><br />
-* If you charge your phone and power bank every other day, <strong>you spend over ₦7,500 every two weeks</strong> just to keep your battery from dying.</p>
+<p>Within forty-eight hours, your entire student community is thrown into complete darkness:</p>
+<ul>
+<li>Every morning, a queue of sixty students forms outside the few roadside business centers with running generators.</li>
+<li>Handwritten cardboard signs pop up: **"CHARGE HERE: Phone ₦200, Power Bank ₦300, Laptop ₦500."**</li>
+<li>If you charge your phone and power bank every other day, **you spend over ₦7,500 every two weeks** just to keep your battery from dying.</li>
+</ul>
 <p>In a modern university where assignments are submitted via Google Classroom, lecture slides are distributed as PDFs on WhatsApp, and exams are Computer-Based Tests (CBT), <strong>battery power is an academic prerequisite</strong>.</p>
 <p>Here is how to slash device charging expenses, outsmart commercial POS charging extortion, and keep your devices alive through months of power grid failure.</p>
-<hr />
+<hr>
 <h2 id="1-the-financial-drain-of-commercial-charging-kiosks">1. The Financial Drain of Commercial Charging Kiosks</h2>
 <p>Commercial charging centers are a massive drain on student pocket money:</p>
 <blockquote>
-<h3 id="1-month-blackout-in-student-community">1 Month Blackout In Student Community</h3>
-<ul>
-<li>Phone charging: 30 days × ₦200 = ₦6,000</li>
-<li>Power bank charging: 15 times × ₦300 = ₦4,500</li>
-<li>Laptop charging (Exam week): 10 times × ₦500 = ₦5,000</li>
-<li><strong>TOTAL COST FOR ELECTRICITY:</strong> ₦15,500 (Over 50% of monthly allowance!)</li>
-</ul>
+<p>### 1 Month Blackout In Student Community</p>
+<p>></p>
+<p>* Phone charging: 30 days × ₦200 = ₦6,000</p>
+<p>* Power bank charging: 15 times × ₦300 = ₦4,500</p>
+<p>* Laptop charging (Exam week): 10 times × ₦500 = ₦5,000</p>
+<p>* **TOTAL COST FOR ELECTRICITY:** ₦15,500 (Over 50% of monthly allowance!)</p>
 </blockquote>
 <p>Beyond the financial cost, commercial charging centers carry severe equipment risks: unregulated voltage spikes from cheap tiger generators frequently burn device charging ICs and battery health.</p>
 <p>Review power outage survival tactics in <a href="/blog/hostel/surviving-power-outages-student-hostel/">surviving power outages in student hostels: light and charging strategies</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-free-campus-power-map-never-pay-for-amps">2. The Free Campus Power Map: Never Pay for Amps</h2>
 <p>Every Nigerian tertiary institution operates dedicated generators for administrative operations. You never need to pay roadside kiosks if you map institutional power schedules:</p>
-<table>
-<thead>
-<tr>
-<th>Institutional Power Sanctuary</th>
-<th>Operating Hours</th>
-<th>Power Reliability</th>
-<th>Tactical Charging Rules</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>University Main Library</strong></td>
-<td>8:30 AM – 4:00 PM</td>
-<td><strong>Extremely High</strong></td>
-<td>Bring extension cords; sit near wall sockets early</td>
-</tr>
-<tr>
-<td><strong>Faculty Computer Labs</strong></td>
-<td>10:00 AM – 2:00 PM</td>
-<td><strong>High</strong></td>
-<td>Charge laptops during practical sessions</td>
-</tr>
-<tr>
-<td><strong>Campus Fellowship Chapels / Mosques</strong></td>
-<td>5:00 PM – 8:00 PM</td>
-<td><strong>High</strong></td>
-<td>Charge devices during evening fellowship hours</td>
-</tr>
-<tr>
-<td><strong>Departmental HOD / Staff Corridors</strong></td>
-<td>9:00 AM – 3:00 PM</td>
-<td><strong>Moderate</strong></td>
-<td>Use wall sockets in departmental common waiting rooms</td>
-</tr>
-</tbody>
-</table>
+<p>| Institutional Power Sanctuary | Operating Hours | Power Reliability | Tactical Charging Rules |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>University Main Library</strong> | 8:30 AM – 4:00 PM | <strong>Extremely High</strong> | Bring extension cords; sit near wall sockets early |</p>
+<p>| <strong>Faculty Computer Labs</strong> | 10:00 AM – 2:00 PM | <strong>High</strong> | Charge laptops during practical sessions |</p>
+<p>| <strong>Campus Fellowship Chapels / Mosques</strong> | 5:00 PM – 8:00 PM | <strong>High</strong> | Charge devices during evening fellowship hours |</p>
+<p>| <strong>Departmental HOD / Staff Corridors</strong> | 9:00 AM – 3:00 PM | <strong>Moderate</strong> | Use wall sockets in departmental common waiting rooms |</p>
 <p>Review certified power bank hardware in <a href="/blog/hostel/power-bank-buying-guide-students-nigeria/">power bank buying guide for Nigerian students: specs and counterfeit defense</a>.</p>
-<hr />
+<hr>
 <h2 id="3-hardware-optimization-the-rapid-refill-protocol">3. Hardware Optimization: The Rapid-Refill Protocol</h2>
 <p>To survive in a blackout environment, your hardware must support <strong>Rapid Wattage Ingestion</strong>:</p>
 <ul>
-<li><strong>Fast-Charging Power Banks (18W – 65W PD):</strong> Cheap 10,000mAh power banks take 8 hours of micro-USB trickle charging to fill up. In a university where generator power only runs for 2 hours, that bank will never reach 40%. A Power Delivery (PD) fast-charging bank ingests full power in 120 minutes.</li>
-<li><strong>The Multi-Port Desktop GaN Charger:</strong> Carry a 65W Gallium Nitride (GaN) multi-port wall charger. With a single wall socket at the library, you can simultaneously fast-charge your laptop, smartphone, and 20,000mAh power bank without fighting other students for outlets.</li>
+<li>**Fast-Charging Power Banks (18W – 65W PD):** Cheap 10,000mAh power banks take 8 hours of micro-USB trickle charging to fill up. In a university where generator power only runs for 2 hours, that bank will never reach 40%. A Power Delivery (PD) fast-charging bank ingests full power in 120 minutes.</li>
+<li>**The Multi-Port Desktop GaN Charger:** Carry a 65W Gallium Nitride (GaN) multi-port wall charger. With a single wall socket at the library, you can simultaneously fast-charge your laptop, smartphone, and 20,000mAh power bank without fighting other students for outlets.</li>
 </ul>
 <p>Compare student energy setups in <a href="/blog/hostel/solar-inverter-vs-generator-student-lodge/">solar inverters vs small generators for student lodges</a>.</p>
-<hr />
+<hr>
 <h2 id="4-software-battery-conservation-protocols">4. Software Battery Conservation Protocols</h2>
 <p>When battery percentage drops below 30% with an assignment deadline looming:</p>
 <ol>
-<li><strong>The PDF Airplane Mode:</strong> Download all required course PDFs. Switch your phone directly to <strong>Airplane Mode</strong>. Without the cellular modem constantly searching for weak mast signals in poor network zones, your battery drain drops by 70%.</li>
-<li><strong>OLED Pure Black System Theme:</strong> If your smartphone has an AMOLED/OLED display, black pixels are completely powered off. Switch your background wallpaper and reading apps to pure black mode.</li>
-<li><strong>Keep an Untouchable ₦2,000 Transport Buffer:</strong> If an emergency CBT exam requires an uncharged laptop, you must have enough cash to transport yourself to an off-campus public cybercafe with dedicated power generators.</li>
+<li>**The PDF Airplane Mode:** Download all required course PDFs. Switch your phone directly to **Airplane Mode**. Without the cellular modem constantly searching for weak mast signals in poor network zones, your battery drain drops by 70%.</li>
+<li>**OLED Pure Black System Theme:** If your smartphone has an AMOLED/OLED display, black pixels are completely powered off. Switch your background wallpaper and reading apps to pure black mode.</li>
+<li>**Keep an Untouchable ₦2,000 Transport Buffer:** If an emergency CBT exam requires an uncharged laptop, you must have enough cash to transport yourself to an off-campus public cybercafe with dedicated power generators.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-do-campus-charging-centers-charge-students-per-phone-in-nigeria">How much do campus charging centers charge students per phone in Nigeria?</h3>
 <p>Commercial kiosks typically charge between ₦150 and ₦300 per phone charge, and ₦300 to ₦600 for laptops or large power banks. Charging daily during a blackout drains ₦9,000 to ₦15,000 monthly.</p>
@@ -559,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -744,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -759,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

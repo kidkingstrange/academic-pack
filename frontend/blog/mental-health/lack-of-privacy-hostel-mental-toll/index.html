@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -313,18 +313,22 @@
 <p>You have spent fourteen straight weeks without being alone in a room for even ten minutes.</p>
 <p>You are experiencing <strong>Shared Space Exhaustion</strong>.</p>
 <p>For introverted and high-focus students, the chronic absence of physical privacy is not just an annoyance. It is a severe cognitive neurotoxin that exhausts your nervous system and drains academic stamina.</p>
-<hr />
+<hr>
 <h2 id="1-the-neurobiology-of-sensory-hyper-vigilance">1. The Neurobiology of Sensory Hyper-Vigilance</h2>
 <p>The human nervous system is biologically wired to scan shared physical environments for potential social threats or interruptions.</p>
-<p>When you are in a private space:<br />
-* Your brain down-regulates its sensory monitoring systems.<br />
-* Cortisol levels drop, and the brain enters the <strong>Default Mode Network (DMN)</strong>, essential for consolidating memory, processing emotional experiences, and deep problem-solving.</p>
-<p>When you live in a crowded room with eight occupants:<br />
-* Your sensory radar remains locked in <strong>Chronic Hyper-Vigilance</strong>.<br />
-* Even while reading, your subconscious mind tracks every footsteps, door creak, and whispered conversation.<br />
-* Over weeks, this micro-stress burns out your prefrontal dopamine reserves, resulting in sudden temper outbursts, chronic brain fog, and study paralysis.</p>
+<p>When you are in a private space:</p>
+<ul>
+<li>Your brain down-regulates its sensory monitoring systems.</li>
+<li>Cortisol levels drop, and the brain enters the **Default Mode Network (DMN)**, essential for consolidating memory, processing emotional experiences, and deep problem-solving.</li>
+</ul>
+<p>When you live in a crowded room with eight occupants:</p>
+<ul>
+<li>Your sensory radar remains locked in **Chronic Hyper-Vigilance**.</li>
+<li>Even while reading, your subconscious mind tracks every footsteps, door creak, and whispered conversation.</li>
+<li>Over weeks, this micro-stress burns out your prefrontal dopamine reserves, resulting in sudden temper outbursts, chronic brain fog, and study paralysis.</li>
+</ul>
 <p>Review the structural causes of room friction in our guide on <a href="/blog/hostel-and-accommodation/hostel-roommate-tension-causes-solutions/">roommate tension: why cleanliness and boundaries clash</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-sanctuary-strategies-creating-solitude-in-chaos">2. The 3 Sanctuary Strategies: Creating Solitude in Chaos</h2>
 <p>When you cannot physically change your hostel accommodation, you must engineer psychological micro-sanctuaries:</p>
 <h3 id="strategy-1-the-bunk-curfew-sensory-air-gap">Strategy 1: The Bunk Curfew (Sensory Air-Gap)</h3>
@@ -332,12 +336,14 @@
 <h3 id="strategy-2-temporal-inversion-the-dawn-monopoly">Strategy 2: Temporal Inversion (The Dawn Monopoly)</h3>
 <p>If you cannot find spatial solitude, claim <strong>temporal solitude</strong>. Wake up at 4:45 AM when all eight roommates are unconscious. Between 5:00 AM and 7:00 AM, the room is completely silent, cool, and peaceful. You can complete your hardest mathematical derivation before the chaos begins.</p>
 <h3 id="strategy-3-campus-geographic-refuges">Strategy 3: Campus Geographic Refuges</h3>
-<p>Map out quiet external sanctuaries across the university campus:<br />
-* The upper floors of old faculty libraries that undergraduates rarely visit.<br />
-* Shaded benches behind the university chapel or mosque gardens.<br />
-* Departmental staff seminar rooms left open between lectures.</p>
+<p>Map out quiet external sanctuaries across the university campus:</p>
+<ul>
+<li>The upper floors of old faculty libraries that undergraduates rarely visit.</li>
+<li>Shaded benches behind the university chapel or mosque gardens.</li>
+<li>Departmental staff seminar rooms left open between lectures.</li>
+</ul>
 <p>To protect personal property while navigating shared rooms, read <a href="/blog/hostel-and-accommodation/roommate-stealing-food-hostel/">confronting a roommate who steals food and supplies</a>.</p>
-<hr />
+<hr>
 <h2 id="3-physical-rest-vs-pushing-through">3. Physical Rest vs Pushing Through</h2>
 <p>When shared space exhaustion peaks, your brain will scream at you to skip reading and escape. Do not interpret this as laziness:</p>
 <ul>
@@ -345,14 +351,16 @@
 <li>When your sensory battery is recharged, your retention speed doubles.</li>
 </ul>
 <p>Learn the diagnostic rules for resting in our comparative analysis on <a href="/blog/mental-health/">pushing through exhaustion vs taking a sick day</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-mental-health-solitude-network">🧠 Join the Student Mental Health &amp; Solitude Network</h3>
+<p>### 🧠 Join the Student Mental Health & Solitude Network</p>
 <p>Struggling with crowded rooms, loud roommates, and zero mental peace?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with quiet study partners, find verified peaceful off-campus lodges, and protect your sanity.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with quiet study partners, find verified peaceful off-campus lodges, and protect your sanity.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-shared-space-exhaustion-in-university-hostels">What is 'Shared Space Exhaustion' in university hostels?</h3>
 <p>It is chronic sensory overload and social hyper-vigilance resulting from having zero physical privacy—living, sleeping, changing clothes, and studying in the constant presence of 6 to 12 roommates and squatters.</p>
@@ -526,8 +534,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -711,8 +719,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -726,7 +734,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

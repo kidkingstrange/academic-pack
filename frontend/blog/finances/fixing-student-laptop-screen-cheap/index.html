@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,81 +309,59 @@
         <h1 id="broken-phone-or-laptop-screen-fast-affordable-repair">Broken Phone or Laptop Screen: Fast Affordable Repair</h1>
 <p>It is two weeks before your final semester examinations.</p>
 <p>Your laptop slips off your hostel bunk bed. It hits the tiled floor with a sickening crunch.</p>
-<p>When you open the lid and press the power button, your heart sinks:<br />
-* The left half of the display is completely black.<br />
-* Colorful vertical green and pink lines flicker across the remaining half.<br />
-* Your final year project draft, thesis data analysis, and four course seminar presentations are trapped inside.</p>
-<p>You carry the machine to a campus technician kiosk at the university gate. </p>
+<p>When you open the lid and press the power button, your heart sinks:</p>
+<ul>
+<li>The left half of the display is completely black.</li>
+<li>Colorful vertical green and pink lines flicker across the remaining half.</li>
+<li>Your final year project draft, thesis data analysis, and four course seminar presentations are trapped inside.</li>
+</ul>
+<p>You carry the machine to a campus technician kiosk at the university gate.</p>
 <p>The technician glances at it dismissively and says: <em>"Ah, bros, screen don burst completely. Original replacement screen is ₦45,000, and workmanship is ₦10,000. Pay ₦55,000 now, pick it up next week."</em></p>
 <p>You only have ₦12,000 in your account.</p>
 <p>In Nigerian university communities, dishonest tech technicians routinely exploit desperate students during exam and project season, swapping original RAM chips, overcharging by 200%, or installing counterfeit screens that fail within thirty days.</p>
 <p>Here is the tactical guide to repairing your student devices affordably, recovering trapped data, and defending yourself against repair fraud.</p>
-<hr />
+<hr>
 <h2 id="1-the-screen-damage-triage-glass-vs-lcd">1. The Screen Damage Triage: Glass vs. LCD</h2>
 <p>Before accepting an expensive repair quote, diagnose the exact layer of physical failure:</p>
 <blockquote>
-<h3 id="smartphone-laptop-display-layers">Smartphone / Laptop Display Layers</h3>
-<ul>
-<li>Top Layer: Protective Tempered Glass</li>
-<li>Middle Layer: Capacitive Touch Digitizer</li>
-<li>Core Display: Liquid Crystal Display (LCD) / AMOLED Matrix</li>
-</ul>
+<p>### Smartphone / Laptop Display Layers</p>
+<p>></p>
+<p>* Top Layer: Protective Tempered Glass</p>
+<p>* Middle Layer: Capacitive Touch Digitizer</p>
+<p>* Core Display: Liquid Crystal Display (LCD) / AMOLED Matrix</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Visual Symptom</th>
-<th>Technical Diagnosis</th>
-<th>Repair Action</th>
-<th>Estimated Cost Ratio</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Glass cracked; display clear; touch responsive</td>
-<td><strong>Outer Glass Fracture Only</strong></td>
-<td>OCA Optical Glass Laminating</td>
-<td><strong>Cheap</strong> (30-40% of full screen cost)</td>
-</tr>
-<tr>
-<td>Purple ink bleed, black blotches, flickering lines</td>
-<td><strong>Internal LCD Panel Rupture</strong></td>
-<td>Full Screen Assembly Replacement</td>
-<td><strong>Standard</strong> (Requires full replacement)</td>
-</tr>
-<tr>
-<td>Display completely black; power LED turns on</td>
-<td>Blown Backlight fuse or disconnected ribbon</td>
-<td>Reconnecting display LVDS cable</td>
-<td><strong>Very Cheap</strong> (Minor servicing fee)</td>
-</tr>
-</tbody>
-</table>
+<p>| Visual Symptom | Technical Diagnosis | Repair Action | Estimated Cost Ratio |</p>
+<p>|---|---|---|---|</p>
+<p>| Glass cracked; display clear; touch responsive | <strong>Outer Glass Fracture Only</strong> | OCA Optical Glass Laminating | <strong>Cheap</strong> (30-40% of full screen cost) |</p>
+<p>| Purple ink bleed, black blotches, flickering lines | <strong>Internal LCD Panel Rupture</strong> | Full Screen Assembly Replacement | <strong>Standard</strong> (Requires full replacement) |</p>
+<p>| Display completely black; power LED turns on | Blown Backlight fuse or disconnected ribbon | Reconnecting display LVDS cable | <strong>Very Cheap</strong> (Minor servicing fee) |</p>
 <p>Review power and hardware maintenance in <a href="/blog/hostel/power-bank-buying-guide-students-nigeria/">power bank buying guide for Nigerian students: specs and counterfeit defense</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-0-emergency-workaround-external-display-bridging">2. The ₦0 Emergency Workaround: External Display Bridging</h2>
 <p>If you do not have money for an immediate screen repair during an exam rush, <strong>do not panic</strong>:</p>
 <ol>
-<li><strong>The HDMI / TV Lifeline:</strong> Modern laptops feature an HDMI or USB-C video output port. Borrow an HDMI cable from a coursemate and plug your broken laptop into a hostel TV or friend's desktop monitor. Your laptop motherboard functions normally; the TV acts as your full desktop screen.</li>
-<li><strong>OTG Mouse Hack for Phones:</strong> If your phone's touch digitizer is unresponsive but the display is visible, plug a standard USB computer mouse into your phone using a ₦500 OTG adapter. A mouse cursor will instantly appear on your screen, allowing you to back up lecture notes and WhatsApp documents to Google Drive.</li>
+<li>**The HDMI / TV Lifeline:** Modern laptops feature an HDMI or USB-C video output port. Borrow an HDMI cable from a coursemate and plug your broken laptop into a hostel TV or friend's desktop monitor. Your laptop motherboard functions normally; the TV acts as your full desktop screen.</li>
+<li>**OTG Mouse Hack for Phones:** If your phone's touch digitizer is unresponsive but the display is visible, plug a standard USB computer mouse into your phone using a ₦500 OTG adapter. A mouse cursor will instantly appear on your screen, allowing you to back up lecture notes and WhatsApp documents to Google Drive.</li>
 </ol>
 <p>Learn how to build financial safety buffers in <a href="/blog/finances/student-emergency-fund-saving/">emergency fund for students: saving when you have little</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-anti-fraud-technician-protocol">3. The Anti-Fraud Technician Protocol</h2>
 <p>When handing your device to a technician in campus communities, execute these four rules:</p>
 <ul>
-<li><strong>The IMEI &amp; Component Audit:</strong> Write down your phone's IMEI number (<code>*#06#</code>) or laptop serial number, RAM size (e.g., 8GB), and SSD capacity on paper in front of the technician. This prevents dishonest operators from downgrading your RAM or swapping your battery.</li>
-<li><strong>Remove SIM &amp; Sensitive Data:</strong> Never surrender an unlocked phone containing banking apps or personal photos. Remove your SIM card and memory card before handover.</li>
-<li><strong>The Sourcing Advantage (Central Markets Over Campus Gate):</strong> Campus gate kiosks add a 100% middleman markup. If possible, order the exact screen model directly from verified distributors in central tech hubs (like Computer Village Ikeja or regional state tech markets) and pay a local technician strictly for the ₦3,000 installation labor.</li>
+<li>**The IMEI & Component Audit:** Write down your phone's IMEI number (`*#06#`) or laptop serial number, RAM size (e.g., 8GB), and SSD capacity on paper in front of the technician. This prevents dishonest operators from downgrading your RAM or swapping your battery.</li>
+<li>**Remove SIM & Sensitive Data:** Never surrender an unlocked phone containing banking apps or personal photos. Remove your SIM card and memory card before handover.</li>
+<li>**The Sourcing Advantage (Central Markets Over Campus Gate):** Campus gate kiosks add a 100% middleman markup. If possible, order the exact screen model directly from verified distributors in central tech hubs (like Computer Village Ikeja or regional state tech markets) and pay a local technician strictly for the ₦3,000 installation labor.</li>
 </ul>
 <p>Compare furnished vs unfurnished student accommodation in <a href="/blog/hostel/furnished-lodge-vs-unfurnished-student/">furnished lodge vs unfurnished student room: buying mattress and appliances</a>.</p>
-<hr />
+<hr>
 <h2 id="4-hardware-preservation-post-repair">4. Hardware Preservation Post-Repair</h2>
-<p>After repairing your display, install proactive defense hardware immediately:<br />
-* Spend ₦1,500 on a heavy-duty silicone shockproof bumper case and ceramic privacy screen protector.<br />
-* Never place your laptop near the edge of a bed or study table while charging.<br />
-* Guard your digital tools with discipline; they are the physical gateway to your academic degree.</p>
-<hr />
+<p>After repairing your display, install proactive defense hardware immediately:</p>
+<ul>
+<li>Spend ₦1,500 on a heavy-duty silicone shockproof bumper case and ceramic privacy screen protector.</li>
+<li>Never place your laptop near the edge of a bed or study table while charging.</li>
+<li>Guard your digital tools with discipline; they are the physical gateway to your academic degree.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-a-student-avoid-getting-scammed-by-campus-phone-technicians">How can a student avoid getting scammed by campus phone technicians?</h3>
 <p>Never leave your phone overnight without removing your SIM card, SD memory card, and noting your phone's unique IMEI number. Stand over the technician during screen testing and verify touch sensitivity across all four screen corners before paying.</p>
@@ -557,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -742,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -757,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

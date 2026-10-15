@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,89 +306,71 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="cooking-for-one-in-lodges-slashing-food-waste-expenses">Cooking for One in Lodges: Slashing Food Waste &amp; Expenses</h1>
+        <h1 id="cooking-for-one-in-lodges-slashing-food-waste-expenses">Cooking for One in Lodges: Slashing Food Waste & Expenses</h1>
 <p>You live alone in a single self-contained room off-campus.</p>
-<p>You love the peace, the privacy, and the quiet. </p>
+<p>You love the peace, the privacy, and the quiet.</p>
 <p>Until dinner time arrives.</p>
-<p>You buy ₦800 worth of fresh tomatoes and rodo peppers. You use half to make a small stew. </p>
-<p>Three days later, you open your food basket: the remaining peppers have turned soft, moldy, and liquefied into a foul-smelling slime. </p>
+<p>You buy ₦800 worth of fresh tomatoes and rodo peppers. You use half to make a small stew.</p>
+<p>Three days later, you open your food basket: the remaining peppers have turned soft, moldy, and liquefied into a foul-smelling slime.</p>
 <p>You throw them into the trash bin.</p>
 <p>You boil a small pot of rice: it took twenty-five minutes of continuous gas burn just for a single small plate.</p>
-<p>By the end of the month, you notice a painful financial reality:<br />
-* You threw away spoiled vegetables and soured food.<br />
-* You burned through a 6kg gas cylinder in four weeks.<br />
-* You spent more money on feeding than your friends who share rooms and cook in groups.</p>
+<p>By the end of the month, you notice a painful financial reality:</p>
+<ul>
+<li>You threw away spoiled vegetables and soured food.</li>
+<li>You burned through a 6kg gas cylinder in four weeks.</li>
+<li>You spent more money on feeding than your friends who share rooms and cook in groups.</li>
+</ul>
 <p>Cooking for one in a Nigerian student lodge is an ergonomic and financial challenge.</p>
 <p>Here is the operational guide to eliminating food waste, mastering single-portion preservation, and eating healthy on a budget.</p>
-<hr />
+<hr>
 <h2 id="1-the-anatomy-of-single-student-food-waste">1. The Anatomy of Single-Student Food Waste</h2>
 <blockquote>
-<h3 id="the-3-food-loss-vectors-for-single-hostellers">The 3 Food Loss Vectors For Single Hostellers</h3>
-<ul>
-<li>Vector 1: Purchasing Perishables in Excessive Retail Units (Peppers, greens)</li>
-<li>Vector 2: Convective Gas Inefficiency (Burning high flame for small portions)</li>
-<li>Vector 3: "Leftover Fatigue" (Cooking large pots, getting bored, abandoning food)</li>
-</ul>
+<p>### The 3 Food Loss Vectors For Single Hostellers</p>
+<p>></p>
+<p>* Vector 1: Purchasing Perishables in Excessive Retail Units (Peppers, greens)</p>
+<p>* Vector 2: Convective Gas Inefficiency (Burning high flame for small portions)</p>
+<p>* Vector 3: "Leftover Fatigue" (Cooking large pots, getting bored, abandoning food)</p>
 </blockquote>
-<p>In tropical Nigerian climates without constant refrigerator electricity, perishable vegetables degrade within 72 hours. </p>
+<p>In tropical Nigerian climates without constant refrigerator electricity, perishable vegetables degrade within 72 hours.</p>
 <p>To cook economically as a solo student, you must rethink ingredient selection and storage thermodynamics.</p>
 <p>Review refrigerator maintenance and power constraints in <a href="/blog/hostel/refrigerator-maintenance-student-hostel/">refrigerator maintenance and electricity reality in student hostels</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-golden-rules-of-single-portion-kitchen-economics">2. The 3 Golden Rules of Single-Portion Kitchen Economics</h2>
-<table>
-<thead>
-<tr>
-<th>Kitchen Practice</th>
-<th>Wasteful Habit</th>
-<th>High-Efficiency Standard</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Pepper Preservation</strong></td>
-<td>Storing fresh peppers in tied nylon bags</td>
-<td>Blending and frying immediately into concentrated oil-based paste</td>
-</tr>
-<tr>
-<td><strong>Gas Usage</strong></td>
-<td>Boiling 1 cup of dry beans for 75 minutes</td>
-<td>Pre-soaking beans for 4 hours; cooking double portion and reheating</td>
-</tr>
-<tr>
-<td><strong>Vegetable Buying</strong></td>
-<td>Buying large bundles of pumpkin (ugu) leaves</td>
-<td>Buying dry vegetables or slicing and steaming immediately in small stews</td>
-</tr>
-</tbody>
-</table>
+<p>| Kitchen Practice | Wasteful Habit | High-Efficiency Standard |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Pepper Preservation</strong> | Storing fresh peppers in tied nylon bags | Blending and frying immediately into concentrated oil-based paste |</p>
+<p>| <strong>Gas Usage</strong> | Boiling 1 cup of dry beans for 75 minutes | Pre-soaking beans for 4 hours; cooking double portion and reheating |</p>
+<p>| <strong>Vegetable Buying</strong> | Buying large bundles of pumpkin (ugu) leaves | Buying dry vegetables or slicing and steaming immediately in small stews |</p>
 <p>Review batch cooking workflows in <a href="/blog/finances/batch-cooking-food-saving-campus/">batch cooking strategy: slashing weekly feeding expenses</a>.</p>
-<hr />
+<hr>
 <h2 id="3-high-speed-zero-waste-single-student-recipes">3. High-Speed, Zero-Waste Single Student Recipes</h2>
 <p>Master these three high-efficiency single-serving meals that take under twenty minutes and produce zero food waste:</p>
 <h3 id="1-the-12-minute-one-pot-jollof-pasta">1. The 12-Minute One-Pot Jollof Pasta</h3>
 <ul>
 <li>Break spaghetti into a small pot. Add 2 tablespoons of pre-fried pepper base, water, vegetable oil, seasoning, and dried crayfish.</li>
 <li>Cook covered for 10 minutes until liquid reduces.</li>
-<li><strong>Yield:</strong> Hot, flavorful, high-carbohydrate meal with zero leftover wastage and 70% less gas consumption than boiling rice.</li>
+<li>**Yield:** Hot, flavorful, high-carbohydrate meal with zero leftover wastage and 70% less gas consumption than boiling rice.</li>
 </ul>
-<h3 id="2-fortified-egg-sweet-potato-hash">2. Fortified Egg &amp; Sweet Potato Hash</h3>
+<h3 id="2-fortified-egg-sweet-potato-hash">2. Fortified Egg & Sweet Potato Hash</h3>
 <ul>
 <li>Cube one large sweet potato into small pieces. Boil for 8 minutes until tender.</li>
 <li>Pan-fry with two beaten eggs, sliced onions, and ground pepper.</li>
-<li><strong>Yield:</strong> Nutrient-dense, high-fiber, low-glycemic brain food that sustains study energy without afternoon sugar crashes.</li>
+<li>**Yield:** Nutrient-dense, high-fiber, low-glycemic brain food that sustains study energy without afternoon sugar crashes.</li>
 </ul>
 <h3 id="3-soya-bean-porridge-fusion">3. Soya Bean Porridge Fusion</h3>
 <ul>
 <li>Use locally milled soya bean powder added to garri or oats with milk and roasted groundnuts.</li>
-<li><strong>Yield:</strong> Premium complete amino acid protein at less than ₦300 per serving with zero cooking required.</li>
+<li>**Yield:** Premium complete amino acid protein at less than ₦300 per serving with zero cooking required.</li>
 </ul>
 <p>Explore upcoming student meal management in our upcoming analysis on <a href="/blog/finances/">shared fridge with roommate vs buying ice blocks daily</a>.</p>
-<hr />
+<hr>
 <h2 id="4-kitchen-discipline-protects-your-wallet">4. Kitchen Discipline Protects Your Wallet</h2>
-<p>Living alone gives you total sovereignty over your nutritional environment:<br />
-* Plan your weekly meals, preserve your bases on Sunday afternoons, and keep your kitchen spotless to repel rodents.<br />
-* When your food budget is controlled and your pantry is organized, you free up financial capital and mental energy to conquer your coursework with total focus.</p>
-<hr />
+<p>Living alone gives you total sovereignty over your nutritional environment:</p>
+<ul>
+<li>Plan your weekly meals, preserve your bases on Sunday afternoons, and keep your kitchen spotless to repel rodents.</li>
+<li>When your food budget is controlled and your pantry is organized, you free up financial capital and mental energy to conquer your coursework with total focus.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-cooking-for-a-single-person-often-more-expensive-than-cooking-for-multiple-people">Why is cooking for a single person often more expensive than cooking for multiple people?</h3>
 <p>Single students face ingredient spoilage: fresh tomatoes, peppers, and vegetables rot before they can be finished, and boiling tiny individual meal portions wastes large amounts of cooking gas.</p>
@@ -562,8 +544,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -747,8 +729,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -762,7 +744,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Night Shift Student Workers: Staying Awake for 8am Class",
       "description": "Tactical alertness protocols, circadian management, and nutritional hacks for Nigerian students working night shifts while attending morning lectures.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,77 +265,79 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>It is 7:15 AM on a chilly Wednesday morning.</p>
-<p>You just completed a grueling 10-hour night shift:<br />
-* Maybe you worked as a remote customer support agent for a US/UK company operating in an opposite time zone.<br />
-* Maybe you worked night security at a tech facility or hotel near campus.<br />
-* Maybe you spent all night at a 24-hour business center formatting documents or monitoring crypto servers.</p>
-<p>Your shift ended at 6:30 AM. </p>
-<p>Now, your eyes are bloodshot. Your limbs feel heavy like lead. </p>
+<p>You just completed a grueling 10-hour night shift:</p>
+<ul>
+<li>Maybe you worked as a remote customer support agent for a US/UK company operating in an opposite time zone.</li>
+<li>Maybe you worked night security at a tech facility or hotel near campus.</li>
+<li>Maybe you spent all night at a 24-hour business center formatting documents or monitoring crypto servers.</li>
+</ul>
+<p>Your shift ended at 6:30 AM.</p>
+<p>Now, your eyes are bloodshot. Your limbs feel heavy like lead.</p>
 <p>Yet in exactly 45 minutes, you must sit in a crowded, stuffy lecture hall for an 8:00 AM compulsory departmental core course where the lecturer locks the door at 8:05 AM and takes attendance.</p>
 <p>You cannot afford to miss the class, but the moment you sit down, your head begins bobbing, your eyelids close, and your pen slips out of your hand.</p>
-<p>Working night shifts while maintaining full-time university enrollment is an extreme physical challenge. </p>
+<p>Working night shifts while maintaining full-time university enrollment is an extreme physical challenge.</p>
 <p>Here is the physiological survival protocol to keep your brain sharp, alert, and functional during morning classes without destroying your long-term health.</p>
-<hr />
+<hr>
 <h2 id="the-biological-reality-of-the-night-to-morning-transition">The Biological Reality of the Night-to-Morning Transition</h2>
-<p>When you stay awake through the night, your brain accumulates an immense buildup of <strong>adenosine</strong>—the chemical compound responsible for sleep pressure. </p>
+<p>When you stay awake through the night, your brain accumulates an immense buildup of <strong>adenosine</strong>—the chemical compound responsible for sleep pressure.</p>
 <p>Between 6:00 AM and 8:30 AM, your internal circadian rhythm attempts to release a burst of sleep hormones while lowering your core body temperature:</p>
 <blockquote>
-<h3 id="the-circadian-morning-danger-zone">The Circadian Morning Danger Zone</h3>
-<ul>
-<li><strong>06:</strong> 00 AM - 08:30 AM: Deepest Circadian Energy Trough</li>
-<li>
-<blockquote>
-<p>Core temperature drops; micro-sleep episodes occur involuntarily.</p>
-</blockquote>
-</li>
-<li>
-<blockquote>
-<p>Sitting in a dark back row = 100% Guaranteed Sleeping in Class!</p>
-</blockquote>
-</li>
-</ul>
+<p>### The Circadian Morning Danger Zone</p>
+<p>></p>
+<p>* **06:** 00 AM - 08:30 AM: Deepest Circadian Energy Trough</p>
+<p>* > Core temperature drops; micro-sleep episodes occur involuntarily.</p>
+<p>* > Sitting in a dark back row = 100% Guaranteed Sleeping in Class!</p>
 </blockquote>
 <p>To survive this danger zone, you must deploy active physical interventions that force your nervous system into high sympathetic alertness.</p>
-<hr />
-<h2 id="4-physiological-hacks-to-stay-awake-in-800-am-classes">4 Physiological Hacks to Stay Awake in 8:00 AM Classes</h2>
-<h3 id="1-the-cold-water-direct-sunlight-shock">1. The Cold Water &amp; Direct Sunlight Shock</h3>
-<p>The moment your night shift terminates:<br />
-1. Wash your face and the back of your neck with cold tap water. The cold sensation activates the <strong>mammalian dive reflex</strong>, stimulating your vagus nerve and elevating heart rate.<br />
-2. Walk outdoors under open sunlight for 10 minutes on your way to faculty. Sunlight hits the retinal ganglion cells in your eyes, signaling your pineal gland to immediately suppress melatonin production.</p>
+<hr>
+<h2 id="4-physiological-hacks-to-stay-awake-in-8-00-am-classes">4 Physiological Hacks to Stay Awake in 8:00 AM Classes</h2>
+<h3 id="1-the-cold-water-direct-sunlight-shock">1. The Cold Water & Direct Sunlight Shock</h3>
+<p>The moment your night shift terminates:</p>
+<ol>
+<li>Wash your face and the back of your neck with cold tap water. The cold sensation activates the **mammalian dive reflex**, stimulating your vagus nerve and elevating heart rate.</li>
+<li>Walk outdoors under open sunlight for 10 minutes on your way to faculty. Sunlight hits the retinal ganglion cells in your eyes, signaling your pineal gland to immediately suppress melatonin production.</li>
+</ol>
 <h3 id="2-the-front-row-social-accountability-shield">2. The Front-Row Social Accountability Shield</h3>
 <p>Never sit at the back of the lecture hall or next to a wall when you are sleep-deprived. The back row offers an easy, dark cocoon that guarantees you will pass out within 15 minutes.</p>
-<p>Sit in the <strong>first or second row directly in the lecturer’s line of vision</strong>:<br />
-* The psychological tension of having the lecturer two meters away triggers low-level adrenaline that keeps your brain awake.<br />
-* Sit upright with both feet planted firmly flat on the floor; crossing your legs relaxes the muscular system and accelerates drowsiness.</p>
+<p>Sit in the <strong>first or second row directly in the lecturer’s line of vision</strong>:</p>
+<ul>
+<li>The psychological tension of having the lecturer two meters away triggers low-level adrenaline that keeps your brain awake.</li>
+<li>Sit upright with both feet planted firmly flat on the floor; crossing your legs relaxes the muscular system and accelerates drowsiness.</li>
+</ul>
 <h3 id="3-smart-hydration-vs-sugar-crashes">3. Smart Hydration vs. Sugar Crashes</h3>
-<p>Avoid high-sugar energy drinks or sugary campus pastries before morning lectures:<br />
-* Sugar causes a violent 30-minute spike followed by an acute insulin crash that knocks you out cold.<br />
-* Instead, drink 500ml of ice-cold water. Mild dehydration drastically amplifies daytime sleepiness; cold water shocks the internal organs into alertness.<br />
-* If using caffeine, drink black coffee or unsweetened tea without milk or sugar.</p>
+<p>Avoid high-sugar energy drinks or sugary campus pastries before morning lectures:</p>
+<ul>
+<li>Sugar causes a violent 30-minute spike followed by an acute insulin crash that knocks you out cold.</li>
+<li>Instead, drink 500ml of ice-cold water. Mild dehydration drastically amplifies daytime sleepiness; cold water shocks the internal organs into alertness.</li>
+<li>If using caffeine, drink black coffee or unsweetened tea without milk or sugar.</li>
+</ul>
 <h3 id="4-continuous-kinesthetic-note-taking">4. Continuous Kinesthetic Note-Taking</h3>
 <p>Passive listening is the enemy of the night-shift worker. If you just sit and listen, your brain will power down.</p>
-<p>Keep your hands moving constantly:<br />
-* Force yourself to write physical notes summarizing every sentence the lecturer speaks.<br />
-* Even if you are sketching diagrams or jotting down questions, the physical motor movement of your fingers prevents your brain from slipping into micro-sleep.</p>
-<p>To learn how to systematically recover your sleep debt over the weekend so your brain does not accumulate chronic inflammation, read our guide on <a href="/blog/balancing-work-and-school/recovering-from-student-work-sleep-debt/">recovering from sleep debt after heavy work sprints</a>.</p>
-<hr />
-<h2 id="the-sacred-daytime-anchor-sleep-100-pm-to-600-pm">The Sacred Daytime Anchor Sleep (1:00 PM to 6:00 PM)</h2>
-<p>You cannot cheat biology forever. If you work nights and attend morning classes, you <strong>must sleep during the afternoon</strong>.</p>
-<p>Establish an inviolable <strong>Daytime Anchor Sleep Window</strong>:<br />
-* Return to your hostel room immediately after morning lectures (by 1:00 PM).<br />
-* Turn off your phone or activate 'Do Not Disturb' mode.<br />
-* Hang thick blankets or curtains over your windows to block daytime sunlight.<br />
-* Sleep uninterrupted for 4 to 5 hours before your next evening shift.</p>
-<blockquote>
-<h3 id="the-night-shift-student-24-hour-clock">The Night Shift Student 24-Hour Clock</h3>
+<p>Keep your hands moving constantly:</p>
 <ul>
-<li><strong>10:</strong> 00 PM - 06:00 AM: Night Work Shift (Active)</li>
-<li><strong>07:</strong> 30 AM - 12:30 PM: University Lectures &amp; Continuous Assessment (Alert)</li>
-<li><strong>01:</strong> 00 PM - 06:00 PM: Deep Anchor Sleep Block (5 Hours Inviolable Rest)</li>
-<li><strong>06:</strong> 00 PM - 09:30 PM: Study Revision, Meal Prep, &amp; Transit</li>
+<li>Force yourself to write physical notes summarizing every sentence the lecturer speaks.</li>
+<li>Even if you are sketching diagrams or jotting down questions, the physical motor movement of your fingers prevents your brain from slipping into micro-sleep.</li>
 </ul>
+<p>To learn how to systematically recover your sleep debt over the weekend so your brain does not accumulate chronic inflammation, read our guide on <a href="/blog/balancing-work-and-school/recovering-from-student-work-sleep-debt/">recovering from sleep debt after heavy work sprints</a>.</p>
+<hr>
+<h2 id="the-sacred-daytime-anchor-sleep-1-00-pm-to-6-00-pm">The Sacred Daytime Anchor Sleep (1:00 PM to 6:00 PM)</h2>
+<p>You cannot cheat biology forever. If you work nights and attend morning classes, you <strong>must sleep during the afternoon</strong>.</p>
+<p>Establish an inviolable <strong>Daytime Anchor Sleep Window</strong>:</p>
+<ul>
+<li>Return to your hostel room immediately after morning lectures (by 1:00 PM).</li>
+<li>Turn off your phone or activate 'Do Not Disturb' mode.</li>
+<li>Hang thick blankets or curtains over your windows to block daytime sunlight.</li>
+<li>Sleep uninterrupted for 4 to 5 hours before your next evening shift.</li>
+</ul>
+<blockquote>
+<p>### The Night Shift Student 24-Hour Clock</p>
+<p>></p>
+<p>* **10:** 00 PM - 06:00 AM: Night Work Shift (Active)</p>
+<p>* **07:** 30 AM - 12:30 PM: University Lectures & Continuous Assessment (Alert)</p>
+<p>* **01:** 00 PM - 06:00 PM: Deep Anchor Sleep Block (5 Hours Inviolable Rest)</p>
+<p>* **06:** 00 PM - 09:30 PM: Study Revision, Meal Prep, & Transit</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="action-checklist-night-shift-survival-system">Action Checklist: Night Shift Survival System</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Take a cold face-wash immediately upon ending your night shift.</li>
@@ -509,8 +511,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -694,8 +696,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -709,7 +711,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

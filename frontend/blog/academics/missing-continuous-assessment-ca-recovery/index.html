@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,74 +310,44 @@
 <p>By the time you sprint across campus to the lecture theater, the doors are locked. Coursemates are streaming out, discussing tricky multiple-choice questions or multi-part calculus derivations.</p>
 <p>You have just missed your <strong>Continuous Assessment (CA) test</strong>.</p>
 <p>A feeling of cold dread settles into your chest. In Nigerian tertiary institutions, CA is not optional homework; it is a statutory pillar of your degree. Under academic standards established by the <a href="https://www.nuc.edu.ng/">National Universities Commission (NUC)</a>, Continuous Assessment carries between <strong>30% and 40% of your total course grade</strong>.</p>
-<p>Missing a 30-mark CA test means entering the final examination hall with an immediate handicap: <strong>0/30</strong>. </p>
+<p>Missing a 30-mark CA test means entering the final examination hall with an immediate handicap: <strong>0/30</strong>.</p>
 <p>If you do nothing, you are staring at a guaranteed grade depression or an avoidable carryover. But missing a test does not have to destroy your semester. If you act decisively within the first 72 hours, university Senate regulations provide concrete administrative mechanisms to recover your lost marks.</p>
 <p>Here is the exact step-by-step recovery blueprint to save your grade after missing a university continuous assessment test.</p>
-<hr />
-<h2 id="1-the-mathematical-danger-why-entering-exams-with-030-is-academic-suicide">1. The Mathematical Danger: Why Entering Exams with 0/30 Is Academic Suicide</h2>
+<hr>
+<h2 id="1-the-mathematical-danger-why-entering-exams-with-0-30-is-academic-suicide">1. The Mathematical Danger: Why Entering Exams with 0/30 Is Academic Suicide</h2>
 <p>Before exploring administrative remedies, you must understand the arithmetic reality of an uncorrected CA score:</p>
-<table>
-<thead>
-<tr>
-<th>Final Exam Score (Out of 70)</th>
-<th>Continuous Assessment (Out of 30)</th>
-<th>Composite Total Mark</th>
-<th>Final NUC Letter Grade</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>65 / 70 (Near Perfect)</strong></td>
-<td><strong>0 / 30 (Missed CA)</strong></td>
-<td><strong>65%</strong></td>
-<td><strong>B (Second Class Upper)</strong></td>
-</tr>
-<tr>
-<td><strong>50 / 70 (Above Average)</strong></td>
-<td><strong>0 / 30 (Missed CA)</strong></td>
-<td><strong>50%</strong></td>
-<td><strong>C (Second Class Lower)</strong></td>
-</tr>
-<tr>
-<td><strong>42 / 70 (Average)</strong></td>
-<td><strong>0 / 30 (Missed CA)</strong></td>
-<td><strong>42%</strong></td>
-<td><strong>E (Pass / Near Failure)</strong></td>
-</tr>
-<tr>
-<td><strong>38 / 70 (Below Average)</strong></td>
-<td><strong>0 / 30 (Missed CA)</strong></td>
-<td><strong>38%</strong></td>
-<td><strong>F (Carryover Course)</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Scoring 65 out of 70 on a Nigerian university final written exam is an exceptional feat achieved by less than 5% of candidates. For an average student, sitting an exam with zero CA guarantees that even a respectable performance ends in an <strong>E</strong> or <strong>F</strong>. </p>
+<p>| Final Exam Score (Out of 70) | Continuous Assessment (Out of 30) | Composite Total Mark | Final NUC Letter Grade |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>65 / 70 (Near Perfect)</strong> | <strong>0 / 30 (Missed CA)</strong> | <strong>65%</strong> | <strong>B (Second Class Upper)</strong> |</p>
+<p>| <strong>50 / 70 (Above Average)</strong> | <strong>0 / 30 (Missed CA)</strong> | <strong>50%</strong> | <strong>C (Second Class Lower)</strong> |</p>
+<p>| <strong>42 / 70 (Average)</strong> | <strong>0 / 30 (Missed CA)</strong> | <strong>42%</strong> | <strong>E (Pass / Near Failure)</strong> |</p>
+<p>| <strong>38 / 70 (Below Average)</strong> | <strong>0 / 30 (Missed CA)</strong> | <strong>38%</strong> | <strong>F (Carryover Course)</strong> |</p>
+<p>Scoring 65 out of 70 on a Nigerian university final written exam is an exceptional feat achieved by less than 5% of candidates. For an average student, sitting an exam with zero CA guarantees that even a respectable performance ends in an <strong>E</strong> or <strong>F</strong>.</p>
 <p>To understand how carryovers silently drag down your cumulative standing, read our tactical guide on <a href="/blog/academics/recover-from-carryover-courses-tactical-blueprint/">recovering from carryover courses</a>.</p>
-<hr />
-<h2 id="2-pathway-1-the-72-hour-medical-exeat-protocol-illness-emergencies">2. Pathway 1: The 72-Hour Medical Exeat Protocol (Illness &amp; Emergencies)</h2>
-<p>If illness, hospitalization, or an acute health crisis prevented you from attending the CA test, you possess a statutory defense under University Senate Academic Regulations. </p>
+<hr>
+<h2 id="2-pathway-1-the-72-hour-medical-exeat-protocol-illness-emergencies">2. Pathway 1: The 72-Hour Medical Exeat Protocol (Illness & Emergencies)</h2>
+<p>If illness, hospitalization, or an acute health crisis prevented you from attending the CA test, you possess a statutory defense under University Senate Academic Regulations.</p>
 <p>However, you must navigate the <strong>Medical Authentication Trap</strong>:</p>
 <ul>
 <li>Illness Occurs] ➔ [Report to University Sick Bay within 48–72h] ➔ [CMO Endorsement] ➔ [Submit to HOD</li>
 </ul>
 <h3 id="the-rules-of-medical-clearance">The Rules of Medical Clearance:</h3>
 <ol>
-<li><strong>Never Rely on Unendorsed Private Clinic Notes:</strong> Lecturers and departmental heads are explicitly instructed to reject medical slips from private clinics or patent medicine stores. </li>
-<li><strong>Obtain University Health Centre Authentication:</strong> If you received emergency treatment off-campus, you must take your discharge summary, lab reports, and doctor’s note directly to the <strong>Directorate of University Health Services</strong> (the campus Sick Bay or Clinic).</li>
-<li><strong>Beat the 72-Hour Statutory Limitation:</strong> Most university handbooks mandate that medical excuses must be lodged within 48 to 72 hours of the missed test. Presenting a medical certificate three weeks later when results are being compiled will be rejected as an afterthought.</li>
+<li>**Never Rely on Unendorsed Private Clinic Notes:** Lecturers and departmental heads are explicitly instructed to reject medical slips from private clinics or patent medicine stores.</li>
+<li>**Obtain University Health Centre Authentication:** If you received emergency treatment off-campus, you must take your discharge summary, lab reports, and doctor’s note directly to the **Directorate of University Health Services** (the campus Sick Bay or Clinic).</li>
+<li>**Beat the 72-Hour Statutory Limitation:** Most university handbooks mandate that medical excuses must be lodged within 48 to 72 hours of the missed test. Presenting a medical certificate three weeks later when results are being compiled will be rejected as an afterthought.</li>
 </ol>
 <p>Once the Chief Medical Officer stamps your clearance, write a formal memo to your course lecturer routed through your Head of Department (HOD) requesting a make-up assessment.</p>
-<hr />
-<h2 id="3-pathway-2-the-compassionate-official-representation-petition">3. Pathway 2: The Compassionate &amp; Official Representation Petition</h2>
+<hr>
+<h2 id="3-pathway-2-the-compassionate-official-representation-petition">3. Pathway 2: The Compassionate & Official Representation Petition</h2>
 <p>What if you missed the test due to an unforeseen crisis that was not medical—such as family bereavement, a verified transportation accident, or official university representation?</p>
 <h3 id="legitimate-grounds-recognized-by-faculty-boards">Legitimate Grounds Recognized by Faculty Boards:</h3>
 <ul>
-<li><strong>Official University Representation:</strong> If you represented your faculty or university at an approved sports festival (such as NUGA), academic debate, or national conference, your absence is legally excused. You must secure a formal confirmation memo from the <strong>Dean of Student Affairs (DSA)</strong> or Director of Sports.</li>
-<li><strong>Compassionate Grounds:</strong> In the tragic event of the demise of an immediate family member (parent or sibling), submit a formal letter co-signed by your parent or guardian, accompanied by supporting documentation (e.g., obituary announcement or death certificate).</li>
+<li>**Official University Representation:** If you represented your faculty or university at an approved sports festival (such as NUGA), academic debate, or national conference, your absence is legally excused. You must secure a formal confirmation memo from the **Dean of Student Affairs (DSA)** or Director of Sports.</li>
+<li>**Compassionate Grounds:** In the tragic event of the demise of an immediate family member (parent or sibling), submit a formal letter co-signed by your parent or guardian, accompanied by supporting documentation (e.g., obituary announcement or death certificate).</li>
 </ul>
 <p>If your missed CA resulted from lecturer miscommunication or subjective departmental friction, explore your institutional appeal rights in our breakdown of <a href="/blog/academics/unfair-lecturer-grading-university/">handling unfair lecturer grading and missing scores</a>.</p>
-<hr />
+<hr>
 <h2 id="4-negotiating-remediation-3-practical-make-up-options">4. Negotiating Remediation: 3 Practical Make-Up Options</h2>
 <p>Once your absence is administratively validated, do not expect the lecturer to print a brand-new 50-person test question paper just for you. Lecturers are overburdened and dislike creating duplicate exam papers.</p>
 <p>Approach your lecturer politely during office consultation hours and propose one of these <strong>three faculty-accepted alternatives</strong>:</p>
@@ -388,43 +358,44 @@
 <h3 id="option-c-pro-rated-examination-weighting-senate-discretion">Option C: Pro-Rated Examination Weighting (Senate Discretion)</h3>
 <p>In certain departments, the lecturer may agree in writing to pro-rate your final examination mark. For example, your final exam score out of 70 is mathematically scaled to represent 100% of your course grade:</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>Pro-Rated Mark = (Final Exam Raw Score / 70) * 100</em></p>
+<p>💡 **Key Formula:** *Pro-Rated Mark = (Final Exam Raw Score / 70) * 100*</p>
 </blockquote>
 <p><em>Note: This option requires official departmental board approval to prevent auditing queries during result verification.</em></p>
-<hr />
+<hr>
 <h2 id="5-what-if-the-lecturer-refuses-to-grant-a-make-up">5. What If the Lecturer Refuses to Grant a Make-Up?</h2>
 <p>In some unfortunate instances, a lecturer may flatly refuse to accommodate a valid, medically certified excuse, stating: <em>"I don't do make-up tests."</em></p>
-<p>If this occurs, do not get into an emotional shouting match. Take these measured steps:<br />
-1. <strong>Engage Your Course Level Adviser:</strong> Present your stamped Health Centre clearance and ask your Course Adviser to intervene informally on your behalf.<br />
-2. <strong>Escalate to the Head of Department (HOD):</strong> If the lecturer remains intractable, submit a formal written appeal to the HOD attaching your medical documentation. Departmental heads have the statutory authority to direct course coordinators to administer make-up assessments for validly excused absences.<br />
-3. <strong>Request an "Incomplete" (INC) Status:</strong> If resolution fails before the semester exam, formally request an INC status rather than sitting an exam with a 0/30 that guarantees failure. An INC permits you to sit the paper during the next session without carrying an 'F' on your permanent transcript.</p>
+<p>If this occurs, do not get into an emotional shouting match. Take these measured steps:</p>
+<ol>
+<li>**Engage Your Course Level Adviser:** Present your stamped Health Centre clearance and ask your Course Adviser to intervene informally on your behalf.</li>
+<li>**Escalate to the Head of Department (HOD):** If the lecturer remains intractable, submit a formal written appeal to the HOD attaching your medical documentation. Departmental heads have the statutory authority to direct course coordinators to administer make-up assessments for validly excused absences.</li>
+<li>**Request an "Incomplete" (INC) Status:** If resolution fails before the semester exam, formally request an INC status rather than sitting an exam with a 0/30 that guarantees failure. An INC permits you to sit the paper during the next session without carrying an 'F' on your permanent transcript.</li>
+</ol>
 <p>When facing severe academic anxiety or paralysis after a major test mishap, apply the psychological recovery frameworks in <a href="/blog/mental-health/">rebuilding confidence after academic setbacks and bad results</a>.</p>
-<hr />
+<hr>
 <h2 id="the-48-hour-recovery-checklist">The 48-Hour Recovery Checklist</h2>
 <p>If you missed a Continuous Assessment test today, follow this immediate emergency protocol:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Document the reason immediately:</strong> Secure clinic admission receipts, doctor's notes, or official event documentation within 24 hours.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Visit the University Health Centre:</strong> Have all external medical certificates authenticated and stamped by campus medical authorities.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Contact your Course Representative:</strong> Confirm if other students missed the test and whether a general make-up batch is being scheduled.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Draft a professional, formal memo to the lecturer:</strong> Route your request through your Course Level Adviser with attached supporting proofs.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Prepare for an immediate evaluation:</strong> Study the test syllabus thoroughly so you are ready to write an emergency make-up paper on 24 hours' notice.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Document the reason immediately:** Secure clinic admission receipts, doctor's notes, or official event documentation within 24 hours.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Visit the University Health Centre:** Have all external medical certificates authenticated and stamped by campus medical authorities.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Contact your Course Representative:** Confirm if other students missed the test and whether a general make-up batch is being scheduled.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Draft a professional, formal memo to the lecturer:** Route your request through your Course Level Adviser with attached supporting proofs.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Prepare for an immediate evaluation:** Study the test syllabus thoroughly so you are ready to write an emergency make-up paper on 24 hours' notice.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="build-an-unshakeable-academic-strategy">Build an Unshakeable Academic Strategy</h2>
 <p>Missing a test is an urgent wake-up call to tighten your academic operations, build contingency buffers into your schedule, and eliminate last-minute crises.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic Resource</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">Master the exact time-management schedules, continuous assessment optimization systems, and exam-hall execution strategies used by top-performing Nigerian university students.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>CA Score Optimization Guide</strong> — How to maximize assignment, test, and lab marks before final exams</li>
-    <li><strong>Syllabus Triage Worksheets</strong> — Rapidly master high-yield topics when recovering from missed coursework</li>
-    <li><strong>Academic Rights & Policy Manual</strong> — Navigate university Senate regulations, exam appeals, and medical exemptions</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Explore the Academic Comeback Package &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic Resource</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">Master the exact time-management schedules, continuous assessment optimization systems, and exam-hall execution strategies used by top-performing Nigerian university students.</p>
+<ul class="blog-cta-box__features">
+<li><strong>CA Score Optimization Guide</strong> — How to maximize assignment, test, and lab marks before final exams</li>
+<li><strong>Syllabus Triage Worksheets</strong> — Rapidly master high-yield topics when recovering from missed coursework</li>
+<li><strong>Academic Rights & Policy Manual</strong> — Navigate university Senate regulations, exam appeals, and medical exemptions</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Explore the Academic Comeback Package &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="can-you-pass-a-nigerian-university-course-if-you-score-zero-in-your-ca-test">Can you pass a Nigerian university course if you score zero in your CA test?</h3>
 <p>Technically yes, but mathematically it is extremely hazardous. Continuous Assessment accounts for 30 to 40 marks. If you enter the exam hall with 0/30, scoring an exceptional 50/70 on the final exam paper only yields a composite score of 50 (C), while a realistic 42/70 results in 42 (E) or an outright carryover.</p>
@@ -598,8 +569,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -783,8 +754,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -798,7 +769,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

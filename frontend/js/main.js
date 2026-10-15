@@ -153,7 +153,7 @@
     if (!el) return;
     let diff = expiry - Date.now();
     if (diff <= 0) {
-      // Roll over for current batch — preserve ₦2,000 price
+      // Roll over for current batch — preserve ₦5,000 price
       expiry = Date.now() + 24 * 60 * 60 * 1000;
       try { localStorage.setItem(KEY, expiry); } catch (e) {}
       diff = expiry - Date.now();

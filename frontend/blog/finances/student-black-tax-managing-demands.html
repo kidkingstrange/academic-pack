@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -317,77 +317,59 @@
 <p>If you transfer the money, your bank account drops to zero, and you will spend the next three weeks starving during Continuous Assessment tests.</p>
 <p>This is the hidden financial tax on ambitious Nigerian youths: <strong>Undergraduate Black Tax</strong>.</p>
 <p>Here is how to set loving, unshakeable boundaries without destroying family relationships.</p>
-<hr />
+<hr>
 <h2 id="1-the-myth-of-the-wealthy-university-student">1. The Myth of the "Wealthy University Student"</h2>
 <p>In many rural Nigerian communities, attending tertiary education is culturally equated with financial wealth:</p>
 <blockquote>
-<h3 id="relatives-perception">Relative'S Perception</h3>
-<ul>
-<li>University student = Living in luxury in the big city</li>
-<li>Has access to scholarships, politicians, and wealthy friends</li>
-<li>Ought to contribute to weddings, burials, and sibling emergencies</li>
-<li><strong>The Student Reality</strong></li>
-<li>Skipping meals to print lecture handouts</li>
-<li>Surviving in a 6-man room with erratic power and no running water</li>
-<li>Bank balance: ₦1,250</li>
-</ul>
+<p>### Relative'S Perception</p>
+<p>></p>
+<p>* University student = Living in luxury in the big city</p>
+<p>* Has access to scholarships, politicians, and wealthy friends</p>
+<p>* Ought to contribute to weddings, burials, and sibling emergencies</p>
+<p>* **The Student Reality**</p>
+<p>* Skipping meals to print lecture handouts</p>
+<p>* Surviving in a 6-man room with erratic power and no running water</p>
+<p>* Bank balance: ₦1,250</p>
 </blockquote>
 <p>When relatives demand financial bailouts, they are not acting out of malice; they are operating under a profound delusion regarding the economic reality of modern Nigerian university life.</p>
 <p>Understand the emotional toll of eldest child expectations in <a href="/blog/mental-health/eldest-child-pressure-university-student/">eldest child pressure in Nigerian universities: sending pocket money home</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-trap-of-financial-secrecy-vs-financial-vulnerability">2. The Trap of Financial Secrecy vs. Financial Vulnerability</h2>
-<p>The biggest mistake students make when they start earning small income (freelancing, campus hair-dressing, tech gigs) is <strong>Status Signaling</strong>:<br />
-* Posting photos in restaurants on WhatsApp status.<br />
-* Buying fashionable clothes to look successful on campus.<br />
-* Announcing online earnings to cousins.</p>
+<p>The biggest mistake students make when they start earning small income (freelancing, campus hair-dressing, tech gigs) is <strong>Status Signaling</strong>:</p>
+<ul>
+<li>Posting photos in restaurants on WhatsApp status.</li>
+<li>Buying fashionable clothes to look successful on campus.</li>
+<li>Announcing online earnings to cousins.</li>
+</ul>
 <p>The moment extended relatives see signs of prosperity, you become the designated family safety net.</p>
-<table>
-<thead>
-<tr>
-<th>Public Stance</th>
-<th>Consequence</th>
-<th>Safe Behavioral Standard</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Flashy WhatsApp status posts</strong></td>
-<td>Immediate influx of emergency loan requests</td>
-<td>Complete privacy regarding income and savings</td>
-</tr>
-<tr>
-<td><strong>Defensive angry arguments</strong></td>
-<td>Accusations of arrogance and family betrayal</td>
-<td>Calm, respectful, and brief boundary scripts</td>
-</tr>
-<tr>
-<td><strong>Sacrificing exam fees for family</strong></td>
-<td>Academic failure, carryovers, drop out</td>
-<td>Non-negotiable protection of education budget</td>
-</tr>
-</tbody>
-</table>
+<p>| Public Stance | Consequence | Safe Behavioral Standard |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Flashy WhatsApp status posts</strong> | Immediate influx of emergency loan requests | Complete privacy regarding income and savings |</p>
+<p>| <strong>Defensive angry arguments</strong> | Accusations of arrogance and family betrayal | Calm, respectful, and brief boundary scripts |</p>
+<p>| <strong>Sacrificing exam fees for family</strong> | Academic failure, carryovers, drop out | Non-negotiable protection of education budget |</p>
 <p>Review how poverty fuels study anxiety in <a href="/blog/mental-health/family-poverty-pressure-study-anxiety/">family poverty pressure and study anxiety: managing survival stress</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-golden-boundary-scripts">3. The 3 Golden Boundary Scripts</h2>
 <p>You never need to lie. You simply state the reality of your student situation with calm respect:</p>
-<h3 id="script-1-for-demands-from-extended-unclesaunts">Script 1: For Demands from Extended Uncles/Aunts</h3>
+<h3 id="script-1-for-demands-from-extended-uncles-aunts">Script 1: For Demands from Extended Uncles/Aunts</h3>
 <blockquote>
-<p><em>"Good afternoon Uncle. Thank you for checking on my studies. I am very sorry to hear about the situation with cousin. Unfortunately, as a student living strictly on an allowance that barely covers my feeding and exam materials, I do not have personal savings or funds to assist with this right now. I am praying that things resolve quickly."</em></p>
+<p>*"Good afternoon Uncle. Thank you for checking on my studies. I am very sorry to hear about the situation with cousin. Unfortunately, as a student living strictly on an allowance that barely covers my feeding and exam materials, I do not have personal savings or funds to assist with this right now. I am praying that things resolve quickly."*</p>
 </blockquote>
 <h3 id="script-2-for-sibling-financial-requests">Script 2: For Sibling Financial Requests</h3>
 <blockquote>
-<p><em>"Sister, I love you, but right now on campus, my remaining balance is for my faculty exam clearances this month. I cannot send money now without putting my exams in jeopardy. Let me focus on finishing my degree so I can support you properly once I start working."</em></p>
+<p>*"Sister, I love you, but right now on campus, my remaining balance is for my faculty exam clearances this month. I cannot send money now without putting my exams in jeopardy. Let me focus on finishing my degree so I can support you properly once I start working."*</p>
 </blockquote>
 <p>Learn upcoming financial management strategies in our pillar guide on <a href="/blog/finances/">managing extended student financial pressures and family budgeting</a>.</p>
-<hr />
+<hr>
 <h2 id="4-your-first-obligation-is-graduation">4. Your First Obligation Is Graduation</h2>
-<p>Remember this foundational truth:<br />
-* You cannot pull someone out of a ditch if you jump into the ditch with them.<br />
-* If you drain your student funds, get sick, fail your exams, or drop out of school, you become another financial burden on your family.<br />
-* Your greatest long-term service to your entire family lineage is to graduate with high academic honors, acquire lucrative skills, and establish your own financial independence.</p>
+<p>Remember this foundational truth:</p>
+<ul>
+<li>You cannot pull someone out of a ditch if you jump into the ditch with them.</li>
+<li>If you drain your student funds, get sick, fail your exams, or drop out of school, you become another financial burden on your family.</li>
+<li>Your greatest long-term service to your entire family lineage is to graduate with high academic honors, acquire lucrative skills, and establish your own financial independence.</li>
+</ul>
 <p>Protect your education with absolute conviction.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-student-black-tax-in-nigeria">What is 'Student Black Tax' in Nigeria?</h3>
 <p>The financial expectations placed on university undergraduates by extended family members, relatives, or parents who assume university students have surplus cash or should solve family emergencies.</p>
@@ -561,8 +543,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -746,8 +728,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -761,7 +743,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

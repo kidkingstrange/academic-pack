@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -313,42 +313,46 @@
 <p>This pride feels intoxicating at first. But by your second semester, that blessing transforms into a crushing, suffocating weight.</p>
 <p>Every time you sit in an exam hall, you don't just see exam questions; you see the faces of twenty relatives waiting for good news. A single 'C' or 'D' grade doesn't just feel like an academic slip—it feels like you have betrayed your family's generational salvation.</p>
 <p>Here is the psychological reality of being a <strong>First-Generation University Student</strong> in Nigeria, and how to carry that mantle without breaking.</p>
-<hr />
+<hr>
 <h2 id="1-the-invisible-barrier-lack-of-institutional-capital">1. The Invisible Barrier: Lack of Institutional Capital</h2>
-<p>Children of university-educated parents inherit an unwritten playbook of academic survival:<br />
-* They know that 100-level continuous assessment (CA) tests count for 30% of their final grade.<br />
-* They know how to speak comfortably with professors during office hours without trembling.<br />
-* They have older siblings who pass down verified course summaries and past question patterns.</p>
+<p>Children of university-educated parents inherit an unwritten playbook of academic survival:</p>
+<ul>
+<li>They know that 100-level continuous assessment (CA) tests count for 30% of their final grade.</li>
+<li>They know how to speak comfortably with professors during office hours without trembling.</li>
+<li>They have older siblings who pass down verified course summaries and past question patterns.</li>
+</ul>
 <p>First-generation students have none of this. You enter the university like an immigrant in a foreign land. Every institutional norm must be learned through painful trial and error.</p>
 <p>When you struggle, you cannot call your parents for academic guidance. If you tell them you are having difficulty with Organic Chemistry or Vector Analysis, they will simply tell you: <em>"Pray more, my child. Fast on Wednesdays. Read harder."</em> While well-intentioned, spiritual advice cannot replace active recall study strategies or past exam analysis.</p>
 <p>Deconstruct the psychological origins of academic insecurity in <a href="/blog/mental-health/imposter-syndrome-university-nigeria/">imposter syndrome in Nigerian universities: why you feel out of place</a>.</p>
-<hr />
+<hr>
 <h2 id="2-navigating-the-disconnect-between-home-and-campus">2. Navigating the Disconnect Between Home and Campus</h2>
 <p>As your vocabulary, critical thinking, and world perspective expand through higher education, an uncomfortable psychological rift emerges between you and your home community:</p>
 <ul>
-<li><strong>The Expectation of Omniscience:</strong> Because you attend university, relatives assume you understand everything from commercial law to medical prescriptions. Disclosing that you don't know makes you feel like an imposter.</li>
-<li><strong>The Presumption of Instant Wealth:</strong> Many families equate entering university with instant financial prosperity. Relatives may begin soliciting contributions for burial ceremonies or child dedications, unaware that you are skipping meals to buy handouts.</li>
-<li><strong>The Fear of Alienation:</strong> You may start to feel guilty when speaking formal English or adopting modern perspectives, fearing that your family will accuse you of <em>"becoming too proud"</em> or forgetting your roots.</li>
+<li>**The Expectation of Omniscience:** Because you attend university, relatives assume you understand everything from commercial law to medical prescriptions. Disclosing that you don't know makes you feel like an imposter.</li>
+<li>**The Presumption of Instant Wealth:** Many families equate entering university with instant financial prosperity. Relatives may begin soliciting contributions for burial ceremonies or child dedications, unaware that you are skipping meals to buy handouts.</li>
+<li>**The Fear of Alienation:** You may start to feel guilty when speaking formal English or adopting modern perspectives, fearing that your family will accuse you of *"becoming too proud"* or forgetting your roots.</li>
 </ul>
 <p>Learn how to communicate your limits to your parents in <a href="/blog/mental-health/parental-expectations-academic-pressure/">handling parental expectations and academic pressure in Nigeria</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-4-survival-pillars-for-first-gen-scholars">3. The 4 Survival Pillars for First-Gen Scholars</h2>
 <p>To transform this generational pressure into academic fuel rather than chronic anxiety, build these four support structures:</p>
 <h3 id="a-seek-academic-mentorship-actively">A. Seek Academic Mentorship Actively</h3>
 <p>Do not suffer in silence. Find a 400-level departmental scholar, a postgraduate student, or an approachable graduate assistant. Say directly: <em>"I am the first in my family to pursue this course. I want to understand how top students study for this department's exams."</em> Academics respect genuine humility and ambition.</p>
-<h3 id="b-separate-your-identity-from-your-familys-destiny">B. Separate Your Identity from Your Family's Destiny</h3>
+<h3 id="b-separate-your-identity-from-your-family-s-destiny">B. Separate Your Identity from Your Family's Destiny</h3>
 <p>You are a human being, not a financial retirement plan for your extended family. While honoring your parents is virtuous, carrying their entire economic salvation on your 20-year-old shoulders will paralyze your cognitive faculties. You must study for your own intellectual mastery first.</p>
 <h3 id="c-build-a-peer-cohort-of-high-achievers">C. Build a Peer Cohort of High Achievers</h3>
 <p>Surround yourself with disciplined, forward-looking coursemates who normalize high grades, library focus, and career preparation. Their collective confidence will dilute the loneliness of your first-generation journey.</p>
 <p>Explore upcoming strategies on student financial management in <a href="/blog/finances/">campus student financial literacy and planning</a>.</p>
-<hr />
+<hr>
 <h2 id="4-your-heritage-is-your-competitive-advantage">4. Your Heritage Is Your Competitive Advantage</h2>
-<p>When the pressure feels overwhelming, remember why you are here:<br />
-* You possess a level of grit, resilience, and hunger that comfortable, privileged students will never understand.<br />
-* You know the physical cost of sacrifice.<br />
-* You have survived difficult secondary schools, harsh economic environments, and institutional hurdles just to earn a seat in this university.</p>
+<p>When the pressure feels overwhelming, remember why you are here:</p>
+<ul>
+<li>You possess a level of grit, resilience, and hunger that comfortable, privileged students will never understand.</li>
+<li>You know the physical cost of sacrifice.</li>
+<li>You have survived difficult secondary schools, harsh economic environments, and institutional hurdles just to earn a seat in this university.</li>
+</ul>
 <p>That resilience is not a handicap—it is your greatest superpower. When you graduate, you will not just collect a certificate; you will permanently alter the trajectory of your entire family lineage.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-biggest-challenge-facing-first-generation-university-students-in-nigeria">What is the biggest challenge facing first-generation university students in Nigeria?</h3>
 <p>The lack of 'institutional cultural capital.' Without parents or relatives who attended university, first-gen students have no one to teach them how CGPAs work, how to network with lecturers, or how to navigate academic probation.</p>
@@ -522,8 +526,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -707,8 +711,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -722,7 +726,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

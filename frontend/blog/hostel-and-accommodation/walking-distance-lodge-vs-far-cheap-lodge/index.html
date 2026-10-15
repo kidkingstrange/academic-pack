@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,41 +309,47 @@
         <h1 id="walking-distance-lodge-vs-cheap-far-lodge-with-bike-cost">Walking Distance Lodge vs Cheap Far Lodge with Bike Cost</h1>
 <p>It is the classic estate hunting dilemma every Nigerian undergraduate faces:</p>
 <ul>
-<li><strong>Lodge Option A:</strong> A self-contained room located 400 meters from the university back gate. The compound is clean, but the landlord firmly demands <strong>₦420,000</strong>.</li>
-<li><strong>Lodge Option B:</strong> A self-contained room located 6 kilometers away in a developing suburban village. The room is modern, spacious, and priced at a tempting <strong>₦250,000</strong>.</li>
+<li>**Lodge Option A:** A self-contained room located 400 meters from the university back gate. The compound is clean, but the landlord firmly demands **₦420,000**.</li>
+<li>**Lodge Option B:** A self-contained room located 6 kilometers away in a developing suburban village. The room is modern, spacious, and priced at a tempting **₦250,000**.</li>
 </ul>
 <p>At first glance, Option B appears to save you a massive <strong>₦170,000</strong>. You congratulate yourself on being financially savvy.</p>
 <p>Then the academic semester begins, and the hidden economic, physical, and academic realities of the <em>"cheap distant lodge"</em> start taking their toll.</p>
-<hr />
-<h2 id="1-the-transport-math-where-the-170000-savings-disappear">1. The Transport Math: Where the ₦170,000 Savings Disappear</h2>
+<hr>
+<h2 id="1-the-transport-math-where-the-170-000-savings-disappear">1. The Transport Math: Where the ₦170,000 Savings Disappear</h2>
 <p>Let us calculate the true transport arithmetic for a distant lodge over a standard 36-week academic session (two 18-week semesters):</p>
 <ul>
-<li><strong>Daily Commuting Route:</strong> Lodge to Campus Gate (₦400) + Gate to Faculty (₦200) = ₦600 one-way.</li>
-<li><strong>Return Commute:</strong> Faculty to Campus Gate (₦200) + Gate to Lodge (₦400) = ₦600 return.</li>
-<li><strong>Total Daily Transit Expense:</strong> <strong>₦1,200 per day</strong>.</li>
-<li><strong>Average Days on Campus per Week:</strong> 5 days (₦6,000 weekly).</li>
-<li><strong>Session Transport Cost (30 active weeks):</strong> 30 weeks × ₦6,000 = <strong>₦180,000</strong>.</li>
+<li>**Daily Commuting Route:** Lodge to Campus Gate (₦400) + Gate to Faculty (₦200) = ₦600 one-way.</li>
+<li>**Return Commute:** Faculty to Campus Gate (₦200) + Gate to Lodge (₦400) = ₦600 return.</li>
+<li>**Total Daily Transit Expense:** **₦1,200 per day**.</li>
+<li>**Average Days on Campus per Week:** 5 days (₦6,000 weekly).</li>
+<li>**Session Transport Cost (30 active weeks):** 30 weeks × ₦6,000 = **₦180,000**.</li>
 </ul>
 <p>If you return to campus for weekend group assignments, evening religious fellowship services, or night library revisions, your transport costs exceed <strong>₦220,000</strong>.</p>
 <p>Your ₦170,000 rental savings have vanished into tricycle exhaust pipes. You paid the same total money, but endured endless dust, rain, and road friction.</p>
 <p>Compare overall living costs in our breakdown on <a href="/blog/hostel-and-accommodation/school-hostel-vs-off-campus-lodge-cost/">school hostel vs off-campus lodge real cost breakdown</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-invisible-academic-penalty-transit-fatigue">2. The Invisible Academic Penalty: Transit Fatigue</h2>
-<p>Financial capital is replaceable; cognitive stamina is not. </p>
-<p>When you live within walking distance:<br />
-1. You wake up at 7:15 AM, shower, prepare a proper breakfast, and stroll into your 8:00 AM lecture hall feeling calm and alert.<br />
-2. If you have a 3-hour lecture gap between 11:00 AM and 2:00 PM, you can walk back to your room, cook fresh food, rest for 45 minutes, and return refreshed.</p>
-<p>When you live 6 kilometers away:<br />
-1. You must wake up at 5:45 AM to fight for commercial vehicles during morning rush hours. If rain falls, motorcycle riders refuse to enter muddy access roads, forcing you to arrive late, drenched, and stressed.<br />
-2. During lecture gaps, you are stranded on campus corridors, spending money on expensive canteen snacks while wandering between faculty benches.</p>
+<p>Financial capital is replaceable; cognitive stamina is not.</p>
+<p>When you live within walking distance:</p>
+<ol>
+<li>You wake up at 7:15 AM, shower, prepare a proper breakfast, and stroll into your 8:00 AM lecture hall feeling calm and alert.</li>
+<li>If you have a 3-hour lecture gap between 11:00 AM and 2:00 PM, you can walk back to your room, cook fresh food, rest for 45 minutes, and return refreshed.</li>
+</ol>
+<p>When you live 6 kilometers away:</p>
+<ol>
+<li>You must wake up at 5:45 AM to fight for commercial vehicles during morning rush hours. If rain falls, motorcycle riders refuse to enter muddy access roads, forcing you to arrive late, drenched, and stressed.</li>
+<li>During lecture gaps, you are stranded on campus corridors, spending money on expensive canteen snacks while wandering between faculty benches.</li>
+</ol>
 <p>Learn how to survive long daily commutes without failing courses in <a href="/blog/hostel-and-accommodation/commuting-off-campus-to-morning-lectures/">off-campus students commuting 10km to early classes</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-emergency-and-social-disconnect">3. The Emergency and Social Disconnect</h2>
-<p>Proximity delivers critical emergency resilience:<br />
-* <strong>The Strike of 11:00 PM Library Sessions:</strong> Walking home from the departmental reading room at 10:30 PM is safe and effortless when your gate is 5 minutes away. If you live 6km away, evening study on campus is impossible because bike transport ceases by 8:30 PM.<br />
-* <strong>Test Venue and Timetable Shifts:</strong> Nigerian lecturers frequently announce impromptu Continuous Assessment tests with 30 minutes' notice on WhatsApp class groups. Distant students routinely miss these tests and suffer zero marks.</p>
+<p>Proximity delivers critical emergency resilience:</p>
+<ul>
+<li>**The Strike of 11:00 PM Library Sessions:** Walking home from the departmental reading room at 10:30 PM is safe and effortless when your gate is 5 minutes away. If you live 6km away, evening study on campus is impossible because bike transport ceases by 8:30 PM.</li>
+<li>**Test Venue and Timetable Shifts:** Nigerian lecturers frequently announce impromptu Continuous Assessment tests with 30 minutes' notice on WhatsApp class groups. Distant students routinely miss these tests and suffer zero marks.</li>
+</ul>
 <p>If pocket money exhaustion forces you into survival rationing, study our field guide on <a href="/blog/finances/">surviving on ₦2,000 campus allowance</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-daily-commercial-transport-add-to-student-living-expenses-annually">How much does daily commercial transport add to student living expenses annually?</h3>
 <p>At an average round-trip motorcycle (Okada) or tricycle (Keke) fare of ₦800 to ₦1,400 daily, a student commuting 200 academic days spends between ₦160,000 and ₦280,000 each session solely on local transport.</p>
@@ -517,8 +523,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -702,8 +708,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -717,7 +723,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

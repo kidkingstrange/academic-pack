@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,7 +308,7 @@
       <div class="article-body">
         <h1 id="venting-to-roommates-vs-journaling-emotional-safety">Venting to Roommates vs Journaling: Emotional Safety</h1>
 <p>It is 10:30 PM in a 6-man student hostel room.</p>
-<p>You are sitting on your thin foam mattress, feeling utterly crushed. </p>
+<p>You are sitting on your thin foam mattress, feeling utterly crushed.</p>
 <p>Your continuous assessment test result was catastrophic. Your bank account is down to ₦350. You feel an overwhelming urge to spill your heart out to your roommate who is cooking indomie noodles two feet away.</p>
 <p>You want to tell them everything: how broken you feel, how terrified you are of failing, how your family is struggling.</p>
 <p>Before you open your mouth, a small warning bell rings in your head:</p>
@@ -316,107 +316,64 @@
 <p>In Nigerian university hostels, where personal boundaries are virtually nonexistent and gossip is the campus currency, <strong>choosing how to process emotional pain is a matter of psychological survival.</strong></p>
 <p>Do you vent to your roommates, or do you channel your stress into private, encrypted therapeutic journaling?</p>
 <p>Here is the psychological and social breakdown.</p>
-<hr />
+<hr>
 <h2 id="1-the-anatomy-of-co-rumination-in-student-rooms">1. The Anatomy of "Co-Rumination" in Student Rooms</h2>
 <p>Venting feels good in the first five minutes. But clinical psychologists distinguish between healthy emotional expression and <strong>Toxic Co-Rumination</strong>:</p>
 <blockquote>
-<h3 id="student-a-vents-this-university-is-wicked-lecturer-x-wants-to-destroy-us">Student A Vents: "This University Is Wicked; Lecturer X Wants To Destroy Us"</h3>
-<ul>
-<li><strong>Roommate Echoes &amp; Amplifies: "Yes! Everyone is failing; our department is doomed"</strong></li>
-<li><strong>Shared Spiral: Cortisol &amp; Panic Multiply; Zero Solutions Generated</strong></li>
-</ul>
+<p>### Student A Vents: "This University Is Wicked; Lecturer X Wants To Destroy Us"</p>
+<p>></p>
+<p>* **Roommate Echoes & Amplifies: "Yes! Everyone is failing; our department is doomed"**</p>
+<p>* **Shared Spiral: Cortisol & Panic Multiply; Zero Solutions Generated**</p>
 </blockquote>
-<p>When you vent to roommates who are equally stressed and anxious:<br />
-* You do not achieve emotional release; you amplify collective despair.<br />
-* The room becomes an echo chamber of defeatism, convincing you that reading is pointless because "the system is rigged."<br />
-* You waste two hours of peak evening revision time fueling mutual outrage.</p>
+<p>When you vent to roommates who are equally stressed and anxious:</p>
+<ul>
+<li>You do not achieve emotional release; you amplify collective despair.</li>
+<li>The room becomes an echo chamber of defeatism, convincing you that reading is pointless because "the system is rigged."</li>
+<li>You waste two hours of peak evening revision time fueling mutual outrage.</li>
+</ul>
 <p>Explore hostel conflict management in <a href="/blog/hostel/roommate-conflict-resolution-hostel/">roommate conflict resolution: managing difficult hostel room dynamics</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-social-vulnerability-risk-the-gossip-economy">2. The Social Vulnerability Risk: The Gossip Economy</h2>
 <p>In crowded tertiary hostels, secrets have a half-life of roughly forty-eight hours:</p>
-<table>
-<thead>
-<tr>
-<th>Communication Method</th>
-<th>Confidentiality Level</th>
-<th>Emotional Reassurance</th>
-<th>Risk of Social Retaliation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Venting to Roommate</strong></td>
-<td><strong>Extremely Low</strong> (50%+ leaked during future fights)</td>
-<td>Immediate verbal empathy</td>
-<td><strong>High</strong> (Weaponized during disputes)</td>
-</tr>
-<tr>
-<td><strong>Encrypted Digital Journal</strong></td>
-<td><strong>100% Secure</strong> (Biometric / PIN lock)</td>
-<td>Self-regulated clarity</td>
-<td><strong>Zero</strong></td>
-</tr>
-<tr>
-<td><strong>Physical Paper Diary</strong></td>
-<td><strong>Moderate to Low</strong> (Can be found under mattress)</td>
-<td>Tactile kinetic release</td>
-<td><strong>Moderate</strong> (Roommates snooping)</td>
-</tr>
-</tbody>
-</table>
+<p>| Communication Method | Confidentiality Level | Emotional Reassurance | Risk of Social Retaliation |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Venting to Roommate</strong> | <strong>Extremely Low</strong> (50%+ leaked during future fights) | Immediate verbal empathy | <strong>High</strong> (Weaponized during disputes) |</p>
+<p>| <strong>Encrypted Digital Journal</strong> | <strong>100% Secure</strong> (Biometric / PIN lock) | Self-regulated clarity | <strong>Zero</strong> |</p>
+<p>| <strong>Physical Paper Diary</strong> | <strong>Moderate to Low</strong> (Can be found under mattress) | Tactile kinetic release | <strong>Moderate</strong> (Roommates snooping) |</p>
 <blockquote>
-<p><strong>Hostel Principle:</strong> Never tell a roommate a secret that you would be terrified to see posted on the faculty WhatsApp group. Roommate friendships on campus can be transient, but reputations are permanent.</p>
+<p>**Hostel Principle:** Never tell a roommate a secret that you would be terrified to see posted on the faculty WhatsApp group. Roommate friendships on campus can be transient, but reputations are permanent.</p>
 </blockquote>
 <p>Learn how lack of space drains mental energy in <a href="/blog/mental-health/lack-of-privacy-hostel-mental-toll/">shared space exhaustion: the mental cost of no privacy in hostels</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-cognitive-science-of-therapeutic-expressive-writing">3. The Cognitive Science of Therapeutic Expressive Writing</h2>
-<p>Pioneering research by Dr. James Pennebaker at the University of Texas demonstrated that <strong>15 minutes of expressive writing</strong>:<br />
-* Directly reduces intrusive negative thoughts during cognitive tasks.<br />
-* Lowers systemic inflammatory markers and resting blood pressure.<br />
-* Significantly improves examination performance in test-anxious college students.</p>
-<table>
-<thead>
-<tr>
-<th>Cognitive Stage</th>
-<th>Brain Mechanism</th>
-<th>Mental Outcome</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Stage 1: Raw Stress</strong></td>
-<td>Amygdala hyper-activation</td>
-<td>Emotional flooding, high cortisol, paralyzed working memory</td>
-</tr>
-<tr>
-<td><strong>Stage 2: Journaling / Labeling</strong></td>
-<td>Prefrontal cortex engages to articulate thoughts into words</td>
-<td>Emotional affect labeling cools amygdala fight-or-flight circuits</td>
-</tr>
-<tr>
-<td><strong>Stage 3: Cognitive Recovery</strong></td>
-<td>Working memory bandwidth restored</td>
-<td>Anxiety dissolves into concrete action items; focus returns for study</td>
-</tr>
-</tbody>
-</table>
+<p>Pioneering research by Dr. James Pennebaker at the University of Texas demonstrated that <strong>15 minutes of expressive writing</strong>:</p>
+<ul>
+<li>Directly reduces intrusive negative thoughts during cognitive tasks.</li>
+<li>Lowers systemic inflammatory markers and resting blood pressure.</li>
+<li>Significantly improves examination performance in test-anxious college students.</li>
+</ul>
+<p>| Cognitive Stage | Brain Mechanism | Mental Outcome |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Stage 1: Raw Stress</strong> | Amygdala hyper-activation | Emotional flooding, high cortisol, paralyzed working memory |</p>
+<p>| <strong>Stage 2: Journaling / Labeling</strong> | Prefrontal cortex engages to articulate thoughts into words | Emotional affect labeling cools amygdala fight-or-flight circuits |</p>
+<p>| <strong>Stage 3: Cognitive Recovery</strong> | Working memory bandwidth restored | Anxiety dissolves into concrete action items; focus returns for study |</p>
 <p>When you write: <em>"I am terrified of failing Course 301 because I don't understand Chapter 4,"</em> your brain shifts from blind emotional panic into <strong>Diagnostic Problem Solving</strong>.</p>
 <p>Review mentoring options on campus in <a href="/blog/mental-health/campus-counselor-vs-senior-mentor/">university guidance counselor vs trusted senior friend</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-safe-emotional-protocol-for-hostellers">4. The Safe Emotional Protocol for Hostellers</h2>
 <p>To protect both your emotional well-being and your social safety in a crowded lodge:</p>
 <ol>
-<li><strong>Adopt Encrypted Digital Journaling:</strong> Use an app with biometric fingerprint lock (like Apple Notes with password lock, Day One, or a private offline document). Write freely for 10 minutes without editing or self-censorship.</li>
-<li><strong>Execute the "Burn After Writing" Technique:</strong> If you prefer pen and paper, write your rawest frustrations on a loose sheet of scrap paper. Once finished, tear it into microscopic shreds or burn it safely over a metal trash can. This prevents any curious roommate from reading your innermost thoughts.</li>
-<li><strong>Keep Roommate Conversations Constructive:</strong> Share daily logistical humor, banter, and light mutual encouragement. Save your deep, vulnerable existential processing for your private journal, trusted family, or professional counselors.</li>
+<li>**Adopt Encrypted Digital Journaling:** Use an app with biometric fingerprint lock (like Apple Notes with password lock, Day One, or a private offline document). Write freely for 10 minutes without editing or self-censorship.</li>
+<li>**Execute the "Burn After Writing" Technique:** If you prefer pen and paper, write your rawest frustrations on a loose sheet of scrap paper. Once finished, tear it into microscopic shreds or burn it safely over a metal trash can. This prevents any curious roommate from reading your innermost thoughts.</li>
+<li>**Keep Roommate Conversations Constructive:** Share daily logistical humor, banter, and light mutual encouragement. Save your deep, vulnerable existential processing for your private journal, trusted family, or professional counselors.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-venting-to-hostel-roommates-about-academic-or-personal-stress-often-risky">Why is venting to hostel roommates about academic or personal stress often risky?</h3>
 <p>Hostel rooms lack privacy. Sensitive disclosures about failed courses, family poverty, or personal secrets are frequently weaponized during future roommate quarrels or shared as campus gossip.</p>
 <h3 id="how-does-therapeutic-journaling-help-reduce-university-examination-anxiety">How does therapeutic journaling help reduce university examination anxiety?</h3>
 <p>Journaling engages the prefrontal cortex, organizing fragmented emotional thoughts into structured verbal sentences. This downregulates amygdala reactivity and frees up working memory for study.</p>
-<h3 id="what-should-you-do-if-you-dont-want-roommates-finding-and-reading-your-private-journal">What should you do if you don't want roommates finding and reading your private journal?</h3>
+<h3 id="what-should-you-do-if-you-don-t-want-roommates-finding-and-reading-your-private-journal">What should you do if you don't want roommates finding and reading your private journal?</h3>
 <p>Use password-protected encrypted digital journaling applications (such as Day One, Notion with two-factor authentication, or locked Notes app) rather than physical paper notebooks in shared rooms.</p>
 <h3 id="when-is-talking-to-a-human-friend-necessary-instead-of-just-journaling">When is talking to a human friend necessary instead of just journaling?</h3>
 <p>When experiencing acute feelings of severe social isolation, active grief, or clinical crises where physical human empathy, safety reassurance, and mutual connection are required.</p>
@@ -584,8 +541,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -769,8 +726,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -784,7 +741,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,23 +309,25 @@
         <h1 id="exam-anxiety-vs-normal-nerves-how-your-body-reacts">Exam Anxiety vs Normal Nerves: How Your Body Reacts</h1>
 <p>Thirty minutes before your semester exam starts, you stand in the crowded foyer outside the university multipurpose auditorium.</p>
 <p>Around you, hundreds of coursemates are flipping frantically through laminated formula summaries. Someone near you murmurs: <em>"Prof said Question 4 is compulsory from Chapter 7!"</em></p>
-<p>Suddenly, your body responds:<br />
-* Your heart begins pounding against your ribs like a sledgehammer.<br />
-* A cold, sickening knot tightens in the pit of your stomach.<br />
-* Your palms grow damp with ice-cold sweat, and your hands tremble as you uncap your ballpoint pen.<br />
-* When you try to recall the core derivation you practiced four times yesterday, your mind presents a complete, blank void.</p>
+<p>Suddenly, your body responds:</p>
+<ul>
+<li>Your heart begins pounding against your ribs like a sledgehammer.</li>
+<li>A cold, sickening knot tightens in the pit of your stomach.</li>
+<li>Your palms grow damp with ice-cold sweat, and your hands tremble as you uncap your ballpoint pen.</li>
+<li>When you try to recall the core derivation you practiced four times yesterday, your mind presents a complete, blank void.</li>
+</ul>
 <p>Every student feels nervous before an examination. But for thousands of Nigerian undergraduates, this reaction is not normal nervousness. It is <strong>Acute Somatic Exam Anxiety and Cognitive Memory Hijacking</strong>.</p>
 <p>Understanding the biological mechanics of this response is your first step to disarming it.</p>
-<hr />
+<hr>
 <h2 id="1-the-yerkes-dodson-law-the-arousal-curve">1. The Yerkes-Dodson Law: The Arousal Curve</h2>
 <p>In cognitive psychology, the relationship between physiological arousal and academic performance is governed by the <strong>Yerkes-Dodson Law</strong>:</p>
 <ul>
-<li><strong>Low Arousal (Apathy):</strong> You do not care about the course; you feel sluggish, read slowly, and make careless grammatical and calculation errors.</li>
-<li><strong>Optimal Arousal (The Sweet Spot):</strong> Mild adrenaline sharpens sensory perception, increases processing speed, and sustains deep analytical concentration.</li>
-<li><strong>Hyper-Arousal (The Panic Cliff):</strong> When nervous stimulation crosses the threshold into catastrophic terror, cognitive function collapses. Working memory capacity shrinks by up to 60%.</li>
+<li>**Low Arousal (Apathy):** You do not care about the course; you feel sluggish, read slowly, and make careless grammatical and calculation errors.</li>
+<li>**Optimal Arousal (The Sweet Spot):** Mild adrenaline sharpens sensory perception, increases processing speed, and sustains deep analytical concentration.</li>
+<li>**Hyper-Arousal (The Panic Cliff):** When nervous stimulation crosses the threshold into catastrophic terror, cognitive function collapses. Working memory capacity shrinks by up to 60%.</li>
 </ul>
 <p>To understand why even the most prepared scholars blank out, read our foundational study on <a href="/blog/academics/exam-panic-blackouts-why-prepared-students-blank/">exam panic and blackouts: why prepared students blank</a>.</p>
-<hr />
+<hr>
 <h2 id="2-somatic-vs-cognitive-anxiety-identifying-your-stress-profile">2. Somatic vs Cognitive Anxiety: Identifying Your Stress Profile</h2>
 <p>Exam anxiety attacks through two distinct physiological channels:</p>
 <h3 id="1-the-somatic-channel-the-body">1. The Somatic Channel (The Body)</h3>
@@ -333,34 +335,33 @@
 <h3 id="2-the-cognitive-channel-the-mind">2. The Cognitive Channel (The Mind)</h3>
 <p>Characterized by catastrophic catastrophic rumination: <em>"If I fail this paper, my CGPA drops below 3.5; my father will stop paying my fees; my life is over."</em> These runaway inner monologues consume working memory bandwidth that should be evaluating exam questions.</p>
 <p>If examination pressure has left you scrambling at the last minute, deploy our 14-day protocol in <a href="/blog/academics/14-day-exam-cramming-panic-study-plan/">14-day exam cramming panic plan: damage control</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-step-hall-protocol-how-to-restore-retrieval-function">3. The 3-Step Hall Protocol: How to Restore Retrieval Function</h2>
 <p>When you sit at your examination desk and feel panic rising, execute this physiological counter-offensive:</p>
 <ol>
-<li><strong>Deploy the Physiological Sigh:</strong> Take two sharp inhales through your nose (first a deep breath, then a sharp top-up inhale), followed by a slow, 6-second exhale through pursed lips. Repeat this cycle three times. This activates parasympathetic baroreceptors and forces your heart rate down.</li>
-<li><strong>Execute the 5-Minute Paper Delay:</strong> When the invigilator distributes the question paper, do not start writing immediately. Read through the entire paper with your pen resting on the desk. Identify the two easiest questions first. Answering easy questions triggers early dopamine releases that dissolve cortisol paralysis.</li>
-<li><strong>The Brain-Dump Margin Technique:</strong> On the rough work margin of your answer booklet, immediately jot down mnemonic acronyms, formula constants, and key theorems while calm. This relieves cognitive load from your working memory.</li>
+<li>**Deploy the Physiological Sigh:** Take two sharp inhales through your nose (first a deep breath, then a sharp top-up inhale), followed by a slow, 6-second exhale through pursed lips. Repeat this cycle three times. This activates parasympathetic baroreceptors and forces your heart rate down.</li>
+<li>**Execute the 5-Minute Paper Delay:** When the invigilator distributes the question paper, do not start writing immediately. Read through the entire paper with your pen resting on the desk. Identify the two easiest questions first. Answering easy questions triggers early dopamine releases that dissolve cortisol paralysis.</li>
+<li>**The Brain-Dump Margin Technique:** On the rough work margin of your answer booklet, immediately jot down mnemonic acronyms, formula constants, and key theorems while calm. This relieves cognitive load from your working memory.</li>
 </ol>
 <p>If sleeplessness haunts you before major papers, master nocturnal protocols in <a href="/blog/mental-health/">night before exam insomnia causes and remedies</a>.</p>
-<hr />
+<hr>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">🚀 PERMANENT EXAM CONFIDENCE</div>
-  <h3 class="blog-cta-box__title">Master Exam Hall Psychology with Proven Scientific Systems</h3>
-  <p class="blog-cta-box__desc">
-    Overcoming exam anxiety requires structured cognitive training and active retrieval routines that make recall automatic under pressure. 
-    Discover the comprehensive 7-part system designed for Nigerian university students navigating intense semester workloads.
-  </p>
-  <div class="blog-cta-box__features">
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Physiological Calm Protocols</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Active Recall Exam Simulations</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Complete CGPA Comeback Blueprint</div>
-  </div>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">
-    Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i>
-  </a>
+<div class="blog-cta-box__badge">🚀 PERMANENT EXAM CONFIDENCE</div>
+<h3 class="blog-cta-box__title">Master Exam Hall Psychology with Proven Scientific Systems</h3>
+<p class="blog-cta-box__desc">
+<p>Overcoming exam anxiety requires structured cognitive training and active retrieval routines that make recall automatic under pressure.</p>
+<p>Discover the comprehensive 7-part system designed for Nigerian university students navigating intense semester workloads.</p>
+</p>
+<div class="blog-cta-box__features">
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Physiological Calm Protocols</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Active Recall Exam Simulations</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Complete CGPA Comeback Blueprint</div>
 </div>
-
-<hr />
+<a href="/academic-comeback-package" class="blog-cta-box__btn">
+<p>Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i></p>
+</a>
+</div>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-biological-difference-between-normal-exam-nervousness-and-severe-exam-anxiety">What is the biological difference between normal exam nervousness and severe exam anxiety?</h3>
 <p>Normal nervousness (eustress) sharpens focus, elevates attention, and fades once you write your name on the script. Exam anxiety (distress) triggers sympathetic fight-or-flight panic: rapid heart rate, trembling fingers, nausea, and catastrophic memory blackout.</p>
@@ -534,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -719,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -734,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

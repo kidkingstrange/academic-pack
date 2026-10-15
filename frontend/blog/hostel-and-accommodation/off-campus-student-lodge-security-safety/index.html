@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,92 +309,69 @@
         <h1 id="off-campus-safety-realities-security-measures-for-lodges">Off-Campus Safety Realities: Security Measures for Lodges</h1>
 <p>It is 2:15 AM on a rainy Tuesday morning in an off-campus student community outside the university perimeter.</p>
 <p>The entire neighborhood is enveloped in pitch darkness. The national grid has been dead for four days. The only sound is the rhythmic drumming of rain against aluminum roofing sheets.</p>
-<p>Suddenly, you awaken with a start. </p>
-<p>A sharp metallic snap rings out from the compound front gate. </p>
-<p>Moments later, you hear heavy footsteps splashing across the muddy courtyard. Whispered voices echo outside the window of Room 2. </p>
+<p>Suddenly, you awaken with a start.</p>
+<p>A sharp metallic snap rings out from the compound front gate.</p>
+<p>Moments later, you hear heavy footsteps splashing across the muddy courtyard. Whispered voices echo outside the window of Room 2.</p>
 <p>Then comes the sickening sound of a 14-pound sledgehammer smashing through a hollow padlock latch.</p>
 <p>Your heart leaps into your throat. Your hands shake as you reach for your phone in the darkness. You realize with horror that you do not have the direct phone number of the local community vigilante commander or the nearby police divisional headquarters.</p>
 <p>For over 1.7 million Nigerian university undergraduates living off-campus, personal safety is not a theoretical classroom subject. It is an urgent, nightly reality.</p>
 <p>Unlike on-campus halls of residence protected by university security checkpoints and internal patrols, suburban student lodges are isolated islands of wealth surrounded by poverty and opportunistic crime.</p>
 <p>Here is the tactical security blueprint to safeguard your life, your electronics, and your peace of mind while living off-campus.</p>
-<hr />
+<hr>
 <h2 id="1-the-threat-landscape-why-student-lodges-are-prime-targets">1. The Threat Landscape: Why Student Lodges Are Prime Targets</h2>
 <p>To build effective defenses, you must analyze how criminals select and breach student properties:</p>
-<p><strong>Criminal Risk Factors for Student Lodges:</strong><br />
-* High-Value Asset Density (Laptops, iPhones, solar batteries, generator sets) — Predictable Absence Windows (Rooms empty from 8:00 AM to 5:00 PM during lectures) — Vulnerable Perimeter Engineering (Low fences, fragile padlocks, unlit alleyways) — Delayed Emergency Response (Unpaved access roads, non-functional police helplines)</p>
-<table>
-<thead>
-<tr>
-<th>Security Element</th>
-<th>Vulnerable "High Risk" Setup</th>
-<th>Hardened "Low Risk" Setup</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Compound Gate Security</td>
-<td>Cheap open padlock; unlocked by day</td>
-<td>Heavy internal deadbolt + Yale lock</td>
-</tr>
-<tr>
-<td>Window Defense</td>
-<td>Decorative thin aluminum burglary</td>
-<td>Solid 16mm rebar welded into lintel</td>
-</tr>
-<tr>
-<td>Community Integration</td>
-<td>Unknown to local vigilante patrol</td>
-<td>Registered monthly security dues</td>
-</tr>
-<tr>
-<td>Late Transit Habits</td>
-<td>Walking alone past 9:30 PM</td>
-<td>Group transit / verified bike riders</td>
-</tr>
-<tr>
-<td>Emergency Readiness</td>
-<td>Zero local emergency phone contacts</td>
-<td>Saved speed-dials for vigilante DPO</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p><strong>Criminal Risk Factors for Student Lodges:</strong></p>
+<ul>
+<li>High-Value Asset Density (Laptops, iPhones, solar batteries, generator sets) — Predictable Absence Windows (Rooms empty from 8:00 AM to 5:00 PM during lectures) — Vulnerable Perimeter Engineering (Low fences, fragile padlocks, unlit alleyways) — Delayed Emergency Response (Unpaved access roads, non-functional police helplines)</li>
+</ul>
+<p>| Security Element | Vulnerable "High Risk" Setup | Hardened "Low Risk" Setup |</p>
+<p>| --- | --- | --- |</p>
+<p>| Compound Gate Security | Cheap open padlock; unlocked by day | Heavy internal deadbolt + Yale lock |</p>
+<p>| Window Defense | Decorative thin aluminum burglary | Solid 16mm rebar welded into lintel |</p>
+<p>| Community Integration | Unknown to local vigilante patrol | Registered monthly security dues |</p>
+<p>| Late Transit Habits | Walking alone past 9:30 PM | Group transit / verified bike riders |</p>
+<p>| Emergency Readiness | Zero local emergency phone contacts | Saved speed-dials for vigilante DPO |</p>
+<hr>
 <h2 id="2-hardening-your-personal-room-fortress">2. Hardening Your Personal Room Fortress</h2>
 <p>Never rely solely on the main compound gate for your physical security. If intruders breach the perimeter, your individual room door is your final line of defense:</p>
 <h3 id="1-upgrade-the-padlocks-and-deadbolts">1. Upgrade the Padlocks and Deadbolts</h3>
 <p>Replace cheap ₦1,500 tin padlocks that can be snipped with bolt cutters in three seconds. Install heavy-duty hardened steel padlocks (such as <strong>Yale, Solex, or Tri-Circle</strong>) with concealed shackle designs that resist crowbar prying.</p>
 <h3 id="2-reinforce-the-door-strike-plate">2. Reinforce the Door Strike Plate</h3>
-<p>Most student lodge doors are made of hollow wooden cores attached to softwood door jambs using tiny 1-inch screws. One firm kick will tear the lock latch straight out of the wood. <br />
-* Replace the factory screws on your strike plate with <strong>3-inch hardened steel wood screws</strong> that anchor deep into the concrete masonry behind the doorframe.</p>
-<h3 id="3-window-visibility-blind-spots">3. Window Visibility &amp; Blind Spots</h3>
+<p>Most student lodge doors are made of hollow wooden cores attached to softwood door jambs using tiny 1-inch screws. One firm kick will tear the lock latch straight out of the wood.</p>
+<ul>
+<li>Replace the factory screws on your strike plate with **3-inch hardened steel wood screws** that anchor deep into the concrete masonry behind the doorframe.</li>
+</ul>
+<h3 id="3-window-visibility-blind-spots">3. Window Visibility & Blind Spots</h3>
 <p>Ensure your window curtains are thick and completely opaque. When studying at night under a rechargeable lamp, never cast a silhouette of your laptop and phone onto the window blinds. Opportunistic prowlers survey lodges from perimeter walls to pinpoint which rooms contain premium electronic gear.</p>
-<hr />
+<hr>
 <h2 id="3-the-4-golden-rules-of-off-campus-night-transit">3. The 4 Golden Rules of Off-Campus Night Transit</h2>
 <p>More students are mugged while returning from late-night study sessions than inside their actual rooms:</p>
 <ol>
-<li><strong>Enforce the 8:30 PM Curfew:</strong> Unless you are studying inside a secure, illuminated 24-hour campus library, be inside your lodge compound before 8:30 PM.</li>
-<li><strong>Never Walk in Solitary Transit with Earphones:</strong> Walking down dark unpaved laterite roads with noise-canceling headphones active strips away your situational awareness. You will not hear approaching motorcycles or footsteps behind you.</li>
-<li><strong>Establish a Trusted "Bike Man" (Okada Network):</strong> Never hail random commercial motorcycles at 10:00 PM outside the campus gate. Build a relationship with one or two verified local motorcyclists who live in your area, and call them directly to pick you up.</li>
-<li><strong>Carry a "Dummy Phone" If Forced to Walk Late:</strong> If your academic schedule forces you to commute late, carry an inexpensive ₦5,000 keypad phone (<em>"palasa"</em>) in your front pocket with a few small currency notes, keeping your primary smartphone and ATM cards concealed in an internal waist pouch.</li>
+<li>**Enforce the 8:30 PM Curfew:** Unless you are studying inside a secure, illuminated 24-hour campus library, be inside your lodge compound before 8:30 PM.</li>
+<li>**Never Walk in Solitary Transit with Earphones:** Walking down dark unpaved laterite roads with noise-canceling headphones active strips away your situational awareness. You will not hear approaching motorcycles or footsteps behind you.</li>
+<li>**Establish a Trusted "Bike Man" (Okada Network):** Never hail random commercial motorcycles at 10:00 PM outside the campus gate. Build a relationship with one or two verified local motorcyclists who live in your area, and call them directly to pick you up.</li>
+<li>**Carry a "Dummy Phone" If Forced to Walk Late:** If your academic schedule forces you to commute late, carry an inexpensive ₦5,000 keypad phone (*"palasa"*) in your front pocket with a few small currency notes, keeping your primary smartphone and ATM cards concealed in an internal waist pouch.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="4-community-integration-the-local-vigilante-shield">4. Community Integration: The Local Vigilante Shield</h2>
 <p>The most effective security asset in any Nigerian university town is the local community vigilante apparatus (e.g., <em>Oodua Peoples Congress, Hunter's Association, or Community Watch</em>).</p>
 <ul>
-<li><strong>Elect a Lodge Security Prefect:</strong> Every student lodge must have a recognized representative who attends monthly landlord association (Landlords/Tenants) security meetings.</li>
-<li><strong>Pay Security Dues Faithfully:</strong> Defaulting on a ₦1,500 monthly vigilante fee is foolish economy. When community night guards know your compound pays on time, they position patrol checkpoints near your gate and respond immediately to distress whistles.</li>
-<li><strong>Create a Compound Emergency WhatsApp Tree:</strong> Program an emergency broadcast group where any tenant can alert the entire compound to suspicious movement with a single touch.</li>
+<li>**Elect a Lodge Security Prefect:** Every student lodge must have a recognized representative who attends monthly landlord association (Landlords/Tenants) security meetings.</li>
+<li>**Pay Security Dues Faithfully:** Defaulting on a ₦1,500 monthly vigilante fee is foolish economy. When community night guards know your compound pays on time, they position patrol checkpoints near your gate and respond immediately to distress whistles.</li>
+<li>**Create a Compound Emergency WhatsApp Tree:** Program an emergency broadcast group where any tenant can alert the entire compound to suspicious movement with a single touch.</li>
 </ul>
-<p>Before signing a lease on any property, review our exhaustive <a href="/blog/hostel-and-accommodation/inspecting-off-campus-student-lodge-checklist/">inspecting off campus student lodge checklist</a>. </p>
+<p>Before signing a lease on any property, review our exhaustive <a href="/blog/hostel-and-accommodation/inspecting-off-campus-student-lodge-checklist/">inspecting off campus student lodge checklist</a>.</p>
 <p>If your lodge ever experiences a security breach, execute the recovery and evidence documentation steps in <a href="/blog/hostel-and-accommodation/student-lodge-burglary-what-to-do/">handling student lodge burglary immediate recovery</a>, and learn campus fraud prevention in <a href="/blog/finances/">student safety and scam prevention on campus</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="protect-your-life-and-studies-off-campus">🛡️ Protect Your Life and Studies Off-Campus</h3>
+<p>### 🛡️ Protect Your Life and Studies Off-Campus</p>
 <p>Living off-campus doesn't mean you have to live in fear.</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with fellow undergraduates in your university town, get verified security updates, share safe transit routes, and connect with trusted student roommates.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with fellow undergraduates in your university town, get verified security updates, share safe transit routes, and connect with trusted student roommates.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-are-off-campus-student-lodges-targeted-by-burglars-in-nigeria">Why are off-campus student lodges targeted by burglars in Nigeria?</h3>
 <p>Student lodges concentrate valuable, easily liquidated electronic assets—smartphones, laptops, power banks, and flat-screen TVs—in suburban areas with weak perimeter fencing and minimal police patrols.</p>
@@ -568,8 +545,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -753,8 +730,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -768,7 +745,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,95 +306,70 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="time-blocking-for-hustlers-managing-8am-4pm-classes-gigs">Time-Blocking for Hustlers: Managing 8am-4pm Classes &amp; Gigs</h1>
+        <h1 id="time-blocking-for-hustlers-managing-8am-4pm-classes-gigs">Time-Blocking for Hustlers: Managing 8am-4pm Classes & Gigs</h1>
 <p>Your alarm sounds at 6:30 AM.</p>
-<p>You rush to campus for an 8:00 AM GST lecture. </p>
-<p>The lecturer arrives at 9:15 AM. You sit in a hot, crowded 500-seat auditorium until 11:30 AM. </p>
+<p>You rush to campus for an 8:00 AM GST lecture.</p>
+<p>The lecturer arrives at 9:15 AM. You sit in a hot, crowded 500-seat auditorium until 11:30 AM.</p>
 <p>Then, you wait three hours in an empty corridor because the next afternoon lecturer moved class from 1:00 PM to 3:30 PM.</p>
-<p>By the time you walk back to your hostel at 5:00 PM:<br />
-* You have two client copywriting briefs due tomorrow morning.<br />
-* A client is messaging you demanding revisions on a graphic design flyer.<br />
-* And you have a 30-mark Continuous Assessment test in Thermodynamics on Thursday.</p>
+<p>By the time you walk back to your hostel at 5:00 PM:</p>
+<ul>
+<li>You have two client copywriting briefs due tomorrow morning.</li>
+<li>A client is messaging you demanding revisions on a graphic design flyer.</li>
+<li>And you have a 30-mark Continuous Assessment test in Thermodynamics on Thursday.</li>
+</ul>
 <p>You sit on your mattress with your laptop open and your course handouts scattered on the floor, completely paralyzed by overwhelm.</p>
 <p>Where do you even begin?</p>
 <p>Without a disciplined calendar architecture, working students in Nigeria get crushed by the chaos of unpredictable lecture schedules.</p>
 <p>Here is the operational science of <strong>Time-Blocking for Student Hustlers</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-why-to-do-lists-fail-working-students">1. Why To-Do Lists Fail Working Students</h2>
-<p>Most students organize their lives using simple daily task lists:<br />
-* <em>"Read Chapter 3."</em><br />
-* <em>"Deliver client video edit."</em><br />
-* <em>"Attend 2:00 PM lab."</em></p>
+<p>Most students organize their lives using simple daily task lists:</p>
+<ul>
+<li>*"Read Chapter 3."*</li>
+<li>*"Deliver client video edit."*</li>
+<li>*"Attend 2:00 PM lab."*</li>
+</ul>
 <p>A to-do list tells you <strong>what</strong> to do, but gives zero consideration to <strong>when, where, and with what cognitive energy</strong>:</p>
 <blockquote>
-<h3 id="unstructured-to-do-list">Unstructured To-Do List</h3>
-<ul>
-<li>High mental friction: Constantly deciding what task to tackle next</li>
-<li>Reactive chaos: You work on whichever client screams loudest on WhatsApp</li>
-<li>Academic decay: Syllabus reading is pushed to midnight when you are half-asleep</li>
-<li><strong>TIME-BLOCKED COGNITIVE SANCTUARY</strong></li>
-<li>Every hour has a pre-assigned operational identity</li>
-<li>Context switching is eliminated</li>
-<li>Study hours are protected behind an unbreakable calendar firewall</li>
-</ul>
+<p>### Unstructured To-Do List</p>
+<p>></p>
+<p>* High mental friction: Constantly deciding what task to tackle next</p>
+<p>* Reactive chaos: You work on whichever client screams loudest on WhatsApp</p>
+<p>* Academic decay: Syllabus reading is pushed to midnight when you are half-asleep</p>
+<p>* **TIME-BLOCKED COGNITIVE SANCTUARY**</p>
+<p>* Every hour has a pre-assigned operational identity</p>
+<p>* Context switching is eliminated</p>
+<p>* Study hours are protected behind an unbreakable calendar firewall</p>
 </blockquote>
 <p>Review study timetable pitfalls in <a href="/blog/academics/university-study-timetable-mistakes/">6 signs your university study timetable is set up to fail</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-master-cognitive-time-blocks">2. The 3 Master Cognitive Time Blocks</h2>
 <p>Structure your weekday calendar into three distinct biological operational zones:</p>
-<table>
-<thead>
-<tr>
-<th>Time Block</th>
-<th>Biological State</th>
-<th>Designated Operational Focus</th>
-<th>Non-Negotiable Rules</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>5:30 AM – 7:30 AM</strong></td>
-<td><strong>Peak Glycogen / Clear Cortisol</strong></td>
-<td><strong>Deep Academic Active Recall</strong></td>
-<td>Zero client emails; zero social media; syllabus only</td>
-</tr>
-<tr>
-<td><strong>8:00 AM – 3:30 PM</strong></td>
-<td><strong>Social / Environmental Arousal</strong></td>
-<td><strong>Campus Lectures &amp; Practical Labs</strong></td>
-<td>Physical presence; networking; recording notes</td>
-</tr>
-<tr>
-<td><strong>5:30 PM – 8:30 PM</strong></td>
-<td><strong>High Tactical Focus</strong></td>
-<td><strong>Client Deliverables &amp; Side Gigs</strong></td>
-<td>Execute client briefs; ship paid deliverables</td>
-</tr>
-<tr>
-<td><strong>8:30 PM – 10:30 PM</strong></td>
-<td><strong>Wind-Down &amp; Nutrition</strong></td>
-<td><strong>Dinner, Relaxation, Next-Day Setup</strong></td>
-<td>Screen curfew; wind down for 7 hours of sleep</td>
-</tr>
-</tbody>
-</table>
+<p>| Time Block | Biological State | Designated Operational Focus | Non-Negotiable Rules |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>5:30 AM – 7:30 AM</strong> | <strong>Peak Glycogen / Clear Cortisol</strong> | <strong>Deep Academic Active Recall</strong> | Zero client emails; zero social media; syllabus only |</p>
+<p>| <strong>8:00 AM – 3:30 PM</strong> | <strong>Social / Environmental Arousal</strong> | <strong>Campus Lectures & Practical Labs</strong> | Physical presence; networking; recording notes |</p>
+<p>| <strong>5:30 PM – 8:30 PM</strong> | <strong>High Tactical Focus</strong> | <strong>Client Deliverables & Side Gigs</strong> | Execute client briefs; ship paid deliverables |</p>
+<p>| <strong>8:30 PM – 10:30 PM</strong> | <strong>Wind-Down & Nutrition</strong> | <strong>Dinner, Relaxation, Next-Day Setup</strong> | Screen curfew; wind down for 7 hours of sleep |</p>
 <p>Learn study routines for working scholars in <a href="/blog/academics/study-routine-working-student/">study routines for working students: passing on 2 hours daily</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-phantom-gap-tactic-monetizing-campus-downtime">3. The "Phantom Gap" Tactic: Monetizing Campus Downtime</h2>
 <p>In Nigerian universities, 30% of your day is wasted in <strong>Phantom Gaps</strong>—unannounced lecture cancellations, delayed professors, and gaps between practical classes:</p>
 <ul>
-<li><strong>The Amateur Move:</strong> Sit on the faculty grass scrolling TikTok or gossiping for two hours.</li>
-<li><strong>The Pro Move:</strong> Find a quiet corner in the departmental library. Open your phone or laptop and execute a 45-minute sprint: draft client copy, reply to Upwork proposals, or solve ten past question equations.</li>
+<li>**The Amateur Move:** Sit on the faculty grass scrolling TikTok or gossiping for two hours.</li>
+<li>**The Pro Move:** Find a quiet corner in the departmental library. Open your phone or laptop and execute a 45-minute sprint: draft client copy, reply to Upwork proposals, or solve ten past question equations.</li>
 </ul>
 <p>Reclaiming two phantom hours daily frees up your entire evening for uninterrupted rest.</p>
 <p>Explore attendance requirements in our upcoming guide on <a href="/blog/balancing-work-and-school/">meeting 75% university attendance while working</a>.</p>
-<hr />
+<hr>
 <h2 id="4-master-your-calendar-to-dominate-your-future">4. Master Your Calendar to Dominate Your Future</h2>
-<p>Time is your most valuable non-renewable capital:<br />
-* Stop operating reactively.<br />
-* Block your hours, protect your morning study sanctuary, and ship your client deliverables with military precision.</p>
+<p>Time is your most valuable non-renewable capital:</p>
+<ul>
+<li>Stop operating reactively.</li>
+<li>Block your hours, protect your morning study sanctuary, and ship your client deliverables with military precision.</li>
+</ul>
 <p>If you are ready to install a proven, step-by-step academic operating system designed specifically to balance high-workload employment with a First Class degree, the <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It equips you with the exact rapid study triage systems top working scholars use to achieve academic dominance on a tight schedule.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-best-daily-schedule-for-a-working-nigerian-university-student">What is the best daily schedule for a working Nigerian university student?</h3>
 <p>The 'Bimodal Structure': 8:00 AM to 3:30 PM strictly dedicated to physical lectures and practicals, 5:00 PM to 8:00 PM for deep client work deliverables, and 5:30 AM to 7:30 AM for undisturbed syllabus active recall.</p>
@@ -568,8 +543,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -753,8 +728,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -768,7 +743,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

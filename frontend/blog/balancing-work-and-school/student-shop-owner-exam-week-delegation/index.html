@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Student Shop Owners: Delegating Operations on Exam Week",
       "description": "How campus student retailers and boutique owners can audit stock, delegate kiosk operations, and protect profits during exam periods.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -266,67 +266,79 @@
       <div class="article-body">
         <p>Across commercial corridors in Nigerian universities—such as New Market in UNN, SUB complex in UI, Access Bank corridor in UNILAG, or Motion Ground in OAU:</p>
 <p>A significant number of physical retail shops, phone accessory stands, boutiques, and printing kiosks are owned and operated by <strong>undergraduates</strong>.</p>
-<p>Owning a physical campus store is a fantastic financial accomplishment:<br />
-* Daily cash sales from thousands of passing students and staff.<br />
-* Reliable monthly income ranging from ₦100,000 to ₦400,000.<br />
-* Practical entrepreneurial training that no classroom textbook can teach.</p>
-<p>However, when semester examinations arrive, physical retail ownership becomes an <strong>intense operational trap</strong>:<br />
-* If you sit in the shop to attend to customers, you cannot study for your 3-unit departmental core courses.<br />
-* If you abandon the shop, your daily cash flow vanishes.<br />
-* If you leave an irresponsible friend in charge without systems, you return after exams to find missing inventory, unpaid credits, and an empty cash box.</p>
+<p>Owning a physical campus store is a fantastic financial accomplishment:</p>
+<ul>
+<li>Daily cash sales from thousands of passing students and staff.</li>
+<li>Reliable monthly income ranging from ₦100,000 to ₦400,000.</li>
+<li>Practical entrepreneurial training that no classroom textbook can teach.</li>
+</ul>
+<p>However, when semester examinations arrive, physical retail ownership becomes an <strong>intense operational trap</strong>:</p>
+<ul>
+<li>If you sit in the shop to attend to customers, you cannot study for your 3-unit departmental core courses.</li>
+<li>If you abandon the shop, your daily cash flow vanishes.</li>
+<li>If you leave an irresponsible friend in charge without systems, you return after exams to find missing inventory, unpaid credits, and an empty cash box.</li>
+</ul>
 <p>To survive exams with your profits intact and an 'A' grade on your transcript, you must master the art of <strong>operational delegation</strong>.</p>
 <p>Here is the step-by-step handover system for student shop owners during university exam blocks.</p>
-<hr />
+<hr>
 <h2 id="the-3-pillars-of-secure-retail-delegation">The 3 Pillars of Secure Retail Delegation</h2>
 <blockquote>
-<h3 id="retail-shop-delegation-architecture">Retail Shop Delegation Architecture</h3>
-<ul>
-<li><strong>1.</strong> The Pre-Exam Inventory Audit (Every item barcoded, tagged, and logged)</li>
-<li><strong>2.</strong> The Cashless Payment Mandate (Zero physical cash handled by assistants)</li>
-<li><strong>3.</strong> The Incentive Commission Structure (Align assistant motivation with sales)</li>
-</ul>
+<p>### Retail Shop Delegation Architecture</p>
+<p>></p>
+<p>* **1.** The Pre-Exam Inventory Audit (Every item barcoded, tagged, and logged)</p>
+<p>* **2.** The Cashless Payment Mandate (Zero physical cash handled by assistants)</p>
+<p>* **3.** The Incentive Commission Structure (Align assistant motivation with sales)</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="pillar-1-the-pre-exam-stock-audit-day-t-5">Pillar 1: The Pre-Exam Stock Audit (Day T-5)</h2>
-<p>Five days before your first examination paper, spend four hours conducting a complete <strong>Physical Inventory Audit</strong>:<br />
-1. Count and record every single physical item on your shelves in a digital spreadsheet (or retail app like Bumpa or Kippa):<br />
-   * <em>"34 iPhone fast-charging cables (₦2,500 retail)."</em><br />
-   * <em>"18 packs of A4 printing paper."</em><br />
-   * <em>"12 unisex oversized vintage shirts (₦6,000 retail)."</em><br />
-2. Print or handwrite the finalized stock inventory sheet.<br />
-3. Have your temporary shop assistant sign the sheet acknowledging: <em>"I acknowledge receiving exactly these item counts in good condition on [Date]."</em></p>
+<p>Five days before your first examination paper, spend four hours conducting a complete <strong>Physical Inventory Audit</strong>:</p>
+<ol>
+<li>Count and record every single physical item on your shelves in a digital spreadsheet (or retail app like Bumpa or Kippa):</li>
+<li>*"34 iPhone fast-charging cables (₦2,500 retail)."*</li>
+<li>*"18 packs of A4 printing paper."*</li>
+<li>*"12 unisex oversized vintage shirts (₦6,000 retail)."*</li>
+<li>Print or handwrite the finalized stock inventory sheet.</li>
+<li>Have your temporary shop assistant sign the sheet acknowledging: *"I acknowledge receiving exactly these item counts in good condition on [Date]."*</li>
+</ol>
 <p>This single document establishes complete psychological accountability. When assistants know that every single missing item is tracked against their salary, shrinkage drops to zero.</p>
-<hr />
+<hr>
 <h2 id="pillar-2-the-cashless-payment-mandate">Pillar 2: The Cashless Payment Mandate</h2>
 <p>The most common way student retailers lose money during delegation is through <strong>unaccounted physical cash transactions</strong>.</p>
-<p>Eliminate cash entirely during exam season:<br />
-* Place a prominent, laminated printed QR code and bank account standee at the checkout counter:</p>
-<blockquote>
-<p><em>"PLEASE PAY FOR ALL PURCHASES VIA BANK TRANSFER OR POS TO [BUSINESS ACCOUNT NAME]. NO CASH ACCEPTED."</em><br />
-* Every single customer transaction goes directly into your verified business bank account on your phone.<br />
-* Your assistant never touches paper money; they simply verify that the transaction was confirmed before bagging items.</p>
-<h3 id="the-zero-cash-checkout-system">The Zero-Cash Checkout System</h3>
+<p>Eliminate cash entirely during exam season:</p>
 <ul>
-<li>Customer purchases shirt -&gt; Pays via Bank Transfer/POS to your account ↓ You receive immediate credit alert on phone -&gt; Assistant bags item ↓ Result: 100% of revenue sits safely in your bank; zero cash leakage!</li>
+<li>Place a prominent, laminated printed QR code and bank account standee at the checkout counter:</li>
+<blockquote>
+<p>*"PLEASE PAY FOR ALL PURCHASES VIA BANK TRANSFER OR POS TO [BUSINESS ACCOUNT NAME]. NO CASH ACCEPTED."*</p>
+<li>Every single customer transaction goes directly into your verified business bank account on your phone.</li>
+<li>Your assistant never touches paper money; they simply verify that the transaction was confirmed before bagging items.</li>
 </ul>
 </blockquote>
-<hr />
+<blockquote>
+<p>### The Zero-Cash Checkout System</p>
+<p>></p>
+<p>* Customer purchases shirt -> Pays via Bank Transfer/POS to your account ↓ You receive immediate credit alert on phone -> Assistant bags item ↓ Result: 100% of revenue sits safely in your bank; zero cash leakage!</p>
+</blockquote>
+<hr>
 <h2 id="pillar-3-commission-backed-assistant-compensation">Pillar 3: Commission-Backed Assistant Compensation</h2>
 <p>Never pay a shop assistant purely on a flat hourly rate. A flat rate encourages them to sit on their phone ignoring customers because their pay is identical whether they make 10 sales or zero sales.</p>
-<p>Structure their compensation with a <strong>Base + Commission Model</strong>:<br />
-* <strong>Base Stipend:</strong> ₦2,000 per day (covers their transport and daily lunch).<br />
-* <strong>Performance Commission:</strong> 5% on all gross sales generated above ₦20,000 per day.</p>
+<p>Structure their compensation with a <strong>Base + Commission Model</strong>:</p>
+<ul>
+<li>**Base Stipend:** ₦2,000 per day (covers their transport and daily lunch).</li>
+<li>**Performance Commission:** 5% on all gross sales generated above ₦20,000 per day.</li>
+</ul>
 <p>This simple incentive structure turns your temporary assistant into an energetic, attentive salesperson who actively greets shoppers, recommends accessories, and drives revenue while you are sitting in the exam hall.</p>
 <p>To ensure your shop profits are safely separated from your personal student allowances, read our guide on <a href="/blog/finances/student-budgeting-template-nigeria/">student budgeting and cash-flow management</a>.</p>
-<hr />
-<h2 id="the-10-minute-daily-audit-630-pm-protocol">The 10-Minute Daily Audit (6:30 PM Protocol)</h2>
+<hr>
+<h2 id="the-10-minute-daily-audit-6-30-pm-protocol">The 10-Minute Daily Audit (6:30 PM Protocol)</h2>
 <p>During exam week, do not hang around your shop during the day.</p>
-<p>At 6:30 PM, on your walk back from the library:<br />
-1. Stop by the shop for exactly 10 minutes.<br />
-2. Match the total daily sales recorded in your POS/ledger against the electronic transfer alerts received on your phone.<br />
-3. Check the stock count of the top 3 fastest-moving inventory items.<br />
-4. Pay your assistant their daily stipend, thank them warmly, lock the security gates, and return to your room for revision.</p>
-<hr />
+<p>At 6:30 PM, on your walk back from the library:</p>
+<ol>
+<li>Stop by the shop for exactly 10 minutes.</li>
+<li>Match the total daily sales recorded in your POS/ledger against the electronic transfer alerts received on your phone.</li>
+<li>Check the stock count of the top 3 fastest-moving inventory items.</li>
+<li>Pay your assistant their daily stipend, thank them warmly, lock the security gates, and return to your room for revision.</li>
+</ol>
+<hr>
 <h2 id="action-checklist-student-retail-delegation">Action Checklist: Student Retail Delegation</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Complete a physical inventory audit and document all stock 5 days before exams.</li>
@@ -500,8 +512,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -685,8 +697,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -700,7 +712,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

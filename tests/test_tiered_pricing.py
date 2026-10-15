@@ -1,6 +1,6 @@
 """
 Unit and Integration Tests for 3-Tier Pricing & Entitlements Architecture.
-- Starter: ₦3,500 ($22)
+- Starter: ₦5,000 ($22)
 - Complete: ₦6,000 ($35)
 - VIP: ₦12,500 ($75)
 """
@@ -21,7 +21,7 @@ async def test_compute_price_and_referral_tiers(test_db):
 
     # Starter tier
     amount_starter_ngn, _ = await compute_price_and_referral(test_db, email, currency="NGN", tier="starter")
-    assert amount_starter_ngn == 3500.0
+    assert amount_starter_ngn == 5000.0
 
     amount_starter_usd, _ = await compute_price_and_referral(test_db, email, currency="USD", tier="starter")
     assert amount_starter_usd == 22.0
@@ -42,10 +42,10 @@ async def test_compute_price_and_referral_tiers(test_db):
 
     # Default fallback (unspecified or unrecognized tier preserves standard sales page pricing)
     amount_default_ngn, _ = await compute_price_and_referral(test_db, email, currency="NGN", tier=None)
-    assert amount_default_ngn == float(settings.PRODUCT_PRICE_NAIRA)  # ₦2,000 early-bird
+    assert amount_default_ngn == float(settings.PRODUCT_PRICE_NAIRA)  # ₦5,000
 
     amount_unknown_ngn, _ = await compute_price_and_referral(test_db, email, currency="NGN", tier="unknown")
-    assert amount_unknown_ngn == float(settings.PRODUCT_PRICE_NAIRA)  # ₦2,000 early-bird
+    assert amount_unknown_ngn == float(settings.PRODUCT_PRICE_NAIRA)  # ₦5,000
 
 
 @pytest.mark.asyncio
@@ -66,7 +66,7 @@ async def test_payment_completion_entitlements_by_tier(test_db):
     starter_ref = "ACP-TEST-STARTER-01"
     await test_db.pending_payments.insert_one({
         "reference": starter_ref,
-        "amount": 3500.0,
+        "amount": 5000.0,
         "currency": "NGN",
         "tier": "starter",
     })
@@ -76,7 +76,7 @@ async def test_payment_completion_entitlements_by_tier(test_db):
         reference=starter_ref,
         email="starter_user@example.com",
         name="Starter Student",
-        amount=3500.0,
+        amount=5000.0,
         charge_id=1001,
         gateway_response={"status": "success"},
         completed_via="webhook",

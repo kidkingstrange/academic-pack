@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,104 +307,86 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="solo-studying-vs-group-discussion-when-groups-harm-gpa">Solo Studying vs Group Discussion: When Groups Harm GPA</h1>
-<p>It is 6:00 PM on a Friday evening. </p>
+<p>It is 6:00 PM on a Friday evening.</p>
 <p>You and four coursemates gather around a large wooden bench in the university library quad or departmental classroom. The plan was ambitious: conduct a high-powered, three-hour group discussion to conquer the toughest topics in Corporate Law, Engineering Thermodynamics, or Advanced Organic Chemistry.</p>
 <p>The books are opened. Highlighters and pens are laid out on the table.</p>
-<p>Then, the group session begins:<br />
-* <strong>First 20 Minutes:</strong> Someone complains about how difficult the lecturer's assignment was, sparking a heated debate about departmental politics.<br />
-* <strong>Next 30 Minutes:</strong> Two members start debating campus relationship drama or arguing over the English Premier League weekend match.<br />
-* <strong>Next 45 Minutes:</strong> One student begins explaining a calculation topic, but gets confused halfway through, leading to an argument where three people offer conflicting, unverified answers.<br />
-* <strong>Final 30 Minutes:</strong> Everyone is tired, scrolling through TikTok, and complaining about how little time is left before exams.</p>
+<p>Then, the group session begins:</p>
+<ul>
+<li>**First 20 Minutes:** Someone complains about how difficult the lecturer's assignment was, sparking a heated debate about departmental politics.</li>
+<li>**Next 30 Minutes:** Two members start debating campus relationship drama or arguing over the English Premier League weekend match.</li>
+<li>**Next 45 Minutes:** One student begins explaining a calculation topic, but gets confused halfway through, leading to an argument where three people offer conflicting, unverified answers.</li>
+<li>**Final 30 Minutes:** Everyone is tired, scrolling through TikTok, and complaining about how little time is left before exams.</li>
+</ul>
 <p>At 9:00 PM, you pack your bag and walk back to your hostel. You spent three hours "studying," but your actual intellectual retention is <strong>near zero</strong>.</p>
 <p>In Nigerian tertiary institutions, group discussions are universally celebrated as an academic virtue. Senior students and fellowship leaders tell you to <em>"find a good study group."</em></p>
 <p>Yet every semester, ambitious undergraduates see their GPAs plummet because their study group has degenerated into an unproductive social club that generates the illusion of productivity while destroying deep learning.</p>
-<p>Group study is not always superior to solo studying. </p>
+<p>Group study is not always superior to solo studying.</p>
 <p>Here is the scientific, cognitive breakdown of when solo study is mandatory, when group discussion actually drives First Class performance, and how to protect your GPA from unproductive study groups.</p>
-<hr />
+<hr>
 <h2 id="1-the-cognitive-reality-comprehension-vs-verification">1. The Cognitive Reality: Comprehension vs. Verification</h2>
 <p>To understand why so many study groups fail, you must understand the two distinct phases of academic learning:</p>
-<p><strong>Phase 1: Deep Encoding &amp; Comprehension ➔ Strictly Solo (No Groups):</strong><br />
-* <strong>Phase 2:</strong> Testing, Stress-Testing &amp; Verification ➔ Group Collaboration</p>
+<p><strong>Phase 1: Deep Encoding & Comprehension ➔ Strictly Solo (No Groups):</strong></p>
+<ul>
+<li>**Phase 2:** Testing, Stress-Testing & Verification ➔ Group Collaboration</li>
+</ul>
 <h3 id="phase-1-deep-encoding-solo-learning">Phase 1: Deep Encoding (Solo Learning)</h3>
-<p>Comprehending a difficult theoretical concept or learning a mathematical derivation requires <strong>deep, solitary cognitive bandwidth</strong>. Your brain must grapple with the concepts, establish internal neural connections, and identify personal confusion points without distraction. </p>
+<p>Comprehending a difficult theoretical concept or learning a mathematical derivation requires <strong>deep, solitary cognitive bandwidth</strong>. Your brain must grapple with the concepts, establish internal neural connections, and identify personal confusion points without distraction.</p>
 <p><strong>You cannot outsource comprehension to a group.</strong> When you sit in a group while someone else reads or explains a concept you have never looked at, your brain experiences the "Illusion of Competence"—you think you understand because you hear someone speaking, but you cannot reproduce the derivation on an exam script.</p>
-<h3 id="phase-2-testing-retrieval-group-collaboration">Phase 2: Testing &amp; Retrieval (Group Collaboration)</h3>
+<h3 id="phase-2-testing-retrieval-group-collaboration">Phase 2: Testing & Retrieval (Group Collaboration)</h3>
 <p>Group study becomes immensely valuable <strong>only after every individual member has mastered the material solo</strong>. In Phase 2, the group acts as a rigorous peer review panel: quizzing each other, debating edge cases, and spotting gaps in individual reasoning.</p>
 <p>To build an unbreakable foundation of independent study habits, review <a href="/blog/academics/7-study-habits-first-class-nigerian-students/">7 study habits of first class Nigerian students</a>.</p>
-<hr />
+<hr>
 <h2 id="2-when-group-study-destroys-your-cgpa-4-warning-signs">2. When Group Study Destroys Your CGPA: 4 Warning Signs</h2>
 <p>Audit your current study group against these four toxic patterns:</p>
-<table>
-<thead>
-<tr>
-<th>Toxic Group Pattern</th>
-<th>Operational Symptom</th>
-<th>Direct Impact on GPA</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. The Parasitic Dynamic</strong></td>
-<td>1 student teaches; 3 students listen passively</td>
-<td>The teacher improves; the 3 listeners fail the exam</td>
-</tr>
-<tr>
-<td><strong>2. The Blind-Leading-the-Blind</strong></td>
-<td>Members argue over incorrect interpretations</td>
-<td>Spreads misconceptions that cost marks on exam scripts</td>
-</tr>
-<tr>
-<td><strong>3. The Social Gravitational Pull</strong></td>
-<td>80% gossip, snacks, and phone scrolling</td>
-<td>Burns 3 hours of prime study time with zero retention</td>
-</tr>
-<tr>
-<td><strong>4. The False Security Bubble</strong></td>
-<td>Believing group attendance equals mastery</td>
-<td>Creates false confidence that shatters during individual exams</td>
-</tr>
-</tbody>
-</table>
+<p>| Toxic Group Pattern | Operational Symptom | Direct Impact on GPA |</p>
+<p>|---|---|---|</p>
+<p>| <strong>1. The Parasitic Dynamic</strong> | 1 student teaches; 3 students listen passively | The teacher improves; the 3 listeners fail the exam |</p>
+<p>| <strong>2. The Blind-Leading-the-Blind</strong> | Members argue over incorrect interpretations | Spreads misconceptions that cost marks on exam scripts |</p>
+<p>| <strong>3. The Social Gravitational Pull</strong> | 80% gossip, snacks, and phone scrolling | Burns 3 hours of prime study time with zero retention |</p>
+<p>| <strong>4. The False Security Bubble</strong> | Believing group attendance equals mastery | Creates false confidence that shatters during individual exams |</p>
 <p>If your group dynamic is plagued by non-contributing members during assignments, learn how to handle friction using our blueprint on <a href="/blog/academics/university-group-assignment-conflict-ghost-teammates/">handling ghost teammates and group assignment conflict</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-rule-protocol-for-high-yield-study-groups">3. The 3-Rule Protocol for High-Yield Study Groups</h2>
 <p>If you want to leverage group study to secure First Class results, enforce these three non-negotiable rules:</p>
 <h3 id="rule-1-the-ticket-to-entry-law">Rule 1: The "Ticket-to-Entry" Law</h3>
-<p>Never allow anyone into a group session who has not read the material in advance.<br />
-* Before the meeting, assign specific topics or past questions (e.g., <em>"Everyone must independently solve Questions 1 through 4 from the 2023 departmental exam"</em>).<br />
-* If a member arrives without their completed solutions, <strong>they are barred from the session</strong>. A study group is a collaboration of prepared minds, not a primary school tutorial center.</p>
+<p>Never allow anyone into a group session who has not read the material in advance.</p>
+<ul>
+<li>Before the meeting, assign specific topics or past questions (e.g., *"Everyone must independently solve Questions 1 through 4 from the 2023 departmental exam"*).</li>
+<li>If a member arrives without their completed solutions, **they are barred from the session**. A study group is a collaboration of prepared minds, not a primary school tutorial center.</li>
+</ul>
 <h3 id="rule-2-cap-the-group-at-3-or-4-members">Rule 2: Cap the Group at 3 or 4 Members</h3>
 <p>The efficiency of a study group decays exponentially with every member added beyond four. A 3-person pod is the mathematical sweet spot: small enough to prevent side conversations, yet diverse enough to catch errors.</p>
 <h3 id="rule-3-enforce-the-teach-back-timetable">Rule 3: Enforce the "Teach-Back" Timetable</h3>
-<p>Structure your 90-minute group session with a strict timer:<br />
-* <strong>First 45 Minutes:</strong> Member A explains Topic 1; Members B and C cross-examine with difficult past questions.<br />
-* <strong>Next 45 Minutes:</strong> Member B explains Topic 2; Members A and C stress-test the derivation steps.</p>
+<p>Structure your 90-minute group session with a strict timer:</p>
+<ul>
+<li>**First 45 Minutes:** Member A explains Topic 1; Members B and C cross-examine with difficult past questions.</li>
+<li>**Next 45 Minutes:** Member B explains Topic 2; Members A and C stress-test the derivation steps.</li>
+</ul>
 <p>Staying disciplined and avoiding late-night exhaustion is critical to memory consolidation; see our scientific analysis in <a href="/blog/academics/tdb-all-nighters-vs-sleep-exam-memory/">tdb all nighter vs 5 hour sleep impact</a>.</p>
-<hr />
+<hr>
 <h2 id="the-study-mode-decision-matrix">The Study Mode Decision Matrix</h2>
 <p>Use this quick matrix to decide how to allocate your study hours this week:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Choose Solo Studying when:</strong> Learning a new chapter for the first time, memorizing formulas, writing lab reports, or doing timed mock exams.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Choose Group Study when:</strong> Comparing past question solutions, practicing oral defense presentations, or debugging complex calculation derivations.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Enforce the Ticket-to-Entry rule:</strong> Never attend a group session empty-handed; arrive with completed independent work.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Limit group sessions to 90 minutes:</strong> Cut the session immediately once conversation drifts to social topics.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Choose Solo Studying when:** Learning a new chapter for the first time, memorizing formulas, writing lab reports, or doing timed mock exams.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Choose Group Study when:** Comparing past question solutions, practicing oral defense presentations, or debugging complex calculation derivations.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Enforce the Ticket-to-Entry rule:** Never attend a group session empty-handed; arrive with completed independent work.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Limit group sessions to 90 minutes:** Cut the session immediately once conversation drifts to social topics.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="build-a-winning-academic-system">Build a Winning Academic System</h2>
 <p>Whether studying solo or in a high-performing peer pod, having the right study frameworks, revision templates, and exam strategies is what separates average undergraduates from academic champions.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam anxiety, master deep solo study, and secure First Class results.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Focus Template</strong> — Protect deep solo study blocks from hostel noise, phone distractions, and procrastination</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer marking rubrics and master exam hall problem-solving</li>
-    <li><strong>30-Day Study Tracker</strong> — Pre-built templates to balance solo deep work with high-yield group revision sessions</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam anxiety, master deep solo study, and secure First Class results.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Focus Template</strong> — Protect deep solo study blocks from hostel noise, phone distractions, and procrastination</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer marking rubrics and master exam hall problem-solving</li>
+<li><strong>30-Day Study Tracker</strong> — Pre-built templates to balance solo deep work with high-yield group revision sessions</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-study-groups-in-nigerian-universities-often-become-unproductive">Why do study groups in Nigerian universities often become unproductive?</h3>
 <p>Study groups collapse into social gossip, campus relationship chatter, and phone scrolling when members meet before individually reading the material. A group cannot discuss what individual members have not learned.</p>
@@ -578,8 +560,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -763,8 +745,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -778,7 +760,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

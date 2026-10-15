@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,11 +309,11 @@
         <p>At the start of every new academic semester, hundreds of thousands of Nigerian university students perform the exact same ritual.</p>
 <p>You buy a fresh 60-leaf ruled exercise book or a large sheet of white cardboard. You pull out a 30 cm ruler and multi-colored biros. With meticulous precision, you draw a massive weekly grid:</p>
 <ul>
-<li><em>4:00 AM – 6:00 AM: Read Organic Chemistry</em></li>
-<li><em>8:00 AM – 4:00 PM: Attend Faculty Lectures</em></li>
-<li><em>5:00 PM – 7:00 PM: Library Study (Physics)</em></li>
-<li><em>8:00 PM – 10:00 PM: Mathematics Derivations</em></li>
-<li><em>10:30 PM – 1:30 AM: GST &amp; General Electives</em></li>
+<li>*4:00 AM – 6:00 AM: Read Organic Chemistry*</li>
+<li>*8:00 AM – 4:00 PM: Attend Faculty Lectures*</li>
+<li>*5:00 PM – 7:00 PM: Library Study (Physics)*</li>
+<li>*8:00 PM – 10:00 PM: Mathematics Derivations*</li>
+<li>*10:30 PM – 1:30 AM: GST & General Electives*</li>
 </ul>
 <p>You paste this masterpiece proudly above your hostel bunk bed or save it as your phone wallpaper. You feel a surge of pure academic ambition. This semester, you promise yourself, you will be unstoppable.</p>
 <p>By Wednesday of Week 2, the plan is in ruins.</p>
@@ -321,106 +321,94 @@
 <p>This is not a character flaw. You are not lazy. <strong>Your timetable was engineered to fail.</strong></p>
 <p>Cognitive psychology research published in the <em>Journal of Educational Psychology</em> demonstrates that rigid, time-based schedules that fail to anticipate mental fatigue and environmental disruption trigger what psychologists call the <strong>"abstinence violation effect"</strong>—the moment a student misses one scheduled session, they abandon the entire system.</p>
 <p>Here are the 6 critical design flaws killing your university study timetable, and how to build a flexible, battle-tested schedule that actually lasts until final exams.</p>
-<hr />
+<hr>
 <h2 id="1-the-zero-buffer-fallacy-planning-for-utopia-instead-of-nigeria">1. The Zero-Buffer Fallacy: Planning for Utopia Instead of Nigeria</h2>
 <p>The single most common mistake undergraduates make is assuming that every scheduled hour will execute without interruption.</p>
 <p>In reality, Nigerian tertiary institutions are high-friction environments. Between sudden departmental announcements, impromptu Continuous Assessment tests, water-fetching queues in campus hostels, and erratic municipal power, an unbuffered schedule will crack within 72 hours.</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>Rigid Fantasy: [Lecture 4 PM] ➔ [Study 4:30 PM] ➔ [Dinner 6:30 PM] ➔ [Study 7 PM] — Nigerian Reality: [Lecture Closes 5:15 PM] ➔ [Shuttle Delay] ➔ [Hostel Power Outage] ➔ [Exhaustion]</em></p>
+<p>💡 **Key Formula:** *Rigid Fantasy: [Lecture 4 PM] ➔ [Study 4:30 PM] ➔ [Dinner 6:30 PM] ➔ [Study 7 PM] — Nigerian Reality: [Lecture Closes 5:15 PM] ➔ [Shuttle Delay] ➔ [Hostel Power Outage] ➔ [Exhaustion]*</p>
 </blockquote>
 <h3 id="the-solution-the-20-contingency-shock-absorber">The Solution: The 20% Contingency Shock Absorber</h3>
-<p>Never schedule more than <strong>80% of your available non-lecture hours</strong>. <br />
-* Leave one entire evening (e.g., Saturday afternoon or Sunday evening) completely unassigned.<br />
-* Treat this empty block as your <strong>Buffer Window</strong>. When a lecture overrun or power cut derails Wednesday’s study session, you do not panic or abandon your routine; you simply slide Wednesday's missed work into Saturday’s buffer block.</p>
+<p>Never schedule more than <strong>80% of your available non-lecture hours</strong>.</p>
+<ul>
+<li>Leave one entire evening (e.g., Saturday afternoon or Sunday evening) completely unassigned.</li>
+<li>Treat this empty block as your **Buffer Window**. When a lecture overrun or power cut derails Wednesday’s study session, you do not panic or abandon your routine; you simply slide Wednesday's missed work into Saturday’s buffer block.</li>
+</ul>
 <p>If your schedule is strained by juggling coursework with off-campus employment, learn how to prevent scheduling disasters in our guide on <a href="/blog/balancing-work-and-school/">avoiding timetable clash between lectures and work shifts</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-marathon-illusion-scheduling-12-hour-study-blocks">2. The Marathon Illusion: Scheduling 12-Hour Study Blocks</h2>
 <p>Many ambitious students design schedules that look like military bootcamps: 6 continuous hours of solitary reading after a 7-hour lecture day.</p>
-<p>Neurobiological research confirms that human sustained attentional focus operates on <strong>ultradian rhythms</strong>—peaking for 60 to 90 minutes before mental fatigue drastically degrades memory encoding. </p>
+<p>Neurobiological research confirms that human sustained attentional focus operates on <strong>ultradian rhythms</strong>—peaking for 60 to 90 minutes before mental fatigue drastically degrades memory encoding.</p>
 <p>Sitting behind an open textbook for four hours without breaks does not mean you studied for four hours; it means you studied for 45 minutes and spent three hours daydreaming, rereading the same paragraph six times, and scrolling through TikTok.</p>
 <h3 id="the-fix-high-intensity-interval-sessions">The Fix: High-Intensity Interval Sessions</h3>
-<p>Break your study blocks into discrete, manageable sprints:<br />
-* <strong>50 minutes</strong> of intense, closed-book retrieval.<br />
-* <strong>10 minutes</strong> of absolute physical detachment (walk around, drink water, stretch).<br />
-* Cap your daily independent study at <strong>3 to 4 focused hours</strong>. Four hours of razor-sharp active recall will consistently outperform eight hours of semi-conscious, exhausted highlighting.</p>
-<hr />
+<p>Break your study blocks into discrete, manageable sprints:</p>
+<ul>
+<li>**50 minutes** of intense, closed-book retrieval.</li>
+<li>**10 minutes** of absolute physical detachment (walk around, drink water, stretch).</li>
+<li>Cap your daily independent study at **3 to 4 focused hours**. Four hours of razor-sharp active recall will consistently outperform eight hours of semi-conscious, exhausted highlighting.</li>
+</ul>
+<hr>
 <h2 id="3-the-flat-tax-error-ignoring-credit-unit-leverage">3. The Flat-Tax Error: Ignoring Credit Unit Leverage</h2>
 <p>Does your timetable allocate two hours to your 4-unit prerequisite departmental course, and the exact same two hours to a 1-unit General Studies (GST) elective?</p>
 <p>If so, you are committing <strong>The Flat-Tax Error</strong>.</p>
-<p>In the National Universities Commission (NUC) 5.0 grade point average system, failing or scoring poorly in a 4-unit course exerts <strong>four times the mathematical leverage</strong> on your GPA compared to a 1-unit course. </p>
+<p>In the National Universities Commission (NUC) 5.0 grade point average system, failing or scoring poorly in a 4-unit course exerts <strong>four times the mathematical leverage</strong> on your GPA compared to a 1-unit course.</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>Course Leverage Ratio = (Course Credit Units) / (Total Registered Semester Units)</em></p>
+<p>💡 **Key Formula:** *Course Leverage Ratio = (Course Credit Units) / (Total Registered Semester Units)*</p>
 </blockquote>
 <h3 id="the-rule-of-weighted-allocation">The Rule of Weighted Allocation:</h3>
 <p>If you are registered for 20 credit units, a 4-unit course represents 20% of your academic life. It demands at least <strong>35% to 40% of your weekly study attention</strong>. Your 1-unit electives should be handled during rapid 45-minute weekend review sprints, never stealing prime cognitive energy from heavy calculation or prerequisite papers.</p>
-<hr />
+<hr>
 <h2 id="4-the-time-spent-trap-scheduling-clocks-instead-of-deliverables">4. The Time-Spent Trap: Scheduling Clocks Instead of Deliverables</h2>
-<p>Look closely at your timetable entries. Do they say:<br />
-* <em>"Tuesday 7:00 PM – 9:00 PM: Study Pathology"</em>?</p>
+<p>Look closely at your timetable entries. Do they say:</p>
+<ul>
+<li>*"Tuesday 7:00 PM – 9:00 PM: Study Pathology"*?</li>
+</ul>
 <p>This is a time-spent trap. When your goal is simply to "sit and study for two hours," your subconscious mind looks for ways to kill time until the clock strikes 9:00 PM.</p>
 <h3 id="the-output-driven-alternative">The Output-Driven Alternative</h3>
 <p>Replace passive time intervals with <strong>concrete, measurable deliverables</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Ineffective Time-Based Entry</th>
-<th>High-Yield Output-Driven Entry</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><em>"Study Engineering Thermodynamics (2 hrs)"</em></td>
-<td><em>"Derive the 3 Rankine cycle efficiency equations without looking"</em></td>
-</tr>
-<tr>
-<td><em>"Read Law of Contract (3 hrs)"</em></td>
-<td><em>"Draft case summaries for Carlill v Carbolic and 3 related offers"</em></td>
-</tr>
-<tr>
-<td><em>"Revise Biochemistry (2 hrs)"</em></td>
-<td><em>"Answer 10 past questions from the 2023 departmental exam paper"</em></td>
-</tr>
-</tbody>
-</table>
+<p>| Ineffective Time-Based Entry | High-Yield Output-Driven Entry |</p>
+<p>|---|---|</p>
+<p>| <em>"Study Engineering Thermodynamics (2 hrs)"</em> | <em>"Derive the 3 Rankine cycle efficiency equations without looking"</em> |</p>
+<p>| <em>"Read Law of Contract (3 hrs)"</em> | <em>"Draft case summaries for Carlill v Carbolic and 3 related offers"</em> |</p>
+<p>| <em>"Revise Biochemistry (2 hrs)"</em> | <em>"Answer 10 past questions from the 2023 departmental exam paper"</em> |</p>
 <p>When you finish the specific deliverable in 75 minutes, you close the book and walk away. This trains your brain to work with aggressive efficiency rather than sluggish procrastination.</p>
-<hr />
+<hr>
 <h2 id="5-the-sleep-sacrifice-trap-planning-night-classes-every-day">5. The Sleep Sacrifice Trap: Planning Night Classes Every Day</h2>
 <p>Undergraduates often build timetables that rely on sleeping only 3 to 4 hours per night, planning regular "Till Daybreak" (TDB) sessions.</p>
 <p>This is self-sabotage. Neuroimaging studies published in <em>Nature Reviews Neuroscience</em> reveal that slow-wave deep sleep is the exact physiological window during which the brain moves newly learned facts from the hippocampus into long-term neocortical storage.</p>
-<p>Depriving your brain of sleep to fulfill an unrealistic timetable impairs memory consolidation, suppresses working memory by up to 40%, and directly produces exam-hall mental paralysis. </p>
+<p>Depriving your brain of sleep to fulfill an unrealistic timetable impairs memory consolidation, suppresses working memory by up to 40%, and directly produces exam-hall mental paralysis.</p>
 <p>If you are already running out of time before examinations and feeling the urge to sacrifice sleep, read our emergency protocol in <a href="/blog/academics/14-day-exam-cramming-panic-study-plan/">14-day emergency exam cramming plan</a>.</p>
-<hr />
+<hr>
 <h2 id="6-the-isolation-trap-zero-spaced-repetition-architecture">6. The Isolation Trap: Zero Spaced Repetition Architecture</h2>
 <p>A final fatal flaw is scheduling each course only once a week in a massive, isolated 4-hour block (e.g., <em>"Monday is for Physics, Tuesday is for Chemistry"</em>).</p>
 <p>Under this schedule, once Monday passes, you will not see Physics again for a full seven days. By the time Monday rolls around again, Ebbinghaus’s Forgetting Curve has erased over 70% of what you reviewed.</p>
 <p>Instead of massed weekly marathons, build <strong>distributed revision loops</strong> into your schedule. Spending 40 minutes reviewing a course three times a week produces vastly superior memory retention compared to one exhausting 3-hour marathon.</p>
 <p>To master this revision rhythm, apply the exact schedules outlined in our guide on <a href="/blog/academics/spaced-repetition-exam-revision-plan/">spaced repetition revision plan</a>.</p>
-<hr />
+<hr>
 <h2 id="the-resilient-timetable-checklist">The Resilient Timetable Checklist</h2>
 <p>Before you write your next semester study schedule, audit your plan against these five rules:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Lock in a 20% weekly buffer block:</strong> Keep Saturday or Sunday afternoon free to absorb lecture overruns.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Cap single study sessions at 50 to 90 minutes:</strong> Enforce a mandatory 10-minute break between sprints.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Weight hours by credit units:</strong> Direct at least 40% of your study time toward 3-unit and 4-unit core papers.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Write output deliverables, not hours:</strong> Define exact derivations, past questions, or flashcards to complete.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Protect 6 to 7 hours of nightly sleep:</strong> Treat sleep as a mandatory memory-consolidation block on your schedule.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Lock in a 20% weekly buffer block:** Keep Saturday or Sunday afternoon free to absorb lecture overruns.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Cap single study sessions at 50 to 90 minutes:** Enforce a mandatory 10-minute break between sprints.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Weight hours by credit units:** Direct at least 40% of your study time toward 3-unit and 4-unit core papers.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Write output deliverables, not hours:** Define exact derivations, past questions, or flashcards to complete.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Protect 6 to 7 hours of nightly sleep:** Treat sleep as a mandatory memory-consolidation block on your schedule.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="transform-your-study-strategy-with-a-battle-tested-system">Transform Your Study Strategy with a Battle-Tested System</h2>
 <p>A realistic timetable is the foundation of high academic performance. But to translate your daily routine into a First Class or strong Second Class Upper degree, you need the complete operational toolkit.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">Eliminate timetable failure, master high-yield active recall methods, and build a sustainable academic routine designed specifically for the realities of Nigerian tertiary education.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>30-Day Study Tracker</strong> — Pre-formatted, output-driven scheduling templates with built-in buffer blocks</li>
-    <li><strong>Focus Template</strong> — Eliminate digital distractions, hostel noise, and procrastination triggers</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer university marking schemes and lecture expectations</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Get the Academic Comeback Package Today &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">Eliminate timetable failure, master high-yield active recall methods, and build a sustainable academic routine designed specifically for the realities of Nigerian tertiary education.</p>
+<ul class="blog-cta-box__features">
+<li><strong>30-Day Study Tracker</strong> — Pre-formatted, output-driven scheduling templates with built-in buffer blocks</li>
+<li><strong>Focus Template</strong> — Eliminate digital distractions, hostel noise, and procrastination triggers</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer university marking schemes and lecture expectations</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Get the Academic Comeback Package Today &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-university-study-timetables-usually-collapse-after-two-weeks">Why do university study timetables usually collapse after two weeks?</h3>
 <p>Most student timetables collapse because they are built on ideal fantasies rather than real campus conditions. They schedule back-to-back study blocks without accounting for Nigerian campus realities—such as unexpected lecture shifts, transit bottlenecks, hostel power cuts, or physical mental fatigue.</p>
@@ -594,8 +582,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -779,8 +767,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -794,7 +782,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,137 +306,73 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="monthly-student-budget-plan-30000-living-survival">Monthly Student Budget Plan: ₦30,000 Living Survival</h1>
-<p>It is the 1st of the month. </p>
+        <h1 id="monthly-student-budget-plan-30-000-living-survival">Monthly Student Budget Plan: ₦30,000 Living Survival</h1>
+<p>It is the 1st of the month.</p>
 <p>Your banking app alerts you: <strong>Credit: ₦30,000.00 (Allowance from Home).</strong></p>
-<p>For about thirty minutes, you feel a sense of relief. </p>
-<p>Then, you take out a pen and start listing your unavoidable expenses:<br />
-* Half bag of rice, beans, and garri: ₦14,000.<br />
-* Cooking gas refill: ₦4,500.<br />
-* Internet data subscriptions for assignments: ₦4,000.<br />
-* Campus shuttle bus transit and printing handouts: ₦4,500.<br />
-* Basic toiletries (soap, toothpaste, detergent): ₦3,000.</p>
+<p>For about thirty minutes, you feel a sense of relief.</p>
+<p>Then, you take out a pen and start listing your unavoidable expenses:</p>
+<ul>
+<li>Half bag of rice, beans, and garri: ₦14,000.</li>
+<li>Cooking gas refill: ₦4,500.</li>
+<li>Internet data subscriptions for assignments: ₦4,000.</li>
+<li>Campus shuttle bus transit and printing handouts: ₦4,500.</li>
+<li>Basic toiletries (soap, toothpaste, detergent): ₦3,000.</li>
+</ul>
 <p>You add up the numbers: <strong>Total: ₦30,000.00.</strong></p>
-<p>There is literally zero naira left for unexpected course dues, medical panadol, emergency phone repairs, or social life. </p>
+<p>There is literally zero naira left for unexpected course dues, medical panadol, emergency phone repairs, or social life.</p>
 <p>One sudden ₦2,000 unannounced departmental levy will plunge you into acute hunger.</p>
 <p>In an era of rampant food inflation in Nigeria, surviving on ₦30,000 per month is an exercise in extreme financial engineering.</p>
 <p>Here is the battle-tested, realistic budget allocation model to stretch ₦30,000 across thirty days without starving your brain.</p>
-<hr />
-<h2 id="1-the-60201010-student-survival-framework">1. The 60/20/10/10 Student Survival Framework</h2>
-<p>Traditional Western budgeting models (like the 50/30/20 rule) are useless for a low-income Nigerian student. </p>
+<hr>
+<h2 id="1-the-60-20-10-10-student-survival-framework">1. The 60/20/10/10 Student Survival Framework</h2>
+<p>Traditional Western budgeting models (like the 50/30/20 rule) are useless for a low-income Nigerian student.</p>
 <p>Instead, use the <strong>Tactical Undergrad Survival Ratio</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Budget Category</th>
-<th>Percentage</th>
-<th>Allocation (₦30,000 Total)</th>
-<th>Target Needs</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Food &amp; Cooking Staples</strong></td>
-<td>60%</td>
-<td>₦18,000</td>
-<td>Raw rice, beans, garri, oil, eggs, seasonings (non-negotiable brain fuel)</td>
-</tr>
-<tr>
-<td><strong>Academic Operations</strong></td>
-<td>20%</td>
-<td>₦6,000</td>
-<td>Compulsory handouts, photocopy, printing, mobile research data, transit</td>
-</tr>
-<tr>
-<td><strong>Lodge Utilities</strong></td>
-<td>10%</td>
-<td>₦3,000</td>
-<td>Cooking gas refill contribution, prepaid electricity token, basic toiletries</td>
-</tr>
-<tr>
-<td><strong>Emergency Sinking Fund</strong></td>
-<td>10%</td>
-<td>₦3,000</td>
-<td>Untouchable medical reserve / urgent unexpected academic requirements</td>
-</tr>
-</tbody>
-</table>
+<p>| Budget Category | Percentage | Allocation (₦30,000 Total) | Target Needs |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Food & Cooking Staples</strong> | 60% | ₦18,000 | Raw rice, beans, garri, oil, eggs, seasonings (non-negotiable brain fuel) |</p>
+<p>| <strong>Academic Operations</strong> | 20% | ₦6,000 | Compulsory handouts, photocopy, printing, mobile research data, transit |</p>
+<p>| <strong>Lodge Utilities</strong> | 10% | ₦3,000 | Cooking gas refill contribution, prepaid electricity token, basic toiletries |</p>
+<p>| <strong>Emergency Sinking Fund</strong> | 10% | ₦3,000 | Untouchable medical reserve / urgent unexpected academic requirements |</p>
 <p>Understand how academic performance and calculations work in <a href="/blog/academics/cgpa-calculation-nigerian-university/">CGPA calculation: how the NUC 5.0 grade scale works</a>.</p>
-<hr />
-<h2 id="2-the-18000-monthly-food-protocol-cooking-over-buying">2. The ₦18,000 Monthly Food Protocol: Cooking Over Buying</h2>
-<p>The single fastest way to run out of money on campus is buying cooked food from roadside kiosks or student cafeterias:<br />
-* A single plate of rice and chicken at a campus bukka costs between ₦1,200 and ₦1,800. Buying twice daily drains your entire ₦30,000 in under twelve days.<br />
-* Cooking your own food reduces daily feeding costs to approximately <strong>₦500 to ₦600 per day</strong>.</p>
-<table>
-<thead>
-<tr>
-<th>Bulk Raw Staple</th>
-<th>Quantity for 1 Month</th>
-<th>Estimated Cost (₦)</th>
-<th>Nutritional Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Garri (Ijebu / Yellow)</strong></td>
-<td>1 Paint Bucket</td>
-<td>₦3,500</td>
-<td>Fast complex carbohydrate; emergency sustenance</td>
-</tr>
-<tr>
-<td><strong>Beans (Oloyin / White)</strong></td>
-<td>1 Paint Bucket</td>
-<td>₦5,500</td>
-<td>High protein; sustained satiety; zero sugar crash</td>
-</tr>
-<tr>
-<td><strong>Rice (Local / Parboiled)</strong></td>
-<td>1 Paint Bucket</td>
-<td>₦6,000</td>
-<td>Baseline daily calorie staple</td>
-</tr>
-<tr>
-<td><strong>Crate of Eggs (30 eggs)</strong></td>
-<td>1 Crate (Split with friend)</td>
-<td>₦2,500</td>
-<td>Premium choline and amino acids for memory</td>
-</tr>
-<tr>
-<td><strong>Palm Oil &amp; Seasonings</strong></td>
-<td>Monthly ration</td>
-<td>₦1,500</td>
-<td>Micronutrients &amp; essential fatty acids</td>
-</tr>
-<tr>
-<td><strong>TOTAL</strong></td>
-<td>—</td>
-<td><strong>₦19,000</strong></td>
-<td>Full month baseline nutrition</td>
-</tr>
-</tbody>
-</table>
+<hr>
+<h2 id="2-the-18-000-monthly-food-protocol-cooking-over-buying">2. The ₦18,000 Monthly Food Protocol: Cooking Over Buying</h2>
+<p>The single fastest way to run out of money on campus is buying cooked food from roadside kiosks or student cafeterias:</p>
+<ul>
+<li>A single plate of rice and chicken at a campus bukka costs between ₦1,200 and ₦1,800. Buying twice daily drains your entire ₦30,000 in under twelve days.</li>
+<li>Cooking your own food reduces daily feeding costs to approximately **₦500 to ₦600 per day**.</li>
+</ul>
+<p>| Bulk Raw Staple | Quantity for 1 Month | Estimated Cost (₦) | Nutritional Value |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Garri (Ijebu / Yellow)</strong> | 1 Paint Bucket | ₦3,500 | Fast complex carbohydrate; emergency sustenance |</p>
+<p>| <strong>Beans (Oloyin / White)</strong> | 1 Paint Bucket | ₦5,500 | High protein; sustained satiety; zero sugar crash |</p>
+<p>| <strong>Rice (Local / Parboiled)</strong>| 1 Paint Bucket | ₦6,000 | Baseline daily calorie staple |</p>
+<p>| <strong>Crate of Eggs (30 eggs)</strong> | 1 Crate (Split with friend)| ₦2,500 | Premium choline and amino acids for memory |</p>
+<p>| <strong>Palm Oil & Seasonings</strong>   | Monthly ration | ₦1,500 | Micronutrients & essential fatty acids |</p>
+<p>| <strong>TOTAL</strong>                  | — | <strong>₦19,000</strong> | Full month baseline nutrition |</p>
 <p>Learn how to slash feeding expenses by teaming up with coursemates in our upcoming pillar guide on <a href="/blog/finances/">bulk food buying groups with roommates</a>.</p>
-<hr />
+<hr>
 <h2 id="3-slashing-internet-and-operational-costs">3. Slashing Internet and Operational Costs</h2>
 <p>Internet data is an academic necessity, but buying daily ₦500 data plans drains your budget through micro-leakage:</p>
 <ol>
-<li><strong>Leverage Institutional Bandwidth:</strong> Make it a daily habit to spend two hours in the University Library or Departmental ICT Centre to download large video lectures, past questions, and research PDFs via campus Wi-Fi.</li>
-<li><strong>Night Bundles for Large Downloads:</strong> If you must use personal data for software or textbook downloads, use cheap midnight data bundles (e.g., 1GB for ₦250-₦300 between 11:00 PM and 5:00 AM).</li>
-<li><strong>Walk Short Campus Distances:</strong> If your lecture hall is a 10-minute walk from your lodge, walk instead of boarding a ₦150 shuttle tricycle. Walking saves ₦6,000 monthly while providing cardiovascular exercise that lowers study stress.</li>
+<li>**Leverage Institutional Bandwidth:** Make it a daily habit to spend two hours in the University Library or Departmental ICT Centre to download large video lectures, past questions, and research PDFs via campus Wi-Fi.</li>
+<li>**Night Bundles for Large Downloads:** If you must use personal data for software or textbook downloads, use cheap midnight data bundles (e.g., 1GB for ₦250-₦300 between 11:00 PM and 5:00 AM).</li>
+<li>**Walk Short Campus Distances:** If your lecture hall is a 10-minute walk from your lodge, walk instead of boarding a ₦150 shuttle tricycle. Walking saves ₦6,000 monthly while providing cardiovascular exercise that lowers study stress.</li>
 </ol>
 <p>Explore upcoming student strategies on emergency financial management in <a href="/blog/finances/">student emergency fund saving: building a buffer on low income</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-psychological-defense-against-campus-peer-spending">4. The Psychological Defense Against Campus Peer Spending</h2>
-<p>The biggest threat to a ₦30,000 budget is not inflation; it is <strong>Peer Comparison</strong>:<br />
-* Watching classmates order takeaway pizza or wear expensive clothes will make you feel deprived.<br />
-* Remind yourself that you are in a disciplined building season.<br />
-* Managing a tight budget with precision develops elite financial discipline that will serve you for the rest of your life.</p>
+<p>The biggest threat to a ₦30,000 budget is not inflation; it is <strong>Peer Comparison</strong>:</p>
+<ul>
+<li>Watching classmates order takeaway pizza or wear expensive clothes will make you feel deprived.</li>
+<li>Remind yourself that you are in a disciplined building season.</li>
+<li>Managing a tight budget with precision develops elite financial discipline that will serve you for the rest of your life.</li>
+</ul>
 <p>Every naira you protect is an investment in your peace of mind, ensuring you sit in your exams with a clear, nourished, and unpanicked brain.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<h3 id="is-it-realistic-to-survive-on-30000-a-month-in-a-nigerian-university-today">Is it realistic to survive on ₦30,000 a month in a Nigerian university today?</h3>
+<h3 id="is-it-realistic-to-survive-on-30-000-a-month-in-a-nigerian-university-today">Is it realistic to survive on ₦30,000 a month in a Nigerian university today?</h3>
 <p>Yes, but it requires strict batch cooking, zero commercial restaurant eating, pooling staple food purchases with trusted roommates, and disciplined digital data allocation.</p>
-<h3 id="what-percentage-of-a-students-allowance-should-go-to-food">What percentage of a student's allowance should go to food?</h3>
+<h3 id="what-percentage-of-a-student-s-allowance-should-go-to-food">What percentage of a student's allowance should go to food?</h3>
 <p>Roughly 50-60% (₦15,000 to ₦18,000). On a low budget, brain nutrition must be prioritized above entertainment, fashionable clothing, or frequent campus transit.</p>
 <h3 id="how-can-a-student-cut-mobile-data-costs-on-campus">How can a student cut mobile data costs on campus?</h3>
 <p>Download large lecture PDFs, YouTube academic tutorials, and study summaries using university library Wi-Fi during the day, reserving personal mobile data for emergency WhatsApp announcements.</p>
@@ -606,8 +542,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -791,8 +727,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -806,7 +742,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

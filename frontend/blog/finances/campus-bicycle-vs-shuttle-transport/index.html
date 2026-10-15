@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,86 +308,64 @@
       <div class="article-body">
         <h1 id="buying-a-campus-bicycle-vs-paying-daily-shuttle-buses">Buying a Campus Bicycle vs Paying Daily Shuttle Buses</h1>
 <p>It is 7:45 AM.</p>
-<p>You stand at the campus shuttle bus stop outside your university main gate. </p>
+<p>You stand at the campus shuttle bus stop outside your university main gate.</p>
 <p>A dense crowd of two hundred students is shoving, shouting, and fighting to force their way into the few arriving 14-seater minibuses and tricycles (kekes).</p>
 <p>The fare was <strong>₦100</strong> last session. Today, conductors demand <strong>₦250 per drop.</strong></p>
 <p>If you take a shuttle to class, a shuttle between faculties, and a shuttle back to your lodge, you burn <strong>₦750 every single day.</strong></p>
 <p>Over a 100-day semester, that amounts to <strong>₦75,000 in transit fares alone.</strong></p>
-<p>Meanwhile, a coursemate glides past the chaotic queue on a clean, sturdy blue bicycle:<br />
-* They spent zero naira on transport today.<br />
-* They didn't wait in a 30-minute shuttle line.<br />
-* They arrive at the lecture hall refreshed, on time, and completely in control of their schedule.</p>
+<p>Meanwhile, a coursemate glides past the chaotic queue on a clean, sturdy blue bicycle:</p>
+<ul>
+<li>They spent zero naira on transport today.</li>
+<li>They didn't wait in a 30-minute shuttle line.</li>
+<li>They arrive at the lecture hall refreshed, on time, and completely in control of their schedule.</li>
+</ul>
 <p>Is buying a student bicycle in Nigeria a smart financial investment or an impractical headache?</p>
 <p>Here is the hard economic, physical, and security analysis of <strong>Campus Bicycles vs. Daily Shuttle Buses</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-financial-break-even-equation">1. The Financial Break-Even Equation</h2>
 <blockquote>
-<h3 id="the-shuttle-bus-system">The Shuttle Bus System</h3>
-<ul>
-<li>Daily Transit Cost: ₦500 - ₦750</li>
-<li>Semester Cost (14 weeks / 70 lecture days): ₦35,000 - ₦52,500</li>
-<li>2-Semester Annual Cost: ₦70,000 - ₦105,000 (Pure evaporated expense!)</li>
-<li><strong>THE CAMPUS BICYCLE SYSTEM</strong></li>
-<li>Purchase Cost (Good Secondhand Mountain Bike): ₦45,000</li>
-<li>Heavy-Duty Steel Chain Lock &amp; Bell: ₦5,000</li>
-<li>Periodic Maintenance (Puncture patches, chain oil): ₦4,000/year</li>
-<li><strong>TOTAL 1-YEAR OUTLAY:</strong> ₦54,000</li>
-<li>Resale Value upon Graduation: ~₦30,000 (Recoverable capital!)</li>
-</ul>
+<p>### The Shuttle Bus System</p>
+<p>></p>
+<p>* Daily Transit Cost: ₦500 - ₦750</p>
+<p>* Semester Cost (14 weeks / 70 lecture days): ₦35,000 - ₦52,500</p>
+<p>* 2-Semester Annual Cost: ₦70,000 - ₦105,000 (Pure evaporated expense!)</p>
+<p>* **THE CAMPUS BICYCLE SYSTEM**</p>
+<p>* Purchase Cost (Good Secondhand Mountain Bike): ₦45,000</p>
+<p>* Heavy-Duty Steel Chain Lock & Bell: ₦5,000</p>
+<p>* Periodic Maintenance (Puncture patches, chain oil): ₦4,000/year</p>
+<p>* **TOTAL 1-YEAR OUTLAY:** ₦54,000</p>
+<p>* Resale Value upon Graduation: ~₦30,000 (Recoverable capital!)</p>
 </blockquote>
 <p>A student bicycle pays for itself within <strong>one single semester</strong>. Over a 4-year degree program, cycling saves an astounding <strong>₦250,000 to ₦350,000</strong> in cash.</p>
 <p>Review daily shuttle cost breakdowns in <a href="/blog/hostel/campus-shuttle-bus-vs-walking-daily/">campus shuttle buses vs walking daily: transit math</a>.</p>
-<hr />
-<h2 id="2-terrain-campus-infrastructure-feasibility">2. Terrain &amp; Campus Infrastructure Feasibility</h2>
+<hr>
+<h2 id="2-terrain-campus-infrastructure-feasibility">2. Terrain & Campus Infrastructure Feasibility</h2>
 <p>Bicycle utility depends heavily on your university's topography:</p>
-<table>
-<thead>
-<tr>
-<th>Campus Category</th>
-<th>Institutions</th>
-<th>Bicycle Viability</th>
-<th>Strategic Tip</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Flat &amp; Sprawling</strong></td>
-<td>ABU Zaria, UNILORIN, KWASU, FUNAAB</td>
-<td><strong>Elite (10/10)</strong></td>
-<td>Single-gear or classic road bike is ideal</td>
-</tr>
-<tr>
-<td><strong>Moderate Distances</strong></td>
-<td>UNIBEN, UI Ibadan, UNILAG</td>
-<td><strong>High (8/10)</strong></td>
-<td>Mountain bike with 7-speed gears</td>
-</tr>
-<tr>
-<td><strong>Steep Hilly Terrain</strong></td>
-<td>UNN Nsukka, AAUA Akungba</td>
-<td><strong>Challenging (5/10)</strong></td>
-<td>Requires high fitness or electric assist</td>
-</tr>
-</tbody>
-</table>
+<p>| Campus Category | Institutions | Bicycle Viability | Strategic Tip |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Flat & Sprawling</strong> | ABU Zaria, UNILORIN, KWASU, FUNAAB | <strong>Elite (10/10)</strong> | Single-gear or classic road bike is ideal |</p>
+<p>| <strong>Moderate Distances</strong> | UNIBEN, UI Ibadan, UNILAG | <strong>High (8/10)</strong> | Mountain bike with 7-speed gears |</p>
+<p>| <strong>Steep Hilly Terrain</strong> | UNN Nsukka, AAUA Akungba | <strong>Challenging (5/10)</strong> | Requires high fitness or electric assist |</p>
 <p>Explore commuter transit budgeting in <a href="/blog/finances/commuter-student-transport-budgeting/">commuter student transport budgeting: daily transit management</a>.</p>
-<hr />
-<h2 id="3-theft-prevention-hardware-defense">3. Theft Prevention &amp; Hardware Defense</h2>
+<hr>
+<h2 id="3-theft-prevention-hardware-defense">3. Theft Prevention & Hardware Defense</h2>
 <p>The biggest fear students have is: <em>"What if someone steals my bike outside the faculty auditorium?"</em></p>
 <p>Execute the <strong>Anti-Theft Security Protocol</strong>:</p>
 <ol>
-<li><strong>The Dual-Lock Strategy:</strong> Cheap wire cable locks can be snipped in three seconds with wire cutters. Use a hardened steel <strong>U-Lock</strong> securing the rear wheel and frame directly to an institutional iron staircase or bicycle rack.</li>
-<li><strong>Park in High-Visibility Security Zones:</strong> Never park your bicycle behind isolated generators or dark faculty wings. Park directly in front of the Departmental Security Post or library entrance where campus security personnel are stationed.</li>
-<li><strong>Cosmetic De-glamorization:</strong> Make your bicycle look unattractive to campus thieves by wrapping black electrical tape around brand logos on the frame.</li>
+<li>**The Dual-Lock Strategy:** Cheap wire cable locks can be snipped in three seconds with wire cutters. Use a hardened steel **U-Lock** securing the rear wheel and frame directly to an institutional iron staircase or bicycle rack.</li>
+<li>**Park in High-Visibility Security Zones:** Never park your bicycle behind isolated generators or dark faculty wings. Park directly in front of the Departmental Security Post or library entrance where campus security personnel are stationed.</li>
+<li>**Cosmetic De-glamorization:** Make your bicycle look unattractive to campus thieves by wrapping black electrical tape around brand logos on the frame.</li>
 </ol>
 <p>Review monthly budget structures in <a href="/blog/finances/monthly-student-budget-30000-naira/">monthly student budget plan: ₦30,000 living survival</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-cardiovascular-and-cognitive-bonus">4. The Cardiovascular and Cognitive Bonus</h2>
-<p>Cycling to lectures is not merely an economic decision; it is a cognitive enhancer:<br />
-* Twenty minutes of moderate cycling stimulates blood circulation and releases brain-derived neurotrophic factor (BDNF).<br />
-* You arrive at your 8:00 AM examinations wide awake, mentally sharp, and energized, while peers who were squashed in hot minibuses arrive sluggish and irritated.<br />
-* Take control of your commute, save your hard-earned allowance, and ride your way to academic dominance.</p>
-<hr />
+<p>Cycling to lectures is not merely an economic decision; it is a cognitive enhancer:</p>
+<ul>
+<li>Twenty minutes of moderate cycling stimulates blood circulation and releases brain-derived neurotrophic factor (BDNF).</li>
+<li>You arrive at your 8:00 AM examinations wide awake, mentally sharp, and energized, while peers who were squashed in hot minibuses arrive sluggish and irritated.</li>
+<li>Take control of your commute, save your hard-earned allowance, and ride your way to academic dominance.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-a-sturdy-secondhand-bicycle-cost-in-nigeria-for-student-use">How much does a sturdy secondhand bicycle cost in Nigeria for student use?</h3>
 <p>A reliable, used single-gear or multi-gear bicycle (mountain bike) costs between ₦35,000 and ₦60,000 at regional bicycle markets or from graduating students.</p>
@@ -561,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -746,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -761,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

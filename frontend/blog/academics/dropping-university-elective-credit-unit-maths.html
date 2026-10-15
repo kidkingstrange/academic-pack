@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,155 +307,101 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="dropping-an-elective-vs-risking-a-d-credit-unit-maths">Dropping an Elective vs Risking a D: Credit Unit Maths</h1>
-<p>It is Week 5 of the semester. </p>
+<p>It is Week 5 of the semester.</p>
 <p>Your Course Level Adviser approved your registration form three weeks ago. To boost your academic profile, you registered <strong>24 maximum credit units</strong>—including an optional 2-unit elective in Advanced Econometrics, French for Beginners, or Introduction to Astronomy.</p>
-<p>Now, the mid-semester Continuous Assessment tests are underway. </p>
-<p>You are drowning. </p>
+<p>Now, the mid-semester Continuous Assessment tests are underway.</p>
+<p>You are drowning.</p>
 <p>Your 4-unit departmental core courses demand twenty hours of weekly problem-solving, your laboratory reports take eight hours every Wednesday, and this "simple" 2-unit elective has turned into a nightmare: an eccentric lecturer who demands a 40-page term paper, unannounced quizzes, and complex formulas.</p>
 <p>You sit at your desk with your scientific calculator, faced with a high-stakes strategic question:</p>
 <blockquote>
-<p><em>"Should I file an Add/Drop form to drop this elective right now, or should I push through and risk getting a 'D' or 'E'?"</em></p>
+<p>*"Should I file an Add/Drop form to drop this elective right now, or should I push through and risk getting a 'D' or 'E'?"*</p>
 </blockquote>
 <p>In the Nigerian university system operating on the <a href="https://www.nuc.edu.ng/">National Universities Commission (NUC)</a> 5.0 Cumulative Grade Point Average scale, <strong>academic progression is an optimization problem.</strong></p>
 <p>Every credit unit you register adds to your cumulative denominator. Registering unnecessary units that yield low letter grades permanently deflates your graduating degree class.</p>
 <p>Here is the exact mathematical model to decide whether to drop an elective or fight for a pass, and how to protect your CGPA from unnecessary damage.</p>
-<hr />
+<hr>
 <h2 id="1-the-denominator-trap-how-low-grades-silently-destroy-cgpa">1. The Denominator Trap: How Low Grades Silently Destroy CGPA</h2>
 <p>To understand the mathematical risk of an elective, examine how the NUC 5.0 CGPA formula works:</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>CGPA = (Total Cumulative Grade Points) / (Total Cumulative Credit Units Registered)</em></p>
+<p>💡 **Key Formula:** *CGPA = (Total Cumulative Grade Points) / (Total Cumulative Credit Units Registered)*</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Letter Grade</th>
-<th>Percentage Score</th>
-<th>NUC Grade Point Value</th>
-<th>2-Unit Course Value</th>
-<th>3-Unit Course Value</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>A</strong></td>
-<td>70% – 100%</td>
-<td>5 Points</td>
-<td>10 Points</td>
-<td>15 Points</td>
-</tr>
-<tr>
-<td><strong>B</strong></td>
-<td>60% – 69%</td>
-<td>4 Points</td>
-<td>8 Points</td>
-<td>12 Points</td>
-</tr>
-<tr>
-<td><strong>C</strong></td>
-<td>50% – 59%</td>
-<td>3 Points</td>
-<td>6 Points</td>
-<td>9 Points</td>
-</tr>
-<tr>
-<td><strong>D</strong></td>
-<td>45% – 49%</td>
-<td>2 Points</td>
-<td>4 Points</td>
-<td>6 Points</td>
-</tr>
-<tr>
-<td><strong>E</strong></td>
-<td>40% – 44%</td>
-<td>1 Point</td>
-<td>2 Points</td>
-<td>3 Points</td>
-</tr>
-<tr>
-<td><strong>F</strong></td>
-<td>Below 40%</td>
-<td>0 Points</td>
-<td>0 Points</td>
-<td>0 Points</td>
-</tr>
-</tbody>
-</table>
+<p>| Letter Grade | Percentage Score | NUC Grade Point Value | 2-Unit Course Value | 3-Unit Course Value |</p>
+<p>|---|---|---|---|---|</p>
+<p>| <strong>A</strong> | 70% – 100% | 5 Points | 10 Points | 15 Points |</p>
+<p>| <strong>B</strong> | 60% – 69% | 4 Points | 8 Points | 12 Points |</p>
+<p>| <strong>C</strong> | 50% – 59% | 3 Points | 6 Points | 9 Points |</p>
+<p>| <strong>D</strong> | 45% – 49% | 2 Points | 4 Points | 6 Points |</p>
+<p>| <strong>E</strong> | 40% – 44% | 1 Point | 2 Points | 3 Points |</p>
+<p>| <strong>F</strong> | Below 40% | 0 Points | 0 Points | 0 Points |</p>
 <h3 id="the-mathematical-shock">The Mathematical Shock:</h3>
 <p>Imagine a student with a solid <strong>3.60 CGPA</strong> across 60 completed units (216 Total Points).</p>
-<p>In the current semester, they register an optional 2-unit elective. They are overloaded, neglect the course, and score a <strong>46% (D)</strong>:<br />
-* New Points Added: $2  imes 2 = 4  ext{ Points}$<br />
-* New Units Added: $2   ext{ Units}$<br />
-* New Cumulative Standing: $(216 + 4) / (60 + 2) = 220 / 62 = \mathbf{3.54  ext{ CGPA}}$</p>
+<p>In the current semester, they register an optional 2-unit elective. They are overloaded, neglect the course, and score a <strong>46% (D)</strong>:</p>
+<ul>
+<li>New Points Added: $2 	imes 2 = 4	ext{ Points}$</li>
+<li>New Units Added: $2	ext{ Units}$</li>
+<li>New Cumulative Standing: $(216 + 4) / (60 + 2) = 220 / 62 = \mathbf{3.54	ext{ CGPA}}$</li>
+</ul>
 <p>That single elective cost the student <strong>0.06 CGPA points</strong>, bringing them within inches of slipping out of Second Class Upper into Second Class Lower.</p>
 <p>To master the complete mathematical rules governing grade points and credit units, review <a href="/blog/academics/cgpa-calculation-nigerian-university-5-scale/">understanding CGPA calculation on the NUC 5.0 scale</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-questions-that-decide-drop-or-push">2. The 3 Questions That Decide: Drop or Push?</h2>
 <p>Before the university Senate's <strong>Add/Drop deadline</strong> passes, ask yourself these three analytical questions:</p>
 <ul>
-<li>
-<ol>
-<li>Is this course a statutory requirement for graduation?</li>
-</ol>
-</li>
-<li>
-<ol start="2">
-<li>Is the predicted grade below a 'C' (3.0)?</li>
-</ol>
-</li>
-<li>
-<ol start="3">
-<li>Does this course steal cognitive time from 4-unit core papers?</li>
-</ol>
-</li>
+<li>1. Is this course a statutory requirement for graduation?</li>
+<li>2. Is the predicted grade below a 'C' (3.0)?</li>
+<li>3. Does this course steal cognitive time from 4-unit core papers?</li>
 </ul>
 <h3 id="question-1-is-this-course-a-compulsory-prerequisite">Question 1: Is this course a compulsory prerequisite?</h3>
 <p>Check your faculty handbook. If the course is a <strong>Departmental Elective Option</strong> (e.g., you need any 2 elective units from a basket of 4 options), you do not have to take <em>this</em> specific difficult course. You can drop it and take a lighter option next semester.</p>
 <h3 id="question-2-what-is-your-realistic-grade-ceiling">Question 2: What is your realistic grade ceiling?</h3>
-<p>Be brutally honest with your Continuous Assessment score:<br />
-* If you scored <strong>8/30</strong> on the CA test, you need to score an incredible <strong>62/70</strong> on the final written paper just to reach an 'A' (70%), or <strong>42/70</strong> just to scrape a 'C' (50%).<br />
-* If your ceiling is a 'D' or 'E', <strong>drop the course immediately</strong>.</p>
+<p>Be brutally honest with your Continuous Assessment score:</p>
+<ul>
+<li>If you scored **8/30** on the CA test, you need to score an incredible **62/70** on the final written paper just to reach an 'A' (70%), or **42/70** just to scrape a 'C' (50%).</li>
+<li>If your ceiling is a 'D' or 'E', **drop the course immediately**.</li>
+</ul>
 <h3 id="question-3-is-it-draining-your-4-unit-core-prerequisites">Question 3: Is it draining your 4-unit core prerequisites?</h3>
 <p>Failing or getting a 'D' in a 4-unit core prerequisite destroys your academic standing four times faster than an elective. If spending 10 hours on this elective causes you to get a 'C' instead of an 'A' in a 4-unit core paper, dropping the elective is a mathematical no-brainer.</p>
 <p>To calculate the exact targets needed across your remaining semester papers, use our guide on <a href="/blog/academics/calculate-semester-target-gpa-step-by-step-tool/">calculating semester target GPA step by step</a>.</p>
-<hr />
-<h2 id="3-the-official-adddrop-protocol-avoiding-the-phantom-f">3. The Official Add/Drop Protocol: Avoiding the "Phantom F"</h2>
+<hr>
+<h2 id="3-the-official-add-drop-protocol-avoiding-the-phantom-f">3. The Official Add/Drop Protocol: Avoiding the "Phantom F"</h2>
 <p>Never stop attending an elective course without formally dropping it on your portal.</p>
-<p>If you simply walk away from a registered course:<br />
-* The departmental broad-sheet will record your score as <strong>0 / 100 (ABS)</strong>.<br />
-* Senate software automatically converts an unexplained absence into an <strong>'F' (0 points)</strong>.<br />
-* That avoidable 'F' adds zero points to your numerator while inflating your denominator by 2 or 3 units, dragging down your GPA.</p>
-<h3 id="the-3-step-adddrop-procedure">The 3-Step Add/Drop Procedure:</h3>
+<p>If you simply walk away from a registered course:</p>
+<ul>
+<li>The departmental broad-sheet will record your score as **0 / 100 (ABS)**.</li>
+<li>Senate software automatically converts an unexplained absence into an **'F' (0 points)**.</li>
+<li>That avoidable 'F' adds zero points to your numerator while inflating your denominator by 2 or 3 units, dragging down your GPA.</li>
+</ul>
+<h3 id="the-3-step-add-drop-procedure">The 3-Step Add/Drop Procedure:</h3>
 <ol>
-<li><strong>Collect the Official Add/Drop Form:</strong> Obtain the form from your Faculty Academic Officer before the statutory 4-to-6-week deadline.</li>
-<li><strong>Secure Signatures:</strong> Have your Course Level Adviser and Head of Department sign the deletion.</li>
-<li><strong>Verify Portal Update:</strong> Log into your student portal and ensure the course code is completely deleted from your registered course list.</li>
+<li>**Collect the Official Add/Drop Form:** Obtain the form from your Faculty Academic Officer before the statutory 4-to-6-week deadline.</li>
+<li>**Secure Signatures:** Have your Course Level Adviser and Head of Department sign the deletion.</li>
+<li>**Verify Portal Update:** Log into your student portal and ensure the course code is completely deleted from your registered course list.</li>
 </ol>
 <p>If poor course registration in previous sessions has placed you at risk of academic withdrawal, follow our recovery blueprint in <a href="/blog/academics/university-academic-probation/">reversing academic probation and withdrawal risks</a>.</p>
-<hr />
+<hr>
 <h2 id="the-elective-audit-checklist">The Elective Audit Checklist</h2>
 <p>Audit your semester course registration today:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Check graduation credit requirements:</strong> Ensure you have enough total units to meet NUC minimums without this elective.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Evaluate your Continuous Assessment mark:</strong> If your CA score guarantees a 'D' or 'E', initiate Add/Drop.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Protect your 4-unit core papers:</strong> Never sacrifice core departmental prerequisites for optional electives.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Submit formal Add/Drop paperwork:</strong> Never abandon a course informally without portal confirmation.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Check graduation credit requirements:** Ensure you have enough total units to meet NUC minimums without this elective.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Evaluate your Continuous Assessment mark:** If your CA score guarantees a 'D' or 'E', initiate Add/Drop.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Protect your 4-unit core papers:** Never sacrifice core departmental prerequisites for optional electives.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Submit formal Add/Drop paperwork:** Never abandon a course informally without portal confirmation.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="master-your-university-degree-strategy">Master Your University Degree Strategy</h2>
 <p>Smart academic management is not about registering the maximum courses; it is about engineering your course load to secure the highest possible graduating honours.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam anxiety, master GPA planning, and graduate with top honours.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Exam Survival Guide</strong> — Pacing blueprints, course triage schedules, and GPA protection formulas</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer marking rubrics and maximize method marks</li>
-    <li><strong>30-Day Study Tracker</strong> — Pre-built templates to plan course loads, study sprints, and target GPAs</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam anxiety, master GPA planning, and graduate with top honours.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Exam Survival Guide</strong> — Pacing blueprints, course triage schedules, and GPA protection formulas</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer marking rubrics and maximize method marks</li>
+<li><strong>30-Day Study Tracker</strong> — Pre-built templates to plan course loads, study sprints, and target GPAs</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="can-you-drop-an-elective-course-after-registering-it-in-a-nigerian-university">Can you drop an elective course after registering it in a Nigerian university?</h3>
 <p>Yes, provided you submit an official 'Add and Drop Form' within the university Senate's approved window (typically within the first 4 to 6 weeks of the semester). Dropping a course outside this window records an automatic 'ABS' or 'F'.</p>
@@ -629,8 +575,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -814,8 +760,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -829,7 +775,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

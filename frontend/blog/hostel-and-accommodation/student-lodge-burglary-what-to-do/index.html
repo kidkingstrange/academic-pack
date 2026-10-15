@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,54 +307,66 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="handling-lodge-burglary-immediate-recovery-steps">Handling Lodge Burglary: Immediate Recovery Steps</h1>
-<p>You arrive back at your student lodge at 4:30 PM after writing your afternoon examination. </p>
-<p>You walk down the tiled corridor, humming quietly, keys in hand. </p>
+<p>You arrive back at your student lodge at 4:30 PM after writing your afternoon examination.</p>
+<p>You walk down the tiled corridor, humming quietly, keys in hand.</p>
 <p>As you reach Room 6, you freeze.</p>
-<p>Your wooden door is slightly ajar. </p>
-<p>The brass padlock latch has been wrenched out of the door frame, leaving splintered wood scattered across the floor tiles. </p>
-<p>You push the door open with trembling fingers. </p>
-<p>Inside, your room has been turned inside out:<br />
-* Wardrobe doors are flung open; your clothes are dumped in a heap on the floor.<br />
-* Your study desk is bare: your HP laptop, your laptop charger, and your external hard drive containing four years of project research are gone.<br />
-* Your backup smartphone and 30,000mAh power bank have vanished.<br />
-* Even the ₦15,000 cash in your drawer has been taken.</p>
+<p>Your wooden door is slightly ajar.</p>
+<p>The brass padlock latch has been wrenched out of the door frame, leaving splintered wood scattered across the floor tiles.</p>
+<p>You push the door open with trembling fingers.</p>
+<p>Inside, your room has been turned inside out:</p>
+<ul>
+<li>Wardrobe doors are flung open; your clothes are dumped in a heap on the floor.</li>
+<li>Your study desk is bare: your HP laptop, your laptop charger, and your external hard drive containing four years of project research are gone.</li>
+<li>Your backup smartphone and 30,000mAh power bank have vanished.</li>
+<li>Even the ₦15,000 cash in your drawer has been taken.</li>
+</ul>
 <p>A cold wave of panic, nausea, and shock washes over your entire body. Your knees feel weak.</p>
 <p>Burglary is every student’s worst nightmare. In minutes, months of academic work, expensive electronic devices, and personal security are erased.</p>
 <p>What you do in the next sixty minutes can mean the difference between recovering your assets or having your bank accounts emptied by criminals.</p>
 <p>Here is the exact <strong>24-Hour Emergency Response Protocol</strong> following a student lodge burglary.</p>
-<hr />
+<hr>
 <h2 id="1-the-immediate-60-minute-emergency-sequence">1. The Immediate 60-Minute Emergency Sequence</h2>
-<p><strong>The 60-Minute Post-Burglary Protocol:</strong><br />
-* Step 1: Digital Quarantine (Block stolen SIMs &amp; USSD bank mobile channels) — Step 2: Crime Scene Preservation (Do NOT touch surfaces or sweep rooms) — Step 3: Formal Police Incident Report (Obtain official Crime Extract Document) — Step 4: Academic Contingency (Notify Departmental HOD &amp; Course Rep)</p>
-<hr />
+<p><strong>The 60-Minute Post-Burglary Protocol:</strong></p>
+<ul>
+<li>Step 1: Digital Quarantine (Block stolen SIMs & USSD bank mobile channels) — Step 2: Crime Scene Preservation (Do NOT touch surfaces or sweep rooms) — Step 3: Formal Police Incident Report (Obtain official Crime Extract Document) — Step 4: Academic Contingency (Notify Departmental HOD & Course Rep)</li>
+</ul>
+<hr>
 <h3 id="step-1-immediate-digital-quarantine-prevent-financial-plunder">Step 1: Immediate Digital Quarantine (Prevent Financial Plunder)</h3>
 <p>Most thieves do not just sell stolen phones—they immediately swap the SIM card into another phone to intercept OTPs and drain bank accounts via USSD codes (<em>737#, </em>901#, *894#).</p>
-<p>Execute this sequence within twenty minutes:<br />
-1. <strong>Dial Bank Deactivation Codes:</strong> Borrow a neighbor's phone and dial your bank's instant USSD freeze code (e.g., GTBank: <code>*737*51*10#</code>, Zenith: <code>*966*911#</code>, Access: <code>*901*911#</code>).<br />
-2. <strong>Call Your Telco Provider:</strong> Contact MTN, Airtel, or Glo customer support to deactivate your stolen SIM cards immediately.<br />
-3. <strong>Remote-Wipe Gadgets:</strong> Log into Google <em>Find My Device</em> (for Android) or Apple <em>Find My</em> (for iPhone/Mac) from a browser. Transmit a remote lock and wipe command to protect your personal photos and passwords.</p>
-<hr />
-<h2 id="2-step-2-crime-scene-preservation-police-documentation">2. Step 2: Crime Scene Preservation &amp; Police Documentation</h2>
-<p>Never clean your room or sweep away debris before law enforcement inspects the scene:<br />
-* <strong>Preserve Fingerprints:</strong> Intruders often leave clear fingerprints on door handles, drawer edges, and window burglary bars.<br />
-* <strong>Obtain the Official Police Crime Extract:</strong> Go to the nearest Divisional Police Headquarters (DPO). File a formal complaint detailing the date, time, and exact serial numbers/IMEIs of stolen items. Insist on collecting an authenticated <strong>Police Extract and Incident Report</strong>. <br />
-* You will need this official police extract to block your SIM cards, replace your student ID card, and legally justify missed academic tests.</p>
-<hr />
+<p>Execute this sequence within twenty minutes:</p>
+<ol>
+<li>**Dial Bank Deactivation Codes:** Borrow a neighbor's phone and dial your bank's instant USSD freeze code (e.g., GTBank: `*737*51*10#`, Zenith: `*966*911#`, Access: `*901*911#`).</li>
+<li>**Call Your Telco Provider:** Contact MTN, Airtel, or Glo customer support to deactivate your stolen SIM cards immediately.</li>
+<li>**Remote-Wipe Gadgets:** Log into Google *Find My Device* (for Android) or Apple *Find My* (for iPhone/Mac) from a browser. Transmit a remote lock and wipe command to protect your personal photos and passwords.</li>
+</ol>
+<hr>
+<h2 id="2-step-2-crime-scene-preservation-police-documentation">2. Step 2: Crime Scene Preservation & Police Documentation</h2>
+<p>Never clean your room or sweep away debris before law enforcement inspects the scene:</p>
+<ul>
+<li>**Preserve Fingerprints:** Intruders often leave clear fingerprints on door handles, drawer edges, and window burglary bars.</li>
+<li>**Obtain the Official Police Crime Extract:** Go to the nearest Divisional Police Headquarters (DPO). File a formal complaint detailing the date, time, and exact serial numbers/IMEIs of stolen items. Insist on collecting an authenticated **Police Extract and Incident Report**.</li>
+<li>You will need this official police extract to block your SIM cards, replace your student ID card, and legally justify missed academic tests.</li>
+</ul>
+<hr>
 <h2 id="3-step-3-departmental-notification-for-lost-academic-work">3. Step 3: Departmental Notification for Lost Academic Work</h2>
-<p>If your laptop contained your only copy of your final-year research project, term papers, or lab data:<br />
-* Immediately write a formal letter through your Academic Adviser to your Head of Department (HOD), attaching a copy of the police report.<br />
-* Request a 7 to 14-day extension for assignment submission or defense preparation.<br />
-* In the future, always automate cloud backups using Google Drive, OneDrive, or GitHub to ensure hardware loss does not destroy your academic degree.</p>
+<p>If your laptop contained your only copy of your final-year research project, term papers, or lab data:</p>
+<ul>
+<li>Immediately write a formal letter through your Academic Adviser to your Head of Department (HOD), attaching a copy of the police report.</li>
+<li>Request a 7 to 14-day extension for assignment submission or defense preparation.</li>
+<li>In the future, always automate cloud backups using Google Drive, OneDrive, or GitHub to ensure hardware loss does not destroy your academic degree.</li>
+</ul>
 <p>Review long-term compound security hardening in <a href="/blog/hostel-and-accommodation/off-campus-student-lodge-security-safety/">off campus student lodge security and safety</a> and explore nighttime protective protocols in <a href="/blog/hostel-and-accommodation/">isolated off campus lodge night security protocols</a>.</p>
 <p>Dealing with the emotional shock and post-incident anxiety requires deliberate psychological care; read our coping blueprint in <a href="/blog/mental-health/">coping with traumatic events and emotional resilience</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="protect-your-gadgets-and-find-support">🛡️ Protect Your Gadgets and Find Support</h3>
+<p>### 🛡️ Protect Your Gadgets and Find Support</p>
 <p>Experienced a break-in or need urgent advice on recovering from device theft?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with campus student leaders, get advice on device tracking, and find emergency academic assistance.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with campus student leaders, get advice on device tracking, and find emergency academic assistance.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-very-first-thing-you-should-do-after-discovering-your-room-was-burgled">What is the very first thing you should do after discovering your room was burgled?</h3>
 <p>Do not enter or touch anything in the room. Touching surfaces contaminates fingerprint and forensic evidence. Immediately alert your neighbors, lodge caretaker, and call the local police divisional headquarters.</p>
@@ -528,8 +540,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -713,8 +725,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -728,7 +740,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

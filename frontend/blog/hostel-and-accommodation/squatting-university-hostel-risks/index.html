@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,68 +306,49 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="squatting-in-university-hostels-legal-social-risks">Squatting in University Hostels: Legal &amp; Social Risks</h1>
+        <h1 id="squatting-in-university-hostels-legal-social-risks">Squatting in University Hostels: Legal & Social Risks</h1>
 <p>It is 11:30 PM in a federal university hostel room officially built for four occupants.</p>
-<p>Inside the room, ten bodies are preparing for sleep. </p>
-<p>Four registered occupants lie on the spring mattresses of the two double-bunk beds. </p>
+<p>Inside the room, ten bodies are preparing for sleep.</p>
+<p>Four registered occupants lie on the spring mattresses of the two double-bunk beds.</p>
 <p>On the concrete floor below, three thin 2-inch student foam mattresses—locally known as <em>"carpets"</em> or <em>"student mats"</em>—are laid out side by side like sardines. Four "squatters" (informal, unregistered roommates) maneuver their bodies to fit onto the foam without touching the bathroom doorway.</p>
 <p>One squatter’s luggage is packed into a single Ghana-Must-Go sack jammed under the lowest bunk bed. His school clothes hang from a single wire hanger suspended from an exposed ceiling pipe.</p>
 <p>This is the underground institution of <strong>"Squatting"</strong> (also known as <em>perching, coupling, or floating</em>) in Nigerian university halls of residence.</p>
 <p>For hundreds of thousands of undergraduates, squatting is not an act of rebellion. It is the only thing standing between them and dropping out of university due to the exorbitant cost of off-campus private lodges.</p>
-<p>Yet, living as an undocumented resident inside institutional halls carries profound psychological, legal, and social liabilities. </p>
+<p>Yet, living as an undocumented resident inside institutional halls carries profound psychological, legal, and social liabilities.</p>
 <p>Here is the objective breakdown of the squatting phenomenon: the institutional risks, the emotional toll, and the survival rules if circumstances force you into this path.</p>
-<hr />
+<hr>
 <h2 id="1-the-legal-and-institutional-hazards-of-squatting">1. The Legal and Institutional Hazards of Squatting</h2>
 <p>University handbooks across federal and state institutions define squatting as unauthorized trespass and accommodation fraud:</p>
-<p><strong>Squatting Disciplinary Risk Chain:</strong><br />
-* Level 1: Porter Dawn Raids (Confiscation of bedding, stoves, and clothes) — Level 2: Hall Disciplinary Eviction (Host student loses bed space permanently) — Level 3: Academic Portal Locks (Withholding of semester exam dockets/results) — Level 4: Student Disciplinary Committee (SDC) Trial (Rustication risk for repeat offenders)</p>
-<h3 id="the-host-students-liability">The Host Student's Liability</h3>
-<p>If you are hosting a squatter, remember that university regulations make the <strong>legal bonafide occupant 100% accountable</strong> for whatever happens inside that room:<br />
-* If your squatter causes an electrical fire with a prohibited heating appliance, you are held liable.<br />
-* If your squatter is accused of theft or hall property damage, your matriculation number is pinned to the disciplinary query.<br />
-* If a midnight porter raid catches unregistered occupants, your accommodation fee is forfeited with zero refund.</p>
+<p><strong>Squatting Disciplinary Risk Chain:</strong></p>
+<ul>
+<li>Level 1: Porter Dawn Raids (Confiscation of bedding, stoves, and clothes) — Level 2: Hall Disciplinary Eviction (Host student loses bed space permanently) — Level 3: Academic Portal Locks (Withholding of semester exam dockets/results) — Level 4: Student Disciplinary Committee (SDC) Trial (Rustication risk for repeat offenders)</li>
+</ul>
+<h3 id="the-host-student-s-liability">The Host Student's Liability</h3>
+<p>If you are hosting a squatter, remember that university regulations make the <strong>legal bonafide occupant 100% accountable</strong> for whatever happens inside that room:</p>
+<ul>
+<li>If your squatter causes an electrical fire with a prohibited heating appliance, you are held liable.</li>
+<li>If your squatter is accused of theft or hall property damage, your matriculation number is pinned to the disciplinary query.</li>
+<li>If a midnight porter raid catches unregistered occupants, your accommodation fee is forfeited with zero refund.</li>
+</ul>
 <p>For a broader perspective on institutional housing shortages, read our analysis of the <a href="/blog/hostel-and-accommodation/campus-accommodation-crisis-nigeria-housing/">campus accommodation crisis reality of student housing</a>.</p>
-<hr />
-<h2 id="2-the-social-psychological-reality-the-second-class-citizen-trauma">2. The Social &amp; Psychological Reality: The "Second-Class Citizen" Trauma</h2>
+<hr>
+<h2 id="2-the-social-psychological-reality-the-second-class-citizen-trauma">2. The Social & Psychological Reality: The "Second-Class Citizen" Trauma</h2>
 <p>Living in a room where your name is not on the door takes a silent, corrosive psychological toll on self-esteem:</p>
 <h3 id="the-loss-of-personal-space-and-dignity">The Loss of Personal Space and Dignity</h3>
-<p>As a squatter, you have no territory. You cannot leave your books on a study table because it belongs to the registered occupant. You must fold your bedding before 7:00 AM every morning so people can walk through the room. </p>
+<p>As a squatter, you have no territory. You cannot leave your books on a study table because it belongs to the registered occupant. You must fold your bedding before 7:00 AM every morning so people can walk through the room.</p>
 <p>When visitors arrive, you feel like an intruder in your own home.</p>
 <h3 id="the-power-asymmetry">The Power Asymmetry</h3>
 <p>When disagreements arise over light switches, fan speed, or music volume, the squatter has zero voting power. A single frustrated sentence from the host—<em>“Remember this is my room, if you don't like it you can leave”</em>—is enough to shatter a friendship and leave you homeless overnight.</p>
-<hr />
+<hr>
 <h2 id="3-the-5-survival-codes-of-a-successful-squatter">3. The 5 Survival Codes of a Successful Squatter</h2>
 <p>If economic hardship leaves you with no choice but to squat, practicing flawless social etiquette is the key to preserving peace and self-respect:</p>
-<table>
-<thead>
-<tr>
-<th>Protocol Area</th>
-<th>Expected Squatter Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Morning Routine</td>
-<td>Pack sleeping foam and stow away before 6:30 AM</td>
-</tr>
-<tr>
-<td>Domestic Labour</td>
-<td>Voluntarily clean bathroom, sweep floor, and fetch water</td>
-</tr>
-<tr>
-<td>Study Location</td>
-<td>Do heavy reading in faculty library to reduce room load</td>
-</tr>
-<tr>
-<td>Food Contribution</td>
-<td>Buy seasonings, onions, oil, or bread to share with hosts</td>
-</tr>
-<tr>
-<td>Porter Interactions</td>
-<td>Keep a low profile; never loiter around hall porter lodge</td>
-</tr>
-</tbody>
-</table>
+<p>| Protocol Area | Expected Squatter Behavior |</p>
+<p>| --- | --- |</p>
+<p>| Morning Routine | Pack sleeping foam and stow away before 6:30 AM |</p>
+<p>| Domestic Labour | Voluntarily clean bathroom, sweep floor, and fetch water |</p>
+<p>| Study Location | Do heavy reading in faculty library to reduce room load |</p>
+<p>| Food Contribution | Buy seasonings, onions, oil, or bread to share with hosts |</p>
+<p>| Porter Interactions | Keep a low profile; never loiter around hall porter lodge |</p>
 <h3 id="1-become-the-most-helpful-person-in-the-room">1. Become the Most Helpful Person in the Room</h3>
 <p>Never allow a registered occupant to sweep the floor, empty the trash bin, or carry water from the borehole if you are physically present. Your domestic labor is the silent rent you pay for your floor space.</p>
 <h3 id="2-live-out-of-a-single-compact-bag">2. Live Out of a Single Compact Bag</h3>
@@ -375,20 +356,22 @@
 <h3 id="3-build-an-emergency-exit-fund">3. Build an Emergency Exit Fund</h3>
 <p>Never assume your squatting arrangement will last the entire academic session. A sudden raid by the Student Affairs task force can evict you in twenty minutes. Keep a modest emergency financial safety net to cover temporary lodging, as explored in <a href="/blog/finances/">student emergency loans and campus financial safety nets</a>.</p>
 <p>If you are currently living as an undocumented resident, discover practical tactics for maintaining academic productivity in our field guide on <a href="/blog/hostel-and-accommodation/surviving-squatting-university-hostel/">legal squatters managing life in an overcrowded room</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="connect-with-supportive-campus-networks">💬 Connect with Supportive Campus Networks</h3>
+<p>### 💬 Connect with Supportive Campus Networks</p>
 <p>Navigating tough accommodation challenges or need help finding emergency campus shelter?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with empathetic peers, discover affordable legal lodging options, and get support through tough academic transitions.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with empathetic peers, discover affordable legal lodging options, and get support through tough academic transitions.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-penalty-if-caught-squatting-in-a-federal-university-hostel">What is the penalty if caught squatting in a federal university hostel?</h3>
 <p>Penalties range from immediate eviction and confiscation of mattress/belongings by hall porters to official reprimand letters, academic portal suspension, and disciplinary committee hearings for both the squatter and the host student.</p>
 <h3 id="why-is-squatting-so-common-despite-official-university-bans">Why is squatting so common despite official university bans?</h3>
 <p>Chronic institutional housing shortages accommodate only 15% to 25% of students, while high off-campus private rents push financially distressed students to share bed spaces with friends or departmental seniors.</p>
-<h3 id="how-does-squatting-affect-a-students-academic-performance">How does squatting affect a student's academic performance?</h3>
+<h3 id="how-does-squatting-affect-a-student-s-academic-performance">How does squatting affect a student's academic performance?</h3>
 <p>Severe overcrowding creates noise, hygiene decline, sleep deprivation, and psychological stress. However, living on campus eliminates long commuting hours, granting better access to libraries and night classes.</p>
 <h3 id="what-is-the-unwritten-etiquette-of-being-a-squatter-in-a-hostel-room">What is the unwritten etiquette of being a squatter in a hostel room?</h3>
 <p>A respectful squatter wake up early to clear their bedding, takes on a disproportionate share of cleaning chores, respects the official occupant's desk and space, and contributes quietly to room groceries and toiletries.</p>
@@ -556,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -741,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -756,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -371,6 +371,14 @@ button{font-family:inherit;cursor:pointer}
   color: var(--text-primary);
   background: var(--surface-container-low);
 }
+.global-nav__link.active {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  border-bottom: 2px solid var(--text-primary) !important;
+  border-radius: 0 !important;
+  padding-bottom: 4px !important;
+  background: transparent !important;
+}
 .global-nav__flagship {
   background: var(--action-primary);
   border: 1px solid var(--action-primary);

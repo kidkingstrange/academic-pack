@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -311,78 +311,60 @@
 <p>Your parents gave you a generous lump sum: tuition fees, lodge rent, and your first semester allowance: <strong>₦120,000 in your bank account.</strong></p>
 <p>You have never managed this much money independently in your life.</p>
 <p>You feel rich, autonomous, and in control of your destiny.</p>
-<p>Yet, by Day 28 of your first semester:<br />
-* Your bank balance has collapsed to <strong>₦1,850</strong>.<br />
-* You haven't paid your departmental registration dues.<br />
-* You don't have enough money to buy food for the next week.<br />
-* You sit on your foam mattress in a cold sweat, wondering how over one hundred thousand naira evaporated in four short weeks.</p>
+<p>Yet, by Day 28 of your first semester:</p>
+<ul>
+<li>Your bank balance has collapsed to **₦1,850**.</li>
+<li>You haven't paid your departmental registration dues.</li>
+<li>You don't have enough money to buy food for the next week.</li>
+<li>You sit on your foam mattress in a cold sweat, wondering how over one hundred thousand naira evaporated in four short weeks.</li>
+</ul>
 <p>Every single year, thousands of Nigerian freshers fall into the exact same predictable financial pits.</p>
 <p>Here are the <strong>5 costly mistakes that drain freshers' bank accounts in their first 30 days</strong>, and how to protect your capital.</p>
-<hr />
+<hr>
 <h2 id="1-the-5-financial-traps-of-the-first-30-days">1. The 5 Financial Traps of the First 30 Days</h2>
 <blockquote>
-<h3 id="the-100-level-fresher-financial-crash">The 100-Level Fresher Financial Crash</h3>
-<ul>
-<li>Mistake 1: The "Campus Celebrity" Wardrobe &amp; Electronics Spree</li>
-<li>Mistake 2: Buying Brand-New Foreign Textbooks Before Syllabus Audit</li>
-<li>Mistake 3: Paying "Friendly Seniors" for Fast-Track Clearance Processing</li>
-<li>Mistake 4: Feeding Roommates &amp; Corridor Squatters Out of Politeness</li>
-<li>Mistake 5: Failing to Budget for Hidden Secondary Faculty Levies</li>
-</ul>
+<p>### The 100-Level Fresher Financial Crash</p>
+<p>></p>
+<p>* Mistake 1: The "Campus Celebrity" Wardrobe & Electronics Spree</p>
+<p>* Mistake 2: Buying Brand-New Foreign Textbooks Before Syllabus Audit</p>
+<p>* Mistake 3: Paying "Friendly Seniors" for Fast-Track Clearance Processing</p>
+<p>* Mistake 4: Feeding Roommates & Corridor Squatters Out of Politeness</p>
+<p>* Mistake 5: Failing to Budget for Hidden Secondary Faculty Levies</p>
 </blockquote>
 <h3 id="mistake-1-the-lodge-furnishing-mirage">Mistake 1: The "Lodge Furnishing" Mirage</h3>
 <p>Many freshers try to turn their 100-level room into a luxury apartment on Day 1: buying expensive bedside rugs, amplified sound systems, velvet curtains, and ambient mood lights. Within three weeks, the luxury aesthetics remain, but there is zero money in their pocket to buy food.</p>
 <h3 id="mistake-2-buying-every-recommended-textbook-upfront">Mistake 2: Buying Every Recommended Textbook Upfront</h3>
 <p>In the first week of lectures, lecturers list ten different foreign reference books. Terrified of falling behind, freshers rush to campus bookstores and spend ₦30,000 on hardcopy books. By mid-semester, they realize the lecturer marks exams strictly based on 20-page class handout summaries.</p>
 <p>Review hidden administrative expenses in <a href="/blog/finances/hidden-university-expenses-nigeria/">hidden university costs: fees beyond main school tuition</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-danger-of-clearance-middlemen">2. The Danger of "Clearance Middlemen"</h2>
 <p>Freshers are overwhelmed by chaotic queues at the Faculty Office, Senate Building, and University Health Center:</p>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>The Costly Mistake</th>
-<th>The Smart Strategic Approach</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Course Registration</strong></td>
-<td>Handing ₦10,000 to a "helpful senior" to fast-track signatures</td>
-<td>Joining queue early; learning official administrative processes directly</td>
-</tr>
-<tr>
-<td><strong>Medical Screening</strong></td>
-<td>Paying private touts outside clinic for fake test slips</td>
-<td>Getting genuine tests inside campus clinic; preventing future clearance blocks</td>
-</tr>
-<tr>
-<td><strong>Handout Purchases</strong></td>
-<td>Buying unauthorized photocopies from commercial business centers</td>
-<td>Verifying required monographs directly with the official departmental course rep</td>
-</tr>
-</tbody>
-</table>
+<p>| Scenario | The Costly Mistake | The Smart Strategic Approach |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Course Registration</strong> | Handing ₦10,000 to a "helpful senior" to fast-track signatures | Joining queue early; learning official administrative processes directly |</p>
+<p>| <strong>Medical Screening</strong> | Paying private touts outside clinic for fake test slips | Getting genuine tests inside campus clinic; preventing future clearance blocks |</p>
+<p>| <strong>Handout Purchases</strong> | Buying unauthorized photocopies from commercial business centers | Verifying required monographs directly with the official departmental course rep |</p>
 <p>Understand how to resolve food dynamics with roommates in <a href="/blog/hostel/roommate-grocery-shopping-disagreements/">roommate grocery shopping disagreements: setting budget rules</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-polite-provider-trap">3. The "Polite Provider" Trap</h2>
-<p>When you unpack your bags on move-in day with cartons of noodles, bags of rice, and provisions, corridor neighbors will drop in with smiles:<br />
-* <em>"Senior man! Welcome! Abeg lend me half cup of sugar."</em><br />
-* <em>"Bros, let us cook together tonight; I have Maggi, you bring rice."</em></p>
+<p>When you unpack your bags on move-in day with cartons of noodles, bags of rice, and provisions, corridor neighbors will drop in with smiles:</p>
+<ul>
+<li>*"Senior man! Welcome! Abeg lend me half cup of sugar."*</li>
+<li>*"Bros, let us cook together tonight; I have Maggi, you bring rice."*</li>
+</ul>
 <p>If you are too shy or eager to please, you will feed five people for two weeks while they contribute nothing. When your food finishes, those same individuals will walk past your door while eating their private takeout.</p>
 <p>Learn upcoming commuter budgeting rules in <a href="/blog/finances/">commuter student transport budgeting: daily transit management</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-30-day-freshers-financial-protocol">4. The 30-Day Freshers Financial Protocol</h2>
 <p>To survive your first month on campus with your finances intact:</p>
 <ol>
-<li><strong>The 3-Week Spending Freeze:</strong> For your first 21 days on campus, spend money <em>strictly on survival</em> (basic food, transport, and verified faculty registration fees). Buy zero clothes, zero luxury gadgets, and zero room decorations until the campus academic routine stabilizes.</li>
-<li><strong>Consult 300-Level Departmental Mentors:</strong> Before spending ₦1,000 on any course handout or textbook, ask a high-achieving senior: <em>"Does Lecturer X set exams from this textbook, or are past questions and class notes sufficient?"</em></li>
-<li><strong>Lock 40% of Your Allowance in a Digital Safe:</strong> Use high-yield lock accounts (like PiggyVest SafeLock or Cowrywise) with a maturity date set for examination week. Money you cannot immediately transfer is money you cannot waste on spontaneous peer pressure.</li>
+<li>**The 3-Week Spending Freeze:** For your first 21 days on campus, spend money *strictly on survival* (basic food, transport, and verified faculty registration fees). Buy zero clothes, zero luxury gadgets, and zero room decorations until the campus academic routine stabilizes.</li>
+<li>**Consult 300-Level Departmental Mentors:** Before spending ₦1,000 on any course handout or textbook, ask a high-achieving senior: *"Does Lecturer X set exams from this textbook, or are past questions and class notes sufficient?"*</li>
+<li>**Lock 40% of Your Allowance in a Digital Safe:** Use high-yield lock accounts (like PiggyVest SafeLock or Cowrywise) with a maturity date set for examination week. Money you cannot immediately transfer is money you cannot waste on spontaneous peer pressure.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<h3 id="what-is-the-single-biggest-expense-that-drains-a-freshers-bank-account-in-month-1">What is the single biggest expense that drains a fresher's bank account in Month 1?</h3>
+<h3 id="what-is-the-single-biggest-expense-that-drains-a-fresher-s-bank-account-in-month-1">What is the single biggest expense that drains a fresher's bank account in Month 1?</h3>
 <p>Buying brand-new imported textbooks and course monographs that are never referenced on exam papers, followed by extravagant furnishing of off-campus lodge rooms.</p>
 <h3 id="should-100-level-students-buy-large-home-appliances-like-sound-systems-or-tvs">Should 100-level students buy large home appliances like sound systems or TVs?</h3>
 <p>Never in your first year. High-power entertainment appliances attract compound freeloaders, trigger electrical power surges during erratic grid restorations, and drain funds needed for academic clearances.</p>
@@ -554,8 +536,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -739,8 +721,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -754,7 +736,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

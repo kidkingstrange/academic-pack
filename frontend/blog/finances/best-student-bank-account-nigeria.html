@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,122 +307,66 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="kuda-vs-opay-vs-traditional-banks-lowest-student-charges">Kuda vs OPay vs Traditional Banks: Lowest Student Charges</h1>
-<p>It is the end of the month. </p>
-<p>You review your commercial bank account statement:<br />
-* Monthly Card Maintenance Fee: <strong>₦107.50</strong><br />
-* SMS Alert Notification Charges (28 alerts): <strong>₦168.00</strong><br />
-* Electronic Transfer Levies (NIP charges): <strong>₦840.00</strong><br />
-* Electronic Money Transfer Levy (EMTL Stamp Duty): <strong>₦250.00</strong><br />
-* <strong>Total Bank Charges for the Month: ₦1,365.50</strong></p>
-<p>You only had ₦20,000 in your account. </p>
+<p>It is the end of the month.</p>
+<p>You review your commercial bank account statement:</p>
+<ul>
+<li>Monthly Card Maintenance Fee: **₦107.50**</li>
+<li>SMS Alert Notification Charges (28 alerts): **₦168.00**</li>
+<li>Electronic Transfer Levies (NIP charges): **₦840.00**</li>
+<li>Electronic Money Transfer Levy (EMTL Stamp Duty): **₦250.00**</li>
+<li>**Total Bank Charges for the Month: ₦1,365.50**</li>
+</ul>
+<p>You only had ₦20,000 in your account.</p>
 <p>Over the course of a four-year degree, your commercial bank will silently extract <strong>over ₦65,000 in phantom banking fees</strong>—money that could have refilled your cooking gas cylinder seven times or bought your final-year project hardcover binding.</p>
 <p>Meanwhile, your roommate uses fintech platforms (OPay, Kuda, PalmPay) and pays <strong>₦0.00 in monthly maintenance and zero transfer fees.</strong></p>
 <p>Which banking architecture is truly best for a broke Nigerian student?</p>
 <p>Here is the objective analysis of <strong>Kuda vs. OPay vs. Traditional Commercial Banks</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-banking-fee-comparison-matrix">1. The Banking Fee Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Banking Dimension</th>
-<th>OPay</th>
-<th>Kuda Bank</th>
-<th>Traditional Banks (GTB, Access, Zenith)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Monthly Card Maintenance</strong></td>
-<td><strong>₦0 (Free)</strong></td>
-<td><strong>₦0 (Free)</strong></td>
-<td>₦50 – ₦100 + VAT monthly</td>
-</tr>
-<tr>
-<td><strong>Free Interbank Transfers</strong></td>
-<td>3 free transfers daily</td>
-<td>25 free transfers monthly</td>
-<td><strong>₦0 (Charges ₦10 – ₦50 per transfer)</strong></td>
-</tr>
-<tr>
-<td><strong>Notification Fees</strong></td>
-<td>Free instant push alerts</td>
-<td>Free instant push alerts</td>
-<td>₦4 – ₦6 per SMS alert</td>
-</tr>
-<tr>
-<td><strong>POS Network Reliability</strong></td>
-<td><strong>Extremely High (98%+)</strong></td>
-<td>High (92%)</td>
-<td>Moderate during weekend peak hours</td>
-</tr>
-<tr>
-<td><strong>Interest on Daily Savings</strong></td>
-<td>15% – 18% annual yield</td>
-<td>10% – 15% annual yield</td>
-<td>1.15% – 2% (Negligible)</td>
-</tr>
-<tr>
-<td><strong>Official Remita Portal Acceptance</strong></td>
-<td>Moderate</td>
-<td>Moderate</td>
-<td><strong>100% Accepted everywhere</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Banking Dimension | OPay | Kuda Bank | Traditional Banks (GTB, Access, Zenith) |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Monthly Card Maintenance</strong> | <strong>₦0 (Free)</strong> | <strong>₦0 (Free)</strong> | ₦50 – ₦100 + VAT monthly |</p>
+<p>| <strong>Free Interbank Transfers</strong> | 3 free transfers daily | 25 free transfers monthly | <strong>₦0 (Charges ₦10 – ₦50 per transfer)</strong> |</p>
+<p>| <strong>Notification Fees</strong> | Free instant push alerts | Free instant push alerts | ₦4 – ₦6 per SMS alert |</p>
+<p>| <strong>POS Network Reliability</strong> | <strong>Extremely High (98%+)</strong> | High (92%) | Moderate during weekend peak hours |</p>
+<p>| <strong>Interest on Daily Savings</strong> | 15% – 18% annual yield | 10% – 15% annual yield | 1.15% – 2% (Negligible) |</p>
+<p>| <strong>Official Remita Portal Acceptance</strong>| Moderate | Moderate | <strong>100% Accepted everywhere</strong> |</p>
 <p>Learn how to recover from failed POS transactions in <a href="/blog/finances/failed-pos-debit-transaction-student-bank/">recovering from failed POS debit transactions on campus: bank escalation</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-strengths-and-fatal-flaws-of-each-banking-platform">2. The Strengths and Fatal Flaws of Each Banking Platform</h2>
 <h3 id="1-opay-the-king-of-daily-campus-velocity">1. OPay (The King of Daily Campus Velocity)</h3>
 <ul>
-<li><strong>The Good:</strong> Unbeatable transaction speed. In crowded campus cafeterias and transport shuttles where networks crawl, OPay QR transfers and card payments process within 3 seconds with near-zero failure rates.</li>
-<li><strong>The Flaw:</strong> Heavily targeted by phone snatchers in student communities; requires biometric transaction locks.</li>
+<li>**The Good:** Unbeatable transaction speed. In crowded campus cafeterias and transport shuttles where networks crawl, OPay QR transfers and card payments process within 3 seconds with near-zero failure rates.</li>
+<li>**The Flaw:** Heavily targeted by phone snatchers in student communities; requires biometric transaction locks.</li>
 </ul>
 <h3 id="2-kuda-bank-the-smart-budgeting-bank">2. Kuda Bank (The Smart Budgeting Bank)</h3>
 <ul>
-<li><strong>The Good:</strong> Excellent budgeting tools: automatic spend categorization, customizable sub-wallets, and zero maintenance fees. Free physical debit card delivery.</li>
-<li><strong>The Flaw:</strong> Occasional weekend server maintenance downtime during month-end national salary spikes.</li>
+<li>**The Good:** Excellent budgeting tools: automatic spend categorization, customizable sub-wallets, and zero maintenance fees. Free physical debit card delivery.</li>
+<li>**The Flaw:** Occasional weekend server maintenance downtime during month-end national salary spikes.</li>
 </ul>
 <h3 id="3-traditional-commercial-banks-the-institutional-anchor">3. Traditional Commercial Banks (The Institutional Anchor)</h3>
 <ul>
-<li><strong>The Good:</strong> Mandatory for official institutional business: university tuition portal clearance, scholarship disbursements (Chevron/Shell), visa applications, and NELFUND disbursements.</li>
-<li><strong>The Flaw:</strong> Relentless fee deductions that drain small student balances.</li>
+<li>**The Good:** Mandatory for official institutional business: university tuition portal clearance, scholarship disbursements (Chevron/Shell), visa applications, and NELFUND disbursements.</li>
+<li>**The Flaw:** Relentless fee deductions that drain small student balances.</li>
 </ul>
 <p>Review NELFUND student loan application protocols in <a href="/blog/finances/nelfund-student-loan-application-guide/">NELFUND student loan: eligibility and application walkthrough</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-2-tier-student-banking-architecture">3. The 2-Tier Student Banking Architecture</h2>
 <p>Smart students do not choose just one bank; they use a <strong>Hybrid Banking Model</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Banking Tier</th>
-<th>Recommended Platform</th>
-<th>Primary Role</th>
-<th>Operating Rules</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Tier 1: Anchor Account</strong></td>
-<td>GTBank, Zenith Bank, Access Bank</td>
-<td>Official fees, family allowances, scholarship grants</td>
-<td><strong>No ATM card attached</strong>; SMS alerts deactivated to prevent fee drain; accessed via mobile app only</td>
-</tr>
-<tr>
-<td><strong>Tier 2: Daily Operations</strong></td>
-<td>OPay, Kuda Bank, Palmpay</td>
-<td>Food, printing, data, daily transit, POS transactions</td>
-<td>Funded via weekly transfer (e.g., ₦7,500); debit card attached; earns daily interest on emergency reserve</td>
-</tr>
-</tbody>
-</table>
+<p>| Banking Tier | Recommended Platform | Primary Role | Operating Rules |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Tier 1: Anchor Account</strong> | GTBank, Zenith Bank, Access Bank | Official fees, family allowances, scholarship grants | <strong>No ATM card attached</strong>; SMS alerts deactivated to prevent fee drain; accessed via mobile app only |</p>
+<p>| <strong>Tier 2: Daily Operations</strong> | OPay, Kuda Bank, Palmpay | Food, printing, data, daily transit, POS transactions | Funded via weekly transfer (e.g., ₦7,500); debit card attached; earns daily interest on emergency reserve |</p>
 <p>Explore upcoming mobile data budgeting strategies in our upcoming analysis on <a href="/blog/finances/">daily mobile data bundles vs monthly night plans</a>.</p>
-<hr />
+<hr>
 <h2 id="4-protect-every-kobo">4. Protect Every Kobo</h2>
-<p>As an undergraduate, financial discipline starts with stopping micro-leakages:<br />
-* Eliminate unnecessary bank charges by moving daily transactions to zero-fee fintech platforms.<br />
-* Keep your institutional anchor account clean for academic and corporate milestones.<br />
-* Every naira you protect remains available to fuel your academic comeback and build your future.</p>
-<hr />
+<p>As an undergraduate, financial discipline starts with stopping micro-leakages:</p>
+<ul>
+<li>Eliminate unnecessary bank charges by moving daily transactions to zero-fee fintech platforms.</li>
+<li>Keep your institutional anchor account clean for academic and corporate milestones.</li>
+<li>Every naira you protect remains available to fuel your academic comeback and build your future.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="which-bank-account-is-cheapest-for-nigerian-university-students">Which bank account is cheapest for Nigerian university students?</h3>
 <p>Fintech platforms like OPay and Kuda Bank offer the lowest operating charges: zero account maintenance fees, 25 to 30 free interbank transfers monthly, and free SMS alerts via app push notifications.</p>
@@ -596,8 +540,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -781,8 +725,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -796,7 +740,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

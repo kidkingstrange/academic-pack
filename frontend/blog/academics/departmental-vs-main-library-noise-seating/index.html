@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,60 +306,29 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="departmental-library-vs-main-library-noise-seating">Departmental Library vs Main Library: Noise &amp; Seating</h1>
-<p>It is 9:30 AM during Week 11 of the semester. </p>
+        <h1 id="departmental-library-vs-main-library-noise-seating">Departmental Library vs Main Library: Noise & Seating</h1>
+<p>It is 9:30 AM during Week 11 of the semester.</p>
 <p>Examinations begin in fourteen days. Your hostel room is impossible to study in: three roommates are playing loud music, the power went out two hours ago, and someone is frying plantains on an electric hotplate.</p>
 <p>You pack your heavy backpack with handouts, past questions, and your study lamp, and head out into the blazing sun to find a quiet place to read.</p>
-<p>You reach the campus library crossroad and face a fundamental strategic decision:<br />
-* <strong>Turn Left:</strong> Walk to the massive, multi-story <strong>University Central Main Library</strong>.<br />
-* <strong>Turn Right:</strong> Head to your faculty building's smaller <strong>Departmental Library</strong>.</p>
-<p>Where you choose to sit for the next five hours will dictate your cognitive output for the day. </p>
+<p>You reach the campus library crossroad and face a fundamental strategic decision:</p>
+<ul>
+<li>**Turn Left:** Walk to the massive, multi-story **University Central Main Library**.</li>
+<li>**Turn Right:** Head to your faculty building's smaller **Departmental Library**.</li>
+</ul>
+<p>Where you choose to sit for the next five hours will dictate your cognitive output for the day.</p>
 <p>In Nigerian tertiary institutions, campus study environments are high-friction battlegrounds. Between aggressive "seat reservation" politics, broken air conditioning units, social distractions, and charging socket shortages, picking the wrong library room can turn a planned 5-hour study session into an exhausting waste of time.</p>
 <p>Here is the tactical comparison of the <strong>Departmental Library vs. The Central Main Library</strong>, and how to choose the right environment for your study needs.</p>
-<hr />
+<hr>
 <h2 id="1-the-head-to-head-comparison-matrix">1. The Head-to-Head Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Evaluation Factor</th>
-<th>The Central Main Library</th>
-<th>The Departmental Library</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Noise &amp; Distractions</strong></td>
-<td>Moderate to High (Heavy social foot traffic)</td>
-<td><strong>Very Low</strong> (Quiet, focused academic tone)</td>
-</tr>
-<tr>
-<td><strong>Seating Availability</strong></td>
-<td>Extreme competition during exam weeks</td>
-<td>Easier to secure a desk early in the morning</td>
-</tr>
-<tr>
-<td><strong>Course-Specific Resources</strong></td>
-<td>Broad general collection, often outdated</td>
-<td><strong>Specialized Past Exam Files &amp; Theses</strong></td>
-</tr>
-<tr>
-<td><strong>Power &amp; Inverter Backup</strong></td>
-<td>Central diesel generator / Solar inverters</td>
-<td>Dependent on faculty power availability</td>
-</tr>
-<tr>
-<td><strong>Operating Hours</strong></td>
-<td>8:00 AM – 8:00 PM (Sometimes 24-hr during exams)</td>
-<td>8:00 AM – 4:00 PM (Closed on weekends)</td>
-</tr>
-<tr>
-<td><strong>Peer Social Pressure</strong></td>
-<td>High chance of meeting friends from other faculties</td>
-<td>Only departmental coursemates</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Evaluation Factor | The Central Main Library | The Departmental Library |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Noise & Distractions</strong> | Moderate to High (Heavy social foot traffic) | <strong>Very Low</strong> (Quiet, focused academic tone) |</p>
+<p>| <strong>Seating Availability</strong> | Extreme competition during exam weeks | Easier to secure a desk early in the morning |</p>
+<p>| <strong>Course-Specific Resources</strong> | Broad general collection, often outdated | <strong>Specialized Past Exam Files & Theses</strong> |</p>
+<p>| <strong>Power & Inverter Backup</strong> | Central diesel generator / Solar inverters | Dependent on faculty power availability |</p>
+<p>| <strong>Operating Hours</strong> | 8:00 AM – 8:00 PM (Sometimes 24-hr during exams) | 8:00 AM – 4:00 PM (Closed on weekends) |</p>
+<p>| <strong>Peer Social Pressure</strong> | High chance of meeting friends from other faculties | Only departmental coursemates |</p>
+<hr>
 <h2 id="2-when-to-choose-the-departmental-library-the-specialization-zone">2. When to Choose the Departmental Library (The Specialization Zone)</h2>
 <p>Your departmental library is a specialized tactical vault:</p>
 <h3 id="1-access-to-the-departmental-past-question-archive">1. Access to the Departmental Past Question Archive</h3>
@@ -369,10 +338,10 @@
 <h3 id="3-minimal-social-interruption">3. Minimal Social Interruption</h3>
 <p>Because the departmental library is only frequented by students in your discipline, you will not encounter friends from other faculties who invite you to grab meat pies or stroll to the campus student center.</p>
 <p>To decide which reference books to prioritize over lecture handouts, review <a href="/blog/academics/lecture-handouts-vs-textbooks-exam-revision/">lecture handouts vs textbooks exam revision</a>.</p>
-<hr />
+<hr>
 <h2 id="3-when-to-choose-the-central-main-library-the-infrastructure-haven">3. When to Choose the Central Main Library (The Infrastructure Haven)</h2>
 <p>The university main library is an infrastructure fortress:</p>
-<h3 id="1-reliable-power-cooling">1. Reliable Power &amp; Cooling</h3>
+<h3 id="1-reliable-power-cooling">1. Reliable Power & Cooling</h3>
 <p>When municipal electricity fails across the state and hostel generators are shut down, the central library’s dedicated diesel generator or solar inverter bank remains operational. In the heat of the Nigerian dry season, a functioning ceiling fan or air-conditioned reading room preserves hours of cognitive stamina.</p>
 <h3 id="2-extended-night-hours">2. Extended Night Hours</h3>
 <p>Departmental libraries close promptly at 4:00 PM when non-academic staff lock up their offices. The central library remains open until 8:00 PM or 10:00 PM, providing uninterrupted evening study blocks.</p>
@@ -380,16 +349,16 @@
 <p>Central libraries feature individual wooden study carrels with high side partitions, shielding your visual periphery from movement and distractions.</p>
 <p>Navigating campus housing rules and avoiding disciplinary trouble is essential to maintaining hostel peace; review <a href="/blog/hostel-and-accommodation/nigerian-university-hostel-rules-to-avoid/">university hostel rules you will regret breaking</a>.</p>
 <p>When hostel amenity crises like water shortages hit campus, planning your library study routine around morning chores becomes critical; see <a href="/blog/hostel-and-accommodation/hostel-water-scarcity-coping/">surviving hostel water scarcity</a>.</p>
-<hr />
+<hr>
 <h2 id="the-library-selection-checklist">The Library Selection Checklist</h2>
 <p>Use this quick checklist to pick your study base today:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Choose the Departmental Library when:</strong> Reviewing localized past examination papers, working on undergraduate project research, or requiring zero social distractions.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Choose the Central Main Library when:</strong> Campus hostels are experiencing power blackouts, studying after 4:00 PM, or requiring uninterrupted 6-hour marathons.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Arrive before 8:30 AM:</strong> Beat the morning rush to secure a desk with functional overhead lighting and socket access.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Migrate to upper floors:</strong> Avoid ground-floor entrance lobbies where conversational noise is highest.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Choose the Departmental Library when:** Reviewing localized past examination papers, working on undergraduate project research, or requiring zero social distractions.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Choose the Central Main Library when:** Campus hostels are experiencing power blackouts, studying after 4:00 PM, or requiring uninterrupted 6-hour marathons.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Arrive before 8:30 AM:** Beat the morning rush to secure a desk with functional overhead lighting and socket access.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Migrate to upper floors:** Avoid ground-floor entrance lobbies where conversational noise is highest.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="which-is-better-for-serious-study-the-central-main-library-or-departmental-library">Which is better for serious study: the central main library or departmental library?</h3>
 <p>Departmental libraries are superior for focused coursework because they stock specialized course textbooks, past examination files, and have fewer social distractions. Central main libraries offer larger spaces and longer operating hours but suffer from social noise.</p>
@@ -399,15 +368,15 @@
 <p>Most departmental libraries close on Friday afternoons and remain shut over the weekend. For Saturday and Sunday revision, students must rely on central libraries, faculty study halls, or quiet campus amphitheaters.</p>
 <h3 id="how-can-students-avoid-noise-and-distraction-in-campus-libraries">How can students avoid noise and distraction in campus libraries?</h3>
 <p>Avoid the ground floor and entrance lobbies where social traffic is highest. Migrate to upper mezzanine floors, individual research carrels, or dedicated postgraduate reference rooms where silence rules are strictly enforced.</p>
-<hr />
-<h2 id="frequently-asked-questions_1">Frequently Asked Questions</h2>
-<h3 id="which-is-better-for-serious-study-the-central-main-library-or-departmental-library_1">Which is better for serious study: the central main library or departmental library?</h3>
+<hr>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="which-is-better-for-serious-study-the-central-main-library-or-departmental-library">Which is better for serious study: the central main library or departmental library?</h3>
 <p>Departmental libraries are superior for focused coursework because they stock specialized course textbooks, past examination files, and have fewer social distractions. Central main libraries offer larger spaces and longer operating hours but suffer from social noise.</p>
-<h3 id="why-is-it-so-hard-to-find-seats-in-nigerian-university-main-libraries-during-exam-season_1">Why is it so hard to find seats in Nigerian university main libraries during exam season?</h3>
+<h3 id="why-is-it-so-hard-to-find-seats-in-nigerian-university-main-libraries-during-exam-season">Why is it so hard to find seats in Nigerian university main libraries during exam season?</h3>
 <p>During exam weeks, thousands of off-campus and hostel students migrate to the central library for air conditioning and inverter power. Students 'reserve' seats with notebooks by 7:00 AM, leading to severe seat scarcity.</p>
-<h3 id="are-departmental-libraries-open-on-weekends-in-nigerian-universities_1">Are departmental libraries open on weekends in Nigerian universities?</h3>
+<h3 id="are-departmental-libraries-open-on-weekends-in-nigerian-universities">Are departmental libraries open on weekends in Nigerian universities?</h3>
 <p>Most departmental libraries close on Friday afternoons and remain shut over the weekend. For Saturday and Sunday revision, students must rely on central libraries, faculty study halls, or quiet campus amphitheaters.</p>
-<h3 id="how-can-students-avoid-noise-and-distraction-in-campus-libraries_1">How can students avoid noise and distraction in campus libraries?</h3>
+<h3 id="how-can-students-avoid-noise-and-distraction-in-campus-libraries">How can students avoid noise and distraction in campus libraries?</h3>
 <p>Avoid the ground floor and entrance lobbies where social traffic is highest. Migrate to upper mezzanine floors, individual research carrels, or dedicated postgraduate reference rooms where silence rules are strictly enforced.</p>
       </div>
 
@@ -573,8 +542,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -758,8 +727,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -773,7 +742,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

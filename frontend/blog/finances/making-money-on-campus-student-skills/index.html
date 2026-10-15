@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,95 +308,69 @@
       <div class="article-body">
         <h1 id="creative-students-monetizing-skills-on-campus-ethically">Creative Students: Monetizing Skills on Campus Ethically</h1>
 <p>You sit in your hostel room watching your coursemates stress over empty bank accounts.</p>
-<p>Meanwhile, you have a talent:<br />
-* Maybe you know how to design clean, striking flyers on Canva, Photoshop, or CorelDraw.<br />
-* Maybe you know how to edit high-retention video reels on CapCut.<br />
-* Maybe you take stunning portrait photos with your smartphone.<br />
-* Maybe you write crisp, error-free academic essays and project summaries.</p>
+<p>Meanwhile, you have a talent:</p>
+<ul>
+<li>Maybe you know how to design clean, striking flyers on Canva, Photoshop, or CorelDraw.</li>
+<li>Maybe you know how to edit high-retention video reels on CapCut.</li>
+<li>Maybe you take stunning portrait photos with your smartphone.</li>
+<li>Maybe you write crisp, error-free academic essays and project summaries.</li>
+</ul>
 <p>On a university campus of twenty thousand students, <strong>convenience, visibility, and aesthetics are high-demand commodities.</strong></p>
 <p>Student union election candidates need campaign posters. Campus fellowships need weekly service flyers. Departmental associations need symposium banners. Graduating students need CVs and graduation photo shoots.</p>
 <p>Yet, most creative students fail to monetize their skills, giving away their labor for free to friends or burning out during examination season.</p>
 <p>Here is the operational blueprint for <strong>Monetizing Your Creative Skills on Campus Ethically</strong>, building financial independence, and protecting your First Class GPA.</p>
-<hr />
+<hr>
 <h2 id="1-the-campus-creative-opportunity-matrix">1. The Campus Creative Opportunity Matrix</h2>
 <blockquote>
-<h3 id="high-demand-campus-creative-markets">High-Demand Campus Creative Markets</h3>
-<ul>
-<li>Student Politics &amp; Elections: Campaign branding, posters, social media banners</li>
-<li>Campus Religious Fellowships: Weekly sermon graphics, video reels, event coverage</li>
-<li>Departmental &amp; Faculty Bodies: Symposium programs, certificate design, magazines</li>
-<li>Graduating Final-Year Students: Professional LinkedIn CVs, thesis formatting, portraits</li>
-</ul>
+<p>### High-Demand Campus Creative Markets</p>
+<p>></p>
+<p>* Student Politics & Elections: Campaign branding, posters, social media banners</p>
+<p>* Campus Religious Fellowships: Weekly sermon graphics, video reels, event coverage</p>
+<p>* Departmental & Faculty Bodies: Symposium programs, certificate design, magazines</p>
+<p>* Graduating Final-Year Students: Professional LinkedIn CVs, thesis formatting, portraits</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Creative Skill</th>
-<th>Entry Tool Requirement</th>
-<th>Turnaround Time</th>
-<th>Standard Campus Pricing</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Flyer &amp; Poster Design</strong></td>
-<td>Canva / Adobe Illustrator (Phone or PC)</td>
-<td>2 – 4 hours</td>
-<td>₦3,000 – ₦7,000 per flyer</td>
-</tr>
-<tr>
-<td><strong>Short-Form Video Editing</strong></td>
-<td>CapCut / Premiere Pro (Phone or PC)</td>
-<td>3 – 5 hours</td>
-<td>₦5,000 – ₦12,000 per reel</td>
-</tr>
-<tr>
-<td><strong>Campus Portrait Photography</strong></td>
-<td>Mid-range phone or entry DSLR</td>
-<td>1 hour shoot</td>
-<td>₦8,000 – ₦20,000 per session</td>
-</tr>
-<tr>
-<td><strong>Thesis &amp; Seminar Formatting</strong></td>
-<td>Microsoft Word / Google Docs</td>
-<td>4 – 8 hours</td>
-<td>₦5,000 – ₦15,000 per document</td>
-</tr>
-</tbody>
-</table>
+<p>| Creative Skill | Entry Tool Requirement | Turnaround Time | Standard Campus Pricing |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Flyer & Poster Design</strong> | Canva / Adobe Illustrator (Phone or PC) | 2 – 4 hours | ₦3,000 – ₦7,000 per flyer |</p>
+<p>| <strong>Short-Form Video Editing</strong> | CapCut / Premiere Pro (Phone or PC) | 3 – 5 hours | ₦5,000 – ₦12,000 per reel |</p>
+<p>| <strong>Campus Portrait Photography</strong> | Mid-range phone or entry DSLR | 1 hour shoot | ₦8,000 – ₦20,000 per session |</p>
+<p>| <strong>Thesis & Seminar Formatting</strong> | Microsoft Word / Google Docs | 4 – 8 hours | ₦5,000 – ₦15,000 per document |</p>
 <p>Review emergency fund architectures in <a href="/blog/finances/student-emergency-fund-saving/">emergency fund for students: saving when you have little</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-rules-of-professional-campus-pricing">2. The 3 Rules of Professional Campus Pricing</h2>
 <p>Do not fall into the <strong>"Bros, You Be My Friend" Discount Trap</strong>:</p>
 <ol>
-<li><strong>The 50% Commitment Deposit:</strong> Never begin drafting a flyer or taking photos without a non-refundable 50% upfront deposit. Student clients who refuse deposits frequently cancel projects or ghost upon completion.</li>
-<li><strong>Standardized Package Pricing:</strong> Create a clean, one-page PDF price card (e.g., <em>"Standard Campaign Package: 3 Flyers + 1 Video Reel = ₦15,000"</em>). Fixed pricing eliminates awkward haggling.</li>
-<li><strong>Strict Revision Caps:</strong> State upfront that your quote includes two rounds of minor edits. Extra revisions incur an additional ₦1,500 fee. This stops indecisive student executives from demanding changes at 2:00 AM.</li>
+<li>**The 50% Commitment Deposit:** Never begin drafting a flyer or taking photos without a non-refundable 50% upfront deposit. Student clients who refuse deposits frequently cancel projects or ghost upon completion.</li>
+<li>**Standardized Package Pricing:** Create a clean, one-page PDF price card (e.g., *"Standard Campaign Package: 3 Flyers + 1 Video Reel = ₦15,000"*). Fixed pricing eliminates awkward haggling.</li>
+<li>**Strict Revision Caps:** State upfront that your quote includes two rounds of minor edits. Extra revisions incur an additional ₦1,500 fee. This stops indecisive student executives from demanding changes at 2:00 AM.</li>
 </ol>
 <p>Explore online side hustles in our upcoming pillar guide on <a href="/blog/balancing-work-and-school/">8 realistic online hustles for Nigerian university students</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-academic-firewall-protecting-your-cgpa">3. The Academic Firewall: Protecting Your CGPA</h2>
 <p>The biggest danger facing creative students is allowing client deadlines to swallow study time:</p>
 <blockquote>
-<h3 id="monday-to-thursday-100-academic-sanctuary">Monday To Thursday: 100% Academic Sanctuary</h3>
-<ul>
-<li>8:00 AM - 4:00 PM: Lectures &amp; Laboratory Practicals</li>
-<li>5:00 PM - 8:30 PM: Syllabus Revision &amp; Active Recall</li>
-<li>Client work is completely banned during weekdays</li>
-<li><strong>FRIDAY NIGHT &amp; SATURDAY: THE CREATIVE SPRINT</strong></li>
-<li>6 hours concentrated client production</li>
-<li>Deliver all weekly design orders before Sunday afternoon</li>
-</ul>
-<p><strong>The 3-Week Exam Lockdown:</strong> Three weeks before semester examinations, announce a formal booking closure: <em>"Orders paused for examination season. Resuming post-exams."</em> Never trade an 'A' grade for a ₦5,000 flyer.</p>
+<p>### Monday To Thursday: 100% Academic Sanctuary</p>
+<p>></p>
+<p>* 8:00 AM - 4:00 PM: Lectures & Laboratory Practicals</p>
+<p>* 5:00 PM - 8:30 PM: Syllabus Revision & Active Recall</p>
+<p>* Client work is completely banned during weekdays</p>
+<p>* **FRIDAY NIGHT & SATURDAY: THE CREATIVE SPRINT**</p>
+<p>* 6 hours concentrated client production</p>
+<p>* Deliver all weekly design orders before Sunday afternoon</p>
+</blockquote>
+<blockquote>
+<p>**The 3-Week Exam Lockdown:** Three weeks before semester examinations, announce a formal booking closure: *"Orders paused for examination season. Resuming post-exams."* Never trade an 'A' grade for a ₦5,000 flyer.</p>
 </blockquote>
 <p>Learn upcoming skill-building strategies in <a href="/blog/balancing-work-and-school/">high-income student skills you can learn in 90 days</a>.</p>
-<hr />
+<hr>
 <h2 id="4-ethical-integrity-is-your-true-currency">4. Ethical Integrity Is Your True Currency</h2>
-<p>Never cross the line into academic dishonesty:<br />
-* Never write exams for other students, produce fake medical screening receipts, or participate in scam projects.<br />
-* Build your business on excellence, prompt delivery, and honesty.<br />
-* The business and client-handling skills you master on campus will position you as an extraordinary, self-employed powerhouse the moment you collect your graduation certificate.</p>
-<hr />
+<p>Never cross the line into academic dishonesty:</p>
+<ul>
+<li>Never write exams for other students, produce fake medical screening receipts, or participate in scam projects.</li>
+<li>Build your business on excellence, prompt delivery, and honesty.</li>
+<li>The business and client-handling skills you master on campus will position you as an extraordinary, self-employed powerhouse the moment you collect your graduation certificate.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-creative-skills-are-easiest-to-monetize-on-a-nigerian-university-campus">What creative skills are easiest to monetize on a Nigerian university campus?</h3>
 <p>Graphic design for student election flyers and fellowship banners, campus event and portrait photography, assignment typing and proofreading, video editing for campus content creators, and CV/resume design for graduating seniors.</p>
@@ -570,8 +544,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -755,8 +729,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -770,7 +744,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

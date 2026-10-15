@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Dropshipping from Hostels: Managing Student Deliveries",
       "description": "How Nigerian student e-commerce entrepreneurs can run profitable dropshipping businesses from hostel rooms without delivery logistics ruining study time.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,58 +265,67 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>Inside university hostels across Nigeria, a quiet e-commerce revolution is happening.</p>
-<p>From their beds in Moremi Hall or Hall 3, students are running thriving digital storefronts:<br />
-* Curating trendy sneakers, thrift wear (okrika), jewelry, smartwatches, and rechargeable study fans on WhatsApp Status and Instagram.<br />
-* Collecting customer payments upfront: ₦18,000 for a pair of shoes that costs ₦9,500 wholesale.<br />
-* Pockets of ₦80,000 to ₦200,000 net monthly profit without holding a single warehouse of stock.</p>
-<p>However, many student dropshippers hit a brick wall when <strong>logistics chaos collides with academic deadlines</strong>:<br />
-* An interstate delivery bus driver arrives at the campus main gate at 11:30 AM demanding immediate pickup while you are sitting in an 11:00 AM Chem Lab test.<br />
-* A customer screams on WhatsApp because a pair of trousers sent from Lagos to Nsukka was delayed by bad roads.<br />
-* Waybill waywardness, delivery disputes, and phone calls interrupt your revision.</p>
+<p>From their beds in Moremi Hall or Hall 3, students are running thriving digital storefronts:</p>
+<ul>
+<li>Curating trendy sneakers, thrift wear (okrika), jewelry, smartwatches, and rechargeable study fans on WhatsApp Status and Instagram.</li>
+<li>Collecting customer payments upfront: ₦18,000 for a pair of shoes that costs ₦9,500 wholesale.</li>
+<li>Pockets of ₦80,000 to ₦200,000 net monthly profit without holding a single warehouse of stock.</li>
+</ul>
+<p>However, many student dropshippers hit a brick wall when <strong>logistics chaos collides with academic deadlines</strong>:</p>
+<ul>
+<li>An interstate delivery bus driver arrives at the campus main gate at 11:30 AM demanding immediate pickup while you are sitting in an 11:00 AM Chem Lab test.</li>
+<li>A customer screams on WhatsApp because a pair of trousers sent from Lagos to Nsukka was delayed by bad roads.</li>
+<li>Waybill waywardness, delivery disputes, and phone calls interrupt your revision.</li>
+</ul>
 <p>If you don't build automated operational barriers, dropshipping will reduce you to a stressed campus errand runner with tanking grades.</p>
 <p>Here is the operational blueprint for managing campus dropshipping with streamlined logistics and high margins while protecting your CGPA.</p>
-<hr />
+<hr>
 <h2 id="the-3-pillars-of-friction-free-campus-dropshipping">The 3 Pillars of Friction-Free Campus Dropshipping</h2>
 <blockquote>
-<h3 id="local-campus-dropshipping-architecture">Local Campus Dropshipping Architecture</h3>
-<ul>
-<li><strong>1.</strong> Wholesaler Integration: Vetted suppliers who dispatch directly to logistics</li>
-<li><strong>2.</strong> Asynchronous Ordering: Google Forms or Selar storefronts (Zero DM back-and-forth)</li>
-<li><strong>3.</strong> Third-Party Campus Dispatch: Fixed-rate riders handling last-mile deliveries</li>
-</ul>
+<p>### Local Campus Dropshipping Architecture</p>
+<p>></p>
+<p>* **1.** Wholesaler Integration: Vetted suppliers who dispatch directly to logistics</p>
+<p>* **2.** Asynchronous Ordering: Google Forms or Selar storefronts (Zero DM back-and-forth)</p>
+<p>* **3.** Third-Party Campus Dispatch: Fixed-rate riders handling last-mile deliveries</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="pillar-1-asynchronous-order-ingestion">Pillar 1: Asynchronous Order Ingestion</h2>
-<p>The biggest time sink for student sellers is spending 45 minutes chatting back and forth on WhatsApp:<br />
-* <em>"Is this available?"</em><br />
-* <em>"What of size 42?"</em><br />
-* <em>"Can you do ₦7,500?"</em><br />
-* <em>"Send account details."</em></p>
+<p>The biggest time sink for student sellers is spending 45 minutes chatting back and forth on WhatsApp:</p>
+<ul>
+<li>*"Is this available?"*</li>
+<li>*"What of size 42?"*</li>
+<li>*"Can you do ₦7,500?"*</li>
+<li>*"Send account details."*</li>
+</ul>
 <p>If you have 10 customer inquiries a day during lecture hours, your study focus is completely shattered.</p>
-<p><strong>The Fix:</strong> Deploy a self-checkout storefront using <strong>Selar</strong> or a structured <strong>Google Form</strong>:<br />
-* Your WhatsApp status says: <em>"Tap the link in bio to select size, enter delivery address, and pay via bank transfer/card."</em><br />
-* When you walk out of your afternoon class, you open your spreadsheet and see three paid orders with complete phone numbers and delivery details. Zero haggling required.</p>
-<hr />
+<p><strong>The Fix:</strong> Deploy a self-checkout storefront using <strong>Selar</strong> or a structured <strong>Google Form</strong>:</p>
+<ul>
+<li>Your WhatsApp status says: *"Tap the link in bio to select size, enter delivery address, and pay via bank transfer/card."*</li>
+<li>When you walk out of your afternoon class, you open your spreadsheet and see three paid orders with complete phone numbers and delivery details. Zero haggling required.</li>
+</ul>
+<hr>
 <h2 id="pillar-2-the-interstate-waybill-partnership">Pillar 2: The Interstate Waybill Partnership</h2>
 <p>Never travel to transport parks yourself to collect or dispatch packages during the week.</p>
-<p>Build a working relationship with an <strong>Independent Park Dispatch Agent</strong>:<br />
-1. At major bus terminals near your campus (Peace Mass, ABC Transport, GUO, GIGM), find the package sorting desk.<br />
-2. Pay the logistics clerk a small personal tip (₦500) to keep your waybills in a secure shelf.<br />
-3. Contract a reliable campus motorcycle rider (Okada) to pick up bulk waybills twice a week (Tuesday and Friday afternoons) and drop them at your hostel porter's lodge.</p>
+<p>Build a working relationship with an <strong>Independent Park Dispatch Agent</strong>:</p>
+<ol>
+<li>At major bus terminals near your campus (Peace Mass, ABC Transport, GUO, GIGM), find the package sorting desk.</li>
+<li>Pay the logistics clerk a small personal tip (₦500) to keep your waybills in a secure shelf.</li>
+<li>Contract a reliable campus motorcycle rider (Okada) to pick up bulk waybills twice a week (Tuesday and Friday afternoons) and drop them at your hostel porter's lodge.</li>
+</ol>
 <blockquote>
-<ul>
-<li>TRADITIONAL vs. AUTOMATED DISPATCH Student Runner: Spend 2 hours in traffic to park -&gt; Miss lecture -&gt; High stress Automated Dispatch: Dispatch rider collects packages -&gt; Delivers to campus gate</li>
-</ul>
+<p>* TRADITIONAL vs. AUTOMATED DISPATCH Student Runner: Spend 2 hours in traffic to park -> Miss lecture -> High stress Automated Dispatch: Dispatch rider collects packages -> Delivers to campus gate</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="pillar-3-exam-season-freeze-protocol">Pillar 3: Exam Season Freeze Protocol</h2>
 <p>When examination week arrives, late packages and customer refunds will destroy your mental peace.</p>
-<p>Execute the <strong>7-Day Order Wind-Down</strong>:<br />
-* 7 days before Paper 1: Announce: <em>"Flash Clearance Sale! All orders placed this week dispatch Friday. Storefront temporarily closes on Saturday for semester inventory audit."</em><br />
-* Fulfill all pending orders and ensure waybills reach customers before exam week begins.<br />
-* Put your store on 'Vacation Mode' on Selar/Instagram.</p>
+<p>Execute the <strong>7-Day Order Wind-Down</strong>:</p>
+<ul>
+<li>7 days before Paper 1: Announce: *"Flash Clearance Sale! All orders placed this week dispatch Friday. Storefront temporarily closes on Saturday for semester inventory audit."*</li>
+<li>Fulfill all pending orders and ensure waybills reach customers before exam week begins.</li>
+<li>Put your store on 'Vacation Mode' on Selar/Instagram.</li>
+</ul>
 <p>Your degree certificate is your most valuable asset. Master the logistics systems that allow you to sell while studying, and never let customer waybills cost you a carryover.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-student-dropshipping-playbook">Action Checklist: Student Dropshipping Playbook</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Transition from manual WhatsApp DMs to an automated Selar storefront or Google Form.</li>
@@ -490,8 +499,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -675,8 +684,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -690,7 +699,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

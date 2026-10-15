@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,71 +306,42 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <p>The final draft of the semester examination timetable has just been pinned to your faculty notice board or uploaded to your departmental WhatsApp group. </p>
-<p>You zoom in on the image, and a cold knot forms in your stomach. </p>
+        <p>The final draft of the semester examination timetable has just been pinned to your faculty notice board or uploaded to your departmental WhatsApp group.</p>
+<p>You zoom in on the image, and a cold knot forms in your stomach.</p>
 <p>Exams start in exactly <strong>14 days</strong>. You count your registered courses: seven papers packed across ten days. You look at your study desk: four stapled 80-page handouts from lecturers who never completed their syllabuses, two courses you barely attended due to morning transit bottlenecks, and a mountain of unorganized PDF slides on your phone.</p>
-<p>A wave of overwhelming panic hits you. You consider extreme, desperate measures: drinking dry Nescafe powder, pulling non-stop "Till Daybreak" (TDB) all-nighters in unventilated night classes, or even applying for medical exeat waivers. </p>
-<p>Stop. Breathe. </p>
+<p>A wave of overwhelming panic hits you. You consider extreme, desperate measures: drinking dry Nescafe powder, pulling non-stop "Till Daybreak" (TDB) all-nighters in unventilated night classes, or even applying for medical exeat waivers.</p>
+<p>Stop. Breathe.</p>
 <p>Here is the operational reality: <strong>Panic is a terrible strategist.</strong> Frantic, chaotic cramming does not save semesters; it exhausts your central nervous system, leading straight to <a href="/blog/academics/exam-panic-blackouts-why-prepared-students-blank/">preventing exam panic and blackouts</a>.</p>
 <p>Educational research published in <a href="https://journals.sagepub.com/">Psychological Science in the Public Interest</a> confirms that while last-minute massed cramming is inefficient for long-term memory, <strong>structured triage and active retrieval testing</strong> can produce dramatic short-term exam recall.</p>
 <p>You cannot read the entire syllabus in two weeks, and you do not need to. You only need to pass the examination. Here is the exact <strong>14-day exam cramming panic study plan</strong> to triage your workload, target high-yield marks, and salvage your semester GPA.</p>
-<hr />
-<h2 id="1-the-8020-triage-protocol-sorting-your-course-battlefield">1. The 80/20 Triage Protocol: Sorting Your Course Battlefield</h2>
+<hr>
+<h2 id="1-the-80-20-triage-protocol-sorting-your-course-battlefield">1. The 80/20 Triage Protocol: Sorting Your Course Battlefield</h2>
 <p>When you have only 14 days remaining, treating all registered courses equally is academic suicide. You must deploy <strong>The Traffic Light Triage Matrix</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Priority Level</th>
-<th>Course Category</th>
-<th>Credit Units</th>
-<th>Current Mastery</th>
-<th>Dedicated Time Allocation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>RED (High Danger)</strong></td>
-<td>Core Departmental Prerequisite</td>
-<td>3 or 4 Units</td>
-<td>Below 40% (Carryover Risk)</td>
-<td><strong>50% of Daily Study Hours</strong></td>
-</tr>
-<tr>
-<td><strong>AMBER (Moderate)</strong></td>
-<td>Departmental Subsidiary</td>
-<td>2 or 3 Units</td>
-<td>50% – 60% (Borderline C/B)</td>
-<td><strong>35% of Daily Study Hours</strong></td>
-</tr>
-<tr>
-<td><strong>GREEN (Low Risk)</strong></td>
-<td>GST / General Elective</td>
-<td>1 or 2 Units</td>
-<td>Familiar / Multiple Choice</td>
-<td><strong>15% of Daily Study Hours</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Priority Level | Course Category | Credit Units | Current Mastery | Dedicated Time Allocation |</p>
+<p>|---|---|---|---|---|</p>
+<p>| <strong>RED (High Danger)</strong> | Core Departmental Prerequisite | 3 or 4 Units | Below 40% (Carryover Risk) | <strong>50% of Daily Study Hours</strong> |</p>
+<p>| <strong>AMBER (Moderate)</strong> | Departmental Subsidiary | 2 or 3 Units | 50% – 60% (Borderline C/B) | <strong>35% of Daily Study Hours</strong> |</p>
+<p>| <strong>GREEN (Low Risk)</strong> | GST / General Elective | 1 or 2 Units | Familiar / Multiple Choice | <strong>15% of Daily Study Hours</strong> |</p>
 <h3 id="the-rule-of-credit-leverage">The Rule of Credit Leverage</h3>
 <p>Failing a 4-unit departmental core course adds 4 units of zero points to your CGPA denominator, destroying your semester standing. Failing a 1-unit elective is easily absorbed. Direct half of your cognitive energy toward neutralizing RED courses first. Designing a realistic schedule avoids the traps outlined in <a href="/blog/academics/university-study-timetable-mistakes/">university study timetable mistakes</a>.</p>
-<hr />
+<hr>
 <h2 id="2-phase-1-days-1-to-4-the-past-question-reverse-engineering-sprint">2. Phase 1 (Days 1 to 4): The Past Question Reverse-Engineering Sprint</h2>
 <p>Do not open page 1 of your lecture handouts. Reading chronologically is a luxury for Week 2 of the semester; in Week 12, it is a fatal trap.</p>
 <h3 id="the-4-day-execution-blueprint">The 4-Day Execution Blueprint</h3>
 <ol>
-<li><strong>Acquire 5 to 7 Years of Past Papers:</strong> Gather authentic departmental examination papers for all RED and AMBER courses.</li>
-<li><strong>Execute Topic Frequency Tallying:</strong> Mark which specific questions, theories, derivations, and case problems appear repeatedly.</li>
-<li><strong>Extract the "Compulsory 80/20 Core":</strong> In virtually every Nigerian university examination, <strong>3 core topics generate 60% to 70% of total exam marks.</strong> </li>
-<li><strong>Build Closed-Book Master Prompts:</strong> Turn each recurring past question into an active recall prompt in your notebook (e.g., <em>"Derive the Bernoulli equation from first principles"</em> or <em>"Explain the 5 essential elements of a valid tort"</em>).</li>
+<li>**Acquire 5 to 7 Years of Past Papers:** Gather authentic departmental examination papers for all RED and AMBER courses.</li>
+<li>**Execute Topic Frequency Tallying:** Mark which specific questions, theories, derivations, and case problems appear repeatedly.</li>
+<li>**Extract the "Compulsory 80/20 Core":** In virtually every Nigerian university examination, **3 core topics generate 60% to 70% of total exam marks.**</li>
+<li>**Build Closed-Book Master Prompts:** Turn each recurring past question into an active recall prompt in your notebook (e.g., *"Derive the Bernoulli equation from first principles"* or *"Explain the 5 essential elements of a valid tort"*).</li>
 </ol>
-<hr />
+<hr>
 <h2 id="3-phase-2-days-5-to-9-active-recall-blurting-and-formula-drilling">3. Phase 2 (Days 5 to 9): Active Recall Blurting and Formula Drilling</h2>
 <p>Now that you have identified the 80/20 high-yield topics, spend Days 5 through 9 mastering the underlying mechanics:</p>
 <ul>
 <li>25-Minute Focused Study] ➔ [10-Minute Closed-Book Blurting] ➔ [5-Minute Error Correction</li>
 </ul>
 <h3 id="ditch-all-highlighting">Ditch All Highlighting</h3>
-<p>Put your fluorescent markers in a drawer. Highlighting provides false familiarity without retrieval strength. </p>
+<p>Put your fluorescent markers in a drawer. Highlighting provides false familiarity without retrieval strength.</p>
 <h3 id="the-blurting-drill-for-exam-scripts">The Blurting Drill for Exam Scripts</h3>
 <ul>
 <li>Study the derivation or legal case for 25 minutes.</li>
@@ -380,51 +351,50 @@
 <li>Compare with the handout in red ink. Repeat until you can produce the entire derivation without looking.</li>
 </ul>
 <p>If intense anxiety begins to interfere with your ability to focus, deploy our <a href="/blog/mental-health/">emergency grounding protocols for exam panic</a> to restore cognitive calm.</p>
-<hr />
+<hr>
 <h2 id="4-phase-3-days-10-to-12-timed-mock-exam-simulation">4. Phase 3 (Days 10 to 12): Timed Mock Exam Simulation</h2>
 <p>Three days before exams commence, you must transition from learning to <strong>exam hall execution</strong>:</p>
 <ul>
-<li><strong>Simulate Real Time Constraints:</strong> If your exam is a 2-hour, 3-question paper, set a countdown timer for exactly 100 minutes (saving 20 minutes for buffer).</li>
-<li><strong>Write on Authentic Paper:</strong> Practice on physical paper, not computer screens or tablet notes. Hand fatigue is real; your wrist muscles must be conditioned to write fast, legible prose under timed pressure.</li>
-<li><strong>Practice Pacing:</strong> Allocate your minutes strictly according to marks. For a 20-mark question in a 2-hour exam, never spend more than 24 minutes.</li>
+<li>**Simulate Real Time Constraints:** If your exam is a 2-hour, 3-question paper, set a countdown timer for exactly 100 minutes (saving 20 minutes for buffer).</li>
+<li>**Write on Authentic Paper:** Practice on physical paper, not computer screens or tablet notes. Hand fatigue is real; your wrist muscles must be conditioned to write fast, legible prose under timed pressure.</li>
+<li>**Practice Pacing:** Allocate your minutes strictly according to marks. For a 20-mark question in a 2-hour exam, never spend more than 24 minutes.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="5-phase-4-days-13-to-14-the-sleep-shield-and-cognitive-stabilization">5. Phase 4 (Days 13 to 14): The Sleep Shield and Cognitive Stabilization</h2>
-<p>The final 48 hours before your first paper will tempt you to pull desperate, sleepless nights. </p>
+<p>The final 48 hours before your first paper will tempt you to pull desperate, sleepless nights.</p>
 <p><strong>This is where students lose everything.</strong></p>
 <p>Neurobiological clinical research published in <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed / National Institutes of Health</a> proves that memory consolidation occurs during slow-wave and REM sleep. Depriving your brain of sleep destroys working memory access by up to 40%. When an exhausted student sits down in the exam hall, their prefrontal cortex locks up, causing catastrophic memory blackouts.</p>
 <h3 id="the-48-hour-protocol">The 48-Hour Protocol</h3>
 <ul>
-<li><strong>Cease New Learning:</strong> Do not try to learn complex new chapters on Day 13 or 14. </li>
-<li><strong>Review Flash-Sheets Only:</strong> Limit revision to rapid 15-minute formula and definition checks.</li>
-<li><strong>Protect 7 Hours of Sleep:</strong> Go to bed early. Enter the examination hall well-hydrated, physically rested, and mentally alert.</li>
+<li>**Cease New Learning:** Do not try to learn complex new chapters on Day 13 or 14.</li>
+<li>**Review Flash-Sheets Only:** Limit revision to rapid 15-minute formula and definition checks.</li>
+<li>**Protect 7 Hours of Sleep:** Go to bed early. Enter the examination hall well-hydrated, physically rested, and mentally alert.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="your-14-day-emergency-action-checklist">Your 14-Day Emergency Action Checklist</h2>
 <p>Follow this emergency checklist starting today:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Triage your courses into Red, Amber, and Green:</strong> Identify your two highest-credit carryover risks immediately.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Secure 5 years of past exam papers:</strong> Map the recurring high-yield questions for every subject.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Commit to 3 hours of closed-book blurting daily:</strong> Practice producing answers from memory on blank lined paper.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Simulate at least one full mock paper under timed conditions:</strong> Condition your hands and brain for hall pacing.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Guard your sleep schedule:</strong> Enforce a non-negotiable 6 to 7 hours of rest every night leading up to Day 1.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Triage your courses into Red, Amber, and Green:** Identify your two highest-credit carryover risks immediately.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Secure 5 years of past exam papers:** Map the recurring high-yield questions for every subject.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Commit to 3 hours of closed-book blurting daily:** Practice producing answers from memory on blank lined paper.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Simulate at least one full mock paper under timed conditions:** Condition your hands and brain for hall pacing.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Guard your sleep schedule:** Enforce a non-negotiable 6 to 7 hours of rest every night leading up to Day 1.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="outsmart-exam-panic-with-an-engineered-comeback-system">Outsmart Exam Panic with an Engineered Comeback System</h2>
 <p>Last-minute cramming can save you from carryovers in an emergency, but building long-term academic excellence and high CGPA performance requires an organized, repeatable study system.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam anxiety, reverse-engineer marking schemes, and produce peak performance under pressure.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Exam Survival Guide</strong> — Emergency triage schedules, hall pacing formulas, and panic neutralizers</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking rubrics and pass criteria</li>
-    <li><strong>Get Good at Hard Things</strong> — Cognitive active recall protocols to master difficult, high-credit courses</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam anxiety, reverse-engineer marking schemes, and produce peak performance under pressure.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Exam Survival Guide</strong> — Emergency triage schedules, hall pacing formulas, and panic neutralizers</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking rubrics and pass criteria</li>
+<li><strong>Get Good at Hard Things</strong> — Cognitive active recall protocols to master difficult, high-credit courses</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="is-it-really-possible-to-pass-semester-exams-with-only-14-days-of-preparation">Is it really possible to pass semester exams with only 14 days of preparation?</h3>
 <p>Yes, provided you shift from broad syllabus reading to aggressive triage. By identifying the high-yield 20% of topics that historically generate 80% of exam marks and running closed-book past question drills, you can secure solid B and C grades and avoid carryovers.</p>
@@ -598,8 +568,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -783,8 +753,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -798,7 +768,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

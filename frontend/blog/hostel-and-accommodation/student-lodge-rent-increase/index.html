@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,56 +310,64 @@
 <p>It is the eighth week of the second semester. Examinations are five weeks away.</p>
 <p>You are sitting at your desk reviewing past questions when the lodge caretaker knocks and hands you a typed letter:</p>
 <blockquote>
-<p><em>"Dear Tenant, in view of prevailing economic realities, rising inflation, and borehole diesel expenditures, rent for this self-contain apartment has been revised from ₦320,000 to ₦500,000 for the upcoming session. All returning students must pay the new fee or a ₦100,000 non-refundable commitment deposit before the end of this month to avoid losing their rooms."</em></p>
+<p>*"Dear Tenant, in view of prevailing economic realities, rising inflation, and borehole diesel expenditures, rent for this self-contain apartment has been revised from ₦320,000 to ₦500,000 for the upcoming session. All returning students must pay the new fee or a ₦100,000 non-refundable commitment deposit before the end of this month to avoid losing their rooms."*</p>
 </blockquote>
 <p>Your hands tremble. A ₦180,000 sudden leap—over a 56% rent hike.</p>
-<p>Your parents already struggled to pay your school tuition. You have no extra ₦180,000 sitting in your bank account. </p>
+<p>Your parents already struggled to pay your school tuition. You have no extra ₦180,000 sitting in your bank account.</p>
 <p>And worse, the letter gives you less than twenty-one days to comply or face eviction right in the middle of your final examinations.</p>
 <p>In Nigerian university towns, arbitrary, predatory rent increases are an annual epidemic. Landlords know that moving heavy furniture, searching for a new lodge, and paying new agent/agreement fees is exhausting for students, so they weaponize relocation friction to force compliance.</p>
-<p>You do not have to accept illegal exploitation lying down. </p>
+<p>You do not have to accept illegal exploitation lying down.</p>
 <p>Here is the strategic and legal playbook to challenge, negotiate, and resolve sudden student rent hikes without getting evicted.</p>
-<hr />
+<hr>
 <h2 id="1-the-legal-reality-what-nigerian-tenancy-law-actually-says">1. The Legal Reality: What Nigerian Tenancy Law Actually Says</h2>
 <p>Under the Tenancy Laws of Lagos, Oyo, Edo, Kwara, Kaduna, and other Nigerian states, tenants possess clear statutory protections that landlords routinely conceal:</p>
-<p><strong>Statutory Tenancy Safeguards in Nigeria:</strong><br />
-* Principle 1: Rent Immunity During Active Term (Zero mid-lease increases) — Principle 2: Mandatory Statutory Notice (Minimum 3-6 months for yearly leases) — Principle 3: Absolute Prohibition of Self-Help Eviction (Illegal to lock doors/remove roofs) — Principle 4: Notice to Quit Precedes Court Action (Eviction requires judicial order)</p>
+<p><strong>Statutory Tenancy Safeguards in Nigeria:</strong></p>
+<ul>
+<li>Principle 1: Rent Immunity During Active Term (Zero mid-lease increases) — Principle 2: Mandatory Statutory Notice (Minimum 3-6 months for yearly leases) — Principle 3: Absolute Prohibition of Self-Help Eviction (Illegal to lock doors/remove roofs) — Principle 4: Notice to Quit Precedes Court Action (Eviction requires judicial order)</li>
+</ul>
 <p>If your current rent is fully paid up until November, the landlord has <strong>zero legal authority</strong> to demand a single additional Naira before that paid term expires. Furthermore, demanding an immediate mid-semester deposit under threat of forfeiture violates basic contract law.</p>
-<hr />
+<hr>
 <h2 id="2-the-4-step-collective-bargaining-strategy">2. The 4-Step Collective Bargaining Strategy</h2>
-<p>Never attempt to negotiate with a predatory landlord as a solitary student. A landlord will intimidate an individual student into submission. </p>
+<p>Never attempt to negotiate with a predatory landlord as a solitary student. A landlord will intimidate an individual student into submission.</p>
 <p>Instead, execute the <strong>Collective Union Protocol</strong>:</p>
 <h3 id="step-1-form-the-lodge-tenants-alliance">Step 1: Form the Lodge Tenants' Alliance</h3>
-<p>Call an emergency meeting of all lodge occupants within 48 hours of receiving the hike notice. <br />
-* Pledge a unanimous pact: <strong>Nobody pays the new rent individually.</strong><br />
-* Elect two calm, articulate senior students (preferably Law or Social Science majors) to act as official tenant spokespersons.</p>
+<p>Call an emergency meeting of all lodge occupants within 48 hours of receiving the hike notice.</p>
+<ul>
+<li>Pledge a unanimous pact: **Nobody pays the new rent individually.**</li>
+<li>Elect two calm, articulate senior students (preferably Law or Social Science majors) to act as official tenant spokespersons.</li>
+</ul>
 <h3 id="step-2-conduct-neighborhood-price-auditing">Step 2: Conduct Neighborhood Price Auditing</h3>
-<p>Send two students to inspect five neighboring lodges within a 500-meter radius:<br />
-* What are comparable compounds charging?<br />
-* Do those compounds have superior amenities (paved access roads, dedicated solar lighting)?<br />
-Compile these facts into an empirical market comparison sheet.</p>
+<p>Send two students to inspect five neighboring lodges within a 500-meter radius:</p>
+<ul>
+<li>What are comparable compounds charging?</li>
+<li>Do those compounds have superior amenities (paved access roads, dedicated solar lighting)?</li>
+<p>Compile these facts into an empirical market comparison sheet.</p>
+</ul>
 <h3 id="step-3-draft-the-formal-counter-proposal-letter">Step 3: Draft the Formal Counter-Proposal Letter</h3>
 <p>Submit a polite, professional, and unified written response to the landlord:</p>
 <blockquote>
-<p><em>"Dear Sir, we acknowledge your letter regarding rent revision. As cooperative tenants who pay on time and maintain your property, we recognize macroeconomic pressures. However, a 56% hike is beyond the capacity of our student sponsors. Based on current neighborhood benchmarks and ongoing compound repairs (unreliable borehole pump and perimeter lighting), we collectively propose an adjusted renewal rent of ₦360,000 (a 12.5% increment)."</em></p>
+<p>*"Dear Sir, we acknowledge your letter regarding rent revision. As cooperative tenants who pay on time and maintain your property, we recognize macroeconomic pressures. However, a 56% hike is beyond the capacity of our student sponsors. Based on current neighborhood benchmarks and ongoing compound repairs (unreliable borehole pump and perimeter lighting), we collectively propose an adjusted renewal rent of ₦360,000 (a 12.5% increment)."*</p>
 </blockquote>
 <h3 id="step-4-leverage-the-zero-vacancy-value">Step 4: Leverage the "Zero-Vacancy" Value</h3>
 <p>Remind the landlord gently that existing, verified student tenants who pay reliably and protect property are far more valuable than the uncertainty of vacant rooms, defaulting strangers, and property agent commissions.</p>
 <p>For early detection of predatory rental schemes, consult our guide on <a href="/blog/hostel-and-accommodation/exploitative-student-lodge-landlord/">exploitative off campus student lodge landlord signs</a>.</p>
-<hr />
+<hr>
 <h2 id="3-preparing-the-financial-contingency-exit">3. Preparing the Financial Contingency Exit</h2>
 <p>While negotiations proceed, always prepare for the worst-case scenario. If a landlord remains completely intransigent and unreasonable:</p>
 <ul>
-<li><strong>Begin Early Scouting:</strong> Start inspecting alternative lodges four weeks before the session concludes, using our <a href="/blog/hostel-and-accommodation/inspecting-off-campus-student-lodge-checklist/">inspecting off campus student lodge checklist</a>.</li>
-<li><strong>Protect Your Emergency Buffer:</strong> Ensure you maintain an emergency student savings reserve to cover moving logistics and transport costs using our <a href="/blog/finances/">emergency student fund savings strategy</a>.</li>
+<li>**Begin Early Scouting:** Start inspecting alternative lodges four weeks before the session concludes, using our [inspecting off campus student lodge checklist](/blog/hostel-and-accommodation/inspecting-off-campus-student-lodge-checklist/).</li>
+<li>**Protect Your Emergency Buffer:** Ensure you maintain an emergency student savings reserve to cover moving logistics and transport costs using our [emergency student fund savings strategy](/blog/finances/).</li>
 </ul>
-<hr />
+<hr>
 <blockquote>
-<h3 id="need-help-negotiating-campus-rent">⚖️ Need Help Negotiating Campus Rent?</h3>
+<p>### ⚖️ Need Help Negotiating Campus Rent?</p>
 <p>Facing an impossible rent hike or threats of illegal eviction from your student landlord?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with student union welfare officers, legal representatives, and peers who can help your lodge organize collective negotiation and protect your tenancy rights.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with student union welfare officers, legal representatives, and peers who can help your lodge organize collective negotiation and protect your tenancy rights.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="can-a-student-landlord-legally-increase-rent-halfway-through-your-paid-year">Can a student landlord legally increase rent halfway through your paid year?</h3>
 <p>No. Under Nigerian tenancy jurisprudence, a rent increase cannot be imposed during an ongoing, paid-up tenancy term. A landlord can only propose increased rent for the subsequent tenancy period.</p>
@@ -533,8 +541,8 @@ Compile these facts into an empirical market comparison sheet.</p>
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -718,8 +726,8 @@ Compile these facts into an empirical market comparison sheet.</p>
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -733,7 +741,7 @@ Compile these facts into an empirical market comparison sheet.</p>
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

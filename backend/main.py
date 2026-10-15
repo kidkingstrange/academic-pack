@@ -37,6 +37,11 @@ from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge
 from .workers.subscription_scheduler import start_subscription_scheduler, stop_subscription_scheduler
 from .workers.email_delivery_alert_scheduler import start_alert_scheduler, stop_alert_scheduler
 from .workers.abandoned_recovery_scheduler import start_abandoned_recovery_scheduler, stop_abandoned_recovery_scheduler
+from .workers.payment_reconciliation_scheduler import (
+    start_reconciliation_scheduler,
+    stop_reconciliation_scheduler,
+    auto_reconcile_flagged_payments,
+)
 from .workers.review_scheduler import start_review_scheduler
 
 from .utils.security import create_access_token
@@ -524,8 +529,11 @@ async def startup():
         start_subscription_scheduler()
         start_alert_scheduler()
         start_abandoned_recovery_scheduler()
+        start_reconciliation_scheduler()
         from .database import db as main_db
         app.state.review_scheduler_task = asyncio.create_task(start_review_scheduler(main_db))
+        # Immediately auto-reconcile any flagged/unresolved transactions on boot
+        asyncio.create_task(auto_reconcile_flagged_payments(main_db))
         print("[Schedulers] Background schedulers started")
     else:
         print("[Schedulers] Background schedulers disabled (RUN_SCHEDULERS=false)")
@@ -540,6 +548,7 @@ async def shutdown():
         stop_subscription_scheduler()
         stop_alert_scheduler()
         stop_abandoned_recovery_scheduler()
+        stop_reconciliation_scheduler()
         if hasattr(app.state, "review_scheduler_task"):
             app.state.review_scheduler_task.cancel()
     await disconnect_db()

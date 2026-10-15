@@ -1368,3 +1368,135 @@ async def export_referral_leads_csv(current_user=Depends(require_admin), db=Depe
         media_type="text/csv",
         headers={"Content-Disposition": f"attachment; filename={filename}"},
     )
+
+
+# ── Flagged Payments & Reconciliation ───────────────────────────────────────
+@router.get("/flagged-payments")
+async def list_flagged_payments(
+    resolved: Optional[bool] = False,
+    limit: int = 50,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """List flagged payments requiring review or resolution."""
+    query = {}
+    if resolved is not None:
+        query["resolved"] = resolved
+
+    cursor = db.flagged_payments.find(query).sort("flagged_at", -1).limit(min(limit, 100))
+    records = await cursor.to_list(length=limit)
+    out = []
+    for r in records:
+        payload = r.get("payload", {})
+        customer = payload.get("customer", {})
+        out.append({
+            "id": str(r["_id"]),
+            "reference": r.get("reference"),
+            "reason": r.get("reason"),
+            "expected_amount": r.get("expected_amount"),
+            "amount_paid": r.get("amount_paid"),
+            "customer_email": customer.get("email") or r.get("email") or "unknown",
+            "customer_name": f"{customer.get('first_name', '')} {customer.get('last_name', '')}".strip() or "Customer",
+            "flagged_at": r.get("flagged_at").isoformat() if r.get("flagged_at") else None,
+            "resolved": r.get("resolved", False),
+            "resolved_at": r.get("resolved_at").isoformat() if r.get("resolved_at") else None,
+            "resolved_by": r.get("resolved_by"),
+        })
+    return {"flagged_payments": out, "count": len(out)}
+
+
+class ResolveFlaggedPaymentRequest(BaseModel):
+    reference: str
+    force: bool = False
+    notes: Optional[str] = None
+
+
+@router.post("/flagged-payments/resolve")
+async def resolve_flagged_payment(
+    body: ResolveFlaggedPaymentRequest,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Manually or automatically resolves a flagged payment by reference:
+    1. Looks up the flagged payment and pending record.
+    2. Verifies with Paystack unless force=True.
+    3. Fulfills the order via complete_payment() giving the student instant access.
+    4. Marks flagged_payments as resolved.
+    """
+    from ..services.paystack import verify_transaction
+    from ..services.payment_completion import complete_payment
+
+    ref = body.reference.strip()
+    flagged = await db.flagged_payments.find_one({"reference": ref})
+    pending = await db.pending_payments.find_one({"reference": ref})
+
+    # Query Paystack if not forced
+    gateway_data = {}
+    amount_paid = 0.0
+    email = ""
+    name = "Student"
+
+    if flagged and flagged.get("payload"):
+        gateway_data = flagged["payload"]
+        amount_paid = float(flagged.get("amount_paid") or (gateway_data.get("amount", 0) / 100.0))
+        cust = gateway_data.get("customer", {})
+        email = cust.get("email") or ""
+        name = f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or "Student"
+
+    if pending:
+        email = email or pending.get("email", "")
+        name = name if name != "Student" else pending.get("name", "Student")
+        if not amount_paid:
+            amount_paid = float(pending.get("amount", 0))
+
+    if not body.force:
+        try:
+            tx = await verify_transaction(ref)
+            if not tx.get("status") or tx.get("data", {}).get("status") != "success":
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Paystack verification did not return success for reference {ref}: {tx.get('message', 'Unconfirmed')}"
+                )
+            gateway_data = tx["data"]
+            amount_paid = gateway_data.get("amount", 0) / 100.0
+            cust = gateway_data.get("customer", {})
+            email = email or cust.get("email") or ""
+            name = name if name != "Student" else (f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or "Student")
+        except HTTPException:
+            raise
+        except Exception as e:
+            raise HTTPException(status_code=502, detail=f"Failed to verify with Paystack: {str(e)}")
+
+    if not email:
+        raise HTTPException(status_code=400, detail="Could not determine customer email to fulfill order.")
+
+    completion = await complete_payment(
+        db,
+        reference=ref,
+        email=email,
+        name=name,
+        amount=amount_paid,
+        charge_id=str(gateway_data.get("id", ref)),
+        gateway_response=gateway_data,
+        completed_via="admin_reconciliation",
+    )
+
+    now = datetime.now(timezone.utc)
+    await db.flagged_payments.update_one(
+        {"reference": ref},
+        {"$set": {
+            "resolved": True,
+            "resolved_at": now,
+            "resolved_by": current_user.get("email", "admin"),
+            "resolution_notes": body.notes or "Resolved via admin reconciliation",
+        }},
+        upsert=True,
+    )
+
+    return {
+        "success": True,
+        "message": f"Payment {ref} resolved successfully. Customer access granted.",
+        "email": email,
+        "magic_token": completion.get("magic_token"),
+    }

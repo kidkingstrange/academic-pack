@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     # ── Paystack ─────────────────────────────────────────────────────
     PAYSTACK_SECRET_KEY: str = "sk_test_your_paystack_secret_key"
     PAYSTACK_PUBLIC_KEY: str = "pk_test_your_paystack_public_key"
-    PRODUCT_PRICE_NAIRA: int = 2000   # Legacy ₦2,000 early-bird
+    PRODUCT_PRICE_NAIRA: int = 5000   # Base student price (₦5,000)
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
     PRODUCT_PRICE_USD: float = 15.0     # $15 early-bird
     PRODUCT_PRICE_LATE_USD: float = 30.0 # $30 after 24 hrs
@@ -49,7 +49,7 @@ class Settings(BaseSettings):
     REFERRAL_DISCOUNT_FRIENDS_COUNT: int = 3
 
     # ── Tiered Pricing Structure ─────────────────────────────────────
-    TIER_STARTER_PRICE_NAIRA: int = 3500
+    TIER_STARTER_PRICE_NAIRA: int = 5000
     TIER_STARTER_PRICE_USD: float = 22.0
     TIER_COMPLETE_PRICE_NAIRA: int = 6000
     TIER_COMPLETE_PRICE_USD: float = 35.0

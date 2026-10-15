@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "What to Do When a Client Demands Revision on Exam Day",
       "description": "A battle-tested emergency action protocol for student freelancers facing urgent client demands and revisions right before or during university exam papers.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,100 +265,92 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>It is 8:15 AM on a Tuesday morning.</p>
-<p>You are standing outside the Faculty of Social Sciences lecture theater. </p>
+<p>You are standing outside the Faculty of Social Sciences lecture theater.</p>
 <p>In exactly 45 minutes, invigilators will begin searching students for examination dockets, ID cards, and calculators for a 3-unit departmental core course.</p>
-<p>Suddenly, your phone buzzes violently in your pocket:<br />
-* Three missed WhatsApp voice calls from a high-paying corporate client.<br />
-* An urgent email: <em>"URGENT: The CEO reviewed the deck and hates the financial layout. We need complete revisions by 10:30 AM before the board meeting or this contract is terminated."</em></p>
-<p>Your adrenaline surges. Your hands shake. </p>
+<p>Suddenly, your phone buzzes violently in your pocket:</p>
+<ul>
+<li>Three missed WhatsApp voice calls from a high-paying corporate client.</li>
+<li>An urgent email: *"URGENT: The CEO reviewed the deck and hates the financial layout. We need complete revisions by 10:30 AM before the board meeting or this contract is terminated."*</li>
+</ul>
+<p>Your adrenaline surges. Your hands shake.</p>
 <p>Do you run back to the hostel with your laptop to fix the slides and miss your exam? Or do you ignore the client, write your paper, and risk losing a ₦250,000 monthly retainer?</p>
 <p>This is the ultimate nightmare scenario for any working Nigerian undergraduate. Here is the exact crisis management protocol to resolve client emergencies on exam days without blowing up your client relationship or your degree.</p>
-<hr />
+<hr>
 <h2 id="phase-1-the-first-3-minutes-emotional-de-escalation">Phase 1: The First 3 Minutes (Emotional De-escalation)</h2>
 <p>When a client sends a panic message, their panic is contagious. Your nervous system immediately interprets the message as life-or-death.</p>
-<p>Take a slow breath and remember three fundamental truths:<br />
-1. <strong>Nobody dies if a slide deck or marketing campaign is delayed by 3 hours.</strong><br />
-2. <strong>You cannot perform good creative or technical work in a 20-minute state of acute panic.</strong><br />
-3. <strong>If you fail to sit for this exam, you receive an automatic Grade 'F' (0 quality points), which permanently depresses your transcript.</strong></p>
+<p>Take a slow breath and remember three fundamental truths:</p>
+<ol>
+<li>**Nobody dies if a slide deck or marketing campaign is delayed by 3 hours.**</li>
+<li>**You cannot perform good creative or technical work in a 20-minute state of acute panic.**</li>
+<li>**If you fail to sit for this exam, you receive an automatic Grade 'F' (0 quality points), which permanently depresses your transcript.**</li>
+</ol>
 <blockquote>
-<h3 id="the-3-minute-crisis-protocol">The 3-Minute Crisis Protocol</h3>
-<ul>
-<li><strong>Step 1:</strong> NEVER ignore the message completely (Silence fuels client paranoia)</li>
-<li><strong>Step 2:</strong> NEVER promise immediate delivery before your exam finishes</li>
-<li><strong>Step 3:</strong> Send the "Controlled Professional Acknowledgment" immediately</li>
-</ul>
+<p>### The 3-Minute Crisis Protocol</p>
+<p>></p>
+<p>* **Step 1:** NEVER ignore the message completely (Silence fuels client paranoia)</p>
+<p>* **Step 2:** NEVER promise immediate delivery before your exam finishes</p>
+<p>* **Step 3:** Send the "Controlled Professional Acknowledgment" immediately</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="phase-2-the-emergency-acknowledgment-template">Phase 2: The Emergency Acknowledgment Template</h2>
 <p>The reason clients become hostile is not usually the delay itself—it is the terrifying fear that their freelancer has vanished off the face of the earth.</p>
 <p>Copy and send this exact response before turning off your mobile device:</p>
 <h3 id="the-professional-in-transit-script">The Professional 'In-Transit' Script:</h3>
 <blockquote>
-<p><em>"Hi [Client Name],</em></p>
-<p><em>I have received your notes and reviewed the required revisions. I am currently in a scheduled physical client briefing with restricted device access until 12:30 PM today.</em></p>
-<p><em>I have flagged your deck as my immediate priority the moment I step out. I will implement these layout changes and deliver the finalized files directly to your inbox by 2:00 PM prompt.</em></p>
-<p><em>Thank you for your patience while I handle this transit window."</em></p>
+<p>*"Hi [Client Name],*</p>
+<p>></p>
+<p>*I have received your notes and reviewed the required revisions. I am currently in a scheduled physical client briefing with restricted device access until 12:30 PM today.*</p>
+<p>></p>
+<p>*I have flagged your deck as my immediate priority the moment I step out. I will implement these layout changes and deliver the finalized files directly to your inbox by 2:00 PM prompt.*</p>
+<p>></p>
+<p>*Thank you for your patience while I handle this transit window."*</p>
 </blockquote>
-<p>Notice what this script accomplishes:<br />
-* It confirms you received the message.<br />
-* It explains why you cannot pick up live calls without making you look like an inexperienced student.<br />
-* It gives a realistic, ironclad delivery commitment (2:00 PM) that gives you time to finish your exam, walk back to your room, and eat a meal.</p>
-<hr />
-<h2 id="phase-3-the-phone-blackout-protocol">Phase 3: The Phone Blackout Protocol</h2>
-<p>Once you have sent the acknowledgment:<br />
-1. <strong>Turn off your phone completely.</strong> Do not set it to vibrate. Do not leave it on silent.<br />
-2. Put the phone inside your backpack or leave it with a trusted friend outside the hall.</p>
-<blockquote>
-<h3 id="warning-university-malpractice-regulations">Warning: University Malpractice Regulations</h3>
+<p>Notice what this script accomplishes:</p>
 <ul>
-<li>Carrying a smartphone into a Nigerian exam hall—even if it is turned off— is classified as examination malpractice in UNILAG, OAU, UNN, ABU, and LASU. A single client notification pinging in your pocket can lead to a 2-semester rustication. No freelance contract on Earth is worth that risk.</li>
+<li>It confirms you received the message.</li>
+<li>It explains why you cannot pick up live calls without making you look like an inexperienced student.</li>
+<li>It gives a realistic, ironclad delivery commitment (2:00 PM) that gives you time to finish your exam, walk back to your room, and eat a meal.</li>
 </ul>
+<hr>
+<h2 id="phase-3-the-phone-blackout-protocol">Phase 3: The Phone Blackout Protocol</h2>
+<p>Once you have sent the acknowledgment:</p>
+<ol>
+<li>**Turn off your phone completely.** Do not set it to vibrate. Do not leave it on silent.</li>
+<li>Put the phone inside your backpack or leave it with a trusted friend outside the hall.</li>
+</ol>
+<blockquote>
+<p>### Warning: University Malpractice Regulations</p>
+<p>></p>
+<p>* Carrying a smartphone into a Nigerian exam hall—even if it is turned off— is classified as examination malpractice in UNILAG, OAU, UNN, ABU, and LASU. A single client notification pinging in your pocket can lead to a 2-semester rustication. No freelance contract on Earth is worth that risk.</p>
 </blockquote>
 <p>Walk into the exam hall with complete mental clarity. Your only job for the next 180 minutes is answering the questions on your paper.</p>
 <p>For strategies on how to recover your physical and cognitive energy after an intense week of juggling client deadlines and exams, read our guide on <a href="/blog/balancing-work-and-school/recovering-from-student-work-sleep-debt/">recovering from sleep debt as a working student</a>.</p>
-<hr />
-<h2 id="phase-4-post-exam-damage-control-100-pm-execution">Phase 4: Post-Exam Damage Control (1:00 PM Execution)</h2>
-<p>The moment your examination finishes and you hand over your answer booklet:<br />
-1. Return to your workspace immediately.<br />
-2. Do not spend 45 minutes arguing with classmates about whether Question 3 was Option B or Option C.<br />
-3. Power on your laptop, boot up your mobile hotspot, and review the client's revision notes with fresh eyes.</p>
+<hr>
+<h2 id="phase-4-post-exam-damage-control-1-00-pm-execution">Phase 4: Post-Exam Damage Control (1:00 PM Execution)</h2>
+<p>The moment your examination finishes and you hand over your answer booklet:</p>
+<ol>
+<li>Return to your workspace immediately.</li>
+<li>Do not spend 45 minutes arguing with classmates about whether Question 3 was Option B or Option C.</li>
+<li>Power on your laptop, boot up your mobile hotspot, and review the client's revision notes with fresh eyes.</li>
+</ol>
 <h3 id="how-to-deliver-the-finalized-files">How to Deliver the Finalized Files:</h3>
 <p>When sending the revised assets at 1:45 PM:</p>
 <blockquote>
-<p><em>"Hi [Client Name],</em></p>
-<p><em>As promised, I have completed all requested revisions on the financial layout. Specifically, I have updated the chart color-coding, restructured slide 8 and 12, and unified the typography hierarchy.</em></p>
-<p><em>The revised files are attached below and synced to our shared Google Drive folder. Please let me know if you need any additional adjustments!"</em></p>
+<p>*"Hi [Client Name],*</p>
+<p>></p>
+<p>*As promised, I have completed all requested revisions on the financial layout. Specifically, I have updated the chart color-coding, restructured slide 8 and 12, and unified the typography hierarchy.*</p>
+<p>></p>
+<p>*The revised files are attached below and synced to our shared Google Drive folder. Please let me know if you need any additional adjustments!"*</p>
 </blockquote>
 <p>Nine times out of ten, the client will respond: <em>"Thank you so much! These look fantastic."</em> The crisis evaporates, your contract remains intact, and your exam paper is safely submitted.</p>
-<hr />
+<hr>
 <h2 id="how-to-prevent-exam-day-emergencies-in-the-future">How to Prevent Exam Day Emergencies in the Future</h2>
 <p>To ensure you never face this terrifying scenario again, implement these structural protections:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Protection Mechanism</th>
-<th style="text-align: left;">How to Execute</th>
-<th style="text-align: left;">Result</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>72-Hour Deliverable Freeze</strong></td>
-<td style="text-align: left;">Submit all weekly milestones 3 days before exam week begins.</td>
-<td style="text-align: left;">Gives clients 48 hours to request changes while you are still free.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Clear Revision Cut-Offs</strong></td>
-<td style="text-align: left;">State in your client contracts: <em>"Revisions requested after 5:00 PM are processed next business morning."</em></td>
-<td style="text-align: left;">Protects your night-time study and morning exam hours.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Designated Peer Backup</strong></td>
-<td style="text-align: left;">Maintain an arrangement with a capable freelancer friend who has your Figma/Canva login.</td>
-<td style="text-align: left;">They can execute emergency minor text edits while you are writing tests.</td>
-</tr>
-</tbody>
-</table>
+<p>| Protection Mechanism | How to Execute | Result |</p>
+<p>| :--- | :--- | :--- |</p>
+<p>| <strong>72-Hour Deliverable Freeze</strong> | Submit all weekly milestones 3 days before exam week begins. | Gives clients 48 hours to request changes while you are still free. |</p>
+<p>| <strong>Clear Revision Cut-Offs</strong> | State in your client contracts: <em>"Revisions requested after 5:00 PM are processed next business morning."</em> | Protects your night-time study and morning exam hours. |</p>
+<p>| <strong>Designated Peer Backup</strong> | Maintain an arrangement with a capable freelancer friend who has your Figma/Canva login. | They can execute emergency minor text edits while you are writing tests. |</p>
 <p>Guard your focus fiercely. You are building both a career and a degree—master the communication tools that protect both.</p>
       </div>
 
@@ -524,8 +516,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -709,8 +701,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -724,7 +716,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

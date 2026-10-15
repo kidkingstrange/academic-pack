@@ -119,7 +119,7 @@ function openCheckout() {
   if (typeof fbq === 'function') {
     fbq('track', 'InitiateCheckout', {
       content_name: 'Academic Comeback Package',
-      value: 2000,
+      value: 5000,
       currency: 'NGN'
     });
   }
@@ -207,7 +207,7 @@ function getActiveBasePrice() {
     }
     return 5000;
   }
-  return 2000;
+  return 5000;
 }
 
 function initViralDiscount() {
@@ -726,36 +726,37 @@ function showResumePaymentBanner(pending) {
 }
 
 (function resumePendingPaymentOnLoad() {
-  const pending = loadPendingPayment();
-  if (!pending || !pending.reference) return;
+  const params = new URLSearchParams(window.location.search);
+  const urlRef = params.get('reference') || params.get('trxref');
+  const urlError = params.get('error');
+  const pending = loadPendingPayment() || (urlRef ? { reference: urlRef } : null);
 
-  // Silently check once in the background — if the webhook already
-  // completed it, log the customer straight in with no banner at all.
+  const refToCheck = urlRef || (pending && pending.reference);
+  if (!refToCheck) return;
+
+  // If redirected with reference or error, verify immediately
   fetch(`${API_BASE}/payments/verify`, {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify({
-      charge_id:      pending.charge_id,
-      va_id:          pending.va_id,
-      reference:      pending.reference,
-      email:          pending.email,
-      name:           pending.name,
-      payment_method: pending.payment_method,
+      charge_id:      pending ? pending.charge_id : null,
+      va_id:          pending ? pending.va_id : null,
+      reference:      refToCheck,
+      email:          pending ? pending.email : undefined,
+      name:           pending ? pending.name : undefined,
+      payment_method: pending ? pending.payment_method : 'bank_transfer',
     }),
   })
     .then(res => res.json())
     .then(data => {
       if (data.success) {
         clearPendingPayment();
-        fireVerifiedPurchase(pending.reference, data.amount);
-        // Isolated so a storage failure still redirects straight to the
-        // library instead of falling through to the resume-payment banner
-        // below.
+        fireVerifiedPurchase(refToCheck, data.amount);
         try {
-          sessionStorage.setItem('ac_token', data.token);
+          if (data.token) sessionStorage.setItem('ac_token', data.token);
           localStorage.setItem('ac_purchased', 'true');
         } catch (storageErr) {
-          console.warn('Storage unavailable after successful payment, continuing via URL token', storageErr);
+          console.warn('Storage unavailable after successful payment', storageErr);
         }
         const targetUrl = data.library_token
           ? `/library?token=${encodeURIComponent(data.library_token)}&welcome=1`
@@ -763,10 +764,67 @@ function showResumePaymentBanner(pending) {
         window.location.href = targetUrl;
         return;
       }
-      showResumePaymentBanner(pending);
+      if (urlError || urlRef) {
+        showPaymentRecoveryBanner(refToCheck, data.message || 'Payment not yet confirmed');
+      } else if (pending) {
+        showResumePaymentBanner(pending);
+      }
     })
-    .catch(() => showResumePaymentBanner(pending));
+    .catch(() => {
+      if (pending) showResumePaymentBanner(pending);
+    });
 })();
+
+function showPaymentRecoveryBanner(ref, message) {
+  if (document.getElementById('payment-recovery-banner')) return;
+  const banner = document.createElement('div');
+  banner.id = 'payment-recovery-banner';
+  banner.style.cssText = [
+    'position:fixed', 'top:0', 'left:0', 'right:0', 'z-index:2100',
+    'background:#1e293b', 'color:#fff', 'padding:14px 20px',
+    'display:flex', 'align-items:center', 'justify-content:center',
+    'gap:14px', 'flex-wrap:wrap', 'text-align:center',
+    'border-bottom:2px solid var(--accent-gold, #f59e0b)',
+    'box-shadow:0 6px 20px rgba(0,0,0,0.4)', 'font-size:0.95rem',
+  ].join(';');
+  banner.innerHTML = `
+    <span>Already debited for reference <strong>${ref}</strong>?</span>
+    <button class="btn btn-primary" id="retry-verify-btn" style="padding:7px 18px;font-weight:600;background:var(--accent-gold, #f59e0b);color:#0f172a;border:none;border-radius:6px;cursor:pointer;">
+      Unlock My Library Instant Access ✓
+    </button>
+    <button id="dismiss-recovery-btn" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:1.1rem;margin-left:8px;">✕</button>
+  `;
+  document.body.prepend(banner);
+
+  document.getElementById('retry-verify-btn').addEventListener('click', async () => {
+    const btn = document.getElementById('retry-verify-btn');
+    btn.disabled = true;
+    btn.textContent = 'Verifying with Paystack...';
+    try {
+      const res = await fetch(`${API_BASE}/payments/verify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reference: ref }),
+      });
+      const data = await res.json();
+      if (data.success && data.library_token) {
+        window.location.href = `/library?token=${encodeURIComponent(data.library_token)}&welcome=1`;
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Retry Verification';
+        alert(data.message || 'We could not confirm payment yet. If debited, please contact support or retry in 1 minute.');
+      }
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = 'Retry Verification';
+      alert('Network error verifying payment. Please retry in a moment.');
+    }
+  });
+
+  document.getElementById('dismiss-recovery-btn').addEventListener('click', () => {
+    banner.remove();
+  });
+}
 
 // ── Copy Account Number Helper ──────────────────────────────────────────────
 function copyAccountNumber(text, buttonEl) {

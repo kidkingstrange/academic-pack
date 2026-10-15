@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,90 +306,65 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="sensitive-skin-students-water-allergies-hostel-bathing">Sensitive Skin Students: Water Allergies &amp; Hostel Bathing</h1>
+        <h1 id="sensitive-skin-students-water-allergies-hostel-bathing">Sensitive Skin Students: Water Allergies & Hostel Bathing</h1>
 <p>It is the third week of your first semester on campus.</p>
 <p>Every evening after taking your bath with the water fetched from the hostel borehole tap, a terrifying routine begins:</p>
-<p>Your skin starts itching intensely. </p>
-<p>Within fifteen minutes, raised red welts, dry scaly patches, and small hive-like bumps spread across your chest, arms, and thighs. </p>
-<p>You scratch furiously until your skin burns and bleeds. </p>
+<p>Your skin starts itching intensely.</p>
+<p>Within fifteen minutes, raised red welts, dry scaly patches, and small hive-like bumps spread across your chest, arms, and thighs.</p>
+<p>You scratch furiously until your skin burns and bleeds.</p>
 <p>When you look in your mirror, your face—which was completely clear before you gained admission—is covered in inflamed, painful cystic breakouts.</p>
 <p>You visit a pharmacy outside the campus gate, and the attendant smiles with familiar pity:</p>
 <blockquote>
-<p><em>"Ah, Jambite water allergy! Don't worry, everyone reacts to the campus water during their first session. Buy this tube of hydrocortisone cream and sulfur soap."</em></p>
+<p>*"Ah, Jambite water allergy! Don't worry, everyone reacts to the campus water during their first session. Buy this tube of hydrocortisone cream and sulfur soap."*</p>
 </blockquote>
 <p>You apply the creams, but the moment you bathe again tomorrow evening, the burning itch returns with double intensity.</p>
 <p>In Nigerian federal and state universities, <strong>campus water dermatitis</strong> (<em>"hostel water reaction"</em>) is an agonizing medical reality for students with sensitive skin or pre-existing eczema.</p>
 <p>Untreated groundwater pumped from unpurified aquifers contains heavy concentrations of dissolved iron, magnesium, chalk, and microbial contaminants that strip away your skin's protective moisture barrier.</p>
 <p>Here is the scientific, dermatologist-backed protocol to shield your sensitive skin from harsh campus water.</p>
-<hr />
+<hr>
 <h2 id="1-the-science-why-campus-borehole-water-triggers-eczema">1. The Science: Why Campus Borehole Water Triggers Eczema</h2>
 <p>Understanding the chemical triggers helps you neutralize them:</p>
-<p><strong>Chemical Attack Vectors in Hostel Water:</strong><br />
-* High Mineral Hardness: Calcium &amp; Magnesium salts neutralize soaps, leaving sticky scums — Ferruginous Sediment: Iron oxide particles clog pores and trigger acute inflammation — Alkaline pH Shift: Hard water has a high pH (8.0–8.5), disrupting the skin's acidic barrier (pH 5.5) — Microbial Contamination: Underground bacterial biofilms trigger folliculitis and dermatitis</p>
+<p><strong>Chemical Attack Vectors in Hostel Water:</strong></p>
+<ul>
+<li>High Mineral Hardness: Calcium & Magnesium salts neutralize soaps, leaving sticky scums — Ferruginous Sediment: Iron oxide particles clog pores and trigger acute inflammation — Alkaline pH Shift: Hard water has a high pH (8.0–8.5), disrupting the skin's acidic barrier (pH 5.5) — Microbial Contamination: Underground bacterial biofilms trigger folliculitis and dermatitis</li>
+</ul>
 <p>When you wash with harsh, alkaline borehole water using drying commercial bar soaps, your skin's natural barrier of ceramides and lipids is obliterated. Moisture evaporates, leaving nerve endings exposed to environmental irritants.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-step-water-treatment-protocol-in-your-room">2. The 3-Step "Water Treatment" Protocol in Your Room</h2>
 <p>Never pour raw, unconditioned hostel borehole water directly onto sensitive skin:</p>
-<table>
-<thead>
-<tr>
-<th>TIER 1: The Mechanical Sediment Filter (₦3,500)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- Fasten a fine muslin cotton cloth or portable carbon</td>
-</tr>
-<tr>
-<td>mesh filter over your tap nozzle or bucket mouth</td>
-</tr>
-<tr>
-<td>- Traps rust particulates, dirt, and visible iron sediment</td>
-</tr>
-<tr>
-<td>TIER 2: Chemical Water Conditioning</td>
-</tr>
-<tr>
-<td>- Add a pea-sized piece of crushed alum to your bath water</td>
-</tr>
-<tr>
-<td>(allows heavy minerals to settle to bottom of bucket)</td>
-</tr>
-<tr>
-<td>- Add 1 capful of mild antiseptic lotion (Savlon/Dettol)</td>
-</tr>
-<tr>
-<td>TIER 3: The "Sachet Water Face Sanctuary"</td>
-</tr>
-<tr>
-<td>- NEVER wash your face with borehole water</td>
-</tr>
-<tr>
-<td>- Wash your face exclusively with clean sachet drinking</td>
-</tr>
-<tr>
-<td>water (pure water) morning and night</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| TIER 1: The Mechanical Sediment Filter (₦3,500) |</p>
+<p>| --- |</p>
+<p>| - Fasten a fine muslin cotton cloth or portable carbon |</p>
+<p>| mesh filter over your tap nozzle or bucket mouth |</p>
+<p>| - Traps rust particulates, dirt, and visible iron sediment |</p>
+<p>| TIER 2: Chemical Water Conditioning |</p>
+<p>| - Add a pea-sized piece of crushed alum to your bath water |</p>
+<p>| (allows heavy minerals to settle to bottom of bucket) |</p>
+<p>| - Add 1 capful of mild antiseptic lotion (Savlon/Dettol) |</p>
+<p>| TIER 3: The "Sachet Water Face Sanctuary" |</p>
+<p>| - NEVER wash your face with borehole water |</p>
+<p>| - Wash your face exclusively with clean sachet drinking |</p>
+<p>| water (pure water) morning and night |</p>
+<hr>
 <h2 id="3-post-bath-barrier-restoration-protocol">3. Post-Bath Barrier Restoration Protocol</h2>
 <p>What you apply to your skin within <strong>three minutes</strong> of stepping out of the shower dictates whether you itch or heal:</p>
 <ol>
-<li><strong>The "Pat Dry" Rule:</strong> Never rub your body violently with a rough towel. Gently pat your skin with a soft cotton towel, leaving it slightly damp.</li>
-<li><strong>The 3-Minute Moisture Trap:</strong> Apply a rich, fragrance-free ceramide or shea butter moisturizer within 180 seconds while skin is still damp. This locks water into the stratum corneum before it evaporates.</li>
-<li><strong>Ditch Harsh Antibacterial Soaps:</strong> Stop using harsh carbolic or sulfur soaps that strip your skin raw. Switch to gentle, syndet (synthetic detergent) cleansing bars or mild baby soaps.</li>
+<li>**The "Pat Dry" Rule:** Never rub your body violently with a rough towel. Gently pat your skin with a soft cotton towel, leaving it slightly damp.</li>
+<li>**The 3-Minute Moisture Trap:** Apply a rich, fragrance-free ceramide or shea butter moisturizer within 180 seconds while skin is still damp. This locks water into the stratum corneum before it evaporates.</li>
+<li>**Ditch Harsh Antibacterial Soaps:** Stop using harsh carbolic or sulfur soaps that strip your skin raw. Switch to gentle, syndet (synthetic detergent) cleansing bars or mild baby soaps.</li>
 </ol>
 <p>Differentiate water allergies from parasitic mattress reactions using our guide on <a href="/blog/hostel-and-accommodation/hostel-bedbug-infestation-removal/">hostel bedbug infestation eradication steps</a>, and master general water hauling logistics in <a href="/blog/hostel-and-accommodation/hostel-water-scarcity-coping/">surviving hostel water scarcity 5 bucket survival</a>.</p>
 <p>If skin conditions worsen or interfere with your lecture attendance, review the student clinic procedures in our guide on <a href="/blog/mental-health/">student chronic illness management and clinic procedures</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="skin-health-student-wellness-support">🌿 Skin Health &amp; Student Wellness Support</h3>
+<p>### 🌿 Skin Health & Student Wellness Support</p>
 <p>Battling severe eczema, acne breakouts, or water allergies in your campus hostel?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with health-conscious peers and medical students sharing tested skincare routines, gentle product recommendations, and wellness advice for university living.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with health-conscious peers and medical students sharing tested skincare routines, gentle product recommendations, and wellness advice for university living.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-university-students-develop-severe-skin-itching-after-bathing-with-campus-water">Why do university students develop severe skin itching after bathing with campus water?</h3>
 <p>Campus boreholes frequently pump untreated hard water saturated with dissolved iron, calcium, magnesium, and sulfur minerals, which strip the skin's natural lipid barrier and cause contact dermatitis.</p>
@@ -563,8 +538,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -748,8 +723,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -763,7 +738,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -312,79 +312,53 @@
 <p>You sit down with the landlord in his office. You face a critical financial negotiation:</p>
 <p><strong>Option A: The 100% Upfront Lump Sum:</strong> Pay ₦200,000 today in a single bank transfer, covering your accommodation for the next 365 days.</p>
 <p><strong>Option B: The 2-Installment Plan:</strong> Pay ₦120,000 (60%) on move-in day, and agree to pay the remaining ₦80,000 (40%) at the start of the second semester.</p>
-<p>Option A drains your family's liquid savings immediately, leaving zero cash buffer for unforeseen emergencies. </p>
+<p>Option A drains your family's liquid savings immediately, leaving zero cash buffer for unforeseen emergencies.</p>
 <p>Option B preserves your working capital, but introduces the terrifying risk of eviction if family cashflow delays your second payment during final exams.</p>
 <p>Which payment architecture is safer for a Nigerian tertiary student?</p>
 <p>Here is the legal, financial, and psychological analysis of <strong>Annual Upfront Rent vs. 2-Installment Plans</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-power-dynamic-the-paid-in-full-leverage-loss">1. The Power Dynamic: The "Paid-in-Full" Leverage Loss</h2>
 <p>In Nigerian tenancy dynamics, <strong>cash is your only enforcement weapon</strong>:</p>
 <blockquote>
-<h3 id="you-pay-100-upfront-200000">You Pay 100% Upfront (₦200,000)</h3>
-<ul>
-<li>Landlord has 100% of your money on Day 1</li>
-<li>When borehole pumping machine breaks in Month 3 → Landlord drags feet for weeks</li>
-<li>When lodge security gate lock breaks          → "No money to repair right now"</li>
-<li>Student Leverage: ZERO!</li>
-<li><strong>YOU PAY VIA 2-INSTALLMENT PLAN (60/40)</strong></li>
-<li>Landlord knows ₦80,000 is still pending in 5 months</li>
-<li>Landlord is highly motivated to maintain water and security to guarantee balance collection</li>
-<li>Student Leverage: HIGH!</li>
-</ul>
+<p>### You Pay 100% Upfront (₦200,000)</p>
+<p>></p>
+<p>* Landlord has 100% of your money on Day 1</p>
+<p>* When borehole pumping machine breaks in Month 3 → Landlord drags feet for weeks</p>
+<p>* When lodge security gate lock breaks          → "No money to repair right now"</p>
+<p>* Student Leverage: ZERO!</p>
+<p>* **YOU PAY VIA 2-INSTALLMENT PLAN (60/40)**</p>
+<p>* Landlord knows ₦80,000 is still pending in 5 months</p>
+<p>* Landlord is highly motivated to maintain water and security to guarantee balance collection</p>
+<p>* Student Leverage: HIGH!</p>
 </blockquote>
 <p>Landlords who collect full annual fees upfront often become distant and unresponsive caretakers. Retaining a second installment keeps the landlord accountable to compound maintenance standards.</p>
 <p>Review lodge rent negotiation tactics in <a href="/blog/finances/negotiating-student-lodge-rent/">negotiating student lodge rent: talking down landlord fees</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-comprehensive-risk-comparison-matrix">2. The Comprehensive Risk Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Financial Factor</th>
-<th>100% Annual Upfront Payment</th>
-<th>Semi-Annual 2-Installment Agreement</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Base Price Discount</strong></td>
-<td><strong>High:</strong> Landlords readily discount 10-15% for instant cash</td>
-<td>Low: Caretakers charge a small installment risk premium</td>
-</tr>
-<tr>
-<td><strong>Exam Season Security</strong></td>
-<td><strong>100% Secure:</strong> Zero risk of mid-session room lockout</td>
-<td><strong>Vulnerable:</strong> Non-payment risks room lockout during exams</td>
-</tr>
-<tr>
-<td><strong>Family Emergency Liquidity</strong></td>
-<td>Low: Family savings drained in single transaction</td>
-<td><strong>High:</strong> Preserves family cashflow for urgent healthcare/food</td>
-</tr>
-<tr>
-<td><strong>Landlord Maintenance Responsiveness</strong></td>
-<td>Low to Moderate</td>
-<td><strong>High:</strong> Landlord eager to please for balance collection</td>
-</tr>
-</tbody>
-</table>
+<p>| Financial Factor | 100% Annual Upfront Payment | Semi-Annual 2-Installment Agreement |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Base Price Discount</strong> | <strong>High:</strong> Landlords readily discount 10-15% for instant cash | Low: Caretakers charge a small installment risk premium |</p>
+<p>| <strong>Exam Season Security</strong> | <strong>100% Secure:</strong> Zero risk of mid-session room lockout | <strong>Vulnerable:</strong> Non-payment risks room lockout during exams |</p>
+<p>| <strong>Family Emergency Liquidity</strong>| Low: Family savings drained in single transaction | <strong>High:</strong> Preserves family cashflow for urgent healthcare/food |</p>
+<p>| <strong>Landlord Maintenance Responsiveness</strong>| Low to Moderate | <strong>High:</strong> Landlord eager to please for balance collection |</p>
 <p>Review hostel selection frameworks in <a href="/blog/hostel/choosing-between-on-campus-and-off-campus-hostel/">choosing between on-campus and off-campus student accommodation</a>.</p>
-<hr />
+<hr>
 <h2 id="3-how-to-negotiate-installment-terms-safely">3. How to Negotiate Installment Terms Safely</h2>
 <p>If your family needs an installment agreement, execute these protective measures:</p>
 <ol>
-<li><strong>The Formal Undertaking Letter:</strong> Have a parent or working guardian provide a signed written undertaking specifying the exact expected transfer date (e.g., <em>"Second installment of ₦80,000 to be disbursed on or before 15th February 2027"</em>).</li>
-<li><strong>The 30-Day Exam Grace Clause:</strong> Ensure your signed lease agreement includes a written clause stating that default notices cannot result in physical room lockouts during designated faculty examination periods.</li>
-<li><strong>Receipt Stamping:</strong> Demand an official signed, dated receipt explicitly reading: <em>"Part payment of ₦120,000 for Room 4; balance ₦80,000 due February 2027."</em></li>
+<li>**The Formal Undertaking Letter:** Have a parent or working guardian provide a signed written undertaking specifying the exact expected transfer date (e.g., *"Second installment of ₦80,000 to be disbursed on or before 15th February 2027"*).</li>
+<li>**The 30-Day Exam Grace Clause:** Ensure your signed lease agreement includes a written clause stating that default notices cannot result in physical room lockouts during designated faculty examination periods.</li>
+<li>**Receipt Stamping:** Demand an official signed, dated receipt explicitly reading: *"Part payment of ₦120,000 for Room 4; balance ₦80,000 due February 2027."*</li>
 </ol>
 <p>Learn ethical borrowing agreements in <a href="/blog/finances/borrowing-lending-money-campus-friends/">borrowing money on campus: agreements that protect trust</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-final-verdict">4. The Final Verdict</h2>
 <ul>
-<li><strong>Choose 100% Upfront if:</strong> Your family has secure, available funds, the landlord offers a substantial discount (₦20,000+ off), and you want total peace of mind during exams.</li>
-<li><strong>Choose Installment Plans if:</strong> Sinking full rent upfront will leave you with zero feeding allowance, or if the lodge has dubious water and maintenance facilities that require landlord accountability.</li>
+<li>**Choose 100% Upfront if:** Your family has secure, available funds, the landlord offers a substantial discount (₦20,000+ off), and you want total peace of mind during exams.</li>
+<li>**Choose Installment Plans if:** Sinking full rent upfront will leave you with zero feeding allowance, or if the lodge has dubious water and maintenance facilities that require landlord accountability.</li>
 </ul>
 <p>Protect your living sanctuary with wisdom. A secure, peaceful room is the launchpad for your academic comeback.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="do-off-campus-nigerian-landlords-accept-2-installment-rent-payments">Do off-campus Nigerian landlords accept 2-installment rent payments?</h3>
 <p>Yes, especially in competitive student housing markets or during off-peak post-exam months, landlords will accept 60% upfront and 40% at the start of second semester when backed by a parent's formal undertaking.</p>
@@ -558,8 +532,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -743,8 +717,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -758,7 +732,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

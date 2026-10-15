@@ -3,166 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Checkout — Academic Comeback</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<title>Secure Checkout — Scale Group</title>
+<meta name="description" content="Complete your authorized private enrollment with secure, encrypted payment processing.">
+<link rel="icon" href="/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
+<link rel="stylesheet" href="/css/landing.css?v=swiss-20261008">
 <style>
   :root {
-    --bg-card: var(--ink2);
-    --border-color: rgba(255, 255, 255, 0.08);
+    --surface: #f9f9f9;
+    --surface-container-lowest: #ffffff;
+    --surface-container-low: #f3f3f4;
+    --border-hairline: #e5e5e5;
+    --border-subtle: #cccccc;
+    --text-primary: #0a0a0a;
+    --text-secondary: #595959;
+    --action-primary: #0a0a0a;
+    --action-hover: #262626;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: linear-gradient(160deg, var(--ink) 0%, #0f1320 60%, #131826 100%);
-    color: #fff;
-    font-family: 'Manrope', sans-serif;
+    background: #f9f9f9;
+    color: #0a0a0a;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .checkout-page-wrapper {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 40px 16px;
+    padding: 48px 20px;
+    box-sizing: border-box;
   }
 
   .checkout-container {
-    max-width: 520px;
+    max-width: 480px;
     width: 100%;
   }
 
   .checkout-card {
-    background: linear-gradient(160deg, #0c0e14 0%, #131826 55%, #0f1520 100%);
-    border: 1px solid rgba(201, 151, 58, 0.15);
-    border-radius: var(--radius-xl);
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
     padding: 40px 32px;
-    box-shadow: 0 24px 60px rgba(0,0,0,.6), var(--gold-glow);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.02);
+    box-sizing: border-box;
     position: relative;
-    overflow: hidden;
   }
 
-  .checkout-card::before {
-    content: '';
-    position: absolute;
-    top: -120px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, rgba(201, 151, 58, 0.1) 0%, rgba(201, 151, 58, 0.02) 45%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .checkout-card > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .brand-logo-wrap {
-    width: 54px;
-    height: 54px;
-    background: rgba(201,151,58,.1);
-    color: var(--gold);
-    border-radius: 50%;
-    display: flex;
+  .badge-tag {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin: 0 auto 20px;
-    border: 1px solid rgba(201,151,58,.2);
-    box-shadow: var(--gold-glow);
+    gap: 6px;
+    background: rgba(22, 163, 74, 0.08);
+    border: 1px solid rgba(22, 163, 74, 0.2);
+    color: #15803d;
+    font-size: .72rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: .08em;
   }
 
-  .title {
-    font-family: 'Clash Display', sans-serif;
+  h1.checkout-title {
+    font-family: 'Inter', sans-serif;
     font-size: 1.65rem;
-    font-weight: 600;
-    color: #fff;
+    font-weight: 800;
+    color: #0a0a0a;
     text-align: center;
-    margin-bottom: 6px;
-    letter-spacing: -.5px;
+    margin: 0 0 8px 0;
+    letter-spacing: -0.035em;
+    line-height: 1.25;
   }
 
-  .subtitle {
-    font-size: 0.9rem;
-    color: var(--gray-l);
+  .checkout-sub {
+    font-size: .92rem;
+    color: #595959;
     text-align: center;
-    line-height: 1.6;
-    margin-bottom: 28px;
+    line-height: 1.55;
+    margin: 0 0 24px 0;
   }
 
   /* ── Order Summary ── */
   .order-summary {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
+    background: #f3f3f4;
+    border: 1px solid #e5e5e5;
     border-radius: 12px;
     padding: 18px 20px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
+
   .summary-row {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 8px;
+    gap: 12px;
   }
+
   .summary-row:last-child {
     margin-bottom: 0;
   }
+
   .offer-title {
     font-weight: 700;
     font-size: 0.95rem;
-    color: #fff;
+    color: #0a0a0a;
   }
+
   .offer-price {
-    font-family: 'Clash Display', sans-serif;
-    font-weight: 600;
-    font-size: 1.15rem;
-    color: var(--gold-l);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #0a0a0a;
   }
+
   .billing-type-badge {
     font-size: 0.68rem;
     font-weight: 700;
-    background: rgba(201, 151, 58, 0.15);
-    color: var(--gold-l);
+    background: #e5e5e5;
+    color: #0a0a0a;
     padding: 2px 8px;
-    border-radius: 4px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
+
   .offer-desc {
-    font-size: 0.78rem;
-    color: var(--gray-l);
+    font-size: 0.8rem;
+    color: #595959;
     line-height: 1.45;
-    margin-top: 4px;
   }
 
   /* ── Form Inputs ── */
   .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    text-align: left;
   }
+
   .form-group label {
     display: block;
-    font-size: 0.76rem;
+    font-size: .74rem;
     font-weight: 700;
+    color: #595959;
     text-transform: uppercase;
-    color: var(--gray-l);
-    letter-spacing: 0.5px;
-    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
   }
+
   .input-control {
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    padding: 12px 16px;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
     border-radius: 10px;
-    font-size: 0.9rem;
+    color: #0a0a0a;
+    font-size: 15px;
+    font-family: inherit;
     outline: none;
-    transition: var(--transition);
+    transition: border-color 0.18s, box-shadow 0.18s;
   }
+
   .input-control:focus {
-    border-color: var(--gold);
+    border-color: #0a0a0a;
+    box-shadow: 0 0 0 1px #0a0a0a;
   }
 
   .expiry-cvv-grid {
@@ -172,28 +189,29 @@
   }
 
   .btn-submit {
-    background: linear-gradient(135deg, var(--gold), var(--gold-l));
-    color: var(--ink);
-    font-weight: 700;
-    font-size: 0.95rem;
-    padding: 14px;
-    border-radius: var(--radius-full);
-    border: none;
+    width: 100%;
+    padding: 14px 20px;
+    background: #0a0a0a;
+    color: #ffffff;
+    border: 1px solid #0a0a0a;
+    border-radius: 9999px;
+    font-size: .95rem;
+    font-weight: 600;
     cursor: pointer;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: 100%;
-    transition: var(--transition);
-    text-decoration: none;
-    box-shadow: 0 4px 24px rgba(201,151,58,.3);
-    margin-top: 10px;
+    transition: all .18s;
+    font-family: inherit;
+    margin-top: 20px;
   }
-  .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 36px rgba(201,151,58,.4);
+
+  .btn-submit:hover:not(:disabled) {
+    background: #262626;
+    border-color: #262626;
   }
+
   .btn-submit:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -201,8 +219,8 @@
 
   .secure-badge {
     text-align: center;
-    font-size: 0.72rem;
-    color: var(--gray-l);
+    font-size: 0.74rem;
+    color: #71717a;
     margin-top: 16px;
     display: flex;
     align-items: center;
@@ -215,9 +233,11 @@
     display: none;
     text-align: center;
   }
+
   .view-state.active {
     display: block;
   }
+
   .state-icon {
     width: 64px;
     height: 64px;
@@ -225,108 +245,149 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin: 0 auto 20px;
   }
+
   .state-icon.success {
-    background: rgba(34, 197, 94, 0.1);
-    color: var(--green);
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    background: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+    border: 1px solid rgba(22, 163, 74, 0.25);
   }
+
   .state-icon.failed {
-    background: rgba(239, 68, 68, 0.1);
-    color: var(--red);
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    background: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(220, 38, 38, 0.25);
+  }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid #e5e5e5;
+    border-top-color: #0a0a0a;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .spin {
+    display: inline-block;
+    animation: spin 1s linear infinite;
   }
 
   @media (max-width: 480px) {
-    body { padding: 20px 12px; }
-    .checkout-card { padding: 28px 18px; border-radius: 16px; }
-    .title { font-size: 1.4rem; }
-    .subtitle { font-size: 0.85rem; margin-bottom: 20px; }
-    .input-control { font-size: 16px !important; }
-    .btn-submit { min-height: 44px; padding: 12px; }
+    .checkout-page-wrapper { padding: 24px 14px; }
+    .checkout-card { padding: 28px 20px; border-radius: 14px; }
+    h1.checkout-title { font-size: 1.35rem; }
     .expiry-cvv-grid { gap: 8px; }
   }
 </style>
 </head>
 <body>
 
-<div class="checkout-container">
-  
-  <!-- ── 1. FORM VIEW ── -->
-  <div class="checkout-card view-state active" id="view-form">
-    <div class="brand-logo-wrap"><i class="bi bi-credit-card-2-front-fill"></i></div>
-    <h1 class="title">Secure Checkout</h1>
-    <p class="subtitle">Complete your transaction with credit or debit card.</p>
+<!-- Unified Global Site Header -->
+<header class="global-site-header">
+  <div class="global-header-inner">
+    <a href="/" class="global-brand">
+      <img src="/assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="24" height="28">
+      <span>SCALE GROUP</span>
+    </a>
+    <nav class="global-nav">
+      <a href="/academic-comeback-package" class="global-nav__flagship">
+        <span class="global-nav__flagship-dot"></span>
+        <i class="bi bi-mortarboard-fill"></i> Academic Comeback
+      </a>
+      <a href="/#masterclasses" class="global-nav__link">Masterclasses</a>
+      <a href="/blog/" class="global-nav__link">Campus Guides</a>
+      <a href="/library" class="global-nav__link">My Library</a>
+    </nav>
+    <div class="global-header-mobile-actions">
+      <a href="/" class="global-nav__link" style="font-size:0.85rem; font-weight:600; text-decoration:none; color:var(--text-primary);">
+        <i class="bi bi-arrow-left"></i> Home
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="checkout-page-wrapper">
+  <div class="checkout-container">
     
-    <!-- Order Card Summary -->
-    <div class="order-summary">
-      <div class="summary-row">
-        <span class="offer-title" id="offer-name">Loading offer...</span>
-        <span class="billing-type-badge" id="offer-type">Monthly</span>
+    <!-- ── 1. FORM VIEW ── -->
+    <div class="checkout-card view-state active" id="view-form">
+      <div style="text-align: center;"><span class="badge-tag"><i class="bi bi-shield-lock-fill"></i> 256-Bit SSL Encrypted</span></div>
+      <h1 class="checkout-title">Secure Checkout</h1>
+      <p class="checkout-sub">Complete your transaction with credit or debit card.</p>
+      
+      <!-- Order Card Summary -->
+      <div class="order-summary">
+        <div class="summary-row">
+          <span class="offer-title" id="offer-name">Loading offer...</span>
+          <span class="billing-type-badge" id="offer-type">Monthly</span>
+        </div>
+        <div class="summary-row">
+          <span class="offer-desc" id="offer-desc">Setting up your secure profile...</span>
+          <span class="offer-price" id="offer-price">₦0</span>
+        </div>
       </div>
-      <div class="summary-row">
-        <span class="offer-desc" id="offer-desc">Setting up your secure profile...</span>
-        <span class="offer-price" id="offer-price">₦0</span>
-      </div>
+
+      <!-- Payment form -->
+      <form id="payment-form">
+        <div class="form-group">
+          <label for="cardholder-name">Cardholder Name</label>
+          <input type="text" id="cardholder-name" class="input-control" placeholder="e.g. John Doe" required autocomplete="cc-name">
+        </div>
+
+        <div class="form-group">
+          <label for="card-number">Card Number</label>
+          <input type="text" id="card-number" class="input-control" placeholder="4111 1111 1111 1111" required maxlength="19" autocomplete="cc-number">
+        </div>
+
+        <div class="expiry-cvv-grid">
+          <div class="form-group">
+            <label for="expiry-month">Expiry Month</label>
+            <input type="text" id="expiry-month" class="input-control" placeholder="MM" required maxlength="2" autocomplete="cc-exp-month">
+          </div>
+          <div class="form-group">
+            <label for="expiry-year">Expiry Year</label>
+            <input type="text" id="expiry-year" class="input-control" placeholder="YY" required maxlength="2" autocomplete="cc-exp-year">
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="password" id="cvv" class="input-control" placeholder="123" required maxlength="4" autocomplete="cc-csc">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn"><i class="bi bi-shield-fill-check"></i> Authorize &amp; Pay</button>
+        
+        <div class="secure-badge"><i class="bi bi-lock-fill"></i> 256-bit SSL Secure Card Tokenization via Flutterwave</div>
+      </form>
     </div>
 
-    <!-- Payment form -->
-    <form id="payment-form">
-      <div class="form-group">
-        <label for="cardholder-name">Cardholder Name</label>
-        <input type="text" id="cardholder-name" class="input-control" placeholder="e.g. John Doe" required>
-      </div>
+    <!-- ── 2. LOADER/VERIFY VIEW ── -->
+    <div class="checkout-card view-state" id="view-loader">
+      <div class="spinner"></div>
+      <h1 class="checkout-title">Verifying Payment</h1>
+      <p class="checkout-sub" id="loader-msg">Confirming your transaction with your card issuer. Please do not close or refresh this page.</p>
+    </div>
 
-      <div class="form-group">
-        <label for="card-number">Card Number</label>
-        <input type="text" id="card-number" class="input-control" placeholder="4111 1111 1111 1111" required maxlength="19">
-      </div>
+    <!-- ── 3. SUCCESS VIEW ── -->
+    <div class="checkout-card view-state" id="view-success">
+      <div class="state-icon success"><i class="bi bi-patch-check-fill"></i></div>
+      <h1 class="checkout-title">Payment Successful!</h1>
+      <p class="checkout-sub" style="margin-bottom:0">Thank you! Your private access has been authorized and set up. You can close this window now.</p>
+    </div>
 
-      <div class="expiry-cvv-grid">
-        <div class="form-group">
-          <label for="expiry-month">Expiry Month</label>
-          <input type="text" id="expiry-month" class="input-control" placeholder="MM" required maxlength="2">
-        </div>
-        <div class="form-group">
-          <label for="expiry-year">Expiry Year</label>
-          <input type="text" id="expiry-year" class="input-control" placeholder="YY" required maxlength="2">
-        </div>
-        <div class="form-group">
-          <label for="cvv">CVV</label>
-          <input type="password" id="cvv" class="input-control" placeholder="123" required maxlength="4">
-        </div>
-      </div>
+    <!-- ── 4. DECLINED/FAILED VIEW ── -->
+    <div class="checkout-card view-state" id="view-failed">
+      <div class="state-icon failed"><i class="bi bi-exclamation-triangle-fill"></i></div>
+      <h1 class="checkout-title">Payment Declined</h1>
+      <p class="checkout-sub" id="fail-reason">Your card transaction was declined or failed. Please check your card details and try again.</p>
+      <button class="btn-submit" onclick="resetForm()"><i class="bi bi-arrow-left"></i> Try Again</button>
+    </div>
 
-      <button type="submit" class="btn-submit" id="submit-btn"><i class="bi bi-shield-fill-check"></i> Authorize &amp; Pay</button>
-      
-      <div class="secure-badge"><i class="bi bi-lock-fill"></i> 256-bit SSL Secure Card Tokenization</div>
-    </form>
   </div>
-
-  <!-- ── 2. LOADER/VERIFY VIEW ── -->
-  <div class="checkout-card view-state" id="view-loader">
-    <div class="brand-logo-wrap"><i class="bi bi-arrow-repeat spin"></i></div>
-    <h1 class="title">Verifying Payment</h1>
-    <p class="subtitle" id="loader-msg">Confirming your transaction with your card issuer. Please do not close or refresh this page.</p>
-  </div>
-
-  <!-- ── 3. SUCCESS VIEW ── -->
-  <div class="checkout-card view-state" id="view-success">
-    <div class="state-icon success"><i class="bi bi-patch-check-fill"></i></div>
-    <h1 class="title">Payment Successful!</h1>
-    <p class="subtitle" style="margin-bottom:0">Thank you! Your private access has been authorized and set up. You can close this window now.</p>
-  </div>
-
-  <!-- ── 4. DECLINED/FAILED VIEW ── -->
-  <div class="checkout-card view-state" id="view-failed">
-    <div class="state-icon failed"><i class="bi bi-exclamation-triangle-fill"></i></div>
-    <h1 class="title">Payment Declined</h1>
-    <p class="subtitle" id="fail-reason">Your card transaction was declined or failed. Please check your card details and try again.</p>
-    <button class="btn-submit" onclick="resetForm()"><i class="bi bi-arrow-left"></i> Try Again</button>
-  </div>
-
 </div>
 
 <script>

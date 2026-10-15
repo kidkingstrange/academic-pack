@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -315,78 +315,60 @@
 <p>In Nigeria, parents and lecturers have a single, devastating diagnosis for this state: <em>"You are lazy, unfocused, and careless. Your village people are following you."</em></p>
 <p>In modern neurobiology, this is <strong>Executive Dysfunction driven by Attention-Deficit/Hyperactivity Disorder (ADHD)</strong>.</p>
 <p>Here is the operational guide to surviving a rigid Nigerian university system when your brain is wired differently.</p>
-<hr />
+<hr>
 <h2 id="1-the-dopamine-deficiency-engine">1. The Dopamine Deficiency Engine</h2>
 <p>ADHD is not a deficit of attention; it is a <strong>dysregulation of attention caused by baseline dopamine deficiency</strong>:</p>
 <blockquote>
-<h3 id="neurotypical-brain">Neurotypical Brain</h3>
-<ul>
-<li>Baseline dopamine steady</li>
-<li>Sees future consequence (Exam in 2 weeks)</li>
-<li>Prefrontal cortex activates task initiation easily</li>
-<li><strong>ADHD / Neurodivergent Brain</strong></li>
-<li>Low baseline dopamine; receptor under-activation</li>
-<li>Future consequences feel abstract and unreal</li>
-<li>Brain requires intense urgency (Exam in 6 hours) or novelty to fire</li>
-</ul>
+<p>### Neurotypical Brain</p>
+<p>></p>
+<p>* Baseline dopamine steady</p>
+<p>* Sees future consequence (Exam in 2 weeks)</p>
+<p>* Prefrontal cortex activates task initiation easily</p>
+<p>* **ADHD / Neurodivergent Brain**</p>
+<p>* Low baseline dopamine; receptor under-activation</p>
+<p>* Future consequences feel abstract and unreal</p>
+<p>* Brain requires intense urgency (Exam in 6 hours) or novelty to fire</p>
 </blockquote>
-<p>In a Nigerian tertiary institution, the environment is engineered against neurodivergent brains:<br />
-* Lecturers deliver three-hour monotonic lectures without visual slides or interactive breaks.<br />
-* Exam preparation requires sitting in silent libraries reading dense, unformatted black-and-white photocopies.<br />
-* Stigma prevents students from seeking clinical diagnosis; campus clinics frequently classify ADHD symptoms as simple insomnia, malaria fatigue, or lack of discipline.</p>
+<p>In a Nigerian tertiary institution, the environment is engineered against neurodivergent brains:</p>
+<ul>
+<li>Lecturers deliver three-hour monotonic lectures without visual slides or interactive breaks.</li>
+<li>Exam preparation requires sitting in silent libraries reading dense, unformatted black-and-white photocopies.</li>
+<li>Stigma prevents students from seeking clinical diagnosis; campus clinics frequently classify ADHD symptoms as simple insomnia, malaria fatigue, or lack of discipline.</li>
+</ul>
 <p>Understand the biological causes of brain fatigue in <a href="/blog/mental-health/student-brain-fog-fatigue-causes/">student brain fog and fatigue causes: physical triggers you overlook</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-dopamine-bridge-protocol-lowering-initiation-friction">2. The Dopamine Bridge Protocol: Lowering Initiation Friction</h2>
-<p>Telling an ADHD student to <em>"just sit down and read for 6 hours"</em> is biologically impossible without chemical urgency. </p>
+<p>Telling an ADHD student to <em>"just sit down and read for 6 hours"</em> is biologically impossible without chemical urgency.</p>
 <p>Instead, build <strong>Dopamine Bridges</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Protocol</th>
-<th>Execution Method</th>
-<th>Neurological Mechanism</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>The 5-Minute Micro-Sprint</strong></td>
-<td>Tell yourself: <em>"I will only read for 300 seconds. After 5 minutes, I am free to quit."</em></td>
-<td>Eliminates executive task paralysis; once engaged, hyperfocus often takes over</td>
-</tr>
-<tr>
-<td><strong>Tactile Study Anchors</strong></td>
-<td>Write formulas with erasable markers on window glass or whiteboards while standing up</td>
-<td>Physical movement (proprioception) stimulates prefrontal dopamine</td>
-</tr>
-<tr>
-<td><strong>High-Contrast Pacing</strong></td>
-<td>Pace back and forth in an empty corridor while reciting lecture concepts aloud</td>
-<td>Motor cortex activation prevents attentional drift</td>
-</tr>
-<tr>
-<td><strong>Brown Noise Audio Shield</strong></td>
-<td>Listen to continuous 40Hz binaural beats or heavy rain audio via noise-isolating earphones</td>
-<td>Masks unpredictable campus background noise that fractures attention</td>
-</tr>
-</tbody>
-</table>
+<p>| Protocol | Execution Method | Neurological Mechanism |</p>
+<p>|---|---|---|</p>
+<p>| <strong>The 5-Minute Micro-Sprint</strong> | Tell yourself: <em>"I will only read for 300 seconds. After 5 minutes, I am free to quit."</em> | Eliminates executive task paralysis; once engaged, hyperfocus often takes over |</p>
+<p>| <strong>Tactile Study Anchors</strong> | Write formulas with erasable markers on window glass or whiteboards while standing up | Physical movement (proprioception) stimulates prefrontal dopamine |</p>
+<p>| <strong>High-Contrast Pacing</strong> | Pace back and forth in an empty corridor while reciting lecture concepts aloud | Motor cortex activation prevents attentional drift |</p>
+<p>| <strong>Brown Noise Audio Shield</strong> | Listen to continuous 40Hz binaural beats or heavy rain audio via noise-isolating earphones | Masks unpredictable campus background noise that fractures attention |</p>
 <p>Learn how to use active learning mechanisms rather than passive reading in <a href="/blog/academics/active-recall-study-method/">active recall study method: Nigerian university guide</a>.</p>
-<hr />
+<hr>
 <h2 id="3-combating-digital-dopamine-hijacking">3. Combating Digital Dopamine Hijacking</h2>
-<p>In university hostels, smartphones are dopamine slot machines:<br />
-* TikTok, Instagram Reels, and class WhatsApp groups offer instant, frictionless dopamine rewards every 5 seconds.<br />
-* Compared to social media feeds, reading a 1982 textbook handout feels like cognitive torture.</p>
-<p>Implement the <strong>Digital Friction Protocol</strong>:<br />
-1. Never study with your phone on your desk. Place it inside a locked backpack across the room or hand it to a trusted friend.<br />
-2. Remove social media apps during exam season or use strict app lockers that require a 16-character alphanumeric password known only to your roommate.</p>
+<p>In university hostels, smartphones are dopamine slot machines:</p>
+<ul>
+<li>TikTok, Instagram Reels, and class WhatsApp groups offer instant, frictionless dopamine rewards every 5 seconds.</li>
+<li>Compared to social media feeds, reading a 1982 textbook handout feels like cognitive torture.</li>
+</ul>
+<p>Implement the <strong>Digital Friction Protocol</strong>:</p>
+<ol>
+<li>Never study with your phone on your desk. Place it inside a locked backpack across the room or hand it to a trusted friend.</li>
+<li>Remove social media apps during exam season or use strict app lockers that require a 16-character alphanumeric password known only to your roommate.</li>
+</ol>
 <p>Explore tactical digital detox strategies in our upcoming comparative guide on <a href="/blog/mental-health/">quitting social media during exams vs strict app timers</a>.</p>
-<hr />
+<hr>
 <h2 id="4-turning-neurodivergence-into-academic-dominance">4. Turning Neurodivergence into Academic Dominance</h2>
-<p>When properly channeled, an ADHD brain is capable of extraordinary <strong>Hyperfocus</strong>:<br />
-* When an exam topic becomes fascinating or structured like a puzzle, neurodivergent students can outwork and out-synthesize anyone in the lecture hall.<br />
-* The key is replacing passive text reading with fast-paced, question-driven study systems.</p>
+<p>When properly channeled, an ADHD brain is capable of extraordinary <strong>Hyperfocus</strong>:</p>
+<ul>
+<li>When an exam topic becomes fascinating or structured like a puzzle, neurodivergent students can outwork and out-synthesize anyone in the lecture hall.</li>
+<li>The key is replacing passive text reading with fast-paced, question-driven study systems.</li>
+</ul>
 <p>If you are struggling with chronic study paralysis, disorganization, and overwhelming syllabi, the <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It provides step-by-step active recall workflows, rapid lecture triage templates, and tactical exam battle cards that bypass executive dysfunction and turn unpredictable study habits into First Class results.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-does-adhd-manifest-differently-in-a-nigerian-university-setting">How does ADHD manifest differently in a Nigerian university setting?</h3>
 <p>Chronic inability to start reading until hours before an exam, severe task paralysis when facing 50-page lecture handouts, hyperfocusing on non-academic interests while neglecting Continuous Assessment deadlines, and sensory overwhelm in crowded 500-seat lecture halls.</p>
@@ -560,8 +542,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -745,8 +727,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -760,7 +742,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

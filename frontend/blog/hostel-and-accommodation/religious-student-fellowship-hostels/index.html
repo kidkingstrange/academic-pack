@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,20 +306,20 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="muslim-christian-fellowship-hostels-navigating-codes">Muslim &amp; Christian Fellowship Hostels: Navigating Codes</h1>
+        <h1 id="muslim-christian-fellowship-hostels-navigating-codes">Muslim & Christian Fellowship Hostels: Navigating Codes</h1>
 <p>Across major university towns in Nigeria, faith-based campus fellowships—including the Joint Christian Campus Fellowship (JCCF) affiliates like CU, RCF, BSF, Winners Campus Fellowship, and Muslim student societies like MSSN—operate dedicated off-campus student accommodation.</p>
 <p>For thousands of undergraduates facing exorbitant private lodge rents and violent off-campus environments, fellowship hostels offer a clean, affordable, and disciplined sanctuary.</p>
 <p>However, living under fellowship administration is not ordinary tenancy. It is a covenant-based community governed by strict behavioural bylaws. Here is how to navigate fellowship housing successfully while maintaining high academic performance.</p>
-<hr />
+<hr>
 <h2 id="1-the-fellowship-advantage-peace-security-and-subsidized-rent">1. The Fellowship Advantage: Peace, Security, and Subsidized Rent</h2>
 <p>Fellowship hostels are rarely run for commercial profit. They are established by alumni bodies, university chapels, and campus ministries to insulate students from external campus pressures:</p>
 <ol>
-<li><strong>Subsidized Rental Rates:</strong> Because facilities are often donor-supported or church-funded, annual bed space fees are typically 40% to 60% lower than comparable private self-contained lodges.</li>
-<li><strong>Guaranteed Study Environment:</strong> The absence of loud club music, drinking parties, and erratic visitors creates a predictable, quiet study haven essential for high GPA attainment.</li>
-<li><strong>Enhanced Utility Management:</strong> Fellowship lodges frequently pool collective offerings to fund solar power inverters and continuous borehole water pumping.</li>
+<li>**Subsidized Rental Rates:** Because facilities are often donor-supported or church-funded, annual bed space fees are typically 40% to 60% lower than comparable private self-contained lodges.</li>
+<li>**Guaranteed Study Environment:** The absence of loud club music, drinking parties, and erratic visitors creates a predictable, quiet study haven essential for high GPA attainment.</li>
+<li>**Enhanced Utility Management:** Fellowship lodges frequently pool collective offerings to fund solar power inverters and continuous borehole water pumping.</li>
 </ol>
 <p>To understand the disciplinary frameworks of standard halls before comparing them with fellowship codes, review <a href="/blog/hostel-and-accommodation/nigerian-university-hostel-rules-to-avoid/">7 university hostel rules you will regret breaking</a>.</p>
-<hr />
+<hr>
 <h2 id="2-navigating-the-bylaws-the-4-core-codes-of-conduct">2. Navigating the Bylaws: The 4 Core Codes of Conduct</h2>
 <p>Before paying for a bed space in a fellowship lodge, read the student handbook carefully. Fellowship administrators enforce conduct codes with zero compromise:</p>
 <h3 id="mandatory-devotional-attendance">Mandatory Devotional Attendance</h3>
@@ -331,16 +331,16 @@
 <h3 id="dress-and-decorum-codes">Dress and Decorum Codes</h3>
 <p>Modesty guidelines apply not only when attending campus lectures but throughout hostel common corridors, balconies, and courtyards.</p>
 <p>For guidance on interpersonal harmony under structured communal living, study our strategies in <a href="/blog/hostel-and-accommodation/">roommate by choice vs random hall allocation</a>.</p>
-<hr />
+<hr>
 <h2 id="3-balancing-spiritual-obligations-with-academic-rigor">3. Balancing Spiritual Obligations with Academic Rigor</h2>
 <p>The primary challenge fellowship residents experience is <strong>time congestion</strong>. When hostel devotions, choir rehearsals, and mid-week prayer services collide with semester Continuous Assessment (CA) tests, academic performance can suffer if you fail to manage boundaries.</p>
 <ul>
-<li><strong>Audit Your Weekly Time Commitment:</strong> Allocate defined slots for fellowship activities, but protect minimum study blocks (3 to 4 hours daily) with uncompromising discipline.</li>
-<li><strong>Communicate Examination Timetables:</strong> Fellowship house leaders are also students; provide your exam schedule well in advance to obtain formal exemptions from non-mandatory fellowship programs during exam weeks.</li>
-<li><strong>Transform Fellow Hostellers into Study Partners:</strong> Capitalize on the high concentration of disciplined, moral students in your lodge to build serious departmental revision circles.</li>
+<li>**Audit Your Weekly Time Commitment:** Allocate defined slots for fellowship activities, but protect minimum study blocks (3 to 4 hours daily) with uncompromising discipline.</li>
+<li>**Communicate Examination Timetables:** Fellowship house leaders are also students; provide your exam schedule well in advance to obtain formal exemptions from non-mandatory fellowship programs during exam weeks.</li>
+<li>**Transform Fellow Hostellers into Study Partners:** Capitalize on the high concentration of disciplined, moral students in your lodge to build serious departmental revision circles.</li>
 </ul>
 <p>If academic setbacks or carryovers ever trigger emotional guilt or spiritual doubt, read our perspective in <a href="/blog/mental-health/">reconciling faith, hard work, and academic setbacks</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-are-the-major-advantages-of-living-in-a-campus-religious-fellowship-hostel">What are the major advantages of living in a campus religious fellowship hostel?</h3>
 <p>Fellowship accommodations offer significantly lower rent, enhanced physical security, guaranteed quiet hours for studying, reliable communal generators, and complete freedom from campus cultism and party noise.</p>
@@ -514,8 +514,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -699,8 +699,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -714,7 +714,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

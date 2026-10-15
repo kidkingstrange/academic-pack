@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,135 +308,64 @@
       <div class="article-body">
         <h1 id="hidden-university-costs-fees-beyond-main-school-tuition">Hidden University Costs: Fees Beyond Main School Tuition</h1>
 <p>You calculated your university expenses down to the exact kobo.</p>
-<p>You paid your official university tuition on the school portal: ₦85,000. </p>
+<p>You paid your official university tuition on the school portal: ₦85,000.</p>
 <p>You paid your off-campus lodge rent: ₦180,000.</p>
 <p>You sighed with relief, believing your major financial hurdles were over for the session.</p>
 <p>Then, lectures start.</p>
-<p>Suddenly, expenses you never budgeted for begin attacking your bank account from every direction:<br />
-* <em>"Pay ₦4,500 for Departmental Dues and ₦3,000 for Faculty Dues before your course registration file can be signed."</em><br />
-* <em>"Buy the Lecturer's 40-page spiral-bound monograph for ₦3,500; the assignment tear-out sheet inside counts for 10 marks of Continuous Assessment."</em><br />
-* <em>"Pay ₦2,000 for Faculty Medical Screening at the clinic."</em><br />
-* <em>"Pay ₦1,500 for SUG Welfare Due and ₦1,000 for Laboratory Manual Printout."</em></p>
+<p>Suddenly, expenses you never budgeted for begin attacking your bank account from every direction:</p>
+<ul>
+<li>*"Pay ₦4,500 for Departmental Dues and ₦3,000 for Faculty Dues before your course registration file can be signed."*</li>
+<li>*"Buy the Lecturer's 40-page spiral-bound monograph for ₦3,500; the assignment tear-out sheet inside counts for 10 marks of Continuous Assessment."*</li>
+<li>*"Pay ₦2,000 for Faculty Medical Screening at the clinic."*</li>
+<li>*"Pay ₦1,500 for SUG Welfare Due and ₦1,000 for Laboratory Manual Printout."*</li>
+</ul>
 <p>Within four weeks of resumption, <strong>₦35,000 to ₦50,000 has vanished</strong> into administrative fees you never knew existed.</p>
 <p>This is the hidden financial trap of Nigerian tertiary education: <strong>The Secondary Fee Extortion Layer.</strong></p>
 <p>Here is the complete audit of every hidden university cost you must anticipate, and how to protect your finances.</p>
-<hr />
+<hr>
 <h2 id="1-the-5-categories-of-hidden-university-fees">1. The 5 Categories of Hidden University Fees</h2>
-<table>
-<thead>
-<tr>
-<th>Expense Tier</th>
-<th>Category Description</th>
-<th>Typical Semester Cost</th>
-<th>Why It Is Mandatory in Practice</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Tier 1</strong></td>
-<td>Departmental &amp; Faculty Student Dues</td>
-<td>₦5,000 – ₦12,000</td>
-<td>Staff advisers withhold course registration signatures without stamped receipts</td>
-</tr>
-<tr>
-<td><strong>Tier 2</strong></td>
-<td>Mandatory Lecturer Handouts &amp; Monographs</td>
-<td>₦10,000 – ₦25,000</td>
-<td>Continuous Assessment (CA) submission sheets and test access are bundled inside</td>
-</tr>
-<tr>
-<td><strong>Tier 3</strong></td>
-<td>Practical Lab Consumables &amp; Lab Coats</td>
-<td>₦5,000 – ₦15,000</td>
-<td>Reagent fees, logbooks, dissecting sets, and manual clearances</td>
-</tr>
-<tr>
-<td><strong>Tier 4</strong></td>
-<td>Medical Screening &amp; Portal Maintenance Fees</td>
-<td>₦3,000 – ₦8,000</td>
-<td>Required for matriculation registration and portal course add/drop verification</td>
-</tr>
-<tr>
-<td><strong>Tier 5</strong></td>
-<td>Exam Docket Clearance &amp; Gown Rentals</td>
-<td>₦4,000 – ₦10,000</td>
-<td>Hall invigilators demand laminated exam passes and matriculation gown clearances</td>
-</tr>
-</tbody>
-</table>
+<p>| Expense Tier | Category Description | Typical Semester Cost | Why It Is Mandatory in Practice |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Tier 1</strong> | Departmental & Faculty Student Dues | ₦5,000 – ₦12,000 | Staff advisers withhold course registration signatures without stamped receipts |</p>
+<p>| <strong>Tier 2</strong> | Mandatory Lecturer Handouts & Monographs | ₦10,000 – ₦25,000 | Continuous Assessment (CA) submission sheets and test access are bundled inside |</p>
+<p>| <strong>Tier 3</strong> | Practical Lab Consumables & Lab Coats | ₦5,000 – ₦15,000 | Reagent fees, logbooks, dissecting sets, and manual clearances |</p>
+<p>| <strong>Tier 4</strong> | Medical Screening & Portal Maintenance Fees | ₦3,000 – ₦8,000 | Required for matriculation registration and portal course add/drop verification |</p>
+<p>| <strong>Tier 5</strong> | Exam Docket Clearance & Gown Rentals | ₦4,000 – ₦10,000 | Hall invigilators demand laminated exam passes and matriculation gown clearances |</p>
 <ol>
-<li><strong>Departmental &amp; Faculty Dues:</strong> Compulsory dues charged by student departmental associations (e.g., NUESA, NAMSSN, NACOS). Without stamped receipts from these associations, staff advisers frequently refuse to sign your official registration course forms.</li>
-<li><strong>The Mandatory "Handout Tax":</strong> While the National Universities Commission (NUC) technically bans compulsory textbook sales, lecturers bypass this rule by including unique continuous assessment submission codes or homework sheets directly inside their private monographs.</li>
-<li><strong>Laboratory and Workshop Consumables:</strong> In engineering, agriculture, and science faculties, students are required to purchase their own lab reagents, safety goggles, white coats, dissecting sets, or workshop materials.</li>
+<li>**Departmental & Faculty Dues:** Compulsory dues charged by student departmental associations (e.g., NUESA, NAMSSN, NACOS). Without stamped receipts from these associations, staff advisers frequently refuse to sign your official registration course forms.</li>
+<li>**The Mandatory "Handout Tax":** While the National Universities Commission (NUC) technically bans compulsory textbook sales, lecturers bypass this rule by including unique continuous assessment submission codes or homework sheets directly inside their private monographs.</li>
+<li>**Laboratory and Workshop Consumables:** In engineering, agriculture, and science faculties, students are required to purchase their own lab reagents, safety goggles, white coats, dissecting sets, or workshop materials.</li>
 </ol>
 <p>Learn about the academic transition freshers make in <a href="/blog/academics/100-level-university-academic-transition/">100-level university transition: surviving the academic shock</a>.</p>
-<hr />
+<hr>
 <h2 id="2-comprehensive-hidden-costs-audit-table">2. Comprehensive Hidden Costs Audit Table</h2>
-<table>
-<thead>
-<tr>
-<th>Expense Item</th>
-<th>Frequency</th>
-<th>Typical Cost Range</th>
-<th>Avoidable or Mandatory?</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Faculty &amp; Departmental Dues</strong></td>
-<td>Once per session</td>
-<td>₦5,000 – ₦10,000</td>
-<td><strong>Mandatory</strong> (Required for clearance)</td>
-</tr>
-<tr>
-<td><strong>Course Monograph / Handouts</strong></td>
-<td>Per semester (4-6 courses)</td>
-<td>₦12,000 – ₦25,000</td>
-<td><strong>Effectively Mandatory</strong> (Contains CA marks)</td>
-</tr>
-<tr>
-<td><strong>Medical Fitness Screening</strong></td>
-<td>100L / Freshers only</td>
-<td>₦3,000 – ₦7,000</td>
-<td><strong>Mandatory</strong> (For portal activation)</td>
-</tr>
-<tr>
-<td><strong>Library Registration &amp; Tag</strong></td>
-<td>Once per session</td>
-<td>₦1,000 – ₦2,500</td>
-<td><strong>Mandatory</strong> (For library borrowing)</td>
-</tr>
-<tr>
-<td><strong>Photocopies of Past Questions</strong></td>
-<td>Per exam season</td>
-<td>₦2,000 – ₦4,000</td>
-<td><strong>Voluntary</strong> (Can be shared digitally)</td>
-</tr>
-<tr>
-<td><strong>Matriculation / Convocation Gown</strong></td>
-<td>Milestone event</td>
-<td>₦3,000 – ₦6,000</td>
-<td><strong>Mandatory</strong> (For ceremonial clearance)</td>
-</tr>
-</tbody>
-</table>
+<p>| Expense Item | Frequency | Typical Cost Range | Avoidable or Mandatory? |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Faculty & Departmental Dues</strong> | Once per session | ₦5,000 – ₦10,000 | <strong>Mandatory</strong> (Required for clearance) |</p>
+<p>| <strong>Course Monograph / Handouts</strong> | Per semester (4-6 courses) | ₦12,000 – ₦25,000 | <strong>Effectively Mandatory</strong> (Contains CA marks) |</p>
+<p>| <strong>Medical Fitness Screening</strong> | 100L / Freshers only | ₦3,000 – ₦7,000 | <strong>Mandatory</strong> (For portal activation) |</p>
+<p>| <strong>Library Registration & Tag</strong> | Once per session | ₦1,000 – ₦2,500 | <strong>Mandatory</strong> (For library borrowing) |</p>
+<p>| <strong>Photocopies of Past Questions</strong>| Per exam season | ₦2,000 – ₦4,000 | <strong>Voluntary</strong> (Can be shared digitally) |</p>
+<p>| <strong>Matriculation / Convocation Gown</strong>| Milestone event | ₦3,000 – ₦6,000 | <strong>Mandatory</strong> (For ceremonial clearance) |</p>
 <p>Explore upcoming student strategies for handling university administrative costs in <a href="/blog/finances/">final clearance hurdles and avoiding graduation delays</a>.</p>
-<hr />
+<hr>
 <h2 id="3-defense-tactics-how-to-cut-hidden-fees-by-40">3. Defense Tactics: How to Cut Hidden Fees by 40%</h2>
 <p>You cannot eliminate official institutional levies, but you can minimize discretionary bleeding:</p>
 <ul>
-<li><strong>The Textbook Co-op:</strong> Team up with two trustworthy coursemates to buy a single copy of expensive reference textbooks. Photocopy only the specific chapters or assignment worksheets required for assessment submission.</li>
-<li><strong>Negotiate Dues Installments:</strong> If you cannot pay departmental dues upfront during resumption, approach the Departmental Financial Secretary with your course rep to agree on an official installment payment schedule so your course form can be endorsed.</li>
-<li><strong>Digitize Past Questions:</strong> Rather than buying five separate printed past question booklets at ₦800 each from campus vendors, borrow copies from senior students and scan them into PDFs on your phone using free mobile scanner apps.</li>
+<li>**The Textbook Co-op:** Team up with two trustworthy coursemates to buy a single copy of expensive reference textbooks. Photocopy only the specific chapters or assignment worksheets required for assessment submission.</li>
+<li>**Negotiate Dues Installments:** If you cannot pay departmental dues upfront during resumption, approach the Departmental Financial Secretary with your course rep to agree on an official installment payment schedule so your course form can be endorsed.</li>
+<li>**Digitize Past Questions:** Rather than buying five separate printed past question booklets at ₦800 each from campus vendors, borrow copies from senior students and scan them into PDFs on your phone using free mobile scanner apps.</li>
 </ul>
 <p>Learn how to plan student expenses in our comprehensive pillar guide on <a href="/blog/finances/">managing extra university expenses and family budgeting</a>.</p>
-<hr />
+<hr>
 <h2 id="4-budgeting-for-reality-not-fantasy">4. Budgeting for Reality, Not Fantasy</h2>
-<p>When planning your university budget for an upcoming session:<br />
-* Always add an extra <strong>20% buffer</strong> on top of your official school tuition for miscellaneous administrative fees.<br />
-* If tuition is ₦100,000, plan for ₦120,000.<br />
-* Having this buffer pre-allocated eliminates the gut-wrenching panic of unannounced test levies, keeping your mental bandwidth free to focus on what truly matters: mastering your coursework and securing your First Class GPA.</p>
-<hr />
+<p>When planning your university budget for an upcoming session:</p>
+<ul>
+<li>Always add an extra **20% buffer** on top of your official school tuition for miscellaneous administrative fees.</li>
+<li>If tuition is ₦100,000, plan for ₦120,000.</li>
+<li>Having this buffer pre-allocated eliminates the gut-wrenching panic of unannounced test levies, keeping your mental bandwidth free to focus on what truly matters: mastering your coursework and securing your First Class GPA.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-are-the-most-common-hidden-fees-in-nigerian-tertiary-institutions">What are the most common hidden fees in Nigerian tertiary institutions?</h3>
 <p>Departmental dues, faculty dues, laboratory practical consumables fees, mandatory lecturer course handouts/monographs, Continuous Assessment test booklet levies, matriculation/convocation gown rentals, and SUG dues.</p>
@@ -610,8 +539,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -795,8 +724,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -810,7 +739,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

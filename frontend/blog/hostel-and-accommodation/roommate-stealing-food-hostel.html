@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,108 +307,83 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="confronting-a-roommate-who-steals-food-and-supplies">Confronting a Roommate Who Steals Food and Supplies</h1>
-<p>You arrive back at your hostel room at 7:30 PM after a grueling four-hour chemistry laboratory practical. </p>
-<p>You have been daydreaming about dinner all afternoon: a steaming bowl of garri, roasted groundnuts, and chilled water. </p>
+<p>You arrive back at your hostel room at 7:30 PM after a grueling four-hour chemistry laboratory practical.</p>
+<p>You have been daydreaming about dinner all afternoon: a steaming bowl of garri, roasted groundnuts, and chilled water.</p>
 <p>You walk over to your food corner, open your 10-liter plastic bucket, and look inside.</p>
-<p>The plastic container of Dano milk powder—which was half-full when you left at 8:00 AM—is scraped completely clean. </p>
+<p>The plastic container of Dano milk powder—which was half-full when you left at 8:00 AM—is scraped completely clean.</p>
 <p>Your tin of Milo is sitting on the study table with the lid off. Beside it, the half-loaf of sliced bread you bought yesterday has two crusts remaining.</p>
 <p>You turn around. Your roommate is sitting on his bed scrolling through TikTok with a satisfied look on his face. When he catches your eye, he flashes a casual smile:</p>
 <blockquote>
-<p><em>"Ah guy, no vex o! Hunger was doing me strong things around 2:00 PM and my brother never send allowance. I say make I borrow small garri and milk from your side. You be my guy now!"</em></p>
+<p>*"Ah guy, no vex o! Hunger was doing me strong things around 2:00 PM and my brother never send allowance. I say make I borrow small garri and milk from your side. You be my guy now!"*</p>
 </blockquote>
-<p>Your chest tightens. This is the fourth time this month. He never buys replacements. He never asks beforehand. </p>
-<p>In Nigerian tertiary institutions, the boundary between "brotherly sharing" and outright parasitic theft is one of the most toxic triggers of room warfare. </p>
+<p>Your chest tightens. This is the fourth time this month. He never buys replacements. He never asks beforehand.</p>
+<p>In Nigerian tertiary institutions, the boundary between "brotherly sharing" and outright parasitic theft is one of the most toxic triggers of room warfare.</p>
 <p>When food prices are soaring and every cup of rice represents carefully budgeted family funds, having a roommate who views your cupboard as a complimentary supermarket destroys your peace of mind.</p>
 <p>Here is the exact psychological and practical protocol to end food pilfering permanently without triggering an all-out physical brawl.</p>
-<hr />
+<hr>
 <h2 id="1-deconstructing-the-communal-culture-psychology">1. Deconstructing the "Communal Culture" Psychology</h2>
 <p>In Nigerian communal culture, sharing food is considered a virtue. Refusing to share is branded as <em>"stinginess"</em> (<em>"tight-handedness"</em> or <em>"monitoring spirits"</em>).</p>
 <p>Manipulative roommates exploit this cultural conditioning to prey on cooperative peers:</p>
-<p><strong>The Anatomy of Campus Food Parasitism:</strong><br />
-* Phase 1: The "Small Pinch" (Borrowing Maggi cube, a spoonful of palm oil) — Phase 2: The "Post-Facto Apology" (Eating your food, apologizing only when caught) — Phase 3: The Entitlement Habit (Treating your provisions as shared communal property) — Phase 4: Defensive Shaming (Accusing YOU of being petty when you set boundaries)</p>
+<p><strong>The Anatomy of Campus Food Parasitism:</strong></p>
+<ul>
+<li>Phase 1: The "Small Pinch" (Borrowing Maggi cube, a spoonful of palm oil) — Phase 2: The "Post-Facto Apology" (Eating your food, apologizing only when caught) — Phase 3: The Entitlement Habit (Treating your provisions as shared communal property) — Phase 4: Defensive Shaming (Accusing YOU of being petty when you set boundaries)</li>
+</ul>
 <p>The moment you realize someone is taking food without asking, you must eliminate the ambiguity. Staying silent sends a psychological signal that you consent to being exploited.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-step-de-escalation-protocol">2. The 3-Step De-Escalation Protocol</h2>
 <p>Never scream or insult a roommate in front of visitors. Shaming them publicly activates their defense mechanisms, making them double down on denial or aggression.</p>
 <p>Use this private, boundary-setting conversation:</p>
 <h3 id="step-1-the-private-observation">Step 1: The Private Observation</h3>
 <p>Pull them aside when the room is empty:</p>
 <blockquote>
-<p><em>"Emeka, I want to talk to you about something important between us. Over the past three weeks, my milk, bread, and rice have been used when I’m in class without anyone asking."</em></p>
+<p>*"Emeka, I want to talk to you about something important between us. Over the past three weeks, my milk, bread, and rice have been used when I’m in class without anyone asking."*</p>
 </blockquote>
 <h3 id="step-2-establish-the-reality-of-budget-scarcity">Step 2: Establish the Reality of Budget Scarcity</h3>
 <p>Strip away the illusion that you have unlimited funds:</p>
 <blockquote>
-<p><em>"I budget every single meal to last until the end of the month. My parents sacrifice heavily to send this food, and when provisions disappear, I literally go to bed hungry. I cannot afford to sustain two people on my single allowance."</em></p>
+<p>*"I budget every single meal to last until the end of the month. My parents sacrifice heavily to send this food, and when provisions disappear, I literally go to bed hungry. I cannot afford to sustain two people on my single allowance."*</p>
 </blockquote>
 <h3 id="step-3-set-the-non-negotiable-standard">Step 3: Set the Non-Negotiable Standard</h3>
 <blockquote>
-<p><em>"From today, let's agree on a strict rule: neither of us touches the other person’s food without asking first via WhatsApp and getting a clear yes. If you are ever genuinely stranded, tell me beforehand, but please don't dip into my food unannounced."</em></p>
+<p>*"From today, let's agree on a strict rule: neither of us touches the other person’s food without asking first via WhatsApp and getting a clear yes. If you are ever genuinely stranded, tell me beforehand, but please don't dip into my food unannounced."*</p>
 </blockquote>
 <p>For foundational conflict frameworks across shared accommodations, review our guide on <a href="/blog/hostel-and-accommodation/hostel-roommate-tension-causes-solutions/">hostel roommate tension causes and solutions</a>.</p>
-<hr />
+<hr>
 <h2 id="3-physical-hardware-hardening-removing-temptation">3. Physical Hardware Hardening: Removing Temptation</h2>
 <p>Human willpower is fragile. If your roommate is chronically broke and smells fresh bread in an unlocked cupboard, conversation alone may not prevent midnight snacking.</p>
 <p>Physical barriers eliminate temptation entirely:</p>
-<table>
-<thead>
-<tr>
-<th>PROVISION SECURITY HARDENING MATRIX</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Tier 1: The Lockable Plastic Camper Box</td>
-</tr>
-<tr>
-<td>- Heavy-duty 80-liter plastic trunk with dual padlock latches</td>
-</tr>
-<tr>
-<td>- Holds all raw foodstuffs, spices, milk, and beverages</td>
-</tr>
-<tr>
-<td>- Padlocked with a 4-dial combination lock</td>
-</tr>
-<tr>
-<td>Tier 2: The "Diplomatic Framing" Excuse</td>
-</tr>
-<tr>
-<td>- Never say: "I am locking this because you are a thief."</td>
-</tr>
-<tr>
-<td>- Say: "The porter warned that large rats and bush roaches</td>
-</tr>
-<tr>
-<td>are entering rooms through the drain; everything must be</td>
-</tr>
-<tr>
-<td>padlocked inside hard plastic to keep the room clean."</td>
-</tr>
-<tr>
-<td>Tier 3: Separation of Daily Staples</td>
-</tr>
-<tr>
-<td>- Keep a small, sacrificial cup of sugar/salt on the desk</td>
-</tr>
-<tr>
-<td>- Keep bulk supplies strictly locked inside the trunk</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| PROVISION SECURITY HARDENING MATRIX |</p>
+<p>| --- |</p>
+<p>| Tier 1: The Lockable Plastic Camper Box |</p>
+<p>| - Heavy-duty 80-liter plastic trunk with dual padlock latches |</p>
+<p>| - Holds all raw foodstuffs, spices, milk, and beverages |</p>
+<p>| - Padlocked with a 4-dial combination lock |</p>
+<p>| Tier 2: The "Diplomatic Framing" Excuse |</p>
+<p>| - Never say: "I am locking this because you are a thief." |</p>
+<p>| - Say: "The porter warned that large rats and bush roaches |</p>
+<p>| are entering rooms through the drain; everything must be |</p>
+<p>| padlocked inside hard plastic to keep the room clean." |</p>
+<p>| Tier 3: Separation of Daily Staples |</p>
+<p>| - Keep a small, sacrificial cup of sugar/salt on the desk |</p>
+<p>| - Keep bulk supplies strictly locked inside the trunk |</p>
+<hr>
 <h2 id="4-what-to-do-if-theft-escalates">4. What to Do If Theft Escalates</h2>
-<p>If a roommate breaks a padlock, steals valuable personal electronics, or behaves violently when confronted:<br />
-1. <strong>Document the Loss:</strong> Keep a written record of missing items and dates.<br />
-2. <strong>Consult Senior Mentors:</strong> If you struggle with social anxiety and hate confrontation, read our coping strategies in <a href="/blog/mental-health/">social anxiety and living in crowded hostels</a> and explore study refuge options in <a href="/blog/hostel-and-accommodation/introvert-living-with-loud-roommates/">introverted roommates creating quiet study sanctuaries</a>.<br />
-3. <strong>Escalate to Hall Authorities:</strong> Report persistent theft to the Hall Porter and Hall Warden to initiate a room reallocation or disciplinary investigation.</p>
-<hr />
+<p>If a roommate breaks a padlock, steals valuable personal electronics, or behaves violently when confronted:</p>
+<ol>
+<li>**Document the Loss:** Keep a written record of missing items and dates.</li>
+<li>**Consult Senior Mentors:** If you struggle with social anxiety and hate confrontation, read our coping strategies in [social anxiety and living in crowded hostels](/blog/mental-health/) and explore study refuge options in [introverted roommates creating quiet study sanctuaries](/blog/hostel-and-accommodation/introvert-living-with-loud-roommates/).</li>
+<li>**Escalate to Hall Authorities:** Report persistent theft to the Hall Porter and Hall Warden to initiate a room reallocation or disciplinary investigation.</li>
+</ol>
+<hr>
 <blockquote>
-<h3 id="share-your-roommate-dilemmas-confidentially">💬 Share Your Roommate Dilemmas Confidentially</h3>
+<p>### 💬 Share Your Roommate Dilemmas Confidentially</p>
 <p>Dealing with an entitled roommate, food theft, or boundary violations?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with experienced student leaders who have navigated tough hostel environments and learn peaceful conflict resolution strategies.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with experienced student leaders who have navigated tough hostel environments and learn peaceful conflict resolution strategies.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-food-theft-so-common-in-nigerian-university-hostels">Why is food theft so common in Nigerian university hostels?</h3>
 <p>Food inflation, irregular family allowances, and blurred social boundaries lead some students to 'borrow' garri, milk, or cooking oil without permission, assuming communal ownership among friends.</p>
@@ -582,8 +557,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -767,8 +742,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -782,7 +757,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

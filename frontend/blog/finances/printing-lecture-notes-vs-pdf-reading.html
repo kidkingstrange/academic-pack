@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,91 +308,73 @@
       <div class="article-body">
         <h1 id="buying-soft-copy-pdf-handouts-vs-printing-hard-copies">Buying Soft-Copy PDF Handouts vs Printing Hard Copies</h1>
 <p>It is the third week of the semester.</p>
-<p>Your course rep uploads seven PDF lecture handouts to the class WhatsApp group:<br />
-* Advanced Econometrics: <strong>140 pages</strong><br />
-* Public International Law: <strong>210 pages</strong><br />
-* Molecular Genetics: <strong>180 pages</strong><br />
-* Total reading volume: <strong>over 500 pages.</strong></p>
+<p>Your course rep uploads seven PDF lecture handouts to the class WhatsApp group:</p>
+<ul>
+<li>Advanced Econometrics: **140 pages**</li>
+<li>Public International Law: **210 pages**</li>
+<li>Molecular Genetics: **180 pages**</li>
+<li>Total reading volume: **over 500 pages.**</li>
+</ul>
 <p>You walk to the campus business center to check printing rates.</p>
 <p>A bold sign hangs on the wall: <strong>"PHOTOCOPY / PRINTING: ₦50 PER PAGE."</strong></p>
-<p>You do the quick arithmetic in your head:<br />
-<code>500 pages × ₦50 = ₦25,000.</code></p>
+<p>You do the quick arithmetic in your head:</p>
+<p>`500 pages × ₦50 = ₦25,000.`</p>
 <p>If you bind each course, the total bill will exceed <strong>₦30,000</strong>—more than your entire monthly allowance!</p>
 <p>You stand at an intellectual and financial crossroads:</p>
 <p><strong>Option A:</strong> Spend ₦30,000 printing physical paper handouts so you can highlight text and flip pages.</p>
 <p><strong>Option B:</strong> Keep the PDFs on your smartphone or laptop, spend ₦0, and read entirely from digital screens.</p>
 <p>Does reading on screens destroy your memory retention, or is paying ₦30,000 for paper a complete waste of money in a digital era?</p>
 <p>Here is the cognitive science, financial reality, and hybrid study strategy.</p>
-<hr />
+<hr>
 <h2 id="1-the-cognitive-neuroscience-of-screen-reading-vs-paper">1. The Cognitive Neuroscience of Screen Reading vs. Paper</h2>
 <p>Cognitive psychologists at leading research institutes have demonstrated that human reading behavior changes fundamentally between paper and digital displays:</p>
 <blockquote>
-<h3 id="physical-paper-reading">Physical Paper Reading</h3>
-<ul>
-<li>Spatial Topography: Brain builds a physical 3D cognitive map ("Concept was bottom-left of page 42")</li>
-<li>Tactile Kinesthetic Anchoring: Turning physical pages reinforces chronological narrative flow</li>
-<li>High Focus Depth: Zero digital notifications or hyperlink distractions</li>
-<li><strong>PASSIVE SCREEN READING</strong></li>
-<li>"Screen Scanning": Eyes scan in an F-shaped pattern, skimming headings and skipping dense paragraphs</li>
-<li>Cognitive Fatigue: Blue-light emission and flickering backlight strain ocular muscles after 60 minutes</li>
-<li>Attention Residue: Constant temptation to switch tabs to WhatsApp, TikTok, or Twitter</li>
-</ul>
+<p>### Physical Paper Reading</p>
+<p>></p>
+<p>* Spatial Topography: Brain builds a physical 3D cognitive map ("Concept was bottom-left of page 42")</p>
+<p>* Tactile Kinesthetic Anchoring: Turning physical pages reinforces chronological narrative flow</p>
+<p>* High Focus Depth: Zero digital notifications or hyperlink distractions</p>
+<p>* **PASSIVE SCREEN READING**</p>
+<p>* "Screen Scanning": Eyes scan in an F-shaped pattern, skimming headings and skipping dense paragraphs</p>
+<p>* Cognitive Fatigue: Blue-light emission and flickering backlight strain ocular muscles after 60 minutes</p>
+<p>* Attention Residue: Constant temptation to switch tabs to WhatsApp, TikTok, or Twitter</p>
 </blockquote>
 <p>Reading complex quantitative derivations or legal case histories purely by scrolling on a tiny phone screen often results in <strong>25% lower conceptual recall</strong> during examination testing.</p>
 <p>Review digital note-taking vs handwritten retention in <a href="/blog/academics/digital-notes-vs-handwritten-study/">digital notes vs handwritten study for university exam retention</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-financial-cost-comparison">2. The Financial Cost Comparison</h2>
 <p>Look at the financial reality over an entire academic session:</p>
-<table>
-<thead>
-<tr>
-<th>Study Format</th>
-<th>Semester Cost (500 Pages)</th>
-<th>Annual Cost (2 Semesters)</th>
-<th>4-Year Degree Total</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Full Hardcopy Printing</strong></td>
-<td>₦25,000 – ₦35,000</td>
-<td>₦50,000 – ₦70,000</td>
-<td><strong>₦200,000 – ₦280,000</strong></td>
-</tr>
-<tr>
-<td><strong>Soft-Copy Digital Reading</strong></td>
-<td><strong>₦0 (Free)</strong></td>
-<td><strong>₦0 (Free)</strong></td>
-<td><strong>₦0</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Study Format | Semester Cost (500 Pages) | Annual Cost (2 Semesters) | 4-Year Degree Total |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Full Hardcopy Printing</strong> | ₦25,000 – ₦35,000 | ₦50,000 – ₦70,000 | <strong>₦200,000 – ₦280,000</strong> |</p>
+<p>| <strong>Soft-Copy Digital Reading</strong> | <strong>₦0 (Free)</strong> | <strong>₦0 (Free)</strong> | <strong>₦0</strong> |</p>
 <p>Spending ₦280,000 over four years on temporary paper that will be discarded upon graduation is a massive misallocation of scarce capital.</p>
 <p>Review hidden administrative costs in <a href="/blog/finances/hidden-university-expenses-nigeria/">hidden university expenses in Nigeria: budgeting beyond tuition</a>.</p>
-<hr />
-<h2 id="3-the-8020-hybrid-protocol-maximum-retention-at-zero-cost">3. The 80/20 Hybrid Protocol: Maximum Retention at Zero Cost</h2>
+<hr>
+<h2 id="3-the-80-20-hybrid-protocol-maximum-retention-at-zero-cost">3. The 80/20 Hybrid Protocol: Maximum Retention at Zero Cost</h2>
 <p>You do not need to print 500 pages to enjoy the cognitive benefits of paper. Use the <strong>Digital-Input / Physical-Output Method</strong>:</p>
 <blockquote>
-<h3 id="step-1-digital-ingestion-laptop-phone">Step 1: Digital Ingestion (Laptop / Phone)</h3>
-<ul>
-<li>Read the 150-page PDF soft-copy on your screen</li>
-<li>Screen brightness at 35%, Blue-light filter ON, Airplane mode ON</li>
-<li><strong>STEP 2: The Physical "Active Synthesis Notebook"</strong></li>
-<li>NEVER passively read screens without a pen in hand</li>
-<li>Close the laptop screen every 3 pages</li>
-<li>Write a 5-bullet conceptual summary into a ₦400 physical paper notebook</li>
-<li><strong>Result: 100% of the memory retention of paper, at ZERO printing cost!</strong></li>
-</ul>
+<p>### Step 1: Digital Ingestion (Laptop / Phone)</p>
+<p>></p>
+<p>* Read the 150-page PDF soft-copy on your screen</p>
+<p>* Screen brightness at 35%, Blue-light filter ON, Airplane mode ON</p>
+<p>* **STEP 2: The Physical "Active Synthesis Notebook"**</p>
+<p>* NEVER passively read screens without a pen in hand</p>
+<p>* Close the laptop screen every 3 pages</p>
+<p>* Write a 5-bullet conceptual summary into a ₦400 physical paper notebook</p>
+<p>* **Result: 100% of the memory retention of paper, at ZERO printing cost!**</p>
 </blockquote>
 <p>By forcing your hand to write physical summary bullets in your own words, you bypass screen scanning and activate deep motor memory encoding.</p>
 <p>Master past question strategies in <a href="/blog/academics/past-questions-study-strategy/">past questions study strategy: avoiding rote memorization</a>.</p>
-<hr />
+<hr>
 <h2 id="4-rebuild-your-revision-system-for-dominance">4. Rebuild Your Revision System for Dominance</h2>
-<p>High grades are determined by active cognitive retrieval, not the medium you hold:<br />
-* Stop spending your feeding allowance on mountains of printed paper.<br />
-* Ingest information digitally, extract high-yield concepts into condensed physical summary notebooks, and test yourself relentlessly.</p>
+<p>High grades are determined by active cognitive retrieval, not the medium you hold:</p>
+<ul>
+<li>Stop spending your feeding allowance on mountains of printed paper.</li>
+<li>Ingest information digitally, extract high-yield concepts into condensed physical summary notebooks, and test yourself relentlessly.</li>
+</ul>
 <p>If you are ready to master high-performance study protocols specifically tailored for Nigerian higher institutions, the <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It gives you the complete blueprint to synthesize dense lecture material, master active recall workflows, and secure a First Class degree on a student budget.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-a-student-save-by-reading-soft-copy-pdfs-instead-of-printing-lecture-handouts">How much does a student save by reading soft-copy PDFs instead of printing lecture handouts?</h3>
 <p>With commercial campus business centers charging ₦50 to ₦100 per page for black-and-white printing, printing 500 pages of semester handouts costs ₦25,000 to ₦50,000. Reading soft copies costs ₦0.</p>
@@ -566,8 +548,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -751,8 +733,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -766,7 +748,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,169 +307,109 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>You are standing in the faculty hallway in a freshly pressed corporate suit or formal traditional attire. Your palms are slick with nervous sweat, and your mouth feels dry as chalk.</p>
-<p>Inside the departmental conference room, you hear the muffled, booming voice of the <strong>External Examiner</strong>—a senior professor invited from another federal university to cross-examine graduating students. </p>
+<p>Inside the departmental conference room, you hear the muffled, booming voice of the <strong>External Examiner</strong>—a senior professor invited from another federal university to cross-examine graduating students.</p>
 <p>Beside him sit your Head of Department (HOD), your internal project supervisor, and four departmental lecturers holding red grading pens and evaluative rubrics.</p>
 <p>The door swings open, and the departmental seminar coordinator calls your matriculation number:</p>
 <blockquote>
-<p><em>"Candidate next! You have exactly 10 minutes to present your research, followed by 10 minutes of questions. Connect your flash drive."</em></p>
+<p>*"Candidate next! You have exactly 10 minutes to present your research, followed by 10 minutes of questions. Connect your flash drive."*</p>
 </blockquote>
 <p>In the Nigerian university system, your undergraduate final year project (coded as 499 or 599) is not just another course. Under <a href="https://www.nuc.edu.ng/">National Universities Commission (NUC)</a> guidelines, the final year research project carries <strong>6 solid credit units</strong>—the single highest credit-weighted course on your entire university transcript.</p>
 <p>Scoring an <strong>'A' (30 grade points)</strong> versus a mediocre <strong>'C' (18 grade points)</strong> represents a massive 12-point differential that can permanently decide whether you graduate with a Second Class Upper or slip into a Second Class Lower.</p>
 <p>Project defense is not an ambush; it is an academic performance. By deploying a streamlined <strong>10-slide presentation architecture</strong> and mastering the psychology of Nigerian external examiners, you can walk into the defense room with poise and secure your 'A'.</p>
-<hr />
-<h2 id="1-deconstructing-the-external-examiners-psychology">1. Deconstructing the External Examiner’s Psychology</h2>
+<hr>
+<h2 id="1-deconstructing-the-external-examiner-s-psychology">1. Deconstructing the External Examiner’s Psychology</h2>
 <p>To conquer the defense room, you must step inside the mind of the external examiner.</p>
 <p>External examiners do not arrive on campus to read your 120-page spiral-bound project from cover to cover. They are senior academics who have reviewed dozens of theses that morning. They flip through your physical document looking for <strong>four specific vulnerability zones</strong>:</p>
 <ul>
-<li>
-<ol>
-<li>Abstract &amp; Problem Statement] ➔ [2. Methodology Justification] ➔ [3. Data Consistency] ➔ [4. Contribution to Knowledge</li>
-</ol>
-</li>
+<li>1. Abstract & Problem Statement] ➔ [2. Methodology Justification] ➔ [3. Data Consistency] ➔ [4. Contribution to Knowledge</li>
 </ul>
 <h3 id="what-panels-actually-grade">What Panels Actually Grade:</h3>
 <ul>
-<li><strong>Mastery of the Problem:</strong> Do you genuinely understand why you conducted this study, or did you simply copy a past topic from an online project repository?</li>
-<li><strong>Methodological Soundness:</strong> Can you justify why you chose your specific sample size, statistical formula, or laboratory protocol?</li>
-<li><strong>Intellectual Ownership:</strong> Did you do the actual laboratory benchwork or field surveys yourself, or did you pay a commercial business center to "cook" your analysis?</li>
-<li><strong>Composure Under Pressure:</strong> Can you defend your conclusions calmly without becoming defensive, arrogant, or combative?</li>
+<li>**Mastery of the Problem:** Do you genuinely understand why you conducted this study, or did you simply copy a past topic from an online project repository?</li>
+<li>**Methodological Soundness:** Can you justify why you chose your specific sample size, statistical formula, or laboratory protocol?</li>
+<li>**Intellectual Ownership:** Did you do the actual laboratory benchwork or field surveys yourself, or did you pay a commercial business center to "cook" your analysis?</li>
+<li>**Composure Under Pressure:** Can you defend your conclusions calmly without becoming defensive, arrogant, or combative?</li>
 </ul>
 <p>If you struggled with research delays or conflict with your internal supervisor during the semester, learn how to protect your academic standing in our guide on <a href="/blog/mental-health/">handling difficult project supervisors and protecting mental peace</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-10-slide-rule-structuring-your-powerpoint-deck">2. The 10-Slide Rule: Structuring Your PowerPoint Deck</h2>
 <p>The greatest mistake students make is pasting 500-word blocks of text onto 25 crowded slides. When a candidate reads paragraphs off a screen, the panel becomes bored and immediately interrupts with hostile questions.</p>
 <p>Your slide deck should contain <strong>no more than 10 to 12 slides</strong>, structured as follows:</p>
-<table>
-<thead>
-<tr>
-<th>Slide #</th>
-<th>Slide Title</th>
-<th>Recommended Content</th>
-<th>Target Delivery Time</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Slide 1</strong></td>
-<td><strong>Title &amp; Metadata</strong></td>
-<td>Project title, your name, matric number, supervisor, department</td>
-<td>30 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slide 2</strong></td>
-<td><strong>Background &amp; Problem Statement</strong></td>
-<td>3 bullet points defining the real-world gap your study addresses</td>
-<td>60 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slide 3</strong></td>
-<td><strong>Aim &amp; Specific Objectives</strong></td>
-<td>1 overarching aim + 3 to 4 measurable, bulleted objectives</td>
-<td>60 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slide 4</strong></td>
-<td><strong>Significance of the Study</strong></td>
-<td>Why this research matters to Nigeria, industry, or academic literature</td>
-<td>45 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slide 5</strong></td>
-<td><strong>Methodology / Experimental Design</strong></td>
-<td>Population, sample size, sampling method, instruments, analytical tools</td>
-<td>90 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slides 6–7</strong></td>
-<td><strong>Key Findings &amp; Results</strong></td>
-<td>Clean charts, key summary tables, or photos of prototypes/titers</td>
-<td>2 Minutes</td>
-</tr>
-<tr>
-<td><strong>Slide 8</strong></td>
-<td><strong>Discussion of Findings</strong></td>
-<td>How your results compare with previous published literature</td>
-<td>90 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slide 9</strong></td>
-<td><strong>Contribution to Knowledge</strong></td>
-<td><strong>The most critical slide:</strong> The exact novel insight or value generated</td>
-<td>60 Seconds</td>
-</tr>
-<tr>
-<td><strong>Slide 10</strong></td>
-<td><strong>Conclusion &amp; Recommendations</strong></td>
-<td>3 actionable policy or technical recommendations + research limitations</td>
-<td>60 Seconds</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Slide # | Slide Title | Recommended Content | Target Delivery Time |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Slide 1</strong> | <strong>Title & Metadata</strong> | Project title, your name, matric number, supervisor, department | 30 Seconds |</p>
+<p>| <strong>Slide 2</strong> | <strong>Background & Problem Statement</strong> | 3 bullet points defining the real-world gap your study addresses | 60 Seconds |</p>
+<p>| <strong>Slide 3</strong> | <strong>Aim & Specific Objectives</strong> | 1 overarching aim + 3 to 4 measurable, bulleted objectives | 60 Seconds |</p>
+<p>| <strong>Slide 4</strong> | <strong>Significance of the Study</strong> | Why this research matters to Nigeria, industry, or academic literature | 45 Seconds |</p>
+<p>| <strong>Slide 5</strong> | <strong>Methodology / Experimental Design</strong> | Population, sample size, sampling method, instruments, analytical tools | 90 Seconds |</p>
+<p>| <strong>Slides 6–7</strong> | <strong>Key Findings & Results</strong> | Clean charts, key summary tables, or photos of prototypes/titers | 2 Minutes |</p>
+<p>| <strong>Slide 8</strong> | <strong>Discussion of Findings</strong> | How your results compare with previous published literature | 90 Seconds |</p>
+<p>| <strong>Slide 9</strong> | <strong>Contribution to Knowledge</strong> | <strong>The most critical slide:</strong> The exact novel insight or value generated | 60 Seconds |</p>
+<p>| <strong>Slide 10</strong> | <strong>Conclusion & Recommendations</strong> | 3 actionable policy or technical recommendations + research limitations | 60 Seconds |</p>
+<hr>
 <h2 id="3-the-5-classic-grilling-questions-and-how-to-answer-them">3. The 5 Classic Grilling Questions (And How to Answer Them)</h2>
 <p>During the cross-examination phase, Nigerian external examiners pull questions from a predictable playbook. Memorize these strategic responses:</p>
-<h3 id="question-1-what-is-your-personal-contribution-to-knowledge-in-this-work">Question 1: <em>"What is your personal contribution to knowledge in this work?"</em></h3>
+<h3 id="question-1-what-is-your-personal-contribution-to-knowledge-in-this-work">Question 1: *"What is your personal contribution to knowledge in this work?"*</h3>
 <ul>
-<li><strong>The Trap:</strong> Answering with a generic summary like <em>"My study showed that social media affects studying."</em></li>
-<li><strong>The Winning Response:</strong> <em>"Thank you, sir. While previous studies focused broadly on North American demographics, my study provides first-hand empirical data on the relationship between campus power outages and evening study productivity among 350 undergraduate hostellers in southwest Nigeria, establishing a quantifiable 28% drop in study output during unbuffered blackouts."</em></li>
+<li>**The Trap:** Answering with a generic summary like *"My study showed that social media affects studying."*</li>
+<li>**The Winning Response:** *"Thank you, sir. While previous studies focused broadly on North American demographics, my study provides first-hand empirical data on the relationship between campus power outages and evening study productivity among 350 undergraduate hostellers in southwest Nigeria, establishing a quantifiable 28% drop in study output during unbuffered blackouts."*</li>
 </ul>
-<h3 id="question-2-why-did-you-use-taro-yamane-or-cochran-formula-for-your-sample-size">Question 2: <em>"Why did you use Taro Yamane (or Cochran) formula for your sample size?"</em></h3>
+<h3 id="question-2-why-did-you-use-taro-yamane-or-cochran-formula-for-your-sample-size">Question 2: *"Why did you use Taro Yamane (or Cochran) formula for your sample size?"*</h3>
 <ul>
-<li><strong>The Trap:</strong> <em>"That is what my supervisor told me to use."</em> (Never blame your supervisor in front of an external examiner!).</li>
-<li><strong>The Winning Response:</strong> <em>"Given that the total registered student population of the faculty is finite and established at 2,400 students, the Taro Yamane formula at a 95% confidence level and 5% margin of error provided the most mathematically robust representative sample of 343 respondents."</em></li>
+<li>**The Trap:** *"That is what my supervisor told me to use."* (Never blame your supervisor in front of an external examiner!).</li>
+<li>**The Winning Response:** *"Given that the total registered student population of the faculty is finite and established at 2,400 students, the Taro Yamane formula at a 95% confidence level and 5% margin of error provided the most mathematically robust representative sample of 343 respondents."*</li>
 </ul>
-<h3 id="question-3-why-do-your-empirical-findings-contradict-the-established-theory-by-professor-x-2018">Question 3: <em>"Why do your empirical findings contradict the established theory by Professor X (2018)?"</em></h3>
+<h3 id="question-3-why-do-your-empirical-findings-contradict-the-established-theory-by-professor-x-2018">Question 3: *"Why do your empirical findings contradict the established theory by Professor X (2018)?"*</h3>
 <ul>
-<li><strong>The Trap:</strong> Panicking and claiming your data must be wrong.</li>
-<li><strong>The Winning Response:</strong> <em>"That is an insightful observation, sir. Professor X conducted his study in an industrial laboratory with controlled ambient temperature, whereas our field trials were conducted under natural tropical field conditions, where high relative humidity introduced a documented dampening effect on the reaction rate."</em></li>
+<li>**The Trap:** Panicking and claiming your data must be wrong.</li>
+<li>**The Winning Response:** *"That is an insightful observation, sir. Professor X conducted his study in an industrial laboratory with controlled ambient temperature, whereas our field trials were conducted under natural tropical field conditions, where high relative humidity introduced a documented dampening effect on the reaction rate."*</li>
 </ul>
-<h3 id="question-4-if-you-were-given-5-million-grant-to-continue-this-research-tomorrow-what-would-you-change">Question 4: <em>"If you were given ₦5 million grant to continue this research tomorrow, what would you change?"</em></h3>
+<h3 id="question-4-if-you-were-given-5-million-grant-to-continue-this-research-tomorrow-what-would-you-change">Question 4: *"If you were given ₦5 million grant to continue this research tomorrow, what would you change?"*</h3>
 <ul>
-<li><strong>The Winning Response:</strong> Highlight your study's self-acknowledged limitations: <em>"I would expand the longitudinal timeframe from three months to a multi-year cohort study and deploy gas chromatography rather than manual volumetric analysis to eliminate apparatus error margins."</em></li>
+<li>**The Winning Response:** Highlight your study's self-acknowledged limitations: *"I would expand the longitudinal timeframe from three months to a multi-year cohort study and deploy gas chromatography rather than manual volumetric analysis to eliminate apparatus error margins."*</li>
 </ul>
-<h3 id="question-5-what-do-you-do-when-asked-a-question-you-genuinely-do-not-know">Question 5: <em>"What do you do when asked a question you genuinely do not know?"</em></h3>
+<h3 id="question-5-what-do-you-do-when-asked-a-question-you-genuinely-do-not-know">Question 5: *"What do you do when asked a question you genuinely do not know?"*</h3>
 <ul>
-<li><strong>The Winning Response:</strong> Never guess or fabricate answers. Say with poise:<blockquote>
-<p><em>"Thank you very much, sir. While my investigation was circumscribed to the variables defined within Chapter 1, that is an acute academic observation which represents an important limitation and an exciting avenue for post-graduate research."</em></p>
+<li>**The Winning Response:** Never guess or fabricate answers. Say with poise:</li>
+<blockquote>
+<p>*"Thank you very much, sir. While my investigation was circumscribed to the variables defined within Chapter 1, that is an acute academic observation which represents an important limitation and an exciting avenue for post-graduate research."*</p>
+</ul>
 </blockquote>
-</li>
-</ul>
-<hr />
+<hr>
 <h2 id="4-defense-day-protocol-the-24-hour-checklist">4. Defense Day Protocol: The 24-Hour Checklist</h2>
 <p>The final 24 hours require flawless logistics:</p>
 <ul>
-<li><strong>Bring 4 Spiral-Bound Hard Copies:</strong> Do not assume the department printed copies for the panel. Have at least three neatly bound copies for the examiners and one for yourself to follow along.</li>
-<li><strong>Test the Presentation Tech in Advance:</strong> Visit the seminar room early. Confirm that the projector connects with your laptop HDMI/VGA port, and keep a backup PDF version on a flash drive and on Google Drive.</li>
-<li><strong>Master Pointer and Posture:</strong> Stand tall, make direct eye contact with all panel members, and hold a physical pen or presenter pointer. Avoid resting your hands in your pockets or leaning on the podium.</li>
+<li>**Bring 4 Spiral-Bound Hard Copies:** Do not assume the department printed copies for the panel. Have at least three neatly bound copies for the examiners and one for yourself to follow along.</li>
+<li>**Test the Presentation Tech in Advance:** Visit the seminar room early. Confirm that the projector connects with your laptop HDMI/VGA port, and keep a backup PDF version on a flash drive and on Google Drive.</li>
+<li>**Master Pointer and Posture:** Stand tall, make direct eye contact with all panel members, and hold a physical pen or presenter pointer. Avoid resting your hands in your pockets or leaning on the podium.</li>
 </ul>
 <p>Navigating final year clearance and ensuring your results reach the Senate board without administrative hitches requires early preparation; see our guide on <a href="/blog/academics/nigerian-university-final-clearance-delays/">final year clearance hurdles and graduation delays</a>.</p>
 <p>If you are currently juggling project writing with off-campus responsibilities, apply our strategies in <a href="/blog/balancing-work-and-school/">balancing final year project research with full-time work</a>.</p>
-<hr />
+<hr>
 <h2 id="defense-day-emergency-checklist">Defense Day Emergency Checklist</h2>
 <p>Ensure these items are completed before you step into the presentation room:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Slide deck capped at 10 to 12 slides:</strong> Strip out all walls of text and replace with charts, bulleted points, and diagrams.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Rehearse aloud with a stopwatch:</strong> Enforce a strict 9-minute presentation pace to leave a 1-minute buffer.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Print 4 spiral-bound copies:</strong> Verify that all page numbers, tables, and chapter headings match your presentation slides.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Know your Chapter 3 (Methodology) cold:</strong> Be ready to defend your sample size, formulas, and statistical tools.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Dress professionally:</strong> Corporate suit or clean formal traditional attire creates an immediate impression of academic competence.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Slide deck capped at 10 to 12 slides:** Strip out all walls of text and replace with charts, bulleted points, and diagrams.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Rehearse aloud with a stopwatch:** Enforce a strict 9-minute presentation pace to leave a 1-minute buffer.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Print 4 spiral-bound copies:** Verify that all page numbers, tables, and chapter headings match your presentation slides.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Know your Chapter 3 (Methodology) cold:** Be ready to defend your sample size, formulas, and statistical tools.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Dress professionally:** Corporate suit or clean formal traditional attire creates an immediate impression of academic competence.</li>
 </ul>
-<hr />
-<h2 id="connect-with-final-year-undergraduates-alumni">Connect with Final Year Undergraduates &amp; Alumni</h2>
+<hr>
+<h2 id="connect-with-final-year-undergraduates-alumni">Connect with Final Year Undergraduates & Alumni</h2>
 <p>Successfully defending your final year project, navigating supervisor revisions, and securing final graduation clearance is much easier when you connect with serious peers and recent graduates who have conquered the exact same hurdles.</p>
 <div class="blog-cta-box" style="background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%); border-color: rgba(34, 197, 94, 0.3);">
-  <div class="blog-cta-box__badge" style="background: #22c55e; color: #ffffff;">Free Student Community</div>
-  <h3 class="blog-cta-box__title">Join the Academic Comeback Network</h3>
-  <p class="blog-cta-box__desc">A high-accountability WhatsApp community of ambitious Nigerian university undergraduates and recent graduates sharing project slide templates, research resources, defense prep tips, and post-graduation career opportunities.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Project Slide & Defense Templates</strong> — Download battle-tested 10-slide PowerPoint layouts optimized for external panels</li>
-    <li><strong>Live Mock Defense Rooms</strong> — Practice your 10-minute presentation in front of peers and get constructive feedback</li>
-    <li><strong>Final Year Clearance Guidance</strong> — Step-by-step blueprints for navigating Senate result approvals, bursary, and NYSC mobilization</li>
-  </ul>
-  <a href="https://chat.whatsapp.com/invite/academic-comeback" class="blog-cta-box__btn" style="background: #22c55e; color: #ffffff;">Join the Free WhatsApp Community &rarr;</a>
+<div class="blog-cta-box__badge" style="background: #22c55e; color: #ffffff;">Free Student Community</div>
+<h3 class="blog-cta-box__title">Join the Academic Comeback Network</h3>
+<p class="blog-cta-box__desc">A high-accountability WhatsApp community of ambitious Nigerian university undergraduates and recent graduates sharing project slide templates, research resources, defense prep tips, and post-graduation career opportunities.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Project Slide & Defense Templates</strong> — Download battle-tested 10-slide PowerPoint layouts optimized for external panels</li>
+<li><strong>Live Mock Defense Rooms</strong> — Practice your 10-minute presentation in front of peers and get constructive feedback</li>
+<li><strong>Final Year Clearance Guidance</strong> — Step-by-step blueprints for navigating Senate result approvals, bursary, and NYSC mobilization</li>
+</ul>
+<a href="https://chat.whatsapp.com/invite/academic-comeback" class="blog-cta-box__btn" style="background: #22c55e; color: #ffffff;">Join the Free WhatsApp Community &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-many-slides-should-an-undergraduate-project-defense-presentation-have">How many slides should an undergraduate project defense presentation have?</h3>
 <p>A standard Nigerian university undergraduate project defense should contain exactly 10 to 12 slides. Presentations are strictly timed at 10 to 15 minutes; exceeding 12 slides causes candidates to rush, speak incoherently, and get cut off prematurely by the panel.</p>
@@ -643,8 +583,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -828,8 +768,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -843,7 +783,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

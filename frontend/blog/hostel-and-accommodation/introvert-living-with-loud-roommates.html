@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,88 +307,69 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="introverted-roommates-creating-quiet-study-sanctuaries">Introverted Roommates: Creating Quiet Study Sanctuaries</h1>
-<p>You arrive back at your hostel room at 5:00 PM after eight hours of crowded lectures, noisy group assignments, and cafeteria queues. </p>
-<p>Your social battery is at 0%. </p>
+<p>You arrive back at your hostel room at 5:00 PM after eight hours of crowded lectures, noisy group assignments, and cafeteria queues.</p>
+<p>Your social battery is at 0%.</p>
 <p>Your brain feels like a glowing radiator. All you crave in the universe is thirty minutes of complete, total, uninterrupted silence: to sit on your bed, stare at the ceiling, and breathe.</p>
-<p>You push the door open. </p>
-<p>Inside, your extroverted roommate is hosting three coursemates. A Bluetooth speaker on the table is blasting loud Afrobeats at maximum bass. Two of them are arguing passionately about football transfers. </p>
+<p>You push the door open.</p>
+<p>Inside, your extroverted roommate is hosting three coursemates. A Bluetooth speaker on the table is blasting loud Afrobeats at maximum bass. Two of them are arguing passionately about football transfers.</p>
 <p>The moment you walk in, your roommate shouts enthusiastically:</p>
 <blockquote>
-<p><em>"Ah! Scholar of the universe! You just in time! Come sit down, make we debate who be better player between Haaland and Mbappe!"</em></p>
+<p>*"Ah! Scholar of the universe! You just in time! Come sit down, make we debate who be better player between Haaland and Mbappe!"*</p>
 </blockquote>
-<p>A wave of internal dread washes over you. </p>
+<p>A wave of internal dread washes over you.</p>
 <p>You smile weakly, mumble an excuse, and sit down at your desk. But you can feel your chest tightening. The continuous noise, laughter, and chatter feels like sandpaper rubbing against your exposed nervous system.</p>
 <p>For introverted students in Nigerian tertiary institutions, hostel living can feel like psychological torture.</p>
 <p>When you live with well-meaning extroverts who interpret silence as "anger" and solitude as "depression," protecting your mental energy requires deliberate environmental engineering.</p>
 <p>Here is the introverted scholar’s survival guide to creating an impenetrable sanctuary of quiet in the midst of campus chaos.</p>
-<hr />
-<h2 id="1-the-introverts-energy-economics">1. The Introvert’s Energy Economics</h2>
+<hr>
+<h2 id="1-the-introvert-s-energy-economics">1. The Introvert’s Energy Economics</h2>
 <p>Introversion is not shyness or social awkwardness; it is an innate neurochemical difference in how the brain processes dopamine and sensory stimuli:</p>
-<p><strong>Energy Dynamics in Shared Living:</strong><br />
-* The Extrovert Battery: Recharges through conversation, music, gatherings, and external stimulation — The Introvert Battery: Drains through social interaction; recharges exclusively in quiet solitude</p>
+<p><strong>Energy Dynamics in Shared Living:</strong></p>
+<ul>
+<li>The Extrovert Battery: Recharges through conversation, music, gatherings, and external stimulation — The Introvert Battery: Drains through social interaction; recharges exclusively in quiet solitude</li>
+</ul>
 <p>When an introvert goes four weeks without solitude, they enter <strong>Social Burnout</strong>: cognitive brain fog, irritability, emotional exhaustion, and severe study procrastination.</p>
-<hr />
+<hr>
 <h2 id="2-sensory-armor-the-non-verbal-defense-system">2. Sensory Armor: The Non-Verbal Defense System</h2>
 <p>You cannot change your roommate’s personality, but you can build physical barriers around your nervous system:</p>
-<table>
-<thead>
-<tr>
-<th>THE INTROVERT'S SENSORY ARMOR STACK</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Shield 1: The "Visual Do-Not-Disturb" Over-Ear Headphones</td>
-</tr>
-<tr>
-<td>- Large, visible over-ear headphones signal immediately</td>
-</tr>
-<tr>
-<td>that you are in deep focus mode, preventing casual chat.</td>
-</tr>
-<tr>
-<td>Shield 2: 32dB Industrial Silicone Earplugs</td>
-</tr>
-<tr>
-<td>- Worn under your headphones or during sleep to muffle</td>
-</tr>
-<tr>
-<td>footsteps, door slamming, and loud hall chatter.</td>
-</tr>
-<tr>
-<td>Shield 3: The "Bunk Bed Curtain Sanctuary"</td>
-</tr>
-<tr>
-<td>- Hang dark curtains around your bunk bed frame to create</td>
-</tr>
-<tr>
-<td>a sensory-deprivation micro-room.</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| THE INTROVERT'S SENSORY ARMOR STACK |</p>
+<p>| --- |</p>
+<p>| Shield 1: The "Visual Do-Not-Disturb" Over-Ear Headphones |</p>
+<p>| - Large, visible over-ear headphones signal immediately |</p>
+<p>| that you are in deep focus mode, preventing casual chat. |</p>
+<p>| Shield 2: 32dB Industrial Silicone Earplugs |</p>
+<p>| - Worn under your headphones or during sleep to muffle |</p>
+<p>| footsteps, door slamming, and loud hall chatter. |</p>
+<p>| Shield 3: The "Bunk Bed Curtain Sanctuary" |</p>
+<p>| - Hang dark curtains around your bunk bed frame to create |</p>
+<p>| a sensory-deprivation micro-room. |</p>
+<hr>
 <h2 id="3-the-gentle-boundary-script-educating-your-roommates">3. The Gentle Boundary Script: Educating Your Roommates</h2>
 <p>Never say: <em>"You guys are too loud and annoying."</em> That triggers immediate defensive conflict.</p>
 <p>Educate your roommates about how your brain functions:</p>
 <blockquote>
-<p><em>"Segun, I really enjoy living with you, but after classes my brain gets completely exhausted by noise. When I put my headphones on or close my curtain, I’m just taking 45 minutes to recharge my energy in silence. It doesn't mean I’m angry or ignoring anyone—it's just how I recover my study focus."</em></p>
+<p>*"Segun, I really enjoy living with you, but after classes my brain gets completely exhausted by noise. When I put my headphones on or close my curtain, I’m just taking 45 minutes to recharge my energy in silence. It doesn't mean I’m angry or ignoring anyone—it's just how I recover my study focus."*</p>
 </blockquote>
 <p>When explained with warmth and clarity, 90% of roommates will respect your space without feeling rejected. Review broader room communication frameworks in our guide on <a href="/blog/hostel-and-accommodation/hostel-roommate-tension-causes-solutions/">hostel roommate tension causes and solutions</a>.</p>
-<hr />
+<hr>
 <h2 id="4-discovering-campus-solitude-pockets">4. Discovering Campus "Solitude Pockets"</h2>
-<p>When your hostel room is completely overtaken by visitors, do not stay and suffer. Have three pre-scouted <strong>Solitude Pockets</strong> on campus:<br />
-1. <strong>The University Botanical Garden / Forest Arboretum:</strong> Shaded, breeze-filled, natural outdoor spaces where almost nobody goes during lecture hours.<br />
-2. <strong>The Postgraduate Research Library:</strong> Strict silence rules are enforced by stern librarians; no casual conversations are tolerated.<br />
-3. <strong>Empty Auditorium Mezzanines:</strong> Faculty auditoriums that host morning classes are often completely vacant between 3:00 PM and 6:00 PM.</p>
+<p>When your hostel room is completely overtaken by visitors, do not stay and suffer. Have three pre-scouted <strong>Solitude Pockets</strong> on campus:</p>
+<ol>
+<li>**The University Botanical Garden / Forest Arboretum:** Shaded, breeze-filled, natural outdoor spaces where almost nobody goes during lecture hours.</li>
+<li>**The Postgraduate Research Library:** Strict silence rules are enforced by stern librarians; no casual conversations are tolerated.</li>
+<li>**Empty Auditorium Mezzanines:** Faculty auditoriums that host morning classes are often completely vacant between 3:00 PM and 6:00 PM.</li>
+</ol>
 <p>Combine personal privacy routines with security guidelines in <a href="/blog/hostel-and-accommodation/roommate-stealing-food-hostel/">confronting a roommate who steals food and supplies</a>, and overcome social anxiety during public university interactions with <a href="/blog/mental-health/">introverted student presentation anxiety survival</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="quiet-minds-focused-scholars">🌿 Quiet Minds &amp; Focused Scholars</h3>
+<p>### 🌿 Quiet Minds & Focused Scholars</p>
 <p>Need a supportive community that understands your need for quiet study and deep focus?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with thoughtful, high-achieving scholars who respect boundaries, share calm study resources, and support each other's academic journeys.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with thoughtful, high-achieving scholars who respect boundaries, share calm study resources, and support each other's academic journeys.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-hostel-living-so-uniquely-exhausting-for-introverted-students">Why is hostel living so uniquely exhausting for introverted students?</h3>
 <p>Introverts recharge cognitive energy in solitude. High-density hostel living subjects them to continuous, uninterrupted social stimulation, noise, visitors, and conversations from dawn to midnight.</p>
@@ -562,8 +543,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -747,8 +728,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -762,7 +743,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

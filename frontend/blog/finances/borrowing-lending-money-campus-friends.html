@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -311,91 +311,73 @@
 <p>His face is strained. He closes the door quietly, sits on your plastic chair, and leans forward:</p>
 <p><em>"Bros, abeg, I am in a serious mess. My lodge landlord gave me 48 hours to pay my balance or he will lock my room. Please, lend me ₦25,000. I swear on my life, my uncle is sending my allowance on Friday. I will transfer it back to you on Friday morning without fail."</em></p>
 <p>You have ₦30,000 in your account—your entire feeding and textbook budget for the next four weeks.</p>
-<p>He is your friend. You study together. You share past questions. </p>
+<p>He is your friend. You study together. You share past questions.</p>
 <p>You transfer the ₦25,000.</p>
-<p>Friday arrives. No transfer. </p>
-<p>Saturday passes. Silence. </p>
+<p>Friday arrives. No transfer.</p>
+<p>Saturday passes. Silence.</p>
 <p>On Monday, you ask him about the money. He avoids eye contact, speaks irritably, and says: <em>"Ah, bros, why are you rushing me? My uncle has not sent it now. Have small patience! You know I cannot run away with your money."</em></p>
 <p>Two weeks later, the friendship has disintegrated into cold glares, avoided lecture seats, and simmering hostility.</p>
 <p>Informal campus lending is a minefield that destroys friendships, fuels physical hostel brawls, and leaves lenders financially stranded.</p>
 <p>Here is the objective framework to handle borrowing and lending on campus with absolute integrity and mutual protection.</p>
-<hr />
+<hr>
 <h2 id="1-the-fundamental-law-of-campus-lending">1. The Fundamental Law of Campus Lending</h2>
 <blockquote>
-<p><strong>The Golden Law:</strong> Never lend money to a campus friend that you cannot afford to write off as a permanent gift.</p>
+<p>**The Golden Law:** Never lend money to a campus friend that you cannot afford to write off as a permanent gift.</p>
 </blockquote>
-<table>
-<thead>
-<tr>
-<th>Audit Question</th>
-<th>Scenario A: High Risk</th>
-<th>Scenario B: Managed Capacity</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>"If they default 100%, will I starve, fall behind on rent, or fail an exam?"</strong></td>
-<td><strong>YES (Capital is critical)</strong></td>
-<td><strong>NO (Discretionary cushion)</strong></td>
-</tr>
-<tr>
-<td><strong>Recommended Decision</strong></td>
-<td><strong>Decline Firmly</strong></td>
-<td><strong>Lend with Written Terms</strong></td>
-</tr>
-<tr>
-<td><strong>Action Script</strong></td>
-<td><em>"I sympathize with your situation, but 100% of my funds are locked for non-negotiable school fees and rent this week."</em></td>
-<td>Execute a simple written agreement with a fixed repayment date and verified source of funds before transferring a kobo.</td>
-</tr>
-</tbody>
-</table>
+<p>| Audit Question | Scenario A: High Risk | Scenario B: Managed Capacity |</p>
+<p>|---|---|---|</p>
+<p>| <strong>"If they default 100%, will I starve, fall behind on rent, or fail an exam?"</strong> | <strong>YES (Capital is critical)</strong> | <strong>NO (Discretionary cushion)</strong> |</p>
+<p>| <strong>Recommended Decision</strong> | <strong>Decline Firmly</strong> | <strong>Lend with Written Terms</strong> |</p>
+<p>| <strong>Action Script</strong> | <em>"I sympathize with your situation, but 100% of my funds are locked for non-negotiable school fees and rent this week."</em> | Execute a simple written agreement with a fixed repayment date and verified source of funds before transferring a kobo. |</p>
 <p>If losing that money will compromise your semester feeding, exam docket clearance, or health, <strong>lending it is reckless self-sabotage.</strong></p>
 <p>Review campus scam prevention in <a href="/blog/finances/campus-money-scams-students-nigeria/">7 campus scams targeting broke students looking for cash</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-written-micro-contract-protocol">2. The Written Micro-Contract Protocol</h2>
 <p>If you choose to lend money to a coursemate, remove ambiguity by creating a simple written <strong>WhatsApp Loan Memorandum</strong>:</p>
 <blockquote>
-<h3 id="loan-confirmation-memo">Loan Confirmation Memo</h3>
-<ul>
-<li>Date: 26/09/2026</li>
-<li>Lender: Itoya David</li>
-<li>Borrower: [Friend's Name]</li>
-<li>Principal Amount: ₦15,000 (Transferred via OPay)</li>
-<li>Repayment Date: Strictly on or before Friday, 10/10/2026</li>
-<li>Repayment Source: October Family Allowance Remittance</li>
-<li>Agreement: Both parties agree this is a formal debt, not a gift.</li>
-<li><strong>Borrower replies: "Confirmed and agreed."</strong></li>
-</ul>
+<p>### Loan Confirmation Memo</p>
+<p>></p>
+<p>* Date: 26/09/2026</p>
+<p>* Lender: Itoya David</p>
+<p>* Borrower: [Friend's Name]</p>
+<p>* Principal Amount: ₦15,000 (Transferred via OPay)</p>
+<p>* Repayment Date: Strictly on or before Friday, 10/10/2026</p>
+<p>* Repayment Source: October Family Allowance Remittance</p>
+<p>* Agreement: Both parties agree this is a formal debt, not a gift.</p>
+<p>* **Borrower replies: "Confirmed and agreed."**</p>
 </blockquote>
-<p>A written confirmation in an active WhatsApp chat:<br />
-* Eliminates the psychological drift where borrowers conveniently "forget" the exact sum.<br />
-* Establishes a concrete calendar repayment deadline.<br />
-* Provides undisputed written evidence if escalation to mutual friends becomes necessary.</p>
+<p>A written confirmation in an active WhatsApp chat:</p>
+<ul>
+<li>Eliminates the psychological drift where borrowers conveniently "forget" the exact sum.</li>
+<li>Establishes a concrete calendar repayment deadline.</li>
+<li>Provides undisputed written evidence if escalation to mutual friends becomes necessary.</li>
+</ul>
 <p>Learn how to manage shared roommate financial dynamics in <a href="/blog/finances/splitting-bills-roommates-fairly/">splitting hostel utilities fairly without losing friends</a>.</p>
-<hr />
+<hr>
 <h2 id="3-how-to-decline-loan-requests-with-grace">3. How to Decline Loan Requests with Grace</h2>
 <p>Saying "no" to a friend feels uncomfortable, but bad loans destroy friendships far faster than clean boundaries:</p>
 <h3 id="script-a-the-pre-allocated-capital-defense">Script A: The "Pre-Allocated Capital" Defense</h3>
 <blockquote>
-<p><em>"Emeka, I value our friendship deeply and I understand how tight things are. However, my remaining balance is pre-allocated for my final semester departmental project binding this week. I don't have surplus liquid funds to lend."</em></p>
+<p>*"Emeka, I value our friendship deeply and I understand how tight things are. However, my remaining balance is pre-allocated for my final semester departmental project binding this week. I don't have surplus liquid funds to lend."*</p>
 </blockquote>
 <h3 id="script-b-the-partial-gift-alternative">Script B: The "Partial Gift Alternative"</h3>
 <blockquote>
-<p><em>"Chinedu, I cannot lend you ₦20,000 because I cannot risk my feeding budget. But because you are my brother, take this ₦3,000 as a free gift to sort out food for the next few days. You don't need to pay it back."</em></p>
+<p>*"Chinedu, I cannot lend you ₦20,000 because I cannot risk my feeding budget. But because you are my brother, take this ₦3,000 as a free gift to sort out food for the next few days. You don't need to pay it back."*</p>
 </blockquote>
 <p>Giving a small ₦2,000 or ₦3,000 gift protects your core capital, helps your friend immediately, and carries zero toxic debt overhang.</p>
 <p>Explore upcoming analysis of annual rent vs installment options in <a href="/blog/finances/">paying full lodge rent upfront vs 2-installment plan</a>.</p>
-<hr />
+<hr>
 <h2 id="4-protect-your-integrity-as-a-borrower">4. Protect Your Integrity as a Borrower</h2>
-<p>If you are the one borrowing:<br />
-* Treat repayment deadlines like sacred oaths.<br />
-* If your expected transfer is delayed, <strong>reach out to the lender before they ask you</strong>:</p>
+<p>If you are the one borrowing:</p>
+<ul>
+<li>Treat repayment deadlines like sacred oaths.</li>
+<li>If your expected transfer is delayed, **reach out to the lender before they ask you**:</li>
 <blockquote>
-<p><em>"Bros, my family's transfer was delayed until Monday. I want to keep you informed. You will receive your funds the moment it drops."</em><br />
-* Proactive communication preserves trust, protects your reputation, and ensures you will always find a helping hand in seasons of true need.</p>
+<p>*"Bros, my family's transfer was delayed until Monday. I want to keep you informed. You will receive your funds the moment it drops."*</p>
+<li>Proactive communication preserves trust, protects your reputation, and ensures you will always find a helping hand in seasons of true need.</li>
+</ul>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-informal-loans-between-university-coursemates-usually-destroy-friendships">Why do informal loans between university coursemates usually destroy friendships?</h3>
 <p>Lack of clear written repayment deadlines: borrowers treat informal loans as indefinite gifts, while lenders expect immediate repayment, breeding silent resentment and bitter confrontation.</p>
@@ -403,7 +385,7 @@
 <p>Principal amount borrowed, specific calendar repayment date, clear method of repayment (bank transfer), and the signatures of both parties and one neutral eyewitness.</p>
 <h3 id="what-is-the-golden-rule-of-lending-money-to-campus-coursemates">What is the 'Golden Rule' of lending money to campus coursemates?</h3>
 <p>Never lend an amount you cannot afford to write off as a complete loss. If lending ₦10,000 means you will starve if they default, politely decline or gift them ₦2,000 instead.</p>
-<h3 id="how-can-you-decline-a-friends-loan-request-without-causing-offense">How can you decline a friend's loan request without causing offense?</h3>
+<h3 id="how-can-you-decline-a-friend-s-loan-request-without-causing-offense">How can you decline a friend's loan request without causing offense?</h3>
 <p>Use the 'Committed Capital' decline script: 'I would love to help, but my remaining funds are strictly allocated for my faculty registration dues this Friday. I cannot lend money right now.'</p>
       </div>
 
@@ -569,8 +551,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -754,8 +736,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -769,7 +751,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

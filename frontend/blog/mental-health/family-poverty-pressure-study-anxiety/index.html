@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,75 +310,57 @@
 <p>It is 9:00 PM. You are sitting in the faculty library with an engineering textbook open in front of you.</p>
 <p>Your phone buzzes against the wooden desk.</p>
 <p>It is a WhatsApp message from your mother: <em>"My child, your father's shop landlord came today and locked the doors. We don't even have ₦1,000 to buy soup ingredients for your younger siblings tonight. Please, if you have any small money left in your account, send it home."</em></p>
-<p>Your bank account balance is exactly ₦1,420. </p>
+<p>Your bank account balance is exactly ₦1,420.</p>
 <p>Your faculty examination begins in four days. If you send ₦1,000 home, you will have no money to eat for the rest of the week. If you don't send it, you will sit in the exam hall picturing your younger brothers going to bed hungry.</p>
 <p>Your chest tightens. Your eyes sting. The formulas on the textbook page dissolve into a meaningless blur.</p>
-<p>This is the hidden crisis of millions of Nigerian undergraduates: <strong>Poverty-Induced Cognitive Scarcity</strong>. </p>
+<p>This is the hidden crisis of millions of Nigerian undergraduates: <strong>Poverty-Induced Cognitive Scarcity</strong>.</p>
 <p>When family survival is under acute threat, your brain enters survival mode, making abstract academic reasoning nearly impossible. Here is how to survive the psychological toll of severe financial pressure during your studies.</p>
-<hr />
+<hr>
 <h2 id="1-the-cognitive-bandwidth-theory-of-poverty">1. The Cognitive Bandwidth Theory of Poverty</h2>
 <p>Behavioral economists at Harvard and Princeton discovered that poverty imposes a massive <strong>"cognitive tax"</strong> on the human brain:</p>
 <blockquote>
-<h3 id="financial-scarcity-stress">Financial Scarcity &amp; Stress</h3>
-<ul>
-<li><strong>Mental Bandwidth Consumed by Survival</strong></li>
-<li><strong>Available Executive Function Drops by 13-14 IQ Points</strong></li>
-<li><strong>Reduced Memory Retention, High Distractibility, Exam Panic</strong></li>
-</ul>
+<p>### Financial Scarcity & Stress</p>
+<p>></p>
+<p>* **Mental Bandwidth Consumed by Survival**</p>
+<p>* **Available Executive Function Drops by 13-14 IQ Points**</p>
+<p>* **Reduced Memory Retention, High Distractibility, Exam Panic**</p>
 </blockquote>
-<p>When you are constantly calculating whether you can afford to print lecture handouts, whether your school fees docket will be signed, or how your family will pay rent, your working memory is occupied. </p>
+<p>When you are constantly calculating whether you can afford to print lecture handouts, whether your school fees docket will be signed, or how your family will pay rent, your working memory is occupied.</p>
 <p>You are not "lazy" or "unintelligent"; your cognitive bandwidth is simply overloaded by real-world survival threats.</p>
 <p>Learn how to manage parental expectations and academic stress in <a href="/blog/mental-health/parental-expectations-academic-pressure/">handling parental expectations and academic pressure in Nigeria</a>.</p>
-<hr />
-<h2 id="2-navigating-the-survivors-guilt-trap">2. Navigating the "Survivor's Guilt" Trap</h2>
-<p>Many students from economically vulnerable backgrounds experience intense guilt whenever they eat a good meal on campus:<br />
-* <em>"How can I buy fried fish when my mother is eating plain garri at home?"</em><br />
-* <em>"I should not be sitting in university when I could be doing odd jobs to help pay my siblings' primary school fees."</em></p>
-<p>You must reframe this dynamic through a long-term lens:<br />
-1. <strong>Starving on campus helps no one:</strong> Sacrificing your physical health or failing your examinations will not ease your family's poverty. It only guarantees that the cycle of financial instability continues for another generation.<br />
-2. <strong>Your degree is an institutional asset:</strong> Passing your courses, maintaining a competitive CGPA, and graduating is the most strategic long-term financial intervention you can provide for your lineage.<br />
-3. <strong>Protect your core operational budget:</strong> Keep enough funds to maintain baseline brain nutrition (protein, clean drinking water, basic carbohydrates).</p>
+<hr>
+<h2 id="2-navigating-the-survivor-s-guilt-trap">2. Navigating the "Survivor's Guilt" Trap</h2>
+<p>Many students from economically vulnerable backgrounds experience intense guilt whenever they eat a good meal on campus:</p>
+<ul>
+<li>*"How can I buy fried fish when my mother is eating plain garri at home?"*</li>
+<li>*"I should not be sitting in university when I could be doing odd jobs to help pay my siblings' primary school fees."*</li>
+</ul>
+<p>You must reframe this dynamic through a long-term lens:</p>
+<ol>
+<li>**Starving on campus helps no one:** Sacrificing your physical health or failing your examinations will not ease your family's poverty. It only guarantees that the cycle of financial instability continues for another generation.</li>
+<li>**Your degree is an institutional asset:** Passing your courses, maintaining a competitive CGPA, and graduating is the most strategic long-term financial intervention you can provide for your lineage.</li>
+<li>**Protect your core operational budget:** Keep enough funds to maintain baseline brain nutrition (protein, clean drinking water, basic carbohydrates).</li>
+</ol>
 <p>For tactical strategies on handling roommate food dynamics on a shoestring budget, see <a href="/blog/hostel/managing-food-sharing-roommate-conflicts/">managing food sharing and roommate conflicts in Nigerian hostels</a>.</p>
-<hr />
+<hr>
 <h2 id="3-communication-protocols-for-stressful-family-calls">3. Communication Protocols for Stressful Family Calls</h2>
 <p>You love your family, but receiving traumatic financial updates two hours before an examination causes autonomic nervous system collapse.</p>
 <p>Implement these boundaries during test weeks:</p>
-<table>
-<thead>
-<tr>
-<th>Scenario</th>
-<th>Ineffective Response</th>
-<th>High-Resilience Response</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Crisis call night before exam</strong></td>
-<td>Answer immediately, panic, argue, or cry for 3 hours</td>
-<td>Send pre-written text: <em>"Mum, my final exam is tomorrow at 8:00 AM. I will call you immediately after 2:00 PM once the paper is finished."</em></td>
-</tr>
-<tr>
-<td><strong>Demands for pocket money remittance</strong></td>
-<td>Empty your last feeding money and starve on campus</td>
-<td>Clear, loving truth: <em>"I currently have only ₦1,200 to last until Friday exam. I cannot send money right now, but I am praying and pushing."</em></td>
-</tr>
-<tr>
-<td><strong>Threats of school fee docket lockouts</strong></td>
-<td>Hide in lodge, skip exam, accept automatic F grade</td>
-<td>Approach Departmental Staff Adviser or HOD with a formal guarantor letter before exam morning</td>
-</tr>
-</tbody>
-</table>
+<p>| Scenario | Ineffective Response | High-Resilience Response |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Crisis call night before exam</strong> | Answer immediately, panic, argue, or cry for 3 hours | Send pre-written text: <em>"Mum, my final exam is tomorrow at 8:00 AM. I will call you immediately after 2:00 PM once the paper is finished."</em> |</p>
+<p>| <strong>Demands for pocket money remittance</strong> | Empty your last feeding money and starve on campus | Clear, loving truth: <em>"I currently have only ₦1,200 to last until Friday exam. I cannot send money right now, but I am praying and pushing."</em> |</p>
+<p>| <strong>Threats of school fee docket lockouts</strong> | Hide in lodge, skip exam, accept automatic F grade | Approach Departmental Staff Adviser or HOD with a formal guarantor letter before exam morning |</p>
 <p>Learn how to manage extended family demands without destroying your academic future in our upcoming deep dive on <a href="/blog/finances/">managing student black tax and family expectations</a>.</p>
-<hr />
+<hr>
 <h2 id="4-immediate-practical-interventions-for-campus-hunger">4. Immediate Practical Interventions for Campus Hunger</h2>
 <p>If financial scarcity is causing active physical hunger during exam preparation:</p>
 <ul>
-<li><strong>Form an Emergency Ration Pool:</strong> Join forces with one or two trustworthy coursemates to pool dry food ingredients (garri, rice, beans). Shared cooking cuts individual feeding costs by up to 55%.</li>
-<li><strong>Access Campus Religious Student Relief:</strong> Almost every major campus fellowship, student union government (SUG) welfare committee, and mosque student association operates an anonymous welfare pantry that provides food packs and small exam docket grants to distressed students. Swallow your pride and ask for these resources.</li>
-<li><strong>Keep High-Volume Satiety Staples:</strong> When funds are near zero, beans porridge, roasted groundnuts, and boiled eggs provide prolonged satiety and sustained amino acids for brain neurotransmitter synthesis at minimal cost.</li>
+<li>**Form an Emergency Ration Pool:** Join forces with one or two trustworthy coursemates to pool dry food ingredients (garri, rice, beans). Shared cooking cuts individual feeding costs by up to 55%.</li>
+<li>**Access Campus Religious Student Relief:** Almost every major campus fellowship, student union government (SUG) welfare committee, and mosque student association operates an anonymous welfare pantry that provides food packs and small exam docket grants to distressed students. Swallow your pride and ask for these resources.</li>
+<li>**Keep High-Volume Satiety Staples:** When funds are near zero, beans porridge, roasted groundnuts, and boiled eggs provide prolonged satiety and sustained amino acids for brain neurotransmitter synthesis at minimal cost.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-a-student-study-when-their-parents-call-crying-about-lack-of-food-or-money-at-home">How can a student study when their parents call crying about lack of food or money at home?</h3>
 <p>Establish compassionate communication boundaries during exam weeks. Inform your parents of your examination timetable in advance and set specific 15-minute weekly check-in times so urgent study blocks are not interrupted by acute panic calls.</p>
@@ -552,8 +534,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -737,8 +719,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -752,7 +734,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

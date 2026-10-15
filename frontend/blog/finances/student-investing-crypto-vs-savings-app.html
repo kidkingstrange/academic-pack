@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -311,76 +311,57 @@
 <p>Your roommate is staring at green and red candlestick charts on his laptop screen: <strong>Binance Futures.</strong></p>
 <p>He turns to you with wide, excited eyes: <em>"Bros! See! I entered a 25x long leverage position on Solana two hours ago with ₦10,000. It just hit ₦35,000! In three days, I will double my entire semester pocket money! Give me your ₦20,000; let me trade it for you."</em></p>
 <p>You look at your ₦20,000 monthly allowance sitting quietly in your bank account earning ₦12 interest.</p>
-<p>The temptation is overwhelming. </p>
+<p>The temptation is overwhelming.</p>
 <p>Why struggle to budget ₦20,000 for thirty days when you could potentially turn it into ₦80,000 in forty-eight hours?</p>
 <p>You transfer the ₦20,000.</p>
 <p>At 3:30 AM, a sudden market flash crash occurs. A liquidation notification pops up on his phone: <strong>"Your position has been liquidated. Total balance: $0.00."</strong></p>
-<p>Your feeding money is gone. </p>
+<p>Your feeding money is gone.</p>
 <p>Your exam is in twelve days. You sit in the dark, physically sick with shock.</p>
 <p>Every single semester, thousands of Nigerian undergraduates ruin their academic sessions gambling their school fees and feeding allowances on volatile crypto markets.</p>
 <p>Here is the hard financial reality: <strong>Crypto Speculation vs. High-Yield Fintech Savings for Students.</strong></p>
-<hr />
+<hr>
 <h2 id="1-the-asset-class-showdown-speculation-vs-capital-preservation">1. The Asset Class Showdown: Speculation vs. Capital Preservation</h2>
 <blockquote>
-<h3 id="volatile-speculation-crypto-futures">Volatile Speculation (Crypto / Futures)</h3>
-<ul>
-<li>Volatility: Up or down 30% - 70% in 24 hours</li>
-<li>Risk of Total Loss (Liquidation): Extremely High (90%+ for amateurs)</li>
-<li>Psychological Toll: Severe insomnia, panic checking screens every 10 mins</li>
-<li>Expected Value for Survival Money: CATASTROPHIC</li>
-<li><strong>CAPITAL PRESERVATION (High-Yield Fintech Vaults: PiggyVest / Cowrywise)</strong></li>
-<li>Volatility: ZERO (Backed by Federal Government Treasury Bills)</li>
-<li>Risk of Capital Loss: Near Zero (Secured &amp; Insured)</li>
-<li>Annualized Yield: 14% - 18% per annum</li>
-<li>Psychological Toll: Pure peace of mind; automated wealth accumulation</li>
-</ul>
+<p>### Volatile Speculation (Crypto / Futures)</p>
+<p>></p>
+<p>* Volatility: Up or down 30% - 70% in 24 hours</p>
+<p>* Risk of Total Loss (Liquidation): Extremely High (90%+ for amateurs)</p>
+<p>* Psychological Toll: Severe insomnia, panic checking screens every 10 mins</p>
+<p>* Expected Value for Survival Money: CATASTROPHIC</p>
+<p>* **CAPITAL PRESERVATION (High-Yield Fintech Vaults: PiggyVest / Cowrywise)**</p>
+<p>* Volatility: ZERO (Backed by Federal Government Treasury Bills)</p>
+<p>* Risk of Capital Loss: Near Zero (Secured & Insured)</p>
+<p>* Annualized Yield: 14% - 18% per annum</p>
+<p>* Psychological Toll: Pure peace of mind; automated wealth accumulation</p>
 </blockquote>
 <p>Review campus financial scam protection in <a href="/blog/finances/campus-money-scams-students-nigeria/">7 campus scams targeting broke students looking for cash</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-deadly-sins-of-student-crypto-speculation">2. The 3 Deadly Sins of Student Crypto Speculation</h2>
 <ol>
-<li><strong>Trading with "Survival Capital":</strong> The cardinal rule of finance is: <em>Never invest money you need to eat, pay rent, or write exams within the next 12 months.</em> When you trade with survival funds, fear paralyzes your decisions, guaranteeing panic-selling at the bottom.</li>
-<li><strong>The Futures Leverage Trap:</strong> Trading with 20x or 50x borrowed exchange leverage turns trading into roulette. A minor 2% market dip wipes out 100% of your student capital.</li>
-<li><strong>The "Crypto Guru" WhatsApp Signal Cartels:</strong> Following anonymous campus students who charge ₦5,000 for "VIP trade signals." In reality, they are gambling with other people's money to earn referral commissions.</li>
+<li>**Trading with "Survival Capital":** The cardinal rule of finance is: *Never invest money you need to eat, pay rent, or write exams within the next 12 months.* When you trade with survival funds, fear paralyzes your decisions, guaranteeing panic-selling at the bottom.</li>
+<li>**The Futures Leverage Trap:** Trading with 20x or 50x borrowed exchange leverage turns trading into roulette. A minor 2% market dip wipes out 100% of your student capital.</li>
+<li>**The "Crypto Guru" WhatsApp Signal Cartels:** Following anonymous campus students who charge ₦5,000 for "VIP trade signals." In reality, they are gambling with other people's money to earn referral commissions.</li>
 </ol>
 <p>Review student emergency fund building in <a href="/blog/finances/student-emergency-fund-saving/">emergency fund for students: saving when you have little</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-power-of-guaranteed-compound-interest">3. The Power of Guaranteed Compound Interest</h2>
 <p>Look at what happens when you lock small surplus student funds in a high-yield vault:</p>
-<table>
-<thead>
-<tr>
-<th>Savings Habit</th>
-<th>6-Month Yield (16% P.A.)</th>
-<th>12-Month Yield</th>
-<th>Capital Safety</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>₦5,000 Saved Monthly</strong></td>
-<td>₦31,400</td>
-<td>₦65,200</td>
-<td><strong>100% Guaranteed</strong></td>
-</tr>
-<tr>
-<td><strong>₦10,000 Saved Monthly</strong></td>
-<td>₦62,800</td>
-<td>₦130,400</td>
-<td><strong>100% Guaranteed</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Savings Habit | 6-Month Yield (16% P.A.) | 12-Month Yield | Capital Safety |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>₦5,000 Saved Monthly</strong> | ₦31,400 | ₦65,200 | <strong>100% Guaranteed</strong> |</p>
+<p>| <strong>₦10,000 Saved Monthly</strong>| ₦62,800 | ₦130,400 | <strong>100% Guaranteed</strong> |</p>
 <p>A locked ₦65,000 vault at the end of the session completely funds your final clearance, new textbooks, and next session's hostel deposit—with zero sleepless nights and zero risk of liquidation.</p>
 <p>Learn bookkeeping rules for student entrepreneurs in <a href="/blog/finances/student-business-bookkeeping-basics/">student business bookkeeping basics: separating business cash from food</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-hierarchy-of-wealth-for-undergraduates">4. The Hierarchy of Wealth for Undergraduates</h2>
-<p>Before you invest a single naira in high-risk speculative markets:<br />
-1. <strong>Tier 1:</strong> 100% of your tuition, rent, and basic 30-day feeding must be fully secured.<br />
-2. <strong>Tier 2:</strong> A ₦30,000 emergency medical cash reserve locked in a high-yield fintech vault.<br />
-3. <strong>Tier 3:</strong> Only if you have surplus discretionary cash (gifts, freelance profits) should you experiment with long-term crypto spot holdings.</p>
+<p>Before you invest a single naira in high-risk speculative markets:</p>
+<ol>
+<li>**Tier 1:** 100% of your tuition, rent, and basic 30-day feeding must be fully secured.</li>
+<li>**Tier 2:** A ₦30,000 emergency medical cash reserve locked in a high-yield fintech vault.</li>
+<li>**Tier 3:** Only if you have surplus discretionary cash (gifts, freelance profits) should you experiment with long-term crypto spot holdings.</li>
+</ol>
 <p>Protect your mental bandwidth. Your primary investment right now is your prefrontal cortex and your CGPA. Graduate first, build capital, and invest from a position of unshakeable strength.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="should-nigerian-university-students-invest-their-feeding-allowance-in-cryptocurrency">Should Nigerian university students invest their feeding allowance in cryptocurrency?</h3>
 <p>Never. Cryptocurrency markets are highly volatile speculative assets. Investing survival funds (feeding or school fees) in crypto during a market downturn triggers acute financial bankruptcy and exam panic.</p>
@@ -554,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -739,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -754,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -93,7 +93,7 @@ Recovering your CGPA requires more than motivation; it requires an organized sys
     <li><strong>How to Score High in Any Exam</strong> — Tactical marking scheme exploitation manual</li>
     <li><strong>30-Day Semester Study Tracker</strong> — Spaced repetition accountability schedule</li>
   </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Unlock The Complete 7-Part System (₦2,000 Early-Bird) &rarr;</a>
+  <a href="/academic-comeback-package" class="blog-cta-box__btn">Unlock The Complete 7-Part System (₦5,000 Early-Bird) &rarr;</a>
 </div>
 
 ---

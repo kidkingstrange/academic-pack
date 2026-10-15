@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,102 +308,73 @@
       <div class="article-body">
         <h1 id="bedbug-infestation-in-hostels-eradication-steps">Bedbug Infestation in Hostels: Eradication Steps</h1>
 <p>It is 2:45 AM. You have been tossing and turning in your hostel bed for four hours.</p>
-<p>A sharp, intensely itchy prickling sensation flares along your lower back. </p>
+<p>A sharp, intensely itchy prickling sensation flares along your lower back.</p>
 <p>You swat your hand against your skin. You feel another bite on your elbow. Then another on your ankle.</p>
-<p>You turn on your smartphone flashlight and peel back your white bedsheet. </p>
+<p>You turn on your smartphone flashlight and peel back your white bedsheet.</p>
 <p>There, marching across the seams of your university-issued foam mattress, are dozens of flat, oval-shaped, reddish-brown parasites. As you press your thumb against one, it pops with a sickening smell of stale iron and sweet blood.</p>
 <p>Bedbugs (<em>Cimex lectularius</em>).</p>
 <p>Welcome to the hidden, humiliating scourge of university hostel living in Nigeria.</p>
-<p>From Jaja Hall in UNILAG to Awo Hall in OAU, from Sultan Bello in UI to PG Hostels in UNN, bedbug infestations are an institutional epidemic. </p>
+<p>From Jaja Hall in UNILAG to Awo Hall in OAU, from Sultan Bello in UI to PG Hostels in UNN, bedbug infestations are an institutional epidemic.</p>
 <p>They do not care whether you are a First Class scholar or on academic probation. They hide inside wooden bunk joint crevices, burrow into mattress foams, and feed silently on your blood every night.</p>
 <p>Chronic bedbug bites cause severe allergic dermatitis, acute iron-deficiency anemia, and unbearable sleep deprivation that destroys your ability to concentrate during examinations.</p>
 <p>Worse, many students resort to lethal, illegal agricultural pesticides (like Sniper) that poison room occupants.</p>
 <p>Here is the scientific, non-toxic, and permanent <strong>3-Phase Thermal Eradication Protocol</strong> to purge bedbugs from your room forever.</p>
-<hr />
+<hr>
 <h2 id="1-the-lethal-dangers-of-sniper-and-agricultural-poisons">1. The Lethal Dangers of Sniper and Agricultural Poisons</h2>
 <p>Before discussing eradication, we must address the fatal mistake thousands of undergraduates make every session: <strong>Spraying Sniper (Dichlorvos) indoors.</strong></p>
-<p><strong>The Organophosphate Warning:</strong><br />
-* NAFDAC Domestic Ban: Dichlorvos is classified as a hazardous chemical — Absorption Pathway: Inhaled through lungs and absorbed through bed linen — Acute Toxicity Symptoms: Pulmonary edema, seizures, nausea, and cardiac arrest — Real Campus Tragedy: Multiple university fatalities recorded from indoor spraying</p>
-<p>Sniper was formulated for outdoor agricultural pest control, not indoor living quarters. Spraying it on your mattress, sealing the windows, and sleeping there twenty-four hours later is suicidal. </p>
+<p><strong>The Organophosphate Warning:</strong></p>
+<ul>
+<li>NAFDAC Domestic Ban: Dichlorvos is classified as a hazardous chemical — Absorption Pathway: Inhaled through lungs and absorbed through bed linen — Acute Toxicity Symptoms: Pulmonary edema, seizures, nausea, and cardiac arrest — Real Campus Tragedy: Multiple university fatalities recorded from indoor spraying</li>
+</ul>
+<p>Sniper was formulated for outdoor agricultural pest control, not indoor living quarters. Spraying it on your mattress, sealing the windows, and sleeping there twenty-four hours later is suicidal.</p>
 <p>Furthermore, bedbugs have developed genetic resistance to common pyrethroid insecticides. The only weapon bedbugs cannot evolve resistance against is <strong>HEAT</strong>.</p>
-<hr />
+<hr>
 <h2 id="2-the-3-phase-thermal-eradication-protocol">2. The 3-Phase Thermal Eradication Protocol</h2>
 <p>Bedbugs and their microscopic eggs cannot survive temperatures above <strong>48°C (118°F)</strong>. In tropical Nigeria, where afternoon tarmac temperatures exceed 35°C and boiling water is easily produced, heat is your most powerful free insecticide.</p>
-<table>
-<thead>
-<tr>
-<th>PHASE 1: The Boiling Water CREVICE FLUSH (Morning 8:00 AM)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- Boil two large 10-liter pots of water to 100°C</td>
-</tr>
-<tr>
-<td>- Strip the room completely; pull all wooden bunks outside</td>
-</tr>
-<tr>
-<td>- Pour boiling water directly into every joint, bolt hole,</td>
-</tr>
-<tr>
-<td>and structural crevice of the metal/wood bed frame</td>
-</tr>
-<tr>
-<td>- Instant 100% mortality of adult bugs and buried eggs</td>
-</tr>
-<tr>
-<td>PHASE 2: The Solar Heat Trap (10:00 AM – 4:00 PM)</td>
-</tr>
-<tr>
-<td>- Wrap the stripped foam mattress inside heavy BLACK nylon</td>
-</tr>
-<tr>
-<td>tarpaulin or industrial waste bags sealed with tape</td>
-</tr>
-<tr>
-<td>- Place the sealed black bundle on concrete in direct sun</td>
-</tr>
-<tr>
-<td>- The greenhouse effect drives interior temp above 60°C</td>
-</tr>
-<tr>
-<td>PHASE 3: The Chemical Quarantine &amp; Encasement (5:00 PM)</td>
-</tr>
-<tr>
-<td>- Dust food-grade Diatomaceous Earth (DE) along baseboards</td>
-</tr>
-<tr>
-<td>- Encase mattress in waterproof zippered PVC protector</td>
-</tr>
-<tr>
-<td>- Pull bed 6 inches away from walls; zero sheet overhang</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| PHASE 1: The Boiling Water CREVICE FLUSH (Morning 8:00 AM) |</p>
+<p>| --- |</p>
+<p>| - Boil two large 10-liter pots of water to 100°C |</p>
+<p>| - Strip the room completely; pull all wooden bunks outside |</p>
+<p>| - Pour boiling water directly into every joint, bolt hole, |</p>
+<p>| and structural crevice of the metal/wood bed frame |</p>
+<p>| - Instant 100% mortality of adult bugs and buried eggs |</p>
+<p>| PHASE 2: The Solar Heat Trap (10:00 AM – 4:00 PM) |</p>
+<p>| - Wrap the stripped foam mattress inside heavy BLACK nylon |</p>
+<p>| tarpaulin or industrial waste bags sealed with tape |</p>
+<p>| - Place the sealed black bundle on concrete in direct sun |</p>
+<p>| - The greenhouse effect drives interior temp above 60°C |</p>
+<p>| PHASE 3: The Chemical Quarantine & Encasement (5:00 PM) |</p>
+<p>| - Dust food-grade Diatomaceous Earth (DE) along baseboards |</p>
+<p>| - Encase mattress in waterproof zippered PVC protector |</p>
+<p>| - Pull bed 6 inches away from walls; zero sheet overhang |</p>
+<hr>
 <h2 id="3-treating-your-clothing-and-academic-gear">3. Treating Your Clothing and Academic Gear</h2>
 <p>Bedbugs hitchhike inside backpack seams, jeans pockets, and textbook bindings:</p>
 <ol>
-<li><strong>The Hot-Wash Wash:</strong> Wash all bedsheets, pillowcases, and clothing in boiling or extremely hot water. Hang them in open sun until bone dry.</li>
-<li><strong>Ironing Seams with Steam:</strong> Use a hot electric iron to vigorously iron the inside seams of your jeans, jackets, and mattress piping. The hot steam penetrates deep into fabric folds, popping any remaining viable eggs.</li>
-<li><strong>The Freezer Trick for Books:</strong> If bedbugs have infested your study notebooks or thick textbooks, seal the books in a plastic ziplock bag and place them inside a deep freezer for 72 hours. Sub-zero temperatures are lethal to nymphs.</li>
+<li>**The Hot-Wash Wash:** Wash all bedsheets, pillowcases, and clothing in boiling or extremely hot water. Hang them in open sun until bone dry.</li>
+<li>**Ironing Seams with Steam:** Use a hot electric iron to vigorously iron the inside seams of your jeans, jackets, and mattress piping. The hot steam penetrates deep into fabric folds, popping any remaining viable eggs.</li>
+<li>**The Freezer Trick for Books:** If bedbugs have infested your study notebooks or thick textbooks, seal the books in a plastic ziplock bag and place them inside a deep freezer for 72 hours. Sub-zero temperatures are lethal to nymphs.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="4-long-term-perimeter-defense">4. Long-Term Perimeter Defense</h2>
-<p>Once your bed is cleared, prevent re-infestation from neighboring infested rooms:<br />
-* <strong>The Interceptor Traps:</strong> Place the four legs of your bed frame inside plastic cups filled with a thin layer of cooking oil or soapy water. Bedbugs cannot fly or jump; they must crawl up bed legs. The oil traps them instantly.<br />
-* <strong>Keep Space from Walls:</strong> Never push your bed flush against the wall. Bedbugs navigate along wall cracks and drop onto beds from baseboards.</p>
-<p>For strategies on selecting cleaner rooms during balloting, see <a href="/blog/hostel-and-accommodation/university-hostel-balloting-tips-bed-space/">university hostel balloting tips to secure bed space</a>. </p>
-<p>If persistent bites have triggered eczema or allergic dermatitis, read our skin health survival guide in <a href="/blog/hostel-and-accommodation/campus-hard-water-skin-reaction/">sensitive skin students water allergies and hostel bathing</a>. </p>
+<p>Once your bed is cleared, prevent re-infestation from neighboring infested rooms:</p>
+<ul>
+<li>**The Interceptor Traps:** Place the four legs of your bed frame inside plastic cups filled with a thin layer of cooking oil or soapy water. Bedbugs cannot fly or jump; they must crawl up bed legs. The oil traps them instantly.</li>
+<li>**Keep Space from Walls:** Never push your bed flush against the wall. Bedbugs navigate along wall cracks and drop onto beds from baseboards.</li>
+</ul>
+<p>For strategies on selecting cleaner rooms during balloting, see <a href="/blog/hostel-and-accommodation/university-hostel-balloting-tips-bed-space/">university hostel balloting tips to secure bed space</a>.</p>
+<p>If persistent bites have triggered eczema or allergic dermatitis, read our skin health survival guide in <a href="/blog/hostel-and-accommodation/campus-hard-water-skin-reaction/">sensitive skin students water allergies and hostel bathing</a>.</p>
 <p>Finally, recover your sleep rhythm and eliminate nocturnal panic using our restorative sleep framework in <a href="/blog/mental-health/">dealing with chronic insomnia and sleep anxiety in university</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="clean-living-hostel-wellness-support">🌿 Clean Living &amp; Hostel Wellness Support</h3>
+<p>### 🌿 Clean Living & Hostel Wellness Support</p>
 <p>Battling hostel pests, chronic itching, or allergic reactions on campus?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with health-conscious peers sharing practical sanitation hacks, natural pest treatments, and wellness advice for university life.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with health-conscious peers sharing practical sanitation hacks, natural pest treatments, and wellness advice for university life.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-are-bedbug-infestations-so-rampant-in-nigerian-federal-university-hostels">Why are bedbug infestations so rampant in Nigerian federal university hostels?</h3>
 <p>Decades-old wooden bunks, cracked plaster walls, high student density, and continuous recycling of institutional spring mattresses create ideal breeding grounds with endless host availability.</p>
@@ -577,8 +548,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -762,8 +733,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -777,7 +748,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

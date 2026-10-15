@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Recovering Your Sleep Debt After Heavy Client Rush Week",
       "description": "How working university students can systematically recover from chronic sleep deprivation and cognitive exhaustion after intense client delivery sprints.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -264,100 +264,70 @@
 
       <!-- Article Body -->
       <div class="article-body">
-        <p>It is Saturday morning. </p>
-<p>Over the past five days, you pulled off what felt like an impossible miracle:<br />
-* You submitted a major remote website overhaul for an overseas client who messaged you at 2:00 AM every night.<br />
-* You wrote two Continuous Assessment tests in your department.<br />
-* You attended four 8:00 AM lectures after sleeping for only 2.5 hours per night.</p>
+        <p>It is Saturday morning.</p>
+<p>Over the past five days, you pulled off what felt like an impossible miracle:</p>
+<ul>
+<li>You submitted a major remote website overhaul for an overseas client who messaged you at 2:00 AM every night.</li>
+<li>You wrote two Continuous Assessment tests in your department.</li>
+<li>You attended four 8:00 AM lectures after sleeping for only 2.5 hours per night.</li>
+</ul>
 <p>You survived the rush. The client paid your invoice, and you did not miss your tests.</p>
-<p>But as you lie on your hostel mattress at 10:00 AM on Saturday, your body feels like it has been hit by a trailer:<br />
-* Your eyes burn behind your eyelids.<br />
-* A dull, throbbing headache pulses in your temples.<br />
-* Your brain feels foggy, unable to process simple sentences.<br />
-* Even though you have free hours, you lack the energy to study or enjoy yourself.</p>
-<p>You are suffering from <strong>acute student sleep debt</strong>. </p>
+<p>But as you lie on your hostel mattress at 10:00 AM on Saturday, your body feels like it has been hit by a trailer:</p>
+<ul>
+<li>Your eyes burn behind your eyelids.</li>
+<li>A dull, throbbing headache pulses in your temples.</li>
+<li>Your brain feels foggy, unable to process simple sentences.</li>
+<li>Even though you have free hours, you lack the energy to study or enjoy yourself.</li>
+</ul>
+<p>You are suffering from <strong>acute student sleep debt</strong>.</p>
 <p>If you do not recover strategically, your cognitive performance will tank for the next two weeks, setting off a downward spiral of missed lectures, low energy, and poor exam preparation.</p>
 <p>Here is the science-backed protocol for working university students to clear sleep debt safely without destroying their circadian biology.</p>
-<hr />
+<hr>
 <h2 id="the-myth-of-the-14-hour-sunday-sleep-marathon">The Myth of the 14-Hour Sunday Sleep Marathon</h2>
 <p>When working students experience severe exhaustion, their instinctive reaction is to close their curtains on Saturday night and sleep until 2:00 PM on Sunday afternoon.</p>
 <p>While this feels intuitive, it often makes you feel <strong>worse</strong>:</p>
 <blockquote>
-<h3 id="the-social-jetlag-cycle">The 'Social Jetlag' Cycle</h3>
-<ul>
-<li>Sleep 14 hours on Sunday -&gt; Wake up at 2:00 PM groggy &amp; disoriented ↓ Cannot fall asleep on Sunday night until 3:30 AM ↓ Alarm rings at 6:30 AM for Monday morning class ↓ Begin Monday morning in acute sleep deficit all over again</li>
-</ul>
+<p>### The 'Social Jetlag' Cycle</p>
+<p>></p>
+<p>* Sleep 14 hours on Sunday -> Wake up at 2:00 PM groggy & disoriented ↓ Cannot fall asleep on Sunday night until 3:30 AM ↓ Alarm rings at 6:30 AM for Monday morning class ↓ Begin Monday morning in acute sleep deficit all over again</p>
 </blockquote>
 <p>Sleeping excessively past your normal wake-up window induces <strong>social jetlag</strong>, throwing off your internal suprachiasmatic nucleus (the brain's master biological clock).</p>
-<hr />
+<hr>
 <h2 id="the-4-night-sleep-restitution-protocol">The 4-Night Sleep Restitution Protocol</h2>
 <p>Instead of trying to wipe out a 15-hour sleep deficit in one afternoon, spread your recovery across a structured 4-night window:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Night</th>
-<th style="text-align: left;">Strategy</th>
-<th style="text-align: left;">Bedtime Target</th>
-<th style="text-align: left;">Wake-up Target</th>
-<th style="text-align: left;">Total Sleep</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Night 1 (Friday)</strong></td>
-<td style="text-align: left;"><strong>Immediate Stabilization</strong></td>
-<td style="text-align: left;">10:00 PM</td>
-<td style="text-align: left;">7:30 AM</td>
-<td style="text-align: left;">9.5 Hours</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Night 2 (Saturday)</strong></td>
-<td style="text-align: left;"><strong>REM Consolidation</strong></td>
-<td style="text-align: left;">10:30 PM</td>
-<td style="text-align: left;">7:30 AM</td>
-<td style="text-align: left;">9.0 Hours</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Night 3 (Sunday)</strong></td>
-<td style="text-align: left;"><strong>Circadian Alignment</strong></td>
-<td style="text-align: left;">11:00 PM</td>
-<td style="text-align: left;">6:30 AM</td>
-<td style="text-align: left;">7.5 Hours</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Night 4 (Monday)</strong></td>
-<td style="text-align: left;"><strong>Baseline Rhythm</strong></td>
-<td style="text-align: left;">11:00 PM</td>
-<td style="text-align: left;">6:30 AM</td>
-<td style="text-align: left;">7.5 Hours</td>
-</tr>
-</tbody>
-</table>
+<p>| Night | Strategy | Bedtime Target | Wake-up Target | Total Sleep |</p>
+<p>| :--- | :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Night 1 (Friday)</strong> | <strong>Immediate Stabilization</strong> | 10:00 PM | 7:30 AM | 9.5 Hours |</p>
+<p>| <strong>Night 2 (Saturday)</strong> | <strong>REM Consolidation</strong> | 10:30 PM | 7:30 AM | 9.0 Hours |</p>
+<p>| <strong>Night 3 (Sunday)</strong> | <strong>Circadian Alignment</strong> | 11:00 PM | 6:30 AM | 7.5 Hours |</p>
+<p>| <strong>Night 4 (Monday)</strong> | <strong>Baseline Rhythm</strong> | 11:00 PM | 6:30 AM | 7.5 Hours |</p>
 <p>By capping morning wake-up times at 7:30 AM even on the weekend, you ensure sufficient sleep pressure accumulates to let you fall asleep easily on Sunday night.</p>
-<hr />
+<hr>
 <h2 id="3-critical-biological-reset-levers">3 Critical Biological Reset Levers</h2>
 <p>To speed up neurological recovery after a brutal work sprint, deploy these physiological levers:</p>
 <h3 id="1-morning-direct-sunlight-viewing">1. Morning Direct Sunlight Viewing</h3>
-<p>Within 30 minutes of waking up on your recovery days, step outside your hostel room and view natural sunlight for 10 to 15 minutes. </p>
+<p>Within 30 minutes of waking up on your recovery days, step outside your hostel room and view natural sunlight for 10 to 15 minutes.</p>
 <p>Sunlight triggers an immediate cortisol pulse that resets your biological clock, clears morning grogginess, and sets an internal timer that releases natural melatonin 14 hours later.</p>
-<h3 id="2-the-1200-pm-caffeine-cut-off">2. The 12:00 PM Caffeine Cut-Off</h3>
-<p>During client rush weeks, working students survive on Nescafe, energy drinks, and cola. </p>
+<h3 id="2-the-12-00-pm-caffeine-cut-off">2. The 12:00 PM Caffeine Cut-Off</h3>
+<p>During client rush weeks, working students survive on Nescafe, energy drinks, and cola.</p>
 <p>Caffeine has a half-life of 5 to 7 hours and a quarter-life of up to 12 hours. Drinking coffee at 4:00 PM means 25% of that stimulant is still binding to your adenosine receptors at midnight, preventing your brain from entering Stage 3 slow-wave restorative deep sleep. Cut off all caffeine by noon during recovery weeks.</p>
 <h3 id="3-the-90-minute-afternoon-power-nap">3. The 90-Minute Afternoon Power Nap</h3>
-<p>If you hit an overwhelming wall of exhaustion at 2:00 PM on Saturday or Sunday, do not sleep for 4 hours. </p>
-<p>Take a <strong>90-minute sleep cycle nap</strong>:<br />
-* 90 minutes corresponds to one complete ultradian sleep cycle (Light Sleep → Deep Slow-Wave Sleep → REM Sleep).<br />
-* Waking up at the 90-minute mark allows you to emerge from light sleep naturally, feeling refreshed rather than groggy.</p>
+<p>If you hit an overwhelming wall of exhaustion at 2:00 PM on Saturday or Sunday, do not sleep for 4 hours.</p>
+<p>Take a <strong>90-minute sleep cycle nap</strong>:</p>
+<ul>
+<li>90 minutes corresponds to one complete ultradian sleep cycle (Light Sleep → Deep Slow-Wave Sleep → REM Sleep).</li>
+<li>Waking up at the 90-minute mark allows you to emerge from light sleep naturally, feeling refreshed rather than groggy.</li>
+</ul>
 <p>If you struggle to stay awake during early classes after late work shifts, read our tactical survival guide on <a href="/blog/balancing-work-and-school/student-night-shift-worker-survival/">staying alert during 8am classes after night shifts</a>.</p>
-<hr />
+<hr>
 <h2 id="nutritional-support-for-brain-fog-clearance">Nutritional Support for Brain Fog Clearance</h2>
 <p>Chronic sleep deprivation causes systemic neuroinflammation and depletes cellular electrolytes. Accelerate your physical recovery with these affordable campus staples:</p>
 <ul>
-<li><strong>Hydration with Electrolytes:</strong> Drink 1 liter of clean water mixed with a pinch of sea salt and lemon or consume fresh coconut water to restore intracellular hydration.</li>
-<li><strong>Complex Carbs &amp; Protein:</strong> Eat boiled eggs, beans, or fresh fish rather than refined sugary pastries and instant noodles that cause volatile insulin spikes.</li>
-<li><strong>Magnesium-Rich Foods:</strong> Bananas and groundnuts provide bioavailable magnesium, which helps relax your central nervous system before bedtime.</li>
+<li>**Hydration with Electrolytes:** Drink 1 liter of clean water mixed with a pinch of sea salt and lemon or consume fresh coconut water to restore intracellular hydration.</li>
+<li>**Complex Carbs & Protein:** Eat boiled eggs, beans, or fresh fish rather than refined sugary pastries and instant noodles that cause volatile insulin spikes.</li>
+<li>**Magnesium-Rich Foods:** Bananas and groundnuts provide bioavailable magnesium, which helps relax your central nervous system before bedtime.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="action-checklist-post-sprint-sleep-recovery">Action Checklist: Post-Sprint Sleep Recovery</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Establish an ironclad 10:00 PM bedtime on Friday night following your work sprint.</li>
@@ -532,8 +502,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -717,8 +687,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -732,7 +702,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

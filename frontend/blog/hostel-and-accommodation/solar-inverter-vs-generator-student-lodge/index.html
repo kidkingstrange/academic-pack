@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,48 +309,54 @@
         <h1 id="solar-inverter-power-vs-small-generator-student-setup">Solar Inverter Power vs Small Generator: Student Setup</h1>
 <p>When the national electrical grid collapses in a Nigerian university town, your academic engine threatens to grind to a halt.</p>
 <p>Your laptop battery dies at 14% midway through compiling code or analyzing lab data. Your phone drops to 4%, cutting you off from course reps' updates. Your room becomes a sweltering furnace, and mosquitoes swarm in the dark.</p>
-<p>To survive, off-campus students turn to two off-grid energy sources:<br />
-1. <strong>The Classic Small Generator:</strong> The ubiquitous 0.9kVA petrol generator (<em>"I-pass-my-neighbor"</em> or Tiger TG950).<br />
-2. <strong>The Modern Compact Solar Inverter:</strong> A 150W–300W rooftop solar panel paired with a deep-cycle battery and pure sine wave inverter.</p>
+<p>To survive, off-campus students turn to two off-grid energy sources:</p>
+<ol>
+<li>**The Classic Small Generator:** The ubiquitous 0.9kVA petrol generator (*"I-pass-my-neighbor"* or Tiger TG950).</li>
+<li>**The Modern Compact Solar Inverter:** A 150W–300W rooftop solar panel paired with a deep-cycle battery and pure sine wave inverter.</li>
+</ol>
 <p>With petrol prices surging past ₦900 per liter across Nigeria, the small generator has turned from a cheap student tool into an unsustainable financial furnace.</p>
 <p>Here is the operational, financial, and safety comparison.</p>
-<hr />
+<hr>
 <h2 id="1-the-fuel-trap-the-shocking-true-cost-of-petrol">1. The Fuel Trap: The Shocking True Cost of Petrol</h2>
 <p>Consider the operational cash burn of fueling a small 0.9kVA generator in 2026:</p>
 <ul>
-<li><strong>Daily Fuel Consumption:</strong> 2.5 liters to run from 7:00 PM to 11:30 PM (4.5 hours of evening study).</li>
-<li><strong>Daily Cost at ₦950/Liter:</strong> <strong>₦2,375 per evening</strong>.</li>
-<li><strong>Monthly Fuel Expense (25 days):</strong> <strong>₦59,375</strong>.</li>
-<li><strong>Session Fuel Expense (8 active months):</strong> <strong>₦475,000</strong>.</li>
-<li><strong>Engine Maintenance:</strong> Spark plugs, 2-stroke engine oil, carburettor cleaning = ₦35,000 annually.</li>
+<li>**Daily Fuel Consumption:** 2.5 liters to run from 7:00 PM to 11:30 PM (4.5 hours of evening study).</li>
+<li>**Daily Cost at ₦950/Liter:** **₦2,375 per evening**.</li>
+<li>**Monthly Fuel Expense (25 days):** **₦59,375**.</li>
+<li>**Session Fuel Expense (8 active months):** **₦475,000**.</li>
+<li>**Engine Maintenance:** Spark plugs, 2-stroke engine oil, carburettor cleaning = ₦35,000 annually.</li>
 </ul>
 <p>Over a single academic session, feeding a cheap ₦75,000 generator costs nearly <strong>half a million naira</strong> in combustible fuel.</p>
-<p>Contrast this with a <strong>Mini Solar Inverter Setup</strong>:<br />
-* <strong>Initial Capital Outlay (150W Panel + 100Ah Battery + Inverter):</strong> ₦185,000.<br />
-* <strong>Monthly Fuel Cost:</strong> <strong>₦0.00</strong>.<br />
-* <strong>Session Maintenance:</strong> Zero fuel, zero oil, silent operation.</p>
+<p>Contrast this with a <strong>Mini Solar Inverter Setup</strong>:</p>
+<ul>
+<li>**Initial Capital Outlay (150W Panel + 100Ah Battery + Inverter):** ₦185,000.</li>
+<li>**Monthly Fuel Cost:** **₦0.00**.</li>
+<li>**Session Maintenance:** Zero fuel, zero oil, silent operation.</li>
+</ul>
 <p>A solar setup pays for itself entirely within 90 days. From Day 91 onward, you study with 100% free sunlight.</p>
 <p>Review gadget safety during electrical surges in <a href="/blog/hostel-and-accommodation/protecting-gadgets-power-surges-hostel/">protecting laptops and phones from voltage surges in hostels</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-noise-and-security-disadvantage-of-generators">2. The Noise and Security Disadvantage of Generators</h2>
-<p>Fuel cost is only half the battle:<br />
-* <strong>The Noise Penalty:</strong> The deafening clatter of twenty small generators screaming in a student lodge compound destroys the cognitive quiet needed for deep retention. You cannot read complex mathematical derivations with a two-stroke engine vibrating through your window.<br />
-* <strong>The Theft Vector:</strong> Petrol generators left outside on verandas are high-priority targets for night thieves. Chaining them with steel cables provides only modest resistance.<br />
-* <strong>The Carbon Monoxide Threat:</strong> Generator exhaust contains fatal carbon monoxide. Every session, undergraduates tragically lose their lives when generator fumes seep into bedrooms through open louvres during night storms.</p>
+<p>Fuel cost is only half the battle:</p>
+<ul>
+<li>**The Noise Penalty:** The deafening clatter of twenty small generators screaming in a student lodge compound destroys the cognitive quiet needed for deep retention. You cannot read complex mathematical derivations with a two-stroke engine vibrating through your window.</li>
+<li>**The Theft Vector:** Petrol generators left outside on verandas are high-priority targets for night thieves. Chaining them with steel cables provides only modest resistance.</li>
+<li>**The Carbon Monoxide Threat:** Generator exhaust contains fatal carbon monoxide. Every session, undergraduates tragically lose their lives when generator fumes seep into bedrooms through open louvres during night storms.</li>
+</ul>
 <p>Solar panels mounted securely on the roof produce <strong>zero noise, zero fumes, and zero fire risk</strong>.</p>
 <p>Learn practical low-light revision habits in <a href="/blog/hostel-and-accommodation/surviving-hostel-power-outage-lighting-gadgets/">surviving hostel power outages: lighting and gadget backup</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-recommended-student-solar-blueprint">3. The Recommended Student Solar Blueprint</h2>
 <p>If you want uninterrupted study autonomy, deploy this compact, high-efficiency specification:</p>
 <ol>
-<li><strong>One 180W or 200W Monocrystalline Solar Panel:</strong> High conversion efficiency even on cloudy or rainy days.</li>
-<li><strong>One 100Ah 12V Deep-Cycle Tubular or LiFePO4 Battery:</strong> Delivers 800 to 1,000 watt-hours of usable storage.</li>
-<li><strong>One 30A MPPT or PWM Solar Charge Controller:</strong> Prevents battery overcharging and optimizes solar current.</li>
-<li><strong>One 500W Pure Sine Wave Inverter:</strong> Safe for delicate laptop charging bricks without motherboard coil-whine.</li>
-<li><strong>Direct 12V DC Accessories:</strong> Use a 12V DC rechargeable fan and 12V LED bulbs directly from the battery to avoid inverter conversion efficiency loss.</li>
+<li>**One 180W or 200W Monocrystalline Solar Panel:** High conversion efficiency even on cloudy or rainy days.</li>
+<li>**One 100Ah 12V Deep-Cycle Tubular or LiFePO4 Battery:** Delivers 800 to 1,000 watt-hours of usable storage.</li>
+<li>**One 30A MPPT or PWM Solar Charge Controller:** Prevents battery overcharging and optimizes solar current.</li>
+<li>**One 500W Pure Sine Wave Inverter:** Safe for delicate laptop charging bricks without motherboard coil-whine.</li>
+<li>**Direct 12V DC Accessories:** Use a 12V DC rechargeable fan and 12V LED bulbs directly from the battery to avoid inverter conversion efficiency loss.</li>
 </ol>
 <p>To reduce charging expenses at commercial POS centers during campus outages, read our guide on <a href="/blog/finances/">saving money on phone charging and POS fees during blackouts</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-typical-setup-cost-for-a-student-solar-inverter-system-in-nigeria">What is the typical setup cost for a student solar inverter system in Nigeria?</h3>
 <p>A basic, high-efficiency student DC solar setup (150W mono solar panel, 100Ah deep-cycle or lithium battery, 30A MPPT controller, and 500W pure sine wave inverter) costs approximately ₦160,000 to ₦240,000 complete with installation.</p>
@@ -524,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -709,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -724,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

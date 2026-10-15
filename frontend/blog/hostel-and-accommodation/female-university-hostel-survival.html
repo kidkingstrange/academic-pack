@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,78 +306,57 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="female-hostels-privacy-sanitation-survival-guide">Female Hostels: Privacy &amp; Sanitation Survival Guide</h1>
+        <h1 id="female-hostels-privacy-sanitation-survival-guide">Female Hostels: Privacy & Sanitation Survival Guide</h1>
 <p>It is 6:30 AM in a public university female hall of residence—Moremi Hall in UNILAG, Queen Idia Hall in UI, or Moremi Hall in OAU.</p>
-<p>The long tiled corridor is a whirlwind of intense domestic activity. </p>
-<p>Dozens of young women in satin bonnets, wrappers, and flip-flops are navigating past each other. </p>
-<p>In the communal bathroom block, steam rises as twenty students wait in line with plastic buckets outside six shower cubicles. </p>
+<p>The long tiled corridor is a whirlwind of intense domestic activity.</p>
+<p>Dozens of young women in satin bonnets, wrappers, and flip-flops are navigating past each other.</p>
+<p>In the communal bathroom block, steam rises as twenty students wait in line with plastic buckets outside six shower cubicles.</p>
 <p>Beside the sinks, someone is scrubbing laundry, another is washing yesterday's dinner pots, while two others are negotiating mirror space to apply eyeliner before their 8:00 AM presentation.</p>
 <p>On the balcony railings outside, hundreds of colorful towels, bedsheets, and garments are pegged three layers deep, flapping in the morning breeze.</p>
 <p>Living in a Nigerian university female hall is a vibrant, sisterly community. But it is also an intense, high-density pressure cooker where privacy is virtually nonexistent, sanitation standards clash violently, and water scarcity can turn simple hygiene into a daily medical emergency.</p>
 <p>Here is the comprehensive hygiene and privacy survival guide for female undergraduates navigating campus halls.</p>
-<hr />
+<hr>
 <h2 id="1-the-sanitation-shield-preventing-utis-and-toilet-infections">1. The Sanitation Shield: Preventing UTIs and Toilet Infections</h2>
 <p>In high-density halls where 60 to 100 students share a single floor bathroom block, communal toilets are primary vectors for bacterial infections, fungal candidiasis, and urinary tract infections (UTIs):</p>
-<p><strong>The Bathroom Defense Protocol:</strong><br />
-* The "Never-Sit" Iron Law: Practice the hovering squat; never allow skin contact with porcelain — Disinfectant Sprays: Carry a pocket spray bottle with 70% isopropyl alcohol or Dettol solution — Sachet Water Flushing: Cleanse intimate areas with fresh sachet water, never murky bucket water — Footwear Armor: Never take a single step into communal bathrooms barefoot; always wear flip-flops</p>
+<p><strong>The Bathroom Defense Protocol:</strong></p>
+<ul>
+<li>The "Never-Sit" Iron Law: Practice the hovering squat; never allow skin contact with porcelain — Disinfectant Sprays: Carry a pocket spray bottle with 70% isopropyl alcohol or Dettol solution — Sachet Water Flushing: Cleanse intimate areas with fresh sachet water, never murky bucket water — Footwear Armor: Never take a single step into communal bathrooms barefoot; always wear flip-flops</li>
+</ul>
 <p>Keep your personal toiletries packed in a hanging waterproof toiletry organizer bag that can be hooked onto shower pipes rather than placed on slimy concrete ledges. For water conservation strategies during dry spells, review our <a href="/blog/hostel-and-accommodation/hostel-water-scarcity-coping/">surviving hostel water scarcity 5 bucket survival</a>.</p>
-<hr />
+<hr>
 <h2 id="2-laundry-underwear-and-line-etiquette">2. Laundry, Underwear, and Line Etiquette</h2>
 <p>Communal clotheslines are notorious for clothes theft, accidental stained spills, and lost underwear:</p>
-<table>
-<thead>
-<tr>
-<th>FEMALE LAUNDRY &amp; INTIMATE CARE CODES</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Code 1: The "Indoor Underwear Drying" Rule</td>
-</tr>
-<tr>
-<td>- Never hang intimate underwear on public courtyard lines</td>
-</tr>
-<tr>
-<td>- Dry indoors using an accordion peg rack by the window</td>
-</tr>
-<tr>
-<td>Code 2: Strategic Daytime Laundry Timing</td>
-</tr>
-<tr>
-<td>- Wash heavy clothes on Saturday mornings at 6:30 AM</td>
-</tr>
-<tr>
-<td>- Secure prime drying lines before overcrowding hits</td>
-</tr>
-<tr>
-<td>- Never leave laundry uncollected overnight</td>
-</tr>
-<tr>
-<td>Code 3: Distinctive Fabric Tagging</td>
-</tr>
-<tr>
-<td>- Mark clothing tags with discrete waterproof ink dots</td>
-</tr>
-<tr>
-<td>- Prevents accidental claims by hall mates with same items</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| FEMALE LAUNDRY & INTIMATE CARE CODES |</p>
+<p>| --- |</p>
+<p>| Code 1: The "Indoor Underwear Drying" Rule |</p>
+<p>| - Never hang intimate underwear on public courtyard lines |</p>
+<p>| - Dry indoors using an accordion peg rack by the window |</p>
+<p>| Code 2: Strategic Daytime Laundry Timing |</p>
+<p>| - Wash heavy clothes on Saturday mornings at 6:30 AM |</p>
+<p>| - Secure prime drying lines before overcrowding hits |</p>
+<p>| - Never leave laundry uncollected overnight |</p>
+<p>| Code 3: Distinctive Fabric Tagging |</p>
+<p>| - Mark clothing tags with discrete waterproof ink dots |</p>
+<p>| - Prevents accidental claims by hall mates with same items |</p>
+<hr>
 <h2 id="3-creating-privacy-in-an-open-room">3. Creating Privacy in an Open Room</h2>
-<p>When four to eight students share a single room, visual privacy becomes your most prized luxury:<br />
-* <strong>The "Bunk Curtain" Haven:</strong> If you occupy a lower bunk, install a tension wire rod with opaque cotton fabric along the outer frame. This creates an instantaneous, private cubicle where you can change clothes, turn on a reading light at 1:00 AM, and decompress without scrutiny.<br />
-* <strong>Soundproof Sanctuary:</strong> High-quality foam earplugs or active noise-canceling earphones are essential to block out hall chatter, prayer meetings, and late-night phone conversations.</p>
-<p>Organize your cooking corner safely within tight room dimensions using our blueprint on <a href="/blog/hostel-and-accommodation/hostel-cooking-setup-small-space/">hostel cooking setup in small spaces safely</a>. </p>
+<p>When four to eight students share a single room, visual privacy becomes your most prized luxury:</p>
+<ul>
+<li>**The "Bunk Curtain" Haven:** If you occupy a lower bunk, install a tension wire rod with opaque cotton fabric along the outer frame. This creates an instantaneous, private cubicle where you can change clothes, turn on a reading light at 1:00 AM, and decompress without scrutiny.</li>
+<li>**Soundproof Sanctuary:** High-quality foam earplugs or active noise-canceling earphones are essential to block out hall chatter, prayer meetings, and late-night phone conversations.</li>
+</ul>
+<p>Organize your cooking corner safely within tight room dimensions using our blueprint on <a href="/blog/hostel-and-accommodation/hostel-cooking-setup-small-space/">hostel cooking setup in small spaces safely</a>.</p>
 <p>If the relentless social friction and lack of privacy trigger anxiety, explore our mental well-being exercises in <a href="/blog/mental-health/">student anxiety and burnout recovery</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="sisterhood-campus-life-network">🌸 Sisterhood &amp; Campus Life Network</h3>
+<p>### 🌸 Sisterhood & Campus Life Network</p>
 <p>Navigating female hostel dynamics, room allocations, or looking for supportive roommates?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with inspiring female scholars from your institution sharing health tips, academic strategies, and supportive campus friendships.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with inspiring female scholars from your institution sharing health tips, academic strategies, and supportive campus friendships.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-female-students-avoid-urinary-tract-infections-utis-in-shared-hostel-bathrooms">How can female students avoid urinary tract infections (UTIs) in shared hostel bathrooms?</h3>
 <p>Never sit directly on communal toilet bowls; use disposable toilet seat covers or practice the hover posture. Always wash with clean sachet water rather than stagnant drum water, and avoid using scented soaps that disrupt natural vaginal flora.</p>
@@ -551,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -736,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -751,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

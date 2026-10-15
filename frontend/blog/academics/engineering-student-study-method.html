@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,33 +306,37 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <p>You walk into the faculty of engineering lecture hall at 7:45 AM. </p>
+        <p>You walk into the faculty of engineering lecture hall at 7:45 AM.</p>
 <p>The three blackboards stretching across the front wall are already covered in dense white chalk: second-order partial differential equations, Laplace transformation tables, and multi-variable integration proofs.</p>
 <p>The lecturer, a seasoned professor of mechanical engineering, finishes wiping chalk dust off his sleeves, turns to the two hundred students seated on hard wooden benches, and says:</p>
 <blockquote>
-<p><em>"Look to your left. Look to your right. By the time this session ends, one of you will not be in this faculty. Welcome to Engineering Mathematics."</em></p>
+<p>*"Look to your left. Look to your right. By the time this session ends, one of you will not be in this faculty. Welcome to Engineering Mathematics."*</p>
 </blockquote>
 <p>Across Nigerian engineering faculties—whether at UNILAG, FUTO, UI, UNN, ABU, OAU, or FUTA—200 Level and 300 Level are universally known as the <strong>"slaughter levels."</strong></p>
-<p>Under standards regulated by the Council for the Regulation of Engineering in Nigeria (COREN) and the <a href="https://www.nuc.edu.ng/">National Universities Commission (NUC)</a>, engineering curricula are deliberately front-loaded with brutal, highly quantitative filter courses:<br />
-* <strong>Engineering Mathematics (ENG 281 / 381):</strong> Advanced Calculus, Fourier Series, Differential Equations, Linear Algebra.<br />
-* <strong>Applied Mechanics &amp; Dynamics:</strong> Vector analysis, particle kinematics, rigid body dynamics.<br />
-* <strong>Strength of Materials &amp; Mechanics of Deformable Bodies:</strong> Stress-strain tensors, shear force, and bending moment distributions.<br />
-* <strong>Fluid Mechanics &amp; Thermodynamics:</strong> Navier-Stokes reductions, entropy balance, boundary layer equations.</p>
+<p>Under standards regulated by the Council for the Regulation of Engineering in Nigeria (COREN) and the <a href="https://www.nuc.edu.ng/">National Universities Commission (NUC)</a>, engineering curricula are deliberately front-loaded with brutal, highly quantitative filter courses:</p>
+<ul>
+<li>**Engineering Mathematics (ENG 281 / 381):** Advanced Calculus, Fourier Series, Differential Equations, Linear Algebra.</li>
+<li>**Applied Mechanics & Dynamics:** Vector analysis, particle kinematics, rigid body dynamics.</li>
+<li>**Strength of Materials & Mechanics of Deformable Bodies:** Stress-strain tensors, shear force, and bending moment distributions.</li>
+<li>**Fluid Mechanics & Thermodynamics:** Navier-Stokes reductions, entropy balance, boundary layer equations.</li>
+</ul>
 <p>Every semester, brilliant students who scored 300+ in JAMB crash into shocking 'E's and 'F's. They pull sleepless all-nighters in night classes, fill dozens of 60-leaf notebooks, and still blank out in front of three-hour calculation papers.</p>
-<p>Why? Because <strong>engineering mathematics cannot be "read."</strong> </p>
+<p>Why? Because <strong>engineering mathematics cannot be "read."</strong></p>
 <p>If you are studying engineering calculations by reading solved examples, you are falling into the fatal "Nodding Trap." Here is the exact cognitive engineering study method to conquer heavy quantitative courses and protect your First Class or 2:1 CGPA.</p>
-<hr />
+<hr>
 <h2 id="1-the-nodding-trap-why-reading-solved-examples-guarantees-failure">1. The "Nodding Trap": Why Reading Solved Examples Guarantees Failure</h2>
 <p>The fundamental reason engineering undergraduates fail calculation courses is a cognitive illusion called <strong>fluency bias</strong>.</p>
-<p>You open K.A. Stroud’s <em>Engineering Mathematics</em> or your lecturer’s stapled handout. You read through a complex 12-step derivation of a damped harmonic oscillator:<br />
-* You look at Step 1: <em>"Yes, that makes sense."</em><br />
-* You look at Step 2: <em>"Ah, he substituted the boundary condition."</em><br />
-* You look at Step 3: <em>"Naturally, integrate by parts."</em></p>
-<p>You nod along through all twelve steps. Your brain registers <strong>recognition</strong>, which you mistake for <strong>mastery</strong>. </p>
-<p>Three weeks later, you sit down in the examination hall. The question paper presents the exact same differential equation—except the lecturer changed one boundary condition from $y(0) = 0$ to $y'(0) = 1$. </p>
+<p>You open K.A. Stroud’s <em>Engineering Mathematics</em> or your lecturer’s stapled handout. You read through a complex 12-step derivation of a damped harmonic oscillator:</p>
+<ul>
+<li>You look at Step 1: *"Yes, that makes sense."*</li>
+<li>You look at Step 2: *"Ah, he substituted the boundary condition."*</li>
+<li>You look at Step 3: *"Naturally, integrate by parts."*</li>
+</ul>
+<p>You nod along through all twelve steps. Your brain registers <strong>recognition</strong>, which you mistake for <strong>mastery</strong>.</p>
+<p>Three weeks later, you sit down in the examination hall. The question paper presents the exact same differential equation—except the lecturer changed one boundary condition from $y(0) = 0$ to $y'(0) = 1$.</p>
 <p>Your solution manual is gone. Your brain freezes at Step 2. You stare at the blank script as panic floods your nervous system, losing 25 marks on a single question.</p>
 <p>Cognitive science confirms that reading a solution engages passive visual recognition, while producing a solution requires deep generative retrieval. To build unbreakable recall, you must deploy <a href="/blog/academics/active-recall-study-method-nigerian-university-guide/">active recall study method guide</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-blind-derivation-protocol-bdp-how-to-build-mathematical-muscle">2. The Blind Derivation Protocol (BDP): How to Build Mathematical Muscle</h2>
 <p>Engineering calculations are not facts to memorize; they are muscular neural pathways. You do not learn to swim by reading a swimming manual; you jump into the pool.</p>
 <p>The <strong>Blind Derivation Protocol</strong> forces your brain to generate solutions without external crutches:</p>
@@ -341,97 +345,73 @@
 </ul>
 <h3 id="the-4-execution-steps">The 4 Execution Steps:</h3>
 <ol>
-<li><strong>The 15-Minute Structural Scan:</strong> Study the derivation or solved problem. Identify the governing physical law (e.g., Newton's Second Law, Conservation of Energy, or Kirchhoff's Laws) and the mathematical bridge used.</li>
-<li><strong>Close the Book Completely:</strong> Slide your textbooks, handouts, and phones completely off the table. Pull out a blank unlined A4 sheet or a clean page in your exercise book.</li>
-<li><strong>Execute Blindly:</strong> Write out the entire derivation or calculation using only your blue pen and scientific calculator. No peeking.</li>
-<li><strong>The Red-Pen Audit:</strong> If you hit an algebraic wall at Step 5, open the textbook for <strong>ten seconds only</strong> to see what you missed. Close the book immediately, pick up a red pen, correct Step 5, and force yourself to complete the remaining steps blindly.</li>
+<li>**The 15-Minute Structural Scan:** Study the derivation or solved problem. Identify the governing physical law (e.g., Newton's Second Law, Conservation of Energy, or Kirchhoff's Laws) and the mathematical bridge used.</li>
+<li>**Close the Book Completely:** Slide your textbooks, handouts, and phones completely off the table. Pull out a blank unlined A4 sheet or a clean page in your exercise book.</li>
+<li>**Execute Blindly:** Write out the entire derivation or calculation using only your blue pen and scientific calculator. No peeking.</li>
+<li>**The Red-Pen Audit:** If you hit an algebraic wall at Step 5, open the textbook for **ten seconds only** to see what you missed. Close the book immediately, pick up a red pen, correct Step 5, and force yourself to complete the remaining steps blindly.</li>
 </ol>
 <p>If you can produce a complete multi-step derivation on a blank sheet without referencing notes, you will execute it effortlessly under timed exam hall pressure.</p>
 <p>For maximum cognitive retention across analytical engineering topics, handwritten problem-solving vastly outperforms typing on laptops; learn why in our analysis of <a href="/blog/academics/digital-notes-vs-handwritten-study-retention/">digital note-taking vs pen and paper for exam retention</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-methodology-rubric-capturing-the-75-method-marks">3. The Methodology Rubric: Capturing the 75% "Method Marks"</h2>
 <p>Many engineering students mistakenly believe that exams are "all or nothing"—that if your final numerical answer is wrong, you receive zero marks.</p>
 <p>Under COREN-accredited departmental marking keys, this is false. Nigerian engineering professors use a standardized <strong>4-part marking rubric</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Component of Solution</th>
-<th>Typical Mark Weight</th>
-<th>What Examiners Look For</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>1. Free Body Diagram / System Sketch</strong></td>
-<td><strong>20% (4 Marks)</strong></td>
-<td>Correct coordinate axes, vectors, forces, and boundary arrows</td>
-</tr>
-<tr>
-<td><strong>2. Stating Governing Formula from First Principles</strong></td>
-<td><strong>25% (5 Marks)</strong></td>
-<td>General formula written with correct notation before substitution</td>
-</tr>
-<tr>
-<td><strong>3. Step-by-Step Algebraic Substitution</strong></td>
-<td><strong>35% (7 Marks)</strong></td>
-<td>Clear algebraic manipulation showing how values were substituted</td>
-</tr>
-<tr>
-<td><strong>4. Final Numerical Answer &amp; SI Units</strong></td>
-<td><strong>20% (4 Marks)</strong></td>
-<td>Accurate arithmetic result with explicit SI metric units (e.g., $N/m^2$)</td>
-</tr>
-</tbody>
-</table>
+<p>| Component of Solution | Typical Mark Weight | What Examiners Look For |</p>
+<p>|---|---|---|</p>
+<p>| <strong>1. Free Body Diagram / System Sketch</strong> | <strong>20% (4 Marks)</strong> | Correct coordinate axes, vectors, forces, and boundary arrows |</p>
+<p>| <strong>2. Stating Governing Formula from First Principles</strong> | <strong>25% (5 Marks)</strong> | General formula written with correct notation before substitution |</p>
+<p>| <strong>3. Step-by-Step Algebraic Substitution</strong> | <strong>35% (7 Marks)</strong> | Clear algebraic manipulation showing how values were substituted |</p>
+<p>| <strong>4. Final Numerical Answer & SI Units</strong> | <strong>20% (4 Marks)</strong> | Accurate arithmetic result with explicit SI metric units (e.g., $N/m^2$) |</p>
 <blockquote>
-<p>💡 <strong>Key Formula:</strong> <em>A Question Worth 20 Marks: — [Diagram: 4 Marks] + [Governing Formula: 5 Marks] + [Substitution Steps: 7 Marks] + [Answer &amp; Unit: 4 Marks]</em></p>
+<p>💡 **Key Formula:** *A Question Worth 20 Marks: — [Diagram: 4 Marks] + [Governing Formula: 5 Marks] + [Substitution Steps: 7 Marks] + [Answer & Unit: 4 Marks]*</p>
 </blockquote>
 <h3 id="the-tactical-takeaway">The Tactical Takeaway:</h3>
-<p>Even if you make an arithmetic calculation slip on your Casio calculator at the very end, <strong>clean mathematical presentation will earn you 16 out of 20 marks</strong>. </p>
+<p>Even if you make an arithmetic calculation slip on your Casio calculator at the very end, <strong>clean mathematical presentation will earn you 16 out of 20 marks</strong>.</p>
 <ul>
 <li>Always draw a large, ruled diagram with labeled axes.</li>
 <li>Never combine three algebraic steps in your head; write down each manipulation clearly.</li>
-<li>Never omit SI units. Writing <code>45.2</code> instead of <code>45.2 kN/m²</code> is an automatic 2-mark deduction.</li>
+<li>Never omit SI units. Writing `45.2` instead of `45.2 kN/m²` is an automatic 2-mark deduction.</li>
 </ul>
 <p>If you are balancing the brutal weekly coursework of an engineering degree with freelancing or tech side projects, read our tactical survival guide on <a href="/blog/balancing-work-and-school/">freelancing as a STEM student without failing calculations</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-3-tier-problem-funnel-sourcing-your-practice-material">4. The 3-Tier Problem Funnel: Sourcing Your Practice Material</h2>
 <p>Do not waste time solving 200 random problems from American textbooks that do not reflect Nigerian university examination styles.</p>
 <p>Use the <strong>3-Tier Practice Funnel</strong>:</p>
 <h3 id="tier-1-foundation-3-problems">Tier 1: Foundation (3 Problems)</h3>
 <p>Solve 3 basic conceptual questions from standard references like K.A. Stroud’s <em>Engineering Mathematics</em>, Bird’s <em>Higher Engineering Mathematics</em>, or Rajput’s <em>Fluid Mechanics</em>. Ensure you grasp the core theory.</p>
-<h3 id="tier-2-the-lecturers-tutorial-sheet-all-problems">Tier 2: The Lecturer’s Tutorial Sheet (All Problems)</h3>
+<h3 id="tier-2-the-lecturer-s-tutorial-sheet-all-problems">Tier 2: The Lecturer’s Tutorial Sheet (All Problems)</h3>
 <p>Departmental lecturers assign weekly tutorial sheets for a reason: <strong>at least 40% of semester exam questions are modified versions of tutorial problems</strong>. Solve every single tutorial problem using the Blind Derivation Protocol.</p>
 <h3 id="tier-3-the-5-year-past-question-reverse-engineering-sprint">Tier 3: The 5-Year Past Question Reverse-Engineering Sprint</h3>
-<p>Obtain departmental past examination papers spanning the last five academic sessions. Group the questions by recurring topics:<br />
-* You will discover that certain derivations appear on an alternating biennial cycle (e.g., deriving the Bernoulli equation on odd years, deriving Reynolds transport theorem on even years).<br />
-* Master the specific question formats favored by your course lecturer.</p>
-<hr />
+<p>Obtain departmental past examination papers spanning the last five academic sessions. Group the questions by recurring topics:</p>
+<ul>
+<li>You will discover that certain derivations appear on an alternating biennial cycle (e.g., deriving the Bernoulli equation on odd years, deriving Reynolds transport theorem on even years).</li>
+<li>Master the specific question formats favored by your course lecturer.</li>
+</ul>
+<hr>
 <h2 id="the-engineering-survival-daily-checklist">The Engineering Survival Daily Checklist</h2>
 <p>Execute this checklist for every calculation course this semester:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Never read a calculation passively:</strong> Always solve with a pen in hand on unlined paper.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Deploy the Blind Derivation Protocol:</strong> Close notes and produce entire proofs from scratch.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Master your Casio FX-991ES/EX calculator:</strong> Learn matrix determinants, polynomial roots, and complex mode shortcuts.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Format for method marks:</strong> Draw clear diagrams, write governing formulas, and include explicit SI units.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Solve all departmental tutorial sheets:</strong> Treat tutorial problems as mandatory exam previews.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Never read a calculation passively:** Always solve with a pen in hand on unlined paper.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Deploy the Blind Derivation Protocol:** Close notes and produce entire proofs from scratch.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Master your Casio FX-991ES/EX calculator:** Learn matrix determinants, polynomial roots, and complex mode shortcuts.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Format for method marks:** Draw clear diagrams, write governing formulas, and include explicit SI units.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Solve all departmental tutorial sheets:** Treat tutorial problems as mandatory exam previews.</li>
 </ul>
-<hr />
-<h2 id="master-hard-engineering-science-courses">Master Hard Engineering &amp; Science Courses</h2>
+<hr>
+<h2 id="master-hard-engineering-science-courses">Master Hard Engineering & Science Courses</h2>
 <p>Conquering engineering mathematics and complex calculation courses requires replacing haphazard cramming with an engineered cognitive system.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Engineering Resource</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to master difficult calculation courses, reverse-engineer marking schemes, and produce peak performance.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Get Good at Hard Things</strong> — The cognitive framework to master math, fluid dynamics, and complex derivations</li>
-    <li><strong>How to Score High in Any Exam</strong> — Maximize method marks and crack university lecturer grading rubrics</li>
-    <li><strong>Exam Survival Guide</strong> — Pacing blueprints, calculation triage schedules, and panic neutralizers</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Engineering Resource</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to master difficult calculation courses, reverse-engineer marking schemes, and produce peak performance.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Get Good at Hard Things</strong> — The cognitive framework to master math, fluid dynamics, and complex derivations</li>
+<li><strong>How to Score High in Any Exam</strong> — Maximize method marks and crack university lecturer grading rubrics</li>
+<li><strong>Exam Survival Guide</strong> — Pacing blueprints, calculation triage schedules, and panic neutralizers</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-so-many-nigerian-students-fail-200-level-and-300-level-engineering-math">Why do so many Nigerian students fail 200 Level and 300 Level engineering math?</h3>
 <p>Most engineering undergraduates study mathematics like a humanities subject—passively reading solved textbook examples in K.A. Stroud and nodding along. In the exam hall, without the solution manual guiding them, their working memory blanks on boundary conditions, integration constants, and multi-step derivations.</p>
@@ -605,8 +585,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -790,8 +770,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -805,7 +785,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

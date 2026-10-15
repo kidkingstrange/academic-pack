@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,93 +307,61 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="gas-refill-economics-tracking-usage-to-stop-gas-theft">Gas Refill Economics: Tracking Usage to Stop Gas Theft</h1>
-<p>You refilled your 6kg cooking gas cylinder twelve days ago. </p>
+<p>You refilled your 6kg cooking gas cylinder twelve days ago.</p>
 <p>You paid <strong>₦9,000</strong> at the plant near the campus junction.</p>
 <p>Tonight, you turn on your burner knob, strike your lighter, and hear only a weak, dying hiss: <em>The gas is completely finished.</em></p>
-<p>You stare at the blue iron cylinder in disbelief:<br />
-* You only boiled rice three times and cooked two pots of soup.<br />
-* A 6kg cylinder should comfortably last an individual student between six and eight weeks.<br />
-* Where did ₦9,000 worth of Liquefied Petroleum Gas (LPG) disappear to in twelve days?</p>
+<p>You stare at the blue iron cylinder in disbelief:</p>
+<ul>
+<li>You only boiled rice three times and cooked two pots of soup.</li>
+<li>A 6kg cylinder should comfortably last an individual student between six and eight weeks.</li>
+<li>Where did ₦9,000 worth of Liquefied Petroleum Gas (LPG) disappear to in twelve days?</li>
+</ul>
 <p>In Nigerian student lodges and university hostels, cooking gas is liquid gold. Between dishonest refill plant operators, leaky cheap rubber hoses, and opportunistic roommates who "borrow small fire" to boil unsoaked dry beans, students lose tens of thousands of naira to <strong>Gas Shrinkage and Theft</strong>.</p>
 <p>Here is the operational guide to tracking your LPG consumption, auditing refill plants, and protecting your cooking fuel.</p>
-<hr />
+<hr>
 <h2 id="1-the-3-silent-causes-of-rapid-gas-depletion">1. The 3 Silent Causes of Rapid Gas Depletion</h2>
 <blockquote>
-<h3 id="where-does-student-cooking-gas-vanish">Where Does Student Cooking Gas Vanish?</h3>
-<ul>
-<li>
-<ol>
-<li>The Refill Plant "Tare Weight Scam" (Purchasing only 3.8kg instead of 6kg)</li>
-</ol>
-</li>
-<li>
-<ol start="2">
-<li>Micro-Leaks in Regulators and Perished Rubber Hoses</li>
-</ol>
-</li>
-<li>
-<ol start="3">
-<li>The "Midnight Beans Bandit" (Unregulated roommate/neighbor gas use)</li>
-</ol>
-</li>
-</ul>
+<p>### Where Does Student Cooking Gas Vanish?</p>
+<p>></p>
+<p>* 1. The Refill Plant "Tare Weight Scam" (Purchasing only 3.8kg instead of 6kg)</p>
+<p>* 2. Micro-Leaks in Regulators and Perished Rubber Hoses</p>
+<p>* 3. The "Midnight Beans Bandit" (Unregulated roommate/neighbor gas use)</p>
 </blockquote>
 <h3 id="the-tare-weight-scale-trick">The Tare Weight Scale Trick</h3>
-<p>Every iron cylinder has an engraved <strong>Tare Weight (T.W.)</strong> stamped on the collar (e.g., <code>T.W. 7.2kg</code>). <br />
-* When full, a 6kg refill must weigh <strong>7.2kg + 6.0kg = 13.2kg total</strong>.<br />
-* Shady attendants at campus retail depots frequently adjust scale calibrations or weigh the cylinder while resting their hand on the scale, shortchanging students by 1.5kg to 2.5kg of gas per transaction.</p>
+<p>Every iron cylinder has an engraved <strong>Tare Weight (T.W.)</strong> stamped on the collar (e.g., `T.W. 7.2kg`).</p>
+<ul>
+<li>When full, a 6kg refill must weigh **7.2kg + 6.0kg = 13.2kg total**.</li>
+<li>Shady attendants at campus retail depots frequently adjust scale calibrations or weigh the cylinder while resting their hand on the scale, shortchanging students by 1.5kg to 2.5kg of gas per transaction.</li>
+</ul>
 <p>Learn about essential hostel appliance and power management in <a href="/blog/hostel/electric-hot-plate-vs-gas-cooker-hostel/">electric hot plates vs gas cookers in student hostels: cost breakdown</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-verification-protocol-how-to-audit-your-refill">2. The Verification Protocol: How to Audit Your Refill</h2>
 <p>Never pay for gas based on visual estimation or faith:</p>
-<table>
-<thead>
-<tr>
-<th>Step</th>
-<th>Action Required</th>
-<th>Verification Standard</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Before Leaving Room</strong></td>
-<td>Note the engraved Tare Weight on cylinder collar</td>
-<td>e.g., 7.4 kg</td>
-</tr>
-<tr>
-<td><strong>At the Gas Plant</strong></td>
-<td>Insist the attendant tares the digital scale to <code>0.00 kg</code></td>
-<td>Digital display reads exactly zero</td>
-</tr>
-<tr>
-<td><strong>Post-Refill Check</strong></td>
-<td>Demand the cylinder is weighed in your presence</td>
-<td>Total weight must equal Tare Weight + 6.0 kg</td>
-</tr>
-<tr>
-<td><strong>Soapy Water Bubble Test</strong></td>
-<td>Dab soapy water on the valve, regulator joint, and hose</td>
-<td>If bubbles form, there is an active gas leak</td>
-</tr>
-</tbody>
-</table>
+<p>| Step | Action Required | Verification Standard |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Before Leaving Room</strong> | Note the engraved Tare Weight on cylinder collar | e.g., 7.4 kg |</p>
+<p>| <strong>At the Gas Plant</strong> | Insist the attendant tares the digital scale to `0.00 kg` | Digital display reads exactly zero |</p>
+<p>| <strong>Post-Refill Check</strong> | Demand the cylinder is weighed in your presence | Total weight must equal Tare Weight + 6.0 kg |</p>
+<p>| <strong>Soapy Water Bubble Test</strong> | Dab soapy water on the valve, regulator joint, and hose | If bubbles form, there is an active gas leak |</p>
 <p>Review hostel safety rules in <a href="/blog/hostel/gas-cooker-safety-rules-student-hostel/">gas cooker safety rules for student hostels: preventing fire disasters</a>.</p>
-<hr />
+<hr>
 <h2 id="3-cooking-thermal-efficiency-extending-6kg-to-60-days">3. Cooking Thermal Efficiency: Extending 6kg to 60 Days</h2>
 <p>To maximize gas lifespan on campus, execute these thermodynamic adjustments:</p>
 <ul>
-<li><strong>The Pot Lid Imperative:</strong> Cooking with an open pot wastes up to <strong>40% of thermal heat</strong> through convective evaporation. Always cover pots with tight lids; trapped steam increases internal pressure and cooks grains in half the time.</li>
-<li><strong>The 4-Hour Bean Soak Hack:</strong> Boiling dry beans from cold water takes up to 75 minutes of continuous high-flame burn. Soaking beans in warm water with a pinch of salt for 4 hours before cooking softens the seed coat, reducing boiling time down to 25 minutes.</li>
-<li><strong>Flame Diameter Alignment:</strong> If the blue flame extends past the outer circumference of your small pot, you are heating ambient room air rather than food. Keep burner flames strictly underneath the pot base.</li>
+<li>**The Pot Lid Imperative:** Cooking with an open pot wastes up to **40% of thermal heat** through convective evaporation. Always cover pots with tight lids; trapped steam increases internal pressure and cooks grains in half the time.</li>
+<li>**The 4-Hour Bean Soak Hack:** Boiling dry beans from cold water takes up to 75 minutes of continuous high-flame burn. Soaking beans in warm water with a pinch of salt for 4 hours before cooking softens the seed coat, reducing boiling time down to 25 minutes.</li>
+<li>**Flame Diameter Alignment:** If the blue flame extends past the outer circumference of your small pot, you are heating ambient room air rather than food. Keep burner flames strictly underneath the pot base.</li>
 </ul>
 <p>Explore facility repairs and lodge infrastructure management in <a href="/blog/hostel/student-hostel-maintenance-broken-facilities/">student hostel maintenance and reporting broken lodge facilities</a>.</p>
-<hr />
+<hr>
 <h2 id="4-protecting-your-cylinder-from-campus-free-riders">4. Protecting Your Cylinder from Campus "Free-Riders"</h2>
-<p>In shared corridor kitchens, leaving your gas cylinder accessible is an open invitation for lodge squatters:<br />
-* Keep your gas cylinder inside your private room, positioned near an open window for cross-ventilation.<br />
-* When hosting roommates for group cooking, establish explicit proportional contribution rules: if a neighbor uses your gas to boil large tubs of water, they must contribute cash to the refill pot.<br />
-* Treat your gas cylinder like a financial asset. Tracking usage preserves your allowance and eliminates mid-semester starvation panic.</p>
-<hr />
+<p>In shared corridor kitchens, leaving your gas cylinder accessible is an open invitation for lodge squatters:</p>
+<ul>
+<li>Keep your gas cylinder inside your private room, positioned near an open window for cross-ventilation.</li>
+<li>When hosting roommates for group cooking, establish explicit proportional contribution rules: if a neighbor uses your gas to boil large tubs of water, they must contribute cash to the refill pot.</li>
+<li>Treat your gas cylinder like a financial asset. Tracking usage preserves your allowance and eliminates mid-semester starvation panic.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-long-should-a-6kg-cooking-gas-cylinder-realistically-last-a-single-student">How long should a 6kg cooking gas cylinder realistically last a single student?</h3>
 <p>With disciplined cooking habits (using lids, soaking hard grains, low-to-medium flames), a 6kg cylinder lasts an individual student between 6 and 8 weeks. If it finishes in under 3 weeks, suspect burner leaks, unmonitored roommate use, or underfilling.</p>
@@ -567,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -752,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -767,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

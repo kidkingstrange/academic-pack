@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,7 +307,7 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="academic-burnout-why-you-cannot-bring-yourself-to-read">Academic Burnout: Why You Cannot Bring Yourself to Read</h1>
-<p>It is three weeks before semester examinations. </p>
+<p>It is three weeks before semester examinations.</p>
 <p>You know with terrifying clarity that you have twelve unread course handouts stacked on your shelf. You know your semester CGPA hangs in the balance. You know your parents sacrificed their life savings to pay your tuition.</p>
 <p>You sit down at your study desk. You pull out your notebook. You open the first page.</p>
 <p>And then... nothing.</p>
@@ -315,17 +315,19 @@
 <p>You tell yourself: <em>"I am lazy. I am undisciplined. I have no willpower."</em></p>
 <p>You are wrong.</p>
 <p>You are not lazy. You are suffering from <strong>Acute Academic Burnout and Executive Function Paralysis</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-neurobiology-of-burnout-when-the-brain-pulls-the-emergency-brake">1. The Neurobiology of Burnout: When the Brain Pulls the Emergency Brake</h2>
 <p>In cognitive neuroscience, the prefrontal cortex functions as the CPU of your brain—responsible for sustained focus, analytical calculation, working memory, and emotional regulation.</p>
-<p>When a university student endures months of:<br />
-* Chronic sleep deprivation (pulling dangerous all-nighters),<br />
-* High cortisol levels triggered by intimidating lecturers and test anxiety,<br />
-* Poor nutrition and endless walking in tropical heat,</p>
+<p>When a university student endures months of:</p>
+<ul>
+<li>Chronic sleep deprivation (pulling dangerous all-nighters),</li>
+<li>High cortisol levels triggered by intimidating lecturers and test anxiety,</li>
+<li>Poor nutrition and endless walking in tropical heat,</li>
+</ul>
 <p>Your brain recognizes that its physiological resources are depleted. To protect your central nervous system from biological collapse, the brain initiates a protective neurochemical shutdown:</p>
 <p>It down-regulates dopamine receptors in the prefrontal cortex, cutting off your ability to initiate mental effort. <strong>Study paralysis is not a character flaw; it is an involuntary biological defense mechanism.</strong></p>
 <p>Compare the scientific memory costs of all-nighters in <a href="/blog/academics/tdb-all-nighters-vs-sleep-exam-memory/">TDB all-nighters vs 5-hour sleep: exam memory impact</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-4-stages-of-the-academic-burnout-cycle">2. The 4 Stages of the Academic Burnout Cycle</h2>
 <p>Burnout does not happen overnight. It develops through four distinct clinical phases:</p>
 <h3 id="phase-1-the-compulsive-overload-weeks-1-6">Phase 1: The Compulsive Overload (Weeks 1 – 6)</h3>
@@ -337,7 +339,7 @@
 <h3 id="phase-4-full-cognitive-paralysis-exam-season">Phase 4: Full Cognitive Paralysis (Exam Season)</h3>
 <p>You sit with your syllabus in front of you, completely unable to read. You experience total emotional numbness, depression, and severe imposter syndrome.</p>
 <p>Review the psychological roots of academic self-doubt in our deep dive on <a href="/blog/mental-health/imposter-syndrome-university-nigeria/">imposter syndrome: why university makes you feel dumb</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-72-hour-cognitive-reset-how-to-break-the-paralysis">3. The 72-Hour Cognitive Reset: How to Break the Paralysis</h2>
 <p>When your brain pulls the emergency brake, trying to force yourself to study for 8 hours will only deepen your despair. Instead, execute this clinical 72-hour reset protocol:</p>
 <h3 id="step-1-the-24-hour-digital-and-study-quarantine">Step 1: The 24-Hour Digital and Study Quarantine</h3>
@@ -347,25 +349,24 @@
 <h3 id="step-3-ruthless-syllabus-triage">Step 3: Ruthless Syllabus Triage</h3>
 <p>You cannot cover 100% of a 15-week syllabus in two weeks of burnout recovery. Identify the top 20% of high-yield topics that account for 80% of exam past questions. Master those core concepts and let the minor details go.</p>
 <p>If you have fallen weeks behind your coursework, deploy our tactical recovery plan in <a href="/blog/mental-health/">resetting when you fall 3 weeks behind in lectures</a>.</p>
-<hr />
+<hr>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">🚀 RECOVER YOUR ACADEMIC MOMENTUM</div>
-  <h3 class="blog-cta-box__title">Stop Burning Out in Silence. Deploy the Proven Comeback System.</h3>
-  <p class="blog-cta-box__desc">
-    Overcoming study paralysis and rebuilding a damaged CGPA requires engineered cognitive systems, not empty motivation. 
-    Discover the battle-tested 7-part framework that thousands of Nigerian undergraduates use to eliminate exam anxiety, master active recall, and graduate with distinction.
-  </p>
-  <div class="blog-cta-box__features">
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Cognitive Burnout Recovery Protocol</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Spaced Repetition Revision Schedules</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> NUC 5.0 Grade Recovery Blueprint</div>
-  </div>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">
-    Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i>
-  </a>
+<div class="blog-cta-box__badge">🚀 RECOVER YOUR ACADEMIC MOMENTUM</div>
+<h3 class="blog-cta-box__title">Stop Burning Out in Silence. Deploy the Proven Comeback System.</h3>
+<p class="blog-cta-box__desc">
+<p>Overcoming study paralysis and rebuilding a damaged CGPA requires engineered cognitive systems, not empty motivation.</p>
+<p>Discover the battle-tested 7-part framework that thousands of Nigerian undergraduates use to eliminate exam anxiety, master active recall, and graduate with distinction.</p>
+</p>
+<div class="blog-cta-box__features">
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Cognitive Burnout Recovery Protocol</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Spaced Repetition Revision Schedules</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> NUC 5.0 Grade Recovery Blueprint</div>
 </div>
-
-<hr />
+<a href="/academic-comeback-package" class="blog-cta-box__btn">
+<p>Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i></p>
+</a>
+</div>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-difference-between-ordinary-student-laziness-and-clinical-academic-burnout">What is the difference between ordinary student laziness and clinical academic burnout?</h3>
 <p>Laziness is a voluntary preference for leisure with low anxiety. Academic burnout is chronic neuro-endocrine exhaustion where a student desperately wants to study, but sits at their desk paralyzed by brain fog, dread, and physical fatigue.</p>
@@ -539,8 +540,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -724,8 +725,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -739,7 +740,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

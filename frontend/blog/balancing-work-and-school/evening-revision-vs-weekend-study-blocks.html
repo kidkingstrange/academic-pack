@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Evening Classes vs Weekend Batch Study for Working Students",
       "description": "How working undergraduates can decide between daily evening revision and dedicated weekend batch study blocks for maximum GPA retention.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -268,33 +268,23 @@
 <p>Between daytime lectures, campus transit, client deadlines, and business shifts, your calendar is almost entirely consumed.</p>
 <p>When looking at the remaining hours of the week, a fundamental strategic dilemma arises:</p>
 <blockquote>
-<h3 id="the-study-timetable-dilemma">The Study Timetable Dilemma</h3>
-<ul>
-<li>Strategy A: The Daily Evening Habit (60 - 90 Minutes every night from Mon - Fri) Strategy B: The Weekend Marathon Sprint (6 - 8 Hours concentrated on Saturday)</li>
-</ul>
+<p>### The Study Timetable Dilemma</p>
+<p>></p>
+<p>* Strategy A: The Daily Evening Habit (60 - 90 Minutes every night from Mon - Fri) Strategy B: The Weekend Marathon Sprint (6 - 8 Hours concentrated on Saturday)</p>
 </blockquote>
 <p>Should you force your exhausted brain to read lecture handouts at 9:00 PM after a grueling 10-hour day? Or should you completely ignore books during the week and lock yourself inside the university library for an 8-hour marathon on Saturday?</p>
-<p>Both strategies have dedicated advocates. </p>
+<p>Both strategies have dedicated advocates.</p>
 <p>Here is the cognitive science and practical scheduling framework to determine which study structure will maximize your Cumulative Grade Point Average.</p>
-<hr />
+<hr>
 <h2 id="strategy-a-the-daily-evening-revision-system">Strategy A: The Daily Evening Revision System</h2>
 <p>The daily evening model relies on <strong>Distributed Practice (The Spacing Effect)</strong>.</p>
 <p>Cognitive psychology demonstrates that encountering information repeatedly across multiple days triggers repeated synaptic consolidation:</p>
 <blockquote>
-<h3 id="the-spacing-effect-advantage">The Spacing Effect Advantage</h3>
-<ul>
-<li>Monday: Review 30 mins -&gt; Tuesday: Review 30 mins -&gt; Wednesday: Review 30 mins</li>
-<li>
-<blockquote>
-<p>Neurological retention rate: 75% after 30 days. Saturday Marathon: Read 5 hours in one sitting</p>
-</blockquote>
-</li>
-<li>
-<blockquote>
-<p>Neurological retention rate: 25% after 30 days (Ebbinghaus Forgetting Curve)</p>
-</blockquote>
-</li>
-</ul>
+<p>### The Spacing Effect Advantage</p>
+<p>></p>
+<p>* Monday: Review 30 mins -> Tuesday: Review 30 mins -> Wednesday: Review 30 mins</p>
+<p>* > Neurological retention rate: 75% after 30 days. Saturday Marathon: Read 5 hours in one sitting</p>
+<p>* > Neurological retention rate: 25% after 30 days (Ebbinghaus Forgetting Curve)</p>
 </blockquote>
 <h3 id="the-pros">The Pros:</h3>
 <ul>
@@ -304,74 +294,43 @@
 </ul>
 <h3 id="the-cons">The Cons:</h3>
 <ul>
-<li><strong>Severe Cognitive Fatigue:</strong> After working a client shift, your brain’s prefrontal cortex is depleted. Reading dense text feels painful.</li>
+<li>**Severe Cognitive Fatigue:** After working a client shift, your brain’s prefrontal cortex is depleted. Reading dense text feels painful.</li>
 <li>High vulnerability to hostel power blackouts, generator noise, and evening social distractions.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="strategy-b-the-weekend-batch-study-sprint">Strategy B: The Weekend Batch Study Sprint</h2>
 <p>The weekend sprint model operates on <strong>Deep Work Immersion</strong>.</p>
 <p>Instead of fighting daily exhaustion, you treat Monday through Friday purely as an execution zone for lectures and client deliverables. On Saturday, you enter complete academic seclusion.</p>
 <blockquote>
-<h3 id="the-saturday-batch-architecture">The Saturday Batch Architecture</h3>
-<ul>
-<li><strong>08:</strong> 00 AM - 11:30 AM: Deep Calculation Problem Solving (Engineering / Math)</li>
-<li><strong>11:</strong> 30 AM - 01:00 PM: Lunch, Hydration, &amp; Rest Break</li>
-<li><strong>01:</strong> 00 PM - 04:30 PM: Past Examination Questions &amp; Essay Synthesis</li>
-<li><strong>RESULT:</strong> 7 Hours of High-Density Academic Output in 1 Day!</li>
-</ul>
+<p>### The Saturday Batch Architecture</p>
+<p>></p>
+<p>* **08:** 00 AM - 11:30 AM: Deep Calculation Problem Solving (Engineering / Math)</p>
+<p>* **11:** 30 AM - 01:00 PM: Lunch, Hydration, & Rest Break</p>
+<p>* **01:** 00 PM - 04:30 PM: Past Examination Questions & Essay Synthesis</p>
+<p>* **RESULT:** 7 Hours of High-Density Academic Output in 1 Day!</p>
 </blockquote>
-<h3 id="the-pros_1">The Pros:</h3>
+<h3 id="the-pros">The Pros:</h3>
 <ul>
 <li>Zero context-switching: You do not have to split your brain between clients and books on the same day.</li>
 <li>Access to quiet study environments: University central libraries and faculty halls are open, quiet, and well-ventilated on Saturday mornings.</li>
 </ul>
-<h3 id="the-cons_1">The Cons:</h3>
+<h3 id="the-cons">The Cons:</h3>
 <ul>
-<li><strong>High Fragility:</strong> If you fall sick on Saturday, or your family summons you for an unexpected weekend errand, your entire week's study quota is completely lost.</li>
+<li>**High Fragility:** If you fall sick on Saturday, or your family summons you for an unexpected weekend errand, your entire week's study quota is completely lost.</li>
 <li>Susceptible to attention fade after hour 4.</li>
 </ul>
-<hr />
-<h2 id="the-winner-the-41-hybrid-model">The Winner: The '4+1' Hybrid Model</h2>
+<hr>
+<h2 id="the-winner-the-4-1-hybrid-model">The Winner: The '4+1' Hybrid Model</h2>
 <p>For working Nigerian undergraduates, neither extreme is optimal. The champion framework is the <strong>4+1 Hybrid Model</strong>:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Day Window</th>
-<th style="text-align: left;">Study Format</th>
-<th style="text-align: left;">Focus Area</th>
-<th style="text-align: left;">Time Investment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Mon - Thu Evenings</strong></td>
-<td style="text-align: left;"><strong>Atomic Micro-Review</strong></td>
-<td style="text-align: left;">30 minutes of mobile flashcards (Anki) or formula review before bed</td>
-<td style="text-align: left;">2 Hours total</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Friday Evening</strong></td>
-<td style="text-align: left;"><strong>Complete Academic Rest</strong></td>
-<td style="text-align: left;">Sleep early, clear work backlog, decompress</td>
-<td style="text-align: left;">0 Hours</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Saturday Morning</strong></td>
-<td style="text-align: left;"><strong>Deep Problem Solving</strong></td>
-<td style="text-align: left;">4-hour batch session solving past exam calculation problems</td>
-<td style="text-align: left;">4 Hours</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Sunday Afternoon</strong></td>
-<td style="text-align: left;"><strong>Syllabus Audit &amp; Prep</strong></td>
-<td style="text-align: left;">1 hour organizing notes and timetable for the upcoming week</td>
-<td style="text-align: left;">1 Hour</td>
-</tr>
-</tbody>
-</table>
+<p>| Day Window | Study Format | Focus Area | Time Investment |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Mon - Thu Evenings</strong> | <strong>Atomic Micro-Review</strong> | 30 minutes of mobile flashcards (Anki) or formula review before bed | 2 Hours total |</p>
+<p>| <strong>Friday Evening</strong> | <strong>Complete Academic Rest</strong> | Sleep early, clear work backlog, decompress | 0 Hours |</p>
+<p>| <strong>Saturday Morning</strong> | <strong>Deep Problem Solving</strong> | 4-hour batch session solving past exam calculation problems | 4 Hours |</p>
+<p>| <strong>Sunday Afternoon</strong> | <strong>Syllabus Audit & Prep</strong> | 1 hour organizing notes and timetable for the upcoming week | 1 Hour |</p>
 <p>This hybrid structure gives you the memory advantages of daily spaced repetition while giving you the deep, focused horsepower of weekend batch study—without burning you out.</p>
 <p>To explore how to integrate 15-minute study bursts between daytime classes, check out our guide on <a href="/blog/balancing-work-and-school/micro-studying-between-university-classes/">micro-studying between university lectures</a>.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-designing-your-study-schedule">Action Checklist: Designing Your Study Schedule</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Audit your average evening energy levels on a 1-to-10 scale.</li>
@@ -545,8 +504,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -730,8 +689,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -745,7 +704,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

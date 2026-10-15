@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Final Year Project vs Freelancing: The Burnout Collision",
       "description": "How final year Nigerian university students can balance demanding project supervisors, lab work, and remote freelance clients without burning out.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,89 +265,60 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>Final year in a Nigerian tertiary institution is an academic crucible unlike any other.</p>
-<p>You are expected to:<br />
-* Complete 18 to 22 units of advanced 400L or 500L coursework.<br />
-* Conduct original empirical research, statistical analysis, or engineering fabrication for your final year project (worth 4 to 6 credit units).<br />
-* Endure unpredictable corrections and sudden physical summons from an abrasive project supervisor.<br />
-* Prepare for departmental defense panels and external moderation examinations.</p>
+<p>You are expected to:</p>
+<ul>
+<li>Complete 18 to 22 units of advanced 400L or 500L coursework.</li>
+<li>Conduct original empirical research, statistical analysis, or engineering fabrication for your final year project (worth 4 to 6 credit units).</li>
+<li>Endure unpredictable corrections and sudden physical summons from an abrasive project supervisor.</li>
+<li>Prepare for departmental defense panels and external moderation examinations.</li>
+</ul>
 <p>If you add three demanding remote freelance clients or an online e-commerce business to this mix, you are standing directly in the crosshairs of a catastrophic burnout collision.</p>
 <p>Every year, brilliant student hustlers who maintained a 4.0 CGPA through 300L watch their grades plummet to a weak 2:2 in their final two semesters because they failed to re-engineer their workload for project year.</p>
 <p>Here is the operational blueprint for completing an outstanding final year project while keeping your income streams alive.</p>
-<hr />
+<hr>
 <h2 id="why-final-year-projects-require-unique-time-management">Why Final Year Projects Require Unique Time Management</h2>
-<p>In 100L through 300L, academic work is predictable. You attend lectures, read lecture handouts, sit for Continuous Assessment tests, and write semester exams. </p>
+<p>In 100L through 300L, academic work is predictable. You attend lectures, read lecture handouts, sit for Continuous Assessment tests, and write semester exams.</p>
 <p>Final year projects are fundamentally different because they are <strong>non-linear and dependency-heavy</strong>:</p>
 <blockquote>
-<h3 id="the-final-year-project-dependency-trap">The Final Year Project Dependency Trap</h3>
-<ul>
-<li>You write Chapter 1 -&gt; Supervisor loses draft -&gt; Wait 3 weeks Supervisor rejects methodology -&gt; Rewrite Chapter 3 from scratch Lab equipment breaks down -&gt; Field data collection delayed by 1 month Defense panel date announced on 48 hours notice</li>
-</ul>
+<p>### The Final Year Project Dependency Trap</p>
+<p>></p>
+<p>* You write Chapter 1 -> Supervisor loses draft -> Wait 3 weeks Supervisor rejects methodology -> Rewrite Chapter 3 from scratch Lab equipment breaks down -> Field data collection delayed by 1 month Defense panel date announced on 48 hours notice</p>
 </blockquote>
 <p>You cannot predict when your supervisor will summon you for a red-pen chapter review. Therefore, your freelance client commitments must be built with maximum elasticity.</p>
 <p>If your grades are already showing early signs of distress, read our diagnostic checklist on <a href="/blog/balancing-work-and-school/side-hustle-hurting-university-grades/">6 signs your side hustle is hurting your academic performance</a>.</p>
-<hr />
+<hr>
 <h2 id="the-4-phase-final-year-work-study-matrix">The 4-Phase Final Year Work-Study Matrix</h2>
 <p>To survive final year without losing your income or your degree, divide your academic session into four operational phases:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Academic Phase</th>
-<th style="text-align: left;">Project Milestone</th>
-<th style="text-align: left;">Freelance Work Strategy</th>
-<th style="text-align: left;">Risk Level</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>First Semester (Months 1 - 3)</strong></td>
-<td style="text-align: left;">Topic approval, Chapters 1 - 3 (Proposal Defense)</td>
-<td style="text-align: left;">Maintain 80% normal client load; front-load literature review early.</td>
-<td style="text-align: left;">Low</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Semester Break (Month 4)</strong></td>
-<td style="text-align: left;">Fieldwork, questionnaires, lab experiments, data collection</td>
-<td style="text-align: left;">Pause new client onboarding; dedicate 6 hours daily to rapid data gathering.</td>
-<td style="text-align: left;">Moderate</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Second Semester (Months 5 - 7)</strong></td>
-<td style="text-align: left;">Chapter 4 &amp; 5 analysis, binding, internal mock defense</td>
-<td style="text-align: left;">Cut freelance load to 30% - 40%; maintain only 1 or 2 high-yield retainers.</td>
-<td style="text-align: left;">High</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Defense Month (Month 8)</strong></td>
-<td style="text-align: left;">External defense panel, final hard-cover submission</td>
-<td style="text-align: left;"><strong>Complete Work Blackout:</strong> Zero client delivery during the 14 days surrounding defense.</td>
-<td style="text-align: left;">Critical</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Academic Phase | Project Milestone | Freelance Work Strategy | Risk Level |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>First Semester (Months 1 - 3)</strong> | Topic approval, Chapters 1 - 3 (Proposal Defense) | Maintain 80% normal client load; front-load literature review early. | Low |</p>
+<p>| <strong>Semester Break (Month 4)</strong> | Fieldwork, questionnaires, lab experiments, data collection | Pause new client onboarding; dedicate 6 hours daily to rapid data gathering. | Moderate |</p>
+<p>| <strong>Second Semester (Months 5 - 7)</strong> | Chapter 4 & 5 analysis, binding, internal mock defense | Cut freelance load to 30% - 40%; maintain only 1 or 2 high-yield retainers. | High |</p>
+<p>| <strong>Defense Month (Month 8)</strong> | External defense panel, final hard-cover submission | <strong>Complete Work Blackout:</strong> Zero client delivery during the 14 days surrounding defense. | Critical |</p>
+<hr>
 <h2 id="3-rules-for-managing-difficult-project-supervisors">3 Rules for Managing Difficult Project Supervisors</h2>
 <p>Your project supervisor controls your graduation clearance. A hostile relationship with a supervisor can delay your graduation by an entire academic session. Follow these diplomatic rules:</p>
 <h3 id="rule-1-always-present-printed-physical-progress">Rule 1: Always Present Printed Physical Progress</h3>
-<p>Never walk into a Nigerian lecturer's office saying: <em>"Sir, I have updated the file in your email."</em> </p>
+<p>Never walk into a Nigerian lecturer's office saying: <em>"Sir, I have updated the file in your email."</em></p>
 <p>Print out Chapter 2 or Chapter 3 with 1.5 line spacing, bound neatly with an office pin. Highlight the specific changes they requested in the previous review. Supervisors respect students who respect their time.</p>
 <h3 id="rule-2-anchor-meetings-to-specific-agenda-points">Rule 2: Anchor Meetings to Specific Agenda Points</h3>
-<p>When you meet your supervisor, do not ask open-ended questions like <em>"Sir, is my chapter okay?"</em> </p>
+<p>When you meet your supervisor, do not ask open-ended questions like <em>"Sir, is my chapter okay?"</em></p>
 <p>Ask targeted questions:</p>
 <blockquote>
-<p><em>"Sir, on page 14, I updated the regression model from SPSS to Python based on your remark last Tuesday. Does this formula meet your requirement for Chapter 4?"</em></p>
+<p>*"Sir, on page 14, I updated the regression model from SPSS to Python based on your remark last Tuesday. Does this formula meet your requirement for Chapter 4?"*</p>
 </blockquote>
 <p>This limits meeting times to 10 minutes and prevents endless philosophical tangents.</p>
 <h3 id="rule-3-use-the-peer-verification-pod">Rule 3: Use the 'Peer Verification Pod'</h3>
 <p>Form a cooperative group with the 3 or 4 other students assigned to the same supervisor. Take turns monitoring the supervisor's campus office. When the supervisor is in a receptive mood, alert the group WhatsApp chat so everyone gets their chapters signed without wasting 5 hours in corridor queues.</p>
-<hr />
+<hr>
 <h2 id="downscaling-client-commitments-without-losing-accounts">Downscaling Client Commitments Without Losing Accounts</h2>
 <p>You do not need to burn bridges with your loyal clients when project pressures escalate. Use the <strong>Account Transition Protocol</strong>:</p>
 <ol>
-<li><strong>Offer a Retainer Downscale:</strong> If you write 8 articles a month for a client, propose shifting to 4 strategic articles at an adjusted fee during your 60-day project crunch.</li>
-<li><strong>Train an Associate Subcontractor:</strong> Bring in a vetted junior freelancer to handle formatting, preliminary drafts, and research, while you act purely as the strategic editor.</li>
-<li><strong>Communicate Early:</strong> Clients respect proactive scheduling. They terminate contracts only when work goes missing without warning.</li>
+<li>**Offer a Retainer Downscale:** If you write 8 articles a month for a client, propose shifting to 4 strategic articles at an adjusted fee during your 60-day project crunch.</li>
+<li>**Train an Associate Subcontractor:** Bring in a vetted junior freelancer to handle formatting, preliminary drafts, and research, while you act purely as the strategic editor.</li>
+<li>**Communicate Early:** Clients respect proactive scheduling. They terminate contracts only when work goes missing without warning.</li>
 </ol>
-<hr />
+<hr>
 <h2 id="action-plan-final-year-sanity-checklist">Action Plan: Final Year Sanity Checklist</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Lock down your project topic within the first 14 days of semester resumption.</li>
@@ -522,8 +493,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -707,8 +678,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -722,7 +693,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

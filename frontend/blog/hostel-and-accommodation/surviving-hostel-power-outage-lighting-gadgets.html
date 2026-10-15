@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,98 +306,79 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="surviving-hostel-blackouts-lighting-gadget-backup">Surviving Hostel Blackouts: Lighting &amp; Gadget Backup</h1>
-<p>It is 9:15 PM on a Tuesday night. </p>
-<p>Semester examinations begin in exactly four days. </p>
+        <h1 id="surviving-hostel-blackouts-lighting-gadget-backup">Surviving Hostel Blackouts: Lighting & Gadget Backup</h1>
+<p>It is 9:15 PM on a Tuesday night.</p>
+<p>Semester examinations begin in exactly four days.</p>
 <p>You are sitting at your hostel reading desk with three open textbook PDFs on your laptop screen. Suddenly, a familiar metallic click echoes down the corridor:</p>
 <p><em>KLINK.</em></p>
 <p>The overhead fluorescent tube dies. The whirring ceiling fan slows to a halt. Pitch darkness swallows the four floors of your hall of residence.</p>
 <p>From every corner of the hostel, a collective roar erupts from four hundred frustrated undergraduates:</p>
 <blockquote>
-<p><em>"UP NEPA! ... AH, NEPA DEY MAD O!"</em></p>
+<p>*"UP NEPA! ... AH, NEPA DEY MAD O!"*</p>
 </blockquote>
-<p>Inside your room, reality sets in. </p>
+<p>Inside your room, reality sets in.</p>
 <p>Your smartphone battery sits at 18%. Your laptop battery is flashing an ominous red warning at 11%. Your room’s single rechargeable study lamp was not plugged in during the four hours of electricity that afternoon.</p>
 <p>Within forty-five minutes, your gadgets are dead. Your revision is paralyzed. You are forced to abandon your study goals and go to sleep.</p>
 <p>In Nigerian tertiary institutions, national grid instability and local transformer blowouts are not temporary anomalies—they are an environmental constant. A student who relies on continuous public electricity to pass their exams will graduate with a compromised CGPA.</p>
 <p>Here is the ultimate tactical guide to engineering a resilient, blackout-proof power and lighting setup on a student budget.</p>
-<hr />
+<hr>
 <h2 id="1-the-anatomy-of-campus-blackouts-the-3-power-tiers">1. The Anatomy of Campus Blackouts: The 3 Power Tiers</h2>
 <p>To build an unbreakable backup system, categorize your energy requirements into three operational tiers:</p>
-<p><strong>Student Gadget Power Hierarchy:</strong><br />
-* Tier 1: Ambient &amp; Desk Illumination (Rechargeable LED reading lamps, room lights) — Tier 2: Communication &amp; Reference (Smartphones, 4G Wi-Fi MiFis, e-readers) — Tier 3: High-Drain Computing (Laptops, external monitors, engineering workstations)</p>
-<table>
-<thead>
-<tr>
-<th>Power Category</th>
-<th>Minimum Budget Hardware Solution</th>
-<th>Recommended Pro Student Setup</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Study Illumination</td>
-<td>₦3,500 5W Li-ion rechargeable torch</td>
-<td>₦12,000 Dual-light LED desk lamp</td>
-</tr>
-<tr>
-<td>Phone &amp; MiFi Charging</td>
-<td>10,000mAh basic power bank (₦8,000)</td>
-<td>30,000mAh 22.5W Fast Bank (₦25,000)</td>
-</tr>
-<tr>
-<td>Laptop Survival</td>
-<td>3-cell internal battery optimization</td>
-<td>65W PD USB-C Power Bank / Mini UPS</td>
-</tr>
-<tr>
-<td>Emergency Backup</td>
-<td>Campus Faculty charging centers</td>
-<td>Solar-panel trickle-charging kit</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p><strong>Student Gadget Power Hierarchy:</strong></p>
+<ul>
+<li>Tier 1: Ambient & Desk Illumination (Rechargeable LED reading lamps, room lights) — Tier 2: Communication & Reference (Smartphones, 4G Wi-Fi MiFis, e-readers) — Tier 3: High-Drain Computing (Laptops, external monitors, engineering workstations)</li>
+</ul>
+<p>| Power Category | Minimum Budget Hardware Solution | Recommended Pro Student Setup |</p>
+<p>| --- | --- | --- |</p>
+<p>| Study Illumination | ₦3,500 5W Li-ion rechargeable torch | ₦12,000 Dual-light LED desk lamp |</p>
+<p>| Phone & MiFi Charging | 10,000mAh basic power bank (₦8,000) | 30,000mAh 22.5W Fast Bank (₦25,000) |</p>
+<p>| Laptop Survival | 3-cell internal battery optimization | 65W PD USB-C Power Bank / Mini UPS |</p>
+<p>| Emergency Backup | Campus Faculty charging centers | Solar-panel trickle-charging kit |</p>
+<hr>
 <h2 id="2-tier-1-blackout-illumination-protocols">2. Tier 1: Blackout Illumination Protocols</h2>
 <p>Reading in poor light strains your optic nerves, triggers tension headaches, and halves reading comprehension speed within twenty minutes.</p>
 <h3 id="the-problem-with-cheap-campus-market-lamps">The Problem with Cheap "Campus Market" Lamps</h3>
 <p>Most ₦2,000 rechargeable lamps sold outside university gates use cheap lead-acid batteries. If left plugged in while the hostel generator runs, the battery plates overheat and swell, reducing run-time from 4 hours to 15 minutes within two months.</p>
 <h3 id="the-solution-18650-lithium-ion-lamps">The Solution: 18650 Lithium-Ion Lamps</h3>
 <ul>
-<li>Buy lamps powered by replaceable <strong>18650 Lithium-ion batteries</strong>. </li>
+<li>Buy lamps powered by replaceable **18650 Lithium-ion batteries**.</li>
 <li>Keep two spare 18650 cells fully charged. When the main battery dies, swap in the fresh cell in five seconds without waiting for electricity.</li>
-<li>Position your lamp at a 45-degree angle to your reading surface to eliminate page glare. For complete study routines under low-light conditions, see our blueprint on <a href="/blog/academics/studying-without-electricity-hostel-blackouts/">studying without electricity during hostel blackouts</a>.</li>
+<li>Position your lamp at a 45-degree angle to your reading surface to eliminate page glare. For complete study routines under low-light conditions, see our blueprint on [studying without electricity during hostel blackouts](/blog/academics/studying-without-electricity-hostel-blackouts/).</li>
 </ul>
-<hr />
-<h2 id="3-tier-2-smartphone-mifi-power-security">3. Tier 2: Smartphone &amp; MiFi Power Security</h2>
+<hr>
+<h2 id="3-tier-2-smartphone-mifi-power-security">3. Tier 2: Smartphone & MiFi Power Security</h2>
 <p>Your smartphone is your gateway to lecture slide updates, exam timetable modifications, and study group communication.</p>
 <h3 id="1-the-two-bank-alternating-protocol">1. The "Two-Bank" Alternating Protocol</h3>
-<p>Never own just one power bank. If you can afford it, purchase two moderate units (e.g., one 20,000mAh bank and one 10,000mAh compact bank) rather than one gigantic 40,000mAh brick:<br />
-* <strong>Bank A</strong> stays with you in your backpack, powering your phone during the day.<br />
-* <strong>Bank B</strong> is plugged into a charging outlet at your departmental library or faculty business center whenever electricity appears.<br />
-* You never suffer a zero-battery state.</p>
+<p>Never own just one power bank. If you can afford it, purchase two moderate units (e.g., one 20,000mAh bank and one 10,000mAh compact bank) rather than one gigantic 40,000mAh brick:</p>
+<ul>
+<li>**Bank A** stays with you in your backpack, powering your phone during the day.</li>
+<li>**Bank B** is plugged into a charging outlet at your departmental library or faculty business center whenever electricity appears.</li>
+<li>You never suffer a zero-battery state.</li>
+</ul>
 <h3 id="2-beware-of-counterfeit-mah-ratings">2. Beware of Counterfeit mAh Ratings</h3>
 <p>Campus markets are flooded with counterfeit power banks labeled "50,000mAh" that weigh next to nothing and contain sandbags inside the casing. Buy only from authorized distributor outlets with verifiable scratch-and-check security codes.</p>
-<hr />
-<h2 id="4-tier-3-laptop-battery-optimization-surge-protection">4. Tier 3: Laptop Battery Optimization &amp; Surge Protection</h2>
+<hr>
+<h2 id="4-tier-3-laptop-battery-optimization-surge-protection">4. Tier 3: Laptop Battery Optimization & Surge Protection</h2>
 <p>A laptop drawing 45 to 65 watts presents the greatest challenge during extended blackouts.</p>
-<h3 id="windows-mac-power-tuning-secrets">Windows &amp; Mac Power-Tuning Secrets</h3>
+<h3 id="windows-mac-power-tuning-secrets">Windows & Mac Power-Tuning Secrets</h3>
 <ol>
-<li><strong>Ditch the Google Chrome Browser:</strong> Chrome is an aggressive RAM and CPU hog that drains battery twice as fast as lightweight alternatives. Switch to Microsoft Edge with "Efficiency Mode" active, or read course documents in offline PDF readers.</li>
-<li><strong>Throttle the Processor:</strong> On Windows, navigate to <em>Advanced Power Settings &gt; Processor Power Management &gt; Maximum Processor State</em> on battery. Reducing this value from 100% to 75% cuts CPU heat and extends battery runtime by up to 90 minutes with zero lag for document reading.</li>
-<li><strong>Turn Off Background Radio Hardware:</strong> Disable Bluetooth and toggle Airplane Mode when reading offline textbook files.</li>
+<li>**Ditch the Google Chrome Browser:** Chrome is an aggressive RAM and CPU hog that drains battery twice as fast as lightweight alternatives. Switch to Microsoft Edge with "Efficiency Mode" active, or read course documents in offline PDF readers.</li>
+<li>**Throttle the Processor:** On Windows, navigate to *Advanced Power Settings > Processor Power Management > Maximum Processor State* on battery. Reducing this value from 100% to 75% cuts CPU heat and extends battery runtime by up to 90 minutes with zero lag for document reading.</li>
+<li>**Turn Off Background Radio Hardware:** Disable Bluetooth and toggle Airplane Mode when reading offline textbook files.</li>
 </ol>
 <h3 id="protecting-against-high-voltage-surges">Protecting Against High-Voltage Surges</h3>
-<p>When campus electricity is suddenly restored, the incoming voltage frequently spikes to over 280V, frying laptop power bricks and motherboard charging ICs. Learn how to protect your expensive hardware using our guide on <a href="/blog/hostel-and-accommodation/protecting-gadgets-power-surges-hostel/">protecting laptops from voltage surges in hostels</a>. </p>
+<p>When campus electricity is suddenly restored, the incoming voltage frequently spikes to over 280V, frying laptop power bricks and motherboard charging ICs. Learn how to protect your expensive hardware using our guide on <a href="/blog/hostel-and-accommodation/protecting-gadgets-power-surges-hostel/">protecting laptops from voltage surges in hostels</a>.</p>
 <p>For budget recommendations on durable student tech hardware, explore our curated list of <a href="/blog/finances/">affordable gadgets and tech tools for students</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="share-campus-charging-hacks-solar-deals">⚡ Share Campus Charging Hacks &amp; Solar Deals</h3>
+<p>### ⚡ Share Campus Charging Hacks & Solar Deals</p>
 <p>Battling blackouts in your university hall or off-campus lodge?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Discover verified student charging hubs on your campus, swap reviews on reliable power banks and solar lamps, and get advice on protecting your study devices.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Discover verified student charging hubs on your campus, swap reviews on reliable power banks and solar lamps, and get advice on protecting your study devices.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-best-power-bank-capacity-for-nigerian-university-students">What is the best power bank capacity for Nigerian university students?</h3>
 <p>A verified 20,000mAh to 30,000mAh power bank from reputable brands (like New-Rixing, Oraimo, or Romoss) provides 4 to 6 full smartphone charges, sufficient to survive a 72-hour campus blackout.</p>
@@ -571,8 +552,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -756,8 +737,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -771,7 +752,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

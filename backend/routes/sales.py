@@ -13,6 +13,7 @@ from ..utils.rate_limit import limiter
 from ..services.paystack import (
     initialize_transaction, verify_transaction
 )
+from ..services.payment_completion import is_valid_paid_amount
 from ..services.email_service import send_email
 
 router = APIRouter(prefix="/api/sales", tags=["sales"])
@@ -348,8 +349,9 @@ async def verify_checkout_payment(body: CheckoutVerifyRequest, db=Depends(get_db
 
     # Transaction Integrity Guard: Verify amount paid matches offer price
     amount_paid = (charge_data.get("amount") or 0) / 100.0
+    fee_paid = float((charge_data.get("fees") or 0) / 100.0)
     expected_amount = float(offer.get("price", 0) or 0)
-    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+    if expected_amount > 0 and not is_valid_paid_amount(amount_paid, expected_amount, fee_paid):
         print(f"⚠️ Sales verify: Amount mismatch for {body.reference}. Expected {expected_amount}, got {amount_paid}")
         await db.flagged_payments.insert_one({
             "reference": body.reference,

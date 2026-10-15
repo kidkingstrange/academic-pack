@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Graphic Designers & Video Editors: Meeting Tight Deadlines",
       "description": "How campus graphic designers and video editors can speed up workflows, manage render times, and deliver client assets around university tests.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -270,54 +270,54 @@
 <ul>
 <li>A "simple flyer" often turns into 4 hours of font hunting, layer masking, and color grading.</li>
 <li>An export in Premiere Pro crashes at 98% because your hostel room generator fluctuated in voltage.</li>
-<li>A client texts you at 10:30 PM: <em>"Can you change the blue to a slightly darker shade and move the CEO's head 2 inches to the left?"</em></li>
+<li>A client texts you at 10:30 PM: *"Can you change the blue to a slightly darker shade and move the CEO's head 2 inches to the left?"*</li>
 <li>Meanwhile, your 8:00 AM Continuous Assessment test in Faculty Hall C is eight hours away.</li>
 </ul>
 <p>If you do not optimize your design and editing workflows, your creative freelance business will consume your degree alive.</p>
 <p>Here is the operational production playbook for student designers and video editors to cut delivery times by 50% while protecting their academic standing.</p>
-<hr />
+<hr>
 <h2 id="the-3-bottlenecks-slowing-down-student-creatives">The 3 Bottlenecks Slowing Down Student Creatives</h2>
 <p>Before you can accelerate, you must eliminate the three major time sinks:</p>
 <blockquote>
-<h3 id="the-creative-design-bottlenecks">The Creative Design Bottlenecks</h3>
-<ul>
-<li><strong>1.</strong> The Blank Canvas Trap: Starting every layout from scratch (2 - 3 hours wasted)</li>
-<li><strong>2.</strong> Unbounded Revision Hell: Clients requesting 14 micro-adjustments via WhatsApp</li>
-<li><strong>3.</strong> Hardware Export Drag: Waiting 90 minutes for local video renders to export</li>
-</ul>
+<p>### The Creative Design Bottlenecks</p>
+<p>></p>
+<p>* **1.** The Blank Canvas Trap: Starting every layout from scratch (2 - 3 hours wasted)</p>
+<p>* **2.** Unbounded Revision Hell: Clients requesting 14 micro-adjustments via WhatsApp</p>
+<p>* **3.** Hardware Export Drag: Waiting 90 minutes for local video renders to export</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="the-modular-asset-system-never-start-from-scratch">The Modular Asset System: Never Start from Scratch</h2>
 <p>The secret of high-earning commercial agencies is that <strong>they rarely design from a blank screen</strong>. They assemble modular design components.</p>
 <p>Build your personal <strong>Design Design System</strong> on your local drive during the semester break:</p>
 <blockquote>
-<h3 id="modular-design-asset-repository">Modular Design Asset Repository</h3>
-<ul>
-<li>📁 Typography Kits: 5 Tested font pairings (Header + Body + Subheader) 📁 Color Palettes: 10 High-contrast corporate &amp; modern gradients 📁 3D &amp; Vector Icons: Curated packs of arrows, badges, social logos, and ribbons 📁 Social Media Templates: 1:1, 4:5, and 9:16 layout grids ready in Figma/PSD</li>
-</ul>
+<p>### Modular Design Asset Repository</p>
+<p>></p>
+<p>* 📁 Typography Kits: 5 Tested font pairings (Header + Body + Subheader) 📁 Color Palettes: 10 High-contrast corporate & modern gradients 📁 3D & Vector Icons: Curated packs of arrows, badges, social logos, and ribbons 📁 Social Media Templates: 1:1, 4:5, and 9:16 layout grids ready in Figma/PSD</p>
 </blockquote>
 <p>By pulling from a pre-curated asset library, assembling an Instagram carousel or event flyer drops from <strong>3.5 hours down to 45 minutes</strong>. You can complete client deliverables between afternoon lecture breaks!</p>
-<hr />
+<hr>
 <h2 id="the-revision-defense-contract">The 'Revision Defense' Contract</h2>
 <p>Undergraduate creatives frequently suffer because they communicate casually on WhatsApp without clear contractual boundaries.</p>
 <p>Before accepting any project deposit, send this standardized project scope note:</p>
 <blockquote>
-<p><em>"Project Scope &amp; Revision Terms:</em><br />
-* <em>Timeline: 48 business hours from deposit receipt.</em><br />
-* <em>Included Revisions: 2 rounds of consolidated written feedback.</em><br />
-* <em>All revision requests must be submitted within 24 hours of preview link.</em><br />
-* <em>Additional revisions or scope changes are billed at ₦5,000 per round with an added 24-hour delivery window."</em></p>
+<p>*"Project Scope & Revision Terms:*</p>
+<p>* *Timeline: 48 business hours from deposit receipt.*</p>
+<p>* *Included Revisions: 2 rounds of consolidated written feedback.*</p>
+<p>* *All revision requests must be submitted within 24 hours of preview link.*</p>
+<p>* *Additional revisions or scope changes are billed at ₦5,000 per round with an added 24-hour delivery window."*</p>
 </blockquote>
 <p>When clients know that each additional casual revision costs money and delays delivery, they consolidate their feedback into a single, thoughtful voice note or email rather than texting you ten times while you are sitting in class.</p>
 <p>If you ever find yourself facing an angry client demanding revisions while you are walking into an examination hall, read our emergency protocol on <a href="/blog/balancing-work-and-school/client-emergency-on-university-exam-day/">what to do when a client demands revision on exam day</a>.</p>
-<hr />
-<h2 id="hardware-render-optimization-in-hostels">Hardware &amp; Render Optimization in Hostels</h2>
+<hr>
+<h2 id="hardware-render-optimization-in-hostels">Hardware & Render Optimization in Hostels</h2>
 <p>Rendering 4K or 1080p 60fps video files on an aging dual-core laptop inside a hot Nigerian hostel room is an invitation to hardware failure.</p>
-<p>Deploy these tactical optimizations:<br />
-1. <strong>Use Proxy Editing:</strong> In Premiere Pro or DaVinci Resolve, generate low-resolution 720p proxies to edit smoothly without laptop stuttering or overheating. Switch to full resolution only during final export.<br />
-2. <strong>Queue Overnight Batch Renders:</strong> Never render during daytime study hours. Queue all exports in Adobe Media Encoder and set the computer to automatically shut down upon completion at 3:00 AM.<br />
-3. <strong>Use Render Caching:</strong> Cache complex motion graphics effects so your CPU doesn't re-calculate color grades on every scrub.</p>
-<hr />
+<p>Deploy these tactical optimizations:</p>
+<ol>
+<li>**Use Proxy Editing:** In Premiere Pro or DaVinci Resolve, generate low-resolution 720p proxies to edit smoothly without laptop stuttering or overheating. Switch to full resolution only during final export.</li>
+<li>**Queue Overnight Batch Renders:** Never render during daytime study hours. Queue all exports in Adobe Media Encoder and set the computer to automatically shut down upon completion at 3:00 AM.</li>
+<li>**Use Render Caching:** Cache complex motion graphics effects so your CPU doesn't re-calculate color grades on every scrub.</li>
+</ol>
+<hr>
 <h2 id="action-checklist-high-velocity-creative-production">Action Checklist: High-Velocity Creative Production</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Assemble a personal modular design system in Figma or Photoshop.</li>
@@ -491,8 +491,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -676,8 +676,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -691,7 +691,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

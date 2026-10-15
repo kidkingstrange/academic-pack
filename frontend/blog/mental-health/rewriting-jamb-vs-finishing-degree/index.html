@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,77 +308,55 @@
       <div class="article-body">
         <h1 id="continuing-unwanted-degree-vs-starting-fresh-with-jamb">Continuing Unwanted Degree vs Starting Fresh with JAMB</h1>
 <p>You sit in an agricultural science or polymer engineering lecture hall.</p>
-<p>For three years in secondary school, your singular dream was to study <strong>Medicine and Surgery</strong> or <strong>Law</strong>. </p>
+<p>For three years in secondary school, your singular dream was to study <strong>Medicine and Surgery</strong> or <strong>Law</strong>.</p>
 <p>You wore scrubs in your dreams. Your parents introduced you to relatives as "our future doctor."</p>
-<p>Then JAMB results arrived. You scored 248. The university cutoff for Medicine was 285. </p>
-<p>To avoid staying at home for another year, you accepted the university's compromise transfer offer: <strong>Fisheries &amp; Aquaculture</strong> or <strong>Soil Science</strong>.</p>
+<p>Then JAMB results arrived. You scored 248. The university cutoff for Medicine was 285.</p>
+<p>To avoid staying at home for another year, you accepted the university's compromise transfer offer: <strong>Fisheries & Aquaculture</strong> or <strong>Soil Science</strong>.</p>
 <p>Now, you are in 200 Level.</p>
-<p>Every single day feels like intellectual torture:<br />
-* You have zero passion for the coursework.<br />
-* Your CGPA is sliding into 2.30 because you cannot bring yourself to read handouts you hate.<br />
-* You see secondary school coursemates in medical school on social media, and your heart aches with regret.</p>
+<p>Every single day feels like intellectual torture:</p>
+<ul>
+<li>You have zero passion for the coursework.</li>
+<li>Your CGPA is sliding into 2.30 because you cannot bring yourself to read handouts you hate.</li>
+<li>You see secondary school coursemates in medical school on social media, and your heart aches with regret.</li>
+</ul>
 <p>You face a terrifying choice:</p>
 <p><strong>Option A: The Fresh Start:</strong> Buy another JAMB UTME form, rewrite the examination, and fight for your dream course from 100 Level all over again.</p>
 <p><strong>Option B: The Sunk Cost Push:</strong> Swallow your pride, endure the remaining three years, graduate with this unwanted certificate, and pivot your career afterward.</p>
 <p>Here is the pragmatic, data-driven analysis to make this monumental life choice.</p>
-<hr />
+<hr>
 <h2 id="1-the-sunk-cost-fallacy-vs-the-4-year-trap">1. The Sunk Cost Fallacy vs. The 4-Year Trap</h2>
 <p>In behavioral economics, the <strong>Sunk Cost Fallacy</strong> leads people to continue an unfulfilling endeavor simply because they have already invested time and money:</p>
 <blockquote>
-<h3 id="already-spent-2-years-in-botany">Already Spent 2 Years In Botany</h3>
-<ul>
-<li><strong>Mindset Trap: "I cannot waste those 2 years; I must suffer for 2 more years"</strong></li>
-<li><strong>Result: Graduating with a Third Class / 2.2 in a field you will never practice</strong></li>
-</ul>
+<p>### Already Spent 2 Years In Botany</p>
+<p>></p>
+<p>* **Mindset Trap: "I cannot waste those 2 years; I must suffer for 2 more years"**</p>
+<p>* **Result: Graduating with a Third Class / 2.2 in a field you will never practice**</p>
 </blockquote>
-<p>On the flip side, the <strong>Grass-Is-Greener Trap</strong> leads students to underestimate the brutal unpredictability of Nigerian university admissions:<br />
-* JAMB cutoffs shift erratically every session.<br />
-* ASUU strikes and institutional quotas mean you could spend two additional years sitting at home without securing your dream course.</p>
+<p>On the flip side, the <strong>Grass-Is-Greener Trap</strong> leads students to underestimate the brutal unpredictability of Nigerian university admissions:</p>
+<ul>
+<li>JAMB cutoffs shift erratically every session.</li>
+<li>ASUU strikes and institutional quotas mean you could spend two additional years sitting at home without securing your dream course.</li>
+</ul>
 <p>Explore internal university transfer alternatives in <a href="/blog/academics/changing-department-university-nigeria/">changing course in 200 level vs pushing through: decision guide</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-decision-scorecard-rewrite-vs-finish">2. The Decision Scorecard: Rewrite vs. Finish</h2>
-<table>
-<thead>
-<tr>
-<th>Evaluation Factor</th>
-<th>Strong Signal to <strong>REWRITE JAMB</strong></th>
-<th>Strong Signal to <strong>FINISH CURRENT DEGREE</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Current Academic Level</strong></td>
-<td>100 Level (Minimal time invested)</td>
-<td>300 Level or Final Year (Over 60% complete)</td>
-</tr>
-<tr>
-<td><strong>Licensing Requirement</strong></td>
-<td>Desired career requires professional license (MBBS, Pharmacy, Law)</td>
-<td>Desired career is flexible (Tech, Business, Finance, Creative)</td>
-</tr>
-<tr>
-<td><strong>Financial Backing</strong></td>
-<td>Family fully supports re-entry and school fees</td>
-<td>Family will cut off all financial support if you drop out</td>
-</tr>
-<tr>
-<td><strong>Current CGPA</strong></td>
-<td>Below 2.00; facing academic probation</td>
-<td>3.50+ (Second Class Upper); First Class still mathematically possible</td>
-</tr>
-</tbody>
-</table>
+<p>| Evaluation Factor | Strong Signal to <strong>REWRITE JAMB</strong> | Strong Signal to <strong>FINISH CURRENT DEGREE</strong> |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Current Academic Level</strong> | 100 Level (Minimal time invested) | 300 Level or Final Year (Over 60% complete) |</p>
+<p>| <strong>Licensing Requirement</strong> | Desired career requires professional license (MBBS, Pharmacy, Law) | Desired career is flexible (Tech, Business, Finance, Creative) |</p>
+<p>| <strong>Financial Backing</strong> | Family fully supports re-entry and school fees | Family will cut off all financial support if you drop out |</p>
+<p>| <strong>Current CGPA</strong> | Below 2.00; facing academic probation | 3.50+ (Second Class Upper); First Class still mathematically possible |</p>
 <p>Learn how to handle academic suspension and leave in <a href="/blog/mental-health/returning-to-university-after-sick-leave/">re-entering class after disciplinary or medical leave</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-third-option-direct-entry-and-postgraduate-pivoting">3. The Third Option: Direct Entry and Postgraduate Pivoting</h2>
 <p>Many Nigerian students mistakenly believe that your undergraduate major locks you into a lifelong career cage:</p>
 <ul>
-<li><strong>The Direct Entry (DE) Route:</strong> If you finish a 3-year or 4-year degree with a First Class or Second Class Upper, you can apply for Direct Entry admission into 200-level Medicine or Law without writing UTME.</li>
-<li><strong>The Modern Corporate Reality:</strong> In corporate Nigeria, top management consulting firms (McKinsey, KPMG, PwC), commercial banks, and technology startups hire graduates of <em>any discipline</em> who demonstrate exceptional problem-solving, analytical aptitude, and communication skills.</li>
-<li><strong>Master's Conversion Programs:</strong> You can transition from a science degree into an MBA, Data Science, or Corporate Finance through postgraduate conversion degrees abroad or locally.</li>
+<li>**The Direct Entry (DE) Route:** If you finish a 3-year or 4-year degree with a First Class or Second Class Upper, you can apply for Direct Entry admission into 200-level Medicine or Law without writing UTME.</li>
+<li>**The Modern Corporate Reality:** In corporate Nigeria, top management consulting firms (McKinsey, KPMG, PwC), commercial banks, and technology startups hire graduates of *any discipline* who demonstrate exceptional problem-solving, analytical aptitude, and communication skills.</li>
+<li>**Master's Conversion Programs:** You can transition from a science degree into an MBA, Data Science, or Corporate Finance through postgraduate conversion degrees abroad or locally.</li>
 </ul>
 <p>Review semester deferral options in <a href="/blog/mental-health/deferring-university-semester-nigeria/">deferring a semester vs staying enrolled on a bad GPA</a>.</p>
-<hr />
+<hr>
 <h2 id="4-how-to-execute-the-safe-parallel-track">4. How to Execute the Safe "Parallel Track"</h2>
 <p>If you decide to rewrite JAMB, <strong>never drop out of your current university first</strong>:</p>
 <ol>
@@ -388,7 +366,7 @@
 <li>Only when your new admission is officially confirmed on JAMB CAPS and school fees are ready do you formally withdraw from your previous institution.</li>
 </ol>
 <p>Never leap into the dark without a safety net underneath you. Make your move with calculated precision.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="should-a-200-level-student-rewrite-jamb-if-they-were-admitted-into-an-unwanted-course">Should a 200-level student rewrite JAMB if they were admitted into an unwanted course?</h3>
 <p>If you have a clear, realistic pathway to your desired professional course (such as scoring 300+ in JAMB) and your mental health is in total collapse, rewriting is viable. However, if you are already in 300 level, finishing your first degree with a First Class and pursuing a direct-entry second degree is usually far safer.</p>
@@ -562,8 +540,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -747,8 +725,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -762,7 +740,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

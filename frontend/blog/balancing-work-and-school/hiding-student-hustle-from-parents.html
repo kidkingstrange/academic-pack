@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Explaining Grade Dips to Parents When Working Secretly",
       "description": "How working Nigerian undergraduates can navigate difficult parental conversations about GPA drops while protecting their entrepreneurial autonomy.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -264,86 +264,77 @@
 
       <!-- Article Body -->
       <div class="article-body">
-        <p>It is the end of the first semester. </p>
-<p>The departmental examination board has just ratified results, and your portal profile updates:<br />
-* Your semester GPA dropped from a <strong>4.25</strong> to a <strong>3.18</strong>.<br />
-* You recorded two Cs and a D in departmental courses you used to excel in.</p>
+        <p>It is the end of the first semester.</p>
+<p>The departmental examination board has just ratified results, and your portal profile updates:</p>
+<ul>
+<li>Your semester GPA dropped from a **4.25** to a **3.18**.</li>
+<li>You recorded two Cs and a D in departmental courses you used to excel in.</li>
+</ul>
 <p>Your phone rings. The caller ID displays: <strong>"Daddy."</strong></p>
-<p>Your stomach tightens into a knot. </p>
-<p>For the past nine months, you have been secretly working 25 hours a week:<br />
-* You learned UI/UX design or digital copywriting.<br />
-* You earn ₦180,000 monthly, which has paid for your hostel rent, daily feeding, and laptop repairs without asking your parents for a single kobo.<br />
-* But in your parents' minds, you are a full-time scholar whose sole responsibility on Earth is to bring home a 4.5 First Class degree.</p>
+<p>Your stomach tightens into a knot.</p>
+<p>For the past nine months, you have been secretly working 25 hours a week:</p>
+<ul>
+<li>You learned UI/UX design or digital copywriting.</li>
+<li>You earn ₦180,000 monthly, which has paid for your hostel rent, daily feeding, and laptop repairs without asking your parents for a single kobo.</li>
+<li>But in your parents' minds, you are a full-time scholar whose sole responsibility on Earth is to bring home a 4.5 First Class degree.</li>
+</ul>
 <p>If you tell them you have been working, they might scream that you have ruined your future chasing "peanut money." But if you stay silent, they assume you have become lazy, unserious, or joined bad company on campus.</p>
 <p>Here is the strategic communication framework for working Nigerian undergraduates to handle difficult parental grade conversations with maturity, dignity, and calm authority.</p>
-<hr />
+<hr>
 <h2 id="understanding-the-nigerian-parental-mindset">Understanding the Nigerian Parental Mindset</h2>
 <p>To communicate effectively with your parents, you must understand the psychological roots of their anxiety.</p>
 <p>Most Nigerian parents grew up in an economic era (1970s - 1990s) where <strong>a First Class degree was an automatic ticket to corporate employment</strong>:</p>
 <blockquote>
-<h3 id="the-historical-divide-in-perspective">The Historical Divide In Perspective</h3>
-<ul>
-<li>Parental Mental Model: First Class -&gt; Shell/Chevron/Bank Job -&gt; Lifelong Security Modern Reality: Certificates without skills -&gt; Chronic underemployment &amp; ₦80k pay</li>
-</ul>
+<p>### The Historical Divide In Perspective</p>
+<p>></p>
+<p>* Parental Mental Model: First Class -> Shell/Chevron/Bank Job -> Lifelong Security Modern Reality: Certificates without skills -> Chronic underemployment & ₦80k pay</p>
 </blockquote>
 <p>They are not being cruel; they are terrified that you are throwing away your life because they do not understand how modern remote digital careers work.</p>
 <p>If you dismiss their concerns with arrogance (<em>"School is a scam anyway!"</em>), you will trigger parental fury, emotional withdrawal, and severed financial support.</p>
-<hr />
+<hr>
 <h2 id="the-3-step-parental-alignment-protocol">The 3-Step Parental Alignment Protocol</h2>
 <p>When your parents notice a grade dip, do not wait for them to interrogate you in an explosive Sunday evening phone call. Take the initiative using this 3-step protocol:</p>
 <blockquote>
-<h3 id="the-parental-conversation-blueprint">The Parental Conversation Blueprint</h3>
-<ul>
-<li><strong>Step 1:</strong> Take Radical Academic Ownership (Zero defensive finger-pointing)</li>
-<li><strong>Step 2:</strong> Present the Written 'Turnaround Plan' (Course-by-course recovery metrics)</li>
-<li><strong>Step 3:</strong> Maturely Reframe the Professional Skill Context</li>
-</ul>
+<p>### The Parental Conversation Blueprint</p>
+<p>></p>
+<p>* **Step 1:** Take Radical Academic Ownership (Zero defensive finger-pointing)</p>
+<p>* **Step 2:** Present the Written 'Turnaround Plan' (Course-by-course recovery metrics)</p>
+<p>* **Step 3:** Maturely Reframe the Professional Skill Context</p>
 </blockquote>
 <h3 id="step-1-radical-academic-ownership">Step 1: Radical Academic Ownership</h3>
 <p>Never begin the conversation by saying:</p>
 <blockquote>
-<p><em>"The lecturer was wicked and failed everybody!"</em> or <em>"The timetable was too tight!"</em></p>
+<p>*"The lecturer was wicked and failed everybody!"* or *"The timetable was too tight!"*</p>
 </blockquote>
 <p>Nigerian parents immediately interpret this as childish evasion.</p>
 <p>Instead, say:</p>
 <blockquote>
-<p><em>"Daddy, I wanted to discuss my semester results with you directly. My GPA came in at 3.18, which is lower than our 4.0 standard. I took on too many commitments this semester and mismanaged my revision timetable. I take full responsibility for that dip."</em></p>
+<p>*"Daddy, I wanted to discuss my semester results with you directly. My GPA came in at 3.18, which is lower than our 4.0 standard. I took on too many commitments this semester and mismanaged my revision timetable. I take full responsibility for that dip."*</p>
 </blockquote>
 <p>This disarms their anger instantly. You cannot attack someone who has already taken full accountability.</p>
 <h3 id="step-2-present-the-written-turnaround-plan">Step 2: Present the Written Turnaround Plan</h3>
-<p>Never present a problem without a solution. Before speaking with them, prepare a simple 1-page <strong>Academic Turnaround Plan</strong>:<br />
-* List the specific courses where you dropped marks.<br />
-* State your target grade for the upcoming semester (e.g., <em>"Targeting 5 As and 2 Bs in 22 credit units to bring my cumulative back to 3.70"</em>).<br />
-* Highlight concrete changes: <em>"I have joined an engineering past-question study group and blocked out 5:00 AM to 7:00 AM every morning for calculation drills."</em></p>
+<p>Never present a problem without a solution. Before speaking with them, prepare a simple 1-page <strong>Academic Turnaround Plan</strong>:</p>
+<ul>
+<li>List the specific courses where you dropped marks.</li>
+<li>State your target grade for the upcoming semester (e.g., *"Targeting 5 As and 2 Bs in 22 credit units to bring my cumulative back to 3.70"*).</li>
+<li>Highlight concrete changes: *"I have joined an engineering past-question study group and blocked out 5:00 AM to 7:00 AM every morning for calculation drills."*</li>
+</ul>
 <p>If you need a step-by-step roadmap to calculate your exact mathematical comeback target, see our comprehensive guide on <a href="/blog/academics/how-to-calculate-cgpa-in-nigerian-universities/">calculating your CGPA comeback trajectory</a>.</p>
 <h3 id="step-3-introduce-your-professional-skills-with-financial-evidence">Step 3: Introduce Your Professional Skills with Financial Evidence</h3>
 <p>Once your parents see that you take your degree seriously, gently bridge into your professional work:</p>
 <blockquote>
-<p><em>"Mummy, alongside my studies, I have also been building professional skills in digital design. Over the last six months, I have worked with legitimate tech businesses that have allowed me to cover my hostel rent and feeding without burdening the family budget.</em></p>
-<p><em>I now understand my limits. I am scaling back my freelance hours by 50% this semester to ensure my academics return to the 4.0 range while preserving my career skills."</em></p>
+<p>*"Mummy, alongside my studies, I have also been building professional skills in digital design. Over the last six months, I have worked with legitimate tech businesses that have allowed me to cover my hostel rent and feeding without burdening the family budget.*</p>
+<p>></p>
+<p>*I now understand my limits. I am scaling back my freelance hours by 50% this semester to ensure my academics return to the 4.0 range while preserving my career skills."*</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="what-to-do-if-parents-demand-you-stop-working-completely">What to Do If Parents Demand You Stop Working Completely</h2>
 <p>If your parents insist that you shut down your laptop and stop all client work immediately, do not rebel openly:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Situation</th>
-<th style="text-align: left;">Strategic Response</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>If parents fully fund your university education and living expenses:</strong></td>
-<td style="text-align: left;">Comply temporarily. Cut your client load to near zero for one semester, secure straight As, prove you can manage your grades, and reintroduce work gradually.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>If parents struggle to fund your basic hostel and feeding needs:</strong></td>
-<td style="text-align: left;">Lovingly explain the financial arithmetic: <em>"I want to focus 100% on school, but without this work, I cannot afford food and textbooks. If you can cover these costs, I will gladly pause my work."</em> Most parents will soften when confronted with economic reality.</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Situation | Strategic Response |</p>
+<p>| :--- | :--- |</p>
+<p>| <strong>If parents fully fund your university education and living expenses:</strong> | Comply temporarily. Cut your client load to near zero for one semester, secure straight As, prove you can manage your grades, and reintroduce work gradually. |</p>
+<p>| <strong>If parents struggle to fund your basic hostel and feeding needs:</strong> | Lovingly explain the financial arithmetic: <em>"I want to focus 100% on school, but without this work, I cannot afford food and textbooks. If you can cover these costs, I will gladly pause my work."</em> Most parents will soften when confronted with economic reality. |</p>
+<hr>
 <h2 id="action-checklist-navigating-grade-conversations">Action Checklist: Navigating Grade Conversations</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Calculate your exact cumulative standing and identify courses needing recovery.</li>
@@ -517,8 +508,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -702,8 +693,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -717,7 +708,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

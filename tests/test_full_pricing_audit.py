@@ -32,7 +32,7 @@ def reset_rate_limiter():
 async def test_scenario_1_regular_price_initialization(client, test_db, monkeypatch):
     """
     Organic visitor sees regular early-bird price:
-    NGN = ₦2,000 (PRODUCT_PRICE_NAIRA)
+    NGN = ₦5,000 (PRODUCT_PRICE_NAIRA)
     USD = $15 (PRODUCT_PRICE_USD)
     """
     mock_init = AsyncMock(return_value={
@@ -49,12 +49,12 @@ async def test_scenario_1_regular_price_initialization(client, test_db, monkeypa
     })
     assert res_ngn.status_code == 200
     data_ngn = res_ngn.json()
-    assert data_ngn["amount"] == 2000.0
+    assert data_ngn["amount"] == 5000.0
 
-    # Verify Paystack was called with exact 2000 naira
+    # Verify Paystack was called with exact 5000 naira
     mock_init.assert_called_with(
         email="regular.student@example.com",
-        amount_naira=2000.0,
+        amount_naira=5000.0,
         reference=data_ngn["reference"],
         callback_url=f"{settings.APP_URL}/api/payments/callback",
         metadata={
@@ -63,8 +63,8 @@ async def test_scenario_1_regular_price_initialization(client, test_db, monkeypa
             "currency": "NGN",
             "friend_discount_applied": False,
             "friend_emails": [],
-            "commission_base_price": 2000.0,
-            "amount_paid": 2000.0,
+            "commission_base_price": 5000.0,
+            "amount_paid": 5000.0,
         },
         channels=["bank_transfer", "bank", "card", "ussd", "qr"],
         currency=None,
@@ -95,7 +95,7 @@ async def test_scenario_1_regular_price_initialization(client, test_db, monkeypa
 async def test_scenario_2_urgency_price_change_transition(client, test_db, monkeypatch):
     """
     When the urgency countdown expires:
-    Organic NGN jumps from ₦2,000 to ₦5,000 (PRODUCT_PRICE_LATE_NAIRA)
+    Organic NGN is ₦5,000 (PRODUCT_PRICE_LATE_NAIRA)
     Organic USD jumps from $15 to $30 (PRODUCT_PRICE_LATE_USD)
     """
     mock_init = AsyncMock(return_value={
@@ -133,7 +133,7 @@ async def test_scenario_3_active_discount_viral_referral(client, test_db, monkey
     """
     Viral referral discount of ₦1,000 applies when exactly 3 distinct,
     valid, unpurchased friends' emails are provided.
-    Base ₦2,000 - ₦1,000 = ₦1,000.
+    Base ₦5,000 - ₦1,000 = ₦4,000.
     Invalid friends (fewer than 3, duplicates, buyer's own email) are rejected.
     """
     mock_init = AsyncMock(return_value={
@@ -150,7 +150,7 @@ async def test_scenario_3_active_discount_viral_referral(client, test_db, monkey
         "friend_emails": ["friend1@example.com", "friend2@example.com", "friend3@example.com"]
     })
     assert res_valid.status_code == 200
-    assert res_valid.json()["amount"] == 1000.0
+    assert res_valid.json()["amount"] == 4000.0
 
     # Invalid: only 2 friends provided
     res_two = await client.post("/api/payments/initialize", json={
@@ -272,7 +272,7 @@ async def test_scenario_6_multi_page_entry_points_pricing(client, test_db, monke
     Multi-page pricing inventory audit:
     - Homepage single book pre-order: strictly ₦5,000
     - Homepage 3-book bundle pre-order: strictly ₦12,000
-    - Academic Comeback Package: ₦2,000
+    - Academic Comeback Package: ₦5,000
     - US landing page: $15
     - Sales offer checkout (Business Consultation): ₦100,000
     """
@@ -311,7 +311,7 @@ async def test_scenario_6_multi_page_entry_points_pricing(client, test_db, monke
         "email": "main.funnel@example.com",
     })
     assert res_main.status_code == 200
-    assert res_main.json()["amount"] == 2000.0
+    assert res_main.json()["amount"] == 5000.0
 
     # 4. US Landing Page
     res_us = await client.post("/api/payments/initialize", json={

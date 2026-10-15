@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Student Barbers & Hairdressers: Running a Hostel Salon",
       "description": "How student barbers, stylists, and braiders can manage hostel salon appointments, maintain sanitation, and protect study time on campus.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -266,59 +266,65 @@
       <div class="article-body">
         <p>Inside every male and female hostel block across Nigerian campuses—from Jaja Hall in UI and Moremi in OAU to Eni-Njoku in UNILAG—there is always that one famous room:</p>
 <p>The <strong>Hostel Salon</strong>.</p>
-<p>For student barbers, braiders, wig stylists, and lash artists, running a beauty or grooming service from your hostel room is one of the most profitable, instant-cash businesses on campus:<br />
-* Zero commercial shop rent or local government council levies.<br />
-* An endless captive audience of 500 to 2,000 fellow students living within a 2-minute walk.<br />
-* Immediate cash payments: no 30-day corporate invoicing delays.</p>
-<p>However, running a physical salon inside your personal living space carries unique, brutal challenges:<br />
-* Roommates complaining about hair clippings on their mattresses.<br />
-* Loud hostel friends barging into your room while you are trying to cut hair or study.<br />
-* Clients banging on your door at 10:45 PM begging for a <em>"quick fade before tomorrow morning's presentation."</em><br />
-* Chronic physical exhaustion from standing on concrete floors for 5 hours after a full day of lectures.</p>
+<p>For student barbers, braiders, wig stylists, and lash artists, running a beauty or grooming service from your hostel room is one of the most profitable, instant-cash businesses on campus:</p>
+<ul>
+<li>Zero commercial shop rent or local government council levies.</li>
+<li>An endless captive audience of 500 to 2,000 fellow students living within a 2-minute walk.</li>
+<li>Immediate cash payments: no 30-day corporate invoicing delays.</li>
+</ul>
+<p>However, running a physical salon inside your personal living space carries unique, brutal challenges:</p>
+<ul>
+<li>Roommates complaining about hair clippings on their mattresses.</li>
+<li>Loud hostel friends barging into your room while you are trying to cut hair or study.</li>
+<li>Clients banging on your door at 10:45 PM begging for a *"quick fade before tomorrow morning's presentation."*</li>
+<li>Chronic physical exhaustion from standing on concrete floors for 5 hours after a full day of lectures.</li>
+</ul>
 <p>If you do not establish ironclad operating systems, your hostel salon will turn your room into a chaotic market stall and wreck your academic grades.</p>
 <p>Here is the operational handbook for running a high-profit, highly respected hostel salon while graduating with honors.</p>
-<hr />
-<h2 id="3-fatal-mistakes-student-barbers-stylists-make">3 Fatal Mistakes Student Barbers &amp; Stylists Make</h2>
+<hr>
+<h2 id="3-fatal-mistakes-student-barbers-stylists-make">3 Fatal Mistakes Student Barbers & Stylists Make</h2>
 <p>Before optimizing your appointments, eliminate these three operational traps:</p>
 <blockquote>
-<h3 id="the-hostel-salon-operational-pitfalls">The Hostel Salon Operational Pitfalls</h3>
-<ul>
-<li><strong>1.</strong> The Walk-In Chaos: Allowing random students to knock and wait at any hour</li>
-<li><strong>2.</strong> The Entitled Roommate Trap: Giving unlimited free cuts/braids to lodge mates</li>
-<li><strong>3.</strong> Sanitation Neglect: Leaving unsterilized clippers and hair in sleeping spaces</li>
-</ul>
+<p>### The Hostel Salon Operational Pitfalls</p>
+<p>></p>
+<p>* **1.** The Walk-In Chaos: Allowing random students to knock and wait at any hour</p>
+<p>* **2.** The Entitled Roommate Trap: Giving unlimited free cuts/braids to lodge mates</p>
+<p>* **3.** Sanitation Neglect: Leaving unsterilized clippers and hair in sleeping spaces</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="the-shift-to-appointment-only-booking">The Shift to Appointment-Only Booking</h2>
 <p>The difference between a stressed student barber and an elite campus grooming entrepreneur is the <strong>WhatsApp Appointment Window</strong>.</p>
 <p>Never allow unscheduled walk-ins. Set up a simple booking template on your WhatsApp Business status:</p>
 <blockquote>
-<h3 id="campus-grooming-appointment-schedule">Campus Grooming Appointment Schedule</h3>
-<ul>
-<li>Monday - Thursday: 5:00 PM - 8:30 PM (Max 4 Slots Daily) Friday: 3:00 PM - 9:00 PM (Weekend Prep Slots) Saturday: 9:00 AM - 2:00 PM (Morning Rush) Sunday &amp; Exam Weeks: STRICTLY CLOSED FOR ACADEMIC REVISION</li>
-</ul>
+<p>### Campus Grooming Appointment Schedule</p>
+<p>></p>
+<p>* Monday - Thursday: 5:00 PM - 8:30 PM (Max 4 Slots Daily) Friday: 3:00 PM - 9:00 PM (Weekend Prep Slots) Saturday: 9:00 AM - 2:00 PM (Morning Rush) Sunday & Exam Weeks: STRICTLY CLOSED FOR ACADEMIC REVISION</p>
 </blockquote>
 <p>When someone knocks on your door outside these hours, reply politely:</p>
 <blockquote>
-<p><em>"Bro, I'm currently on study revision right now. Check my WhatsApp status to book a slot for tomorrow evening between 5:00 PM and 7:00 PM!"</em></p>
+<p>*"Bro, I'm currently on study revision right now. Check my WhatsApp status to book a slot for tomorrow evening between 5:00 PM and 7:00 PM!"*</p>
 </blockquote>
 <p>This immediately establishes high social status. When you are scarce, your value rises, and clients respect your academic boundaries.</p>
-<hr />
-<h2 id="roommate-harmony-sanitation-protocol">Roommate Harmony &amp; Sanitation Protocol</h2>
+<hr>
+<h2 id="roommate-harmony-sanitation-protocol">Roommate Harmony & Sanitation Protocol</h2>
 <p>Your roommates share your living space. If your business creates dust, bad odors, or noise, resentment will quickly boil over into hostel management complaints.</p>
-<p>Implement the <strong>Clean-Room Standard</strong>:<br />
-1. <strong>The Washable Floor Tarp:</strong> Purchase a 6x6 foot heavy-duty plastic tarpaulin or barber floor mat. Place your client chair directly in the center. All clippings fall on the mat.<br />
-2. <strong>Immediate Sweep &amp; Dust:</strong> Sweep and bag all hair immediately after the client stands up. Never leave clippings on the floor while you relax.<br />
-3. <strong>Medical-Grade Clipper Sterilization:</strong> Keep a spray bottle of Methylated Spirit or professional clipper disinfectant. Spray and wipe clippers in plain view of your client before every cut. This builds immense trust and prevents the spread of campus ringworm (tinea capitis).</p>
-<hr />
+<p>Implement the <strong>Clean-Room Standard</strong>:</p>
+<ol>
+<li>**The Washable Floor Tarp:** Purchase a 6x6 foot heavy-duty plastic tarpaulin or barber floor mat. Place your client chair directly in the center. All clippings fall on the mat.</li>
+<li>**Immediate Sweep & Dust:** Sweep and bag all hair immediately after the client stands up. Never leave clippings on the floor while you relax.</li>
+<li>**Medical-Grade Clipper Sterilization:** Keep a spray bottle of Methylated Spirit or professional clipper disinfectant. Spray and wipe clippers in plain view of your client before every cut. This builds immense trust and prevents the spread of campus ringworm (tinea capitis).</li>
+</ol>
+<hr>
 <h2 id="exam-month-the-total-salon-freeze">Exam Month: The Total Salon Freeze</h2>
 <p>When semester exams approach, hair grooming must pause.</p>
-<p>Ten days before your first paper:<br />
-1. Post a broadcast notice: <em>"Hostel Salon Final Booking Notice: Book all cuts and braiding by [Date]. We will be closed for semester examinations from [Start Date] to [End Date]."</em><br />
-2. Lock your room door during daytime revision hours.<br />
-3. If necessary, study in the university central library or faculty reading rooms to remove yourself from hostel distractions entirely.</p>
+<p>Ten days before your first paper:</p>
+<ol>
+<li>Post a broadcast notice: *"Hostel Salon Final Booking Notice: Book all cuts and braiding by [Date]. We will be closed for semester examinations from [Start Date] to [End Date]."*</li>
+<li>Lock your room door during daytime revision hours.</li>
+<li>If necessary, study in the university central library or faculty reading rooms to remove yourself from hostel distractions entirely.</li>
+</ol>
 <p>Remember: one carryover in an academic session costs far more to retake than the profit from twenty haircuts. Protect your time, maintain clinical cleanliness, and run your hostel business with professional pride.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-hostel-salon-blueprint">Action Checklist: Hostel Salon Blueprint</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Transition 100% of client bookings to scheduled WhatsApp Business slots.</li>
@@ -492,8 +498,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -677,8 +683,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -692,7 +698,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

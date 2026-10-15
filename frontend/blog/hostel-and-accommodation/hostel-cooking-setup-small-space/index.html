@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,88 +308,65 @@
       <div class="article-body">
         <h1 id="hostel-kitchen-setup-cooking-in-tight-spaces-safely">Hostel Kitchen Setup: Cooking in Tight Spaces Safely</h1>
 <p>You step into a 10-by-12 foot hostel room shared by four students.</p>
-<p>In the narrow corridor between the metal bunk bed and the wardrobe sits a wooden crate covered with oil-stained cardboard. </p>
-<p>Perched on top is a 3kg camping gas cylinder with a glowing brass burner. Beside it sits a 5-liter bottle of vegetable oil, three opened sachets of tomato paste attracting houseflies, and an open bag of garri resting directly on the concrete floor. </p>
+<p>In the narrow corridor between the metal bunk bed and the wardrobe sits a wooden crate covered with oil-stained cardboard.</p>
+<p>Perched on top is a 3kg camping gas cylinder with a glowing brass burner. Beside it sits a 5-liter bottle of vegetable oil, three opened sachets of tomato paste attracting houseflies, and an open bag of garri resting directly on the concrete floor.</p>
 <p>Two feet above the flame dangles a nylon window curtain swaying in the evening breeze.</p>
 <p>This is the daily cooking reality in hundreds of Nigerian tertiary institutions—from Queen Elizabeth Hall in Ibadan to Fajuyi Hall in Ife, from Abuja Hostels to private off-campus self-contained lodges.</p>
 <p>With rising restaurant and campus canteen prices, cooking your own meals is the single most effective way to stretch your monthly pocket money. Yet, cooking inside congested living quarters carries acute hazards: accidental room fires, carbon monoxide accumulation, rat invasions, and foodborne bacterial infections.</p>
 <p>Here is the exact architectural and safety protocol to build a clean, efficient, and fire-safe cooking station in the tightest hostel space.</p>
-<hr />
+<hr>
 <h2 id="1-the-3-golden-rules-of-small-space-hostel-cooking">1. The 3 Golden Rules of Small-Space Hostel Cooking</h2>
 <p>Before setting up your pots and seasoning racks, memorize these non-negotiable safety principles:</p>
-<p><strong>Hostel Kitchen Safety Hierarchy:</strong><br />
-* Rule 1: The Non-Combustible Clearance Zone (1.5m radius free of beddings/curtains) — Rule 2: Airtight Food Quarantine (Airtight plastic pails; zero exposed nylons) — Rule 3: Cross-Ventilation Mandate (Never light burners with shut windows)</p>
-<h3 id="the-15-meter-clearance-zone">The 1.5-Meter Clearance Zone</h3>
-<p>Fabric, synthetic foam mattresses, mosquito nets, and paper handouts are volatile fire fuels. A sudden boiling splash of hot palm oil or a gust of wind blowing a curtain into an open flame can consume an entire room in under 90 seconds. </p>
+<p><strong>Hostel Kitchen Safety Hierarchy:</strong></p>
+<ul>
+<li>Rule 1: The Non-Combustible Clearance Zone (1.5m radius free of beddings/curtains) — Rule 2: Airtight Food Quarantine (Airtight plastic pails; zero exposed nylons) — Rule 3: Cross-Ventilation Mandate (Never light burners with shut windows)</li>
+</ul>
+<h3 id="the-1-5-meter-clearance-zone">The 1.5-Meter Clearance Zone</h3>
+<p>Fabric, synthetic foam mattresses, mosquito nets, and paper handouts are volatile fire fuels. A sudden boiling splash of hot palm oil or a gust of wind blowing a curtain into an open flame can consume an entire room in under 90 seconds.</p>
 <p>Always designate a specific corner adjacent to a window, and elevate your burner on a stable metal or tiled surface at least 18 inches off the floor.</p>
-<hr />
+<hr>
 <h2 id="2-the-step-by-step-cooking-station-layout">2. The Step-by-Step Cooking Station Layout</h2>
 <p>You do not need a full kitchen cabinet to maintain hygienic order. Structure your cooking corner using a vertical 3-tier storage rack:</p>
-<table>
-<thead>
-<tr>
-<th>TIER 1: The Active Cooking Surface (Top Deck)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>- Elevated gas burner / induction hotplate</td>
-</tr>
-<tr>
-<td>- Aluminum heat-deflector shield against wall paint</td>
-</tr>
-<tr>
-<td>- Salt cellar, dry pepper shaker, cooking spoon rest</td>
-</tr>
-<tr>
-<td>TIER 2: Daily Prep &amp; Utensil Storage (Middle Shelf)</td>
-</tr>
-<tr>
-<td>- Perforated plastic basket for clean plates and cutlery</td>
-</tr>
-<tr>
-<td>- Knife block / safety sheath, chopping board, sponge dish</td>
-</tr>
-<tr>
-<td>- Small bottle of vegetable oil and cooking seasonings</td>
-</tr>
-<tr>
-<td>TIER 3: Bulk Staple Quarantine (Bottom Ground Level)</td>
-</tr>
-<tr>
-<td>- 20-liter food-grade plastic drums with airtight lids</td>
-</tr>
-<tr>
-<td>- Sealed raw foodstuffs: Rice, Beans, Garri, Semovita</td>
-</tr>
-<tr>
-<td>- Gas cylinder standing upright on stable rubber ring</td>
-</tr>
-</tbody>
-</table>
+<p>| TIER 1: The Active Cooking Surface (Top Deck) |</p>
+<p>| --- |</p>
+<p>| - Elevated gas burner / induction hotplate |</p>
+<p>| - Aluminum heat-deflector shield against wall paint |</p>
+<p>| - Salt cellar, dry pepper shaker, cooking spoon rest |</p>
+<p>| TIER 2: Daily Prep & Utensil Storage (Middle Shelf) |</p>
+<p>| - Perforated plastic basket for clean plates and cutlery |</p>
+<p>| - Knife block / safety sheath, chopping board, sponge dish |</p>
+<p>| - Small bottle of vegetable oil and cooking seasonings |</p>
+<p>| TIER 3: Bulk Staple Quarantine (Bottom Ground Level) |</p>
+<p>| - 20-liter food-grade plastic drums with airtight lids |</p>
+<p>| - Sealed raw foodstuffs: Rice, Beans, Garri, Semovita |</p>
+<p>| - Gas cylinder standing upright on stable rubber ring |</p>
 <h3 id="managing-fire-safety-equipment">Managing Fire Safety Equipment</h3>
-<p>Never cook without emergency fire mitigation on hand. Since commercial carbon dioxide fire extinguishers are rarely provided in student lodges:<br />
-* Keep a <strong>clean 5-liter bucket of dry sand</strong> positioned beside your cooking corner. Dry sand smothers electrical and oil grease fires instantly where water causes catastrophic burning oil explosions.<br />
-* Keep a damp heavy cotton towel within arm’s reach to drape over flare-ups.</p>
-<hr />
+<p>Never cook without emergency fire mitigation on hand. Since commercial carbon dioxide fire extinguishers are rarely provided in student lodges:</p>
+<ul>
+<li>Keep a **clean 5-liter bucket of dry sand** positioned beside your cooking corner. Dry sand smothers electrical and oil grease fires instantly where water causes catastrophic burning oil explosions.</li>
+<li>Keep a damp heavy cotton towel within arm’s reach to drape over flare-ups.</li>
+</ul>
+<hr>
 <h2 id="3-pest-proofing-banishing-campus-rats-and-cockroaches">3. Pest Proofing: Banishing Campus Rats and Cockroaches</h2>
 <p>University rodents are notoriously bold. Leaving open food or dirty pots overnight invites rats that carry Lassa fever and chew through expensive laptop cables.</p>
 <ol>
-<li><strong>The "Zero Open Nylon" Rule:</strong> Never store rice or beans in flimsy commercial thin nylon bags. Transfer every grain into rigid plastic food tubs or washed paint buckets sealed with tight rubber rings.</li>
-<li><strong>Wash Pots Before Eating:</strong> Adopt the "Cook, Dispel, Clean" habit. While your stew or jollof rice is simmering its final five minutes, wash your prep bowls, knives, and chopping boards immediately.</li>
-<li><strong>Daily Waste Evacuation:</strong> Food peels, onion skins, and fish bones must be sealed into small trash bags and taken to external hall incinerators or dumpsters every evening.</li>
+<li>**The "Zero Open Nylon" Rule:** Never store rice or beans in flimsy commercial thin nylon bags. Transfer every grain into rigid plastic food tubs or washed paint buckets sealed with tight rubber rings.</li>
+<li>**Wash Pots Before Eating:** Adopt the "Cook, Dispel, Clean" habit. While your stew or jollof rice is simmering its final five minutes, wash your prep bowls, knives, and chopping boards immediately.</li>
+<li>**Daily Waste Evacuation:** Food peels, onion skins, and fish bones must be sealed into small trash bags and taken to external hall incinerators or dumpsters every evening.</li>
 </ol>
 <p>If your campus hall enforces a blanket ban on gas cooking, learn alternative culinary strategies in our guide on <a href="/blog/hostel-and-accommodation/cooking-without-gas-hostel-ban/">cooking without gas managing electric hotplate bans</a>.</p>
-<p>For female undergraduates navigating crowded communal hostel cooking spaces, review our specialized tips on <a href="/blog/hostel-and-accommodation/female-university-hostel-survival/">female university hostel privacy and sanitation survival</a>. </p>
+<p>For female undergraduates navigating crowded communal hostel cooking spaces, review our specialized tips on <a href="/blog/hostel-and-accommodation/female-university-hostel-survival/">female university hostel privacy and sanitation survival</a>.</p>
 <p>Finally, build your weekly grocery purchasing around our master guide on <a href="/blog/finances/">student meal planning and cooking on a tight budget</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="share-recipes-food-prep-hacks">🍳 Share Recipes &amp; Food Prep Hacks</h3>
+<p>### 🍳 Share Recipes & Food Prep Hacks</p>
 <p>Looking for fast, healthy 20-minute meals you can cook between lectures on a tight budget?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with students across Nigeria sharing money-saving grocery bulk-buys, easy hostel meal prep guides, and kitchen safety tips.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with students across Nigeria sharing money-saving grocery bulk-buys, easy hostel meal prep guides, and kitchen safety tips.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-the-safest-place-to-position-a-gas-burner-inside-a-student-hostel-room">What is the safest place to position a gas burner inside a student hostel room?</h3>
 <p>Place the burner on a elevated, non-combustible surface (like a metal stand or tiled wooden stool) near an open window for continuous cross-ventilation. Never position gas burners on carpeted floors, plastic tables, or under hanging mosquito nets.</p>
@@ -563,8 +540,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -748,8 +725,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -763,7 +740,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

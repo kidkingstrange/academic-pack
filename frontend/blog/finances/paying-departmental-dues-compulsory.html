@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,98 +309,54 @@
         <h1 id="departmental-due-disputes-legitimate-fees-vs-extortion">Departmental Due Disputes: Legitimate Fees vs Extortion</h1>
 <p>It is the morning of your first semester examination.</p>
 <p>You walk toward the faculty lecture theatre with your transparent plastic exam file and pens.</p>
-<p>At the entrance, six aggressive senior students wearing association tags block the double doors. </p>
+<p>At the entrance, six aggressive senior students wearing association tags block the double doors.</p>
 <p>A handwritten banner hangs across the hallway: <strong>"NO DEPARTMENTAL DUES RECEIPT, NO EXAM ENTRY!"</strong></p>
 <p>The association financial secretary stops you: <em>"Bring your ₦4,500 NAMSSN association receipt. If you don't have it, turn back to your hostel right now."</em></p>
-<p>You only have ₦500 in your pocket. </p>
+<p>You only have ₦500 in your pocket.</p>
 <p>You paid your official university tuition on the school portal, but you could not afford the student association levy.</p>
 <p>Your chest heaves in blind panic. Can a student association actually stop you from writing an examination you paid university tuition for?</p>
 <p>Here is the legal reality, institutional framework, and defense strategy to handle <strong>Departmental Dues Disputes</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-statutory-reality-voluntary-associations-vs-university-senate">1. The Statutory Reality: Voluntary Associations vs. University Senate</h2>
 <p>In the legal architecture of Nigerian higher institutions, authority is strictly stratified:</p>
-<table>
-<thead>
-<tr>
-<th>Institutional Authority</th>
-<th>Legal Statutory Status</th>
-<th>Power Over Examination &amp; Degree Clearance</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>University Senate &amp; Governing Council</strong></td>
-<td>Supreme statutory academic authority created by Federal/State Act</td>
-<td><strong>Exclusive Legal Power</strong> to register students, administer exams, and confer degrees</td>
-</tr>
-<tr>
-<td><strong>Faculty Dean &amp; Departmental HOD</strong></td>
-<td>Appointed administrative academic officers</td>
-<td>Authorized only to enforce University Senate regulations and accredited academic curricula</td>
-</tr>
-<tr>
-<td><strong>Student Departmental Associations (e.g., NACOS, NUESA)</strong></td>
-<td>Registered voluntary extracurricular student societies</td>
-<td><strong>Zero Statutory Power</strong> to withhold university examination dockets, block portals, or bar students from writing exams</td>
-</tr>
-</tbody>
-</table>
-<p>Student associations routinely bluff because intimidation works on fearful 100-level and 200-level students. </p>
+<p>| Institutional Authority | Legal Statutory Status | Power Over Examination & Degree Clearance |</p>
+<p>|---|---|---|</p>
+<p>| <strong>University Senate & Governing Council</strong> | Supreme statutory academic authority created by Federal/State Act | <strong>Exclusive Legal Power</strong> to register students, administer exams, and confer degrees |</p>
+<p>| <strong>Faculty Dean & Departmental HOD</strong> | Appointed administrative academic officers | Authorized only to enforce University Senate regulations and accredited academic curricula |</p>
+<p>| <strong>Student Departmental Associations (e.g., NACOS, NUESA)</strong> | Registered voluntary extracurricular student societies | <strong>Zero Statutory Power</strong> to withhold university examination dockets, block portals, or bar students from writing exams |</p>
+<p>Student associations routinely bluff because intimidation works on fearful 100-level and 200-level students.</p>
 <p>No student association constitution supersedes your constitutional right to write examinations once approved by the University Senate.</p>
 <p>Review institutional grading rights in <a href="/blog/academics/unfair-lecturer-grading-university/">unfair lecturer grading: what you can actually do</a>.</p>
-<hr />
+<hr>
 <h2 id="2-differentiating-legitimate-fees-from-executive-extortion">2. Differentiating Legitimate Fees from Executive Extortion</h2>
-<table>
-<thead>
-<tr>
-<th>Fee Category</th>
-<th>Administrative Reality</th>
-<th>Legal Enforcement Standard</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Official University Tuition</strong></td>
-<td>Mandatory for matriculation &amp; docket</td>
-<td><strong>Enforceable</strong> (Portal lock if unpaid)</td>
-</tr>
-<tr>
-<td><strong>Faculty &amp; Department Registration</strong></td>
-<td>Mandatory institutional filing charge</td>
-<td><strong>Enforceable</strong> by Department Secretary</td>
-</tr>
-<tr>
-<td><strong>Student Association Annual Dues</strong></td>
-<td>Extracurricular student fund (Dinners, jerseys)</td>
-<td><strong>Non-Enforceable</strong> for academic exams</td>
-</tr>
-<tr>
-<td><strong>"Late Payment Fines" by Executives</strong></td>
-<td>Arbitrary executive penalty markup</td>
-<td><strong>Completely Illegal</strong> under campus bylaws</td>
-</tr>
-</tbody>
-</table>
+<p>| Fee Category | Administrative Reality | Legal Enforcement Standard |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Official University Tuition</strong> | Mandatory for matriculation & docket | <strong>Enforceable</strong> (Portal lock if unpaid) |</p>
+<p>| <strong>Faculty & Department Registration</strong> | Mandatory institutional filing charge | <strong>Enforceable</strong> by Department Secretary |</p>
+<p>| <strong>Student Association Annual Dues</strong> | Extracurricular student fund (Dinners, jerseys) | <strong>Non-Enforceable</strong> for academic exams |</p>
+<p>| <strong>"Late Payment Fines" by Executives</strong> | Arbitrary executive penalty markup | <strong>Completely Illegal</strong> under campus bylaws |</p>
 <p>Learn about hidden university fee structures in <a href="/blog/finances/hidden-university-expenses-nigeria/">hidden university costs: fees beyond main school tuition</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-step-escalation-protocol-for-exam-day-blockades">3. The 3-Step Escalation Protocol for Exam Day Blockades</h2>
 <p>If overzealous student executives attempt to physically block your entrance into an exam hall:</p>
 <ol>
-<li><strong>Never Engage in Physical Brawls:</strong> Fighting with student executives provides faculty committees with grounds to issue you an immediate suspension for campus assault.</li>
-<li><strong>Bypass the Picket Line to the Chief Invigilator:</strong> Walk directly to the faculty member or chief exam invigilator supervising the hall. State clearly:<blockquote>
-<p><em>"Good morning, Professor. I have my official signed university exam docket and student ID. The student association executives are physically obstructing students from entering over extracurricular club dues."</em></p>
-</blockquote>
-</li>
-<li><strong>Escalate to the Dean of Student Affairs:</strong> If faculty staff hesitate, have a coursemate escort you to the Dean of Student Affairs or the Chief Security Officer (CSO). Security units are mandated to dismantle illegal student blockades immediately.</li>
+<li>**Never Engage in Physical Brawls:** Fighting with student executives provides faculty committees with grounds to issue you an immediate suspension for campus assault.</li>
+<li>**Bypass the Picket Line to the Chief Invigilator:** Walk directly to the faculty member or chief exam invigilator supervising the hall. State clearly:</li>
+<blockquote>
+<p>*"Good morning, Professor. I have my official signed university exam docket and student ID. The student association executives are physically obstructing students from entering over extracurricular club dues."*</p>
+<li>**Escalate to the Dean of Student Affairs:** If faculty staff hesitate, have a coursemate escort you to the Dean of Student Affairs or the Chief Security Officer (CSO). Security units are mandated to dismantle illegal student blockades immediately.</li>
 </ol>
+</blockquote>
 <p>Explore roommate utility frameworks in <a href="/blog/hostel/splitting-electricity-bills-in-student-lodge/">splitting electricity bills in student lodges: prepaid meter management</a>.</p>
-<hr />
+<hr>
 <h2 id="4-the-diplomatic-resolution-route">4. The Diplomatic Resolution Route</h2>
-<p>While defending your rights is vital, entering university warfare is stressful during revision week:<br />
-* If you have small funds, negotiate an official installment plan during the third week of resumption.<br />
-* Request a stamped provisional receipt from the association treasurer so your course forms can proceed without friction.<br />
-* Understand your institutional rights, maintain emotional composure, and let no unauthorized student clique sabotage your academic future.</p>
-<hr />
+<p>While defending your rights is vital, entering university warfare is stressful during revision week:</p>
+<ul>
+<li>If you have small funds, negotiate an official installment plan during the third week of resumption.</li>
+<li>Request a stamped provisional receipt from the association treasurer so your course forms can proceed without friction.</li>
+<li>Understand your institutional rights, maintain emotional composure, and let no unauthorized student clique sabotage your academic future.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="can-a-departmental-student-association-legally-bar-you-from-writing-semester-exams-for-unpaid-dues">Can a departmental student association legally bar you from writing semester exams for unpaid dues?</h3>
 <p>No. Under National Universities Commission (NUC) guidelines and university regulations, student associations are non-governmental voluntary bodies. They have zero legal or statutory authority to prevent matriculated students from taking official semester examinations.</p>
@@ -574,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -759,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -774,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

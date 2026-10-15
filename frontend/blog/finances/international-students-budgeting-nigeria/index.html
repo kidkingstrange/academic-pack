@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -309,81 +309,59 @@
         <h1 id="international-or-expat-students-in-nigeria-currency-tips">International or Expat Students in Nigeria: Currency Tips</h1>
 <p>You arrive in Nigeria from Ghana, Cameroon, Benin Republic, Kenya, or the diaspora to pursue higher education.</p>
 <p>You enroll in an institution like the University of Ibadan, UNILAG, Covenant University, or UNN.</p>
-<p>Everything feels vibrant, intense, and completely unfamiliar:<br />
-* The local currency, the <strong>Naira (₦)</strong>, fluctuates rapidly against the US Dollar, British Pound, or West African CFA franc.<br />
-* Local POS operators give you puzzled looks when you present an international Visa or Mastercard debit card.<br />
-* When campus vendors and taxi drivers hear your foreign accent, their prices instantly double: <em>"Ah, foreign student! My friend, pay ₦5,000!"</em></p>
+<p>Everything feels vibrant, intense, and completely unfamiliar:</p>
+<ul>
+<li>The local currency, the **Naira (₦)**, fluctuates rapidly against the US Dollar, British Pound, or West African CFA franc.</li>
+<li>Local POS operators give you puzzled looks when you present an international Visa or Mastercard debit card.</li>
+<li>When campus vendors and taxi drivers hear your foreign accent, their prices instantly double: *"Ah, foreign student! My friend, pay ₦5,000!"*</li>
+</ul>
 <p>Studying abroad in Nigeria offers rich academic cultural immersion, but navigating the local financial ecosystem requires strategic adaptation.</p>
 <p>Here is the authoritative financial and currency survival guide for <strong>International and Expat Students in Nigerian Tertiary Institutions</strong>.</p>
-<hr />
-<h2 id="1-the-banking-legal-identification-protocol">1. The Banking &amp; Legal Identification Protocol</h2>
+<hr>
+<h2 id="1-the-banking-legal-identification-protocol">1. The Banking & Legal Identification Protocol</h2>
 <p>The primary roadblock facing international students is opening a local Nigerian bank account:</p>
 <blockquote>
-<h3 id="international-student-banking-clearance">International Student Banking Clearance</h3>
-<ul>
-<li>Document 1: Valid International Passport with Nigerian Student Visa (CERPAC)</li>
-<li>Document 2: Official University Admission Letter &amp; Student Matriculation ID</li>
-<li>Document 3: Non-Resident BVN Registration at any commercial bank branch</li>
-<li>Document 4: Two Passport Photographs and Proof of Campus Residence Address</li>
-</ul>
+<p>### International Student Banking Clearance</p>
+<p>></p>
+<p>* Document 1: Valid International Passport with Nigerian Student Visa (CERPAC)</p>
+<p>* Document 2: Official University Admission Letter & Student Matriculation ID</p>
+<p>* Document 3: Non-Resident BVN Registration at any commercial bank branch</p>
+<p>* Document 4: Two Passport Photographs and Proof of Campus Residence Address</p>
 </blockquote>
 <ul>
-<li><strong>The Non-Resident BVN:</strong> Under Central Bank of Nigeria (CBN) guidelines, foreign students are entitled to obtain a Bank Verification Number (BVN) using their international passport and student visa.</li>
-<li><strong>Fintech Flexibility:</strong> Once your BVN is linked, opening accounts on digital fintech platforms (such as Kuda or OPay) allows frictionless local transfers, electricity bill payments, and QR code merchant payments across campus.</li>
+<li>**The Non-Resident BVN:** Under Central Bank of Nigeria (CBN) guidelines, foreign students are entitled to obtain a Bank Verification Number (BVN) using their international passport and student visa.</li>
+<li>**Fintech Flexibility:** Once your BVN is linked, opening accounts on digital fintech platforms (such as Kuda or OPay) allows frictionless local transfers, electricity bill payments, and QR code merchant payments across campus.</li>
 </ul>
 <p>Review monthly budget structures in <a href="/blog/finances/monthly-student-budget-30000-naira/">monthly student budget plan: ₦30,000 living survival</a>.</p>
-<hr />
+<hr>
 <h2 id="2-currency-conversion-avoiding-the-street-oga-markup">2. Currency Conversion: Avoiding the Street "Oga Markup"</h2>
 <p>Never exchange foreign currency (USD, EUR, GBP, CFA) with informal roadside touts outside campus gates:</p>
-<table>
-<thead>
-<tr>
-<th>Conversion Method</th>
-<th>Security Level</th>
-<th>Exchange Rate Quality</th>
-<th>Risk Factor</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Licensed Bureau De Change (BDC)</strong></td>
-<td>High</td>
-<td>Official Parallel Market Rate</td>
-<td>Requires physical passport inspection</td>
-</tr>
-<tr>
-<td><strong>Regulated Fintech P2P (Binance, Lemonade)</strong></td>
-<td>High</td>
-<td>Competitive Market Equilibrium</td>
-<td>Requires basic crypto/digital wallet literacy</td>
-</tr>
-<tr>
-<td><strong>Campus Street Forex Touts</strong></td>
-<td><strong>Extremely Low</strong></td>
-<td>Poor (15-20% below real market)</td>
-<td>High risk of counterfeit Naira notes</td>
-</tr>
-</tbody>
-</table>
+<p>| Conversion Method | Security Level | Exchange Rate Quality | Risk Factor |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Licensed Bureau De Change (BDC)</strong> | High | Official Parallel Market Rate | Requires physical passport inspection |</p>
+<p>| <strong>Regulated Fintech P2P (Binance, Lemonade)</strong>| High | Competitive Market Equilibrium | Requires basic crypto/digital wallet literacy |</p>
+<p>| <strong>Campus Street Forex Touts</strong> | <strong>Extremely Low</strong> | Poor (15-20% below real market) | High risk of counterfeit Naira notes |</p>
 <p>Learn how to resolve failed digital payment debits in <a href="/blog/finances/failed-pos-debit-transaction-student-bank/">recovering from failed POS debit transactions on campus: bank escalation</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-local-wingman-defense-against-expat-pricing">3. The "Local Wingman" Defense Against Expat Pricing</h2>
 <p>Campus vendors routinely apply an informal <strong>"Foreigner Surcharge"</strong> when they detect a foreign accent:</p>
 <ol>
-<li><strong>Never Shop Alone at Open Wholesale Markets:</strong> When buying fruits, tubers, or lodge appliances, always shop alongside a trusted Nigerian coursemate. Let them initiate price inquiries and negotiate in local vernacular while you observe quietly.</li>
-<li><strong>Master Essential Transaction Phrases:</strong> Learning basic greetings in the local language of your university town immediately breaks down interpersonal barriers and signals market awareness:<br />
-   * <strong>South-West (Yoruba):</strong> <em>"Bawo ni?"</em> (How are you?), <em>"E lo ni?"</em> (How much is it?), <em>"E dinku"</em> (Please reduce the price).<br />
-   * <strong>South-East (Igbo):</strong> <em>"Kedu?"</em> (How are you?), <em>"Ego ole?"</em> (How much?), <em>"Biko belata"</em> (Please reduce).<br />
-   * <strong>North (Hausa):</strong> <em>"Ina kwana?"</em> (Good morning?), <em>"Nawa ne?"</em> (How much?), <em>"Rage mana"</em> (Reduce the price).</li>
+<li>**Never Shop Alone at Open Wholesale Markets:** When buying fruits, tubers, or lodge appliances, always shop alongside a trusted Nigerian coursemate. Let them initiate price inquiries and negotiate in local vernacular while you observe quietly.</li>
+<li>**Master Essential Transaction Phrases:** Learning basic greetings in the local language of your university town immediately breaks down interpersonal barriers and signals market awareness:</li>
+<li>**South-West (Yoruba):** *"Bawo ni?"* (How are you?), *"E lo ni?"* (How much is it?), *"E dinku"* (Please reduce the price).</li>
+<li>**South-East (Igbo):** *"Kedu?"* (How are you?), *"Ego ole?"* (How much?), *"Biko belata"* (Please reduce).</li>
+<li>**North (Hausa):** *"Ina kwana?"* (Good morning?), *"Nawa ne?"* (How much?), *"Rage mana"* (Reduce the price).</li>
 </ol>
 <p>Explore scholarship application models in <a href="/blog/finances/undergraduate-scholarships-nigeria/">scholarship applications for undergraduates in Nigeria: winning formats</a>.</p>
-<hr />
+<hr>
 <h2 id="4-empathy-cultural-integration-and-academic-triumph">4. Empathy, Cultural Integration, and Academic Triumph</h2>
-<p>Studying in Nigeria provides an extraordinary masterclass in resilience, cultural dynamism, and resourcefulness:<br />
-* Embrace the warmth and energy of your coursemates.<br />
-* Manage your currency with disciplined foresight, establish secure local banking channels, and protect your budget.<br />
-* Your international journey will broaden your global perspective and forge lifelong cross-border networks that will enrich your professional career for decades to come.</p>
-<hr />
+<p>Studying in Nigeria provides an extraordinary masterclass in resilience, cultural dynamism, and resourcefulness:</p>
+<ul>
+<li>Embrace the warmth and energy of your coursemates.</li>
+<li>Manage your currency with disciplined foresight, establish secure local banking channels, and protect your budget.</li>
+<li>Your international journey will broaden your global perspective and forge lifelong cross-border networks that will enrich your professional career for decades to come.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-challenges-do-international-students-from-ghana-cameroon-or-the-uk-face-in-nigerian-universities">What challenges do international students from Ghana, Cameroon, or the UK face in Nigerian universities?</h3>
 <p>High Naira exchange rate volatility, difficulty opening local bank accounts without Nigerian NIN/BVN, unfamiliar campus living costs, and aggressive commercial overcharging by local merchants.</p>
@@ -557,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -742,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -757,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

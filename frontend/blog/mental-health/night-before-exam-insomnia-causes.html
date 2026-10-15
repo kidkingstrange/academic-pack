@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -315,35 +315,37 @@
 <p>By 4:00 AM, you feel completely exhausted yet chemically wired.</p>
 <p>Welcome to <strong>Pre-Exam Psychophysiological Insomnia</strong>.</p>
 <p>Insomnia before an exam is not a sign of physical illness. It is an evolutionary stress response. Here is why your sleep vanished, and how to salvage your cognitive faculties before dawn.</p>
-<hr />
+<hr>
 <h2 id="1-the-neuroscience-of-anticipatory-fight-or-flight">1. The Neuroscience of Anticipatory Fight-or-Flight</h2>
 <p>Human sleep requires the autonomic nervous system to shift from the <strong>Sympathetic Drive (Fight or Flight)</strong> to the <strong>Parasympathetic Drive (Rest and Digest)</strong>:</p>
 <p>For parasympathetic activation to occur, your brain must perceive that you are physically safe.</p>
-<p>When you spend four hours cramming anxious notes before bed:<br />
-* Your amygdala perceives tomorrow's examination as an acute physical predator.<br />
-* The adrenal cortex floods your bloodstream with <strong>cortisol and norepinephrine</strong>.<br />
-* Core body temperature remains elevated, heart rate variability drops, and the brain's sleep centers are completely locked down.</p>
+<p>When you spend four hours cramming anxious notes before bed:</p>
+<ul>
+<li>Your amygdala perceives tomorrow's examination as an acute physical predator.</li>
+<li>The adrenal cortex floods your bloodstream with **cortisol and norepinephrine**.</li>
+<li>Core body temperature remains elevated, heart rate variability drops, and the brain's sleep centers are completely locked down.</li>
+</ul>
 <p>The harder you try to force yourself to sleep, the more performance anxiety you generate, creating a self-sustaining insomnia loop.</p>
 <p>Understand the biological impact of severe sleep loss on memory consolidation in <a href="/blog/academics/tdb-all-nighters-vs-sleep-exam-memory/">TDB all-nighters vs 5-hour sleep: exam memory impact</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-4-fatal-mistakes-students-make-in-the-dark">2. The 4 Fatal Mistakes Students Make in the Dark</h2>
 <p>When sleep refuses to come, most undergraduates make critical mistakes that guarantee morning disaster:</p>
 <ol>
-<li><strong>The Clock-Watching Spiral:</strong> Staring at your phone screen every fifteen minutes. Each time you see the advancing time, your brain receives a fresh jolt of cortisol. Turn your phone face-down across the room.</li>
-<li><strong>The 2:00 AM Midnight Study Panic:</strong> Jumping out of bed in frustration, turning on fluorescent lights, and frantically reading new textbook chapters. This confirms to your brain that it is daytime, resetting your circadian clock.</li>
-<li><strong>The Chemical Sedation Trap:</strong> Swallowing sedative antihistamines, codeine syrups, or sleeping tablets. While they may knock you unconscious, they destroy REM sleep architecture, leaving you with severe cognitive brain fog when the exam begins.</li>
+<li>**The Clock-Watching Spiral:** Staring at your phone screen every fifteen minutes. Each time you see the advancing time, your brain receives a fresh jolt of cortisol. Turn your phone face-down across the room.</li>
+<li>**The 2:00 AM Midnight Study Panic:** Jumping out of bed in frustration, turning on fluorescent lights, and frantically reading new textbook chapters. This confirms to your brain that it is daytime, resetting your circadian clock.</li>
+<li>**The Chemical Sedation Trap:** Swallowing sedative antihistamines, codeine syrups, or sleeping tablets. While they may knock you unconscious, they destroy REM sleep architecture, leaving you with severe cognitive brain fog when the exam begins.</li>
 </ol>
 <p>Learn how to control acute exam panic in <a href="/blog/mental-health/exam-anxiety-university-students/">exam anxiety vs normal nerves: how your body reacts</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-emergency-rescue-protocol-the-quiet-rest-strategy">3. The Emergency Rescue Protocol: The "Quiet Rest" Strategy</h2>
 <p>If it is 3:00 AM and you are still awake, execute this clinical salvage plan:</p>
 <ul>
-<li><strong>Embrace Non-Sleep Deep Rest (NSDR):</strong> Tell yourself: <em>"I don't need to sleep. My only job right now is to give my body quiet physical rest."</em> Clinical studies confirm that lying still in the dark with slow, rhythmic breathing restores muscle glycogen and allows the glymphatic system to clear cerebral metabolic waste. Removing the pressure to sleep often allows sleep to occur naturally within 20 minutes.</li>
-<li><strong>The Cognitive Shuffle:</strong> Instead of thinking about exam topics, pick a random five-letter word (e.g., 'B-R-E-A-D'). Think of as many random nouns starting with B as possible (Ball, Banana, Boat), then R, then E. This scrambles logical thought chains and mimics natural pre-sleep hypnagogic imagery.</li>
-<li><strong>The Morning Hydration Shock:</strong> If you get zero sleep, do not panic. The human body can perform at 90% cognitive capacity for one day on adrenaline alone. Drink 750ml of cold water upon waking, eat two boiled eggs for steady choline and protein, and walk briskly into the exam hall with confidence.</li>
+<li>**Embrace Non-Sleep Deep Rest (NSDR):** Tell yourself: *"I don't need to sleep. My only job right now is to give my body quiet physical rest."* Clinical studies confirm that lying still in the dark with slow, rhythmic breathing restores muscle glycogen and allows the glymphatic system to clear cerebral metabolic waste. Removing the pressure to sleep often allows sleep to occur naturally within 20 minutes.</li>
+<li>**The Cognitive Shuffle:** Instead of thinking about exam topics, pick a random five-letter word (e.g., 'B-R-E-A-D'). Think of as many random nouns starting with B as possible (Ball, Banana, Boat), then R, then E. This scrambles logical thought chains and mimics natural pre-sleep hypnagogic imagery.</li>
+<li>**The Morning Hydration Shock:** If you get zero sleep, do not panic. The human body can perform at 90% cognitive capacity for one day on adrenaline alone. Drink 750ml of cold water upon waking, eat two boiled eggs for steady choline and protein, and walk briskly into the exam hall with confidence.</li>
 </ul>
 <p>If you struggle with expressing your emotional distress to parents, read <a href="/blog/mental-health/">opening up to parents about depression vs keeping quiet</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-it-impossible-to-sleep-the-night-before-an-important-university-exam">Why is it impossible to sleep the night before an important university exam?</h3>
 <p>Anticipatory anxiety activates the sympathetic nervous system, triggering cortisol and adrenaline spikes that block the release of melatonin. The brain treats tomorrow's exam as an acute survival threat, keeping you wide awake.</p>
@@ -351,7 +353,7 @@
 <p>Yes. Clinical sleep research confirms that 'quiet rest' (lying quietly in the dark with slow breathing) provides roughly 70-80% of the cognitive and muscular restorative benefits of actual sleep.</p>
 <h3 id="should-students-take-pharmaceutical-sleeping-pills-or-cough-syrups-the-night-before-an-exam">Should students take pharmaceutical sleeping pills or cough syrups the night before an exam?</h3>
 <p>Never. Over-the-counter sedatives, antihistamines, or codeine syrups induce profound morning-after 'hangover sedation', severely blunting memory retrieval and reaction time inside the exam hall.</p>
-<h3 id="what-should-you-do-if-you-are-still-awake-at-330-am-before-an-800-am-paper">What should you do if you are still awake at 3:30 AM before an 8:00 AM paper?</h3>
+<h3 id="what-should-you-do-if-you-are-still-awake-at-3-30-am-before-an-8-00-am-paper">What should you do if you are still awake at 3:30 AM before an 8:00 AM paper?</h3>
 <p>Get out of bed. Sit on a chair under dim light and do a light, non-stimulating activity (such as drinking water or reviewing easy summary formulas) for 20 minutes until natural drowsiness returns.</p>
       </div>
 
@@ -517,8 +519,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -702,8 +704,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -717,7 +719,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,48 +307,56 @@
       <!-- Article Body -->
       <div class="article-body">
         <h1 id="lecturer-intimidation-the-psychological-toll-on-campus">Lecturer Intimidation: The Psychological Toll on Campus</h1>
-<p>It is 7:45 AM on a Monday morning. </p>
+<p>It is 7:45 AM on a Monday morning.</p>
 <p>As you walk toward the lecture theatre, your heart is beating with sickening irregularity. Your throat feels dry, and your stomach is in knots.</p>
 <p>You are not dreading an examination. You are dreading the person holding the dry-erase marker at the front of the hall.</p>
-<p>Every Nigerian undergraduate knows the character:<br />
-* The lecturer who struts into the 300-level lecture theatre on Day 1 and announces: <em>"In this course, 'A' is for God, 'B' is for me, 'C' is for the exceptionally brilliant, and the rest of you will share D, E, and F."</em><br />
-* The lecturer who delights in publicly humiliating students, tearing up submitted assignments, or making veiled threats regarding graduation clearance.</p>
+<p>Every Nigerian undergraduate knows the character:</p>
+<ul>
+<li>The lecturer who struts into the 300-level lecture theatre on Day 1 and announces: *"In this course, 'A' is for God, 'B' is for me, 'C' is for the exceptionally brilliant, and the rest of you will share D, E, and F."*</li>
+<li>The lecturer who delights in publicly humiliating students, tearing up submitted assignments, or making veiled threats regarding graduation clearance.</li>
+</ul>
 <p>While academic rigor is essential to higher learning, <strong>calculated psychological intimidation</strong> is toxic abuse. It creates chronic sympathetic nervous system activation that destroys intellectual stamina and induces severe campus trauma.</p>
 <p>Here is how to psychologically insulate yourself, safeguard your academic grades, and survive hostile departmental staff.</p>
-<hr />
+<hr>
 <h2 id="1-the-anatomy-of-academic-power-inversion">1. The Anatomy of Academic Power Inversion</h2>
 <p>To neutralize the psychological impact of lecturer intimidation, you must understand its institutional roots:</p>
-<p>In many public tertiary institutions, lecturers operate with unchecked discretionary power:<br />
-* They set the Continuous Assessment (CA) tests.<br />
-* They mark the final exam scripts in private without independent double-blind moderation.<br />
-* They compute the final grade spreadsheets uploaded to the Senate.</p>
+<p>In many public tertiary institutions, lecturers operate with unchecked discretionary power:</p>
+<ul>
+<li>They set the Continuous Assessment (CA) tests.</li>
+<li>They mark the final exam scripts in private without independent double-blind moderation.</li>
+<li>They compute the final grade spreadsheets uploaded to the Senate.</li>
+</ul>
 <p>When insecure or stressed academics realize there are few external checks on their authority, some weaponize this power asymmetry to compensate for personal frustrations, low remuneration, or historical academic trauma they endured as students.</p>
 <p>Recognizing that <strong>their hostility reflects their internal brokenness—not your lack of intellectual competence</strong>—is the foundational step toward emotional detachment.</p>
 <p>For practical steps on disputing dubious grades, read <a href="/blog/academics/unfair-lecturer-grading-university/">unfair lecturer grading: what you can actually do</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-gray-rock-campus-defense-protocol">2. The "Gray Rock" Campus Defense Protocol</h2>
 <p>In clinical psychology, the <strong>Gray Rock Technique</strong> is the gold standard for dealing with narcissistic or intimidating authority figures:</p>
 <p>You make yourself as uninteresting, unreactive, and emotionally bland as a gray rock on the road:</p>
 <ol>
-<li><strong>Eradicate Public Debate:</strong> Never contradict an aggressive lecturer in open class, even when their lecture notes contain obvious factual errors. Confronting an ego-driven lecturer in front of 300 students activates their defensive aggression, painting a permanent target on your matriculation number.</li>
-<li><strong>Master the Middle Rows:</strong> Do not sit in the front row where you can be singled out for humiliation; do not sit in the last row where lecturers scan for <em>"unserious backbenchers."</em> Sit in the center quadrant of the hall.</li>
-<li><strong>Meticulous Record-Keeping:</strong> Save physical carbon copies and smartphone photos of every submitted term paper, lab report, and Continuous Assessment test script before submission. If scripts mysteriously <em>"disappear"</em>, you have timestamped evidence.</li>
+<li>**Eradicate Public Debate:** Never contradict an aggressive lecturer in open class, even when their lecture notes contain obvious factual errors. Confronting an ego-driven lecturer in front of 300 students activates their defensive aggression, painting a permanent target on your matriculation number.</li>
+<li>**Master the Middle Rows:** Do not sit in the front row where you can be singled out for humiliation; do not sit in the last row where lecturers scan for *"unserious backbenchers."* Sit in the center quadrant of the hall.</li>
+<li>**Meticulous Record-Keeping:** Save physical carbon copies and smartphone photos of every submitted term paper, lab report, and Continuous Assessment test script before submission. If scripts mysteriously *"disappear"*, you have timestamped evidence.</li>
 </ol>
 <p>Learn how to bounce back from traumatic grading setbacks in <a href="/blog/mental-health/coping-with-failing-university-exams/">failure shame: rebuilding self-worth after bad results</a>.</p>
-<hr />
+<hr>
 <h2 id="3-protecting-your-mental-health-outside-the-department">3. Protecting Your Mental Health Outside the Department</h2>
-<p>Do not allow a hostile lecturer to colonize your entire life:<br />
-* <strong>Compartmentalize Course Trauma:</strong> When you step outside that lecturer's classroom, deliberately disengage. Do not spend four hours at the cafeteria reliving their rude remarks with classmates.<br />
-* <strong>Seek Departmental Senior Mentorship:</strong> Connect with recent alumni or postgraduate students who cleared the course. Ask for their specific survival notes: <em>"What exact textbook does this lecturer lift their exam questions from? What stylistic buzzwords do they look for in essay questions?"</em></p>
+<p>Do not allow a hostile lecturer to colonize your entire life:</p>
+<ul>
+<li>**Compartmentalize Course Trauma:** When you step outside that lecturer's classroom, deliberately disengage. Do not spend four hours at the cafeteria reliving their rude remarks with classmates.</li>
+<li>**Seek Departmental Senior Mentorship:** Connect with recent alumni or postgraduate students who cleared the course. Ask for their specific survival notes: *"What exact textbook does this lecturer lift their exam questions from? What stylistic buzzwords do they look for in essay questions?"*</li>
+</ul>
 <p>If exploitation crosses ethical boundaries into harassment, review our safety protocols on <a href="/blog/mental-health/">campus bullying and setting hard boundaries</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-mental-health-support-network">🧠 Join the Student Mental Health &amp; Support Network</h3>
+<p>### 🧠 Join the Student Mental Health & Support Network</p>
 <p>Dealing with intimidating lecturers, toxic departments, or exam stress?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with verified students from your campus, share experiences safely, and access supportive guidance.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with verified students from your campus, share experiences safely, and access supportive guidance.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-is-lecturer-intimidation-so-prevalent-in-some-nigerian-universities">Why is lecturer intimidation so prevalent in some Nigerian universities?</h3>
 <p>Historical authoritarian academic culture, lack of functional independent student ombudsman bodies, absence of anonymous course feedback mechanisms, and excessive unchecked discretionary grading power held by individual lecturers.</p>
@@ -522,8 +530,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -707,8 +715,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -722,7 +730,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

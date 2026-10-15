@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,117 +306,62 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="budgeting-for-final-year-clearance-project-binding-gown">Budgeting for Final Year Clearance, Project Binding &amp; Gown</h1>
+        <h1 id="budgeting-for-final-year-clearance-project-binding-gown">Budgeting for Final Year Clearance, Project Binding & Gown</h1>
 <p>You wrote your final undergraduate examination paper.</p>
 <p>You signed your white shirt with permanent markers. You celebrated outside the faculty building with classmates.</p>
 <p>You think you are finished with university.</p>
 <p>Then, your project supervisor drops a bombshell: <em>"Make all structural corrections to Chapters 1 to 5, print four complete copies on 80g bond paper, hard-bind them in embossed navy blue leather with gold lettering, and submit within fourteen days."</em></p>
-<p>You walk to the campus printing center. The printer gives you the estimate:<br />
-* 4 Hardcover Gold-Embossed Project Copies: <strong>₦28,000</strong><br />
-* Printing 120 pages × 4 copies + color charts: <strong>₦18,000</strong><br />
-* Statistical Data Analysis Specialist Fee: <strong>₦25,000</strong><br />
-* Departmental Clearance Fee: <strong>₦7,500</strong><br />
-* Alumni Association Lifetime Registration: <strong>₦10,000</strong><br />
-* Convocation Gown Rental Deposit: <strong>₦15,000</strong><br />
-* <strong>TOTAL FINAL YEAR CLEARANCE BILL: ₦103,500</strong></p>
-<p>Your heart sinks. </p>
+<p>You walk to the campus printing center. The printer gives you the estimate:</p>
+<ul>
+<li>4 Hardcover Gold-Embossed Project Copies: **₦28,000**</li>
+<li>Printing 120 pages × 4 copies + color charts: **₦18,000**</li>
+<li>Statistical Data Analysis Specialist Fee: **₦25,000**</li>
+<li>Departmental Clearance Fee: **₦7,500**</li>
+<li>Alumni Association Lifetime Registration: **₦10,000**</li>
+<li>Convocation Gown Rental Deposit: **₦15,000**</li>
+<li>**TOTAL FINAL YEAR CLEARANCE BILL: ₦103,500**</li>
+</ul>
+<p>Your heart sinks.</p>
 <p>You survived four or five grueling years of ASUU strikes, carryovers, and hostel hardship—only to find your certificate held hostage by a <strong>₦100,000 Graduation Clearance Tollbooth</strong>.</p>
 <p>Here is the realistic financial audit and survival budget for your final lap in higher education.</p>
-<hr />
+<hr>
 <h2 id="1-the-final-year-expense-audit-matrix">1. The Final-Year Expense Audit Matrix</h2>
-<table>
-<thead>
-<tr>
-<th>Project Phase</th>
-<th>Description &amp; Cost Drivers</th>
-<th>Estimated Cost Range</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Phase 1: Research Execution</strong></td>
-<td>Lab reagents, field questionnaires, local logistics, sample transport</td>
-<td>₦15,000 – ₦40,000</td>
-</tr>
-<tr>
-<td><strong>Phase 2: Data Analysis &amp; Review</strong></td>
-<td>SPSS/Python analysis, Turnitin plagiarism check, spiral draft reviews</td>
-<td>₦10,000 – ₦25,000</td>
-</tr>
-<tr>
-<td><strong>Phase 3: Final Hardcover Binding</strong></td>
-<td>Gold-embossed hardcover binding (4 mandatory copies for faculty &amp; archives)</td>
-<td>₦20,000 – ₦35,000</td>
-</tr>
-<tr>
-<td><strong>Phase 4: Senate Clearance &amp; Gowns</strong></td>
-<td>Departmental dues, alumni levy, library clearance, convocation gown rental</td>
-<td>₦25,000 – ₦45,000</td>
-</tr>
-<tr>
-<td><strong>Total Capital Required</strong></td>
-<td><strong>Combined mandatory out-of-pocket final-year budget</strong></td>
-<td><strong>₦70,000 – ₦145,000</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Project Phase | Description & Cost Drivers | Estimated Cost Range |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Phase 1: Research Execution</strong> | Lab reagents, field questionnaires, local logistics, sample transport | ₦15,000 – ₦40,000 |</p>
+<p>| <strong>Phase 2: Data Analysis & Review</strong> | SPSS/Python analysis, Turnitin plagiarism check, spiral draft reviews | ₦10,000 – ₦25,000 |</p>
+<p>| <strong>Phase 3: Final Hardcover Binding</strong> | Gold-embossed hardcover binding (4 mandatory copies for faculty & archives) | ₦20,000 – ₦35,000 |</p>
+<p>| <strong>Phase 4: Senate Clearance & Gowns</strong> | Departmental dues, alumni levy, library clearance, convocation gown rental | ₦25,000 – ₦45,000 |</p>
+<p>| <strong>Total Capital Required</strong> | <strong>Combined mandatory out-of-pocket final-year budget</strong> | <strong>₦70,000 – ₦145,000</strong> |</p>
 <p>Review official institutional clearance hurdles in <a href="/blog/academics/nigerian-university-final-clearance/">final year clearance hurdles: avoiding graduation delays</a>.</p>
-<hr />
+<hr>
 <h2 id="2-tactical-cost-cutting-on-project-binding">2. Tactical Cost-Cutting on Project Binding</h2>
 <p>You cannot eliminate university clearance fees, but you can slash thesis production costs by <strong>up to 45%</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Expense Item</th>
-<th>Commercial Campus Price</th>
-<th>High-Efficiency Strategy</th>
-<th>Savings Yield</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Data Analysis (SPSS/R)</strong></td>
-<td>₦20,000 – ₦35,000</td>
-<td>Learn YouTube SPSS basics or partner with a tech-savvy coursemate</td>
-<td><strong>₦20,000</strong></td>
-</tr>
-<tr>
-<td><strong>Plagiarism Checker (Turnitin)</strong></td>
-<td>₦3,000 – ₦5,000 per run</td>
-<td>Access free departmental library Turnitin quota via graduate assistants</td>
-<td><strong>₦4,000</strong></td>
-</tr>
-<tr>
-<td><strong>Hardcover Thesis Binding</strong></td>
-<td>₦8,000 per copy at gate</td>
-<td>Pool 10 students and negotiate with major regional printing press</td>
-<td><strong>₦12,000</strong></td>
-</tr>
-<tr>
-<td><strong>Draft Review Printouts</strong></td>
-<td>₦50 per page (5 drafts = ₦15,000)</td>
-<td>Send PDF chapters to supervisor via WhatsApp/email whenever possible</td>
-<td><strong>₦10,000</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Expense Item | Commercial Campus Price | High-Efficiency Strategy | Savings Yield |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Data Analysis (SPSS/R)</strong> | ₦20,000 – ₦35,000 | Learn YouTube SPSS basics or partner with a tech-savvy coursemate | <strong>₦20,000</strong> |</p>
+<p>| <strong>Plagiarism Checker (Turnitin)</strong> | ₦3,000 – ₦5,000 per run | Access free departmental library Turnitin quota via graduate assistants | <strong>₦4,000</strong> |</p>
+<p>| <strong>Hardcover Thesis Binding</strong> | ₦8,000 per copy at gate | Pool 10 students and negotiate with major regional printing press | <strong>₦12,000</strong> |</p>
+<p>| <strong>Draft Review Printouts</strong> | ₦50 per page (5 drafts = ₦15,000) | Send PDF chapters to supervisor via WhatsApp/email whenever possible | <strong>₦10,000</strong> |</p>
 <p>Review project defense presentation tips in <a href="/blog/academics/final-year-project-defense-prep/">defending your final year project: presentation prep</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-month-graduation-sinking-fund">3. The 3-Month Graduation Sinking Fund</h2>
 <p>If you are currently in 300 Level or First Semester 400 Level, <strong>do not wait until clearance week to look for ₦100,000</strong>:</p>
 <ol>
-<li><strong>Establish a Dedicated Final-Year Vault:</strong> Lock ₦5,000 monthly in a target savings account specifically labeled <em>"Project &amp; Clearance."</em></li>
-<li><strong>Liquidate Non-Essential Campus Assets:</strong> As graduation approaches, sell your standing fan, small cooking gas cylinder, plastic bucket, and mattress to incoming 100-level freshers on hostel market groups. A standard room clearance sale raises between <strong>₦25,000 and ₦40,000</strong> in liquid cash.</li>
-<li><strong>The Family Milestone Pitch:</strong> Frame final-year clearance costs to extended family as an explicit, joyful graduation milestone rather than student upkeep. Relatives are significantly more willing to contribute to <em>"convocation gown and final project clearance"</em> than regular monthly pocket money.</li>
+<li>**Establish a Dedicated Final-Year Vault:** Lock ₦5,000 monthly in a target savings account specifically labeled *"Project & Clearance."*</li>
+<li>**Liquidate Non-Essential Campus Assets:** As graduation approaches, sell your standing fan, small cooking gas cylinder, plastic bucket, and mattress to incoming 100-level freshers on hostel market groups. A standard room clearance sale raises between **₦25,000 and ₦40,000** in liquid cash.</li>
+<li>**The Family Milestone Pitch:** Frame final-year clearance costs to extended family as an explicit, joyful graduation milestone rather than student upkeep. Relatives are significantly more willing to contribute to *"convocation gown and final project clearance"* than regular monthly pocket money.</li>
 </ol>
 <p>Explore secondary fee structures in <a href="/blog/finances/hidden-university-expenses-nigeria/">hidden university expenses in Nigeria: budgeting beyond tuition</a>.</p>
-<hr />
+<hr>
 <h2 id="4-cross-the-finish-line-with-honor">4. Cross the Finish Line with Honor</h2>
-<p>Final year clearance is an administrative test of endurance:<br />
-* Do not let bureaucratic frustration or printer delays steal the joy of your academic achievement.<br />
-* Budget early, execute your project revisions systematically, and protect your clearance documents in a waterproof plastic folder.<br />
-* You are standing at the threshold of freedom. Finish the final paperwork with pride and step into your professional future as a victorious graduate.</p>
-<hr />
+<p>Final year clearance is an administrative test of endurance:</p>
+<ul>
+<li>Do not let bureaucratic frustration or printer delays steal the joy of your academic achievement.</li>
+<li>Budget early, execute your project revisions systematically, and protect your clearance documents in a waterproof plastic folder.</li>
+<li>You are standing at the threshold of freedom. Finish the final paperwork with pride and step into your professional future as a victorious graduate.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-final-year-project-research-and-hardcover-binding-cost-in-nigeria">How much does final year project research and hardcover binding cost in Nigeria?</h3>
 <p>Depending on your course (science lab reagents vs humanities desk research), final-year research, questionnaire distribution, data analysis, and 4 hardcover thesis copies cost between ₦45,000 and ₦120,000.</p>
@@ -590,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -775,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -790,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

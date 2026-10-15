@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -307,26 +307,26 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>It is 8:45 AM inside a sweltering university multipurpose examination hall. Outside, campus security guards brandish handheld metal detector wands, while aggressive departmental invigilators bark instructions over megaphones: <em>"Drop your bags at the door! Anyone caught with unauthorized material will face the Senate Disciplinary Panel for rustication!"</em></p>
-<p>You take your assigned seat at a wobbly wooden desk. You know you prepared. You spent the last three weeks breaking down lecture handouts, practicing past questions, and even teaching confused coursemates in night class until 1:00 AM. </p>
+<p>You take your assigned seat at a wobbly wooden desk. You know you prepared. You spent the last three weeks breaking down lecture handouts, practicing past questions, and even teaching confused coursemates in night class until 1:00 AM.</p>
 <p>The chief invigilator shouts, <em>"You may turn over your papers and begin!"</em></p>
 <p>You flip the booklet. You scan Question 1, a 25-mark multi-part derivation. Suddenly, a cold wave washes over your chest. Your heart begins hammering against your ribs like a trapped bird. Your palms sweat, your mouth goes completely dry, and the formulas you recited effortlessly two hours ago vanish into thin air. You stare at the blank white answer script in utter paralysis. Ten minutes pass. Twenty minutes pass. Nothing comes.</p>
-<p>This horrifying experience is an <strong>exam panic blackout</strong>. </p>
-<p>It is the most demoralizing setback a hardworking student can endure. You leave the hall convinced that you are an academic fraud or that your brain is fundamentally flawed. </p>
+<p>This horrifying experience is an <strong>exam panic blackout</strong>.</p>
+<p>It is the most demoralizing setback a hardworking student can endure. You leave the hall convinced that you are an academic fraud or that your brain is fundamentally flawed.</p>
 <p>Here is the scientific reality: <strong>An exam blackout is not a failure of intelligence; it is a temporary neurochemical hijack of your retrieval system.</strong> Clinical educational studies across Nigerian tertiary institutions indicate that between 35% and 55% of undergraduates suffer from moderate-to-severe examination anxiety, with acute cognitive paralysis—commonly termed 'going blank' in the exam hall—cited as the most frequent manifestation of working memory failure..</p>
 <p>When you understand the biological mechanics of why prepared minds freeze, you can short-circuit the panic loop and regain command of your memory in under three minutes.</p>
-<hr />
+<hr>
 <h2 id="1-the-amygdala-hijack-how-hall-stress-shuts-down-memory-retrieval">1. The Amygdala Hijack: How Hall Stress Shuts Down Memory Retrieval</h2>
 <p>To understand an exam blackout, you must understand how your brain processes acute threat.</p>
 <p>Your brain has two key structures competing for control during an exam:</p>
 <ol>
-<li><strong>The Prefrontal Cortex (PFC):</strong> The sophisticated executive center located behind your forehead. It handles working memory, mathematical calculations, logical deduction, and essay structuring.</li>
-<li><strong>The Amygdala:</strong> An ancient, almond-shaped alarm system deep in the emotional brain designed to ensure physical survival against predators.</li>
+<li>**The Prefrontal Cortex (PFC):** The sophisticated executive center located behind your forehead. It handles working memory, mathematical calculations, logical deduction, and essay structuring.</li>
+<li>**The Amygdala:** An ancient, almond-shaped alarm system deep in the emotional brain designed to ensure physical survival against predators.</li>
 </ol>
 <p>Under normal study conditions in a quiet library cubicle, your cortisol levels are low. The prefrontal cortex operates with peak efficiency, retrieving stored knowledge from the hippocampus smoothly.</p>
 <p>However, when you enter a high-stakes Nigerian exam hall—surrounded by yelling invigilators, suffocating heat, ticking wall clocks, and fear of carryovers—your amygdala perceives the situation as a literal life-or-death crisis. It triggers an <strong>Amygdala Hijack</strong>, flooding your bloodstream with cortisol, norepinephrine, and adrenaline.</p>
 <p>$$\text{Perceived High-Stakes Threat} \longrightarrow \text{Cortisol/Adrenaline Spike} \longrightarrow \text{PFC Downregulation} \longrightarrow \text{Cognitive Blackout}$$</p>
 <p>In a biological emergency (like fleeing a burning building), your brain deliberately shuts down complex logical contemplation to redirect all blood flow and glucose to large muscle groups. In an exam hall, this survival mechanism backfires: <strong>your brain literally turns off your memory retrieval centers to save your life.</strong> You didn't forget the material; the neural gatekeeper simply locked the door.</p>
-<hr />
+<hr>
 <h2 id="2-environmental-amplifiers-why-nigerian-campuses-exacerbate-exam-panic">2. Environmental Amplifiers: Why Nigerian Campuses Exacerbate Exam Panic</h2>
 <p>While exam anxiety exists worldwide, Nigerian tertiary institutions present severe environmental triggers that elevate nervous system stress:</p>
 <h3 id="hostile-invigilation-culture">Hostile Invigilation Culture</h3>
@@ -335,58 +335,59 @@
 <p>Exams held in overcrowded, unventilated halls under 34°C afternoon heat place extreme thermoregulatory strain on the body. Mild dehydration combined with heat exhaustion elevates resting heart rates, mimicking the physical symptoms of a panic attack and tricking the brain into cognitive panic.</p>
 <h3 id="the-exhaustion-deficit">The Exhaustion Deficit</h3>
 <p>Students who pull consecutive all-nighters enter the examination hall with depleted glycogen and neurotransmitter reserves. Sleep-deprived neurons cannot tolerate cortisol spikes, making an amygdala hijack almost inevitable when an unfamiliar question format appears.</p>
-<hr />
+<hr>
 <h2 id="3-the-threat-state-paradox-why-starting-hard-triggers-immediate-freezes">3. The Threat-State Paradox: Why Starting Hard Triggers Immediate Freezes</h2>
 <p>The single biggest tactical mistake students make inside the hall is <strong>tackling the hardest question first</strong>.</p>
-<p>Students often think: <em>"Let me quickly do this compulsory 30-mark calculation question while my energy is high."</em> </p>
+<p>Students often think: <em>"Let me quickly do this compulsory 30-mark calculation question while my energy is high."</em></p>
 <p>If you get stuck on line 3 of that complex calculation, your brain interprets the impasse as catastrophic failure. Panic accelerates, time slips away, and the remaining 70 marks become compromised.</p>
 <p>Before stepping into the hall, students frequently compare notes in disorganized crowds outside the doorway, trading panic-inducing rumors about what the lecturer might test. Understanding <a href="/blog/academics/solo-studying-vs-group-discussion-gpa/">solo study vs group discussion dynamics</a> prevents your nervous system from absorbing collective panic before you sit down.</p>
-<hr />
+<hr>
 <h2 id="4-the-180-second-hall-de-escalation-protocol-unlocking-your-prefrontal-cortex">4. The 180-Second Hall De-Escalation Protocol: Unlocking Your Prefrontal Cortex</h2>
-<p>If you open your question booklet and feel panic rising, <strong>do not attempt to force yourself to write.</strong> Forcing recall while cortisol is peaking only intensifies the freeze. </p>
+<p>If you open your question booklet and feel panic rising, <strong>do not attempt to force yourself to write.</strong> Forcing recall while cortisol is peaking only intensifies the freeze.</p>
 <p>Instead, execute this physical 4-step de-escalation protocol immediately:</p>
 <ul>
-<li><strong>Step 1:</strong> Put Pen Down] ➔ [Step 2: Physiological Sighs] ➔ [Step 3: Grounding Scan] ➔ [Step 4: Micro-Victory Question</li>
+<li>**Step 1:** Put Pen Down] ➔ [Step 2: Physiological Sighs] ➔ [Step 3: Grounding Scan] ➔ [Step 4: Micro-Victory Question</li>
 </ul>
-<h3 id="step-1-the-physical-disengagement-seconds-015">Step 1: The Physical Disengagement (Seconds 0–15)</h3>
+<h3 id="step-1-the-physical-disengagement-seconds-0-15">Step 1: The Physical Disengagement (Seconds 0–15)</h3>
 <p>Lay your ballpoint pen flat on the desk. Lean back against your chair. Drop your shoulders down and away from your ears. Consciously unclamp your jaw. Tell yourself internally: <em>"This is a temporary cortisol spike. My knowledge is intact. I am giving my nervous system 90 seconds to reset."</em></p>
-<h3 id="step-2-the-physiological-sigh-seconds-1560">Step 2: The Physiological Sigh (Seconds 15–60)</h3>
-<p>Developed by neurobiologists at Stanford University, the physiological sigh is the fastest biological method to reduce autonomic arousal in real time:<br />
-* Take two sharp inhales through your nose without pausing (one deep breath, followed immediately by a sharp top-off sniff).<br />
-* Exhale slowly through your mouth for 6 to 8 seconds.<br />
-* Repeat this cycle three times.</p>
+<h3 id="step-2-the-physiological-sigh-seconds-15-60">Step 2: The Physiological Sigh (Seconds 15–60)</h3>
+<p>Developed by neurobiologists at Stanford University, the physiological sigh is the fastest biological method to reduce autonomic arousal in real time:</p>
+<ul>
+<li>Take two sharp inhales through your nose without pausing (one deep breath, followed immediately by a sharp top-off sniff).</li>
+<li>Exhale slowly through your mouth for 6 to 8 seconds.</li>
+<li>Repeat this cycle three times.</li>
+</ul>
 <p>The extended exhale stimulates the vagus nerve, immediately slowing heart rate and sending an unmistakable signal to the amygdala that you are not in physical danger. For severe episodes, implement <a href="/blog/mental-health/">emergency grounding protocols for exam panic</a>.</p>
-<h3 id="step-3-peripheral-sensory-grounding-seconds-6090">Step 3: Peripheral Sensory Grounding (Seconds 60–90)</h3>
+<h3 id="step-3-peripheral-sensory-grounding-seconds-60-90">Step 3: Peripheral Sensory Grounding (Seconds 60–90)</h3>
 <p>Look away from the exam paper. Look at a stable, non-threatening object in the hall—a distant window, the grain of the wooden desk, or the label on your plastic water bottle. Notice 3 physical sensations: your feet planted firmly on the concrete floor, your back touching the chair, and the cool plastic of your water bottle. This grounds your working memory in the present moment.</p>
-<h3 id="step-4-secure-the-micro-victory-seconds-90180">Step 4: Secure the Micro-Victory (Seconds 90–180)</h3>
-<p>Reopen your paper, but skip Question 1 entirely. Flip through the pages until you find the easiest, simplest question on the paper—even if it is worth only 2 marks (such as defining a basic term or writing a standard formula). Write that answer down. </p>
+<h3 id="step-4-secure-the-micro-victory-seconds-90-180">Step 4: Secure the Micro-Victory (Seconds 90–180)</h3>
+<p>Reopen your paper, but skip Question 1 entirely. Flip through the pages until you find the easiest, simplest question on the paper—even if it is worth only 2 marks (such as defining a basic term or writing a standard formula). Write that answer down.</p>
 <p>Producing that single correct sentence delivers a crucial dopamine hit that shatters the freeze and signals to your prefrontal cortex that retrieval is safe. Once the door is opened, the rest of your memory cascades back online.</p>
-<hr />
+<hr>
 <h2 id="5-your-exam-hall-armor-checklist">5. Your Exam Hall Armor Checklist</h2>
 <p>Keep these five rules in mind for your next semester examination:</p>
 <ul>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Bring a bottle of water:</strong> Cold water cools your core body temperature and activates the swallowing reflex, which downregulates autonomic panic.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Arrive 30 minutes early, but stand alone:</strong> Avoid courtyard crowd debates where nervous coursemates yell formulas at the door. Find a quiet tree or corridor to center your focus.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Read the whole paper before writing a single word:</strong> Spend the first 5 minutes reading through all questions calmly. Identify your two strongest questions and mark them with a subtle dot.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Budget your minutes per mark:</strong> In a 2-hour (120-minute) exam for 100 marks, you have roughly 1.1 minutes per mark. Allocate time strictly and never let one stubborn question consume your clock.</li>
-<li class="task-list-item"><span class="task-checkbox"></span><strong>Memorize the 3-breath reset:</strong> Practice the physiological sigh during your personal study sessions so your body remembers the calming reflex automatically when hall tension rises.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Bring a bottle of water:** Cold water cools your core body temperature and activates the swallowing reflex, which downregulates autonomic panic.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Arrive 30 minutes early, but stand alone:** Avoid courtyard crowd debates where nervous coursemates yell formulas at the door. Find a quiet tree or corridor to center your focus.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Read the whole paper before writing a single word:** Spend the first 5 minutes reading through all questions calmly. Identify your two strongest questions and mark them with a subtle dot.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Budget your minutes per mark:** In a 2-hour (120-minute) exam for 100 marks, you have roughly 1.1 minutes per mark. Allocate time strictly and never let one stubborn question consume your clock.</li>
+<li class="task-list-item"><span class="task-checkbox"></span>**Memorize the 3-breath reset:** Practice the physiological sigh during your personal study sessions so your body remembers the calming reflex automatically when hall tension rises.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="never-let-exam-anxiety-rob-you-of-your-hard-work">Never Let Exam Anxiety Rob You of Your Hard Work</h2>
 <p>Understanding the neuroscience of panic transforms your mindset, but mastering the complete exam execution process requires a proven, field-tested toolkit built for Nigerian university standards.</p>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">Recommended Academic System</div>
-  <h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
-  <p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam hall paralysis, outsmart strict marking schemes, and produce peak performance under pressure.</p>
-  <ul class="blog-cta-box__features">
-    <li><strong>Exam Survival Guide</strong> — Tactical hall management, pacing formulas, and emergency panic neutralizers</li>
-    <li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking rubrics</li>
-    <li><strong>Focus Template</strong> — Rapid cognitive calibration tools for high-stakes test days</li>
-  </ul>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
+<div class="blog-cta-box__badge">Recommended Academic System</div>
+<h3 class="blog-cta-box__title">The Academic Comeback Package</h3>
+<p class="blog-cta-box__desc">A complete 7-part digital system created specifically for Nigerian university students ready to eliminate exam hall paralysis, outsmart strict marking schemes, and produce peak performance under pressure.</p>
+<ul class="blog-cta-box__features">
+<li><strong>Exam Survival Guide</strong> — Tactical hall management, pacing formulas, and emergency panic neutralizers</li>
+<li><strong>How to Score High in Any Exam</strong> — Reverse-engineer Nigerian lecturers' marking rubrics</li>
+<li><strong>Focus Template</strong> — Rapid cognitive calibration tools for high-stakes test days</li>
+</ul>
+<a href="/academic-comeback-package" class="blog-cta-box__btn">Claim Your Academic Comeback Package Now &rarr;</a>
 </div>
-
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-does-my-mind-go-blank-during-exams-even-when-i-studied-thoroughly">Why does my mind go blank during exams even when I studied thoroughly?</h3>
 <p>Acute exam stress triggers the amygdala, releasing high surges of cortisol and adrenaline. This neurochemical flood temporarily downregulates the prefrontal cortex—the exact region responsible for conscious memory retrieval and logical problem-solving—causing a temporary cognitive blackout.</p>
@@ -560,8 +561,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -745,8 +746,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -760,7 +761,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

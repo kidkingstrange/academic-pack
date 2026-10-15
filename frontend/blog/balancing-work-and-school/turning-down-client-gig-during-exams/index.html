@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Turning Down a ₦100,000 Gig vs Risking an Exam Carryover",
       "description": "The financial and academic decision framework for Nigerian undergraduates deciding when to turn down lucrative client offers during exam season.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,56 +265,61 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>It is 7:00 PM on a Thursday evening.</p>
-<p>You are sitting at your hostel reading desk. </p>
+<p>You are sitting at your hostel reading desk.</p>
 <p>In exactly 36 hours, you will walk into an examination hall to sit for an intensive 3-unit departmental core course. If you score less than 45%, you receive an automatic 'F' carryover that you cannot re-sit until next year.</p>
 <p>Suddenly, your WhatsApp pings with a message from an agency director in Lekki:</p>
 <p><em>"Hey! We urgently need a 5-page landing page design and copywriting wireframe completed by tomorrow night. We are paying ₦100,000 upfront via instant bank transfer. Can you jump on it right now?"</em></p>
 <p>Your hands tremble. ₦100,000 is real money. It could pay your next semester feeding allowance, buy new clothes, or clear your lodge utility bills.</p>
-<p>Your brain begins bargaining:<br />
-* <em>"Maybe I can code until 4:00 AM, sleep for 2 hours, and then cram for the exam tomorrow afternoon..."</em><br />
-* <em>"I can skim the lecture notes while the client feedback renders..."</em></p>
+<p>Your brain begins bargaining:</p>
+<ul>
+<li>*"Maybe I can code until 4:00 AM, sleep for 2 hours, and then cram for the exam tomorrow afternoon..."*</li>
+<li>*"I can skim the lecture notes while the client feedback renders..."*</li>
+</ul>
 <p>Every semester, thousands of Nigerian student hustlers fall into this exact trap. They take the ₦100,000 gig, arrive at the exam hall in a sleep-deprived daze, and end up with a disastrous carryover.</p>
 <p>Here is the financial and operational mathematics proving why taking that gig is a massive financial loss, and the exact protocol to decline it while keeping the client hungry to work with you later.</p>
-<hr />
+<hr>
 <h2 id="the-true-financial-cost-of-an-academic-carryover">The True Financial Cost of an Academic Carryover</h2>
 <p>Most undergraduates view money through a narrow 7-day lens. They think:</p>
 <blockquote>
-<p><em>"If I accept this gig, I am ₦100,000 richer. If I decline, I have ₦0."</em></p>
+<p>*"If I accept this gig, I am ₦100,000 richer. If I decline, I have ₦0."*</p>
 </blockquote>
-<p>This is completely false arithmetic. </p>
+<p>This is completely false arithmetic.</p>
 <p>Let us calculate the <strong>Real Economic Cost of a University Carryover</strong> in Nigeria:</p>
 <blockquote>
-<h3 id="the-real-cost-of-a-1-year-carryover">The Real Cost Of A 1-Year Carryover</h3>
-<ul>
-<li>Extra Session Tuition &amp; Departmental Dues: ₦65,000 - ₦150,000 Extra 1-Year Off-Campus Hostel Rent: ₦250,000 - ₦600,000 Living &amp; Feeding Expenses (12 Extra Months): ₦360,000 - ₦720,000 Delayed NYSC &amp; Corporate Entry Opportunity Cost: ₦1,200,000+ TOTAL ECONOMIC COST OF ONE CARRYOVER: ₦1,875,000 to ₦2,670,000!</li>
-</ul>
+<p>### The Real Cost Of A 1-Year Carryover</p>
+<p>></p>
+<p>* Extra Session Tuition & Departmental Dues: ₦65,000 - ₦150,000 Extra 1-Year Off-Campus Hostel Rent: ₦250,000 - ₦600,000 Living & Feeding Expenses (12 Extra Months): ₦360,000 - ₦720,000 Delayed NYSC & Corporate Entry Opportunity Cost: ₦1,200,000+ TOTAL ECONOMIC COST OF ONE CARRYOVER: ₦1,875,000 to ₦2,670,000!</p>
 </blockquote>
 <p>When you accept a ₦100,000 gig that triggers an academic carryover, <strong>you are trading ₦100,000 of short-term cash for a ₦2,000,000 long-term financial penalty!</strong></p>
 <p>It is the worst financial trade an entrepreneur can ever make.</p>
-<hr />
+<hr>
 <h2 id="the-referral-commission-pivot-how-to-earn-without-working">The 'Referral Commission Pivot' (How to Earn Without Working)</h2>
-<p>You do not need to choose between losing the client forever and failing your course. </p>
+<p>You do not need to choose between losing the client forever and failing your course.</p>
 <p>Deploy the <strong>Referral Commission Pivot</strong>:</p>
 <blockquote>
-<h3 id="the-referral-commission-model">The Referral Commission Model</h3>
-<ul>
-<li>Client offers you ₦100,000 project during exams ↓ You decline execution due to schedule; introduce trusted peer freelancer ↓ Peer completes project -&gt; Collects ₦85,000 You receive 15% Finder's Commission: ₦15,000 clean profit for 2 minutes of work!</li>
-</ul>
+<p>### The Referral Commission Model</p>
+<p>></p>
+<p>* Client offers you ₦100,000 project during exams ↓ You decline execution due to schedule; introduce trusted peer freelancer ↓ Peer completes project -> Collects ₦85,000 You receive 15% Finder's Commission: ₦15,000 clean profit for 2 minutes of work!</p>
 </blockquote>
 <h3 id="the-exact-whatsapp-script-to-send">The Exact WhatsApp Script to Send:</h3>
 <blockquote>
-<p><em>"Hi [Client Name],</em></p>
-<p><em>Thank you so much for thinking of me for this project! I am currently fully committed to scheduled institutional technical compliance until [Post-Exam Date], so I cannot personally deliver this with the speed and elite quality your brand deserves by tomorrow night.</em></p>
-<p><em>However, my trusted colleague [Peer's Name] is an exceptional specialist in this exact wireframing style and has immediate bandwidth. I have already briefed him on your scope, and he is ready to deliver by tomorrow evening.</em></p>
-<p><em>May I introduce him to your WhatsApp right now?"</em></p>
+<p>*"Hi [Client Name],*</p>
+<p>></p>
+<p>*Thank you so much for thinking of me for this project! I am currently fully committed to scheduled institutional technical compliance until [Post-Exam Date], so I cannot personally deliver this with the speed and elite quality your brand deserves by tomorrow night.*</p>
+<p>></p>
+<p>*However, my trusted colleague [Peer's Name] is an exceptional specialist in this exact wireframing style and has immediate bandwidth. I have already briefed him on your scope, and he is ready to deliver by tomorrow evening.*</p>
+<p>></p>
+<p>*May I introduce him to your WhatsApp right now?"*</p>
 </blockquote>
-<p>Notice what this accomplished:<br />
-1. The client views you as an extraordinary, well-connected professional rather than an unreliable student making excuses.<br />
-2. The client gets their problem solved on time.<br />
-3. Your peer earns ₦85,000.<br />
-4. You earn a <strong>₦15,000 referral fee</strong> in exchange for two WhatsApp messages—leaving your entire 36-hour revision window completely undisturbed!</p>
+<p>Notice what this accomplished:</p>
+<ol>
+<li>The client views you as an extraordinary, well-connected professional rather than an unreliable student making excuses.</li>
+<li>The client gets their problem solved on time.</li>
+<li>Your peer earns ₦85,000.</li>
+<li>You earn a **₦15,000 referral fee** in exchange for two WhatsApp messages—leaving your entire 36-hour revision window completely undisturbed!</li>
+</ol>
 <p>If you need a protocol for managing ongoing retainer clients during exam periods, read our guide on <a href="/blog/balancing-work-and-school/pausing-client-work-for-exams/">pausing client work for university exams</a>.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-high-stakes-project-audits">Action Checklist: High-Stakes Project Audits</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Print your semester exam schedule and highlight all 3-unit and 4-unit core courses.</li>
@@ -487,8 +492,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -672,8 +677,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -687,7 +692,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

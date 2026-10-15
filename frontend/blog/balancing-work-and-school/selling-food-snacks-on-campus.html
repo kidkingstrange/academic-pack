@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Campus Bakers & Food Sellers: Packaging Food Around Classes",
       "description": "How student food entrepreneurs, bakers, and snack vendors can manage bulk cooking, inventory shelf-life, and delivery around university lectures.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,70 +265,65 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>On every Nigerian university campus, food is the ultimate non-negotiable commodity.</p>
-<p>Between 8:00 AM lectures in distant auditoriums, endless lab queues, and exhausting commutes, thousands of hungry students search for quick, affordable snacks:<br />
-* A warm meat pie and chilled drink between classes.<br />
-* A plastic tub of crunchy chinchin to chew during 4-hour evening study sessions.<br />
-* Customized birthday cakes and cupcakes delivered to hostel rooms.</p>
+<p>Between 8:00 AM lectures in distant auditoriums, endless lab queues, and exhausting commutes, thousands of hungry students search for quick, affordable snacks:</p>
+<ul>
+<li>A warm meat pie and chilled drink between classes.</li>
+<li>A plastic tub of crunchy chinchin to chew during 4-hour evening study sessions.</li>
+<li>Customized birthday cakes and cupcakes delivered to hostel rooms.</li>
+</ul>
 <p>For student entrepreneurs with culinary skills, selling food on campus generates fast daily cash flow and profit margins ranging from 40% to 70%.</p>
 <p>However, the food business has one ruthless constraint: <strong>spoilage and real-time operational delivery</strong>.</p>
 <p>Unlike a digital freelancer who can pause their laptop, raw ingredients spoil, bread stales, pastries dry out, and hot stews sour if power goes out.</p>
 <p>If you spend your mornings baking and your afternoons running around campus delivering snack packs, your energy will evaporate, your lecture attendance will collapse, and your GPA will plunge.</p>
 <p>Here is the operational blueprint for running a highly profitable campus food or baking business without flunking out of university.</p>
-<hr />
+<hr>
 <h2 id="the-golden-law-ambient-shelf-life-vs-perishable-traps">The Golden Law: Ambient Shelf-Life vs. Perishable Traps</h2>
 <p>The single greatest mistake student food sellers make is choosing products that require <strong>continuous refrigeration</strong>:</p>
 <blockquote>
-<h3 id="food-product-selection-matrix">Food Product Selection Matrix</h3>
-<ul>
-<li>HIGH-RISK (Avoid): Fresh fruit parfaits, milk-based smoothies, meat pies with gravy</li>
-<li>
-<blockquote>
-<p>Spoil in 4 hours if hostel electricity fails; high financial loss. HIGH-LEVERAGE (Recommended): Chinchin tubs, banana bread loaves, cookies, jerky</p>
-</blockquote>
-</li>
-<li>
-<blockquote>
-<p>14-day ambient shelf life; zero refrigeration required; batch-made on Sunday.</p>
-</blockquote>
-</li>
-</ul>
+<p>### Food Product Selection Matrix</p>
+<p>></p>
+<p>* HIGH-RISK (Avoid): Fresh fruit parfaits, milk-based smoothies, meat pies with gravy</p>
+<p>* > Spoil in 4 hours if hostel electricity fails; high financial loss. HIGH-LEVERAGE (Recommended): Chinchin tubs, banana bread loaves, cookies, jerky</p>
+<p>* > 14-day ambient shelf life; zero refrigeration required; batch-made on Sunday.</p>
 </blockquote>
 <p>By focusing on dry, baked, or securely sealed goods with long shelf lives, you decouple your business from the unpredictability of hostel power outages.</p>
-<hr />
+<hr>
 <h2 id="the-sunday-batch-production-system">The Sunday Batch-Production System</h2>
 <p>Never cook or bake on weekday mornings before 8:00 AM class. Doing so leaves you smelling of smoke, flour, and oil while rushing into lectures exhausted.</p>
 <p>Structure your production using the <strong>Weekly Batch Model</strong>:</p>
 <blockquote>
-<h3 id="the-weekly-production-timeline">The Weekly Production Timeline</h3>
-<ul>
-<li>Saturday Afternoon: Procure raw ingredients in bulk from local town market Sunday 2:00 PM - 7:00 PM: The Master Batch Cook &amp; Bake Sprint (Package 100 units) Monday - Thursday: Distributed deliveries via designated hostel drop-off points Friday: Revenue reconciliation &amp; supply audit</li>
-</ul>
+<p>### The Weekly Production Timeline</p>
+<p>></p>
+<p>* Saturday Afternoon: Procure raw ingredients in bulk from local town market Sunday 2:00 PM - 7:00 PM: The Master Batch Cook & Bake Sprint (Package 100 units) Monday - Thursday: Distributed deliveries via designated hostel drop-off points Friday: Revenue reconciliation & supply audit</p>
 </blockquote>
 <p>In one 5-hour focused burst on Sunday afternoon, you package your entire week's inventory into clean, labeled, heat-sealed clear containers. During the rest of the week, your cooking equipment remains clean and packed away.</p>
-<hr />
+<hr>
 <h2 id="the-hostel-ambassador-distribution-model">The 'Hostel Ambassador' Distribution Model</h2>
 <p>You cannot spend your day walking 8 kilometers between male and female hostels delivering single ₦500 snack packs. That is an enormous waste of study time.</p>
-<p>Instead, recruit <strong>Hostel Ambassadors</strong>:<br />
-* Identify two friendly classmates living in the large campus hostel blocks (e.g., Block A, Block D).<br />
-* Provide them with a display crate containing 20 packaged snack tubs.<br />
-* Offer them a <strong>15% sales commission</strong> on every unit sold.<br />
-* Their hostel mates buy directly from their rooms late at night when the campus cafeteria is closed.</p>
-<blockquote>
-<h3 id="distributed-campus-retail">Distributed Campus Retail</h3>
+<p>Instead, recruit <strong>Hostel Ambassadors</strong>:</p>
 <ul>
-<li>You (Producer): Focus on lectures &amp; studying ↓ Bulk Drop-Off (Sunday Evening) 3 Hostel Ambassadors (Distributors): Sell to room neighbours at 10:00 PM Result: 100% Sales executed with zero weekday delivery running on your part</li>
+<li>Identify two friendly classmates living in the large campus hostel blocks (e.g., Block A, Block D).</li>
+<li>Provide them with a display crate containing 20 packaged snack tubs.</li>
+<li>Offer them a **15% sales commission** on every unit sold.</li>
+<li>Their hostel mates buy directly from their rooms late at night when the campus cafeteria is closed.</li>
 </ul>
+<blockquote>
+<p>### Distributed Campus Retail</p>
+<p>></p>
+<p>* You (Producer): Focus on lectures & studying ↓ Bulk Drop-Off (Sunday Evening) 3 Hostel Ambassadors (Distributors): Sell to room neighbours at 10:00 PM Result: 100% Sales executed with zero weekday delivery running on your part</p>
 </blockquote>
 <p>If you need a framework to budget your profits and keep your business cash separate from your school allowances, read our guide on <a href="/blog/finances/student-budgeting-template-nigeria/">student budgeting and cash-flow management</a>.</p>
-<hr />
+<hr>
 <h2 id="the-pre-exam-inventory-wind-down">The Pre-Exam Inventory Wind-Down</h2>
 <p>Food businesses require disciplined inventory shutdowns before exam season begins.</p>
-<p>Follow these strict rules:<br />
-1. <strong>Week 12:</strong> Halt all new raw bulk flour, butter, and sugar procurement.<br />
-2. <strong>Week 13:</strong> Bake off all remaining raw materials into final inventory batches. Clear out all freezers and cupboards.<br />
-3. <strong>Exam Week:</strong> Zero food production. Broadcast an official WhatsApp status announcement: <em>"Kitchen Closed for Academic Exam Sprints—Resuming Day 1 of Next Semester!"</em></p>
+<p>Follow these strict rules:</p>
+<ol>
+<li>**Week 12:** Halt all new raw bulk flour, butter, and sugar procurement.</li>
+<li>**Week 13:** Bake off all remaining raw materials into final inventory batches. Clear out all freezers and cupboards.</li>
+<li>**Exam Week:** Zero food production. Broadcast an official WhatsApp status announcement: *"Kitchen Closed for Academic Exam Sprints—Resuming Day 1 of Next Semester!"*</li>
+</ol>
 <p>Never allow a batch of unbaked dough or perishable inventory to distract you from studying for your core departmental finals. Run your kitchen with discipline, delegate distribution, and keep your degree safe.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-campus-food-venture-guide">Action Checklist: Campus Food Venture Guide</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Select items with at least a 7-day ambient shelf life (cookies, chinchin, dry loaves).</li>
@@ -502,8 +497,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -687,8 +682,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -702,7 +697,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

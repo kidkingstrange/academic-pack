@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -313,34 +313,38 @@
 <p>Students routinely dismiss this state as <em>"spiritual heaviness"</em> or personal laziness.</p>
 <p>In physiological reality, you are experiencing <strong>Acute Neuro-Metabolic Brain Fog</strong>.</p>
 <p>Brain fog is rarely a psychological defect. In 90% of university cases, it is the direct biological consequence of physiological neglect. Here are the five hidden physical causes undermining your intellectual horsepower.</p>
-<hr />
+<hr>
 <h2 id="1-the-sub-clinical-dehydration-crisis">1. The Sub-Clinical Dehydration Crisis</h2>
-<p>Most Nigerian undergraduates live in a chronic state of mild dehydration without realizing it:<br />
-* You walk 2 kilometers in 34°C tropical heat between lecture faculties.<br />
-* You sweat profusely in crowded, un-airconditioned lecture theatres.<br />
-* To avoid having to use dilapidated campus hall toilets, you deliberately avoid drinking water during the day.</p>
+<p>Most Nigerian undergraduates live in a chronic state of mild dehydration without realizing it:</p>
+<ul>
+<li>You walk 2 kilometers in 34°C tropical heat between lecture faculties.</li>
+<li>You sweat profusely in crowded, un-airconditioned lecture theatres.</li>
+<li>To avoid having to use dilapidated campus hall toilets, you deliberately avoid drinking water during the day.</li>
+</ul>
 <p>When your body loses just <strong>1.5% to 2% of its fluid mass</strong>, blood plasma volume contracts. Your heart must pump harder to deliver oxygenated blood to the cerebral cortex. Neural synaptic firing slows down, and short-term memory retrieval collapses.</p>
 <h3 id="the-fix">The Fix</h3>
 <p>Drink 500ml of clean water with a pinch of mineral table salt first thing in the morning, and carry a reusable water bottle to campus daily. Hydration alone cures 40% of daytime study fatigue.</p>
 <p>Learn active memory retention protocols in <a href="/blog/academics/active-recall-study-method-nigerian-university-guide/">active recall study method: Nigerian university guide</a>.</p>
-<hr />
+<hr>
 <h2 id="2-high-glycemic-food-crashes-the-garri-and-bread-trap">2. High-Glycemic Food Crashes: The "Garri and Bread" Trap</h2>
 <p>Student budgets in Nigeria are heavily skewed toward cheap, refined carbohydrates: white bread and tea for breakfast, fried Indomie noodles for lunch, and a heavy bowl of Garri (Eba) before reading in the afternoon.</p>
-<p>When you consume high-glycemic starches:<br />
-1. Blood glucose surges rapidly, triggering a massive insulin spike from the pancreas.<br />
-2. Insulin clears glucose from the bloodstream aggressively, inducing <strong>reactive hypoglycemia</strong> (a sugar crash) within 60 minutes.<br />
-3. The large carbohydrate load triggers the influx of tryptophan into the brain, synthesizing serotonin and melatonin—the neurochemicals of deep sleep.</p>
-<h3 id="the-fix_1">The Fix</h3>
+<p>When you consume high-glycemic starches:</p>
+<ol>
+<li>Blood glucose surges rapidly, triggering a massive insulin spike from the pancreas.</li>
+<li>Insulin clears glucose from the bloodstream aggressively, inducing **reactive hypoglycemia** (a sugar crash) within 60 minutes.</li>
+<li>The large carbohydrate load triggers the influx of tryptophan into the brain, synthesizing serotonin and melatonin—the neurochemicals of deep sleep.</li>
+</ol>
+<h3 id="the-fix">The Fix</h3>
 <p>Eat your heaviest carbohydrate meals <em>after</em> your primary daily study blocks. Before reading sessions, consume protein, boiled eggs, groundnuts, beans, or light fruit rations that provide stable, long-burning glucose.</p>
 <p>For pre-med and health sciences memorization strategies, read <a href="/blog/academics/pre-med-study-techniques-nigeria/">pre-med and nursing students: anatomy memory protocols</a>.</p>
-<hr />
+<hr>
 <h2 id="3-high-carbon-dioxide-and-room-heat-stagnation">3. High Carbon Dioxide and Room Heat Stagnation</h2>
 <p>In overcrowded university hostels or unventilated student lodge rooms, four to eight students often sleep and read with windows closed to block mosquitoes.</p>
 <p>By midday, indoor carbon dioxide (CO2) concentrations easily surge past 1,500 parts per million (ppm). Human cognitive research shows that at these CO2 levels, complex analytical reasoning drops by over 35%. Pair stale air with room temperatures exceeding 31°C, and your brain slows its metabolic rate to protect vital organs from heat stress.</p>
-<h3 id="the-fix_2">The Fix</h3>
+<h3 id="the-fix">The Fix</h3>
 <p>Install magnetic window mosquito netting to keep louvre blades fully open for cross-ventilation, or study in airy outdoor campus quads or shaded faculty courtyards.</p>
 <p>Compare caffeine pills, energy drinks, and power naps in <a href="/blog/mental-health/">caffeine vs energy drinks vs power naps: study focus safety</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-brain-fog-in-university-students">What is brain fog in university students?</h3>
 <p>Brain fog is a subjective state of cognitive dysfunction characterized by sluggish thinking, poor working memory retrieval, inability to focus on reading, and profound mental lethargy.</p>
@@ -514,8 +518,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -699,8 +703,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -714,7 +718,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

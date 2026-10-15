@@ -11,6 +11,7 @@ from pydantic import BaseModel, EmailStr
 from ..database import get_db
 from ..config import get_settings
 from ..services.paystack import initialize_transaction, verify_transaction
+from ..services.payment_completion import is_valid_paid_amount
 from ..middleware.auth import require_admin
 from ..utils.rate_limit import limiter, get_real_client_ip
 
@@ -142,6 +143,7 @@ async def verify_preorder_payment(body: PreorderVerifyRequest, request: Request,
         return {"success": False, "message": "Payment not yet confirmed. Please complete payment and try again."}
 
     amount_paid = data.get("amount", 0) / 100.0
+    fee_paid = float((data.get("fees") or 0) / 100.0)
     now = datetime.now(timezone.utc)
 
     pending = await db.pending_payments.find_one({"reference": body.reference})
@@ -155,7 +157,7 @@ async def verify_preorder_payment(body: PreorderVerifyRequest, request: Request,
         if (str(book_id).startswith("bundle_3"))
         else float(settings.PREORDER_BOOK_PRICE_NAIRA)
     )
-    if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+    if expected_amount > 0 and not is_valid_paid_amount(amount_paid, expected_amount, fee_paid):
         return {
             "success": False,
             "message": "Payment amount does not match expected order total. Please contact support."
@@ -239,12 +241,13 @@ async def preorder_callback(request: Request, trxref: str = "", reference: str =
         data = result.get("data", {})
         if result.get("status") and data.get("status") == "success":
             amount_paid = data.get("amount", 0) / 100.0
+            fee_paid = float((data.get("fees") or 0) / 100.0)
             expected_amount = float(pending.get("amount", 0) or 0) if pending else (
                 float(settings.PREORDER_BUNDLE_3_PRICE_NAIRA)
                 if (pending and str(pending.get("book_id", "")).startswith("bundle_3"))
                 else float(settings.PREORDER_BOOK_PRICE_NAIRA)
             )
-            if expected_amount > 0 and abs(amount_paid - expected_amount) > 1.0:
+            if expected_amount > 0 and not is_valid_paid_amount(amount_paid, expected_amount, fee_paid):
                 print(f"⚠️ Preorder callback: amount mismatch for {ref}. Expected {expected_amount}, got {amount_paid}")
                 return RedirectResponse(f"/?preorder_failed=1&ref={ref}&error=amount_mismatch")
 

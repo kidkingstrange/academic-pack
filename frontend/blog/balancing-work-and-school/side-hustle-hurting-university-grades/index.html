@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,87 +308,67 @@
       <div class="article-body">
         <h1 id="6-signs-your-side-hustle-is-ruining-your-academic-standing">6 Signs Your Side Hustle Is Ruining Your Academic Standing</h1>
 <p>You started an online freelance business or campus trade.</p>
-<p>Money is flowing in:<br />
-* You made ₦120,000 this month selling thrift fashion or designing brand logos.<br />
-* You bought a new smartphone. You eat good food. You feel like a successful campus CEO.</p>
-<p>Then, mid-semester continuous assessment test results are published on the departmental notice board:<br />
-* Course 301: <strong>08 / 30</strong><br />
-* Course 303: <strong>11 / 30</strong><br />
-* Course 305: <strong>Absent (Missed Test!)</strong></p>
-<p>You stare at the paper in disbelief. </p>
+<p>Money is flowing in:</p>
+<ul>
+<li>You made ₦120,000 this month selling thrift fashion or designing brand logos.</li>
+<li>You bought a new smartphone. You eat good food. You feel like a successful campus CEO.</li>
+</ul>
+<p>Then, mid-semester continuous assessment test results are published on the departmental notice board:</p>
+<ul>
+<li>Course 301: **08 / 30**</li>
+<li>Course 303: **11 / 30**</li>
+<li>Course 305: **Absent (Missed Test!)**</li>
+</ul>
+<p>You stare at the paper in disbelief.</p>
 <p>You tell yourself: <em>"It was just a busy week; I will make it up during final exams."</em></p>
 <p>You are lying to yourself.</p>
 <p>Every academic session, thousands of ambitious student entrepreneurs confuse short-term freelance cashflow with long-term success, sleepwalking into <strong>Academic Probation, Carryovers, and Degree Ruin.</strong></p>
 <p>Here are the <strong>6 undeniable warning signs that your side hustle is destroying your university degree</strong>, and how to execute an emergency academic rescue.</p>
-<hr />
+<hr>
 <h2 id="1-the-6-critical-warning-signs">1. The 6 Critical Warning Signs</h2>
 <blockquote>
-<h3 id="the-academic-decay-radar">The Academic Decay Radar</h3>
-<ul>
-<li>Sign 1: Skipping Mandatory Daytime Lectures for Client "Emergencies"</li>
-<li>Sign 2: Studying Exclusively Under Exam Panic (Zero Weekly Revision)</li>
-<li>Sign 3: Sub-60% Continuous Assessment Test Scores (Dropping 30-mark CA)</li>
-<li>Sign 4: Mental Resentment Toward Academic Coursework</li>
-<li>Sign 5: Chronic Sleep Deprivation &amp; Stimulant Over-Reliance</li>
-<li>Sign 6: Unread Departmental Handouts 14 Days Before Exams</li>
-</ul>
+<p>### The Academic Decay Radar</p>
+<p>></p>
+<p>* Sign 1: Skipping Mandatory Daytime Lectures for Client "Emergencies"</p>
+<p>* Sign 2: Studying Exclusively Under Exam Panic (Zero Weekly Revision)</p>
+<p>* Sign 3: Sub-60% Continuous Assessment Test Scores (Dropping 30-mark CA)</p>
+<p>* Sign 4: Mental Resentment Toward Academic Coursework</p>
+<p>* Sign 5: Chronic Sleep Deprivation & Stimulant Over-Reliance</p>
+<p>* Sign 6: Unread Departmental Handouts 14 Days Before Exams</p>
 </blockquote>
 <h3 id="sign-1-skipping-classes-for-client-tasks">Sign 1: Skipping Classes for Client Tasks</h3>
 <p>The moment you decide: <em>"Let me skip this 8:00 AM lecture to finish this client flyer,"</em> you have inverted your priorities. In Nigerian universities where attendance awards 10 marks and lecturers set unannounced tests, chronic absenteeism guarantees a 'D' or 'E' grade.</p>
 <h3 id="sign-2-resentment-toward-your-degree">Sign 2: Resentment Toward Your Degree</h3>
 <p>You sit in a lecture thinking: <em>"Why am I wasting my time learning this theory when I am already making money online? School is a scam."</em> This arrogance blinds you to the fact that failing courses leads to extra years that prolong your time in the very university you claim to hate.</p>
 <p>Review leadership and academic balancing in <a href="/blog/academics/becoming-course-rep-pros-cons/">course rep roles: leadership value vs CGPA sacrifice</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-dangerous-continuous-assessment-trap">2. The Dangerous "Continuous Assessment Trap"</h2>
 <p>In the Nigerian university 5.0 grading scale, you cannot survive on exam hall heroics alone:</p>
-<table>
-<thead>
-<tr>
-<th>Component</th>
-<th>Weight</th>
-<th>Working Student Reality</th>
-<th>Consequence on Final Grade</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Continuous Assessment (CA)</strong></td>
-<td>30 – 40 Marks</td>
-<td>Neglected due to client rush; scores 10/30</td>
-<td>Puts maximum attainable grade at 70%</td>
-</tr>
-<tr>
-<td><strong>Final Examination</strong></td>
-<td>60 – 70 Marks</td>
-<td>Written with sleep deprivation; scores 42/70</td>
-<td>Total: <strong>52% (Grade 'C' / 3.0 Points)</strong></td>
-</tr>
-<tr>
-<td><strong>Cumulative Outcome</strong></td>
-<td>—</td>
-<td>CGPA systematically drops toward 2.40</td>
-<td><strong>Second Class Lower / Probation</strong></td>
-</tr>
-</tbody>
-</table>
+<p>| Component | Weight | Working Student Reality | Consequence on Final Grade |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Continuous Assessment (CA)</strong> | 30 – 40 Marks | Neglected due to client rush; scores 10/30 | Puts maximum attainable grade at 70% |</p>
+<p>| <strong>Final Examination</strong> | 60 – 70 Marks | Written with sleep deprivation; scores 42/70 | Total: <strong>52% (Grade 'C' / 3.0 Points)</strong> |</p>
+<p>| <strong>Cumulative Outcome</strong> | — | CGPA systematically drops toward 2.40 | <strong>Second Class Lower / Probation</strong> |</p>
 <p>Even if you write a brilliant exam paper, forfeiting Continuous Assessment marks mathematically locks you out of 'A' and 'B' grades.</p>
 <p>Review the working student dilemma in <a href="/blog/balancing-work-and-school/working-while-studying-university-nigeria/">the working student dilemma: why juggling both strains GPA</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-step-emergency-course-correction">3. The 3-Step Emergency Course Correction</h2>
 <p>If you recognize two or more warning signs in your life right now, execute this <strong>Operational Reset</strong>:</p>
 <ol>
-<li><strong>The 50% Client Volume Cap:</strong> Immediately fire your lowest-paying, most difficult clients. Retain only your top 20% high-margin retainers that require minimal emotional friction.</li>
-<li><strong>The 3-Week Exam Lockdown:</strong> Announce a strict client intake freeze three weeks before final examinations. Your clients will still be there in four weeks; your semester GPA will not.</li>
-<li><strong>Outsource Low-Leverage Chores:</strong> If your business is earning ₦150,000 monthly, pay a trusted junior student ₦15,000 to handle packaging, deliveries, or basic administrative typing. Buy back your study hours.</li>
+<li>**The 50% Client Volume Cap:** Immediately fire your lowest-paying, most difficult clients. Retain only your top 20% high-margin retainers that require minimal emotional friction.</li>
+<li>**The 3-Week Exam Lockdown:** Announce a strict client intake freeze three weeks before final examinations. Your clients will still be there in four weeks; your semester GPA will not.</li>
+<li>**Outsource Low-Leverage Chores:** If your business is earning ₦150,000 monthly, pay a trusted junior student ₦15,000 to handle packaging, deliveries, or basic administrative typing. Buy back your study hours.</li>
 </ol>
 <p>Explore upcoming student side hustle analysis in <a href="/blog/balancing-work-and-school/">side hustles hurting university grades: identifying warning signals</a>.</p>
-<hr />
+<hr>
 <h2 id="4-finish-the-work-in-front-of-you">4. Finish the Work in Front of You</h2>
-<p>Do not allow a ₦50,000 monthly freelance gig to cost you a First Class or Second Class Upper graduation certificate:<br />
-* A high degree classification combined with verified digital skills makes you an unstoppable force in the post-graduation corporate and global marketplace.<br />
-* Install discipline, protect your study calendar, and reclaim your academic brilliance.</p>
+<p>Do not allow a ₦50,000 monthly freelance gig to cost you a First Class or Second Class Upper graduation certificate:</p>
+<ul>
+<li>A high degree classification combined with verified digital skills makes you an unstoppable force in the post-graduation corporate and global marketplace.</li>
+<li>Install discipline, protect your study calendar, and reclaim your academic brilliance.</li>
+</ul>
 <p>If you need a systematic, time-saving study framework engineered specifically for high-achieving working students, the <a href="/academic-comeback-package">Academic Comeback Package</a> retails for just <strong>₦5,000</strong>. It gives you the rapid active recall templates and exam triage tools to reverse dropping GPAs and achieve academic excellence on a tight schedule.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-you-tell-if-your-campus-side-hustle-is-hurting-your-academic-grades">How can you tell if your campus side hustle is hurting your academic grades?</h3>
 <p>Skipping mandatory 8:00 AM lectures to fulfill client orders, chronic study procrastination, falling below 60% on continuous assessment tests, reading lecture handouts with persistent brain fog, and feeling irritable when academic deadlines arrive.</p>
@@ -562,8 +542,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -747,8 +727,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -762,7 +742,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

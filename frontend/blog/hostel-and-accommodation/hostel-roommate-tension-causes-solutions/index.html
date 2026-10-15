@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -306,22 +306,24 @@
       </figure>
       <!-- Article Body -->
       <div class="article-body">
-        <h1 id="roommate-tension-why-cleanliness-boundaries-clash">Roommate Tension: Why Cleanliness &amp; Boundaries Clash</h1>
-<p>You arrive back at your hostel room at 8:45 PM after ten hours of back-to-back lectures, practical labs, and departmental meetings. </p>
+        <h1 id="roommate-tension-why-cleanliness-boundaries-clash">Roommate Tension: Why Cleanliness & Boundaries Clash</h1>
+<p>You arrive back at your hostel room at 8:45 PM after ten hours of back-to-back lectures, practical labs, and departmental meetings.</p>
 <p>Your head is pounding. All you want is a clean space to take off your shoes, eat your dinner, and review your notes for tomorrow's 8:00 AM test.</p>
 <p>You push the wooden door open.</p>
-<p>The stench of unwashed plates and sour egusi soup hits you immediately. </p>
-<p>In the middle of the small floor space sits a plastic basin overflowing with crusty pots and three-day-old oily plates. Your roommate’s wet towel is draped over your study chair. His shoes are kicked into the center of the room. </p>
+<p>The stench of unwashed plates and sour egusi soup hits you immediately.</p>
+<p>In the middle of the small floor space sits a plastic basin overflowing with crusty pots and three-day-old oily plates. Your roommate’s wet towel is draped over your study chair. His shoes are kicked into the center of the room.</p>
 <p>To make matters worse, his friend from 300 Level is sprawled across your bed, playing TikTok videos on full speaker volume with no earphones.</p>
-<p>You clench your fists. Your blood pressure spikes. </p>
+<p>You clench your fists. Your blood pressure spikes.</p>
 <p>Do you scream? Do you kick the basin across the room? Or do you swallow your rage, climb onto your bunk, and spend the night in simmering bitterness?</p>
 <p>In Nigerian federal and state universities, roommate conflict is one of the leading causes of acute mental distress, chronic sleep deprivation, and GPA decline. When four, six, or eight young adults from completely different socio-economic backgrounds, parental upbringings, and hygiene standards are forced to cohabit inside a 12-by-12 foot concrete room, friction is guaranteed.</p>
 <p>Here is the psychological and operational playbook to resolve hostel roommate tension before it derails your semester.</p>
-<hr />
+<hr>
 <h2 id="1-the-4-universal-triggers-of-hostel-roommate-warfare">1. The 4 Universal Triggers of Hostel Roommate Warfare</h2>
 <p>Hostel roommate disputes almost never begin with grand ideological differences. They erupt from four mundane, everyday boundary violations:</p>
-<p><strong>The 4 Pillars of Roommate Friction:</strong><br />
-* 1. The Sanitation &amp; Chore Deficit (Dirty dishes, unscrubbed toilets, trash) — 2. The Boundary &amp; Privacy Intrusion (Sitting on your bed, wearing your clothes) — 3. The Sensory Pollution (Loud music, speakerphone calls at 1:00 AM, bright lights) — 4. The Food &amp; Financial Parasitism ("Help me use small salt", unreturned money)</p>
+<p><strong>The 4 Pillars of Roommate Friction:</strong></p>
+<ul>
+<li>1. The Sanitation & Chore Deficit (Dirty dishes, unscrubbed toilets, trash) — 2. The Boundary & Privacy Intrusion (Sitting on your bed, wearing your clothes) — 3. The Sensory Pollution (Loud music, speakerphone calls at 1:00 AM, bright lights) — 4. The Food & Financial Parasitism ("Help me use small salt", unreturned money)</li>
+</ul>
 <h3 id="trigger-1-sanitation-asymmetry">Trigger 1: Sanitation Asymmetry</h3>
 <p>Everyone has a different definition of "clean." For Student A, a clean room means mopped tiles, zero dirty dishes in the sink, and garbage emptied every morning. For Student B, who grew up with household domestic help or lived in an unstructured environment, leaving dirty plates until Sunday afternoon feels completely normal.</p>
 <p>When expectations are uncommunicated, Student A feels like an unpaid servant, while Student B feels micromanaged and nagged.</p>
@@ -329,74 +331,53 @@
 <p>Sleep deprivation is academic poison. When one roommate stays up until 3:00 AM watching Netflix series or arguing loudly on the phone without headphones, the entire room suffers cognitive fatigue. Managing collaborative friction requires the same communication frameworks used in handling <a href="/blog/academics/university-group-assignment-conflict-ghost-teammates/">university group assignment conflict with ghost teammates</a>.</p>
 <h3 id="trigger-3-the-boundary-intrusion-cycle">Trigger 3: The Boundary Intrusion Cycle</h3>
 <p>Your bed is your only private sanctuary in a communal hostel room. When roommates or their casual visitors sit on your white bedsheet with dusty street clothes, borrow your iron without asking, or use your body lotion without permission, resentment compounds exponentially.</p>
-<hr />
+<hr>
 <h2 id="2-the-day-one-roommate-constitution">2. The Day-One Roommate Constitution</h2>
 <p>The fatal mistake most students make is adopting a policy of "wait and see." They assume good manners will prevail naturally.</p>
 <p>They won't.</p>
 <p>Within the first 72 hours of moving into a shared room, convene an informal 30-minute <strong>Room Agreement Meeting</strong>. Draft a simple written sheet pinned behind the door establishing these four ground rules:</p>
-<table>
-<thead>
-<tr>
-<th>Area of Friction</th>
-<th>Agreed Operational Standard</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Kitchen &amp; Plates</td>
-<td>All cooking pots and plates must be washed within 2 hours</td>
-</tr>
-<tr>
-<td>Quiet Hours</td>
-<td>10:30 PM to 6:30 AM: Mandatory earphone rule for all media</td>
-</tr>
-<tr>
-<td>Private Bed Policy</td>
-<td>Nobody sits on another person's bed without invitation</td>
-</tr>
-<tr>
-<td>Overnight Guests</td>
-<td>Maximum 2 consecutive nights; requires 24-hour room notice</td>
-</tr>
-<tr>
-<td>Chore Roster</td>
-<td>Weekly rotating schedule for sweeping, mopping, and trash</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Area of Friction | Agreed Operational Standard |</p>
+<p>| --- | --- |</p>
+<p>| Kitchen & Plates | All cooking pots and plates must be washed within 2 hours |</p>
+<p>| Quiet Hours | 10:30 PM to 6:30 AM: Mandatory earphone rule for all media |</p>
+<p>| Private Bed Policy | Nobody sits on another person's bed without invitation |</p>
+<p>| Overnight Guests | Maximum 2 consecutive nights; requires 24-hour room notice |</p>
+<p>| Chore Roster | Weekly rotating schedule for sweeping, mopping, and trash |</p>
+<hr>
 <h2 id="3-the-3-step-non-violent-de-escalation-script">3. The 3-Step Non-Violent De-Escalation Script</h2>
 <p>When a roommate inevitably violates a boundary, attacking them personally (<em>“You are so dirty and inconsiderate!”</em>) immediately triggers defensive resistance and hostility.</p>
 <p>Use this structured psychological script instead:</p>
 <h3 id="step-1-the-private-observation-no-public-audience">Step 1: The Private Observation (No Public Audience)</h3>
 <p>Never correct a roommate in front of other hall mates or visitors. Pull them aside in the hallway or outside the lodge:</p>
 <blockquote>
-<p><em>"Hey Emeka, I noticed that yesterday and today, the cooking pots were left in the sink overnight. It makes it hard for me to boil water in the morning before my 8:00 AM class."</em></p>
+<p>*"Hey Emeka, I noticed that yesterday and today, the cooking pots were left in the sink overnight. It makes it hard for me to boil water in the morning before my 8:00 AM class."*</p>
 </blockquote>
 <h3 id="step-2-state-the-impact-not-the-moral-character">Step 2: State the Impact, Not the Moral Character</h3>
 <blockquote>
-<p><em>"When the sink is occupied with dirty plates, it creates fruit flies in the room and delays my morning preparation. I start the day stressed."</em></p>
+<p>*"When the sink is occupied with dirty plates, it creates fruit flies in the room and delays my morning preparation. I start the day stressed."*</p>
 </blockquote>
 <h3 id="step-3-propose-the-actionable-standard">Step 3: Propose the Actionable Standard</h3>
 <blockquote>
-<p><em>"Can we agree that whenever any of us cooks, we wash the pots immediately before eating, or within an hour after? Let's keep the room sharp for both of us."</em></p>
+<p>*"Can we agree that whenever any of us cooks, we wash the pots immediately before eating, or within an hour after? Let's keep the room sharp for both of us."*</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="4-handling-extreme-cases-theft-and-unwanted-guests">4. Handling Extreme Cases: Theft and Unwanted Guests</h2>
 <p>What happens when dialogue fails, and you are dealing with malicious behavior?</p>
 <ul>
-<li><strong>Food and Supply Pilfering:</strong> If your raw provisions (garri, milk, seasonings, kerosene) mysteriously evaporate, stop leaving them unlocked. Invest in a lockable plastic storage chest or padlocked food cupboard. For a deeper tactical protocol, read our guide on <a href="/blog/hostel-and-accommodation/roommate-stealing-food-hostel/">confronting a roommate who steals food and supplies</a>.</li>
-<li><strong>Living with Social Anxiety:</strong> If living in a crowded, noisy room is overwhelming your mental bandwidth, explore our coping mechanisms in <a href="/blog/mental-health/">social anxiety and living in crowded hostels</a>.</li>
-<li><strong>Formal Porter Mediation:</strong> If a roommate threatens violence or brings unauthorized squatters who refuse to leave, document dates and times, and present a calm, formal report to the Hall Warden.</li>
+<li>**Food and Supply Pilfering:** If your raw provisions (garri, milk, seasonings, kerosene) mysteriously evaporate, stop leaving them unlocked. Invest in a lockable plastic storage chest or padlocked food cupboard. For a deeper tactical protocol, read our guide on [confronting a roommate who steals food and supplies](/blog/hostel-and-accommodation/roommate-stealing-food-hostel/).</li>
+<li>**Living with Social Anxiety:** If living in a crowded, noisy room is overwhelming your mental bandwidth, explore our coping mechanisms in [social anxiety and living in crowded hostels](/blog/mental-health/).</li>
+<li>**Formal Porter Mediation:** If a roommate threatens violence or brings unauthorized squatters who refuse to leave, document dates and times, and present a calm, formal report to the Hall Warden.</li>
 </ul>
-<hr />
+<hr>
 <blockquote>
-<h3 id="share-your-roommate-dilemmas-confidentially">💬 Share Your Roommate Dilemmas Confidentially</h3>
+<p>### 💬 Share Your Roommate Dilemmas Confidentially</p>
 <p>Dealing with an impossible roommate, constant noise, or boundary violations in your hostel?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with experienced students, get tactical advice on resolving room conflicts peacefully, and find compatible, disciplined study partners for next session.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Free Student Community on WhatsApp</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with experienced students, get tactical advice on resolving room conflicts peacefully, and find compatible, disciplined study partners for next session.</p>
+<p>></p>
+<p>👉 **[Join the Free Student Community on WhatsApp](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="why-do-roommate-relationships-break-down-so-quickly-in-nigerian-university-hostels">Why do roommate relationships break down so quickly in Nigerian university hostels?</h3>
 <p>Hostel tension stems from unstated expectations regarding domestic hygiene, food sharing, overnight guests, noise levels, and financial inequality compressed into high-density, tiny living spaces.</p>
@@ -570,8 +551,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -755,8 +736,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -770,7 +751,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -315,21 +315,21 @@
 <p>You feel a crushing, dirty sensation that psychologists define as <strong>Toxic Academic Shame</strong>.</p>
 <p>Shame does not whisper: <em>"You made a mistake."</em> Shame screams: <em>"You ARE a mistake."</em></p>
 <p>Before you allow despair to destroy your university career, read this with absolute clarity: <strong>A failed semester is an educational event; it is not a life sentence.</strong></p>
-<hr />
+<hr>
 <h2 id="1-deconstructing-the-shame-spiral-event-vs-identity">1. Deconstructing the Shame Spiral: Event vs Identity</h2>
 <p>In the psychology of trauma, failure shame operates through a dangerous cognitive shortcut:</p>
 <blockquote>
-<ul>
-<li>Bad Grade (Objective Event) → "I Am Fundamentally Incapable" (Identity Judgment) → Despair &amp; Isolation → Study Avoidance → Further Failure</li>
-</ul>
+<p>* Bad Grade (Objective Event) → "I Am Fundamentally Incapable" (Identity Judgment) → Despair & Isolation → Study Avoidance → Further Failure</p>
 </blockquote>
-<p>To break this loop, you must execute immediate cognitive separation:<br />
-* An <strong>'F'</strong> on an exam script simply means that on Tuesday morning between 9:00 AM and 12:00 PM, your written answers did not match the marking scheme criteria of that specific lecturer.<br />
-* It does not mean your brain is defective.<br />
-* It does not mean you will not graduate, get a great job, or build an extraordinary career.</p>
+<p>To break this loop, you must execute immediate cognitive separation:</p>
+<ul>
+<li>An **'F'** on an exam script simply means that on Tuesday morning between 9:00 AM and 12:00 PM, your written answers did not match the marking scheme criteria of that specific lecturer.</li>
+<li>It does not mean your brain is defective.</li>
+<li>It does not mean you will not graduate, get a great job, or build an extraordinary career.</li>
+</ul>
 <p>Some of the most successful engineers, medical consultants, lawyers, and entrepreneurs in Nigeria survived brutal carryovers in their second year. What separated them from dropouts was <strong>how they processed the psychological shock</strong>.</p>
 <p>For the exact tactical system on retaking failed papers, study our <a href="/blog/academics/recover-from-carryover-courses-tactical-blueprint/">tactical blueprint to recover from carryover courses</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-5-day-psychological-decontamination-protocol">2. The 5-Day Psychological Decontamination Protocol</h2>
 <p>When academic failure hits, do not immediately make rash decisions like dropping out or changing courses. Follow this structured emotional recovery roadmap:</p>
 <h3 id="day-1-the-grieving-window">Day 1: The Grieving Window</h3>
@@ -341,36 +341,35 @@
 <h3 id="day-4-mathematical-recalibration">Day 4: Mathematical Recalibration</h3>
 <p>Calculate exactly what grades you need over the remaining semesters to achieve your target graduation classification. Mathematical clarity destroys catastrophic emotional anxiety.</p>
 <p>If your GPA has fallen near the withdrawal threshold, read <a href="/blog/academics/university-academic-probation/">academic probation warning: reversing withdrawal risk</a>.</p>
-<hr />
+<hr>
 <h2 id="3-rebuilding-your-identity-the-comeback-narrative">3. Rebuilding Your Identity: The Comeback Narrative</h2>
 <p>The greatest degree comebacks are not born from easy victories; they are forged in the crucible of painful failures.</p>
 <p>When you overcome an academic crash and lift your CGPA from a 2.1 to a First Class or Second Class Upper, you build a caliber of resilience, discipline, and grit that straight-A students who never faced adversity can never match.</p>
 <p>For high school academic stars who find their identity shattered by university grading, explore <a href="/blog/mental-health/">top high school star to university average: identity crisis</a>.</p>
-<hr />
+<hr>
 <div class="blog-cta-box">
-  <div class="blog-cta-box__badge">🚀 REBUILD YOUR ACADEMIC LIFE</div>
-  <h3 class="blog-cta-box__title">Turn Your Worst Semester into Your Greatest Academic Comeback</h3>
-  <p class="blog-cta-box__desc">
-    Recovering from carryovers and low CGPA requires an engineered operational system, not wishful thinking. 
-    Discover the proven 7-part system that thousands of Nigerian undergraduates use to reverse failed grades, master difficult courses, and graduate with pride.
-  </p>
-  <div class="blog-cta-box__features">
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Carryover Clearance Strategy</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Mathematical Target GPA Calculator</div>
-    <div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Cognitive Resilience & Memory Blueprints</div>
-  </div>
-  <a href="/academic-comeback-package" class="blog-cta-box__btn">
-    Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i>
-  </a>
+<div class="blog-cta-box__badge">🚀 REBUILD YOUR ACADEMIC LIFE</div>
+<h3 class="blog-cta-box__title">Turn Your Worst Semester into Your Greatest Academic Comeback</h3>
+<p class="blog-cta-box__desc">
+<p>Recovering from carryovers and low CGPA requires an engineered operational system, not wishful thinking.</p>
+<p>Discover the proven 7-part system that thousands of Nigerian undergraduates use to reverse failed grades, master difficult courses, and graduate with pride.</p>
+</p>
+<div class="blog-cta-box__features">
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Carryover Clearance Strategy</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Mathematical Target GPA Calculator</div>
+<div class="blog-cta-box__feature"><i class="bi bi-check-circle-fill"></i> Cognitive Resilience & Memory Blueprints</div>
 </div>
-
-<hr />
+<a href="/academic-comeback-package" class="blog-cta-box__btn">
+<p>Unlock The Complete System (₦5,000 Special Access) <i class="bi bi-arrow-right"></i></p>
+</a>
+</div>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
-<h3 id="how-does-academic-failure-impact-a-students-psychological-identity">How does academic failure impact a student's psychological identity?</h3>
+<h3 id="how-does-academic-failure-impact-a-student-s-psychological-identity">How does academic failure impact a student's psychological identity?</h3>
 <p>In Nigerian culture, academic achievement is deeply tied to family pride and moral worth. When a student receives an F or carryover, they experience profound 'identity death'—feeling they have permanently disgraced their parents and compromised their future.</p>
 <h3 id="what-is-the-most-dangerous-emotional-mistake-students-make-after-seeing-bad-grades">What is the most dangerous emotional mistake students make after seeing bad grades?</h3>
 <p>Chronic avoidance and secrecy. Hiding results from parents, withdrawing from departmental colleagues, and refusing to check remaining course scores, which prevents strategic remediation and carryover registration.</p>
-<h3 id="can-you-recover-from-a-18-or-22-cgpa-and-still-graduate-with-second-class-upper-21">Can you recover from a 1.8 or 2.2 CGPA and still graduate with Second Class Upper (2:1)?</h3>
+<h3 id="can-you-recover-from-a-1-8-or-2-2-cgpa-and-still-graduate-with-second-class-upper-2-1">Can you recover from a 1.8 or 2.2 CGPA and still graduate with Second Class Upper (2:1)?</h3>
 <p>Yes. Mathematical modeling under the NUC 5.0 grade scale shows that students in 100L or 200L who execute a disciplined comeback protocol can mathematically lift their cumulative GPA above 3.50 before graduation.</p>
 <h3 id="how-should-you-break-bad-academic-results-to-strict-nigerian-parents">How should you break bad academic results to strict Nigerian parents?</h3>
 <p>Deliver the news in person or via structured phone call with total ownership, zero blame-shifting, and a concrete, written remediation action plan detailing how you will retake courses and adjust your daily study schedule.</p>
@@ -538,8 +537,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -723,8 +722,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -738,7 +737,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

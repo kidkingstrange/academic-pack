@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "2:1 Degree with Hustle Income vs First Class with No Cash",
       "description": "The ultimate honest analysis of academic classification versus real-world earning power for Nigerian university graduates.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -266,85 +266,66 @@
       <div class="article-body">
         <p>We have arrived at the ultimate question that divides Nigerian university lecture halls, family dinner tables, and Twitter spaces:</p>
 <blockquote>
-<p><em>"Is it better to graduate with a First Class degree and zero money in your bank account, or graduate with a Second Class Upper (2:1) while earning steady freelance and business income?"</em></p>
+<p>*"Is it better to graduate with a First Class degree and zero money in your bank account, or graduate with a Second Class Upper (2:1) while earning steady freelance and business income?"*</p>
 </blockquote>
-<p>On one side stand traditional parents, university lecturers, and academic purists:<br />
-* <em>"Read your books! A First Class is the only thing that guarantees your future! Everything else is a distraction!"</em></p>
-<p>On the other side stand practical campus hustlers, tech founders, and frustrated graduates:<br />
-* <em>"First Class is just paper! My senior who graduated with a 4.85 CGPA is currently earning ₦70,000 teaching secondary school while I make $800 a month writing copy in my hostel!"</em></p>
+<p>On one side stand traditional parents, university lecturers, and academic purists:</p>
+<ul>
+<li>*"Read your books! A First Class is the only thing that guarantees your future! Everything else is a distraction!"*</li>
+</ul>
+<p>On the other side stand practical campus hustlers, tech founders, and frustrated graduates:</p>
+<ul>
+<li>*"First Class is just paper! My senior who graduated with a 4.85 CGPA is currently earning ₦70,000 teaching secondary school while I make $800 a month writing copy in my hostel!"*</li>
+</ul>
 <p>Who is telling the truth? And as you navigate your own university journey, where should you position your ambition?</p>
 <p>Here is the definitive, unvarnished breakdown of academic classification versus real-world economic power in modern Nigeria.</p>
-<hr />
+<hr>
 <h2 id="the-4-graduate-profiles-the-career-matrix">The 4 Graduate Profiles: The Career Matrix</h2>
 <p>Every Nigerian graduate enters the post-NYSC economy in one of four distinct quadrants:</p>
 <h3 id="the-nigerian-graduate-value-matrix">The Nigerian Graduate Value Matrix</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">QUADRANT 1: The Theoretical Scholar</th>
-<th style="text-align: left;">QUADRANT 2: The Modern Titan</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">First Class Degree + Zero Skills / Money</td>
-<td style="text-align: left;">First Class + High-Income Skills</td>
-</tr>
-<tr>
-<td style="text-align: left;">-&gt; High scholarship potential; high risk</td>
-<td style="text-align: left;">-&gt; The rarest 1%; global opportunities</td>
-</tr>
-<tr>
-<td style="text-align: left;">QUADRANT 3: The Struggling Hustler</td>
-<td style="text-align: left;">QUADRANT 4: The Pragmatic Leader</td>
-</tr>
-<tr>
-<td style="text-align: left;">Third Class Degree + Chaotic Income</td>
-<td style="text-align: left;">Solid 2:1 Degree + Commercial Engine</td>
-</tr>
-<tr>
-<td style="text-align: left;">-&gt; Locked out of corporate gates; high</td>
-<td style="text-align: left;">-&gt; THE SWEET SPOT: Complete career</td>
-</tr>
-<tr>
-<td style="text-align: left;">volatility and career vulnerability.</td>
-<td style="text-align: left;">autonomy &amp; institutional respect!</td>
-</tr>
-</tbody>
-</table>
+<p>| QUADRANT 1: The Theoretical Scholar | QUADRANT 2: The Modern Titan |</p>
+<p>| :--- | :--- |</p>
+<p>| First Class Degree + Zero Skills / Money | First Class + High-Income Skills |</p>
+<p>| -> High scholarship potential; high risk | -> The rarest 1%; global opportunities |</p>
+<p>| QUADRANT 3: The Struggling Hustler | QUADRANT 4: The Pragmatic Leader |</p>
+<p>| Third Class Degree + Chaotic Income | Solid 2:1 Degree + Commercial Engine |</p>
+<p>| -> Locked out of corporate gates; high | -> THE SWEET SPOT: Complete career |</p>
+<p>| volatility and career vulnerability. | autonomy & institutional respect! |</p>
 <p>Let us examine why <strong>Quadrant 4 (The Solid 2:1 + Commercial Engine)</strong> has become the ultimate strategic goal for modern undergraduates.</p>
-<hr />
+<hr>
 <h2 id="the-reality-of-the-broke-first-class">The Reality of the 'Broke First Class'</h2>
 <p>Make no mistake: achieving a First Class (4.50 to 5.00 CGPA) in a Nigerian tertiary institution is an extraordinary testament to <strong>intellectual discipline, memory retention, and bureaucratic grit</strong>.</p>
 <p>If your goal is to win a fully funded master's scholarship to Oxford, Cambridge, or MIT, a First Class is an invaluable golden key.</p>
 <p>However, many First Class students commit one catastrophic error: <strong>they mistake academic validation for economic value</strong>.</p>
-<p>The corporate market does not pay for how well you can memorize 1994 lecture handouts. The market pays for <strong>problems solved and revenue generated</strong>:<br />
-* Can you build a high-converting web interface?<br />
-* Can you negotiate enterprise sales contracts?<br />
-* Can you analyze corporate financial statements?<br />
-* Can you write persuasive marketing campaigns?</p>
+<p>The corporate market does not pay for how well you can memorize 1994 lecture handouts. The market pays for <strong>problems solved and revenue generated</strong>:</p>
+<ul>
+<li>Can you build a high-converting web interface?</li>
+<li>Can you negotiate enterprise sales contracts?</li>
+<li>Can you analyze corporate financial statements?</li>
+<li>Can you write persuasive marketing campaigns?</li>
+</ul>
 <p>When a First Class graduate leaves campus with zero commercial skills, zero professional network, and zero practical experience, they enter the harsh corporate job queue alongside 500,000 other graduates competing for entry-level bank trainee roles.</p>
-<hr />
-<h2 id="why-the-21-income-engine-wins-the-long-game">Why the '2:1 + Income Engine' Wins the Long Game</h2>
+<hr>
+<h2 id="why-the-2-1-income-engine-wins-the-long-game">Why the '2:1 + Income Engine' Wins the Long Game</h2>
 <p>A student who graduates with a <strong>3.80 to 4.20 CGPA (Second Class Upper)</strong> while running a digital business or remote freelance practice enjoys the best of both worlds:</p>
 <blockquote>
-<h3 id="the-pragmatic-graduate-advantage">The Pragmatic Graduate Advantage</h3>
-<ul>
-<li><strong>1.</strong> Institutional Passport: The 2:1 clears every corporate HR filter, graduate trainee assessment, and international scholarship eligibility cutoff.</li>
-<li><strong>2.</strong> Commercial Resilience: 3 years of client management, negotiation, cash flow discipline, and real-world execution already mastered before age 23.</li>
-<li><strong>3.</strong> Financial Peace: Graduating with ₦1,500,000+ in savings rather than begging relatives for transport money during NYSC orientation camp.</li>
-</ul>
+<p>### The Pragmatic Graduate Advantage</p>
+<p>></p>
+<p>* **1.** Institutional Passport: The 2:1 clears every corporate HR filter, graduate trainee assessment, and international scholarship eligibility cutoff.</p>
+<p>* **2.** Commercial Resilience: 3 years of client management, negotiation, cash flow discipline, and real-world execution already mastered before age 23.</p>
+<p>* **3.** Financial Peace: Graduating with ₦1,500,000+ in savings rather than begging relatives for transport money during NYSC orientation camp.</p>
 </blockquote>
 <p>They do not fear the post-graduation job market because <strong>they are already employed by their own capabilities</strong>. If a corporate job offers them ₦120,000 in Lagos, they can politely decline because their freelance retainers already pay them three times that amount.</p>
-<hr />
-<h2 id="the-ultimate-formula-academic-excellence-commercial-mastery">The Ultimate Formula: Academic Excellence &amp; Commercial Mastery</h2>
+<hr>
+<h2 id="the-ultimate-formula-academic-excellence-commercial-mastery">The Ultimate Formula: Academic Excellence & Commercial Mastery</h2>
 <p>You do not have to accept the false choice between poverty and academic excellence.</p>
-<p>You can have both:<br />
-1. <strong>Protect your 2:1 or First Class baseline:</strong> Master active recall, question-led study, and systematic time-blocking so you score As and Bs in minimal time.<br />
-2. <strong>Build a high-income skill concurrently:</strong> Dedicate 90 focused minutes daily to mastering copywriting, design, coding, or commercial sales.<br />
-3. <strong>Graduate as an unstoppable force:</strong> Armed with an accredited honors degree in your hand, proven commercial skills on your laptop, and capital in your account.</p>
+<p>You can have both:</p>
+<ol>
+<li>**Protect your 2:1 or First Class baseline:** Master active recall, question-led study, and systematic time-blocking so you score As and Bs in minimal time.</li>
+<li>**Build a high-income skill concurrently:** Dedicate 90 focused minutes daily to mastering copywriting, design, coding, or commercial sales.</li>
+<li>**Graduate as an unstoppable force:** Armed with an accredited honors degree in your hand, proven commercial skills on your laptop, and capital in your account.</li>
+</ol>
 <p>Step forward with confidence. Protect your degree, master your craft, and build a life of profound academic distinction and financial freedom.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-the-complete-scholar-hustler-roadmap">Action Checklist: The Complete Scholar-Hustler Roadmap</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Audit your current CGPA and identify the exact path to lock in your 2:1 or First Class.</li>
@@ -518,8 +499,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -703,8 +684,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -718,7 +699,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

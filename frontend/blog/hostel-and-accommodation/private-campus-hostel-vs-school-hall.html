@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -312,78 +312,38 @@
 <p>Examples include the New Hall Private wings at UNILAG, Chancellor's and Keystone at UNIBEN, and various managed halls at UI, OAU, and UNN.</p>
 <p>These facilities offer tiled ensuite rooms, dedicated solar inverter power, air-conditioned study lounges, and professional laundry rooms. But they command prices ranging from ₦180,000 to over ₦450,000 per bed space.</p>
 <p>Is the massive price premium truly worth the investment for an undergraduate? Here is the comparative analysis.</p>
-<hr />
+<hr>
 <h2 id="1-what-your-premium-buys-the-4-big-upgrades">1. What Your Premium Buys: The 4 Big Upgrades</h2>
 <p>Private on-campus hostels bridge the gap between the chaotic affordability of federal halls and the dangerous isolation of distant off-campus lodges:</p>
 <ol>
-<li><strong>Guaranteed Power and Study Infrastructure:</strong> While federal halls endure frequent campus blackouts, private hostels maintain commercial backup generators running on dedicated evening schedules (e.g., 6:00 PM to 12:00 AM) plus 24-hour solar inverters in central study libraries.</li>
-<li><strong>Sanitation and Private Bathrooms:</strong> Most private rooms feature ensuite toilets shared by only 2 to 4 students, serviced daily by private janitorial contractors. The risk of waterborne illnesses and toilet infections drops to near zero.</li>
-<li><strong>On-Campus Security Without Transit Fatigue:</strong> You gain the quiet, secure lifestyle of an upscale off-campus lodge without ever needing to board a commercial tricycle or fight for shuttle buses in the rain.</li>
-<li><strong>Rigid Capacity Enforcement:</strong> Unlike federal halls where porters turn a blind eye to illegal squatting, private hostels strictly enforce registered occupancy through biometric gate cards.</li>
+<li>**Guaranteed Power and Study Infrastructure:** While federal halls endure frequent campus blackouts, private hostels maintain commercial backup generators running on dedicated evening schedules (e.g., 6:00 PM to 12:00 AM) plus 24-hour solar inverters in central study libraries.</li>
+<li>**Sanitation and Private Bathrooms:** Most private rooms feature ensuite toilets shared by only 2 to 4 students, serviced daily by private janitorial contractors. The risk of waterborne illnesses and toilet infections drops to near zero.</li>
+<li>**On-Campus Security Without Transit Fatigue:** You gain the quiet, secure lifestyle of an upscale off-campus lodge without ever needing to board a commercial tricycle or fight for shuttle buses in the rain.</li>
+<li>**Rigid Capacity Enforcement:** Unlike federal halls where porters turn a blind eye to illegal squatting, private hostels strictly enforce registered occupancy through biometric gate cards.</li>
 </ol>
 <p>To prepare for university hall balloting and understand how portal allocation works, study our guide on <a href="/blog/hostel-and-accommodation/university-hostel-balloting-tips-bed-space/">hostel balloting online and securing bed spaces fast</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-cost-benefit-calculus-measuring-return-on-investment">2. The Cost-Benefit Calculus: Measuring Return on Investment</h2>
 <p>Paying ₦250,000 for a private hostel bed space rather than ₦40,000 for a public hall represents a ₦210,000 premium. Does it make academic and financial sense?</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Feature</th>
-<th style="text-align: left;">Standard Federal Hall</th>
-<th style="text-align: left;">Private On-Campus Hostel</th>
-<th style="text-align: left;">Off-Campus Private Lodge</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Annual Bed Cost</strong></td>
-<td style="text-align: left;">₦35,000 – ₦65,000</td>
-<td style="text-align: left;">₦180,000 – ₦450,000</td>
-<td style="text-align: left;">₦280,000 – ₦550,000</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Occupancy Density</strong></td>
-<td style="text-align: left;">8 – 14 (with squatters)</td>
-<td style="text-align: left;">2 – 4 (Strictly enforced)</td>
-<td style="text-align: left;">1 – 2 (Self-contained)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Daily Commute</strong></td>
-<td style="text-align: left;">0 minutes (Walking)</td>
-<td style="text-align: left;">0 minutes (Walking)</td>
-<td style="text-align: left;">30 – 60 minutes</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Backup Power</strong></td>
-<td style="text-align: left;">Rare / Erratic</td>
-<td style="text-align: left;">8 – 16 Hours / Inverter</td>
-<td style="text-align: left;">Student's generator</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Toilet Hygiene</strong></td>
-<td style="text-align: left;">High infection risk</td>
-<td style="text-align: left;">Excellent (Ensuite/Cleaned)</td>
-<td style="text-align: left;">Private / Individual</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Squatting Allowed</strong></td>
-<td style="text-align: left;">Unofficial norm</td>
-<td style="text-align: left;">Zero tolerance</td>
-<td style="text-align: left;">Permitted by landlord</td>
-</tr>
-</tbody>
-</table>
+<p>| Feature | Standard Federal Hall | Private On-Campus Hostel | Off-Campus Private Lodge |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Annual Bed Cost</strong> | ₦35,000 – ₦65,000 | ₦180,000 – ₦450,000 | ₦280,000 – ₦550,000 |</p>
+<p>| <strong>Occupancy Density</strong> | 8 – 14 (with squatters) | 2 – 4 (Strictly enforced) | 1 – 2 (Self-contained) |</p>
+<p>| <strong>Daily Commute</strong> | 0 minutes (Walking) | 0 minutes (Walking) | 30 – 60 minutes |</p>
+<p>| <strong>Backup Power</strong> | Rare / Erratic | 8 – 16 Hours / Inverter | Student's generator |</p>
+<p>| <strong>Toilet Hygiene</strong> | High infection risk | Excellent (Ensuite/Cleaned) | Private / Individual |</p>
+<p>| <strong>Squatting Allowed</strong> | Unofficial norm | Zero tolerance | Permitted by landlord |</p>
 <p>Compare the full financial scope of living arrangements in our comprehensive breakdown on <a href="/blog/hostel-and-accommodation/school-hostel-vs-off-campus-lodge-cost/">school hostel vs off-campus lodge real cost breakdown</a>.</p>
-<hr />
+<hr>
 <h2 id="3-when-a-private-on-campus-hostel-is-worth-every-naira">3. When a Private On-Campus Hostel Is Worth Every Naira</h2>
 <p>A private campus hostel is not a luxury for every student, but in specific situations, it is the highest-leverage academic investment you can make:</p>
 <ul>
-<li><strong>Final-Year Research and Defense:</strong> During your 400L or 500L project year, avoiding transit fatigue and having reliable electricity for research analysis can be the difference between a First Class degree and a 2:1.</li>
-<li><strong>Intensive Professional Programs:</strong> Students in Medicine, Pharmacy, Law, and Engineering who navigate brutal continuous assessment schedules cannot afford the mental tax of hauling water or studying under candlelight.</li>
-<li><strong>Remote Tech Workers and Freelancers:</strong> If you earn income as a software developer, designer, or copywriter, the reliable generator power and quiet rooms generate returns that pay for the bed space within two months.</li>
+<li>**Final-Year Research and Defense:** During your 400L or 500L project year, avoiding transit fatigue and having reliable electricity for research analysis can be the difference between a First Class degree and a 2:1.</li>
+<li>**Intensive Professional Programs:** Students in Medicine, Pharmacy, Law, and Engineering who navigate brutal continuous assessment schedules cannot afford the mental tax of hauling water or studying under candlelight.</li>
+<li>**Remote Tech Workers and Freelancers:** If you earn income as a software developer, designer, or copywriter, the reliable generator power and quiet rooms generate returns that pay for the bed space within two months.</li>
 </ul>
 <p>If parental pocket money delays ever disrupt your semester planning, explore our practical contingency frameworks in <a href="/blog/finances/">delayed pocket money survival and ethical coping</a>.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="what-is-a-private-on-campus-hostel-bot-hostel-in-nigerian-universities">What is a private on-campus hostel (BOT hostel) in Nigerian universities?</h3>
 <p>Private on-campus hostels are built and operated by commercial real estate firms under Build-Operate-Transfer (BOT) agreements with university managements (e.g., El-Kanemi and Honours at UNILAG, or Chancellor's Hall at UNIBEN). They offer upgraded amenities inside campus boundaries at premium rental rates.</p>
@@ -557,8 +517,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -742,8 +702,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -757,7 +717,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -313,103 +313,55 @@
 <p>A loud internal voice screams: <em>"You must push! You cannot afford to sleep! First-class students don't rest during exams! Drink another sachet of coffee!"</em></p>
 <p>Another part of your body is screaming for mercy: <em>"If you don't lie down right now, you are going to collapse in that exam hall."</em></p>
 <p>Every Nigerian undergraduate faces this high-stakes dilemma: <strong>Do you push through the wall of exhaustion, or do you surrender to rest?</strong></p>
-<p>Pushing when you shouldn't leads to acute exam blackouts, fainting in lecture halls, and severe malaria flare-ups. </p>
+<p>Pushing when you shouldn't leads to acute exam blackouts, fainting in lecture halls, and severe malaria flare-ups.</p>
 <p>Resting recklessly when you should have persevered leads to unpreparedness and carryovers.</p>
 <p>Here is the objective decision framework to protect both your health and your semester GPA.</p>
-<hr />
+<hr>
 <h2 id="1-the-law-of-diminishing-cognitive-returns">1. The Law of Diminishing Cognitive Returns</h2>
 <p>In cognitive ergonomics, mental productivity follows an inverted U-curve:</p>
-<table>
-<thead>
-<tr>
-<th>Study Phase</th>
-<th>Cognitive State</th>
-<th>Retention Efficiency</th>
-<th>Strategic Action</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Phase 1: Peak Alertness (Hours 1–3)</strong></td>
-<td>Optimal neural processing</td>
-<td><strong>90% – 100% Retention</strong></td>
-<td>Tackle complex calculations, heavy proofs, and difficult foundational concepts</td>
-</tr>
-<tr>
-<td><strong>Phase 2: Diminishing Returns (Hours 4–5)</strong></td>
-<td>Mild synaptic fatigue, slowed comprehension</td>
-<td><strong>40% – 60% Retention</strong></td>
-<td>Transition to active recall, past exam practice questions, or flashcard review</td>
-</tr>
-<tr>
-<td><strong>Phase 3: Negative Cognitive Yield (Hour 6+)</strong></td>
-<td>Severe exhaustion, micro-sleeps, confusion</td>
-<td><strong>Negative Yield</strong> (Induces memory errors)</td>
-<td><strong>Stop immediately.</strong> Close books and sleep 5–6 hours to allow hippocampal memory consolidation</td>
-</tr>
-</tbody>
-</table>
-<p>When you cross into <strong>Negative Cognitive Yield</strong>:<br />
-* Reading speed drops by up to 75%.<br />
-* The brain begins conflating facts (e.g., memorizing formulas with reversed mathematical signs).<br />
-* Information read in this state is not consolidated by the hippocampus into long-term storage; it evaporates the moment you sit down in the examination hall.</p>
+<p>| Study Phase | Cognitive State | Retention Efficiency | Strategic Action |</p>
+<p>|---|---|---|---|</p>
+<p>| <strong>Phase 1: Peak Alertness (Hours 1–3)</strong> | Optimal neural processing | <strong>90% – 100% Retention</strong> | Tackle complex calculations, heavy proofs, and difficult foundational concepts |</p>
+<p>| <strong>Phase 2: Diminishing Returns (Hours 4–5)</strong> | Mild synaptic fatigue, slowed comprehension | <strong>40% – 60% Retention</strong> | Transition to active recall, past exam practice questions, or flashcard review |</p>
+<p>| <strong>Phase 3: Negative Cognitive Yield (Hour 6+)</strong> | Severe exhaustion, micro-sleeps, confusion | <strong>Negative Yield</strong> (Induces memory errors) | <strong>Stop immediately.</strong> Close books and sleep 5–6 hours to allow hippocampal memory consolidation |</p>
+<p>When you cross into <strong>Negative Cognitive Yield</strong>:</p>
+<ul>
+<li>Reading speed drops by up to 75%.</li>
+<li>The brain begins conflating facts (e.g., memorizing formulas with reversed mathematical signs).</li>
+<li>Information read in this state is not consolidated by the hippocampus into long-term storage; it evaporates the moment you sit down in the examination hall.</li>
+</ul>
 <p>Understand why sleep is a biological necessity for exam success in <a href="/blog/academics/tdb-all-nighters-vs-sleep-exam-memory/">TDB all-nighters vs 5-hour sleep: exam memory impact</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-4-point-diagnostic-test-push-vs-stop">2. The 4-Point Diagnostic Test: Push vs. Stop</h2>
 <p>Before swallowing another cup of instant coffee or an energy drink at 1:00 AM, audit yourself against this clinical diagnostic checklist:</p>
-<table>
-<thead>
-<tr>
-<th>Biological Indicator</th>
-<th>The "Push" Green Light</th>
-<th>The "Stop &amp; Sleep" Red Light</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Body Temperature</strong></td>
-<td>Normal (36.5°C - 37°C)</td>
-<td>Febrile, hot forehead, shivering (Malaria/Typhoid)</td>
-</tr>
-<tr>
-<td><strong>Eye &amp; Vision State</strong></td>
-<td>Mild heaviness; clears after washing face</td>
-<td>Blurred vision, double vision, burning tear ducts</td>
-</tr>
-<tr>
-<td><strong>Cognitive Retention</strong></td>
-<td>Able to recall a paragraph after 60 seconds</td>
-<td>Reading the same paragraph 5 times with zero comprehension</td>
-</tr>
-<tr>
-<td><strong>Cardiovascular State</strong></td>
-<td>Steady, normal resting pulse</td>
-<td>Palpitations, chest tightness, dizziness upon standing</td>
-</tr>
-</tbody>
-</table>
+<p>| Biological Indicator | The "Push" Green Light | The "Stop & Sleep" Red Light |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Body Temperature</strong> | Normal (36.5°C - 37°C) | Febrile, hot forehead, shivering (Malaria/Typhoid) |</p>
+<p>| <strong>Eye & Vision State</strong> | Mild heaviness; clears after washing face | Blurred vision, double vision, burning tear ducts |</p>
+<p>| <strong>Cognitive Retention</strong> | Able to recall a paragraph after 60 seconds | Reading the same paragraph 5 times with zero comprehension |</p>
+<p>| <strong>Cardiovascular State</strong> | Steady, normal resting pulse | Palpitations, chest tightness, dizziness upon standing |</p>
 <blockquote>
-<p><strong>The Golden Rule:</strong> If you exhibit two or more "Red Lights," any further study is biologically counterproductive. Shut your books, set an alarm for 5 hours of deep sleep, and review high-yield summaries for 45 minutes in the morning.</p>
+<p>**The Golden Rule:** If you exhibit two or more "Red Lights," any further study is biologically counterproductive. Shut your books, set an alarm for 5 hours of deep sleep, and review high-yield summaries for 45 minutes in the morning.</p>
 </blockquote>
 <p>Deconstruct academic burnout symptoms in <a href="/blog/mental-health/academic-burnout-student-symptoms/">academic burnout student symptoms: why you cannot bring yourself to read</a>.</p>
-<hr />
+<hr>
 <h2 id="3-how-to-execute-an-emergency-power-sleep-reset">3. How to Execute an Emergency "Power Sleep Reset"</h2>
 <p>If you must stop reading at 2:00 AM with an 8:00 AM exam looming:</p>
 <ol>
-<li><strong>Do Not Sleep on Your Notebook:</strong> Dragging yourself to your mattress or a flat surface signals to your parasympathetic system that you are resting intentionally.</li>
-<li><strong>Execute the "Caffeine Nap" Shortcut:</strong> Drink half a cup of warm coffee immediately before closing your eyes, then set an alarm for exactly 25 minutes. Caffeine takes 20-25 minutes to clear adenosine receptors. You wake up right as the chemical stimulant kicks in, cutting sleep inertia.</li>
-<li><strong>The Morning 60-Minute Triage:</strong> Wake up at 6:30 AM. Do not try to read the 3 unread chapters from cover to cover. Review only:<br />
-   * Bolded chapter summary formulas.<br />
-   * Past examination question patterns from the last 3 years.<br />
-   * Diagram labels and core definitions.</li>
+<li>**Do Not Sleep on Your Notebook:** Dragging yourself to your mattress or a flat surface signals to your parasympathetic system that you are resting intentionally.</li>
+<li>**Execute the "Caffeine Nap" Shortcut:** Drink half a cup of warm coffee immediately before closing your eyes, then set an alarm for exactly 25 minutes. Caffeine takes 20-25 minutes to clear adenosine receptors. You wake up right as the chemical stimulant kicks in, cutting sleep inertia.</li>
+<li>**The Morning 60-Minute Triage:** Wake up at 6:30 AM. Do not try to read the 3 unread chapters from cover to cover. Review only:</li>
+<li>Bolded chapter summary formulas.</li>
+<li>Past examination question patterns from the last 3 years.</li>
+<li>Diagram labels and core definitions.</li>
 </ol>
 <p>Explore hostel fatigue management in <a href="/blog/mental-health/lack-of-privacy-hostel-mental-toll/">shared space exhaustion: the mental cost of no privacy in student hostels</a>.</p>
-<hr />
+<hr>
 <h2 id="4-health-is-your-greatest-academic-asset">4. Health Is Your Greatest Academic Asset</h2>
 <p>A carryover course can be retaken and cleared in a subsequent semester.</p>
 <p>A ruptured stomach ulcer, a cardiac arrhythmia triggered by energy drink overdoses, or a nervous breakdown in an emergency room will derail your university journey for an entire year.</p>
 <p>Know when to fight with courage, and have the wisdom to allow your brain to rest. Sustainable academic excellence is built on physiological preservation.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-you-tell-the-difference-between-normal-study-laziness-and-dangerous-burnout">How can you tell the difference between normal study laziness and dangerous burnout?</h3>
 <p>Normal laziness disappears when meaningful urgency appears (like an exam tomorrow). Burnout produces profound physical paralysis, emotional numbness, unrefreshing sleep, and nausea at the thought of opening a notebook.</p>
@@ -417,7 +369,7 @@
 <p>Elevated core body temperature impairs hippocampal synaptic plasticity. Information read during acute febrile illness (malaria/typhoid) is rarely consolidated into long-term memory, rendering study sessions almost useless.</p>
 <h3 id="how-can-a-student-take-an-academic-rest-day-without-falling-behind-on-syllabus">How can a student take an academic 'rest day' without falling behind on syllabus?</h3>
 <p>Schedule an intentional 'Recovery Block': 24 hours of zero study, total digital rest, high protein nutrition, and 9 hours of sleep. An intentional rest day restores prefrontal executive function, doubling revision speed the following day.</p>
-<h3 id="should-you-force-yourself-to-attend-an-800-am-lecture-when-running-on-zero-sleep">Should you force yourself to attend an 8:00 AM lecture when running on zero sleep?</h3>
+<h3 id="should-you-force-yourself-to-attend-an-8-00-am-lecture-when-running-on-zero-sleep">Should you force yourself to attend an 8:00 AM lecture when running on zero sleep?</h3>
 <p>If attendance does not award formal Continuous Assessment marks, sleep instead. Sitting in an auditorium while sleep-deprived retains less than 10% of lecture content while worsening immune compromise.</p>
       </div>
 
@@ -583,8 +535,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -768,8 +720,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -783,7 +735,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

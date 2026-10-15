@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Upwork & Fiverr vs Direct Campus Clients: What Pays Faster",
       "description": "An empirical analysis comparing global freelancing platforms with local Nigerian campus clients for student income velocity and profit reliability.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -266,105 +266,69 @@
       <div class="article-body">
         <p>When a Nigerian university student learns a high-income digital skill—like copywriting, graphic design, video editing, or web development—their next immediate question is:</p>
 <blockquote>
-<p><em>"Where should I find paying clients: Upwork and Fiverr, or directly on campus?"</em></p>
+<p>*"Where should I find paying clients: Upwork and Fiverr, or directly on campus?"*</p>
 </blockquote>
-<p>Online tech influencers frequently boast:<br />
-* <em>"Stop wasting time with broke Nigerian clients! Get on Upwork and earn $500 an hour from clients in California!"</em></p>
-<p>Meanwhile, pragmatic campus entrepreneurs argue:<br />
-* <em>"Upwork takes 14 days to clear your money, charges high platform fees, and can ban your account without warning. Campus clients pay cash into your GTBank account immediately!"</em></p>
+<p>Online tech influencers frequently boast:</p>
+<ul>
+<li>*"Stop wasting time with broke Nigerian clients! Get on Upwork and earn $500 an hour from clients in California!"*</li>
+</ul>
+<p>Meanwhile, pragmatic campus entrepreneurs argue:</p>
+<ul>
+<li>*"Upwork takes 14 days to clear your money, charges high platform fees, and can ban your account without warning. Campus clients pay cash into your GTBank account immediately!"*</li>
+</ul>
 <p>Which marketplace truly delivers the fastest cash velocity, highest profit margins, and lowest stress for an undergraduate balancing 20 credit units?</p>
 <p>Here is the empirical, side-by-side comparison between global freelance platforms and direct local campus clients.</p>
-<hr />
+<hr>
 <h2 id="detailed-platform-comparison-matrix">Detailed Platform Comparison Matrix</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Operational Factor</th>
-<th style="text-align: left;">Global Platforms (Upwork / Fiverr)</th>
-<th style="text-align: left;">Direct Campus / Local Clients</th>
-<th style="text-align: left;">Winner</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Payment Velocity</strong></td>
-<td style="text-align: left;">10 to 14 days clearance holding period</td>
-<td style="text-align: left;">Instant bank transfer (Minutes)</td>
-<td style="text-align: left;"><strong>Campus Clients (10x Faster)</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Earning Currency</strong></td>
-<td style="text-align: left;">US Dollars / Foreign Currency (USD hedge)</td>
-<td style="text-align: left;">Nigerian Naira (Subject to local inflation)</td>
-<td style="text-align: left;"><strong>Upwork / Fiverr</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Earning Ceiling</strong></td>
-<td style="text-align: left;">$300 - $2,500+ per month</td>
-<td style="text-align: left;">₦50,000 - ₦250,000 per month</td>
-<td style="text-align: left;"><strong>Upwork / Fiverr</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Startup Friction</strong></td>
-<td style="text-align: left;">Identity verification, proposal connects, bid competition</td>
-<td style="text-align: left;">Word-of-mouth, WhatsApp status, personal network</td>
-<td style="text-align: left;"><strong>Campus Clients</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Client Reliability</strong></td>
-<td style="text-align: left;">Escrow-backed contracts (Guaranteed payment)</td>
-<td style="text-align: left;">High default risk; requires aggressive deposit enforcement</td>
-<td style="text-align: left;"><strong>Upwork / Fiverr</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Time Investment</strong></td>
-<td style="text-align: left;">2 - 3 hours daily writing customized proposals</td>
-<td style="text-align: left;">15 minutes posting portfolio on WhatsApp Status</td>
-<td style="text-align: left;"><strong>Campus Clients</strong></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="the-reality-of-global-platforms-upwork-fiverr">The Reality of Global Platforms (Upwork &amp; Fiverr)</h2>
-<p>Landing clients on Upwork or Fiverr is fantastic for <strong>long-term wealth creation</strong>:<br />
-* Earning $400 a month translates to over ₦600,000—more than the salary of many senior university professors!<br />
-* Clients operate with professional systems and respect written scope boundaries.</p>
+<p>| Operational Factor | Global Platforms (Upwork / Fiverr) | Direct Campus / Local Clients | Winner |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Payment Velocity</strong> | 10 to 14 days clearance holding period | Instant bank transfer (Minutes) | <strong>Campus Clients (10x Faster)</strong> |</p>
+<p>| <strong>Earning Currency</strong> | US Dollars / Foreign Currency (USD hedge) | Nigerian Naira (Subject to local inflation) | <strong>Upwork / Fiverr</strong> |</p>
+<p>| <strong>Earning Ceiling</strong> | $300 - $2,500+ per month | ₦50,000 - ₦250,000 per month | <strong>Upwork / Fiverr</strong> |</p>
+<p>| <strong>Startup Friction</strong> | Identity verification, proposal connects, bid competition | Word-of-mouth, WhatsApp status, personal network | <strong>Campus Clients</strong> |</p>
+<p>| <strong>Client Reliability</strong> | Escrow-backed contracts (Guaranteed payment) | High default risk; requires aggressive deposit enforcement | <strong>Upwork / Fiverr</strong> |</p>
+<p>| <strong>Time Investment</strong> | 2 - 3 hours daily writing customized proposals | 15 minutes posting portfolio on WhatsApp Status | <strong>Campus Clients</strong> |</p>
+<hr>
+<h2 id="the-reality-of-global-platforms-upwork-fiverr">The Reality of Global Platforms (Upwork & Fiverr)</h2>
+<p>Landing clients on Upwork or Fiverr is fantastic for <strong>long-term wealth creation</strong>:</p>
+<ul>
+<li>Earning $400 a month translates to over ₦600,000—more than the salary of many senior university professors!</li>
+<li>Clients operate with professional systems and respect written scope boundaries.</li>
+</ul>
 <p>However, global platforms have <strong>severe latency</strong>:</p>
 <blockquote>
-<h3 id="the-global-escrow-clearance-delay">The Global Escrow Clearance Delay</h3>
-<ul>
-<li>Day 1: Pitch proposal -&gt; Day 5: Client interviews &amp; hires Day 8: Complete deliverable -&gt; Day 10: Client approves milestone Day 10 - 24: Platform 14-day security clearance hold Day 25: Funds transfer to local bank account via Payoneer/Geegpay</li>
-<li><strong>CASH VELOCITY:</strong> 25 Days from effort to physical Naira in hand!</li>
-</ul>
+<p>### The Global Escrow Clearance Delay</p>
+<p>></p>
+<p>* Day 1: Pitch proposal -> Day 5: Client interviews & hires Day 8: Complete deliverable -> Day 10: Client approves milestone Day 10 - 24: Platform 14-day security clearance hold Day 25: Funds transfer to local bank account via Payoneer/Geegpay</p>
+<p>* **CASH VELOCITY:** 25 Days from effort to physical Naira in hand!</p>
 </blockquote>
 <p>If your hostel rent is due in 72 hours, or you have zero money for food today, Upwork cannot save you.</p>
-<hr />
+<hr>
 <h2 id="the-reality-of-direct-campus-clients">The Reality of Direct Campus Clients</h2>
 <p>Selling digital services to fellow students, campus fellowship leaders, departmental associations, and local business owners around campus operates on <strong>instant cash velocity</strong>:</p>
 <blockquote>
-<h3 id="direct-campus-cash-velocity">Direct Campus Cash Velocity</h3>
-<ul>
-<li><strong>10:</strong> 00 AM: Post flyer design sample on WhatsApp Status</li>
-<li><strong>11:</strong> 30 AM: Student Union presidential aspirant DMs you</li>
-<li><strong>12:</strong> 00 PM: Agree on ₦25,000 fee; receive ₦15,000 upfront deposit in bank</li>
-<li><strong>CASH VELOCITY:</strong> 2 Hours from pitch to spending cash!</li>
-</ul>
+<p>### Direct Campus Cash Velocity</p>
+<p>></p>
+<p>* **10:** 00 AM: Post flyer design sample on WhatsApp Status</p>
+<p>* **11:** 30 AM: Student Union presidential aspirant DMs you</p>
+<p>* **12:** 00 PM: Agree on ₦25,000 fee; receive ₦15,000 upfront deposit in bank</p>
+<p>* **CASH VELOCITY:** 2 Hours from pitch to spending cash!</p>
 </blockquote>
 <h3 id="the-3-golden-rules-for-campus-clients">The 3 Golden Rules for Campus Clients:</h3>
 <ol>
-<li><strong>Never Start Work Without a 60% Upfront Deposit:</strong> Nigerian campus clients have high default rates. If they don't pay upfront, they will ghost you when the event finishes.</li>
-<li><strong>Watermark Previews Heavily:</strong> Never send high-resolution unwatermarked designs or final code files until the remaining 40% balance is confirmed.</li>
-<li><strong>Do Not Work for Friends on Credit:</strong> <em>"I will pay you when my uncle sends my allowance"</em> almost always means you will never see that money.</li>
+<li>**Never Start Work Without a 60% Upfront Deposit:** Nigerian campus clients have high default rates. If they don't pay upfront, they will ghost you when the event finishes.</li>
+<li>**Watermark Previews Heavily:** Never send high-resolution unwatermarked designs or final code files until the remaining 40% balance is confirmed.</li>
+<li>**Do Not Work for Friends on Credit:** *"I will pay you when my uncle sends my allowance"* almost always means you will never see that money.</li>
 </ol>
 <p>If you are deciding between selling digital services or launching a physical retail side hustle on campus, see our comparison of <a href="/blog/balancing-work-and-school/physical-goods-vs-digital-services-student/">physical product ventures vs digital services for students</a>.</p>
-<hr />
+<hr>
 <h2 id="the-high-yield-student-roadmap">The High-Yield Student Roadmap</h2>
 <p>The most financially resilient Nigerian undergraduates do not pick one or the other. They execute the <strong>Two-Pillar Strategy</strong>:</p>
 <ul>
-<li><strong>Pillar 1 (The Cash Flow Engine):</strong> Use direct local and campus clients for fast weekly operational cash flow (food, data, transport).</li>
-<li><strong>Pillar 2 (The Wealth Engine):</strong> Pitch 3 high-tier Upwork proposals every weekend to land foreign retainer clients that build your long-term savings and equipment fund.</li>
+<li>**Pillar 1 (The Cash Flow Engine):** Use direct local and campus clients for fast weekly operational cash flow (food, data, transport).</li>
+<li>**Pillar 2 (The Wealth Engine):** Pitch 3 high-tier Upwork proposals every weekend to land foreign retainer clients that build your long-term savings and equipment fund.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="action-checklist-selecting-your-client-engine">Action Checklist: Selecting Your Client Engine</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Audit your immediate financial runway (Do you need cash in 48 hours or in 30 days?).</li>
@@ -538,8 +502,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -723,8 +687,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -738,7 +702,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

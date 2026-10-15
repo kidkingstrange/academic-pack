@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Campus Content Creators: Protecting Study Time from Gigs",
       "description": "How student TikTokers, YouTubers, and skit-makers can batch-film videos, manage brand sponsorships, and protect examination revision on campus.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -265,62 +265,71 @@
       <!-- Article Body -->
       <div class="article-body">
         <p>On campuses across Nigeria, being a student content creator has become the dream career.</p>
-<p>Armed with an iPhone, a ring light, and a wireless lapel microphone, undergraduates are building massive followings on TikTok, Instagram, YouTube, and X:<br />
-* Campus comedic skits, street interviews, fashion lookbooks, and daily university vlogs.<br />
-* Securing ₦150,000 to ₦500,000 brand integration deals with fintech apps, fashion outlets, and campus event organizers.<br />
-* Enjoying celebrity status across faculty halls and student union squares.</p>
-<p>However, content creation is one of the most deceptively <strong>time-consuming and mentally addictive</strong> activities in existence:<br />
-* A "simple 30-second TikTok" often takes 2 hours to film, 3 hours to edit, and 4 hours of refreshing analytics to see if it goes viral.<br />
-* Brand managers demand instant script revisions and reshoots during lecture hours.<br />
-* The intoxicating hit of dopamine from 100,000 views makes reading a 50-page biology handout feel unbearable.</p>
+<p>Armed with an iPhone, a ring light, and a wireless lapel microphone, undergraduates are building massive followings on TikTok, Instagram, YouTube, and X:</p>
+<ul>
+<li>Campus comedic skits, street interviews, fashion lookbooks, and daily university vlogs.</li>
+<li>Securing ₦150,000 to ₦500,000 brand integration deals with fintech apps, fashion outlets, and campus event organizers.</li>
+<li>Enjoying celebrity status across faculty halls and student union squares.</li>
+</ul>
+<p>However, content creation is one of the most deceptively <strong>time-consuming and mentally addictive</strong> activities in existence:</p>
+<ul>
+<li>A "simple 30-second TikTok" often takes 2 hours to film, 3 hours to edit, and 4 hours of refreshing analytics to see if it goes viral.</li>
+<li>Brand managers demand instant script revisions and reshoots during lecture hours.</li>
+<li>The intoxicating hit of dopamine from 100,000 views makes reading a 50-page biology handout feel unbearable.</li>
+</ul>
 <p>If you don't build systematic guardrails around your production pipeline, the social media algorithm will steal your study time and destroy your academic transcript.</p>
 <p>Here is the operational production playbook for student creators to maintain a vibrant content engine while graduating with honors.</p>
-<hr />
+<hr>
 <h2 id="the-3-content-traps-ruining-student-creator-gpas">The 3 Content Traps Ruining Student Creator GPAs</h2>
 <blockquote>
-<h3 id="the-student-creator-time-traps">The Student Creator Time Traps</h3>
-<ul>
-<li><strong>1.</strong> Daily Filming Fatigue: Shooting one video every day -&gt; Constant disruption</li>
-<li><strong>2.</strong> Analytics Addiction: Refreshing view counts every 10 minutes in lecture halls</li>
-<li><strong>3.</strong> Unbounded Brand Demands: Reshooting videos during Continuous Assessment weeks</li>
-</ul>
+<p>### The Student Creator Time Traps</p>
+<p>></p>
+<p>* **1.** Daily Filming Fatigue: Shooting one video every day -> Constant disruption</p>
+<p>* **2.** Analytics Addiction: Refreshing view counts every 10 minutes in lecture halls</p>
+<p>* **3.** Unbounded Brand Demands: Reshooting videos during Continuous Assessment weeks</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="the-saturday-batch-filming-factory">The Saturday Batch-Filming Factory</h2>
 <p>The difference between an amateur student creator who burns out and a professional creator who graduates with a 2:1 or First Class is <strong>Batch Production</strong>.</p>
 <p>Never shoot content during weekday lecture hours. Implement the <strong>Saturday Content Sprint</strong>:</p>
 <blockquote>
-<h3 id="the-4-hour-batch-filming-sprint">The 4-Hour Batch Filming Sprint</h3>
-<ul>
-<li><strong>10:</strong> 00 AM - 11:00 AM: Scripting &amp; Concept Outlines (Write 6 short-form scripts)</li>
-<li><strong>11:</strong> 00 AM - 01:30 PM: Filming Window (Shoot all 6 videos; change shirts between)</li>
-<li><strong>01:</strong> 30 PM - 02:00 PM: Cloud Backup &amp; File Organization</li>
-<li><strong>RESULT:</strong> 1 Full Week of Content Banked in 4 Hours!</li>
-</ul>
+<p>### The 4-Hour Batch Filming Sprint</p>
+<p>></p>
+<p>* **10:** 00 AM - 11:00 AM: Scripting & Concept Outlines (Write 6 short-form scripts)</p>
+<p>* **11:** 00 AM - 01:30 PM: Filming Window (Shoot all 6 videos; change shirts between)</p>
+<p>* **01:** 30 PM - 02:00 PM: Cloud Backup & File Organization</p>
+<p>* **RESULT:** 1 Full Week of Content Banked in 4 Hours!</p>
 </blockquote>
 <p>From Monday through Friday, your ring light remains packed away. You focus 100% of your energy on lectures, practicals, and syllabus revision. Your pre-scheduled videos publish automatically.</p>
-<hr />
+<hr>
 <h2 id="the-social-media-analytics-detox-during-classes">The 'Social Media Analytics Detox' During Classes</h2>
 <p>The biggest enemy of academic focus is the <strong>dopamine loop of platform notifications</strong>.</p>
-<p>When you post a video at 9:00 AM and have an 10:00 AM lecture:<br />
-* You spend the entire lecture checking notifications under your desk: <em>"Did it hit 10k views? Who commented? Did that influencer repost it?"</em><br />
-* You miss the lecturer explaining the exact derivation that appears on the exam paper.</p>
-<p><strong>The Golden Law:</strong> <br />
-* Schedule all video releases for <strong>6:30 PM or 7:00 PM</strong> in the evening—after all campus lectures have concluded.<br />
-* Turn off all social media app push notifications on your phone. Check analytics only during dedicated evening time slots.</p>
+<p>When you post a video at 9:00 AM and have an 10:00 AM lecture:</p>
+<ul>
+<li>You spend the entire lecture checking notifications under your desk: *"Did it hit 10k views? Who commented? Did that influencer repost it?"*</li>
+<li>You miss the lecturer explaining the exact derivation that appears on the exam paper.</li>
+</ul>
+<p><strong>The Golden Law:</strong></p>
+<ul>
+<li>Schedule all video releases for **6:30 PM or 7:00 PM** in the evening—after all campus lectures have concluded.</li>
+<li>Turn off all social media app push notifications on your phone. Check analytics only during dedicated evening time slots.</li>
+</ul>
 <p>If you struggle to transition your brain from social media engagement to academic revision, explore our guide on <a href="/blog/balancing-work-and-school/mental-context-switching-work-study/">overcoming mental context-switching fatigue</a>.</p>
-<hr />
+<hr>
 <h2 id="managing-brand-sponsorships-during-exam-month">Managing Brand Sponsorships During Exam Month</h2>
 <p>When a sponsor offers you ₦200,000 to post a campaign during exam week, your first instinct is to accept immediately.</p>
 <p>Do not sacrifice a course for a one-off sponsorship fee. Deploy the <strong>Exam Sponsorship Buffer Clause</strong>:</p>
 <blockquote>
-<p><em>"Hi [Brand Manager],</em></p>
-<p><em>Thank you for the opportunity! We would love to feature [Product] across our channels.</em></p>
-<p><em>Our production schedule is currently locked until [Post-Exam Date] due to scheduled institutional filming compliance.</em></p>
-<p><em>We can lock in this campaign today and schedule your video to go live as our primary feature post on [Date—3 days after your last paper]. Let me know if that aligns with your campaign flight!"</em></p>
+<p>*"Hi [Brand Manager],*</p>
+<p>></p>
+<p>*Thank you for the opportunity! We would love to feature [Product] across our channels.*</p>
+<p>></p>
+<p>*Our production schedule is currently locked until [Post-Exam Date] due to scheduled institutional filming compliance.*</p>
+<p>></p>
+<p>*We can lock in this campaign today and schedule your video to go live as our primary feature post on [Date—3 days after your last paper]. Let me know if that aligns with your campaign flight!"*</p>
 </blockquote>
 <p>Nine out of ten brand managers will happily agree because they want your audience engagement, not a rushed, stressed video.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-student-creator-production-protocol">Action Checklist: Student Creator Production Protocol</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Consolidate 100% of filming into a single 4-hour weekend batch-shooting window.</li>
@@ -494,8 +503,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -679,8 +688,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -694,7 +703,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

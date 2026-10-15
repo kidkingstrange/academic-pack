@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -312,43 +312,47 @@
 <p>For a family navigating harsh economic pressures, saving hundreds of thousands of naira in annual rent sounds undeniably attractive.</p>
 <p>However, living as a dependent undergraduate in an extended family household is rarely the frictionless blessing it appears to be. In university life, <strong>"free accommodation"</strong> often carries the highest academic tax you will ever pay.</p>
 <p>Here is how to evaluate the arrangement objectively, manage familial friction, and protect your Cumulative Grade Point Average.</p>
-<hr />
+<hr>
 <h2 id="1-the-unspoken-contract-the-domestic-errands-tax">1. The Unspoken Contract: The Domestic Errands Tax</h2>
 <p>When you rent your own hostel room or private lodge, your time is your sovereign property. If you choose to study from 4:00 PM to midnight without speaking to another human being, nobody can challenge you.</p>
-<p>In a relative's house, you are not a paying tenant; you are a junior family dependent:<br />
-1. <strong>The Endless Errands Loop:</strong> You are returning from an exhausting 4-hour biochemistry practical when you are dispatched to the local market to buy soup ingredients, wash the family car, or pick up younger cousins from primary school.<br />
-2. <strong>The Domestic Guilt Trap:</strong> When you sit down with your textbooks in the living room, elders view quiet reading as <em>"sitting idle."</em> Refusing domestic requests to prepare for Continuous Assessment tests is often interpreted as arrogance or lack of home training.<br />
-3. <strong>Loss of Late-Night Study Freedom:</strong> Household noise, television sets, screaming toddlers, and early curfew lights-out rules destroy the deep concentration required for rigorous university analysis.</p>
+<p>In a relative's house, you are not a paying tenant; you are a junior family dependent:</p>
+<ol>
+<li>**The Endless Errands Loop:** You are returning from an exhausting 4-hour biochemistry practical when you are dispatched to the local market to buy soup ingredients, wash the family car, or pick up younger cousins from primary school.</li>
+<li>**The Domestic Guilt Trap:** When you sit down with your textbooks in the living room, elders view quiet reading as *"sitting idle."* Refusing domestic requests to prepare for Continuous Assessment tests is often interpreted as arrogance or lack of home training.</li>
+<li>**Loss of Late-Night Study Freedom:** Household noise, television sets, screaming toddlers, and early curfew lights-out rules destroy the deep concentration required for rigorous university analysis.</li>
+</ol>
 <p>For final-year scholars whose degree classification hangs on single-room focus, read <a href="/blog/hostel-and-accommodation/final-year-single-room-accommodation/">final year students securing single room productivity</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-commuting-drain-living-in-town-vs-living-on-campus">2. The Commuting Drain: Living in Town vs Living on Campus</h2>
 <p>Relatives rarely live adjacent to the university campus gate. They live in residential suburban estates across town:</p>
 <ul>
-<li><strong>The Transit Cash Burn:</strong> Daily buses, tricycles, and bikes across town often consume ₦1,500 to ₦2,500 daily. Over a 9-month academic session, you can easily spend ₦250,000 strictly on city transport—money that could have covered a substantial portion of campus hostel rent.</li>
-<li><strong>The Traffic Nightmare:</strong> Morning rush-hour traffic jams in cities like Lagos, Ibadan, or Port Harcourt mean spending 90 minutes each way in transit, draining your physical energy before lectures even commence.</li>
+<li>**The Transit Cash Burn:** Daily buses, tricycles, and bikes across town often consume ₦1,500 to ₦2,500 daily. Over a 9-month academic session, you can easily spend ₦250,000 strictly on city transport—money that could have covered a substantial portion of campus hostel rent.</li>
+<li>**The Traffic Nightmare:** Morning rush-hour traffic jams in cities like Lagos, Ibadan, or Port Harcourt mean spending 90 minutes each way in transit, draining your physical energy before lectures even commence.</li>
 </ul>
 <p>Compare the total economic equations in <a href="/blog/hostel-and-accommodation/school-hostel-vs-off-campus-lodge-cost/">school hostel vs off-campus lodge real cost breakdown</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-golden-strategy-the-campus-as-workplace-routine">3. The Golden Strategy: The "Campus as Workplace" Routine</h2>
 <p>If financial necessity leaves you no choice but to stay with relatives, you can protect your academic performance by executing the <strong>8-to-6 Campus Quarantine</strong>:</p>
 <ol>
-<li><strong>Leave Early, Return Late:</strong> Depart the relative's house at 6:45 AM after completing your agreed morning chores. Pack your lunch and water bottle.</li>
-<li><strong>Never Return Home Between Lectures:</strong> Treat the university campus as your full-time job. Between lecture slots, study exclusively in the university central library or quiet departmental reading halls.</li>
-<li><strong>Clear Parental Communication:</strong> Have your parents speak directly with your host before resumption to clarify that semester examination months require full academic exemption from non-essential domestic duties.</li>
+<li>**Leave Early, Return Late:** Depart the relative's house at 6:45 AM after completing your agreed morning chores. Pack your lunch and water bottle.</li>
+<li>**Never Return Home Between Lectures:** Treat the university campus as your full-time job. Between lecture slots, study exclusively in the university central library or quiet departmental reading halls.</li>
+<li>**Clear Parental Communication:** Have your parents speak directly with your host before resumption to clarify that semester examination months require full academic exemption from non-essential domestic duties.</li>
 </ol>
 <p>If family financial demands or poverty guilt trigger constant emotional strain, explore our mental health frameworks in <a href="/blog/mental-health/">navigating family financial pressure and study anxiety</a>.</p>
-<hr />
+<hr>
 <blockquote>
-<h3 id="join-the-student-accommodation-campus-support-network">🏠 Join the Student Accommodation &amp; Campus Support Network</h3>
+<p>### 🏠 Join the Student Accommodation & Campus Support Network</p>
 <p>Navigating student living arrangements on a tight budget?</p>
-<p>Join our <strong>Free Academic Comeback WhatsApp Community</strong>. Connect with students from your campus, share practical housing hacks, and find supportive study circles.</p>
-<p>👉 <strong><a href="https://chat.whatsapp.com/invite/academic-pack-community">Join the Student WhatsApp Community Now</a></strong></p>
+<p>></p>
+<p>Join our **Free Academic Comeback WhatsApp Community**. Connect with students from your campus, share practical housing hacks, and find supportive study circles.</p>
+<p>></p>
+<p>👉 **[Join the Student WhatsApp Community Now](https://chat.whatsapp.com/invite/academic-pack-community)**</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="is-living-with-relatives-during-university-truly-free">Is living with relatives during university truly free?</h3>
 <p>No. While you save direct accommodation rent, you pay heavily in non-monetary currency: domestic servitude (running family errands, cooking, babysitting), loss of study autonomy, and daily transit expenses.</p>
-<h3 id="how-can-students-set-study-boundaries-when-living-in-a-relatives-house">How can students set study boundaries when living in a relative's house?</h3>
+<h3 id="how-can-students-set-study-boundaries-when-living-in-a-relative-s-house">How can students set study boundaries when living in a relative's house?</h3>
 <p>Establish explicit schedules before moving in. Have your parents communicate your academic requirements clearly, commit to specific morning chores, and spend 8:00 AM to 5:00 PM continuously on campus libraries before returning home.</p>
 <h3 id="when-is-living-with-relatives-most-damaging-to-academic-performance">When is living with relatives most damaging to academic performance?</h3>
 <p>During final-year research project execution and examination weeks, when family domestic demands and noisy household environments collide with intense 10-hour revision cycles.</p>
@@ -518,8 +522,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -703,8 +707,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -718,7 +722,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

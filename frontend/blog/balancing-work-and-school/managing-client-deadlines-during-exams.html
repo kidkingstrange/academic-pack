@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Negotiating Flexible Client Deadlines During Exam Month",
       "description": "How to protect your GP and professional reputation by proactively communicating with remote and local clients before university exams begin.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -264,93 +264,72 @@
 
       <!-- Article Body -->
       <div class="article-body">
-        <p>It is 11:30 PM on a Sunday night. </p>
+        <p>It is 11:30 PM on a Sunday night.</p>
 <p>Your first semester examinations begin in exactly six days. You have three carryover-risk departmental courses lined up in the first 72 hours of the timetable.</p>
 <p>Your laptop chimes. A Slack notification pops up from your primary remote marketing client:</p>
 <p><em>"Hey, we're launching the Q3 campaign early. Can you deliver the 5 landing page copies and 12 email sequences by Wednesday morning?"</em></p>
 <p>Your heart drops into your stomach. Wednesday morning is when you are scheduled to sit for an intensive 3-hour physical examination in Faculty Hall B.</p>
 <p>If you ghost the client, you risk losing a monthly income that pays your hostel rent, food allowances, and sibling support. But if you spend the next 48 hours drafting copy, you risk walking into your exam hall sleep-deprived and flunking the semester.</p>
 <p>This high-stakes friction is the daily reality of the working Nigerian undergraduate. Here is the proven operational blueprint for negotiating client deadlines during exam month without losing contracts or sacrificing your Cumulative Grade Point Average.</p>
-<hr />
+<hr>
 <h2 id="the-golden-rule-proactive-buffering-vs-reactive-apologies">The Golden Rule: Proactive Buffering vs. Reactive Apologies</h2>
-<p>The single greatest mistake student freelancers make is waiting until the night before a deadline to announce an exam emergency. </p>
+<p>The single greatest mistake student freelancers make is waiting until the night before a deadline to announce an exam emergency.</p>
 <p>When you message a client twelve hours before a deliverable saying:</p>
 <blockquote>
-<p><em>"Sorry sir, NEPA took light and our lecturer suddenly scheduled an exam tomorrow morning,"</em></p>
+<p>*"Sorry sir, NEPA took light and our lecturer suddenly scheduled an exam tomorrow morning,"*</p>
 </blockquote>
 <p>The client does not hear an honest student—they hear an unprofessional operator making excuses.</p>
 <blockquote>
-<h3 id="the-deadline-notification-timeline">The Deadline Notification Timeline</h3>
-<ul>
-<li>T - 21 Days: Audit timetable &amp; identify exam black-out clusters T - 14 Days: Send advance schedule notice &amp; offer front-loaded delivery T - 7 Days: Lock in all retainer buffer assets; freeze new client intake T - 0 Days: Active auto-responders enabled; 100% mental presence in exam hall</li>
-</ul>
+<p>### The Deadline Notification Timeline</p>
+<p>></p>
+<p>* T - 21 Days: Audit timetable & identify exam black-out clusters T - 14 Days: Send advance schedule notice & offer front-loaded delivery T - 7 Days: Lock in all retainer buffer assets; freeze new client intake T - 0 Days: Active auto-responders enabled; 100% mental presence in exam hall</p>
 </blockquote>
 <p>By communicating 14 days in advance, you transform a potential crisis into a demonstration of high-tier project management.</p>
-<hr />
+<hr>
 <h2 id="framework-categorizing-your-clients-before-exam-month">Framework: Categorizing Your Clients Before Exam Month</h2>
 <p>Not all clients should be treated identically during exam periods. Audit your client roster using this operational matrix:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Client Tier</th>
-<th style="text-align: left;">Revenue Contribution</th>
-<th style="text-align: left;">Communication Channel</th>
-<th style="text-align: left;">Exam Month Strategy</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Tier 1: High-Value Retainers</strong></td>
-<td style="text-align: left;">60% - 80% of monthly income</td>
-<td style="text-align: left;">Slack / Email / Asana</td>
-<td style="text-align: left;">Front-load deliverables 10 days early; hire a peer reviewer for emergency coverage.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Tier 2: One-Off Project Gigs</strong></td>
-<td style="text-align: left;">Project-based milestones</td>
-<td style="text-align: left;">WhatsApp / Upwork / Fiverr</td>
-<td style="text-align: left;">Set project milestones to deliver before exam week or pause delivery until exams end.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Tier 3: Low-Ticket Ad-Hoc Clients</strong></td>
-<td style="text-align: left;">Minor unpredictable sums</td>
-<td style="text-align: left;">WhatsApp DMs</td>
-<td style="text-align: left;">Freeze onboarding; inform them of a temporary booking hiatus until examination completion.</td>
-</tr>
-</tbody>
-</table>
+<p>| Client Tier | Revenue Contribution | Communication Channel | Exam Month Strategy |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Tier 1: High-Value Retainers</strong> | 60% - 80% of monthly income | Slack / Email / Asana | Front-load deliverables 10 days early; hire a peer reviewer for emergency coverage. |</p>
+<p>| <strong>Tier 2: One-Off Project Gigs</strong> | Project-based milestones | WhatsApp / Upwork / Fiverr | Set project milestones to deliver before exam week or pause delivery until exams end. |</p>
+<p>| <strong>Tier 3: Low-Ticket Ad-Hoc Clients</strong> | Minor unpredictable sums | WhatsApp DMs | Freeze onboarding; inform them of a temporary booking hiatus until examination completion. |</p>
 <p>If you need a systematic method to organize your revision weeks alongside heavy deadlines, read our guide on <a href="/blog/balancing-work-and-school/time-blocking-for-working-students/">time-blocking schedules for working undergraduates</a>.</p>
-<hr />
+<hr>
 <h2 id="3-copy-and-paste-client-notification-scripts">3 Copy-and-Paste Client Notification Scripts</h2>
 <p>Depending on whether your client is a foreign enterprise or a local Nigerian business owner, choose the appropriate script:</p>
-<h3 id="script-1-for-foreign-remote-clients-enterprise-tone">Script 1: For Foreign &amp; Remote Clients (Enterprise Tone)</h3>
+<h3 id="script-1-for-foreign-remote-clients-enterprise-tone">Script 1: For Foreign & Remote Clients (Enterprise Tone)</h3>
 <blockquote>
-<p><strong>Subject:</strong> Scheduled Operational Downtime &amp; Project Buffer Notice — [Your Name]</p>
-<p><em>"Hi [Client Name],</em></p>
-<p><em>I am writing to share my scheduled operational calendar for the upcoming month. Between [Start Date] and [End Date], I have scheduled mandatory institutional training and compliance examinations.</em></p>
-<p><em>To ensure zero interruption to your project workflow, I have scheduled our key deliverables to be completed and handed over by [Buffer Date—5 days before exams]. For any real-time emergency maintenance during that window, my associate [Name] will be monitoring our channel.</em></p>
-<p><em>Please let me know if there are any additional assets you need front-loaded before [Buffer Date]."</em></p>
+<p>**Subject:** Scheduled Operational Downtime & Project Buffer Notice — [Your Name]</p>
+<p>></p>
+<p>*"Hi [Client Name],*</p>
+<p>></p>
+<p>*I am writing to share my scheduled operational calendar for the upcoming month. Between [Start Date] and [End Date], I have scheduled mandatory institutional training and compliance examinations.*</p>
+<p>></p>
+<p>*To ensure zero interruption to your project workflow, I have scheduled our key deliverables to be completed and handed over by [Buffer Date—5 days before exams]. For any real-time emergency maintenance during that window, my associate [Name] will be monitoring our channel.*</p>
+<p>></p>
+<p>*Please let me know if there are any additional assets you need front-loaded before [Buffer Date]."*</p>
 </blockquote>
-<h3 id="script-2-for-local-nigerian-clients-direct-professional">Script 2: For Local Nigerian Clients (Direct &amp; Professional)</h3>
+<h3 id="script-2-for-local-nigerian-clients-direct-professional">Script 2: For Local Nigerian Clients (Direct & Professional)</h3>
 <blockquote>
-<p><em>"Good morning [Client Name]. Our semester examination timetable has just been officially posted, spanning from [Date] to [Date].</em></p>
-<p><em>Because I prioritize delivering top-tier work for your brand, I want to ensure your deliverables are fully completed before my exam block starts. I will be sending this week's batch on Thursday evening so you can review ahead of time. Thank you for your continued partnership!"</em></p>
+<p>*"Good morning [Client Name]. Our semester examination timetable has just been officially posted, spanning from [Date] to [Date].*</p>
+<p>></p>
+<p>*Because I prioritize delivering top-tier work for your brand, I want to ensure your deliverables are fully completed before my exam block starts. I will be sending this week's batch on Thursday evening so you can review ahead of time. Thank you for your continued partnership!"*</p>
 </blockquote>
 <h3 id="script-3-when-an-emergency-revision-clashes-with-an-exam">Script 3: When an Emergency Revision Clashes with an Exam</h3>
 <blockquote>
-<p><em>"Hi [Client Name], I have received your feedback notes and reviewed the required revisions. I am currently attending a scheduled mandatory institutional session until 3:00 PM today. I have already queued these adjustments as my top priority for 5:30 PM this evening and will deliver the finalized files to your inbox before 9:00 PM tonight."</em></p>
+<p>*"Hi [Client Name], I have received your feedback notes and reviewed the required revisions. I am currently attending a scheduled mandatory institutional session until 3:00 PM today. I have already queued these adjustments as my top priority for 5:30 PM this evening and will deliver the finalized files to your inbox before 9:00 PM tonight."*</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="the-subcontractor-protocol-hiring-a-classmate-backup">The Subcontractor Protocol: Hiring a Classmate Backup</h2>
 <p>If you run high-volume services like graphic design, customer support, or content writing, you cannot afford to leave client channels completely dark for three weeks.</p>
 <p>Identify a responsible 300L or 400L classmate in your department or tech community. Train them on your workflow during the middle of the semester:</p>
 <ol>
-<li><strong>Create SOPs (Standard Operating Procedures):</strong> Record a 5-minute Loom video or write a bulletproof checklist of how you complete tasks.</li>
-<li><strong>Offer a 50/50 or 60/40 Split:</strong> Pay your peer 50% to 60% of the project fee for executing the rough draft, while you spend 15 minutes doing quality assurance before sending to the client.</li>
-<li><strong>Retain Client Ownership:</strong> The client communicates only with you; your brand standards remain intact while your study hours are protected.</li>
+<li>**Create SOPs (Standard Operating Procedures):** Record a 5-minute Loom video or write a bulletproof checklist of how you complete tasks.</li>
+<li>**Offer a 50/50 or 60/40 Split:** Pay your peer 50% to 60% of the project fee for executing the rough draft, while you spend 15 minutes doing quality assurance before sending to the client.</li>
+<li>**Retain Client Ownership:** The client communicates only with you; your brand standards remain intact while your study hours are protected.</li>
 </ol>
 <p>To prevent mental exhaustion when juggling client revisions with intense revision sessions, check out our breakdown on <a href="/blog/balancing-work-and-school/mental-context-switching-work-study/">managing cognitive switching fatigue between work and school</a>.</p>
-<hr />
+<hr>
 <h2 id="action-checklist-pre-exam-client-defense-protocol">Action Checklist: Pre-Exam Client Defense Protocol</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Print out your official semester exam timetable and highlight high-risk exam papers.</li>
@@ -361,12 +340,14 @@
 <li class="task-list-item"><span class="task-checkbox"></span>Identify a trusted peer subcontractor for emergency revision handoffs.</li>
 <li class="task-list-item"><span class="task-checkbox"></span>Build a 24-hour buffer into every post-exam delivery estimate.</li>
 </ul>
-<hr />
+<hr>
 <h2 id="when-a-client-threatens-to-cancel-over-exam-delays">When a Client Threatens to Cancel Over Exam Delays</h2>
 <p>Occasionally, an unreasonable client will insist that your academic exams do not matter and demand immediate delivery.</p>
-<p>Keep your perspective grounded:<br />
-* <strong>A semester carryover costs you an entire year</strong>, thousands of Naira in extra school fees, hostel rent, and transcript damage.<br />
-* <strong>A client can be replaced in 30 days</strong> once your mental bandwidth is restored.</p>
+<p>Keep your perspective grounded:</p>
+<ul>
+<li>**A semester carryover costs you an entire year**, thousands of Naira in extra school fees, hostel rent, and transcript damage.</li>
+<li>**A client can be replaced in 30 days** once your mental bandwidth is restored.</li>
+</ul>
 <p>Never sacrifice an irreversible 3-unit departmental core course for a client who views you as disposable. Deliver with excellence, communicate with advance maturity, and keep your degree safe.</p>
       </div>
 
@@ -532,8 +513,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -717,8 +698,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -732,7 +713,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

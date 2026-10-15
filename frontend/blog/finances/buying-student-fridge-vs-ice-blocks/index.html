@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -308,82 +308,58 @@
       <div class="article-body">
         <h1 id="shared-fridge-with-roommate-vs-buying-ice-blocks-daily">Shared Fridge with Roommate vs Buying Ice Blocks Daily</h1>
 <p>You cook a fresh, rich pot of egusi soup with fish and meat on Sunday.</p>
-<p>By Tuesday afternoon, the temperature in your student room reaches 34°C. </p>
+<p>By Tuesday afternoon, the temperature in your student room reaches 34°C.</p>
 <p>Without cooling, your soup will sour and curdle within twenty-four hours.</p>
 <p>You face a classic hosteller decision:</p>
 <p><strong>Option A:</strong> Walk to the kiosk down the street, pay <strong>₦300 for a solid commercial ice block</strong>, drop it inside a styrofoam cooler box, and keep your soup chilled for twenty-four hours.</p>
 <p><strong>Option B:</strong> Team up with your roommate, pool funds, and buy a <strong>Secondhand Mini-Refrigerator</strong> for the room.</p>
-<p>Option A requires zero upfront capital, but bleeds cash every single day. </p>
+<p>Option A requires zero upfront capital, but bleeds cash every single day.</p>
 <p>Option B requires an upfront financial sprint, but transforms your food preservation, batch cooking, and quality of life.</p>
 <p>Here is the financial and operational comparison of <strong>Co-Buying a Fridge vs. Daily Ice Blocks</strong>.</p>
-<hr />
+<hr>
 <h2 id="1-the-financial-comparison-matrix">1. The Financial Comparison Matrix</h2>
 <blockquote>
-<h3 id="the-ice-block-expense-spiral">The Ice Block Expense Spiral</h3>
-<ul>
-<li>Cost per Ice Block: ₦300</li>
-<li>15 Ice Blocks Monthly: ₦4,500</li>
-<li>2-Semester Session (8 Months): ₦36,000 (Pure consumed expense; zero resale equity!)</li>
-<li><strong>THE SHARED MINI-FRIDGE ASSET</strong></li>
-<li>Secondhand Bedside Refrigerator: ₦55,000</li>
-<li>Split between 2 Roommates = ₦27,500 each</li>
-<li>Monthly Electricity Prepaid Token Share: ~₦1,500/month</li>
-<li>Resale Value after 2 Years: ~₦40,000 (You recover ₦20,000 cash!)</li>
-</ul>
+<p>### The Ice Block Expense Spiral</p>
+<p>></p>
+<p>* Cost per Ice Block: ₦300</p>
+<p>* 15 Ice Blocks Monthly: ₦4,500</p>
+<p>* 2-Semester Session (8 Months): ₦36,000 (Pure consumed expense; zero resale equity!)</p>
+<p>* **THE SHARED MINI-FRIDGE ASSET**</p>
+<p>* Secondhand Bedside Refrigerator: ₦55,000</p>
+<p>* Split between 2 Roommates = ₦27,500 each</p>
+<p>* Monthly Electricity Prepaid Token Share: ~₦1,500/month</p>
+<p>* Resale Value after 2 Years: ~₦40,000 (You recover ₦20,000 cash!)</p>
 </blockquote>
-<p>Buying ice blocks is a financial drain: over an academic session, you burn <strong>₦36,000 in frozen water</strong> that melts away into the drain. </p>
+<p>Buying ice blocks is a financial drain: over an academic session, you burn <strong>₦36,000 in frozen water</strong> that melts away into the drain.</p>
 <p>A shared mini-fridge preserves your capital as a tangible physical asset that can be liquidated upon graduation.</p>
 <p>Review batch cooking workflows in <a href="/blog/finances/batch-cooking-food-saving-campus/">batch cooking strategy: slashing weekly feeding expenses</a>.</p>
-<hr />
-<h2 id="2-the-operational-preservation-realities">2. The Operational &amp; Preservation Realities</h2>
-<table>
-<thead>
-<tr>
-<th>Practical Feature</th>
-<th>The Ice Block Cooler Box</th>
-<th>The Shared Mini-Fridge</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Temperature Consistency</strong></td>
-<td>Drops rapidly as ice melts; watery mess in cooler</td>
-<td>Constant deep chill whenever electricity runs</td>
-</tr>
-<tr>
-<td><strong>Food Storage Capacity</strong></td>
-<td>Restricted to 2 small bowls submerged in water</td>
-<td>Stores 6-8 meal containers, milk, eggs, drinks</td>
-</tr>
-<tr>
-<td><strong>Effort &amp; Friction</strong></td>
-<td>Walking to kiosk every evening in rain or heat</td>
-<td>Effortless in-room cold storage</td>
-</tr>
-<tr>
-<td><strong>Dependency Risk</strong></td>
-<td>Kiosk runs out of ice during campus blackouts</td>
-<td>Thick freezer compartment retains frost for 18 hours</td>
-</tr>
-</tbody>
-</table>
+<hr>
+<h2 id="2-the-operational-preservation-realities">2. The Operational & Preservation Realities</h2>
+<p>| Practical Feature | The Ice Block Cooler Box | The Shared Mini-Fridge |</p>
+<p>|---|---|---|</p>
+<p>| <strong>Temperature Consistency</strong> | Drops rapidly as ice melts; watery mess in cooler | Constant deep chill whenever electricity runs |</p>
+<p>| <strong>Food Storage Capacity</strong> | Restricted to 2 small bowls submerged in water | Stores 6-8 meal containers, milk, eggs, drinks |</p>
+<p>| <strong>Effort & Friction</strong> | Walking to kiosk every evening in rain or heat | Effortless in-room cold storage |</p>
+<p>| <strong>Dependency Risk</strong> | Kiosk runs out of ice during campus blackouts | Thick freezer compartment retains frost for 18 hours |</p>
 <p>Review single-student kitchen economics in <a href="/blog/finances/single-student-cooking-without-waste/">cooking for one in lodges: slashing food waste and expenses</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-roommate-partnership-exit-agreement">3. The Roommate Partnership Exit Agreement</h2>
 <p>The primary hurdle to co-buying a fridge is the exit strategy: <em>"What happens when we graduate or change rooms?"</em></p>
 <p>Establish a written <strong>Appliance Exit Agreement</strong> before purchase:</p>
 <ol>
-<li><strong>The Buyout Option:</strong> When one roommate relocates, the staying roommate has first right of refusal to buy out the departing roommate's 50% share at a depreciated valuation (e.g., ₦20,000).</li>
-<li><strong>The Open Market Liquidation:</strong> If neither roommate wants the fridge, it is listed on hostel WhatsApp market groups two weeks before final exams. The sale proceeds are transferred 50/50 immediately.</li>
+<li>**The Buyout Option:** When one roommate relocates, the staying roommate has first right of refusal to buy out the departing roommate's 50% share at a depreciated valuation (e.g., ₦20,000).</li>
+<li>**The Open Market Liquidation:** If neither roommate wants the fridge, it is listed on hostel WhatsApp market groups two weeks before final exams. The sale proceeds are transferred 50/50 immediately.</li>
 </ol>
 <p>Compare cooking versus bukka costs in <a href="/blog/finances/cooking-vs-eating-at-campus-bukka/">cooking every meal vs campus bukka eating: real math</a>.</p>
-<hr />
+<hr>
 <h2 id="4-cold-water-fresh-food-high-gpa">4. Cold Water, Fresh Food, High GPA</h2>
-<p>Having a functional refrigerator in your room is not a luxury; it is a health and financial foundation:<br />
-* You batch-cook nutritious soups without fear of spoilage.<br />
-* You drink clean, cold water during blistering afternoon study sessions.<br />
-* You preserve your food budget and keep your mental energy focused on academic triumph.</p>
-<hr />
+<p>Having a functional refrigerator in your room is not a luxury; it is a health and financial foundation:</p>
+<ul>
+<li>You batch-cook nutritious soups without fear of spoilage.</li>
+<li>You drink clean, cold water during blistering afternoon study sessions.</li>
+<li>You preserve your food budget and keep your mental energy focused on academic triumph.</li>
+</ul>
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-much-does-a-good-secondhand-mini-fridge-cost-for-students-in-nigeria">How much does a good secondhand mini-fridge cost for students in Nigeria?</h3>
 <p>A functional, low-wattage (60W-120W) secondhand bedside mini-refrigerator costs between ₦45,000 and ₦75,000 at regional electronics markets.</p>
@@ -557,8 +533,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -742,8 +718,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -757,7 +733,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

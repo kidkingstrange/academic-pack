@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -113,8 +113,8 @@
       "headline": "Managing High Internet Data Costs for Online Remote Jobs",
       "description": "How Nigerian students working remote digital jobs can slash internet data expenses by 60% using smart routing, night plans, and campus Wi-Fi.",
       "image": "https://academic-pack.onrender.com/assets/images/scale-logo-512.png",
-      "datePublished": "2026-09-29T08:00:00+01:00",
-      "dateModified": "2026-09-29T08:00:00+01:00",
+      "datePublished": "2026-10-15T08:00:00+01:00",
+      "dateModified": "2026-10-15T08:00:00+01:00",
       "author": {
         "@type": "Person",
         "name": "Itoya David",
@@ -143,8 +143,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -164,7 +164,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -186,7 +186,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -269,82 +269,63 @@
 <p>Nothing is more painful than watching your last ₦5,000 disappear because Windows decided to silently download a 4.2GB background update while you were hotspotting your phone for a client call.</p>
 <p>To build a profitable student freelance business, you must manage your data consumption like a disciplined network engineer.</p>
 <p>Here is the operational guide to slashing your monthly data expenses by up to 60% while maintaining rock-solid connectivity for your remote clients.</p>
-<hr />
+<hr>
 <h2 id="the-3-data-killers-eating-your-student-budget">The 3 Data Killers Eating Your Student Budget</h2>
 <p>Before optimizing your spending, identify where your gigabytes are actually disappearing:</p>
 <blockquote>
-<h3 id="where-your-data-is-disappearing">Where Your Data Is Disappearing</h3>
-<ul>
-<li><strong>1.</strong> Background OS Updates: Windows 11 &amp; macOS auto-updates (5GB - 15GB/mo)</li>
-<li><strong>2.</strong> Uncompressed Video Calls: Full HD Zoom/Google Meet video (1.5GB - 2.5GB/hr)</li>
-<li><strong>3.</strong> Cloud Asset Syncing: Google Drive, Dropbox, &amp; OneDrive auto-sync (10GB+/mo)</li>
-</ul>
+<p>### Where Your Data Is Disappearing</p>
+<p>></p>
+<p>* **1.** Background OS Updates: Windows 11 & macOS auto-updates (5GB - 15GB/mo)</p>
+<p>* **2.** Uncompressed Video Calls: Full HD Zoom/Google Meet video (1.5GB - 2.5GB/hr)</p>
+<p>* **3.** Cloud Asset Syncing: Google Drive, Dropbox, & OneDrive auto-sync (10GB+/mo)</p>
 </blockquote>
-<hr />
+<hr>
 <h2 id="4-rules-to-cut-remote-work-data-costs-by-60">4 Rules to Cut Remote Work Data Costs by 60%</h2>
 <h3 id="1-enable-metered-connection-and-deploy-tripmode">1. Enable 'Metered Connection' and Deploy TripMode</h3>
-<p>The moment you connect your Windows laptop to your mobile hotspot:<br />
-* Go to <strong>Settings → Network &amp; Internet → Wi-Fi → [Your Network]</strong>.<br />
-* Toggle <strong>"Set as metered connection"</strong> to <strong>ON</strong>.<br />
-* This immediately forces Windows to stop downloading optional updates, driver packages, and background OneDrive synchronizations.</p>
+<p>The moment you connect your Windows laptop to your mobile hotspot:</p>
+<ul>
+<li>Go to **Settings → Network & Internet → Wi-Fi → [Your Network]**.</li>
+<li>Toggle **"Set as metered connection"** to **ON**.</li>
+<li>This immediately forces Windows to stop downloading optional updates, driver packages, and background OneDrive synchronizations.</li>
+</ul>
 <p>For absolute control, install <strong>TripMode</strong> (or NetLimiter). TripMode acts as a gatekeeper: it blocks all internet traffic across your computer except the specific apps you explicitly allow (e.g., Chrome, Slack, and VS Code).</p>
 <blockquote>
-<h3 id="tripmode-data-consumption-comparison">Tripmode Data Consumption Comparison</h3>
-<ul>
-<li>Standard Hotspot (Background apps unrestricted): 1,200 MB consumed in 2 hours With TripMode Active (Only Slack &amp; Docs permitted): 120 MB consumed in 2 hours</li>
-<li><strong>NET SAVINGS:</strong> 90% Data Conservation!</li>
-</ul>
+<p>### Tripmode Data Consumption Comparison</p>
+<p>></p>
+<p>* Standard Hotspot (Background apps unrestricted): 1,200 MB consumed in 2 hours With TripMode Active (Only Slack & Docs permitted): 120 MB consumed in 2 hours</p>
+<p>* **NET SAVINGS:** 90% Data Conservation!</p>
 </blockquote>
 <h3 id="2-leverage-midnight-data-bundles-for-heavy-downloads">2. Leverage Midnight Data Bundles for Heavy Downloads</h3>
-<p>If you are a video editor downloading 15GB of 4K client b-roll footage, or a software engineer pulling heavy Docker containers:<br />
-* <strong>Never download during daytime peak hours.</strong><br />
-* Purchase telco night bundles (MTN and Airtel offer 2GB to 5GB night allocations at a fraction of standard daytime rates between 11:00 PM and 6:00 AM).<br />
-* Queue all heavy asset downloads using an open-source download manager (like Free Download Manager) to run automatically overnight while you sleep.</p>
+<p>If you are a video editor downloading 15GB of 4K client b-roll footage, or a software engineer pulling heavy Docker containers:</p>
+<ul>
+<li>**Never download during daytime peak hours.**</li>
+<li>Purchase telco night bundles (MTN and Airtel offer 2GB to 5GB night allocations at a fraction of standard daytime rates between 11:00 PM and 6:00 AM).</li>
+<li>Queue all heavy asset downloads using an open-source download manager (like Free Download Manager) to run automatically overnight while you sleep.</li>
+</ul>
 <h3 id="3-audio-first-video-call-protocol">3. Audio-First Video Call Protocol</h3>
 <p>A 60-minute Google Meet or Zoom video call in 1080p consumes between <strong>1.2GB and 2.2GB</strong> of data.</p>
-<p>To protect your balance:<br />
-* Join client calls with your video camera disabled by default.<br />
-* State professionally: <em>"Good morning! I am joining audio-first today to ensure maximum voice clarity and bandwidth stability."</em><br />
-* An audio-only VoIP call consumes less than <strong>75MB per hour</strong>—a 95% reduction in data overhead!</p>
+<p>To protect your balance:</p>
+<ul>
+<li>Join client calls with your video camera disabled by default.</li>
+<li>State professionally: *"Good morning! I am joining audio-first today to ensure maximum voice clarity and bandwidth stability."*</li>
+<li>An audio-only VoIP call consumes less than **75MB per hour**—a 95% reduction in data overhead!</li>
+</ul>
 <p>If you are exploring the best skills to learn that consume minimal hardware and data overhead, see our breakdown of <a href="/blog/balancing-work-and-school/high-income-student-skills-90-days/">5 high-income skills students can learn in 90 days</a>.</p>
 <h3 id="4-tap-campus-ict-center-fiber-optics">4. Tap Campus ICT Center Fiber Optics</h3>
 <p>Most federal and state universities (UNILAG, UI, OAU, UNN, Covenant) maintain dedicated central library or ICT center Wi-Fi networks connected to high-speed terrestrial fiber optics.</p>
-<p>Identify the low-traffic hours:<br />
-* Visit the university library between 8:00 AM and 10:00 AM or on Saturday mornings.<br />
-* Download software updates, client video archives, course lecture recordings, and development dependencies entirely on institutional bandwidth for free.</p>
-<hr />
+<p>Identify the low-traffic hours:</p>
+<ul>
+<li>Visit the university library between 8:00 AM and 10:00 AM or on Saturday mornings.</li>
+<li>Download software updates, client video archives, course lecture recordings, and development dependencies entirely on institutional bandwidth for free.</li>
+</ul>
+<hr>
 <h2 id="cost-comparison-data-optimization-strategies">Cost-Comparison: Data Optimization Strategies</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Strategy</th>
-<th style="text-align: left;">Monthly Data Consumed</th>
-<th style="text-align: left;">Estimated Monthly Cost</th>
-<th style="text-align: left;">Savings</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><strong>Unrestricted Mobile Hotspot</strong></td>
-<td style="text-align: left;">85 GB</td>
-<td style="text-align: left;">₦38,000</td>
-<td style="text-align: left;">0% (Baseline)</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>Metered Connection + Audio Calls</strong></td>
-<td style="text-align: left;">35 GB</td>
-<td style="text-align: left;">₦18,000</td>
-<td style="text-align: left;">52% Saved</td>
-</tr>
-<tr>
-<td style="text-align: left;"><strong>TripMode + Midnight Heavy Batching</strong></td>
-<td style="text-align: left;">22 GB + 40 GB (Night)</td>
-<td style="text-align: left;">₦14,500</td>
-<td style="text-align: left;">62% Saved</td>
-</tr>
-</tbody>
-</table>
-<hr />
+<p>| Strategy | Monthly Data Consumed | Estimated Monthly Cost | Savings |</p>
+<p>| :--- | :--- | :--- | :--- |</p>
+<p>| <strong>Unrestricted Mobile Hotspot</strong> | 85 GB | ₦38,000 | 0% (Baseline) |</p>
+<p>| <strong>Metered Connection + Audio Calls</strong> | 35 GB | ₦18,000 | 52% Saved |</p>
+<p>| <strong>TripMode + Midnight Heavy Batching</strong> | 22 GB + 40 GB (Night) | ₦14,500 | 62% Saved |</p>
+<hr>
 <h2 id="action-checklist-data-cost-elimination">Action Checklist: Data Cost Elimination</h2>
 <ul>
 <li class="task-list-item"><span class="task-checkbox"></span>Turn on 'Set as metered connection' on your primary laptop Wi-Fi profile.</li>
@@ -519,8 +500,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -704,8 +685,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -719,7 +700,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>

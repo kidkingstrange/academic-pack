@@ -35,7 +35,7 @@
     (function() {
       try {
         var saved = localStorage.getItem('academic_blog_theme');
-        var preferred = saved === 'dark' ? 'dark' : 'light';
+        var preferred = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', preferred);
       } catch(e) {}
 
@@ -64,7 +64,7 @@
       };
     })();
   </script>
-  <link rel="stylesheet" href="/css/main.css?v=4">
+  <link rel="stylesheet" href="/css/main.css?v=swiss-20261008">
   <link rel="stylesheet" href="/css/blog.css?v=6">
 
   <!-- Structured Data JSON-LD -->
@@ -180,8 +180,8 @@
   <div class="global-top-bar">
     <div class="global-top-bar__inner">
       <span class="global-top-bar__badge">🌟 FLAGSHIP SYSTEM</span>
-      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦2,000</strong>).</span>
-      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦2,000 &rarr;</a>
+      <span><strong>The Academic Comeback Package™:</strong> Complete 7-in-1 study, memory &amp; CGPA turnaround system for Nigerian students is live (<strong>₦5,000</strong>).</span>
+      <a href="/academic-comeback-package" class="global-top-bar__cta">Claim For ₦5,000 &rarr;</a>
     </div>
   </div>
 
@@ -201,7 +201,7 @@
           <i class="bi bi-mortarboard-fill"></i> Academic Comeback (Flagship)
         </a>
         <a href="/#masterclasses" class="global-nav__link">30 Masterclasses</a>
-        <a href="/blog/" class="global-nav__link" style="color: #fff;">201+ Free Guides</a>
+        <a href="/blog/" class="global-nav__link active">201+ Free Guides</a>
         <a href="/library" class="global-nav__link">My Library</a>
         <a href="/?support=true" class="global-nav__link">Support</a>
         <button type="button" class="theme-toggle" onclick="toggleGlobalTheme(event)" aria-label="Toggle light or dark theme" title="Toggle theme">
@@ -223,7 +223,7 @@
           <span class="theme-toggle__text">Theme</span>
         </button>
         <a href="/academic-comeback-package" class="global-nav__mobile-flagship">
-          <i class="bi bi-mortarboard-fill"></i> Flagship (₦2,000)
+          <i class="bi bi-mortarboard-fill"></i> Flagship (₦5,000)
         </a>
         <button class="global-nav__toggle" onclick="openGlobalDrawer()" aria-label="Open Navigation Menu">
           <i class="bi bi-list"></i>
@@ -310,94 +310,72 @@
 <p>It is 5:30 PM on a Tuesday.</p>
 <p>You just walked two kilometers back to your hostel after five exhausting hours of biochemistry or commercial law lectures.</p>
 <p>Your head throbs. Your feet ache. Your stomach is rumbling loudly.</p>
-<p>Now, you face the daily student cooking ordeal:<br />
-* Light your kerosene stove or small gas burner.<br />
-* Slice onions on a textbook cover.<br />
-* Boil water, wait, wash pots, and cook a single plate of rice or noodles from scratch.</p>
-<p>By the time you finish cooking, eating, and washing greasy dishes, it is <strong>8:15 PM</strong>. </p>
+<p>Now, you face the daily student cooking ordeal:</p>
+<ul>
+<li>Light your kerosene stove or small gas burner.</li>
+<li>Slice onions on a textbook cover.</li>
+<li>Boil water, wait, wash pots, and cook a single plate of rice or noodles from scratch.</li>
+</ul>
+<p>By the time you finish cooking, eating, and washing greasy dishes, it is <strong>8:15 PM</strong>.</p>
 <p>You are completely exhausted. You lie down on your mattress <em>"just to rest your eyes for ten minutes"</em>—and wake up at 5:30 AM the next morning, having done zero reading.</p>
 <p>Every single week, Nigerian undergraduates waste <strong>10 to 15 hours of prime cognitive energy</strong> cooking individual micro-meals.</p>
 <p>The solution is the single most potent productivity and financial hack in university life: <strong>The Strategic Batch Cooking Protocol</strong>.</p>
 <p>Here is how to cook once a week, slash your feeding costs by over 50%, and free up twelve hours of study time.</p>
-<hr />
+<hr>
 <h2 id="1-the-mathematics-of-batch-cooking-vs-daily-micro-cooking">1. The Mathematics of Batch Cooking vs. Daily Micro-Cooking</h2>
 <blockquote>
-<h3 id="daily-micro-cooking-individual-meals">Daily Micro-Cooking (Individual Meals)</h3>
-<ul>
-<li>Gas consumed: 7 days × 45 mins cooking = 5.25 hours of gas burn</li>
-<li>Time lost: 7 days × 1.5 hours prep/cleanup = 10.5 hours lost weekly</li>
-<li>Cost per plate: High (buying individual sachets of oil, tomato paste, onions)</li>
-<li><strong>WEEKLY BATCH COOKING (Sunday 2-Hour Sprint)</strong></li>
-<li>Gas consumed: 1 single 90-minute concentrated burn (Saves 70% gas)</li>
-<li>Time lost: Exactly 2 hours on Sunday afternoon (Frees 8.5 hours for study)</li>
-<li>Cost per plate: Low (Bulk wholesale market ingredients)</li>
-</ul>
+<p>### Daily Micro-Cooking (Individual Meals)</p>
+<p>></p>
+<p>* Gas consumed: 7 days × 45 mins cooking = 5.25 hours of gas burn</p>
+<p>* Time lost: 7 days × 1.5 hours prep/cleanup = 10.5 hours lost weekly</p>
+<p>* Cost per plate: High (buying individual sachets of oil, tomato paste, onions)</p>
+<p>* **WEEKLY BATCH COOKING (Sunday 2-Hour Sprint)**</p>
+<p>* Gas consumed: 1 single 90-minute concentrated burn (Saves 70% gas)</p>
+<p>* Time lost: Exactly 2 hours on Sunday afternoon (Frees 8.5 hours for study)</p>
+<p>* Cost per plate: Low (Bulk wholesale market ingredients)</p>
 </blockquote>
 <p>Review essential hostel gas safety precautions in <a href="/blog/hostel/gas-cooker-safety-rules-student-hostel/">gas cooker safety rules for student hostels: preventing explosions</a>.</p>
-<hr />
+<hr>
 <h2 id="2-the-power-outage-preservation-problem-how-to-keep-food-without-light">2. The Power-Outage Preservation Problem: How to Keep Food Without Light</h2>
 <p>The biggest hesitation students have about batch cooking is: <em>"What if NEPA takes light for five days and my soup spoils?"</em></p>
-<p>In Nigerian university hostels where power outages are legendary, you do not rely on refrigerators; you use <strong>Thermal &amp; Chemical Preservation Techniques</strong>:</p>
-<table>
-<thead>
-<tr>
-<th>Preservation Method</th>
-<th>Execution Protocol</th>
-<th>Storage Lifespan Without Light</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>The 24-Hour Re-boil</strong></td>
-<td>Bring the entire pot of soup to a rolling boil for 3 minutes every morning. Never put a wet spoon inside after boiling</td>
-<td>4 to 6 days at ambient room temperature</td>
-</tr>
-<tr>
-<td><strong>The Concentrated Stew Base</strong></td>
-<td>Fry tomato-pepper blend in high-grade vegetable oil until moisture evaporates completely</td>
-<td>7 to 10 days without refrigeration</td>
-</tr>
-<tr>
-<td><strong>High-Oil Palm Stews (Banga / Egusi)</strong></td>
-<td>Cook thick egusi with palm oil barrier layer; oil prevents atmospheric bacterial access</td>
-<td>4 to 5 days without power</td>
-</tr>
-<tr>
-<td><strong>Dry Smoked Fish &amp; Dried Meats</strong></td>
-<td>Thoroughly dry proteins before adding to soups; avoid soft fresh fish that degrades rapidly</td>
-<td>Resists spoilage indefinitely</td>
-</tr>
-</tbody>
-</table>
+<p>In Nigerian university hostels where power outages are legendary, you do not rely on refrigerators; you use <strong>Thermal & Chemical Preservation Techniques</strong>:</p>
+<p>| Preservation Method | Execution Protocol | Storage Lifespan Without Light |</p>
+<p>|---|---|---|</p>
+<p>| <strong>The 24-Hour Re-boil</strong> | Bring the entire pot of soup to a rolling boil for 3 minutes every morning. Never put a wet spoon inside after boiling | 4 to 6 days at ambient room temperature |</p>
+<p>| <strong>The Concentrated Stew Base</strong> | Fry tomato-pepper blend in high-grade vegetable oil until moisture evaporates completely | 7 to 10 days without refrigeration |</p>
+<p>| <strong>High-Oil Palm Stews (Banga / Egusi)</strong> | Cook thick egusi with palm oil barrier layer; oil prevents atmospheric bacterial access | 4 to 5 days without power |</p>
+<p>| <strong>Dry Smoked Fish & Dried Meats</strong> | Thoroughly dry proteins before adding to soups; avoid soft fresh fish that degrades rapidly | Resists spoilage indefinitely |</p>
 <p>Learn how to pool food purchases with roommates in <a href="/blog/finances/">bulk food buying groups with roommates: saving feeding costs</a>.</p>
-<hr />
+<hr>
 <h2 id="3-the-3-master-student-batch-recipes">3. The 3 Master Student Batch Recipes</h2>
 <h3 id="recipe-1-the-multi-purpose-red-pepper-base">Recipe 1: The Multi-Purpose Red Pepper Base</h3>
 <ul>
 <li>Blend large quantities of red bell peppers (tatase), scotch bonnets (rodo), and onions.</li>
 <li>Fry heavily in vegetable oil with seasoning cubes, curry, and dried fish flakes until oil floats on top.</li>
-<li><strong>Usage:</strong> Spoon out 3 tablespoons over boiled white rice, boiled yam, pasta, or fried eggs in under 90 seconds.</li>
+<li>**Usage:** Spoon out 3 tablespoons over boiled white rice, boiled yam, pasta, or fried eggs in under 90 seconds.</li>
 </ul>
 <h3 id="recipe-2-the-high-protein-iron-beans-base">Recipe 2: The High-Protein Iron Beans Base</h3>
 <ul>
 <li>Cook a large pot of honey beans (oloyin) with onions and salt on Sunday until soft.</li>
 <li>Store concentrated in two containers.</li>
-<li><strong>Usage:</strong> Reheat with palm oil, garri, or fried plantains throughout the week for sustained pre-exam glucose stability without afternoon crashes.</li>
+<li>**Usage:** Reheat with palm oil, garri, or fried plantains throughout the week for sustained pre-exam glucose stability without afternoon crashes.</li>
 </ul>
 <h3 id="recipe-3-thick-vegetable-egusi-soup">Recipe 3: Thick Vegetable / Egusi Soup</h3>
 <ul>
 <li>Cook a dense, nutrient-heavy pot of egusi soup packed with ugu (pumpkin leaves) and boiled eggs.</li>
-<li><strong>Usage:</strong> Pairs instantly with swallow (wheat, semovita, or yellow garri) after long evening lectures.</li>
+<li>**Usage:** Pairs instantly with swallow (wheat, semovita, or yellow garri) after long evening lectures.</li>
 </ul>
 <p>Explore upcoming student meal planning strategies in <a href="/blog/finances/">cheap nutritious campus meal plans and food budget strategies</a>.</p>
-<hr />
+<hr>
 <h2 id="4-reclaiming-your-semester-time">4. Reclaiming Your Semester Time</h2>
-<p>Time is the ultimate currency of the university scholar:<br />
-* When you walk back to your hostel at 6:00 PM, you heat a bowl of pre-made stew in three minutes.<br />
-* You finish your nutritious dinner by 6:20 PM.<br />
-* By 6:30 PM, your belly is full, your energy is steady, and you have three full hours of uninterrupted focus to master your coursework before bedtime.</p>
+<p>Time is the ultimate currency of the university scholar:</p>
+<ul>
+<li>When you walk back to your hostel at 6:00 PM, you heat a bowl of pre-made stew in three minutes.</li>
+<li>You finish your nutritious dinner by 6:20 PM.</li>
+<li>By 6:30 PM, your belly is full, your energy is steady, and you have three full hours of uninterrupted focus to master your coursework before bedtime.</li>
+</ul>
 <p>Batch cooking is not just domestic management; it is a high-leverage academic strategy that puts you leagues ahead of your peers.</p>
-<hr />
+<hr>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="how-can-a-student-batch-cook-without-a-stable-freezer-or-constant-electricity-in-the-hostel">How can a student batch cook without a stable freezer or constant electricity in the hostel?</h3>
 <p>Cook low-moisture, concentrated bases (like heavily fried pepper stew or thick egusi soup with palm oil preservative layers). Re-heat to boiling point once every 24 to 36 hours to kill bacterial growth without refrigeration.</p>
@@ -571,8 +549,8 @@
           <span class="sidebar-cta-card__badge">Top Recommendation</span>
           <h4 class="sidebar-cta-card__title">Academic Comeback Package</h4>
           <p class="sidebar-cta-card__text">The complete 7-part digital learning system for Nigerian students. Turn poor grades around in 30 days.</p>
-          <div class="sidebar-cta-card__price">₦2,000 <span>(₦20,000 Retail)</span></div>
-          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 90% Off Deal &rarr;</a>
+          <div class="sidebar-cta-card__price">₦5,000 <span>(₦20,000 Retail)</span></div>
+          <a href="/academic-comeback-package" class="sidebar-cta-card__btn">Claim 75% Off Deal &rarr;</a>
         </div>
 
         <!-- Pillar Navigation -->
@@ -756,8 +734,8 @@
     <div class="drawer-flagship-desc">7-Part complete study, memory &amp; CGPA turnaround system for Nigerian students.</div>
     <div class="drawer-flagship-price">
       <span class="drawer-flagship-old">₦20,000</span>
-      <span class="drawer-flagship-new">₦2,000</span>
-      <span class="drawer-flagship-discount">SAVE 90%</span>
+      <span class="drawer-flagship-new">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
     </div>
     <a href="/academic-comeback-package" class="drawer-flagship-btn" onclick="closeGlobalDrawer()">
       Claim Flagship Package &rarr;
@@ -771,7 +749,7 @@
       <i class="bi bi-house-door-fill"></i> <span>Home (All Products)</span>
     </a>
     <a href="/academic-comeback-package" class="drawer-nav-item drawer-nav-item--highlight" onclick="closeGlobalDrawer()">
-      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦2,000)</span>
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package (₦5,000)</span>
     </a>
     <a href="/#masterclasses" class="drawer-nav-item" onclick="closeGlobalDrawer()">
       <i class="bi bi-collection-play-fill"></i> <span>30 Tactical Masterclasses</span>
