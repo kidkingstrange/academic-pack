@@ -39,6 +39,112 @@ def _write_data(data):
         print(f"Error saving data: {e}")
 
 
+_PAYSTACK_DEV_STORE = {
+    "balance": 184500.0,
+    "local_sales": [
+        {
+            "reference": "ACP-DB-1001",
+            "name": "Ibrahim Danjuma",
+            "email": "ibrahim.d@example.com",
+            "amount": 5000.0,
+            "payment_method": "card",
+            "gateway": "Paystack",
+            "status": "success",
+            "email_sent": True,
+            "created_at": "2026-10-15T10:14:00Z",
+            "verified_at": "2026-10-15T10:15:22Z"
+        },
+        {
+            "reference": "ACP-DB-1002",
+            "name": "Amaka Nnamdi",
+            "email": "amaka.n@example.com",
+            "amount": 5000.0,
+            "payment_method": "bank_transfer",
+            "gateway": "Paystack",
+            "status": "success",
+            "email_sent": True,
+            "created_at": "2026-10-15T11:20:00Z",
+            "verified_at": "2026-10-15T11:21:40Z"
+        },
+        {
+            "reference": "ACP-DB-1003",
+            "name": "Kelechi Eze",
+            "email": "kelechi.eze@example.com",
+            "amount": 5000.0,
+            "payment_method": "card",
+            "gateway": "Paystack",
+            "status": "success",
+            "email_sent": False,
+            "created_at": "2026-10-15T14:02:00Z",
+            "verified_at": "2026-10-15T14:03:10Z"
+        }
+    ],
+    "paystack_txs": [
+        {
+            "id": 8923011,
+            "reference": "ACP-DB-1001",
+            "status": "success",
+            "amount": 5000.0,
+            "currency": "NGN",
+            "channel": "card",
+            "paid_at": "2026-10-15T10:15:22Z",
+            "customer_email": "ibrahim.d@example.com",
+            "customer_name": "Ibrahim Danjuma",
+            "sync_status": "synced"
+        },
+        {
+            "id": 8923012,
+            "reference": "ACP-DB-1002",
+            "status": "success",
+            "amount": 5000.0,
+            "currency": "NGN",
+            "channel": "bank_transfer",
+            "paid_at": "2026-10-15T11:21:40Z",
+            "customer_email": "amaka.n@example.com",
+            "customer_name": "Amaka Nnamdi",
+            "sync_status": "synced"
+        },
+        {
+            "id": 8923015,
+            "reference": "ACP-PAYSTACK-UNSYNCED-1",
+            "status": "success",
+            "amount": 5000.0,
+            "currency": "NGN",
+            "channel": "bank_transfer",
+            "paid_at": "2026-10-15T13:45:10Z",
+            "customer_email": "tunde.babalola@example.com",
+            "customer_name": "Tunde Babalola",
+            "sync_status": "not_in_db"
+        },
+        {
+            "id": 8923018,
+            "reference": "ACP-FLAGGED-001",
+            "status": "success",
+            "amount": 4920.0,
+            "currency": "NGN",
+            "channel": "card",
+            "paid_at": "2026-10-15T14:10:00Z",
+            "customer_email": "chidinma.okafor@example.com",
+            "customer_name": "Chidinma Okafor",
+            "sync_status": "flagged",
+            "flagged_reason": "fee_pass_through_discrepancy"
+        }
+    ],
+    "flagged_payments": [
+        {
+            "reference": "ACP-FLAGGED-001",
+            "customer_name": "Chidinma Okafor",
+            "customer_email": "chidinma.okafor@example.com",
+            "amount_paid": 4920.0,
+            "expected_amount": 5000.0,
+            "reason": "fee_pass_through_discrepancy",
+            "flagged_at": "2026-10-15T14:10:05Z",
+            "resolved": False
+        }
+    ]
+}
+
+
 class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(DIRECTORY), **kwargs)
@@ -147,6 +253,69 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 return self._send_json({"articles": [], "total": 0})
 
+        # API: Admin Paystack Status
+        if clean_path == "/api/admin/paystack/status":
+            unresolved = len([f for f in _PAYSTACK_DEV_STORE["flagged_payments"] if not f.get("resolved")])
+            return self._send_json({
+                "connected": True,
+                "configured": True,
+                "mode": "live",
+                "balance": {"currency": "NGN", "available_balance": _PAYSTACK_DEV_STORE["balance"]},
+                "error": None,
+                "webhook": {
+                    "expected_url": "https://academic-pack.onrender.com/api/payments/webhook",
+                    "total_received": 142,
+                    "last_received_at": datetime.now(timezone.utc).isoformat(),
+                    "last_ip": "52.31.139.248"
+                },
+                "unresolved_flagged_count": unresolved,
+                "total_local_sales": len(_PAYSTACK_DEV_STORE["local_sales"])
+            })
+
+        # API: Admin Paystack Live Transactions Feed
+        if clean_path.startswith("/api/admin/paystack/transactions"):
+            return self._send_json({
+                "transactions": _PAYSTACK_DEV_STORE["paystack_txs"],
+                "meta": {"total": len(_PAYSTACK_DEV_STORE["paystack_txs"])},
+                "total": len(_PAYSTACK_DEV_STORE["paystack_txs"])
+            })
+
+        # API: Admin Flagged Payments
+        if clean_path.startswith("/api/admin/flagged-payments"):
+            unresolved = [f for f in _PAYSTACK_DEV_STORE["flagged_payments"] if not f.get("resolved")]
+            return self._send_json({
+                "flagged_payments": unresolved,
+                "count": len(unresolved)
+            })
+
+        # API: Admin Analytics Sales
+        if clean_path.startswith("/api/admin/analytics/sales"):
+            return self._send_json({
+                "transactions": _PAYSTACK_DEV_STORE["local_sales"],
+                "total": len(_PAYSTACK_DEV_STORE["local_sales"])
+            })
+
+        # API: Admin Sale Details
+        if clean_path.startswith("/api/admin/sales/") and clean_path.endswith("/details"):
+            ref = clean_path.split("/")[4]
+            sale = next((s for s in _PAYSTACK_DEV_STORE["local_sales"] if s["reference"] == ref), None)
+            if not sale:
+                sale = {
+                    "reference": ref,
+                    "name": "Customer",
+                    "email": "customer@example.com",
+                    "amount": 5000.0,
+                    "payment_method": "card",
+                    "gateway": "Paystack",
+                    "status": "success",
+                    "verified_at": datetime.now(timezone.utc).isoformat()
+                }
+            return self._send_json({
+                "payment": sale,
+                "customer": {"email": sale.get("email"), "name": sale.get("name")},
+                "referral": {"affiliate_code": "DIRECT", "commission_amount": 0.0}
+            })
+
         # Static clean URL routing
         super().do_GET()
 
@@ -253,6 +422,122 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
                     break
             _write_data(data)
             return self._send_json({"success": True, "votes": votes})
+
+        # API: Paystack 1-Click Sync
+        if clean_path == "/api/admin/paystack/sync":
+            newly = []
+            for tx in _PAYSTACK_DEV_STORE["paystack_txs"]:
+                if tx.get("sync_status") == "not_in_db":
+                    tx["sync_status"] = "synced"
+                    _PAYSTACK_DEV_STORE["local_sales"].insert(0, {
+                        "reference": tx["reference"],
+                        "name": tx["customer_name"],
+                        "email": tx["customer_email"],
+                        "amount": tx["amount"],
+                        "payment_method": tx["channel"],
+                        "gateway": "Paystack",
+                        "status": "success",
+                        "email_sent": True,
+                        "created_at": datetime.now(timezone.utc).isoformat(),
+                        "verified_at": datetime.now(timezone.utc).isoformat()
+                    })
+                    newly.append(tx)
+            return self._send_json({
+                "success": True,
+                "scanned": len(_PAYSTACK_DEV_STORE["paystack_txs"]),
+                "already_synced": len(_PAYSTACK_DEV_STORE["paystack_txs"]) - len(newly),
+                "newly_reconciled_count": len(newly),
+                "newly_reconciled": newly,
+                "message": f"Scanned {len(_PAYSTACK_DEV_STORE['paystack_txs'])} Paystack transactions: {len(newly)} newly reconciled and granted access."
+            })
+
+        # API: Paystack Reconcile Single Reference
+        if clean_path == "/api/admin/paystack/reconcile-ref":
+            ref = (body.get("reference") or "").strip()
+            found = None
+            for tx in _PAYSTACK_DEV_STORE["paystack_txs"]:
+                if tx.get("reference") == ref:
+                    tx["sync_status"] = "synced"
+                    found = tx
+                    break
+            
+            if not found:
+                found = {
+                    "id": int(uuid.uuid4().int % 10000000),
+                    "reference": ref,
+                    "status": "success",
+                    "amount": 5000.0,
+                    "currency": "NGN",
+                    "channel": "bank_transfer",
+                    "paid_at": datetime.now(timezone.utc).isoformat(),
+                    "customer_email": "reconciled.student@example.com",
+                    "customer_name": "Reconciled Student",
+                    "sync_status": "synced"
+                }
+                _PAYSTACK_DEV_STORE["paystack_txs"].insert(0, found)
+
+            if not any(s["reference"] == ref for s in _PAYSTACK_DEV_STORE["local_sales"]):
+                _PAYSTACK_DEV_STORE["local_sales"].insert(0, {
+                    "reference": ref,
+                    "name": found["customer_name"],
+                    "email": found["customer_email"],
+                    "amount": found["amount"],
+                    "payment_method": found["channel"],
+                    "gateway": "Paystack",
+                    "status": "success",
+                    "email_sent": True,
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                    "verified_at": datetime.now(timezone.utc).isoformat()
+                })
+
+            return self._send_json({
+                "success": True,
+                "reference": ref,
+                "email": found["customer_email"],
+                "name": found["customer_name"],
+                "amount": found["amount"],
+                "message": f"Successfully verified and reconciled {ref} for {found['customer_email']}. Customer access granted."
+            })
+
+        # API: Resolve Flagged Payment
+        if clean_path == "/api/admin/flagged-payments/resolve":
+            ref = (body.get("reference") or "").strip()
+            for f in _PAYSTACK_DEV_STORE["flagged_payments"]:
+                if f.get("reference") == ref:
+                    f["resolved"] = True
+                    f["resolved_at"] = datetime.now(timezone.utc).isoformat()
+                    f["resolved_by"] = "admin"
+                    if not any(s["reference"] == ref for s in _PAYSTACK_DEV_STORE["local_sales"]):
+                        _PAYSTACK_DEV_STORE["local_sales"].insert(0, {
+                            "reference": ref,
+                            "name": f["customer_name"],
+                            "email": f["customer_email"],
+                            "amount": f["amount_paid"],
+                            "payment_method": "card",
+                            "gateway": "Paystack",
+                            "status": "success",
+                            "email_sent": True,
+                            "created_at": datetime.now(timezone.utc).isoformat(),
+                            "verified_at": datetime.now(timezone.utc).isoformat()
+                        })
+                    for tx in _PAYSTACK_DEV_STORE["paystack_txs"]:
+                        if tx.get("reference") == ref:
+                            tx["sync_status"] = "synced"
+            return self._send_json({
+                "success": True,
+                "message": f"Payment {ref} resolved successfully. Customer access granted."
+            })
+
+        # API: Resend Welcome Email
+        if clean_path.startswith("/api/admin/sales/") and clean_path.endswith("/resend-email"):
+            ref = clean_path.split("/")[4]
+            for s in _PAYSTACK_DEV_STORE["local_sales"]:
+                if s["reference"] == ref:
+                    s["email_sent"] = True
+            return self._send_json({
+                "success": True,
+                "message": "Access email re-queued! The customer will receive it within minutes."
+            })
 
         return self._send_json({"detail": "Not found"}, 404)
 

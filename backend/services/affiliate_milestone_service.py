@@ -240,7 +240,10 @@ async def check_and_trigger_milestones(db, affiliate_code: str) -> dict:
         return {"direct_milestone_triggered": False, "parent_milestone_triggered": False}
 
     now = datetime.now(timezone.utc)
-    sales_count = await db.referrals.count_documents({"affiliate_code": affiliate_code})
+    sales_count = await db.referrals.count_documents({
+        "affiliate_code": affiliate_code,
+        "is_recovery": {"$ne": True},
+    })
     
     direct_triggered = False
     parent_triggered = False
@@ -385,7 +388,7 @@ async def get_affiliate_recruits_and_bonuses(db, affiliate_code: str) -> dict:
     sales_by_code = {}
     if recruit_codes:
         pipeline = [
-            {"$match": {"affiliate_code": {"$in": recruit_codes}}},
+            {"$match": {"affiliate_code": {"$in": recruit_codes}, "is_recovery": {"$ne": True}}},
             {"$group": {"_id": "$affiliate_code", "count": {"$sum": 1}}},
         ]
         async for row in db.referrals.aggregate(pipeline):

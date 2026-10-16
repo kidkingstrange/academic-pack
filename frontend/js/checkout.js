@@ -406,8 +406,21 @@ form.addEventListener('submit', async (e) => {
   btn.disabled   = true;
   btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
 
-  try {
-    const referralCode = localStorage.getItem('ac_referral_code');
+    const urlParams = new URLSearchParams(window.location.search);
+    const isRecovery = urlParams.get('recovery') === '1' ||
+                       urlParams.get('is_recovery') === '1' ||
+                       urlParams.get('source') === 'recovery' ||
+                       urlParams.get('utm_source') === 'abandoned_email';
+
+    if (isRecovery) {
+      try {
+        localStorage.removeItem('ac_referral_code');
+        localStorage.removeItem('ac_ref');
+        document.cookie = 'ac_ref=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      } catch (e) {}
+    }
+
+    const referralCode = isRecovery ? null : localStorage.getItem('ac_referral_code');
     const clientExpiry = referralCode 
       ? (localStorage.getItem('ac_aff_expiry') || localStorage.getItem('ac_expiry'))
       : localStorage.getItem('ac_expiry');
@@ -421,6 +434,7 @@ form.addEventListener('submit', async (e) => {
         payment_method: currentPayMethod,
         referral_code:  referralCode || null,
         friend_emails:  friendEmailsPayload,
+        is_recovery:    isRecovery,
       }),
     });
 

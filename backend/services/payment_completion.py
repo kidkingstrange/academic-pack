@@ -157,6 +157,7 @@ async def complete_payment(
             "ip_address": ip_address,
             "completed_via": completed_via,
             "tier": (pending.get("tier") if pending else "complete"),
+            "is_recovery": bool(pending.get("is_recovery", False)) if pending else False,
             "friend_discount_applied": friend_discount_applied,
             "friend_emails": friend_emails,
         })
@@ -226,15 +227,13 @@ async def complete_payment(
 
 
         # ── Referral attribution ────────────────────────────────────────
-        # Only recorded on the winning claim — a retry/race that finds the
-        # payment already claimed must not double-count the same sale
-        # against the affiliate. referred_by was captured at checkout time
-        # (see routes/payments.py) and lives on the matching
-        # pending_payments doc. The commission rate is locked in at the
-        # affiliate's *current* rate at this exact moment — a later edit
-        # to their rate never retroactively changes what this sale owes.
-        # CRITICAL RULE: Commission is ALWAYS computed on commission_base_price (₦5,000), method-agnostic.
-        referred_by = pending.get("referred_by") if pending else None
+        # Recovery Policy:
+        # Scenario A: Follow-up email recovery sales (is_recovery=True) belong
+        # 100% to the merchant. Zero affiliate commission is generated.
+        # Scenario B: Direct website returns (is_recovery=False) preserve the affiliate's
+        # attribution and commission share.
+        is_recovery = bool(pending.get("is_recovery", False)) if pending else reference.startswith("ACP-REC-")
+        referred_by = pending.get("referred_by") if (pending and not is_recovery) else None
         if referred_by:
             affiliate = await db.affiliates.find_one({"code": referred_by, "active": {"$ne": False}})
             if affiliate:
@@ -270,6 +269,7 @@ async def complete_payment(
                         "payout_method": "instant_split" if split_applied else "manual_batch",
                         "paid_at": now if split_applied else None,
                         "created_at": now,
+                        "is_recovery": False,
                         "friend_discount_applied": friend_discount_applied,
                         "friend_emails": friend_emails,
                     })

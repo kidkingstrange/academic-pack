@@ -113,6 +113,32 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     friend_discount_applied = False
     valid_friend_emails = []
 
+    # ── Recovery & Follow-up Email Protection Policy ───────────────────
+    # Scenario A: Sales originating from recovery emails / recovery redirect links
+    # (body.is_recovery=True) belong 100% to the merchant (zero affiliate split).
+    # Scenario B: Customers returning directly to the website on their own
+    # (body.is_recovery=False) preserve the affiliate attribution and commission split.
+    is_recovery = bool(getattr(body, "is_recovery", False))
+    email_clean = body.email.strip().lower()
+
+    if is_recovery:
+        # Scenario A: Recovery email redirect / recovery campaign
+        referred_by = None
+    else:
+        # Scenario B: Direct website return
+        # If customer returned directly without re-typing referral_code in payload,
+        # but previously had an affiliate on this checkout lead, preserve it for the affiliate.
+        if not referred_by:
+            abandoned_record = await db.abandoned_transactions.find_one(
+                {"email": email_clean, "status": {"$ne": "recovered"}},
+                sort=[("created_at", -1)]
+            )
+            if abandoned_record and abandoned_record.get("referred_by"):
+                orig_code = abandoned_record.get("referred_by")
+                aff = await db.affiliates.find_one({"code": orig_code, "active": {"$ne": False}})
+                if aff:
+                    referred_by = orig_code
+
     # ── Viral Referral Discount Validation: Exactly 3 Friends' Emails ─────────
     if body.friend_emails is not None:
         raw_emails = [e.strip().lower() for e in body.friend_emails if isinstance(e, str) and e.strip()]
@@ -285,6 +311,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "currency":                   currency,
             "created_at":                 now,
             "referred_by":                referred_by,
+            "is_recovery":                is_recovery,
             "split_applied":              split_applied,
             "tier":                       tier,
             "friend_discount_applied":    friend_discount_applied,
@@ -829,8 +856,9 @@ async def recovery_redirect(
 
     tier = tier_selected
     payment_method = tx.get("payment_method") or "pay_with_bank"
-    referred_by = tx.get("referred_by")
-
+    # Recovery Policy: Follow-up email recovery sales belong 100% to the merchant.
+    # No affiliate attribution or subaccount split is applied.
+    referred_by = None
 
     # Generate a fresh Paystack transaction reference for this recovery attempt
     new_reference = f"ACP-REC-{uuid.uuid4().hex[:10].upper()}"
@@ -844,7 +872,7 @@ async def recovery_redirect(
             amount_naira=amount,
             reference=new_reference,
             callback_url=callback_url,
-            metadata={"name": name, "payment_method": payment_method, "currency": currency, "tier": tier, "recovery_from_ref": ref},
+            metadata={"name": name, "payment_method": payment_method, "currency": currency, "tier": tier, "is_recovery": True, "recovery_from_ref": ref, "recovery_source": "email_redirect"},
             channels=channels,
             currency=currency if currency == "USD" else None,
         )
@@ -864,8 +892,10 @@ async def recovery_redirect(
                 "amount": amount,
                 "currency": currency,
                 "created_at": now,
-                "referred_by": referred_by,
+                "referred_by": None,
                 "is_recovery": True,
+                "recovery_source": "email_redirect",
+                "split_applied": False,
                 "original_reference": ref,
                 "tier": tier,
             }},

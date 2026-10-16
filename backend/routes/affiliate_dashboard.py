@@ -73,7 +73,7 @@ async def get_my_stats(
     clicks = await db.referral_clicks.count_documents({"affiliate_code": code})
 
     referrals = await db.referrals.find(
-        {"affiliate_code": code}
+        {"affiliate_code": code, "is_recovery": {"$ne": True}}
     ).sort("created_at", -1).to_list(1000)
 
     revenue = sum(r.get("amount", 0) or 0 for r in referrals)

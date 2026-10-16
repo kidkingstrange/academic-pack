@@ -195,6 +195,7 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
 
     pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
     owed_pipeline = [
+        {"$match": {"is_recovery": {"$ne": True}}},
         {"$group": {
             "_id": None,
             "earned": {"$sum": "$commission_amount"},
@@ -437,6 +438,7 @@ async def get_analytics_affiliates(
     referral_stats = {
         row["_id"]: row
         for row in await db.referrals.aggregate([
+            {"$match": {"is_recovery": {"$ne": True}}},
             {"$group": {
                 "_id": "$affiliate_code",
                 "conversions": {"$sum": 1},

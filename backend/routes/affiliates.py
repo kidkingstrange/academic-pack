@@ -150,6 +150,7 @@ async def list_affiliates(
     referral_stats = {
         row["_id"]: row
         for row in await db.referrals.aggregate([
+            {"$match": {"is_recovery": {"$ne": True}}},
             {"$group": {
                 "_id": "$affiliate_code",
                 "conversions": {"$sum": 1},
