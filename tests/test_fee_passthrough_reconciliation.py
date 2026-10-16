@@ -12,6 +12,7 @@ import hashlib
 from backend.config import get_settings
 from backend.services.payment_completion import is_valid_paid_amount
 from backend.routes.payments import process_webhook_payment
+from backend.utils.security import create_access_token
 
 settings = get_settings()
 WEBHOOK_URL = "/api/payments/webhook"
@@ -207,3 +208,81 @@ async def test_admin_flagged_payments_list_and_resolve(client, test_db, monkeypa
     flagged_after = await test_db.flagged_payments.find_one({"reference": ref})
     assert flagged_after["resolved"] is True
     assert flagged_after["resolved_by"] == "admin@example.com"
+
+
+@pytest.mark.asyncio
+async def test_admin_paystack_gateway_status_and_sync(client, test_db, monkeypatch):
+    """Verify Paystack status endpoint, live transactions, and 1-click sync."""
+    admin_token = create_access_token({"sub": "admin", "email": "admin@example.com", "role": "admin"})
+    headers = {"Authorization": f"Bearer {admin_token}"}
+    monkeypatch.setattr(settings, "PAYSTACK_SECRET_KEY", "sk_test_1234567890abcdef")
+
+    # Mock Paystack API calls
+    monkeypatch.setattr(
+        "backend.services.paystack.get_paystack_balance",
+        AsyncMock(return_value={"status": "success", "data": {"currency": "NGN", "available_balance": 45000.0}}),
+    )
+    mock_txs = [
+        {
+            "id": 111,
+            "reference": "ACP-PAYSTACK-SYNC-1",
+            "amount": 203046,
+            "fees": 3046,
+            "status": "success",
+            "currency": "NGN",
+            "channel": "card",
+            "paid_at": "2026-10-15T12:00:00Z",
+            "customer": {"email": "paystack.sync1@example.com", "first_name": "Sync", "last_name": "One"},
+        },
+        {
+            "id": 222,
+            "reference": "ACP-PAYSTACK-SYNC-2",
+            "amount": 500000,
+            "fees": 7500,
+            "status": "success",
+            "currency": "NGN",
+            "channel": "bank_transfer",
+            "paid_at": "2026-10-15T12:10:00Z",
+            "customer": {"email": "paystack.sync2@example.com", "first_name": "Sync", "last_name": "Two"},
+        },
+    ]
+    monkeypatch.setattr(
+        "backend.services.paystack.list_transactions",
+        AsyncMock(return_value={"status": True, "data": mock_txs, "meta": {"total": 2}}),
+    )
+    monkeypatch.setattr("backend.services.payment_completion.process_email_queue", AsyncMock())
+
+    # 1. Test Status
+    res_status = await client.get("/api/admin/paystack/status", headers=headers)
+    assert res_status.status_code == 200
+    status_data = res_status.json()
+    assert status_data["connected"] is True
+    assert status_data["balance"]["available_balance"] == 45000.0
+    assert "webhook" in status_data
+
+    # 2. Test Transactions listing before sync
+    res_txs = await client.get("/api/admin/paystack/transactions", headers=headers)
+    assert res_txs.status_code == 200
+    tx_list = res_txs.json()["transactions"]
+    assert len(tx_list) == 2
+    assert all(t["sync_status"] == "unreconciled" for t in tx_list)
+
+    # 3. Test 1-click Paystack Sync
+    res_sync = await client.post("/api/admin/paystack/sync", headers=headers)
+    assert res_sync.status_code == 200
+    sync_data = res_sync.json()
+    assert sync_data["success"] is True
+    assert sync_data["newly_reconciled_count"] == 2
+
+    # 4. Verify users were created in DB
+    u1 = await test_db.users.find_one({"email": "paystack.sync1@example.com"})
+    u2 = await test_db.users.find_one({"email": "paystack.sync2@example.com"})
+    assert u1 is not None and u1["library_access_token"] is not None
+    assert u2 is not None and u2["library_access_token"] is not None
+
+    # 5. Subsequent sync shows 0 newly reconciled, 2 already synced
+    res_sync_again = await client.post("/api/admin/paystack/sync", headers=headers)
+    assert res_sync_again.status_code == 200
+    assert res_sync_again.json()["newly_reconciled_count"] == 0
+    assert res_sync_again.json()["already_synced"] == 2
+

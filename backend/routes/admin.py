@@ -1500,3 +1500,312 @@ async def resolve_flagged_payment(
         "email": email,
         "magic_token": completion.get("magic_token"),
     }
+
+
+# ── Paystack Live Gateway Bridge & Auto-Sync ────────────────────────────────
+@router.get("/paystack/status")
+async def get_paystack_gateway_status(current_user=Depends(require_admin), db=Depends(get_db)):
+    """Check live Paystack connection, balance, mode, webhook health, and reconciliation status."""
+    from ..services.paystack import get_paystack_balance
+    
+    secret = (settings.PAYSTACK_SECRET_KEY or "").strip()
+    is_configured = bool(secret and not secret.startswith("sk_test_your_"))
+    mode = "live" if secret.startswith("sk_live_") else ("test" if secret.startswith("sk_test_") else "unconfigured")
+    
+    balance_info = {"currency": "NGN", "available_balance": 0.0}
+    connected = False
+    error_msg = None
+    
+    if is_configured:
+        try:
+            bal_res = await get_paystack_balance()
+            if bal_res.get("status") == "success":
+                connected = True
+                balance_info = bal_res.get("data", {})
+            else:
+                error_msg = bal_res.get("message") or "Could not fetch balance"
+        except Exception as e:
+            error_msg = str(e)
+            
+    recent_webhook = await db.webhook_logs.find().sort("received_at", -1).limit(1).to_list(1)
+    webhook_total = await db.webhook_logs.count_documents({})
+    unresolved_flagged = await db.flagged_payments.count_documents({"resolved": False})
+    total_local_sales = await db.payments.count_documents({"status": "success"})
+    
+    base_url = (settings.APP_URL or "https://academic-pack.onrender.com").rstrip("/")
+    if "localhost" in base_url and settings.APP_ENV != "development":
+        base_url = "https://academic-pack.onrender.com"
+        
+    webhook_url = f"{base_url}/api/payments/webhook"
+    
+    webhook_status = {
+        "expected_url": webhook_url,
+        "total_received": webhook_total,
+        "last_received_at": recent_webhook[0]["received_at"].isoformat() if recent_webhook else None,
+        "last_ip": recent_webhook[0].get("ip") if recent_webhook else None,
+    }
+    
+    return {
+        "connected": connected,
+        "configured": is_configured,
+        "mode": mode,
+        "balance": balance_info,
+        "error": error_msg,
+        "webhook": webhook_status,
+        "unresolved_flagged_count": unresolved_flagged,
+        "total_local_sales": total_local_sales,
+    }
+
+
+@router.get("/paystack/transactions")
+async def get_paystack_live_transactions(
+    status: Optional[str] = None,
+    page: int = 1,
+    per_page: int = 50,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Fetch live transactions directly from Paystack API and cross-reference each against
+    the local MongoDB payments and flagged_payments collections.
+    """
+    from ..services.paystack import list_transactions
+    
+    try:
+        raw_res = await list_transactions(status=status, page=page, per_page=per_page)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Failed to query Paystack API: {str(e)}")
+        
+    if not raw_res.get("status"):
+        raise HTTPException(status_code=502, detail=raw_res.get("message") or "Failed to query Paystack")
+        
+    paystack_txs = raw_res.get("data", [])
+    meta = raw_res.get("meta", {})
+    
+    enriched = []
+    for tx in paystack_txs:
+        ref = tx.get("reference")
+        tx_status = tx.get("status")
+        amount = (tx.get("amount") or 0) / 100.0
+        cust = tx.get("customer", {})
+        
+        local_pay = await db.payments.find_one({"reference": ref}) if ref else None
+        local_flagged = await db.flagged_payments.find_one({"reference": ref}) if ref else None
+        
+        sync_state = "unreconciled"
+        if local_pay and local_pay.get("status") == "success":
+            sync_state = "synced"
+        elif local_flagged and not local_flagged.get("resolved"):
+            sync_state = "flagged"
+        elif tx_status != "success":
+            sync_state = "not_applicable"
+            
+        enriched.append({
+            "id": tx.get("id"),
+            "reference": ref,
+            "status": tx_status,
+            "amount": amount,
+            "currency": tx.get("currency", "NGN"),
+            "channel": tx.get("channel"),
+            "paid_at": tx.get("paid_at") or tx.get("paidAt"),
+            "created_at": tx.get("created_at") or tx.get("createdAt"),
+            "customer_email": cust.get("email") or "unknown",
+            "customer_name": f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or "Customer",
+            "sync_status": sync_state,
+            "flagged_reason": local_flagged.get("reason") if local_flagged else None,
+            "gateway_response": tx.get("gateway_response"),
+        })
+        
+    return {
+        "transactions": enriched,
+        "meta": meta,
+        "total": len(enriched),
+    }
+
+
+@router.post("/paystack/sync")
+async def sync_paystack_transactions(
+    per_page: int = 50,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Auto-sync all successful Paystack transactions into local database:
+    1. Fetches recent successful transactions from Paystack API.
+    2. Identifies any that are missing in db.payments.
+    3. Auto-completes them, generates student library access, and marks flagged records resolved.
+    """
+    from ..services.paystack import list_transactions
+    from ..services.payment_completion import complete_payment, is_valid_paid_amount
+    
+    try:
+        raw_res = await list_transactions(status="success", page=1, per_page=per_page)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Failed to query Paystack: {str(e)}")
+        
+    if not raw_res.get("status"):
+        raise HTTPException(status_code=502, detail=raw_res.get("message") or "Failed to query Paystack")
+        
+    txs = raw_res.get("data", [])
+    already_synced = 0
+    newly_reconciled = []
+    
+    for tx in txs:
+        ref = tx.get("reference")
+        if not ref:
+            continue
+            
+        existing = await db.payments.find_one({"reference": ref, "status": "success"})
+        if existing:
+            already_synced += 1
+            continue
+            
+        amount_paid = (tx.get("amount") or 0) / 100.0
+        fee_paid = float((tx.get("fees") or 0) / 100.0)
+        cust = tx.get("customer", {})
+        email = cust.get("email") or ""
+        name = f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or "Student"
+        
+        pending = await db.pending_payments.find_one({"reference": ref})
+        if pending:
+            email = email or pending.get("email")
+            name = pending.get("name") or name
+            expected = float(pending.get("amount", 0) or 0)
+        else:
+            expected = 0.0
+            
+        if expected > 0 and not is_valid_paid_amount(amount_paid, expected, fee_paid):
+            await db.flagged_payments.update_one(
+                {"reference": ref},
+                {"$set": {
+                    "reason": "amount_mismatch",
+                    "expected_amount": expected,
+                    "amount_paid": amount_paid,
+                    "payload": tx,
+                    "resolved": False,
+                    "flagged_at": datetime.now(timezone.utc),
+                }},
+                upsert=True
+            )
+            continue
+            
+        if not email:
+            continue
+            
+        try:
+            completion = await complete_payment(
+                db,
+                reference=ref,
+                email=email,
+                name=name,
+                amount=amount_paid,
+                charge_id=str(tx.get("id", ref)),
+                gateway_response=tx,
+                completed_via="paystack_admin_sync",
+                payment_method=tx.get("channel"),
+            )
+            await db.flagged_payments.update_one(
+                {"reference": ref},
+                {"$set": {
+                    "resolved": True,
+                    "resolved_at": datetime.now(timezone.utc),
+                    "resolved_by": current_user.get("email", "admin"),
+                    "resolution_notes": "Resolved via Paystack 1-click admin sync",
+                }}
+            )
+            newly_reconciled.append({
+                "reference": ref,
+                "email": email,
+                "name": name,
+                "amount": amount_paid,
+                "magic_link": completion.get("magic_link"),
+            })
+        except Exception as sync_err:
+            print(f"⚠️ Error reconciling {ref} during Paystack sync: {sync_err}")
+            
+    return {
+        "success": True,
+        "scanned": len(txs),
+        "already_synced": already_synced,
+        "newly_reconciled_count": len(newly_reconciled),
+        "newly_reconciled": newly_reconciled,
+        "message": f"Scanned {len(txs)} Paystack transactions: {already_synced} already up to date, {len(newly_reconciled)} newly reconciled and granted access.",
+    }
+
+
+class ReconcilePaystackRefRequest(BaseModel):
+    reference: str
+
+
+@router.post("/paystack/reconcile-ref")
+async def reconcile_single_paystack_reference(
+    body: ReconcilePaystackRefRequest,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
+    """
+    Directly query Paystack for a single reference, verify success,
+    complete order in local DB, create user/token, and queue welcome email.
+    """
+    from ..services.paystack import verify_transaction
+    from ..services.payment_completion import complete_payment
+    
+    ref = body.reference.strip()
+    if not ref:
+        raise HTTPException(status_code=400, detail="Reference is required")
+        
+    try:
+        tx = await verify_transaction(ref)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Failed to verify with Paystack: {str(e)}")
+        
+    if not tx.get("status") or tx.get("data", {}).get("status") != "success":
+        msg = tx.get("message") or "Transaction not successful on Paystack"
+        raise HTTPException(status_code=400, detail=f"Paystack reported unconfirmed status for {ref}: {msg}")
+        
+    data = tx["data"]
+    amount_paid = data.get("amount", 0) / 100.0
+    cust = data.get("customer", {})
+    email = cust.get("email")
+    name = f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or "Student"
+    
+    if not email:
+        pending = await db.pending_payments.find_one({"reference": ref})
+        if pending and pending.get("email"):
+            email = pending["email"]
+            name = pending.get("name") or name
+            
+    if not email:
+        raise HTTPException(status_code=400, detail=f"Customer email not found in Paystack payload for {ref}")
+        
+    completion = await complete_payment(
+        db,
+        reference=ref,
+        email=email,
+        name=name,
+        amount=amount_paid,
+        charge_id=str(data.get("id", ref)),
+        gateway_response=data,
+        completed_via="admin_direct_reconcile",
+        payment_method=data.get("channel"),
+    )
+    
+    await db.flagged_payments.update_one(
+        {"reference": ref},
+        {"$set": {
+            "resolved": True,
+            "resolved_at": datetime.now(timezone.utc),
+            "resolved_by": current_user.get("email", "admin"),
+            "resolution_notes": "Resolved via single-reference admin verification",
+        }}
+    )
+    
+    return {
+        "success": True,
+        "reference": ref,
+        "email": email,
+        "name": name,
+        "amount": amount_paid,
+        "magic_link": completion.get("magic_link"),
+        "message": f"Successfully verified and reconciled {ref} for {email}. Customer access granted.",
+    }

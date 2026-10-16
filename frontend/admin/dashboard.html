@@ -1735,34 +1735,160 @@
       </div>
     </div>
 
-    <!-- ── VIEW 2: SALES MANAGEMENT (Transaction Inspector) ────────────────── -->
+    <!-- ── VIEW 2: SALES MANAGEMENT (Transaction Inspector & Paystack Live Bridge) ── -->
     <div id="view-sales" class="section">
-      <div class="filter-bar">
-        <input type="text" class="input-control" id="sales-search" placeholder="Search reference, email, name..." oninput="filterSales()">
-        <select class="period-select" id="sales-status-filter" onchange="filterSales()">
-          <option value="">All Statuses</option>
-          <option value="success">Success</option>
-          <option value="pending">Pending</option>
-          <option value="failed">Failed</option>
-          <option value="refunded">Refunded</option>
-        </select>
-        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">From
-          <input type="date" class="input-control" id="sales-date-from" onchange="loadSalesView()" style="padding:9px 12px">
-        </label>
-        <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">To
-          <input type="date" class="input-control" id="sales-date-to" onchange="loadSalesView()" style="padding:9px 12px">
-        </label>
-        <button class="btn-action btn-secondary" id="sales-date-clear" onclick="clearSalesDateRange()" style="display:none">Clear dates</button>
-        <button class="btn-action btn-secondary" onclick="exportSalesCSV()"><i class="bi bi-download"></i> Export CSV</button>
+      <!-- Paystack Gateway Live Bridge Banner -->
+      <div class="paystack-bridge-card" style="background:var(--bg-card); border:1px solid rgba(212,175,55,0.25); border-radius:16px; padding:20px 24px; margin-bottom:22px; display:flex; flex-direction:column; gap:14px">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px">
+          <div style="display:flex; align-items:center; gap:12px">
+            <div style="width:40px; height:40px; border-radius:10px; background:rgba(0,195,255,0.12); border:1px solid rgba(0,195,255,0.3); display:flex; align-items:center; justify-content:center; color:#38bdf8; font-size:1.25rem">
+              <i class="bi bi-lightning-charge-fill"></i>
+            </div>
+            <div>
+              <div style="font-weight:700; color:#fff; font-size:1.05rem; display:flex; align-items:center; gap:8px">
+                Paystack Gateway Live Bridge
+                <span id="paystack-live-mode-badge" class="status-pill success" style="font-size:0.72rem; padding:2px 8px">Connecting...</span>
+              </div>
+              <div style="font-size:0.8rem; color:var(--gray-l); margin-top:2px">
+                Direct API Connection &amp; Real-time Payment Reconciliation
+              </div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+            <button class="btn-action btn-secondary" onclick="reconcileSingleReferencePrompt()" style="font-size:0.8rem">
+              <i class="bi bi-search"></i> Reconcile Reference
+            </button>
+            <button class="btn-action btn-primary" id="btn-sync-paystack" onclick="syncPaystackNow()" style="font-size:0.8rem; background:linear-gradient(135deg,var(--gold),#b8860b); color:#000; font-weight:700">
+              <i class="bi bi-arrow-repeat"></i> 1-Click Paystack Sync
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric & Webhook Health Strip -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:12px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.06)">
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px 14px">
+            <div style="font-size:0.72rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:0.5px">Paystack Balance</div>
+            <div id="paystack-live-balance" style="font-size:1.2rem; font-weight:700; color:var(--gold-light); margin-top:2px">₦0.00</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px 14px">
+            <div style="font-size:0.72rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:0.5px">Webhook Listener</div>
+            <div id="paystack-live-webhook" style="font-size:0.88rem; font-weight:600; color:#86efac; margin-top:4px">Checking...</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px 14px">
+            <div style="font-size:0.72rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:0.5px">Unresolved Flagged</div>
+            <div id="paystack-unresolved-count" style="font-size:1.2rem; font-weight:700; color:#fbbf24; margin-top:2px">0</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px 14px">
+            <div style="font-size:0.72rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:0.5px">Paystack Webhook URL</div>
+            <div style="display:flex; align-items:center; gap:6px; margin-top:3px">
+              <input type="text" id="paystack-webhook-url-input" readonly value="https://academic-pack.onrender.com/api/payments/webhook" style="background:transparent; border:none; color:var(--gray-l); font-size:0.75rem; font-family:monospace; width:100%" />
+              <button onclick="copyWebhookUrl()" class="btn-action btn-secondary" style="padding:2px 6px; font-size:0.7rem" title="Copy Webhook URL"><i class="bi bi-copy"></i></button>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="data-table-container has-mobile-cards">
-        <table class="data-table" id="table-sales-management">
-          <thead><tr><th class="sortable" onclick="sortTable('table-sales-management', 0)">Verified At <i class="bi bi-arrow-down-up"></i></th><th>Reference</th><th class="sortable" onclick="sortTable('table-sales-management', 2)">Customer <i class="bi bi-arrow-down-up"></i></th><th>Email</th><th class="sortable" onclick="sortTable('table-sales-management', 4, true)">Amount <i class="bi bi-arrow-down-up"></i></th><th>Method</th><th>Gateway</th><th class="sortable" onclick="sortTable('table-sales-management', 7)">Status <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
-          <tbody></tbody>
-        </table>
+      <!-- Sub-Tabs: Orders | Live Paystack Feed | Flagged for Review -->
+      <div style="display:flex; gap:10px; margin-bottom:18px; border-bottom:1px solid var(--border-color); padding-bottom:12px; flex-wrap:wrap">
+        <button id="tab-btn-sales-local" class="btn-action btn-primary" onclick="switchSalesSubTab('local')" style="font-size:0.83rem">
+          <i class="bi bi-bag-check-fill"></i> Database Orders (<span id="count-local-sales">0</span>)
+        </button>
+        <button id="tab-btn-sales-paystack" class="btn-action btn-secondary" onclick="switchSalesSubTab('paystack')" style="font-size:0.83rem">
+          <i class="bi bi-cloud-arrow-down-fill"></i> Paystack Live Feed (<span id="count-paystack-sales">Live</span>)
+        </button>
+        <button id="tab-btn-sales-flagged" class="btn-action btn-secondary" onclick="switchSalesSubTab('flagged')" style="font-size:0.83rem">
+          <i class="bi bi-flag-fill"></i> Flagged for Review (<span id="count-flagged-sales" style="color:#fbbf24; font-weight:700">0</span>)
+        </button>
       </div>
-      <div class="record-card-list" id="cards-sales-management"></div>
+
+      <!-- PANEL 1: LOCAL DATABASE ORDERS -->
+      <div id="panel-sales-local">
+        <div class="filter-bar">
+          <input type="text" class="input-control" id="sales-search" placeholder="Search reference, email, name..." oninput="filterSales()">
+          <select class="period-select" id="sales-status-filter" onchange="filterSales()">
+            <option value="">All Statuses</option>
+            <option value="success">Success</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+            <option value="refunded">Refunded</option>
+          </select>
+          <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">From
+            <input type="date" class="input-control" id="sales-date-from" onchange="loadSalesView()" style="padding:9px 12px">
+          </label>
+          <label style="font-size:.78rem; color:var(--gray-l); display:flex; align-items:center; gap:6px">To
+            <input type="date" class="input-control" id="sales-date-to" onchange="loadSalesView()" style="padding:9px 12px">
+          </label>
+          <button class="btn-action btn-secondary" id="sales-date-clear" onclick="clearSalesDateRange()" style="display:none">Clear dates</button>
+          <button class="btn-action btn-secondary" onclick="exportSalesCSV()"><i class="bi bi-download"></i> Export CSV</button>
+        </div>
+
+        <div class="data-table-container has-mobile-cards">
+          <table class="data-table" id="table-sales-management">
+            <thead><tr><th class="sortable" onclick="sortTable('table-sales-management', 0)">Verified At <i class="bi bi-arrow-down-up"></i></th><th>Reference</th><th class="sortable" onclick="sortTable('table-sales-management', 2)">Customer <i class="bi bi-arrow-down-up"></i></th><th>Email</th><th class="sortable" onclick="sortTable('table-sales-management', 4, true)">Amount <i class="bi bi-arrow-down-up"></i></th><th>Method</th><th>Gateway</th><th class="sortable" onclick="sortTable('table-sales-management', 7)">Status <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="record-card-list" id="cards-sales-management"></div>
+      </div>
+
+      <!-- PANEL 2: PAYSTACK LIVE TRANSACTIONS FEED -->
+      <div id="panel-sales-paystack" style="display:none">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px">
+          <div style="font-size:0.85rem; color:var(--gray-l)">
+            Showing recent transactions pulled directly from Paystack API cross-referenced against your local database.
+          </div>
+          <button class="btn-action btn-secondary" onclick="loadPaystackLiveFeed()"><i class="bi bi-arrow-clockwise"></i> Refresh Paystack Feed</button>
+        </div>
+        <div class="data-table-container has-mobile-cards">
+          <table class="data-table" id="table-paystack-live">
+            <thead>
+              <tr>
+                <th>Paid At</th>
+                <th>Reference</th>
+                <th>Customer</th>
+                <th>Amount</th>
+                <th>Channel</th>
+                <th>Paystack Status</th>
+                <th>Database State</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="8" style="text-align:center; padding:32px; color:var(--gray-l)">Loading live Paystack transactions...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="record-card-list" id="cards-paystack-live"></div>
+      </div>
+
+      <!-- PANEL 3: FLAGGED FOR MANUAL REVIEW -->
+      <div id="panel-sales-flagged" style="display:none">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px">
+          <div style="font-size:0.85rem; color:#fde68a">
+            <i class="bi bi-info-circle-fill"></i> Transactions flagged due to gateway fee discrepancies, missing pending records, or price transitions. Approve with 1 click to unlock student access immediately.
+          </div>
+          <button class="btn-action btn-secondary" onclick="loadFlaggedPayments()"><i class="bi bi-arrow-clockwise"></i> Refresh Flagged</button>
+        </div>
+        <div class="data-table-container has-mobile-cards">
+          <table class="data-table" id="table-flagged-sales">
+            <thead>
+              <tr>
+                <th>Flagged At</th>
+                <th>Reference</th>
+                <th>Customer</th>
+                <th>Amount Paid</th>
+                <th>Expected</th>
+                <th>Flag Reason</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="7" style="text-align:center; padding:32px; color:var(--gray-l)">Loading flagged payments...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="record-card-list" id="cards-flagged-sales"></div>
+      </div>
     </div>
 
     <!-- ── VIEW 3: CUSTOMER MANAGEMENT (Lifecycle 360°) ─────────────────────── -->
@@ -2637,7 +2763,304 @@
     loadSalesView();
   }
 
+  // ── Paystack Live Bridge Functions ──────────────────────────────────────────
+  let paystackGatewayData = null;
+  let currentSalesSubTab = 'local';
+
+  async function loadPaystackGatewayStatus() {
+    try {
+      const status = await apiCall('/api/admin/paystack/status');
+      paystackGatewayData = status;
+
+      const badge = document.getElementById('paystack-live-mode-badge');
+      if (badge) {
+        if (status.connected) {
+          badge.className = 'status-pill success';
+          badge.innerHTML = `<i class="bi bi-circle-fill" style="font-size:0.5rem; color:#4ade80"></i> ${status.mode === 'live' ? 'Paystack LIVE' : 'Paystack TEST'}`;
+        } else {
+          badge.className = 'status-pill failed';
+          badge.innerHTML = `<i class="bi bi-exclamation-triangle"></i> Disconnected`;
+        }
+      }
+
+      const balEl = document.getElementById('paystack-live-balance');
+      if (balEl) {
+        const bal = status.balance ? (status.balance.available_balance || 0) : 0;
+        balEl.textContent = money(bal);
+      }
+
+      const webhookEl = document.getElementById('paystack-live-webhook');
+      if (webhookEl) {
+        const wh = status.webhook || {};
+        if (wh.last_received_at) {
+          const dt = new Date(wh.last_received_at);
+          webhookEl.innerHTML = `<span style="color:#86efac"><i class="bi bi-check-circle"></i> Active (${dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</span>`;
+        } else {
+          webhookEl.innerHTML = `<span style="color:#fbbf24"><i class="bi bi-exclamation-triangle"></i> No Webhooks Yet</span>`;
+        }
+      }
+
+      const unresEl = document.getElementById('paystack-unresolved-count');
+      if (unresEl) {
+        unresEl.textContent = status.unresolved_flagged_count || 0;
+      }
+
+      const countFlagged = document.getElementById('count-flagged-sales');
+      if (countFlagged) {
+        countFlagged.textContent = status.unresolved_flagged_count || 0;
+      }
+
+      const whInput = document.getElementById('paystack-webhook-url-input');
+      if (whInput && status.webhook && status.webhook.expected_url) {
+        whInput.value = status.webhook.expected_url;
+      }
+    } catch (e) {
+      console.warn('Could not load paystack status:', e);
+    }
+  }
+
+  function copyWebhookUrl() {
+    const input = document.getElementById('paystack-webhook-url-input');
+    if (!input) return;
+    navigator.clipboard.writeText(input.value).then(() => {
+      showToast('Paystack Webhook URL copied! Paste it in Paystack Dashboard > Settings > Preferences > Webhooks.', 'success', 5000);
+    }).catch(() => {
+      input.select();
+      document.execCommand('copy');
+      showToast('Copied Webhook URL to clipboard!', 'success');
+    });
+  }
+
+  function switchSalesSubTab(tab) {
+    currentSalesSubTab = tab;
+    ['local', 'paystack', 'flagged'].forEach(t => {
+      const btn = document.getElementById(`tab-btn-sales-${t}`);
+      const panel = document.getElementById(`panel-sales-${t}`);
+      if (btn) {
+        btn.className = (t === tab) ? 'btn-action btn-primary' : 'btn-action btn-secondary';
+      }
+      if (panel) {
+        panel.style.display = (t === tab) ? 'block' : 'none';
+      }
+    });
+
+    if (tab === 'paystack') {
+      loadPaystackLiveFeed();
+    } else if (tab === 'flagged') {
+      loadFlaggedPayments();
+    }
+  }
+
+  async function syncPaystackNow() {
+    const btn = document.getElementById('btn-sync-paystack');
+    const originalText = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Syncing...';
+    }
+
+    try {
+      const res = await apiCall('/api/admin/paystack/sync', 'POST', { per_page: 50 });
+      if (res.success) {
+        showToast(res.message || 'Paystack sync completed successfully!', 'success', 4500);
+        await loadSalesView();
+        if (currentSalesSubTab === 'paystack') loadPaystackLiveFeed();
+        if (currentSalesSubTab === 'flagged') loadFlaggedPayments();
+      } else {
+        showToast(res.detail || 'Could not sync with Paystack', 'error');
+      }
+    } catch (err) {
+      showToast('Error syncing with Paystack: ' + err.message, 'error');
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
+    }
+  }
+
+  async function reconcileSingleReferencePrompt() {
+    const ref = prompt('Enter the Paystack Transaction Reference to verify and reconcile:\n(e.g. ACP-E11F4D194086)');
+    if (!ref || !ref.trim()) return;
+    await reconcileSingleRef(ref.trim());
+  }
+
+  async function reconcileSingleRef(ref) {
+    try {
+      showToast(`Verifying reference ${ref} with Paystack...`, 'info', 2000);
+      const res = await apiCall('/api/admin/paystack/reconcile-ref', 'POST', { reference: ref });
+      if (res.success) {
+        showToast(`✓ Payment reconciled! Access granted to ${res.email}`, 'success', 4000);
+        await loadSalesView();
+        if (currentSalesSubTab === 'paystack') loadPaystackLiveFeed();
+        if (currentSalesSubTab === 'flagged') loadFlaggedPayments();
+      } else {
+        showToast(res.detail || 'Could not reconcile reference', 'error');
+      }
+    } catch (err) {
+      showToast('Failed to reconcile: ' + err.message, 'error');
+    }
+  }
+
+  async function resolveFlaggedPayment(ref) {
+    if (!confirm(`Fulfill and grant access for flagged payment ${ref}?`)) return;
+    try {
+      const res = await apiCall('/api/admin/flagged-payments/resolve', 'POST', { reference: ref, force: true, notes: 'Manually approved from Admin Flagged tab' });
+      if (res.success) {
+        showToast(`✓ Flagged payment ${ref} approved! Access unlocked.`, 'success', 4000);
+        loadFlaggedPayments();
+        loadSalesView();
+      } else {
+        showToast(res.detail || 'Could not approve flagged payment', 'error');
+      }
+    } catch (err) {
+      showToast('Error approving payment: ' + err.message, 'error');
+    }
+  }
+
+  async function loadPaystackLiveFeed() {
+    const tbody = document.querySelector('#table-paystack-live tbody');
+    if (tbody) {
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:32px; color:var(--gray-l)"><i class="bi bi-arrow-repeat spin"></i> Pulling live transactions directly from Paystack API...</td></tr>';
+    }
+
+    try {
+      const data = await apiCall('/api/admin/paystack/transactions?per_page=50');
+      const txs = data.transactions || [];
+      const badgeCount = document.getElementById('count-paystack-sales');
+      if (badgeCount) badgeCount.textContent = txs.length;
+
+      if (!tbody) return;
+
+      if (!txs.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:32px; color:var(--gray-l)">No recent Paystack transactions found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = txs.map(t => {
+        let syncBadge = '';
+        let actionBtn = '';
+
+        if (t.sync_status === 'synced') {
+          syncBadge = '<span class="status-pill success"><i class="bi bi-check2-circle"></i> Synced in DB</span>';
+          actionBtn = `<button class="btn-action btn-secondary" style="padding:4px 9px; font-size:0.75rem" onclick="inspectSale('${escapeJs(t.reference)}')">Inspect →</button>`;
+        } else if (t.sync_status === 'flagged') {
+          syncBadge = `<span class="status-pill pending" title="${escapeHtml(t.flagged_reason || '')}"><i class="bi bi-flag"></i> Flagged (${escapeHtml(t.flagged_reason || 'Review')})</span>`;
+          actionBtn = `<button class="btn-action btn-secondary" style="padding:4px 9px; font-size:0.75rem; color:#fbbf24; border-color:rgba(245,158,11,0.4)" onclick="resolveFlaggedPayment('${escapeJs(t.reference)}')">Approve ⚡</button>`;
+        } else if (t.status === 'success') {
+          syncBadge = '<span class="status-pill failed" style="background:rgba(239,68,68,0.15); color:#fca5a5"><i class="bi bi-exclamation-triangle"></i> Not in DB</span>';
+          actionBtn = `<button class="btn-action btn-primary" style="padding:4px 9px; font-size:0.75rem" onclick="reconcileSingleRef('${escapeJs(t.reference)}')">Reconcile ⚡</button>`;
+        } else {
+          syncBadge = `<span style="color:var(--gray-l); font-size:0.78rem">${escapeHtml(t.status)}</span>`;
+          actionBtn = `<span style="color:var(--gray-l); font-size:0.75rem">—</span>`;
+        }
+
+        const dateStr = t.paid_at ? new Date(t.paid_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : (t.created_at ? new Date(t.created_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : '—');
+
+        return `
+          <tr>
+            <td>${dateStr}</td>
+            <td><code>${escapeHtml(t.reference)}</code></td>
+            <td>
+              <div style="font-weight:600">${escapeHtml(t.customer_name)}</div>
+              <div style="font-size:0.75rem; color:var(--gray-l)">${escapeHtml(t.customer_email)}</div>
+            </td>
+            <td style="color:var(--gold-light); font-weight:700">${money(t.amount)}</td>
+            <td style="text-transform:capitalize">${escapeHtml(t.channel || '—')}</td>
+            <td><span class="status-pill ${t.status === 'success' ? 'success' : 'failed'}">${escapeHtml(t.status)}</span></td>
+            <td>${syncBadge}</td>
+            <td>${actionBtn}</td>
+          </tr>
+        `;
+      }).join('');
+
+      const cardsContainer = document.getElementById('cards-paystack-live');
+      if (cardsContainer) {
+        cardsContainer.innerHTML = txs.map(t => `
+          <div class="record-card record-card--${t.status === 'success' ? 'success' : 'failed'}">
+            <div class="record-card__row1">
+              <span class="record-card__primary">${escapeHtml(t.customer_name)}</span>
+              <span class="record-card__amount">${money(t.amount)}</span>
+            </div>
+            <div class="record-card__row2">
+              <span class="record-card__secondary">${escapeHtml(t.customer_email)} · ${escapeHtml(t.reference)}</span>
+              <span class="record-card__meta">${escapeHtml(t.sync_status)}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    } catch (err) {
+      if (tbody) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:32px; color:#f87171">Failed to load Paystack feed: ${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+  }
+
+  async function loadFlaggedPayments() {
+    const tbody = document.querySelector('#table-flagged-sales tbody');
+    if (tbody) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:32px; color:var(--gray-l)"><i class="bi bi-arrow-repeat spin"></i> Loading flagged payments...</td></tr>';
+    }
+
+    try {
+      const data = await apiCall('/api/admin/flagged-payments?resolved=false');
+      const flagged = data.flagged_payments || [];
+      const badgeCount = document.getElementById('count-flagged-sales');
+      if (badgeCount) badgeCount.textContent = flagged.length;
+
+      if (!tbody) return;
+
+      if (!flagged.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:32px; color:#86efac"><i class="bi bi-check2-circle"></i> Zero flagged payments! All customer orders are fully reconciled.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = flagged.map(f => {
+        const dt = f.flagged_at ? new Date(f.flagged_at).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' }) : '—';
+        return `
+          <tr style="background:rgba(245,158,11,0.06); border-left:3px solid rgba(245,158,11,0.6)">
+            <td>${dt}</td>
+            <td><code>${escapeHtml(f.reference)}</code></td>
+            <td>
+              <div style="font-weight:600">${escapeHtml(f.customer_name)}</div>
+              <div style="font-size:0.75rem; color:var(--gray-l)">${escapeHtml(f.customer_email)}</div>
+            </td>
+            <td style="color:#fbbf24; font-weight:700">${money(f.amount_paid || 0)}</td>
+            <td style="color:var(--gray-l)">${f.expected_amount ? money(f.expected_amount) : '—'}</td>
+            <td><span class="status-pill pending">${escapeHtml(f.reason || 'manual_review')}</span></td>
+            <td>
+              <button class="btn-action btn-primary" style="padding:4px 10px; font-size:0.75rem" onclick="resolveFlaggedPayment('${escapeJs(f.reference)}')">
+                Approve &amp; Grant Access ⚡
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      const cardsContainer = document.getElementById('cards-flagged-sales');
+      if (cardsContainer) {
+        cardsContainer.innerHTML = flagged.map(f => `
+          <div class="record-card record-card--pending">
+            <div class="record-card__row1">
+              <span class="record-card__primary">${escapeHtml(f.customer_name)} (${escapeHtml(f.reference)})</span>
+              <span class="record-card__amount">${money(f.amount_paid || 0)}</span>
+            </div>
+            <div class="record-card__row2">
+              <span class="record-card__secondary">${escapeHtml(f.customer_email)} · ${escapeHtml(f.reason || 'Flagged')}</span>
+              <button class="record-card__action" onclick="resolveFlaggedPayment('${escapeJs(f.reference)}')">Approve &amp; Grant Access ⚡</button>
+            </div>
+          </div>
+        `).join('');
+      }
+    } catch (err) {
+      if (tbody) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:32px; color:#f87171">Failed to load flagged payments: ${escapeHtml(err.message)}</td></tr>`;
+      }
+    }
+  }
+
   async function loadSalesView() {
+    loadPaystackGatewayStatus();
     const from = document.getElementById('sales-date-from').value;
     const to = document.getElementById('sales-date-to').value;
     document.getElementById('sales-date-clear').style.display = (from || to) ? 'inline-flex' : 'none';
@@ -2655,6 +3078,8 @@
 
     const data = await apiCall(url);
     allSalesData = data.transactions || [];
+    const countLocal = document.getElementById('count-local-sales');
+    if (countLocal) countLocal.textContent = allSalesData.length;
     filterSales();
   }
 

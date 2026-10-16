@@ -267,11 +267,21 @@ const SITE_REGISTRY = [
 
   // ── System Health ────────────────────────────────────────────────────────
   {
+    id: "paystack-gateway",
+    title: "Paystack Gateway Live Bridge",
+    description: "Real-time connection with Paystack: check live gateway balance, monitor incoming webhooks, and 1-click sync missing transactions.",
+    category: "Money & Orders",
+    type: "admin-section",
+    target: "sales",
+    icon: "bi bi-lightning-charge-fill",
+  },
+  {
     id: "flagged-payments",
     title: "Payments Needing Review",
     description: "Payment notifications that came in but didn't match an expected order — held here for you to check by hand instead of auto-approving.",
     category: "System Health",
-    type: "system",
+    type: "admin-section",
+    target: "sales",
     icon: "bi bi-flag-fill",
     status_key: "flagged_payments",
   },
