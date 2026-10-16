@@ -213,14 +213,37 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
 
         # API: Admin Analytics Overview
         if clean_path.startswith("/api/admin/analytics/overview"):
+            sales = _PAYSTACK_DEV_STORE.get("local_sales", [])
+            total_rev = sum(s.get("amount", 0) for s in sales)
+            total_sales = len(sales)
+            aov = (total_rev / total_sales) if total_sales > 0 else 0
+            recent_txs = [
+                {
+                    "name": s.get("name", "Student"),
+                    "email": s.get("email", ""),
+                    "amount": s.get("amount", 0),
+                    "verified_at": s.get("verified_at", ""),
+                    "reference": s.get("reference", ""),
+                    "status": s.get("status", "success"),
+                }
+                for s in sorted(sales, key=lambda x: x.get("verified_at", ""), reverse=True)[:10]
+            ]
             return self._send_json({
                 "period": "all",
-                "total_revenue": 8400000,
-                "total_orders": 4200,
-                "avg_order_value": 2000,
-                "conversion_rate": 3.8,
-                "sales_count": 4200,
-                "recent_sales": []
+                "total_revenue": total_rev,
+                "today_revenue": total_rev,
+                "week_revenue": total_rev,
+                "month_revenue": total_rev,
+                "total_sales": total_sales,
+                "aov": round(aov, 2),
+                "conversion_rate": 52.1,
+                "pending_payouts": 0.0,
+                "customers_without_access": 0,
+                "ai_insights": [],
+                "daily_trends": [{"_id": "2026-10-15", "revenue": total_rev}],
+                "recent_transactions": recent_txs,
+                "recent_leads": [],
+                "last_synced_at": datetime.now(timezone.utc).isoformat(),
             })
 
         # API: Admin Blog Categories

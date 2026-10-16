@@ -87,6 +87,7 @@ async def complete_payment(
     ip_address: str = None,
     payment_method: str = None,
     base_price: float = None,
+    verified_at: datetime = None,
 ) -> dict:
     """
     Idempotently complete a confirmed payment. Safe to call more than once
@@ -103,6 +104,7 @@ async def complete_payment(
     """
     email = email.lower()
     now = datetime.now(timezone.utc)
+    tx_time = verified_at if verified_at is not None else now
     amount_charged = float(amount or 0)
 
     # ── Resolve base product price ─────────────────────────────────────
@@ -151,9 +153,9 @@ async def complete_payment(
             "payment_method": payment_method,
             "status": "success",
             "gateway_response": gateway_response,
-            "verified_at": now,
-            "created_at": now,
-            "purchase_date": now,
+            "verified_at": tx_time,
+            "created_at": tx_time,
+            "purchase_date": tx_time,
             "ip_address": ip_address,
             "completed_via": completed_via,
             "tier": (pending.get("tier") if pending else "complete"),

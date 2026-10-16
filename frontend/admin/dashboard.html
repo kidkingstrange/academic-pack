@@ -1616,6 +1616,10 @@
         <option value="this_month">This Month</option>
       </select>
 
+      <button class="btn-action btn-secondary btn-icon" id="header-sync-btn" onclick="syncPaystackFromDashboard()" title="Sync Live Paystack Transactions (1-Click)">
+        <i class="bi bi-arrow-repeat"></i>
+      </button>
+
       <button class="btn-action btn-secondary btn-icon" onclick="openShortcutsModal()" title="Keyboard Shortcuts (?)">
         <i class="bi bi-keyboard"></i>
       </button>
@@ -1691,6 +1695,25 @@
           <div style="color:#fca5a5; font-size:0.88rem" id="delivery-alert-text">Some customers paid but never received their access link.</div>
         </div>
         <button onclick="switchSection('sales')" style="background:rgba(239,68,68,0.2); border:1px solid rgba(239,68,68,0.5); color:#f87171; padding:9px 18px; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.85rem; white-space:nowrap">View & Resend →</button>
+      </div>
+
+      <!-- Paystack Live Bridge Status & 1-Click Sync Bar -->
+      <div class="dash-sync-strip" style="background:var(--bg-card); border:1px solid rgba(212,175,55,0.25); border-radius:14px; padding:12px 20px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px">
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap">
+          <span class="status-pill success" style="font-size:0.75rem; padding:3px 10px; display:inline-flex; align-items:center; gap:6px">
+            <span class="status-dot-pulse" style="width:7px; height:7px; background:#4ade80"></span>
+            Paystack Live Connected
+          </span>
+          <span style="font-size:0.82rem; color:var(--gray-l)">
+            <i class="bi bi-clock-history" style="color:var(--gold-l); margin-right:4px"></i>
+            Last Auto-Sync: <span id="dash-last-sync-time" style="color:#fff; font-weight:600">Checking...</span>
+          </span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px">
+          <button id="btn-dash-sync" class="btn-action btn-primary" onclick="syncPaystackFromDashboard()" style="font-size:0.8rem; background:linear-gradient(135deg,var(--gold),#b8860b); color:#000; font-weight:700; padding:7px 16px; border-radius:8px">
+            <i class="bi bi-arrow-repeat"></i> 1-Click Paystack Sync
+          </button>
+        </div>
       </div>
 
       <div class="kpi-grid" id="dash-kpi-grid">
@@ -1781,7 +1804,7 @@
           <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:10px; padding:10px 14px">
             <div style="font-size:0.72rem; color:var(--gray-l); text-transform:uppercase; letter-spacing:0.5px">Paystack Webhook URL</div>
             <div style="display:flex; align-items:center; gap:6px; margin-top:3px">
-              <input type="text" id="paystack-webhook-url-input" readonly value="https://academic-pack.onrender.com/api/payments/webhook" style="background:transparent; border:none; color:var(--gray-l); font-size:0.75rem; font-family:monospace; width:100%" />
+              <input type="text" id="paystack-webhook-url-input" readonly value="https://edgepack.thescaleconference.com/api/payments/webhook" style="background:transparent; border:none; color:var(--gray-l); font-size:0.75rem; font-family:monospace; width:100%" />
               <button onclick="copyWebhookUrl()" class="btn-action btn-secondary" style="padding:2px 6px; font-size:0.7rem" title="Copy Webhook URL"><i class="bi bi-copy"></i></button>
             </div>
           </div>
@@ -2657,6 +2680,18 @@
   async function loadDashboardView(period) {
     const data = await apiCall(`/api/admin/analytics/overview?period=${period}`);
 
+    if (data.last_synced_at) {
+      const syncEl = document.getElementById('dash-last-sync-time');
+      if (syncEl) {
+        try {
+          const dt = new Date(data.last_synced_at);
+          syncEl.textContent = dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        } catch (_) {
+          syncEl.textContent = 'Just now';
+        }
+      }
+    }
+
     const kpiHTML = `
       <div class="kpi-card"><div class="kpi-title">Total Revenue</div><div class="kpi-val gold">${money(data.total_revenue)}</div></div>
       <div class="kpi-card"><div class="kpi-title">Today Revenue</div><div class="kpi-val">${money(data.today_revenue)}</div></div>
@@ -2875,6 +2910,50 @@
       if (btn) {
         btn.disabled = false;
         btn.innerHTML = originalText;
+      }
+    }
+  }
+
+  async function syncPaystackFromDashboard() {
+    const btn = document.getElementById('btn-dash-sync');
+    const headerBtn = document.getElementById('header-sync-btn');
+    const originalText = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = '<i class="bi bi-arrow-repeat spin"></i> Syncing...';
+    }
+    if (headerBtn) {
+      headerBtn.disabled = true;
+      headerBtn.classList.add('spin');
+    }
+
+    try {
+      showToast('Connecting to Paystack and reconciling sales...', 'info', 2500);
+      const res = await apiCall('/api/admin/paystack/sync', 'POST', { per_page: 50 });
+      if (res.success) {
+        const count = res.newly_reconciled_count || 0;
+        const msg = count > 0
+          ? `✓ Reconciled ${count} new sale(s) from Paystack! Dashboard updated.`
+          : `✓ All Paystack sales are up to date (${res.scanned || 0} scanned).`;
+        showToast(msg, 'success', 5000);
+        const period = document.getElementById('period-select') ? document.getElementById('period-select').value : 'all';
+        await loadDashboardView(period);
+        if (typeof loadSalesView === 'function' && currentView === 'sales') {
+          await loadSalesView();
+        }
+      } else {
+        showToast(res.detail || res.message || 'Could not sync with Paystack', 'error');
+      }
+    } catch (err) {
+      showToast('Error syncing with Paystack: ' + err.message, 'error');
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalText || '<i class="bi bi-arrow-repeat"></i> 1-Click Paystack Sync';
+      }
+      if (headerBtn) {
+        headerBtn.disabled = false;
+        headerBtn.classList.remove('spin');
       }
     }
   }

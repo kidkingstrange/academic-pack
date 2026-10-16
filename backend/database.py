@@ -114,6 +114,11 @@ async def connect_db():
             if isinstance(res, Exception):
                 print(f"[Warning] Index creation note: {res}")
         print("[DB] MongoDB connected")
+        try:
+            from .services.paystack_sync_service import sanitize_payment_records
+            asyncio.create_task(sanitize_payment_records(db))
+        except Exception:
+            pass
     except Exception as e:
         print(f"[Warning] Could not connect to MongoDB ({e}). Running in UI-only mode.")
         db = None

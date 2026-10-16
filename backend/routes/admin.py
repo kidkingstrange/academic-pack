@@ -157,13 +157,60 @@ async def get_lead_growth_analytics(current_user=Depends(require_admin), db=Depe
 
 
 # ── Dashboard tab data endpoints ────────────────────────────────────────────
+def build_payment_date_filter(start_date: Optional[datetime] = None, end_date: Optional[datetime] = None) -> dict:
+    if not start_date and not end_date:
+        return {}
+    
+    dt_clause = {}
+    str_clause = {}
+    if start_date:
+        dt_clause["$gte"] = start_date
+        str_clause["$gte"] = start_date.isoformat()
+    if end_date:
+        dt_clause["$lt"] = end_date
+        str_clause["$lt"] = end_date.isoformat()
+        
+    return {
+        "$or": [
+            {"verified_at": dt_clause},
+            {"verified_at": str_clause},
+            {
+                "$and": [
+                    {"$or": [{"verified_at": {"$exists": False}}, {"verified_at": None}]},
+                    {"created_at": dt_clause}
+                ]
+            },
+            {
+                "$and": [
+                    {"$or": [{"verified_at": {"$exists": False}}, {"verified_at": None}]},
+                    {"created_at": str_clause}
+                ]
+            },
+        ]
+    }
+
+
 # These back the 4 tabs in the rebuilt admin dashboard UI (frontend/admin/
 # dashboard.html). The UI was rewritten to call these paths at some point
 # without these routes ever being built — every tab 404'd. Reuses the same
 # aggregation logic already proven in the routes above / routes/affiliates.py
 # rather than inventing new logic.
 @router.get("/analytics/overview")
-async def get_analytics_overview(period: str = "all", current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_analytics_overview(
+    period: str = "all",
+    force_sync: bool = False,
+    current_user=Depends(require_admin),
+    db=Depends(get_db)
+):
+    from ..services.paystack_sync_service import auto_sync_paystack_successful_sales
+    
+    # Auto-sync successful Paystack sales (60s cooldown cache to avoid hitting Paystack rate limits)
+    sync_res = {}
+    try:
+        sync_res = await auto_sync_paystack_successful_sales(db, force=force_sync)
+    except Exception as sync_err:
+        print(f"⚠️ [AnalyticsOverview] Auto-sync notice: {sync_err}")
+
     now = datetime.now(timezone.utc)
     start_date = None
     end_date = None
@@ -179,13 +226,15 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
     elif period == "this_month":
         start_date = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
 
-    match_query = {"status": "success"}
+    date_filter = build_payment_date_filter(start_date, end_date)
+    status_filter = {"status": {"$in": ["success", "SUCCESS", "completed", "COMPLETED"]}}
+    
+    match_query = {**status_filter, **date_filter} if date_filter else status_filter
+
     lead_query = {}
     if start_date:
-        match_query["verified_at"] = {"$gte": start_date}
         lead_query["created_at"] = {"$gte": start_date}
     if end_date:
-        match_query.setdefault("verified_at", {})["$lt"] = end_date
         lead_query.setdefault("created_at", {})["$lt"] = end_date
 
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -193,7 +242,11 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
     month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
     thirty_days_ago = now - timedelta(days=30)
 
-    pipeline = [{"$match": match_query}, {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
+    pipeline = [
+        {"$match": match_query},
+        {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
+    ]
+
     owed_pipeline = [
         {"$match": {"is_recovery": {"$ne": True}}},
         {"$group": {
@@ -202,8 +255,11 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
             "paid": {"$sum": {"$cond": [{"$eq": ["$commission_status", "paid"]}, "$commission_amount", 0]}},
         }}
     ]
+
+    trend_date_filter = build_payment_date_filter(start_date=thirty_days_ago)
+    trend_match = {**status_filter, **trend_date_filter} if trend_date_filter else status_filter
     trend_pipeline = [
-        {"$match": {"status": "success", "verified_at": {"$gte": thirty_days_ago}}},
+        {"$match": trend_match},
         {"$group": {
             "_id": {"$dateToString": {"format": "%Y-%m-%d", "date": "$verified_at"}},
             "revenue": {"$sum": "$amount"},
@@ -212,8 +268,12 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
     ]
 
     async def revenue_since(since):
-        pipe = [{"$match": {"status": "success", "verified_at": {"$gte": since}}},
-                {"$group": {"_id": None, "total": {"$sum": "$amount"}}}]
+        filter_since = build_payment_date_filter(start_date=since)
+        match_since = {**status_filter, **filter_since}
+        pipe = [
+            {"$match": match_since},
+            {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
+        ]
         result = await db.payments.aggregate(pipe).to_list(1)
         return result[0]["total"] if result else 0
 
@@ -226,7 +286,7 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
         month_revenue,
         owed_result,
         daily_trends,
-        recent_transactions,
+        raw_recent_transactions,
         recent_leads,
     ) = await asyncio.gather(
         db.payments.count_documents(match_query),
@@ -238,7 +298,8 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
         db.referrals.aggregate(owed_pipeline).to_list(1),
         db.payments.aggregate(trend_pipeline).to_list(31),
         db.payments.find(
-            match_query, {"_id": 0, "name": 1, "email": 1, "amount": 1, "verified_at": 1, "reference": 1, "status": 1}
+            match_query,
+            {"_id": 0, "name": 1, "email": 1, "amount": 1, "amount_paid": 1, "verified_at": 1, "created_at": 1, "reference": 1, "status": 1}
         ).sort("verified_at", -1).limit(10).to_list(10),
         db.leads.find(
             lead_query, {"_id": 0, "email": 1, "source": 1, "created_at": 1}
@@ -250,6 +311,19 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
     conversion_rate = (total_sales / total_leads * 100) if total_leads > 0 else 0
     commission_owed = (owed_result[0]["earned"] - owed_result[0]["paid"]) if owed_result else 0
 
+    recent_transactions = []
+    for t in raw_recent_transactions:
+        amt = float(t.get("amount") if t.get("amount") is not None else (t.get("amount_paid") or 0.0))
+        vt = t.get("verified_at") or t.get("created_at")
+        vt_iso = vt.isoformat() if hasattr(vt, "isoformat") else str(vt or "")
+        recent_transactions.append({
+            "name": t.get("name") or "Student",
+            "email": t.get("email") or "",
+            "amount": amt,
+            "verified_at": vt_iso,
+            "reference": t.get("reference") or "",
+            "status": t.get("status") or "success",
+        })
 
     return {
         "total_revenue": total_revenue,
@@ -267,6 +341,8 @@ async def get_analytics_overview(period: str = "all", current_user=Depends(requi
         "daily_trends": daily_trends,
         "recent_transactions": recent_transactions,
         "recent_leads": recent_leads,
+        "last_synced_at": (sync_res.get("last_synced_at") if isinstance(sync_res, dict) else None) or now.isoformat(),
+        "sync_info": sync_res,
     }
 
 
@@ -1506,7 +1582,11 @@ async def resolve_flagged_payment(
 
 # ── Paystack Live Gateway Bridge & Auto-Sync ────────────────────────────────
 @router.get("/paystack/status")
-async def get_paystack_gateway_status(current_user=Depends(require_admin), db=Depends(get_db)):
+async def get_paystack_gateway_status(
+    request: Request,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
     """Check live Paystack connection, balance, mode, webhook health, and reconciliation status."""
     from ..services.paystack import get_paystack_balance
     
@@ -1532,11 +1612,19 @@ async def get_paystack_gateway_status(current_user=Depends(require_admin), db=De
     recent_webhook = await db.webhook_logs.find().sort("received_at", -1).limit(1).to_list(1)
     webhook_total = await db.webhook_logs.count_documents({})
     unresolved_flagged = await db.flagged_payments.count_documents({"resolved": False})
-    total_local_sales = await db.payments.count_documents({"status": "success"})
+    total_local_sales = await db.payments.count_documents({"status": {"$in": ["success", "SUCCESS", "completed", "COMPLETED"]}})
     
-    base_url = (settings.APP_URL or "https://academic-pack.onrender.com").rstrip("/")
-    if "localhost" in base_url and settings.APP_ENV != "development":
-        base_url = "https://academic-pack.onrender.com"
+    # Determine accurate production base URL dynamically
+    host = request.headers.get("x-forwarded-host") or request.headers.get("host") or ""
+    proto = request.headers.get("x-forwarded-proto") or "https"
+    if "edgepack.thescaleconference.com" in host or not settings.APP_URL:
+        base_url = "https://edgepack.thescaleconference.com"
+    elif host and "localhost" not in host and "127.0.0.1" not in host:
+        base_url = f"{proto}://{host}".rstrip("/")
+    else:
+        base_url = (settings.APP_URL or "https://edgepack.thescaleconference.com").rstrip("/")
+        if "localhost" in base_url and settings.APP_ENV != "development":
+            base_url = "https://edgepack.thescaleconference.com"
         
     webhook_url = f"{base_url}/api/payments/webhook"
     
@@ -1637,102 +1725,15 @@ async def sync_paystack_transactions(
     2. Identifies any that are missing in db.payments.
     3. Auto-completes them, generates student library access, and marks flagged records resolved.
     """
-    from ..services.paystack import list_transactions
-    from ..services.payment_completion import complete_payment, is_valid_paid_amount
+    from ..services.paystack_sync_service import auto_sync_paystack_successful_sales
     
-    try:
-        raw_res = await list_transactions(status="success", page=1, per_page=per_page)
-    except Exception as e:
-        raise HTTPException(status_code=502, detail=f"Failed to query Paystack: {str(e)}")
+    res = await auto_sync_paystack_successful_sales(db, per_page=per_page, force=True)
+    if not res.get("success") and res.get("message") and "PAYSTACK_SECRET_KEY" in res.get("message"):
+        raise HTTPException(status_code=400, detail=res["message"])
+    elif not res.get("success") and "Failed to query Paystack" in (res.get("message") or ""):
+        raise HTTPException(status_code=502, detail=res["message"])
         
-    if not raw_res.get("status"):
-        raise HTTPException(status_code=502, detail=raw_res.get("message") or "Failed to query Paystack")
-        
-    txs = raw_res.get("data", [])
-    already_synced = 0
-    newly_reconciled = []
-    
-    for tx in txs:
-        ref = tx.get("reference")
-        if not ref:
-            continue
-            
-        existing = await db.payments.find_one({"reference": ref, "status": "success"})
-        if existing:
-            already_synced += 1
-            continue
-            
-        amount_paid = (tx.get("amount") or 0) / 100.0
-        fee_paid = float((tx.get("fees") or 0) / 100.0)
-        cust = tx.get("customer", {})
-        email = cust.get("email") or ""
-        name = f"{cust.get('first_name', '')} {cust.get('last_name', '')}".strip() or "Student"
-        
-        pending = await db.pending_payments.find_one({"reference": ref})
-        if pending:
-            email = email or pending.get("email")
-            name = pending.get("name") or name
-            expected = float(pending.get("amount", 0) or 0)
-        else:
-            expected = 0.0
-            
-        if expected > 0 and not is_valid_paid_amount(amount_paid, expected, fee_paid):
-            await db.flagged_payments.update_one(
-                {"reference": ref},
-                {"$set": {
-                    "reason": "amount_mismatch",
-                    "expected_amount": expected,
-                    "amount_paid": amount_paid,
-                    "payload": tx,
-                    "resolved": False,
-                    "flagged_at": datetime.now(timezone.utc),
-                }},
-                upsert=True
-            )
-            continue
-            
-        if not email:
-            continue
-            
-        try:
-            completion = await complete_payment(
-                db,
-                reference=ref,
-                email=email,
-                name=name,
-                amount=amount_paid,
-                charge_id=str(tx.get("id", ref)),
-                gateway_response=tx,
-                completed_via="paystack_admin_sync",
-                payment_method=tx.get("channel"),
-            )
-            await db.flagged_payments.update_one(
-                {"reference": ref},
-                {"$set": {
-                    "resolved": True,
-                    "resolved_at": datetime.now(timezone.utc),
-                    "resolved_by": current_user.get("email", "admin"),
-                    "resolution_notes": "Resolved via Paystack 1-click admin sync",
-                }}
-            )
-            newly_reconciled.append({
-                "reference": ref,
-                "email": email,
-                "name": name,
-                "amount": amount_paid,
-                "magic_link": completion.get("magic_link"),
-            })
-        except Exception as sync_err:
-            print(f"⚠️ Error reconciling {ref} during Paystack sync: {sync_err}")
-            
-    return {
-        "success": True,
-        "scanned": len(txs),
-        "already_synced": already_synced,
-        "newly_reconciled_count": len(newly_reconciled),
-        "newly_reconciled": newly_reconciled,
-        "message": f"Scanned {len(txs)} Paystack transactions: {already_synced} already up to date, {len(newly_reconciled)} newly reconciled and granted access.",
-    }
+    return res
 
 
 class ReconcilePaystackRefRequest(BaseModel):

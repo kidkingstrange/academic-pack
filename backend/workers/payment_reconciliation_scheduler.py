@@ -95,22 +95,27 @@ async def auto_reconcile_flagged_payments(db):
 
 async def _run_job():
     from ..database import db
+    from ..services.paystack_sync_service import auto_sync_paystack_successful_sales
     if db is not None:
         await auto_reconcile_flagged_payments(db)
+        try:
+            await auto_sync_paystack_successful_sales(db, per_page=50, force=False)
+        except Exception as e:
+            print(f"⚠️ [PaymentReconciliationScheduler] Auto-sync notice: {e}")
 
 
 def start_reconciliation_scheduler():
     if not scheduler.running:
         scheduler.add_job(
             _run_job,
-            trigger=IntervalTrigger(minutes=15),
+            trigger=IntervalTrigger(minutes=3),
             id="payment_auto_reconciliation_job",
             replace_existing=True,
             max_instances=1,
             coalesce=True,
         )
         scheduler.start()
-        print("[Schedulers] Payment auto-reconciliation scheduler started (runs every 15m)")
+        print("[Schedulers] Payment auto-reconciliation scheduler started (runs every 3m)")
 
 
 def stop_reconciliation_scheduler():
