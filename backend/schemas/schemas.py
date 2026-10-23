@@ -31,6 +31,8 @@ class PaymentInitRequest(BaseModel):
     tier: Optional[str] = None  # Explicitly set only by recovery flows ("starter" | "complete" | "vip")
     friend_emails: Optional[List[str]] = None
     is_recovery: Optional[bool] = False
+    product_slug: Optional[str] = None  # e.g. "quitting-the-handjob"
+    product_title: Optional[str] = None  # e.g. "Quitting The Handjob"
 
 
 class PaymentInitResponse(BaseModel):

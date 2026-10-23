@@ -5,6 +5,29 @@ const API_BASE = '/api';
 
 const BOOKS = [
   {
+    id: "quitting-the-handjob",
+    title: "Quitting The Handjob: How to Stop Masturbation and Pornography Addiction Forever",
+    cover: "/book-covers/quitting-the-handjob.webp",
+    category: "Mindset & Health",
+    rating: 4.9,
+    reviews: 285,
+    salesPage: "/quitting-the-handjob",
+    description: "The definitive neuroscience-grounded blueprint to break free from compulsive masturbation, heal dopamine receptors, eliminate brain fog, and reclaim masculine energy and self-command.",
+    painPoints: [
+      "Stuck in the cycle of shame, late-night relapses, and broken promises to yourself",
+      "Experiencing crippling brain fog, low energy, social anxiety, and eroded motivation",
+      "Relying on sheer willpower or 'streak counters' only to relapse whenever stress strikes"
+    ],
+    solutionOverview: "This system addresses the neurobiological root cause of compulsive habits. Using the C.A.R.E. framework, emergency relapse protocols, and dopamine receptor resensitization, you will end the cycle permanently without relying on fragile willpower.",
+    whoShouldReadThis: "Men struggling with compulsive porn use, chronic masturbation, brain fog, low testosterone symptoms, guilt, and reduced focus who want to reclaim full vitality and sovereign self-mastery.",
+    bullets: [
+      "The Dopamine Reset Protocol: Heal hijacked neuro-pathways in 30 days",
+      "The C.A.R.E. Framework: Cue Disruption, Urge Surfing, Friction & State Shifting",
+      "The 5-Minute Emergency Protocol: Instant intervention when urges peak",
+      "Identity Reconstruction: Stop identifying as an 'addict fighting streaks' and become indifferent to the urge"
+    ]
+  },
+  {
     id: "how-to-close-high-paying-clients-in-the-dms",
     title: "How to Close High-Paying Clients in the DMs",
     cover: "/assets/covers/how-to-close-high-paying-clients-in-the-dms.webp",
@@ -786,7 +809,9 @@ function renderBooks() {
 
     const buttonHtml = isOwned
       ? `<button class="btn btn--green book-card__btn" onclick="event.stopPropagation(); location.href='/library'">Read Now</button>`
-      : `<button class="btn btn--gold book-card__btn" onclick="event.stopPropagation(); openPreorderModal('${book.id}')">Buy Playbook</button>`;
+      : (book.salesPage
+          ? `<a class="btn btn--gold book-card__btn" href="${book.salesPage}" onclick="event.stopPropagation();" style="display:inline-flex; align-items:center; justify-content:center; text-decoration:none;">Read Sales Page</a>`
+          : `<button class="btn btn--gold book-card__btn" onclick="event.stopPropagation(); openPreorderModal('${book.id}')">Buy Playbook</button>`);
 
     return `
     <div class="book-card" data-id="${book.id}" onclick="openBookDetailsModal('${book.id}')" style="cursor:pointer;">
@@ -805,8 +830,8 @@ function renderBooks() {
         </div>
         <h3 class="book-card__title">${escapeHtml(book.title)}</h3>
         <p class="book-card__desc">${escapeHtml(book.description)}</p>
-        <div class="book-card__details-action" onclick="event.stopPropagation(); openBookDetailsModal('${book.id}')">
-          <i class="bi bi-info-circle-fill"></i> Read Details & Takeaways &rarr;
+        <div class="book-card__details-action" onclick="event.stopPropagation(); ${book.salesPage ? `location.href='${book.salesPage}'` : `openBookDetailsModal('${book.id}')`}">
+          <i class="bi ${book.salesPage ? 'bi-box-arrow-up-right' : 'bi-info-circle-fill'}"></i> ${book.salesPage ? 'Read Dedicated Sales Page &rarr;' : 'Read Details & Takeaways &rarr;'}
         </div>
         <div class="book-card__footer">
           <div class="book-card__price">
@@ -862,13 +887,30 @@ function openBookDetailsModal(bookId) {
     whoEl.textContent = book.whoShouldReadThis || `Ambitious performers and leaders in ${escapeHtml(book.category)}.`;
   }
 
-  // Wire up Buy Button
+  // Wire up Buy Button & Sales Page Button
   const buyBtn = document.getElementById('details-buy-btn');
-  if (buyBtn) {
-    buyBtn.onclick = () => {
-      closeBookDetailsModal();
-      openPreorderModal(book.id);
-    };
+  const salesBtn = document.getElementById('details-sales-page-btn');
+  if (book.salesPage) {
+    if (salesBtn) {
+      salesBtn.href = book.salesPage;
+      salesBtn.style.display = 'inline-flex';
+    }
+    if (buyBtn) {
+      buyBtn.onclick = () => {
+        closeBookDetailsModal();
+        window.location.href = book.salesPage;
+      };
+      buyBtn.innerHTML = `View Sales Page & Get It — <span class="naira">₦</span> 5,000`;
+    }
+  } else {
+    if (salesBtn) salesBtn.style.display = 'none';
+    if (buyBtn) {
+      buyBtn.onclick = () => {
+        closeBookDetailsModal();
+        openPreorderModal(book.id);
+      };
+      buyBtn.innerHTML = `Buy Playbook Now — <span class="naira">₦</span> 5,000`;
+    }
   }
 
   document.getElementById('book-details-modal').classList.add('open');

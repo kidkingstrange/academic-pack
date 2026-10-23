@@ -580,6 +580,10 @@ class CleanUrlHandler(http.server.SimpleHTTPRequestHandler):
             return str(html_target)
 
         # Check special route aliases
+        if clean_path in ("/books/quitting-the-handjob", "/books/quitting-the-handjob/"):
+            p = DIRECTORY / "quitting-the-handjob.html"
+            if p.is_file():
+                return str(p)
         if clean_path in ("/affiliate/register", "/affiliate/register/"):
             p = DIRECTORY / "affiliate-register.html"
             if p.is_file():

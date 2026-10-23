@@ -51,6 +51,12 @@ CANONICAL_PRODUCT_MAP: Dict[str, List[str]] = {
         "Exam_Survival_Guide.pdf",
         "__Exam_Survival_Guide.pdf",
     ],
+    "handjob": [
+        "Quitting_The_Handjob_David_Itoya.pdf",
+        "quitting_the_handjob.pdf",
+        "quitting-the-handjob.pdf",
+        "Quitting The Handjob.pdf",
+    ],
 }
 
 
@@ -83,6 +89,8 @@ def resolve_product_pdf_path(product: dict, uploads_dir_setting: str = "uploads/
         elif key == "focus" and "focus" in title:
             matched = True
         elif key == "survival" and "survival" in title:
+            matched = True
+        elif key == "handjob" and ("handjob" in title or "quitting" in title or "masturbation" in title or "pornography" in title):
             matched = True
 
         if matched:

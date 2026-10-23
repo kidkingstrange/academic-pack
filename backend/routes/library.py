@@ -145,7 +145,8 @@ async def get_library(user=Depends(get_library_user), db=Depends(get_db)):
     result = []
     for p in products:
         p_id = str(p["_id"])
-        is_locked = not (has_all or p_id in user_prods)
+        p_slug = p.get("slug")
+        is_locked = not (has_all or p_id in user_prods or (p_slug and p_slug in user_prods))
         result.append({
             "id": p_id,
             "title": p["title"],
@@ -171,18 +172,29 @@ async def sign_download(
     db=Depends(get_db),
 ):
     """Issue a short-lived signed URL for downloading a specific product."""
-    product = await db.products.find_one({"_id": ObjectId(product_id), "is_active": True})
+    query = {"is_active": True}
+    if ObjectId.is_valid(product_id):
+        query["_id"] = ObjectId(product_id)
+    else:
+        query["slug"] = product_id
+
+    product = await db.products.find_one(query)
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 
     user_id = str(user["_id"])
+    prod_id_str = str(product["_id"])
+    prod_slug = product.get("slug")
+    user_prods = user.get("purchased_products", [])
+
     # Verify user has access
-    if not user or ("all" not in user.get("purchased_products", []) and
-                    product_id not in user.get("purchased_products", [])):
+    if not user or ("all" not in user_prods and
+                    prod_id_str not in user_prods and
+                    (not prod_slug or prod_slug not in user_prods)):
         raise HTTPException(status_code=403, detail="Access denied")
 
     # Issue signed token
-    signed_token = create_download_token(user_id, product_id)
+    signed_token = create_download_token(user_id, prod_id_str)
 
     # Log download attempt
     await db.downloads.insert_one({

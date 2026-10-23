@@ -99,16 +99,32 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     Step 1: Determine price, initialize Paystack transaction,
     return authorization/redirect URL.
     """
-    reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+    product_slug = (getattr(body, "product_slug", None) or "").strip().lower()
+    product_title = (getattr(body, "product_title", None) or "").strip()
+    if product_slug == "quitting-the-handjob":
+        reference = f"ACP-QTH-{uuid.uuid4().hex[:12].upper()}"
+        product_title = product_title or "Quitting The Handjob"
+    else:
+        reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
     now = datetime.now(timezone.utc)
 
     currency = (body.currency or ("USD" if (body.country or "").upper() == "US" else "NGN")).strip().upper()
     tier_requested = (body.tier or "").strip().lower() if body.tier else None
     tier = tier_requested if tier_requested in ("starter", "complete", "vip") else "complete"
 
-    amount, referred_by = await compute_price_and_referral(
-        db, body.email, body.client_expiry, body.referral_code, currency=currency, tier=tier_requested
-    )
+    if product_slug == "quitting-the-handjob":
+        amount = float(settings.PRODUCT_PRICE_NAIRA)
+        referred_by = None
+        if body.referral_code:
+            candidate = body.referral_code.strip().upper()
+            if candidate:
+                affiliate = await db.affiliates.find_one({"code": candidate, "active": {"$ne": False}})
+                if affiliate:
+                    referred_by = candidate
+    else:
+        amount, referred_by = await compute_price_and_referral(
+            db, body.email, body.client_expiry, body.referral_code, currency=currency, tier=tier_requested
+        )
     base_price_before_discount = float(amount)
     friend_discount_applied = False
     valid_friend_emails = []
@@ -241,20 +257,26 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
 
     callback_url = f"{settings.APP_URL}/api/payments/callback"
     try:
+        meta = {
+            "name": body.name,
+            "payment_method": payment_method,
+            "currency": currency,
+            "friend_discount_applied": friend_discount_applied,
+            "friend_emails": valid_friend_emails,
+            "commission_base_price": base_price_before_discount,
+            "amount_paid": amount,
+        }
+        if product_slug:
+            meta["product_slug"] = product_slug
+        if product_title:
+            meta["product_title"] = product_title
+
         tx_data = await initialize_transaction(
             email=body.email.lower(),
             amount_naira=amount,
             reference=reference,
             callback_url=callback_url,
-            metadata={
-                "name": body.name,
-                "payment_method": payment_method,
-                "currency": currency,
-                "friend_discount_applied": friend_discount_applied,
-                "friend_emails": valid_friend_emails,
-                "commission_base_price": base_price_before_discount,
-                "amount_paid": amount,
-            },
+            metadata=meta,
             channels=channels,
             currency=currency if currency == "USD" else None,
             subaccount=subaccount_code if split_applied else None,
@@ -265,21 +287,27 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         if currency == "USD" and ("Currency not supported" in err_msg or "currency" in err_msg.lower()):
             print(f"⚠️ Paystack USD not enabled on merchant account: {err_msg}. Falling back to NGN equivalent.")
             ngn_equivalent = amount * settings.USD_TO_NGN_RATE
+            usd_meta = {
+                "name": body.name,
+                "payment_method": payment_method,
+                "original_currency": "USD",
+                "usd_amount": amount,
+                "friend_discount_applied": friend_discount_applied,
+                "friend_emails": valid_friend_emails,
+                "commission_base_price": base_price_before_discount,
+            }
+            if product_slug:
+                usd_meta["product_slug"] = product_slug
+            if product_title:
+                usd_meta["product_title"] = product_title
+
             try:
                 tx_data = await initialize_transaction(
                     email=body.email.lower(),
                     amount_naira=ngn_equivalent,
                     reference=reference,
                     callback_url=callback_url,
-                    metadata={
-                        "name": body.name,
-                        "payment_method": payment_method,
-                        "original_currency": "USD",
-                        "usd_amount": amount,
-                        "friend_discount_applied": friend_discount_applied,
-                        "friend_emails": valid_friend_emails,
-                        "commission_base_price": base_price_before_discount,
-                    },
+                    metadata=usd_meta,
                     channels=channels,
                     currency=None,
                     subaccount=subaccount_code if split_applied else None,
@@ -304,6 +332,9 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "payment_method":             payment_method,
             "email":                      body.email.lower(),
             "name":                       body.name,
+            "product_slug":               product_slug or None,
+            "product_title":              product_title or None,
+            "book_title":                 product_title or None,
             "base_price":                 amount,
             "commission_base_price":      base_price_before_discount,
             "amount":                     amount,
@@ -463,23 +494,24 @@ async def payment_callback(
     from fastapi.responses import RedirectResponse
 
     ref = trxref or reference
-    if not ref:
-        return RedirectResponse("/academic-comeback-package?error=missing_reference")
+    pending = await db.pending_payments.find_one({"reference": ref}) if ref else None
+    error_base = f"/{pending.get('product_slug')}" if (pending and pending.get("product_slug")) else "/academic-comeback-package"
 
-    pending = await db.pending_payments.find_one({"reference": ref})
+    if not ref:
+        return RedirectResponse(f"{error_base}?error=missing_reference")
 
     try:
         result = await verify_transaction(ref)
         data = result.get("data", {})
     except Exception:
-        return RedirectResponse(f"/academic-comeback-package?error=verify_failed&reference={ref}")
+        return RedirectResponse(f"{error_base}?error=verify_failed&reference={ref}")
 
     if not result.get("status") or data.get("status") != "success":
-        return RedirectResponse(f"/academic-comeback-package?error=payment_not_confirmed&reference={ref}")
+        return RedirectResponse(f"{error_base}?error=payment_not_confirmed&reference={ref}")
 
     email = (pending.get("email") if pending else None) or data.get("customer", {}).get("email")
     if not email:
-        return RedirectResponse(f"/academic-comeback-package?error=order_not_found&reference={ref}")
+        return RedirectResponse(f"{error_base}?error=order_not_found&reference={ref}")
 
     name = (pending.get("name") if pending else None) or f"{data.get('customer', {}).get('first_name', '')} {data.get('customer', {}).get('last_name', '')}".strip() or "Student"
     amount_paid = data.get("amount", 0) / 100.0
@@ -489,7 +521,7 @@ async def payment_callback(
     expected_amount = float(pending.get("amount", 0) or 0) if pending else 0
     if expected_amount > 0 and not is_valid_paid_amount(amount_paid, expected_amount, fee_paid):
         print(f"⚠️ Payment callback: Amount mismatch for {ref}. Expected {expected_amount}, received {amount_paid}")
-        return RedirectResponse(f"/academic-comeback-package?error=amount_mismatch&reference={ref}")
+        return RedirectResponse(f"{error_base}?error=amount_mismatch&reference={ref}")
 
     completion = await complete_payment(
         db,

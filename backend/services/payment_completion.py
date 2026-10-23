@@ -137,12 +137,19 @@ async def complete_payment(
     friend_discount_applied = bool(pending.get("friend_discount_applied", False)) if pending else False
     friend_emails = list(pending.get("friend_emails", [])) if pending else []
 
+    product_slug = pending.get("product_slug") if pending else None
+    if not product_slug and reference.startswith("ACP-QTH-"):
+        product_slug = "quitting-the-handjob"
+    book_title = (pending.get("book_title") if pending else None) or ("Quitting The Handjob" if product_slug else None)
+
     try:
         await db.payments.insert_one({
             "reference": reference,
             "charge_id": charge_id,
             "email": email,
             "name": name,
+            "product_slug": product_slug,
+            "book_title": book_title,
             "base_price": resolved_base_price,
             "commission_base_price": commission_base,
             "amount_charged": amount_charged,
@@ -175,15 +182,26 @@ async def complete_payment(
     current_products = user.get("purchased_products", []) if user else []
     already_has_all = "all" in current_products
     
-    if tier == "starter" and not already_has_all:
+    if product_slug == "quitting-the-handjob":
+        qth_prod = await db.products.find_one({"$or": [{"slug": "quitting-the-handjob"}, {"title": "Quitting The Handjob"}]})
+        qth_id = str(qth_prod["_id"]) if qth_prod else "quitting-the-handjob"
+        if already_has_all:
+            new_products = current_products
+        else:
+            new_products = list(set(current_products + [qth_id, "quitting-the-handjob"]))
+        user_tier = user.get("tier", "single_book") if user else "single_book"
+    elif tier == "starter" and not already_has_all:
         starter_prods = await db.products.find({"order": {"$in": [1, 2]}}).to_list(10)
         starter_ids = [str(p["_id"]) for p in starter_prods]
         new_products = list(set(current_products + starter_ids))
+        user_tier = "starter"
     else:
         new_products = ["all"]
+        user_tier = "complete"
         
     is_vip = True if tier == "vip" or (user and user.get("is_vip")) else False
-    user_tier = "vip" if is_vip else ("complete" if "all" in new_products else tier)
+    if is_vip:
+        user_tier = "vip"
 
     # ── Create or get the user ─────────────────────────────────────────
     access_token = secrets.token_urlsafe(32)

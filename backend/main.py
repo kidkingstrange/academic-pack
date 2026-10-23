@@ -186,6 +186,15 @@ async def serve_acp_landing():
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
 
+@app.get("/quitting-the-handjob", include_in_schema=False)
+@app.get("/quitting-the-handjob.html", include_in_schema=False)
+@app.get("/books/quitting-the-handjob", include_in_schema=False)
+async def serve_qth_landing():
+    return FileResponse(
+        str(frontend_path / "quitting-the-handjob.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
 @app.get("/us", include_in_schema=False)
 @app.get("/us.html", include_in_schema=False)
 async def serve_us_landing():

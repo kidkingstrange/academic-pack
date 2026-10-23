@@ -119,6 +119,27 @@ async def connect_db():
             asyncio.create_task(sanitize_payment_records(db))
         except Exception:
             pass
+
+        try:
+            from datetime import datetime, timezone
+            now_dt = datetime.now(timezone.utc)
+            from scripts.sync_products_db import CANONICAL_PRODUCTS
+            for cp in CANONICAL_PRODUCTS:
+                exists = await db.products.find_one({"$or": [{"order": cp["order"]}, {"title": cp["title"]}]})
+                if not exists:
+                    await db.products.insert_one({
+                        "title": cp["title"],
+                        "description": cp["description"],
+                        "file_path": cp["file_path"],
+                        "thumbnail": None,
+                        "order": cp["order"],
+                        "slug": cp.get("slug"),
+                        "price_naira": cp.get("price_naira", 5000),
+                        "is_active": True,
+                        "created_at": now_dt,
+                    })
+        except Exception as seed_err:
+            print(f"[Warning] Product auto-sync note: {seed_err}")
     except Exception as e:
         print(f"[Warning] Could not connect to MongoDB ({e}). Running in UI-only mode.")
         db = None

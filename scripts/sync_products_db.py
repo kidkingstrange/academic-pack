@@ -64,6 +64,15 @@ CANONICAL_PRODUCTS = [
         "file_path": "exam_survival_guide.pdf",
         "aliases": ["🔥 Exam Survival Guide.pdf", "exam_survival_guide.pdf"],
     },
+    {
+        "order": 8,
+        "title": "Quitting The Handjob",
+        "description": "How to Stop Masturbation and Pornography Addiction Forever. A neurochemical and behavioral recovery blueprint for lasting freedom.",
+        "file_path": "Quitting_The_Handjob_David_Itoya.pdf",
+        "aliases": ["Quitting_The_Handjob_David_Itoya.pdf", "quitting_the_handjob.pdf", "quitting-the-handjob.pdf", "Quitting The Handjob.pdf"],
+        "slug": "quitting-the-handjob",
+        "price_naira": 5000,
+    },
 ]
 
 async def sync_products():

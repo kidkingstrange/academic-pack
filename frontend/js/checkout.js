@@ -435,6 +435,8 @@ form.addEventListener('submit', async (e) => {
         referral_code:  referralCode || null,
         friend_emails:  friendEmailsPayload,
         is_recovery:    isRecovery,
+        product_slug:   window.PRODUCT_SLUG || null,
+        product_title:  window.PRODUCT_TITLE || null,
       }),
     });
 
