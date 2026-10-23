@@ -406,6 +406,7 @@ form.addEventListener('submit', async (e) => {
   btn.disabled   = true;
   btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
 
+  try {
     const urlParams = new URLSearchParams(window.location.search);
     const isRecovery = urlParams.get('recovery') === '1' ||
                        urlParams.get('is_recovery') === '1' ||
