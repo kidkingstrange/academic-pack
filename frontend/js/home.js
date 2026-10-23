@@ -9,8 +9,8 @@ const BOOKS = [
     title: "Quitting The Handjob: How to Stop Masturbation and Pornography Addiction Forever",
     cover: "/book-covers/quitting-the-handjob.webp",
     category: "Mindset & Health",
-    rating: 4.9,
-    reviews: 285,
+    rating: 5.0,
+    reviews: 0,
     salesPage: "/quitting-the-handjob",
     description: "The definitive neuroscience-grounded blueprint to break free from compulsive masturbation, heal dopamine receptors, eliminate brain fog, and reclaim masculine energy and self-command.",
     painPoints: [
@@ -854,7 +854,7 @@ function openBookDetailsModal(bookId) {
   document.getElementById('details-book-title').textContent = book.title;
   document.getElementById('details-book-category').textContent = book.category;
   document.getElementById('details-book-rating').textContent = book.rating;
-  document.getElementById('details-book-reviews').textContent = `(${book.reviews || 200}+ verified readers)`;
+  document.getElementById('details-book-reviews').textContent = book.reviews ? `(${book.reviews}+ verified readers)` : '(New Release)';
 
   // Render Pain Points
   const painEl = document.getElementById('details-pain-points');

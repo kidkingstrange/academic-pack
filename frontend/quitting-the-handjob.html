@@ -183,7 +183,6 @@ window.PRODUCT_PRICE = 5000;
       <a href="/quitting-the-handjob" class="global-nav__link active">The Book</a>
       <a href="#curriculum" class="global-nav__link">What's Inside</a>
       <a href="#neuroscience" class="global-nav__link">The Science</a>
-      <a href="#reviews" class="global-nav__link">Reader Stories</a>
       <a href="/library" class="global-nav__link">My Library</a>
       <button class="global-nav__cta-pill" onclick="openCheckout()">
         Get the Book <span class="cta-arrow">↗</span>
@@ -429,83 +428,7 @@ window.PRODUCT_PRICE = 5000;
 
 
 
-<!-- Testimonials / Social Proof Section -->
-<section class="testimonials" id="reviews">
-  <div class="container">
-    <div class="testi-header" data-aos="fade-up">
-      <div>
-        <span class="section-label">Verified Readers</span>
-        <h2 class="section-title">Men who took their minds and lives back</h2>
-      </div>
-      <div class="testi-slider-controls">
-        <button type="button" class="testi-arrow-btn testi-arrow-prev" id="testiPrevBtn" aria-label="Previous">
-          <i class="bi bi-chevron-left"></i>
-        </button>
-        <button type="button" class="testi-arrow-btn testi-arrow-next" id="testiNextBtn" aria-label="Next">
-          <i class="bi bi-chevron-right"></i>
-        </button>
-      </div>
-    </div>
-    
-    <div class="testi-slider-container" data-aos="fade-up" data-aos-delay="100">
-      <div class="testi-slider-viewport" id="testiViewport">
-        <div class="testi-slider-track" id="testiTrack">
-          <!-- Card 1 -->
-          <div class="testi-card">
-            <div class="testi-card__header">
-              <div class="testi-card__badges">
-                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Reader</span>
-                <span class="testi-metric"><i class="bi bi-lightning-charge-fill"></i> 74 Days Free</span>
-              </div>
-              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-            </div>
-            <p class="testi-card__text">"I was addicted for 8 years. I tried every NoFap challenge on Reddit and never made it past 9 days. <strong>Chapter 4's emergency protocol literally saved my life.</strong> I have gone 74 days clean without a single urge knocking me over. My brain fog is gone, and my business revenue doubled."</p>
-            <div class="testi-card__author">T. M. — Software Engineer (Lagos)</div>
-          </div>
 
-          <!-- Card 2 -->
-          <div class="testi-card">
-            <div class="testi-card__header">
-              <div class="testi-card__badges">
-                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Reader</span>
-                <span class="testi-metric"><i class="bi bi-award-fill"></i> Massive Confidence</span>
-              </div>
-              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-            </div>
-            <p class="testi-card__text">"What shocked me was the explanation of D2 dopamine receptors. I finally understood why I was so awkward and fearful around women and in meetings. <strong>Within 3 weeks of applying the C.A.R.E. protocol, people started noticing a dramatic shift in my voice and posture.</strong>"</p>
-            <div class="testi-card__author">O. A. — 400L Medical Student (Ibadan)</div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="testi-card">
-            <div class="testi-card__header">
-              <div class="testi-card__badges">
-                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Reader</span>
-                <span class="testi-metric"><i class="bi bi-shield-check"></i> Zero Post-Nut Guilt</span>
-              </div>
-              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-            </div>
-            <p class="testi-card__text">"I used to hate myself after every session. It was an endless, humiliating loop. This book stripped away all the religious guilt and gave me hard, clinical mechanics. <strong>For the first time in my adult life, I feel completely in control of my own impulses.</strong>"</p>
-            <div class="testi-card__author">K. E. — Growth Marketer (Abuja)</div>
-          </div>
-
-          <!-- Card 4 -->
-          <div class="testi-card">
-            <div class="testi-card__header">
-              <div class="testi-card__badges">
-                <span class="testi-badge"><i class="bi bi-patch-check-fill"></i> Verified Reader</span>
-                <span class="testi-metric"><i class="bi bi-fire"></i> Energy Sublimated</span>
-              </div>
-              <div class="testi-card__stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-            </div>
-            <p class="testi-card__text">"The transmutation chapter alone is worth 100x the price. I channeled that pent-up tension directly into the gym and my new sales agency. <strong>I dropped body fat, gained 4kg of muscle, and my mental focus is sharper than it's ever been.</strong>"</p>
-            <div class="testi-card__author">D. O. — Fitness Coach &amp; Founder</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- Mid-Page CTA -->
 <section class="mid-cta">
@@ -845,41 +768,7 @@ window.PRODUCT_PRICE = 5000;
 <script>
 AOS.init({ once: true, offset: 50, duration: 600 });
 
-// ── Testimonials Slider ──
-(function() {
-  const track = document.getElementById('testiTrack');
-  const prevBtn = document.getElementById('testiPrevBtn');
-  const nextBtn = document.getElementById('testiNextBtn');
-  if (!track || !prevBtn || !nextBtn) return;
 
-  let currentPos = 0;
-  const cards = track.querySelectorAll('.testi-card');
-  const total = cards.length;
-
-  function update() {
-    const cardWidth = cards[0].offsetWidth + 20;
-    track.style.transform = `translateX(-${currentPos * cardWidth}px)`;
-    track.style.transition = 'transform 0.4s ease';
-  }
-
-  nextBtn.addEventListener('click', () => {
-    if (currentPos < total - 1) {
-      currentPos++;
-    } else {
-      currentPos = 0;
-    }
-    update();
-  });
-
-  prevBtn.addEventListener('click', () => {
-    if (currentPos > 0) {
-      currentPos--;
-    } else {
-      currentPos = total - 1;
-    }
-    update();
-  });
-})();
 
 // ── Support / Resend Link Modal ──
 function openRefundModal() {
