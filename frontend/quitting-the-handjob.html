@@ -156,6 +156,24 @@ window.PRODUCT_PRICE = 5000;
   line-height: 1.55;
   margin: 0;
 }
+.reframe-slider-top {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  margin-bottom: 16px;
+}
+.reframe-arrow-btn:hover {
+  background: #0f172a !important;
+  border-color: #0f172a !important;
+  color: #ffffff !important;
+}
+.reframe-dot.active {
+  background: #0f172a !important;
+}
+.reframe__pillar-card {
+  aspect-ratio: auto !important;
+  min-height: 480px;
+}
 </style>
 </head>
 <body>
@@ -317,48 +335,201 @@ window.PRODUCT_PRICE = 5000;
         </p>
       </div>
 
-      <!-- 4 Core Pillars of Recovery -->
+      <!-- 4 Core Pillars of Recovery Slider -->
       <div class="reframe-slider-container" data-aos="fade-left">
-        <div style="display: flex; flex-direction: column; gap: 16px;">
-          <!-- Pillar 1 -->
-          <div class="chapter-card" style="border-left: 4px solid #f59e0b;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span class="chapter-badge">PILLAR 01 · NEUROBIOLOGY</span>
-              <span style="font-size: 0.8rem; font-weight: 700; color: #16a34a;"><i class="bi bi-check-circle-fill"></i> D2 Resensitization</span>
-            </div>
-            <h4>Dopamine Receptor Regeneration</h4>
-            <p>Understand the exact 30-day biological timeline required for your brain to regenerate downregulated dopamine receptors, lifting chronic brain fog and restoring genuine daily drive.</p>
+        <div class="reframe-slider-top">
+          <div class="reframe-slider-counter" id="reframeCounter" style="margin-right: auto;">01 / 04</div>
+          <div class="reframe-slider-controls">
+            <button type="button" class="reframe-arrow-btn reframe-arrow-prev" id="reframePrevBtn" aria-label="Previous">
+              <i class="bi bi-chevron-left"></i>
+            </button>
+            <button type="button" class="reframe-arrow-btn reframe-arrow-next" id="reframeNextBtn" aria-label="Next">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
+        </div>
 
-          <!-- Pillar 2 -->
-          <div class="chapter-card" style="border-left: 4px solid #0284c7;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span class="chapter-badge" style="background:#e0f2fe; color:#0284c7;">PILLAR 02 · EXECUTION</span>
-              <span style="font-size: 0.8rem; font-weight: 700; color: #0284c7;"><i class="bi bi-shield-check"></i> System Architecture</span>
+        <div class="reframe-slider-viewport" id="reframeViewport">
+          <div class="reframe-slider-track" id="reframeTrack">
+            <!-- Pillar 1 -->
+            <div class="reframe-slide" data-index="0">
+              <div class="reframe__pillar-card" style="border-left: 4px solid #f59e0b;">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true" style="color: #f59e0b;">
+                    <i class="bi bi-activity" style="font-size: 1.3rem;"></i>
+                  </div>
+                  <span class="reframe__pillar-tag" style="background: #fef3c7; color: #b45309; border: 1px solid rgba(245, 158, 11, 0.25);">PILLAR 01 · NEUROBIOLOGY</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Dopamine Receptor Regeneration</h4>
+                  <p class="reframe__pillar-summary">Understand the exact 30-day biological timeline required for your brain to regenerate downregulated dopamine receptors, lifting chronic brain fog and restoring genuine daily drive.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Delta-FosB Reversal:</strong> Stop the hyper-stimulation cycle locking your reward pathways in perpetual craving.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>The 30-Day Timeline:</strong> Navigate the flatline phase with clear biological milestones instead of anxiety.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Prefrontal Re-Command:</strong> Restore executive rational control over primitive subconscious impulses.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-check-circle-fill" style="color: #16a34a;"></i>
+                    <span><strong>Key Outcome:</strong> D2 Receptor Resensitization</span>
+                  </div>
+                  <span class="reframe__pillar-module">CORE PROTOCOL 01</span>
+                </div>
+              </div>
             </div>
-            <h4>The C.A.R.E. Framework</h4>
-            <p><strong>C</strong>ue Disruption, <strong>A</strong>nxiety &amp; Urge Surfing, <strong>R</strong>adical Environmental Friction, and <strong>E</strong>nergetic State Shifting. Remove willpower from the equation entirely.</p>
-          </div>
 
-          <!-- Pillar 3 -->
-          <div class="chapter-card" style="border-left: 4px solid #dc2626;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span class="chapter-badge" style="background:#fee2e2; color:#dc2626;">PILLAR 03 · CRISIS PROTOCOL</span>
-              <span style="font-size: 0.8rem; font-weight: 700; color: #dc2626;"><i class="bi bi-lightning-charge-fill"></i> 5-Min Kill Switch</span>
+            <!-- Pillar 2 -->
+            <div class="reframe-slide" data-index="1">
+              <div class="reframe__pillar-card" style="border-left: 4px solid #0284c7;">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true" style="color: #0284c7;">
+                    <i class="bi bi-shield-check" style="font-size: 1.3rem;"></i>
+                  </div>
+                  <span class="reframe__pillar-tag" style="background: #e0f2fe; color: #0284c7; border: 1px solid rgba(2, 132, 199, 0.25);">PILLAR 02 · EXECUTION</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">The C.A.R.E. Framework</h4>
+                  <p class="reframe__pillar-summary"><strong>C</strong>ue Disruption, <strong>A</strong>nxiety &amp; Urge Surfing, <strong>R</strong>adical Environmental Friction, and <strong>E</strong>nergetic State Shifting. Remove willpower from the equation entirely.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Cue Disruption:</strong> Neutralize environmental and emotional triggers before cravings have power to ignite.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Radical Friction:</strong> Install insurmountable barriers between your trigger moments and relapse devices.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Urge Surfing:</strong> Ride dopaminergic wave peaks to natural extinction without panic or white-knuckling.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-shield-check" style="color: #0284c7;"></i>
+                    <span><strong>Key Outcome:</strong> Willpower-Free System Architecture</span>
+                  </div>
+                  <span class="reframe__pillar-module">CORE PROTOCOL 02</span>
+                </div>
+              </div>
             </div>
-            <h4>The 5-Minute Emergency Intervention</h4>
-            <p>The step-by-step physiological kill switch to deploy the exact instant an urge peaks. Shuts off the dopaminergic loop before your rational prefrontal cortex is overpowered.</p>
-          </div>
 
-          <!-- Pillar 4 -->
-          <div class="chapter-card" style="border-left: 4px solid #16a34a;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-              <span class="chapter-badge" style="background:#dcfce7; color:#16a34a;">PILLAR 04 · IDENTITY</span>
-              <span style="font-size: 0.8rem; font-weight: 700; color: #16a34a;"><i class="bi bi-trophy-fill"></i> Sovereign Self</span>
+            <!-- Pillar 3 -->
+            <div class="reframe-slide" data-index="2">
+              <div class="reframe__pillar-card" style="border-left: 4px solid #dc2626;">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true" style="color: #dc2626;">
+                    <i class="bi bi-lightning-charge-fill" style="font-size: 1.3rem;"></i>
+                  </div>
+                  <span class="reframe__pillar-tag" style="background: #fee2e2; color: #dc2626; border: 1px solid rgba(220, 38, 38, 0.25);">PILLAR 03 · CRISIS PROTOCOL</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">The 5-Minute Emergency Intervention</h4>
+                  <p class="reframe__pillar-summary">The step-by-step physiological kill switch to deploy the exact instant an urge peaks. Shuts off the dopaminergic loop before your rational prefrontal cortex is overpowered.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Parasympathetic Reset:</strong> Deploy breathing sequences that immediately downshift acute sympathetic arousal.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Temperature Shock:</strong> Thermal reflex protocols that snap the mind out of compulsive dopamine trance.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>State Displacement:</strong> Reroute blood flow away from the limbic system and back to executive function.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-lightning-charge-fill" style="color: #dc2626;"></i>
+                    <span><strong>Key Outcome:</strong> 5-Min Kill Switch Deployment</span>
+                  </div>
+                  <span class="reframe__pillar-module">CORE PROTOCOL 03</span>
+                </div>
+              </div>
             </div>
-            <h4>Identity Deconstruction &amp; Sublimation</h4>
-            <p>Stop identifying as "a recovering addict fighting temptations." Shift into complete indifference, channel raw sexual energy into high-performance physical strength and business mastery.</p>
+
+            <!-- Pillar 4 -->
+            <div class="reframe-slide" data-index="3">
+              <div class="reframe__pillar-card" style="border-left: 4px solid #16a34a;">
+                <div class="reframe__pillar-header">
+                  <div class="reframe__pillar-icon" aria-hidden="true" style="color: #16a34a;">
+                    <i class="bi bi-trophy-fill" style="font-size: 1.3rem;"></i>
+                  </div>
+                  <span class="reframe__pillar-tag" style="background: #dcfce7; color: #16a34a; border: 1px solid rgba(22, 163, 74, 0.25);">PILLAR 04 · IDENTITY</span>
+                </div>
+                <div class="reframe__pillar-main">
+                  <h4 class="reframe__pillar-title">Identity Deconstruction &amp; Sublimation</h4>
+                  <p class="reframe__pillar-summary">Stop identifying as "a recovering addict fighting temptations." Shift into complete indifference, channel raw sexual energy into high-performance physical strength and business mastery.</p>
+                  <div class="reframe__pillar-deliverables">
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Identity Reset:</strong> Eliminate streak-counting mentality and anchor your baseline in unshakeable self-command.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Sexual Transmutation:</strong> Channel biological drive into heavy physical training, work output, and clear focus.
+                      </div>
+                    </div>
+                    <div class="reframe__deliverable-item">
+                      <span class="reframe__deliverable-check"><i class="bi bi-check2"></i></span>
+                      <div class="reframe__deliverable-text">
+                        <strong>Sovereign Presence:</strong> Develop grounded masculine presence, deep voice cadence, and confident authority.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="reframe__pillar-footer">
+                  <div class="reframe__pillar-kpi">
+                    <i class="bi bi-trophy-fill" style="color: #16a34a;"></i>
+                    <span><strong>Key Outcome:</strong> Sovereign Self-Mastery</span>
+                  </div>
+                  <span class="reframe__pillar-module">CORE PROTOCOL 04</span>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        <div class="reframe-slider-dots" id="reframeDots">
+          <button type="button" class="reframe-dot active" aria-label="Go to Pillar 1"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 2"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 3"></button>
+          <button type="button" class="reframe-dot" aria-label="Go to Pillar 4"></button>
         </div>
       </div>
     </div>
@@ -767,6 +938,96 @@ window.PRODUCT_PRICE = 5000;
 <script src="/js/checkout.js?v=7"></script>
 <script>
 AOS.init({ once: true, offset: 50, duration: 600 });
+
+// ── 4 Core Recovery Pillars Slider ──
+function initReframeSlider() {
+  var container = document.querySelector('.reframe-slider-container');
+  if (!container) return;
+  var viewport = container.querySelector('.reframe-slider-viewport');
+  var track = container.querySelector('.reframe-slider-track');
+  var slides = container.querySelectorAll('.reframe-slide');
+  var dots = container.querySelectorAll('.reframe-dot');
+  var prevBtn = container.querySelector('.reframe-arrow-prev');
+  var nextBtn = container.querySelector('.reframe-arrow-next');
+  var counter = container.querySelector('.reframe-slider-counter');
+  var total = slides.length;
+  if (total === 0) return;
+  var currentIdx = 0;
+  var timer = null;
+  var isPaused = false;
+
+  function goToSlide(idx) {
+    currentIdx = (idx + total) % total;
+    var slideWidth = viewport ? viewport.getBoundingClientRect().width : container.getBoundingClientRect().width;
+    track.style.transform = 'translateX(-' + (currentIdx * slideWidth) + 'px)';
+    dots.forEach(function(dot, i) {
+      dot.classList.toggle('active', i === currentIdx);
+    });
+    if (counter) {
+      counter.textContent = '0' + (currentIdx + 1) + ' / 0' + total;
+    }
+  }
+
+  window.addEventListener('resize', function() {
+    goToSlide(currentIdx);
+  });
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', function() {
+      goToSlide(currentIdx - 1);
+    });
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', function() {
+      goToSlide(currentIdx + 1);
+    });
+  }
+
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() {
+      goToSlide(i);
+    });
+  });
+
+  var startX = 0;
+  var currentX = 0;
+  track.addEventListener('touchstart', function(e) {
+    isPaused = true;
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+  track.addEventListener('touchmove', function(e) {
+    currentX = e.touches[0].clientX;
+  }, { passive: true });
+  track.addEventListener('touchend', function() {
+    isPaused = false;
+    var diffX = startX - currentX;
+    if (Math.abs(diffX) > 40 && currentX !== 0) {
+      if (diffX > 0) {
+        goToSlide(currentIdx + 1);
+      } else {
+        goToSlide(currentIdx - 1);
+      }
+    }
+    startX = 0;
+    currentX = 0;
+  }, { passive: true });
+
+  container.addEventListener('mouseenter', function() { isPaused = true; });
+  container.addEventListener('mouseleave', function() { isPaused = false; });
+
+  timer = setInterval(function() {
+    if (!isPaused) {
+      goToSlide(currentIdx + 1);
+    }
+  }, 4500);
+
+  goToSlide(0);
+}
+
+document.addEventListener('DOMContentLoaded', initReframeSlider);
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  initReframeSlider();
+}
 
 
 
