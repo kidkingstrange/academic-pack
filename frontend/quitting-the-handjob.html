@@ -174,6 +174,340 @@ window.PRODUCT_PRICE = 5000;
   aspect-ratio: auto !important;
   min-height: 480px;
 }
+
+/* ── Mobile Layout & Touch Optimization ── */
+.mobile-visual-flow {
+  display: none !important;
+}
+.hero-book-showcase {
+  display: flex !important;
+}
+.curriculum-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  body {
+    padding-bottom: 84px !important; /* Reserve clearance for sticky bottom bar */
+  }
+
+  /* Hero Section */
+  .hero {
+    padding: 24px 0 36px !important;
+  }
+  .hero__grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  .hero__content {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .hero-editorial-lead--qth {
+    font-size: clamp(1.85rem, 6.5vw, 2.45rem) !important;
+    line-height: 1.14 !important;
+    letter-spacing: -0.025em !important;
+  }
+  .hero-monumental-sub {
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    padding: 0 4px !important;
+    margin-bottom: 18px !important;
+  }
+  .hero-monumental-actions {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .hero-pill-btn {
+    width: 100% !important;
+    min-height: 48px !important;
+    justify-content: center !important;
+    font-size: 14.5px !important;
+    padding: 13px 18px !important;
+  }
+
+  /* Single Book Visual Flow: Show mobile visual, hide desktop showcase */
+  .hero-book-showcase {
+    display: none !important;
+  }
+  .mobile-visual-flow {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 22px auto 0 auto !important;
+    width: 100% !important;
+  }
+  .mobile-flagship-cover {
+    width: 200px !important;
+    max-width: 70vw !important;
+    margin: 0 auto 14px auto !important;
+  }
+  .mobile-price-badge {
+    width: 100% !important;
+    max-width: 290px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Sticky CTA Bottom Bar */
+  .sticky-cta-bar {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(255, 255, 255, 0.97) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-top: 1px solid var(--border-hairline, #e2e8f0) !important;
+    box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.08) !important;
+    z-index: 999 !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+  .sticky-cta-bar__price {
+    display: flex !important;
+    flex-direction: column !important;
+    line-height: 1.15 !important;
+  }
+  .sticky-old {
+    font-size: 0.72rem !important;
+    color: #94a3b8 !important;
+    text-decoration: line-through !important;
+  }
+  .sticky-new {
+    font-size: 1.22rem !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+  }
+  .sticky-cta-bar__btn {
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    padding: 11px 18px !important;
+    min-height: 44px !important;
+    border-radius: 9999px !important;
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15) !important;
+  }
+
+  /* Author Section */
+  .author {
+    padding: 50px 0 !important;
+  }
+  .author__inner {
+    grid-template-columns: 1fr !important;
+    text-align: center !important;
+    gap: 22px !important;
+  }
+  .author__photo {
+    width: 120px !important;
+    height: 120px !important;
+    margin: 0 auto !important;
+  }
+  .author__name {
+    font-size: 1.6rem !important;
+  }
+  .author__bio {
+    font-size: 0.9rem !important;
+    line-height: 1.65 !important;
+    text-align: left !important;
+  }
+  .author__creds {
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Recovery Pillars Slider Mobile Optimization */
+  .reframe-slider-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .reframe__pillar-card {
+    min-height: auto !important;
+    height: auto !important;
+    aspect-ratio: auto !important;
+    padding: 20px 16px 18px !important;
+    border-radius: 14px !important;
+  }
+  .reframe__pillar-title {
+    font-size: 1.15rem !important;
+    line-height: 1.28 !important;
+    margin-bottom: 6px !important;
+  }
+  .reframe__pillar-summary {
+    font-size: 0.85rem !important;
+    line-height: 1.48 !important;
+    margin-bottom: 14px !important;
+  }
+  .reframe__pillar-deliverables {
+    gap: 8px !important;
+  }
+  .reframe__deliverable-item {
+    padding: 9px 11px !important;
+    gap: 8px !important;
+    font-size: 0.81rem !important;
+    line-height: 1.4 !important;
+  }
+  .reframe__pillar-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+    padding-top: 12px !important;
+    margin-top: 12px !important;
+  }
+  .reframe-arrow-btn {
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 15px !important;
+  }
+  .reframe-dot {
+    position: relative;
+  }
+  .reframe-dot::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    bottom: -12px;
+    left: -8px;
+    right: -8px;
+  }
+
+  /* Curriculum Grid */
+  .curriculum-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .chapter-card {
+    padding: 16px 14px !important;
+  }
+
+  /* Two Choices Grid */
+  .choices-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+  .choice-card {
+    padding: 18px 16px !important;
+  }
+
+  /* Final CTA */
+  .final-cta {
+    padding: 48px 0 !important;
+  }
+  .final-cta__headline {
+    font-size: 1.85rem !important;
+    line-height: 1.18 !important;
+  }
+  .final-cta .btn--full {
+    width: 100% !important;
+    min-height: 48px !important;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 36px 0 calc(36px + 60px) 0 !important;
+  }
+  .footer-links {
+    gap: 12px 14px !important;
+  }
+  .footer-links a {
+    display: inline-block !important;
+    padding: 4px 6px !important;
+  }
+}
+
+/* Payment Method Option Selector */
+.payment-method-selector {
+  margin: 18px 0 16px;
+}
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+  background: #ffffff;
+}
+.payment-method-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.payment-method-radio-custom {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+.payment-method-option.active,
+.payment-method-option:has(input:checked) {
+  border-color: #0f172a !important;
+  background: #f8fafc !important;
+}
+.payment-method-option.active .payment-method-radio-custom,
+.payment-method-option:has(input:checked) .payment-method-radio-custom {
+  border-color: #0f172a;
+}
+.payment-method-option.active .payment-method-radio-custom::after,
+.payment-method-option:has(input:checked) .payment-method-radio-custom::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #0f172a;
+}
+.payment-method-info {
+  flex: 1;
+  min-width: 0;
+}
+.payment-method-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+.payment-method-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  background: #dcfce7;
+  color: #166534;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.payment-method-desc {
+  font-size: 0.76rem;
+  color: #64748b;
+  line-height: 1.35;
+}
 </style>
 </head>
 <body>
@@ -545,7 +879,7 @@ window.PRODUCT_PRICE = 5000;
       <p class="section-sub">8 tactical, direct, zero-fluff chapters engineered to take you from compulsive relapse to total sovereign self-command.</p>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+    <div class="curriculum-grid">
       <div class="chapter-card" data-aos="fade-up" data-aos-delay="100">
         <span class="chapter-badge">Chapter 01</span>
         <h4>The Dopamine Trap</h4>
@@ -751,6 +1085,76 @@ window.PRODUCT_PRICE = 5000;
   </div>
   <button class="btn btn--gold sticky-cta-bar__btn" onclick="openCheckout()">Get The Book</button>
 </div>
+
+<!-- Mobile Drawer Backdrop -->
+<div class="global-drawer-backdrop" id="global-drawer-backdrop" onclick="closeGlobalDrawer()"></div>
+
+<!-- Mobile Navigation Drawer -->
+<aside class="global-drawer" id="global-drawer" aria-label="Mobile Navigation">
+  <div class="drawer-header">
+    <a href="/" class="global-brand" onclick="closeGlobalDrawer()">
+      <img src="assets/images/scale-logo-cutout.png" alt="Scale Group Logo" width="22" height="26">
+      <span>SCALE GROUP</span>
+    </a>
+    <button class="drawer-close" onclick="closeGlobalDrawer()" aria-label="Close menu">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <!-- Flagship Highlight Card Inside Drawer -->
+  <div class="drawer-flagship-card">
+    <div class="drawer-flagship-tag">
+      <i class="bi bi-bookmark-check-fill"></i> CURRENT SELECTION
+    </div>
+    <div class="drawer-flagship-title">Quitting The Handjob</div>
+    <div class="drawer-flagship-desc">The neuroscience manual to stop masturbation and pornography addiction permanently.</div>
+    <div class="drawer-flagship-price">
+      <span class="drawer-flagship-old">₦20,000</span>
+      <span class="drawer-flagship-new price-current">₦5,000</span>
+      <span class="drawer-flagship-discount">SAVE 75%</span>
+    </div>
+    <button class="drawer-flagship-btn" onclick="closeGlobalDrawer(); openCheckout();" style="border: none; cursor: pointer;">
+      Get The Book Now &rarr;
+    </button>
+  </div>
+
+  <!-- Navigation Links -->
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">EXPLORE THE BOOK</div>
+    <a href="/" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-house-door-fill"></i> <span>Home (All Books)</span>
+    </a>
+    <a href="/quitting-the-handjob" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-book-half"></i> <span>The Book</span>
+    </a>
+    <a href="#curriculum" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-list-check"></i> <span>What's Inside (8 Chapters)</span>
+    </a>
+    <a href="#neuroscience" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-activity"></i> <span>Neuroscience &amp; Recovery</span>
+    </a>
+    <a href="/academic-comeback-package" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-mortarboard-fill"></i> <span>Academic Comeback Package</span>
+    </a>
+  </div>
+
+  <div class="drawer-nav-group">
+    <div class="drawer-group-title">BUYER TOOLS &amp; ACCESS</div>
+    <a href="/library" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-folder-check"></i> <span>My Download Library</span>
+    </a>
+    <a href="/affiliate-register.html" class="drawer-nav-item" onclick="closeGlobalDrawer()">
+      <i class="bi bi-gift-fill" style="color:var(--gold,#f59e0b);"></i> <span>Affiliate Program (Earn 60%)</span>
+    </a>
+    <a href="javascript:void(0)" onclick="openSupportModalFromDrawer()" class="drawer-nav-item">
+      <i class="bi bi-headset"></i> <span>Check Order Status / Support</span>
+    </a>
+  </div>
+
+  <div class="drawer-footer">
+    Instant Digital Delivery · Paystack Secured<br>© 2026 Scale Group
+  </div>
+</aside>
 
 <!-- Checkout Modal -->
 <div class="modal-overlay" id="checkout-modal">
@@ -1067,7 +1471,18 @@ async function handleResendLink(e) {
     btn.disabled = false;
     btn.textContent = 'Send My Access Link';
   }
-}
+// ── Payment Method Toggle Handler ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('input[name="payment_method"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      document.querySelectorAll('.payment-method-option').forEach(function(opt) {
+        opt.classList.remove('active');
+      });
+      var parent = radio.closest('.payment-method-option');
+      if (parent) parent.classList.add('active');
+    });
+  });
+});
 </script>
 <script src="/js/global-nav.js"></script>
 <script src="/js/affiliate-modal.js" defer></script>
