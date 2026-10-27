@@ -328,6 +328,7 @@ async def process_email_queue():
                         referral_link=item.get("referral_link"),
                         dashboard_link=item.get("dashboard_link"),
                         recruiter_link=item.get("recruiter_link"),
+                        book_title=item.get("book_title"),
                     )
                 elif kind == "affiliate_welcome":
                     success, error_msg = await send_affiliate_welcome_email(

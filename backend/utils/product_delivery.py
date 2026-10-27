@@ -68,29 +68,37 @@ def resolve_product_pdf_path(product: dict, uploads_dir_setting: str = "uploads/
     3. Canonical filename aliases and title matching
     """
     raw_path = (product.get("file_path") or "").strip()
-    title = (product.get("title") or "").strip().lower()
+    title = (product.get("title") or "").strip()
+    slug = (product.get("slug") or "").strip()
+    title_lower = title.lower()
 
     candidates: List[str] = [raw_path] if raw_path else []
+    if title:
+        candidates.append(f"{title}.pdf")
+        candidates.append(f"{title} - David Itoya.pdf")
+    if slug:
+        candidates.append(f"{slug}.pdf")
+        candidates.append(f"{slug.replace('-', '_')}.pdf")
 
     for key, aliases in CANONICAL_PRODUCT_MAP.items():
         matched = False
         if raw_path and (key in raw_path.lower() or any(a.lower() in raw_path.lower() for a in aliases)):
             matched = True
-        elif key == "get_good" and ("hard things" in title or "get good" in title):
+        elif key == "get_good" and ("hard things" in title_lower or "get good" in title_lower):
             matched = True
-        elif key == "study_tracker" and ("study tracker" in title or "tracker" in title):
+        elif key == "study_tracker" and ("study tracker" in title_lower or "tracker" in title_lower):
             matched = True
-        elif key == "balance" and "balance" in title:
+        elif key == "balance" and "balance" in title_lower:
             matched = True
-        elif key == "exam_pass" and ("pass" in title or "score high" in title or ("exam" in title and "survival" not in title)):
+        elif key == "exam_pass" and ("pass" in title_lower or "score high" in title_lower or ("exam" in title_lower and "survival" not in title_lower)):
             matched = True
-        elif key == "learning" and ("learning" in title or "result" in title):
+        elif key == "learning" and ("learning" in title_lower or "result" in title_lower):
             matched = True
-        elif key == "focus" and "focus" in title:
+        elif key == "focus" and "focus" in title_lower:
             matched = True
-        elif key == "survival" and "survival" in title:
+        elif key == "survival" and "survival" in title_lower:
             matched = True
-        elif key == "handjob" and ("handjob" in title or "quitting" in title or "masturbation" in title or "pornography" in title):
+        elif key == "handjob" and ("handjob" in title_lower or "quitting" in title_lower or "masturbation" in title_lower or "pornography" in title_lower):
             matched = True
 
         if matched:
@@ -104,11 +112,31 @@ def resolve_product_pdf_path(product: dict, uploads_dir_setting: str = "uploads/
 
     search_dirs = [pdfs_dir, uploads_dir, Path("pdfs"), Path(uploads_dir_setting)]
 
+    # 1. Fast direct lookup
     for c in candidates:
         if not c:
             continue
         for d in search_dirs:
+            if not d.exists():
+                continue
             p = d / c
             if p.exists() and p.is_file():
                 return p
+
+    # 2. Recursive subdirectory lookup across pdfs/ and uploads/
+    candidate_names = {Path(c).name.lower() for c in candidates if c}
+    for d in search_dirs:
+        if not d.exists():
+            continue
+        try:
+            for sub_p in d.rglob("*.pdf"):
+                if sub_p.is_file():
+                    sub_name = sub_p.name.lower()
+                    if sub_name in candidate_names:
+                        return sub_p
+                    if title and title_lower in sub_name:
+                        return sub_p
+        except Exception:
+            continue
+
     return None

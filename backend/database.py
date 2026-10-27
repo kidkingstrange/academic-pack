@@ -135,9 +135,20 @@ async def connect_db():
                         "order": cp["order"],
                         "slug": cp.get("slug"),
                         "price_naira": cp.get("price_naira", 5000),
+                        "price_usd": cp.get("price_usd", 15.0),
                         "is_active": True,
                         "created_at": now_dt,
                     })
+                else:
+                    up_fields = {}
+                    if cp.get("slug") and exists.get("slug") != cp.get("slug"):
+                        up_fields["slug"] = cp["slug"]
+                    if cp.get("price_naira") is not None and "price_naira" not in exists:
+                        up_fields["price_naira"] = cp["price_naira"]
+                    if cp.get("price_usd") is not None and "price_usd" not in exists:
+                        up_fields["price_usd"] = cp["price_usd"]
+                    if up_fields:
+                        await db.products.update_one({"_id": exists["_id"]}, {"$set": up_fields})
         except Exception as seed_err:
             print(f"[Warning] Product auto-sync note: {seed_err}")
     except Exception as e:

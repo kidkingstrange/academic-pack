@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block subject %}🎉 Your Academic Comeback Package is ready, {{ name }}!{% endblock %}
+{% block subject %}{% if book_title %}🎉 Your copy of {{ book_title }} is ready, {{ name }}!{% else %}🎉 Your Academic Comeback Package is ready, {{ name }}!{% endif %}{% endblock %}
 {% block content %}
 <p style="font-size:16px;color:#333;margin:0 0 16px">Hey {{ name }},</p>
 
@@ -10,11 +10,19 @@
 {% endif %}
 
 <p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 16px">
+  {% if book_title %}
+  Welcome! Your payment went through and your copy of <strong>{{ book_title }}</strong> is ready in your digital library.
+  {% else %}
   Welcome to the <strong>Academic Comeback Package</strong>. Your payment went through and your materials are ready.
+  {% endif %}
 </p>
 
 <p style="font-size:15px;color:#555;line-height:1.7;margin:0 0 24px">
+  {% if book_title %}
+  Thank you for investing in yourself. You can access and download your book anytime from your digital library below.
+  {% else %}
   I built this package because I believe most students aren't failing because they're unintelligent. They're failing because nobody ever taught them <em>how</em> to learn effectively. That ends today.
+  {% endif %}
 </p>
 
 <!-- CTA -->
@@ -26,9 +34,11 @@
   </td></tr>
 </table>
 
+{% if not book_title %}
 <p style="font-size:14px;color:#555;line-height:1.7;margin:0 0 16px">
   Inside, you'll find all 7 resources. Start with <strong>"Get Good at Hard Things"</strong> — it's the core system everything else builds on.
 </p>
+{% endif %}
 
 <!-- WhatsApp Join -->
 <table width="100%" cellpadding="0" cellspacing="0" style="background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.2);border-radius:12px;padding:20px;margin:0 0 24px">

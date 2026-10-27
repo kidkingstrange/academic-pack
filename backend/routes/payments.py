@@ -8,6 +8,7 @@ import re
 import secrets
 import uuid
 from datetime import datetime, timedelta, timezone
+from typing import Optional, List
 
 EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$")
 from fastapi import APIRouter, HTTPException, Request, Depends, BackgroundTasks
@@ -101,19 +102,45 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     """
     product_slug = (getattr(body, "product_slug", None) or "").strip().lower()
     product_title = (getattr(body, "product_title", None) or "").strip()
-    if product_slug == "quitting-the-handjob":
-        reference = f"ACP-QTH-{uuid.uuid4().hex[:12].upper()}"
-        product_title = product_title or "Quitting The Handjob"
+    product_doc = None
+
+    if product_slug:
+        product_doc = await db.products.find_one({
+            "$or": [
+                {"slug": product_slug},
+                {"title": {"$regex": f"^{re.escape(product_slug)}$", "$options": "i"}},
+            ]
+        })
+        if product_slug == "quitting-the-handjob":
+            reference = f"ACP-QTH-{uuid.uuid4().hex[:12].upper()}"
+            product_title = product_title or "Quitting The Handjob"
+        else:
+            clean_code = "".join(c for c in product_slug if c.isalnum())[:4].upper() or "PROD"
+            reference = f"ACP-{clean_code}-{uuid.uuid4().hex[:12].upper()}"
+            if product_doc and not product_title:
+                product_title = product_doc.get("title")
     else:
         reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
     now = datetime.now(timezone.utc)
 
     currency = (body.currency or ("USD" if (body.country or "").upper() == "US" else "NGN")).strip().upper()
+    is_usd = currency == "USD"
     tier_requested = (body.tier or "").strip().lower() if body.tier else None
     tier = tier_requested if tier_requested in ("starter", "complete", "vip") else "complete"
 
-    if product_slug == "quitting-the-handjob":
-        amount = float(settings.PRODUCT_PRICE_NAIRA)
+    if product_slug:
+        if product_doc:
+            if is_usd:
+                raw_price = product_doc.get("price_usd") or (
+                    float(product_doc.get("price_naira") or product_doc.get("price") or settings.PRODUCT_PRICE_NAIRA)
+                    / settings.USD_TO_NGN_RATE
+                )
+            else:
+                raw_price = product_doc.get("price_naira") or product_doc.get("price") or settings.PRODUCT_PRICE_NAIRA
+            amount = float(raw_price)
+        else:
+            amount = float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+
         referred_by = None
         if body.referral_code:
             candidate = body.referral_code.strip().upper()
@@ -985,4 +1012,39 @@ async def recovery_unsubscribe(
         """,
         status_code=200,
     )
+
+
+@router.get("/product-info")
+async def get_product_info(slug: Optional[str] = None, title: Optional[str] = None, db=Depends(get_db)):
+    """Return public product information, dynamic price in NGN and USD."""
+    query_parts = []
+    if slug:
+        clean_slug = slug.strip().lower()
+        query_parts.extend([
+            {"slug": clean_slug},
+            {"title": {"$regex": f"^{re.escape(clean_slug)}$", "$options": "i"}},
+        ])
+    if title:
+        clean_title = title.strip()
+        query_parts.append({"title": {"$regex": f"^{re.escape(clean_title)}$", "$options": "i"}})
+
+    if not query_parts:
+        raise HTTPException(status_code=400, detail="slug or title required")
+
+    product = await db.products.find_one({"$or": query_parts, "is_active": True})
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    price_naira = float(product.get("price_naira") or product.get("price") or settings.PRODUCT_PRICE_NAIRA)
+    price_usd = float(product.get("price_usd") or (price_naira / settings.USD_TO_NGN_RATE))
+
+    return {
+        "id": str(product["_id"]),
+        "title": product["title"],
+        "slug": product.get("slug"),
+        "description": product.get("description"),
+        "price_naira": price_naira,
+        "price_usd": price_usd,
+    }
+
 

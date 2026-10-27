@@ -118,8 +118,8 @@ function openCheckout() {
   trackTelemetry('checkout_view');
   if (typeof fbq === 'function') {
     fbq('track', 'InitiateCheckout', {
-      content_name: 'Academic Comeback Package',
-      value: 5000,
+      content_name: window.PRODUCT_TITLE || 'Academic Comeback Package',
+      value: getActiveBasePrice(),
       currency: 'NGN'
     });
   }
@@ -197,6 +197,12 @@ document.querySelectorAll('.payment-method-option input[type="radio"]').forEach(
 
 // ── Viral Referral Discount Controller ("Refer 3 Friends, Save ₦1,000") ──────
 function getActiveBasePrice() {
+  if (typeof window.PRODUCT_PRICE === 'number' && window.PRODUCT_PRICE > 0) {
+    return window.PRODUCT_PRICE;
+  }
+  if (typeof window.PRODUCT_PRICE === 'string' && Number(window.PRODUCT_PRICE) > 0) {
+    return Number(window.PRODUCT_PRICE);
+  }
   const referralCode = localStorage.getItem('ac_referral_code');
   const urlParams = new URLSearchParams(window.location.search);
   const isAff = !!(referralCode || urlParams.get('ref') || urlParams.get('price') === '5000');
@@ -218,7 +224,7 @@ function initViralDiscount() {
   const f2 = document.getElementById('friend-email-2');
   const f3 = document.getElementById('friend-email-3');
   const msgEl = document.getElementById('viral-validation-msg');
-  const submitBtn = document.getElementById('submit-lead');
+  const submitBtn = document.getElementById('submit-lead') || document.getElementById('submit-btn');
   const priceLabel = document.getElementById('viral-discount-price-label');
   const origLabel = document.getElementById('viral-original-price-label');
 
@@ -338,7 +344,7 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const nameInput  = document.getElementById('name');
   const emailInput = document.getElementById('email');
-  const btn        = document.getElementById('submit-lead');
+  const btn        = document.getElementById('submit-lead') || document.getElementById('submit-btn');
 
   userName  = nameInput.value.trim();
   userEmail = emailInput.value.trim();
@@ -361,8 +367,10 @@ form.addEventListener('submit', async (e) => {
           msgEl.innerHTML = `<i class="bi bi-exclamation-triangle-fill"></i> Please enter 3 valid friend email addresses to claim your ₦1,000 discount, or uncheck the discount box.`;
           msgEl.style.display = 'block';
         }
-        btn.disabled = false;
-        btn.innerHTML = `Proceed to Payment — <span class="price-current">₦${getActiveBasePrice().toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = `Proceed to Payment — <span class="price-current">₦${getActiveBasePrice().toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+        }
         return;
       }
     }
@@ -372,8 +380,10 @@ form.addEventListener('submit', async (e) => {
         msgEl.innerHTML = `<i class="bi bi-exclamation-triangle-fill"></i> All 3 friend emails must be different from each other.`;
         msgEl.style.display = 'block';
       }
-      btn.disabled = false;
-      btn.innerHTML = `Proceed to Payment — <span class="price-current">₦${getActiveBasePrice().toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `Proceed to Payment — <span class="price-current">₦${getActiveBasePrice().toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+      }
       return;
     }
     if (emails.includes(userEmail.toLowerCase())) {
@@ -382,18 +392,21 @@ form.addEventListener('submit', async (e) => {
         msgEl.innerHTML = `<i class="bi bi-exclamation-triangle-fill"></i> You cannot enter your own email as one of your 3 friends.`;
         msgEl.style.display = 'block';
       }
-      btn.disabled = false;
-      btn.innerHTML = `Proceed to Payment — <span class="price-current">₦${getActiveBasePrice().toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `Proceed to Payment — <span class="price-current">₦${getActiveBasePrice().toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+      }
       return;
     }
     friendEmailsPayload = emails;
   }
 
   // Track Lead event in Meta Pixel & Telemetry
+  const basePriceForTracking = getActiveBasePrice();
   if (typeof fbq === 'function') {
     fbq('track', 'Lead', {
-      content_name: 'Academic Comeback Package',
-      value: friendEmailsPayload ? 4000 : 5000,
+      content_name: window.PRODUCT_TITLE || 'Academic Comeback Package',
+      value: friendEmailsPayload ? Math.max(500, basePriceForTracking - 1000) : basePriceForTracking,
       currency: 'NGN'
     });
   }
@@ -403,8 +416,10 @@ form.addEventListener('submit', async (e) => {
   const pmRadio = document.querySelector('input[name="payment_method"]:checked');
   currentPayMethod = pmRadio ? pmRadio.value : 'bank_transfer';
 
-  btn.disabled   = true;
-  btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+  if (btn) {
+    btn.disabled   = true;
+    btn.innerHTML  = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+  }
 
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -484,13 +499,15 @@ form.addEventListener('submit', async (e) => {
     savePendingPayment(data);
 
   } catch (err) {
-    btn.disabled  = false;
-    const basePrice = getActiveBasePrice();
-    const discountPrice = Math.max(500, basePrice - 1000);
-    const isDiscountActive = friendEmailsPayload && friendEmailsPayload.length === 3;
-    btn.innerHTML = isDiscountActive 
-      ? `Proceed to Payment — <span class="price-current">₦${discountPrice.toLocaleString()}</span> <span class="viral-applied-pill">₦1,000 OFF</span> <i class="bi bi-arrow-right"></i>`
-      : `Proceed to Payment — <span class="price-current">₦${basePrice.toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+    if (btn) {
+      btn.disabled  = false;
+      const basePrice = getActiveBasePrice();
+      const discountPrice = Math.max(500, basePrice - 1000);
+      const isDiscountActive = friendEmailsPayload && friendEmailsPayload.length === 3;
+      btn.innerHTML = isDiscountActive 
+        ? `Proceed to Payment — <span class="price-current">₦${discountPrice.toLocaleString()}</span> <span class="viral-applied-pill">₦1,000 OFF</span> <i class="bi bi-arrow-right"></i>`
+        : `Proceed to Payment — <span class="price-current">₦${basePrice.toLocaleString()}</span> <i class="bi bi-arrow-right"></i>`;
+    }
 
     const errMsg = err.message || 'Initialization failed. Please try again.';
     const msgEl = document.getElementById('viral-validation-msg');

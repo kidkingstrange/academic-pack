@@ -153,10 +153,13 @@ async def send_welcome_email(
     referral_link: str = None,
     dashboard_link: str = None,
     recruiter_link: str = None,
+    book_title: str = None,
 ):
     """Send welcome + download access email after successful payment."""
+    product_label = book_title or "Academic Comeback Package"
     html = render_template("welcome.html", {
         "name": name,
+        "book_title": book_title,
         "library_url": f"{settings.APP_URL}/library?token={token}",
         "whatsapp_url": settings.WHATSAPP_COMMUNITY_LINK,
         "app_name": settings.APP_NAME,
@@ -169,9 +172,9 @@ async def send_welcome_email(
         "recruiter_link": recruiter_link,
     })
     subject = (
-        f"Sorry for the wait — your Academic Comeback Package is ready, {name}!"
+        f"Sorry for the wait — your {product_label} is ready, {name}!"
         if delayed else
-        f"🎉 Your Academic Comeback Package is ready, {name}!"
+        f"🎉 Your {product_label} is ready, {name}!"
     )
     return await send_email(email, subject, html)
 

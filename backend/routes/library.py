@@ -150,9 +150,9 @@ async def get_library(user=Depends(get_library_user), db=Depends(get_db)):
         result.append({
             "id": p_id,
             "title": p["title"],
-            "description": p["description"],
+            "description": p.get("description", ""),
             "thumbnail": p.get("thumbnail"),
-            "order": p["order"],
+            "order": p.get("order", 0),
             "locked": is_locked,
         })
 
@@ -199,7 +199,7 @@ async def sign_download(
     # Log download attempt
     await db.downloads.insert_one({
         "user_id": ObjectId(user_id),
-        "product_id": ObjectId(product_id),
+        "product_id": product["_id"],
         "downloaded_at": datetime.now(timezone.utc),
         "product_title": product["title"],
     })

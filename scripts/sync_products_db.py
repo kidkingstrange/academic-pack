@@ -21,6 +21,9 @@ CANONICAL_PRODUCTS = [
         "description": "A system for academic and skill excellence through discipline, mental depth, and deliberate effort.",
         "file_path": "get_good_at_hard_things.pdf",
         "aliases": ["GET GOOD AT HARD THINGS by David Itoya.pdf", "get_good_at_hard_things.pdf"],
+        "slug": "get-good-at-hard-things",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 2,
@@ -28,6 +31,9 @@ CANONICAL_PRODUCTS = [
         "description": "Proven strategies, smart study techniques, and practical exam preparation protocols to achieve top results.",
         "file_path": "how_to_score_high_in_any_exam.pdf",
         "aliases": ["HOW TO PASS ANY EXAM WITH HIGH SCORES.pdf", "how_to_score_high_in_any_exam.pdf"],
+        "slug": "how-to-score-high-in-any-exam",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 3,
@@ -35,6 +41,9 @@ CANONICAL_PRODUCTS = [
         "description": "A practical guide to excelling in school, growing your business, and building the life you want without burnout.",
         "file_path": "balance_academics_and_business.pdf",
         "aliases": ["HOW TO BALANCE YOUR ACADEMICS AND YOUR BUSINESS.pdf", "balance_academics_and_business.pdf"],
+        "slug": "balance-academics-and-business",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 4,
@@ -42,6 +51,9 @@ CANONICAL_PRODUCTS = [
         "description": "Know exactly what to study for exams. Eliminate wasted effort and focus on high-yield topic mastery.",
         "file_path": "results_oriented_learning.pdf",
         "aliases": ["RESULT-ORIENTED LEARNING.pdf", "results_oriented_learning.pdf"],
+        "slug": "result-oriented-learning",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 5,
@@ -49,6 +61,9 @@ CANONICAL_PRODUCTS = [
         "description": "Daily progress & discipline system to build consistent study habits, track syllabus coverage, and stay accountable.",
         "file_path": "30_day_study_tracker.pdf",
         "aliases": ["30-Day Study Tracker.pdf", "30_day_study_tracker.pdf"],
+        "slug": "30-day-study-tracker",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 6,
@@ -56,6 +71,9 @@ CANONICAL_PRODUCTS = [
         "description": "Deep work & distraction elimination system to block out digital noise, build focus stamina, and double study output.",
         "file_path": "focus_template.pdf",
         "aliases": ["🎯 Focus Template.pdf", "focus_template.pdf"],
+        "slug": "focus-template",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 7,
@@ -63,6 +81,9 @@ CANONICAL_PRODUCTS = [
         "description": "High-stakes preparation & tactical performance protocol for final exams, professional certifications, and tests.",
         "file_path": "exam_survival_guide.pdf",
         "aliases": ["🔥 Exam Survival Guide.pdf", "exam_survival_guide.pdf"],
+        "slug": "exam-survival-guide",
+        "price_naira": 5000,
+        "price_usd": 15.0,
     },
     {
         "order": 8,
@@ -72,6 +93,7 @@ CANONICAL_PRODUCTS = [
         "aliases": ["Quitting_The_Handjob_David_Itoya.pdf", "quitting_the_handjob.pdf", "quitting-the-handjob.pdf", "Quitting The Handjob.pdf"],
         "slug": "quitting-the-handjob",
         "price_naira": 5000,
+        "price_usd": 15.0,
     },
 ]
 
@@ -94,18 +116,24 @@ async def sync_products():
         })
 
         if existing:
+            update_data = {
+                "title": existing.get("title") or p["title"],
+                "description": existing.get("description") or p["description"],
+                "file_path": p["file_path"],
+                "order": p["order"],
+                "is_active": True,
+                "updated_at": now,
+            }
+            if p.get("slug"):
+                update_data["slug"] = p["slug"]
+            if p.get("price_naira") is not None:
+                update_data["price_naira"] = p["price_naira"]
+            if p.get("price_usd") is not None:
+                update_data["price_usd"] = p["price_usd"]
+
             await db.products.update_one(
                 {"_id": existing["_id"]},
-                {
-                    "$set": {
-                        "title": existing.get("title") or p["title"],
-                        "description": existing.get("description") or p["description"],
-                        "file_path": p["file_path"],
-                        "order": p["order"],
-                        "is_active": True,
-                        "updated_at": now,
-                    }
-                }
+                {"$set": update_data}
             )
             print(f"✅ Updated product order {p['order']}: {p['title']} -> {p['file_path']}")
         else:
@@ -115,6 +143,9 @@ async def sync_products():
                 "file_path": p["file_path"],
                 "thumbnail": None,
                 "order": p["order"],
+                "slug": p.get("slug"),
+                "price_naira": p.get("price_naira", 5000),
+                "price_usd": p.get("price_usd", 15.0),
                 "is_active": True,
                 "created_at": now,
             })

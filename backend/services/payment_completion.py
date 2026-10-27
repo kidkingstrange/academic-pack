@@ -8,6 +8,7 @@ the full sequence: user, payment record, subscriber, all 52 queued emails,
 welcome email, and a session token. No caller re-implements these steps.
 """
 import asyncio
+import re
 import secrets
 from datetime import datetime, timedelta, timezone
 
@@ -140,7 +141,12 @@ async def complete_payment(
     product_slug = pending.get("product_slug") if pending else None
     if not product_slug and reference.startswith("ACP-QTH-"):
         product_slug = "quitting-the-handjob"
-    book_title = (pending.get("book_title") if pending else None) or ("Quitting The Handjob" if product_slug else None)
+    book_title = pending.get("book_title") if pending else None
+    if not book_title and product_slug:
+        if product_slug == "quitting-the-handjob":
+            book_title = "Quitting The Handjob"
+        else:
+            book_title = product_slug.replace("-", " ").title()
 
     try:
         await db.payments.insert_one({
@@ -182,13 +188,18 @@ async def complete_payment(
     current_products = user.get("purchased_products", []) if user else []
     already_has_all = "all" in current_products
     
-    if product_slug == "quitting-the-handjob":
-        qth_prod = await db.products.find_one({"$or": [{"slug": "quitting-the-handjob"}, {"title": "Quitting The Handjob"}]})
-        qth_id = str(qth_prod["_id"]) if qth_prod else "quitting-the-handjob"
+    if product_slug:
+        matched_prod = await db.products.find_one({
+            "$or": [
+                {"slug": product_slug},
+                {"title": {"$regex": f"^{re.escape(product_slug)}$", "$options": "i"}},
+            ]
+        })
+        prod_id = str(matched_prod["_id"]) if matched_prod else product_slug
         if already_has_all:
             new_products = current_products
         else:
-            new_products = list(set(current_products + [qth_id, "quitting-the-handjob"]))
+            new_products = list(set(current_products + [prod_id, product_slug]))
         user_tier = user.get("tier", "single_book") if user else "single_book"
     elif tier == "starter" and not already_has_all:
         starter_prods = await db.products.find({"order": {"$in": [1, 2]}}).to_list(10)
@@ -415,6 +426,8 @@ async def complete_payment(
             "user_id": user_id,
             "email": email,
             "name": name,
+            "book_title": book_title,
+            "product_slug": product_slug,
             "access_token": access_token,
             "unsubscribe_token": unsub_token,
             "affiliate_code": aff_code,
