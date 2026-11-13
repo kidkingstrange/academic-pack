@@ -123,9 +123,17 @@ async def connect_db():
         try:
             from datetime import datetime, timezone
             now_dt = datetime.now(timezone.utc)
-            from scripts.sync_products_db import CANONICAL_PRODUCTS
+            from .utils.canonical_products import CANONICAL_PRODUCTS
             for cp in CANONICAL_PRODUCTS:
-                exists = await db.products.find_one({"$or": [{"order": cp["order"]}, {"title": cp["title"]}]})
+                query_conds = []
+                if cp.get("slug"):
+                    query_conds.append({"slug": cp["slug"]})
+                if cp.get("title"):
+                    query_conds.append({"title": cp["title"]})
+                if cp.get("order") is not None:
+                    query_conds.append({"order": cp["order"]})
+
+                exists = await db.products.find_one({"$or": query_conds}) if query_conds else None
                 if not exists:
                     await db.products.insert_one({
                         "title": cp["title"],
@@ -134,8 +142,8 @@ async def connect_db():
                         "thumbnail": None,
                         "order": cp["order"],
                         "slug": cp.get("slug"),
-                        "price_naira": cp.get("price_naira", 5000),
-                        "price_usd": cp.get("price_usd", 15.0),
+                        "price_naira": float(cp.get("price_naira", 5000)),
+                        "price_usd": float(cp.get("price_usd", 15.0)),
                         "is_active": True,
                         "created_at": now_dt,
                     })
@@ -143,10 +151,16 @@ async def connect_db():
                     up_fields = {}
                     if cp.get("slug") and exists.get("slug") != cp.get("slug"):
                         up_fields["slug"] = cp["slug"]
-                    if cp.get("price_naira") is not None and "price_naira" not in exists:
-                        up_fields["price_naira"] = cp["price_naira"]
-                    if cp.get("price_usd") is not None and "price_usd" not in exists:
-                        up_fields["price_usd"] = cp["price_usd"]
+                    target_naira = float(cp.get("price_naira", 5000))
+                    target_usd = float(cp.get("price_usd", 15.0))
+                    if exists.get("price_naira") != target_naira:
+                        up_fields["price_naira"] = target_naira
+                    if exists.get("price_usd") != target_usd:
+                        up_fields["price_usd"] = target_usd
+                    if cp.get("file_path") and exists.get("file_path") != cp["file_path"]:
+                        up_fields["file_path"] = cp["file_path"]
+                    if exists.get("is_active") is not True:
+                        up_fields["is_active"] = True
                     if up_fields:
                         await db.products.update_one({"_id": exists["_id"]}, {"$set": up_fields})
         except Exception as seed_err:

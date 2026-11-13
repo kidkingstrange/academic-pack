@@ -22,6 +22,7 @@ from ..services.paystack import (
 from ..services.payment_completion import complete_payment, is_valid_paid_amount
 from ..services.email_service import send_email
 from ..utils.security import create_access_token
+from ..utils.canonical_products import get_canonical_product, get_canonical_price
 from ..database import get_db
 from ..config import get_settings
 from ..utils.rate_limit import limiter, get_real_client_ip
@@ -88,7 +89,7 @@ async def compute_price_and_referral(
         base_price = (
             float(settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA)
             if direct_expired
-            else float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+            else float(settings.PRODUCT_PRICE_USD if is_usd else max(5000, settings.PRODUCT_PRICE_NAIRA))
         )
         return base_price, referred_by
 
@@ -129,17 +130,27 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     tier = tier_requested if tier_requested in ("starter", "complete", "vip") else "complete"
 
     if product_slug:
+        canonical_prod = get_canonical_product(slug=product_slug, title=product_title)
         if product_doc:
             if is_usd:
-                raw_price = product_doc.get("price_usd") or (
-                    float(product_doc.get("price_naira") or product_doc.get("price") or settings.PRODUCT_PRICE_NAIRA)
-                    / settings.USD_TO_NGN_RATE
-                )
+                raw_price = product_doc.get("price_usd")
+                if raw_price is None:
+                    raw_price = float(product_doc.get("price_naira") or product_doc.get("price") or settings.PRODUCT_PRICE_NAIRA) / settings.USD_TO_NGN_RATE
             else:
                 raw_price = product_doc.get("price_naira") or product_doc.get("price") or settings.PRODUCT_PRICE_NAIRA
             amount = float(raw_price)
+            # If canonical product (e.g. Quitting The Handjob), protect against legacy ₦2,000 DB records
+            if canonical_prod:
+                canon_naira = float(canonical_prod.get("price_naira", 5000))
+                canon_usd = float(canonical_prod.get("price_usd", 15.0))
+                if is_usd and amount < canon_usd:
+                    amount = canon_usd
+                elif not is_usd and amount < canon_naira:
+                    amount = canon_naira
+        elif canonical_prod:
+            amount = float(canonical_prod["price_usd"] if is_usd else canonical_prod["price_naira"])
         else:
-            amount = float(settings.PRODUCT_PRICE_USD if is_usd else settings.PRODUCT_PRICE_NAIRA)
+            amount = float(settings.PRODUCT_PRICE_USD if is_usd else max(5000, settings.PRODUCT_PRICE_NAIRA))
 
         referred_by = None
         if body.referral_code:
@@ -224,7 +235,9 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             friend_discount_applied = True
             valid_friend_emails = raw_emails
             discount_naira = float(settings.REFERRAL_DISCOUNT_NAIRA)
-            amount = max(500.0, amount - discount_naira)
+            # CRITICAL FLOOR: For ₦5,000 products, discount lowers price to exactly ₦4,000.
+            # Never allow price to drop below ₦4,000 under any circumstances.
+            amount = max(4000.0, base_price_before_discount - discount_naira)
 
     # ── Instant affiliate split & Commission Override ──────────────────
     subaccount_code = None
@@ -1017,6 +1030,7 @@ async def recovery_unsubscribe(
 @router.get("/product-info")
 async def get_product_info(slug: Optional[str] = None, title: Optional[str] = None, db=Depends(get_db)):
     """Return public product information, dynamic price in NGN and USD."""
+    canonical = get_canonical_product(slug=slug, title=title)
     query_parts = []
     if slug:
         clean_slug = slug.strip().lower()
@@ -1028,21 +1042,40 @@ async def get_product_info(slug: Optional[str] = None, title: Optional[str] = No
         clean_title = title.strip()
         query_parts.append({"title": {"$regex": f"^{re.escape(clean_title)}$", "$options": "i"}})
 
-    if not query_parts:
+    if not query_parts and not canonical:
         raise HTTPException(status_code=400, detail="slug or title required")
 
-    product = await db.products.find_one({"$or": query_parts, "is_active": True})
-    if not product:
+    product = await db.products.find_one({"$or": query_parts, "is_active": True}) if (query_parts and db is not None) else None
+    if not product and not canonical:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    price_naira = float(product.get("price_naira") or product.get("price") or settings.PRODUCT_PRICE_NAIRA)
-    price_usd = float(product.get("price_usd") or (price_naira / settings.USD_TO_NGN_RATE))
+    if product:
+        title_val = product.get("title") or (canonical.get("title") if canonical else "")
+        slug_val = product.get("slug") or (canonical.get("slug") if canonical else None)
+        desc_val = product.get("description") or (canonical.get("description") if canonical else "")
+
+        raw_naira = product.get("price_naira") if product.get("price_naira") is not None else product.get("price")
+        price_naira = float(raw_naira) if raw_naira is not None else float(settings.PRODUCT_PRICE_NAIRA)
+
+        raw_usd = product.get("price_usd")
+        price_usd = float(raw_usd) if raw_usd is not None else (price_naira / settings.USD_TO_NGN_RATE)
+
+        # If it's a canonical product, ensure legacy ₦2,000 doesn't override ₦5,000
+        if canonical:
+            price_naira = max(price_naira, float(canonical.get("price_naira", 5000)))
+            price_usd = max(price_usd, float(canonical.get("price_usd", 15.0)))
+    else:
+        title_val = canonical["title"]
+        slug_val = canonical.get("slug")
+        desc_val = canonical.get("description", "")
+        price_naira = float(canonical.get("price_naira", 5000))
+        price_usd = float(canonical.get("price_usd", 15.0))
 
     return {
-        "id": str(product["_id"]),
-        "title": product["title"],
-        "slug": product.get("slug"),
-        "description": product.get("description"),
+        "id": str(product["_id"]) if product and "_id" in product else (str(canonical.get("order")) if canonical else "prod"),
+        "title": title_val,
+        "slug": slug_val,
+        "description": desc_val,
         "price_naira": price_naira,
         "price_usd": price_usd,
     }

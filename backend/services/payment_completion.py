@@ -60,10 +60,10 @@ def is_valid_paid_amount(actual_paid: float, expected_amount: float, fee_paid: f
     if (expected_amount - 1.0) <= actual_paid <= (expected_amount * 1.25 + 3500.0):
         return True
 
-    # 4. Main package transition tolerance (between legacy ₦2,000, ₦4,000 viral, and ₦5,000 base):
+    # 4. Main package transition tolerance (between ₦4,000 viral and ₦5,000 base):
     # Protects paying students who initiated checkout during price updates or urgency transitions.
     if expected_amount in (2000.0, 5000.0):
-        transition_targets = [2000.0, 4000.0] if expected_amount == 5000.0 else [5000.0, 1000.0]
+        transition_targets = [4000.0] if expected_amount == 5000.0 else [5000.0]
         for t in transition_targets:
             if abs(actual_paid - t) <= 1.0:
                 return True

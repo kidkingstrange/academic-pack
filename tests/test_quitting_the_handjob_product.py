@@ -152,6 +152,56 @@ async def test_payment_initialization_viral_friend_discount(client, test_db, mon
 
 
 @pytest.mark.asyncio
+async def test_quitting_the_handjob_never_sells_for_1000_even_with_legacy_env_or_missing_doc(
+    client, test_db, monkeypatch
+):
+    """
+    Critical regression test:
+    Customers must NEVER be charged ₦1,000 for Quitting The Handjob.
+    Even if PRODUCT_PRICE_NAIRA is corrupted to 2000 in env, and DB document is missing,
+    price must be authoritative ₦5,000 (or ₦4,000 max discount). Underpayment of ₦1,000 is rejected.
+    """
+    # 1. Product info returns authoritative ₦5,000 even without DB document
+    info_res = await client.get("/api/payments/product-info?slug=quitting-the-handjob")
+    assert info_res.status_code == 200
+    assert info_res.json()["price_naira"] == 5000.0
+
+    # 2. Corrupt settings to simulate legacy 2000 env
+    monkeypatch.setattr(settings, "PRODUCT_PRICE_NAIRA", 2000)
+    monkeypatch.setattr(
+        "backend.routes.payments.initialize_transaction",
+        AsyncMock(return_value={
+            "status": True,
+            "data": {
+                "authorization_url": "https://checkout.paystack.com/mock-qth-guard",
+                "reference": "ACP-QTH-GUARD-1",
+            }
+        })
+    )
+
+    # Standard payment init must be 5000, NOT 2000
+    res = await client.post("/api/payments/initialize", json={
+        "name": "Buyer Guard",
+        "email": "guard@example.com",
+        "product_slug": "quitting-the-handjob",
+        "payment_method": "bank_transfer",
+    })
+    assert res.status_code == 200
+    assert res.json()["amount"] == 5000.0
+
+    # Viral discount with 3 friends must be 4000, NOT 1000
+    res_disc = await client.post("/api/payments/initialize", json={
+        "name": "Buyer Guard Disc",
+        "email": "guard_disc@example.com",
+        "product_slug": "quitting-the-handjob",
+        "payment_method": "bank_transfer",
+        "friend_emails": ["f1@ex.com", "f2@ex.com", "f3@ex.com"],
+    })
+    assert res_disc.status_code == 200
+    assert res_disc.json()["amount"] == 4000.0
+
+
+@pytest.mark.asyncio
 async def test_webhook_payment_completion_entitlement_and_affiliate_attribution(
     client, test_db, monkeypatch
 ):

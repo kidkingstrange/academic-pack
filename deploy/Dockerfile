@@ -12,6 +12,7 @@ COPY frontend/ ./frontend/
 COPY uploads/ ./uploads/
 COPY content/ ./content/
 COPY pdfs/ ./pdfs/
+COPY scripts/ ./scripts/
 
 # Drop root — the app writes to uploads/products/ at runtime (admin
 # product upload), so the app user needs ownership of /app, not just
