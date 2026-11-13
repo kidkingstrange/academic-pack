@@ -195,6 +195,47 @@ async def serve_qth_landing():
         headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
     )
 
+@app.get("/how-to-close-high-paying-clients-in-the-dms", include_in_schema=False)
+@app.get("/how-to-close-high-paying-clients-in-the-dms.html", include_in_schema=False)
+@app.get("/clients-in-dm", include_in_schema=False)
+@app.get("/books/how-to-close-high-paying-clients-in-the-dms", include_in_schema=False)
+async def serve_dms_landing():
+    return FileResponse(
+        str(frontend_path / "how-to-close-high-paying-clients-in-the-dms.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/how-to-do-your-ideas", include_in_schema=False)
+@app.get("/how-to-do-your-ideas.html", include_in_schema=False)
+@app.get("/do-your-ideas", include_in_schema=False)
+@app.get("/books/how-to-do-your-ideas", include_in_schema=False)
+async def serve_ideas_landing():
+    return FileResponse(
+        str(frontend_path / "how-to-do-your-ideas.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/what-to-do-after-a-breakup", include_in_schema=False)
+@app.get("/what-to-do-after-a-breakup.html", include_in_schema=False)
+@app.get("/breakup", include_in_schema=False)
+@app.get("/breakup-recovery", include_in_schema=False)
+@app.get("/books/what-to-do-after-a-breakup", include_in_schema=False)
+async def serve_breakup_landing():
+    return FileResponse(
+        str(frontend_path / "what-to-do-after-a-breakup.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
+@app.get("/what-to-do-when-your-boss-is-angry-with-you", include_in_schema=False)
+@app.get("/what-to-do-when-your-boss-is-angry-with-you.html", include_in_schema=False)
+@app.get("/angry-boss", include_in_schema=False)
+@app.get("/books/what-to-do-when-your-boss-is-angry-with-you", include_in_schema=False)
+async def serve_boss_landing():
+    return FileResponse(
+        str(frontend_path / "what-to-do-when-your-boss-is-angry-with-you.html"),
+        headers={"Cache-Control": "no-cache, no-store, must-revalidate"}
+    )
+
 @app.get("/us", include_in_schema=False)
 @app.get("/us.html", include_in_schema=False)
 async def serve_us_landing():

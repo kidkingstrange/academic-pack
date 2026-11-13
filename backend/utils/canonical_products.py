@@ -86,6 +86,68 @@ CANONICAL_PRODUCTS: List[Dict[str, Any]] = [
         "price_naira": 5000,
         "price_usd": 15.0,
     },
+    {
+        "order": 9,
+        "title": "How to Close High-Paying Clients in the DMs",
+        "description": "A tactical manual for young corporate professionals and founders to turn direct messages into high-ticket clients without being pushy or awkward.",
+        "file_path": "How to Close High-Paying Clients in the DMs - David Itoya.pdf",
+        "aliases": [
+            "How to Close High-Paying Clients in the DMs - David Itoya.pdf",
+            "How to Close High-Paying Clients in the DMs.pdf",
+            "how-to-close-high-paying-clients-in-the-dms.pdf",
+            "high_paying_clients_in_dm.pdf",
+            "clients-in-dm.pdf"
+        ],
+        "slug": "how-to-close-high-paying-clients-in-the-dms",
+        "price_naira": 5000,
+        "price_usd": 15.0,
+    },
+    {
+        "order": 10,
+        "title": "How to Do Your Ideas",
+        "description": "The easiest, proven ways to stop overthinking, build momentum, and turn your inspiration into real-world execution.",
+        "file_path": "How to Do Your Ideas - David Itoya.pdf",
+        "aliases": [
+            "How to Do Your Ideas - David Itoya.pdf",
+            "How to Do Your Ideas.pdf",
+            "how-to-do-your-ideas.pdf",
+            "do-your-ideas.pdf"
+        ],
+        "slug": "how-to-do-your-ideas",
+        "price_naira": 5000,
+        "price_usd": 15.0,
+    },
+    {
+        "order": 11,
+        "title": "What to Do After a Breakup",
+        "description": "How to be genuinely happy without your ex. A psychology-grounded roadmap to process heartbreak, regain self-respect, and heal completely.",
+        "file_path": "What to Do After a Breakup - David Itoya.pdf",
+        "aliases": [
+            "What to Do After a Breakup - David Itoya.pdf",
+            "What to Do After a Breakup.pdf",
+            "what-to-do-after-a-breakup.pdf",
+            "breakup-recovery.pdf"
+        ],
+        "slug": "what-to-do-after-a-breakup",
+        "price_naira": 5000,
+        "price_usd": 15.0,
+    },
+    {
+        "order": 12,
+        "title": "What To Do When Your Boss Is Angry With You",
+        "description": "The workplace survival and advancement playbook to defuse tension, rebuild trust, and turn managerial conflict into career advancement.",
+        "file_path": "What To Do When Your Boss Is Angry With You - David Itoya.pdf",
+        "aliases": [
+            "What To Do When Your Boss Is Angry With You - David Itoya.pdf",
+            "What To Do When Your Boss Is Angry With You.pdf",
+            "what-to-do-when-your-boss-is-angry-with-you.pdf",
+            "how-to-turn-your-boss-into-your-biggest.pdf",
+            "angry-boss.pdf"
+        ],
+        "slug": "what-to-do-when-your-boss-is-angry-with-you",
+        "price_naira": 5000,
+        "price_usd": 15.0,
+    },
 ]
 
 

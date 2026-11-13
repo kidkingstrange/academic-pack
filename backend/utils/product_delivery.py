@@ -57,6 +57,30 @@ CANONICAL_PRODUCT_MAP: Dict[str, List[str]] = {
         "quitting-the-handjob.pdf",
         "Quitting The Handjob.pdf",
     ],
+    "dm_clients": [
+        "How to Close High-Paying Clients in the DMs - David Itoya.pdf",
+        "How to Close High-Paying Clients in the DMs.pdf",
+        "how-to-close-high-paying-clients-in-the-dms.pdf",
+        "high_paying_clients_in_dm.pdf",
+    ],
+    "ideas": [
+        "How to Do Your Ideas - David Itoya.pdf",
+        "How to Do Your Ideas.pdf",
+        "how-to-do-your-ideas.pdf",
+        "do-your-ideas.pdf",
+    ],
+    "breakup": [
+        "What to Do After a Breakup - David Itoya.pdf",
+        "What to Do After a Breakup.pdf",
+        "what-to-do-after-a-breakup.pdf",
+        "breakup.pdf",
+    ],
+    "angry_boss": [
+        "What To Do When Your Boss Is Angry With You - David Itoya.pdf",
+        "What To Do When Your Boss Is Angry With You.pdf",
+        "what-to-do-when-your-boss-is-angry-with-you.pdf",
+        "how-to-turn-your-boss-into-your-biggest.pdf",
+    ],
 }
 
 
@@ -99,6 +123,14 @@ def resolve_product_pdf_path(product: dict, uploads_dir_setting: str = "uploads/
         elif key == "survival" and "survival" in title_lower:
             matched = True
         elif key == "handjob" and ("handjob" in title_lower or "quitting" in title_lower or "masturbation" in title_lower or "pornography" in title_lower):
+            matched = True
+        elif key == "dm_clients" and ("high-paying" in title_lower or "paying client" in title_lower or "dms" in title_lower or "direct message" in title_lower):
+            matched = True
+        elif key == "ideas" and ("ideas" in title_lower or "do your ideas" in title_lower):
+            matched = True
+        elif key == "breakup" and ("breakup" in title_lower or "break-up" in title_lower or "ex" in title_lower):
+            matched = True
+        elif key == "angry_boss" and ("boss" in title_lower or "angry" in title_lower):
             matched = True
 
         if matched:

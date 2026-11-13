@@ -34,6 +34,7 @@ const BOOKS = [
     category: "Sales & Marketing",
     rating: 4.9,
     reviews: 214,
+    salesPage: "/how-to-close-high-paying-clients-in-the-dms",
     description: "The complete script, objection handling, and conversation framework to close high-ticket deals inside social media DMs.",
     painPoints: [
       "Getting left on 'read' after sending your price or proposal",
@@ -47,6 +48,52 @@ const BOOKS = [
       "Overcoming the 'It's too expensive' objection effortlessly",
       "Transitioning from casual conversation to a 5-figure retainer",
       "The budget-qualification question to ask before sending any proposal"
+    ]
+  },
+  {
+    id: "how-to-do-your-ideas",
+    title: "How to Do Your Ideas",
+    cover: "/book-covers/how-to-do-your-ideas.webp",
+    category: "Career Acceleration",
+    rating: 4.9,
+    reviews: 182,
+    salesPage: "/how-to-do-your-ideas",
+    description: "The definitive action guide to stop overthinking, break inertia, and turn your best inspiration into real-world execution.",
+    painPoints: [
+      "Having 50+ unfinished ideas rotting in your notes app",
+      "Starting exciting projects with high energy only to abandon them a week later",
+      "Paralyzed by perfectionism and fear of what people will think"
+    ],
+    solutionOverview: "A practical execution protocol featuring the 5 Whys diagnostic, Mind Mapping clarity, the Eisenhower matrix, and the 7-Day Sprint Action Toolkit to ship your ideas.",
+    whoShouldReadThis: "Builders, creators, corporate professionals, and entrepreneurs tired of being stuck in the planning phase.",
+    bullets: [
+      "The 5 Whys diagnostic lens to eliminate vague project confusion",
+      "How to defeat perfectionism paralysis and shipping anxiety",
+      "Breaking massive tasks into fast micro-sprints that maintain momentum",
+      "The complete 7-Day Sprint Planner and Clarity Audit worksheet"
+    ]
+  },
+  {
+    id: "what-to-do-after-a-breakup",
+    title: "What to Do After a Breakup",
+    cover: "/book-covers/what-to-do-after-a-breakup.webp",
+    category: "Mindset & Health",
+    rating: 5.0,
+    reviews: 196,
+    salesPage: "/what-to-do-after-a-breakup",
+    description: "How to be genuinely happy without your ex. A psychology-grounded roadmap to process heartbreak, break emotional dependence, and rebuild self-respect.",
+    painPoints: [
+      "Debilitating chest pain, sleepless nights, and obsessive rumination",
+      "Compulsively checking their social media and 'last seen' timestamps",
+      "Feeling like you lost your identity and will never find love again"
+    ],
+    solutionOverview: "A 114-page compassionate recovery manual: acknowledge the pain healthily, enforce the No-Contact protocol with dignity, sever dopamine attachment loops, and create your own closure.",
+    whoShouldReadThis: "Anyone suffering through heartbreak, rejection, or emotional grief who wants to heal completely and reclaim self-command.",
+    bullets: [
+      "The neurochemistry of heartbreak withdrawal and how to stop rumination",
+      "Executing the No-Contact rule with absolute class and zero pleading",
+      "How to rediscover your independent identity and personal ambitions",
+      "Forgiving without excusing, and granting yourself unconditional closure"
     ]
   },
   {
@@ -403,12 +450,13 @@ const BOOKS = [
   },
   {
     id: "how-to-turn-your-boss-into-your-biggest",
-    title: "How to Turn Your Boss Into Your Biggest Career Advocate",
+    title: "What To Do When Your Boss Is Angry With You",
     cover: "/assets/covers/how-to-turn-your-boss-into-your-biggest.webp",
     category: "Career Acceleration",
     rating: 4.8,
     reviews: 145,
-    description: "Managing up, aligning goals, and turning your direct manager into your active sponsor.",
+    salesPage: "/what-to-do-when-your-boss-is-angry-with-you",
+    description: "The workplace survival and advancement playbook: defuse managerial conflict, restore trust, and turn friction into your next promotion.",
     painPoints: [
       "Struggling with a distant, demanding, or micromanaging boss",
       "Misaligned expectations causing friction in 1-on-1 performance meetings",

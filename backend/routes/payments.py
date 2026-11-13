@@ -106,20 +106,30 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     product_doc = None
 
     if product_slug:
+        canonical_prod = get_canonical_product(slug=product_slug, title=product_title)
         product_doc = await db.products.find_one({
             "$or": [
                 {"slug": product_slug},
                 {"title": {"$regex": f"^{re.escape(product_slug)}$", "$options": "i"}},
             ]
         })
-        if product_slug == "quitting-the-handjob":
-            reference = f"ACP-QTH-{uuid.uuid4().hex[:12].upper()}"
-            product_title = product_title or "Quitting The Handjob"
+        prefix_map = {
+            "quitting-the-handjob": "QTH",
+            "how-to-close-high-paying-clients-in-the-dms": "DMS",
+            "how-to-do-your-ideas": "IDEA",
+            "what-to-do-after-a-breakup": "BRK",
+            "what-to-do-when-your-boss-is-angry-with-you": "BOSS",
+        }
+        ref_prefix = prefix_map.get(product_slug)
+        if ref_prefix:
+            reference = f"ACP-{ref_prefix}-{uuid.uuid4().hex[:12].upper()}"
         else:
             clean_code = "".join(c for c in product_slug if c.isalnum())[:4].upper() or "PROD"
             reference = f"ACP-{clean_code}-{uuid.uuid4().hex[:12].upper()}"
-            if product_doc and not product_title:
-                product_title = product_doc.get("title")
+        if product_doc and not product_title:
+            product_title = product_doc.get("title")
+        elif not product_title and canonical_prod:
+            product_title = canonical_prod.get("title")
     else:
         reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
     now = datetime.now(timezone.utc)
@@ -130,7 +140,8 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
     tier = tier_requested if tier_requested in ("starter", "complete", "vip") else "complete"
 
     if product_slug:
-        canonical_prod = get_canonical_product(slug=product_slug, title=product_title)
+        if not canonical_prod:
+            canonical_prod = get_canonical_product(slug=product_slug, title=product_title)
         if product_doc:
             if is_usd:
                 raw_price = product_doc.get("price_usd")
