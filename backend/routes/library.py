@@ -235,7 +235,8 @@ async def download_file(signed_token: str, db=Depends(get_db)):
     # gate allows retries within the token's time-bound expiration window
     # (JWT_DOWNLOAD_EXPIRE_MINUTES, see create_download_token in security.py).
     product_id = payload.get("product_id")
-    product = await db.products.find_one({"_id": ObjectId(product_id)})
+    query = {"_id": ObjectId(product_id)} if (product_id and ObjectId.is_valid(product_id)) else {"slug": product_id}
+    product = await db.products.find_one(query)
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
 

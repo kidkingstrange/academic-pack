@@ -108,6 +108,24 @@ async def connect_db():
             db.blog_comments.create_index([("slug", 1), ("approved", 1), ("created_at", -1)]),
             db.blog_topics.create_index([("votes", -1)]),
             db.blog_topics.create_index("category"),
+            # Products catalog & library indexes
+            db.products.create_index("slug", unique=True, sparse=True),
+            db.products.create_index([("is_active", 1), ("order", 1)]),
+            db.products.create_index("title"),
+            # Checkout recovery & flagged payment indexes
+            db.abandoned_transactions.create_index("reference", unique=True),
+            db.abandoned_transactions.create_index([("status", 1), ("created_at", -1)]),
+            db.abandoned_transactions.create_index("email"),
+            db.flagged_payments.create_index("reference", unique=True),
+            db.flagged_payments.create_index([("resolved", 1), ("flagged_at", -1)]),
+            # Sales team, preorders, & lead magnets
+            db.sales_reps.create_index("email", unique=True),
+            db.sales_reps.create_index("code", unique=True),
+            db.pre_orders.create_index("reference", unique=True),
+            db.pre_orders.create_index([("email", 1), ("created_at", -1)]),
+            db.pending_subscription_payments.create_index("reference", unique=True),
+            db.lead_subscribers.create_index([("email", 1), ("lead_magnet_id", 1)]),
+            db.webhook_logs.create_index([("received_at", -1)]),
             return_exceptions=True,
         )
         for res in index_results:

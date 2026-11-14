@@ -149,11 +149,24 @@ if frontend_path.exists():
     app.mount("/js", CachedStaticFiles(directory=str(frontend_path / "js"), cache_control="no-cache, must-revalidate"), name="js")
     app.mount("/book-covers", CachedStaticFiles(directory=str(frontend_path / "book-covers"), cache_control="public, max-age=31536000, immutable"), name="book-covers")
 
-if uploads_path.exists():
-    app.mount("/uploads", CachedStaticFiles(directory=str(uploads_path), cache_control="public, max-age=86400"), name="uploads")
+reviews_upload_path = uploads_path / "reviews"
+reviews_upload_path.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads/reviews", CachedStaticFiles(directory=str(reviews_upload_path), cache_control="public, max-age=86400"), name="uploads_reviews")
 
-if pdfs_path.exists():
-    app.mount("/pdfs", StaticFiles(directory=str(pdfs_path)), name="pdfs")
+# ── Protected Digital Asset Handlers ──────────────────────────────────────────
+# Digital book PDFs (in pdfs/ and uploads/products/) are protected commercial assets.
+# They are never served directly via public static mounts; access is restricted
+# exclusively to paying customers through signed tokens generated in /library.
+@app.get("/pdfs/{file_path:path}", include_in_schema=False)
+@app.get("/uploads/products/{file_path:path}", include_in_schema=False)
+async def block_direct_pdf_access(file_path: str):
+    return expired_link_page(
+        "Direct access to digital books is locked. Please open your private customer library to download your books.",
+        heading="Protected Digital Asset",
+        cta_text="Go to My Library",
+        cta_href="/library",
+        status_code=403,
+    )
 
 
 # ── SEO / crawler files ────────────────────────────────────────────────────────

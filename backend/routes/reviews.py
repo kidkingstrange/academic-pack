@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 
 from ..config import get_settings
 from ..database import get_db
+from ..middleware.auth import require_admin
 from ..services.coupon_service import issue_review_coupon
 from ..services.email_service import send_email, render_template
 from ..services.image_service import process_and_save_webp
@@ -319,9 +320,14 @@ async def get_reviews_summary(db=Depends(get_db)):
 
 # ── Admin Moderation Endpoints ────────────────────────────────────────────────
 @router.post("/api/admin/reviews/{review_id}/approve")
-async def admin_approve_review(review_id: str, db=Depends(get_db)):
+async def admin_approve_review(
+    review_id: str,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
     """
     Admin endpoint to manually approve a review.
+    Requires verified Admin credentials.
     """
     try:
         oid = ObjectId(review_id)
@@ -337,9 +343,14 @@ async def admin_approve_review(review_id: str, db=Depends(get_db)):
 
 
 @router.post("/api/admin/reviews/{review_id}/reject")
-async def admin_reject_review(review_id: str, db=Depends(get_db)):
+async def admin_reject_review(
+    review_id: str,
+    current_user=Depends(require_admin),
+    db=Depends(get_db),
+):
     """
     Admin endpoint to manually reject/hide a review.
+    Requires verified Admin credentials.
     """
     try:
         oid = ObjectId(review_id)
