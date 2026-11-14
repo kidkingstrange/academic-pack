@@ -70,6 +70,7 @@ async def test_new_books_sales_pages_served_cleanly(client):
         ("/breakup", "what-to-do-after-a-breakup"),
         ("/what-to-do-when-your-boss-is-angry-with-you", "what-to-do-when-your-boss-is-angry-with-you"),
         ("/angry-boss", "what-to-do-when-your-boss-is-angry-with-you"),
+        ("/quitting-the-handjob", "quitting-the-handjob"),
     ]
     for url, expected_slug in pages:
         res = await client.get(url)
@@ -79,6 +80,8 @@ async def test_new_books_sales_pages_served_cleanly(client):
         assert "window.PRODUCT_PRICE = 5000;" in html, f"Missing price 5000 in {url}"
         assert "₦5,000" in html, f"Missing ₦5,000 price text in {url}"
         assert "checkout-modal" in html, f"Missing checkout modal in {url}"
+        assert "main.js" not in html, f"Standalone page {url} should not load main.js (bundle countdown override)"
+        assert "/assets/images/profileimg.webp" in html, f"Missing author photo in {url}"
 
 
 @pytest.mark.asyncio

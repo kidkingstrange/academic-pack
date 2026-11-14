@@ -1,5 +1,11 @@
 // Countdown Timer & Price Controller
 (function() {
+  // If this is a standalone product page (window.PRODUCT_SLUG is set),
+  // never mutate the price or run the flagship bundle affiliate expiry to ₦20,000!
+  if (window.PRODUCT_SLUG) {
+    return;
+  }
+
   const urlParams = new URLSearchParams(window.location.search);
   const refParam = (urlParams.get('ref') || '').trim();
   const storedRef = (localStorage.getItem('ac_referral_code') || '').trim();
