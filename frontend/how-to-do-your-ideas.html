@@ -399,18 +399,25 @@ window.PRODUCT_PRICE = 5000;
 
 <!-- Author Section -->
 <section class="author" style="background:#f8fafc; padding:70px 0;">
-  <div class="container container--sm">
-    <div style="text-align:center;" data-aos="fade-up">
-      <span class="section-label">ABOUT THE AUTHOR</span>
-      <h2 class="section-title">David Itoya</h2>
-      <p class="section-sub" style="margin: 0 auto 24px auto;">Founder, Scale Group Publishing &amp; The Scale Conference</p>
-      <div style="max-width:680px; margin:0 auto; line-height:1.7; color:#334155; text-align:left;">
-        <p style="margin-bottom:16px;">
+  <div class="container container--sm author__inner" data-aos="fade-up">
+    <div class="author__img-wrap">
+      <img src="/assets/images/profileimg.webp" alt="David Itoya" class="author__photo" loading="lazy">
+    </div>
+    <div>
+      <span class="section-label" style="display:inline-block; margin-bottom:4px;">ABOUT THE AUTHOR</span>
+      <h2 class="author__name" style="margin-top:0;">David Itoya</h2>
+      <p class="author__role" style="color:#2563eb; font-weight:600; margin-bottom:14px;">Founder, Scale Group Publishing &amp; The Scale Conference</p>
+      <div style="line-height:1.7; color:#334155;">
+        <p style="margin-bottom:12px;">
           David Itoya has spent the last decade building high-velocity execution systems across publishing, media, and corporate consulting. He is dedicated to helping ambitious builders bridge the gap between creative inspiration and disciplined execution.
         </p>
         <p>
           <em>"Thinking about doing things and actually getting them done are two entirely different universes. This book was written to make sure your best ideas do not die inside your notebooks."</em>
         </p>
+      </div>
+      <div class="author__creds" style="margin-top:16px;">
+        <div class="author__cred"><i class="bi bi-lightning-charge-fill"></i> Execution Architect</div>
+        <div class="author__cred"><i class="bi bi-people-fill"></i> Thousands of Builders Guided Across Scale Group</div>
       </div>
     </div>
   </div>
@@ -720,3 +727,4 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="/js/affiliate-modal.js" defer></script>
 </body>
 </html>
+
