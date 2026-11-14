@@ -20,6 +20,44 @@ if (typeof formatApiError !== 'function') {
   };
 }
 
+// ── Standalone Book Price Enforcer ──────────────────────────────────────────
+// Guarantees that standalone book sales pages permanently display and charge ₦5,000,
+// and immediately sanitizes any button or badge if an external or cached script mutated it.
+function enforceStandaloneBookPricing() {
+  if (!window.PRODUCT_SLUG) return;
+  const canonicalPrice = (typeof window.PRODUCT_PRICE === 'number' && window.PRODUCT_PRICE > 0)
+    ? window.PRODUCT_PRICE
+    : 5000;
+  const priceFormatted = '₦' + canonicalPrice.toLocaleString();
+
+  // 1. Sanitize any button or container on the page that mentions ₦20,000 or old bundle pricing
+  document.querySelectorAll('button, a, span, p, div').forEach(function(el) {
+    if (el.closest('#checkout-modal')) return;
+    if (el.tagName === 'BUTTON' || el.classList.contains('hero-pill-btn') || el.classList.contains('btn--mega')) {
+      if (el.textContent.includes('₦20,000')) {
+        el.innerHTML = el.innerHTML.replace(/₦20,000/g, priceFormatted);
+      }
+    }
+    if (el.classList.contains('hero-electric-badge__amount') && el.textContent.includes('₦20,000')) {
+      el.textContent = priceFormatted;
+    }
+  });
+
+  // 2. Enforce priceFormatted on all .price-current elements outside the modal
+  document.querySelectorAll('.price-current').forEach(function(el) {
+    if (!el.closest('#checkout-modal')) {
+      el.textContent = priceFormatted;
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', enforceStandaloneBookPricing);
+} else {
+  enforceStandaloneBookPricing();
+}
+window.addEventListener('load', enforceStandaloneBookPricing);
+
 const modal = document.getElementById('checkout-modal');
 const form  = document.getElementById('lead-form');
 let userEmail         = '';
