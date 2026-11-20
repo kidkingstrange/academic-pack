@@ -241,15 +241,9 @@ function getActiveBasePrice() {
   if (typeof window.PRODUCT_PRICE === 'string' && Number(window.PRODUCT_PRICE) > 0) {
     return Number(window.PRODUCT_PRICE);
   }
-  const referralCode = localStorage.getItem('ac_referral_code');
-  const urlParams = new URLSearchParams(window.location.search);
-  const isAff = !!(referralCode || urlParams.get('ref') || urlParams.get('price') === '5000');
-  if (isAff) {
-    const affExpiry = Number(localStorage.getItem('ac_aff_expiry') || 0);
-    if (affExpiry && Date.now() > affExpiry) {
-      return 20000;
-    }
-    return 5000;
+  const PROMO_END_MS = new Date('2027-01-01T00:00:00+01:00').getTime();
+  if (Date.now() >= PROMO_END_MS) {
+    return 20000;
   }
   return 5000;
 }

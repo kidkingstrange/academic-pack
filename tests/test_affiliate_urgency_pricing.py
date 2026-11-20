@@ -20,7 +20,7 @@ settings = get_settings()
 
 
 @pytest.mark.asyncio
-async def test_affiliate_referral_within_48h_gets_5000(test_db):
+async def test_affiliate_referral_during_promo_gets_5000(test_db):
     aff_code = "URGENCY48"
     await test_db.affiliates.insert_one({
         "code": aff_code,
@@ -31,8 +31,8 @@ async def test_affiliate_referral_within_48h_gets_5000(test_db):
     })
 
     now = datetime.now(timezone.utc)
-    # Client expiry is set 24 hours into the future (well within the 48h window)
-    client_expiry_ms = (now + timedelta(hours=24)).timestamp() * 1000
+    # Even if client has an old expired timer, promo is active through Jan 1, 2027
+    client_expiry_ms = (now - timedelta(days=2)).timestamp() * 1000
 
     amount, referred_by = await compute_price_and_referral(
         test_db,
@@ -43,12 +43,12 @@ async def test_affiliate_referral_within_48h_gets_5000(test_db):
     )
 
     assert referred_by == aff_code
-    assert amount == settings.PRODUCT_PRICE_LATE_NAIRA  # ₦5,000
+    assert amount == settings.PACKAGE_PROMO_PRICE_NAIRA  # ₦5,000
 
 
 @pytest.mark.asyncio
-async def test_affiliate_referral_after_48h_gets_20000(test_db):
-    aff_code = "EXPIRED48"
+async def test_affiliate_referral_after_promo_date_gets_20000(test_db, monkeypatch):
+    aff_code = "EXPIREDPROMO"
     await test_db.affiliates.insert_one({
         "code": aff_code,
         "name": "Affiliate Tester 2",
@@ -57,25 +57,32 @@ async def test_affiliate_referral_after_48h_gets_20000(test_db):
         "active": True,
     })
 
-    now = datetime.now(timezone.utc)
-    # Client expiry is set in the past (48-hour window has expired)
-    client_expiry_ms = (now - timedelta(minutes=10)).timestamp() * 1000
+    # Simulate date in 2027 (after Jan 1, 2027 promo end date)
+    future_date = datetime(2027, 1, 15, 12, 0, 0, tzinfo=timezone.utc)
+    import datetime as dt_module
+
+    class MockDateTime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return future_date
+
+    monkeypatch.setattr("backend.routes.payments.datetime", MockDateTime)
 
     amount, referred_by = await compute_price_and_referral(
         test_db,
         email="student_expired_window@example.com",
-        client_expiry=client_expiry_ms,
+        client_expiry=None,
         referral_code=aff_code,
         currency="NGN"
     )
 
     assert referred_by == aff_code
-    assert amount == settings.PRODUCT_PRICE_RETAIL_NAIRA  # ₦20,000
+    assert amount == settings.PACKAGE_REGULAR_PRICE_NAIRA  # ₦20,000
 
 
 @pytest.mark.asyncio
-async def test_affiliate_existing_lead_older_than_48h_jumps_to_20000(test_db):
-    aff_code = "LEADEXPIRED48"
+async def test_affiliate_existing_lead_during_promo_retains_5000(test_db):
+    aff_code = "LEADPROMO48"
     await test_db.affiliates.insert_one({
         "code": aff_code,
         "name": "Affiliate Tester 3",
@@ -86,7 +93,7 @@ async def test_affiliate_existing_lead_older_than_48h_jumps_to_20000(test_db):
 
     email = "lead_registered_3days_ago@example.com"
     now = datetime.now(timezone.utc)
-    # Lead registered 3 days ago (72 hours > 48 hours)
+    # Lead registered 3 days ago
     await test_db.leads.insert_one({
         "email": email,
         "name": "Old Lead",
@@ -103,36 +110,20 @@ async def test_affiliate_existing_lead_older_than_48h_jumps_to_20000(test_db):
     )
 
     assert referred_by == aff_code
-    assert amount == settings.PRODUCT_PRICE_RETAIL_NAIRA  # ₦20,000
+    assert amount == settings.PACKAGE_PROMO_PRICE_NAIRA  # ₦5,000
 
 
 @pytest.mark.asyncio
-async def test_direct_traffic_still_gets_2000_or_5000(test_db):
-    now = datetime.now(timezone.utc)
-
-    # 1. Direct traffic within 24h
-    fresh_expiry = (now + timedelta(hours=10)).timestamp() * 1000
-    amount_fresh, ref_fresh = await compute_price_and_referral(
+async def test_direct_traffic_during_promo_gets_5000(test_db):
+    amount_direct, ref_direct = await compute_price_and_referral(
         test_db,
         email="direct_fresh@example.com",
-        client_expiry=fresh_expiry,
+        client_expiry=None,
         referral_code=None,
         currency="NGN"
     )
-    assert ref_fresh is None
-    assert amount_fresh == settings.PRODUCT_PRICE_NAIRA  # ₦2,000
-
-    # 2. Direct traffic expired (> 24h)
-    expired_time = (now - timedelta(hours=2)).timestamp() * 1000
-    amount_exp, ref_exp = await compute_price_and_referral(
-        test_db,
-        email="direct_expired@example.com",
-        client_expiry=expired_time,
-        referral_code=None,
-        currency="NGN"
-    )
-    assert ref_exp is None
-    assert amount_exp == settings.PRODUCT_PRICE_LATE_NAIRA  # ₦5,000
+    assert ref_direct is None
+    assert amount_direct == settings.PACKAGE_PROMO_PRICE_NAIRA  # ₦5,000
 
 
 @pytest.mark.asyncio

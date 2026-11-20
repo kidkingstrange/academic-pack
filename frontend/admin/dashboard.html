@@ -1739,7 +1739,7 @@
           <div style="padding:18px 20px; font-weight:700; color:#fff; border-bottom:1px solid var(--border-color); background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg) var(--radius-lg) 0 0">Recent Sales Activity</div>
           <div class="data-table-container has-mobile-cards" style="border-radius:0 0 var(--radius-lg) var(--radius-lg)">
             <table class="data-table" id="table-dash-recent-sales">
-              <thead><tr><th>Date</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead>
+              <thead><tr><th>Date</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th></tr></thead>
               <tbody></tbody>
             </table>
           </div>
@@ -1847,7 +1847,7 @@
 
         <div class="data-table-container has-mobile-cards">
           <table class="data-table" id="table-sales-management">
-            <thead><tr><th class="sortable" onclick="sortTable('table-sales-management', 0)">Verified At <i class="bi bi-arrow-down-up"></i></th><th>Reference</th><th class="sortable" onclick="sortTable('table-sales-management', 2)">Customer <i class="bi bi-arrow-down-up"></i></th><th>Email</th><th class="sortable" onclick="sortTable('table-sales-management', 4, true)">Amount <i class="bi bi-arrow-down-up"></i></th><th>Method</th><th>Gateway</th><th class="sortable" onclick="sortTable('table-sales-management', 7)">Status <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
+            <thead><tr><th class="sortable" onclick="sortTable('table-sales-management', 0)">Verified At <i class="bi bi-arrow-down-up"></i></th><th>Reference</th><th class="sortable" onclick="sortTable('table-sales-management', 2)">Customer <i class="bi bi-arrow-down-up"></i></th><th>Email</th><th>Product</th><th class="sortable" onclick="sortTable('table-sales-management', 5, true)">Amount <i class="bi bi-arrow-down-up"></i></th><th>Method</th><th>Gateway</th><th class="sortable" onclick="sortTable('table-sales-management', 8)">Status <i class="bi bi-arrow-down-up"></i></th><th>Action</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -2736,6 +2736,10 @@
       <tr onclick="inspectSale('${escapeJs(t.reference)}')">
         <td>${t.verified_at ? new Date(t.verified_at).toLocaleDateString() : 'Today'}</td>
         <td style="font-weight:600">${escapeHtml(t.name)}</td>
+        <td>
+          <div style="font-weight:600; color:#fff; font-size:0.83rem">${escapeHtml(t.product_name || 'The Academic Comeback Package')}</div>
+          <div style="font-size:0.71rem; color:var(--gray-l)"><code>${escapeHtml(t.product_sku || 'ACP-BUNDLE')}</code></div>
+        </td>
         <td style="color:var(--gold-light);font-weight:700">${money(t.amount)}</td>
         <td><span class="status-pill success">${escapeHtml(t.status)}</span></td>
       </tr>
@@ -2748,6 +2752,10 @@
           <div class="record-card__row1">
             <span class="record-card__primary">${escapeHtml(t.name)}</span>
             <span class="record-card__amount">${money(t.amount)}</span>
+          </div>
+          <div style="margin:4px 0; font-size:0.8rem; color:#fff">
+            <strong>${escapeHtml(t.product_name || 'The Academic Comeback Package')}</strong>
+            <span style="font-size:0.7rem; color:var(--gray-l); margin-left:4px"><code>${escapeHtml(t.product_sku || 'ACP-BUNDLE')}</code></span>
           </div>
           <div class="record-card__row2">
             <span class="record-card__secondary">${t.verified_at ? new Date(t.verified_at).toLocaleDateString() : 'Today'}</span>
@@ -3167,12 +3175,42 @@
     const st = document.getElementById('sales-status-filter').value;
 
     const filtered = allSalesData.filter(s => {
-      const matchQ = !query || (s.reference || '').toLowerCase().includes(query) || (s.name || '').toLowerCase().includes(query) || (s.email || '').toLowerCase().includes(query);
+      const prodName = (s.product_name || s.book_title || '').toLowerCase();
+      const prodSku = (s.product_sku || '').toLowerCase();
+      const matchQ = !query || 
+        (s.reference || '').toLowerCase().includes(query) || 
+        (s.name || '').toLowerCase().includes(query) || 
+        (s.email || '').toLowerCase().includes(query) ||
+        prodName.includes(query) ||
+        prodSku.includes(query) ||
+        (s.items && s.items.some(it => (it.name || '').toLowerCase().includes(query) || (it.product_sku || '').toLowerCase().includes(query)));
       const matchSt = !st || s.status === st;
       return matchQ && matchSt;
     });
 
     renderSalesTable(filtered);
+  }
+
+  function formatProductBadge(sale) {
+    const items = sale.items && sale.items.length ? sale.items : [
+      {
+        name: sale.product_name || sale.book_title || 'The Academic Comeback Package',
+        product_sku: sale.product_sku || 'ACP-BUNDLE',
+        quantity: 1,
+        unit_price: sale.amount
+      }
+    ];
+
+    return items.map(item => `
+      <div style="margin-bottom:4px; line-height:1.25">
+        <strong style="color:#fff; font-size:0.83rem">${escapeHtml(item.name || 'The Academic Comeback Package')}</strong>
+        <div style="font-size:0.71rem; color:var(--gray-l); display:flex; gap:6px; align-items:center; margin-top:2px">
+          <code style="background:rgba(255,255,255,0.06); padding:1px 4px; border-radius:3px; font-size:0.69rem">${escapeHtml(item.product_sku || 'ACP-BUNDLE')}</code>
+          ${item.quantity > 1 ? `<span style="color:#93c5fd; font-weight:600">Qty: ${item.quantity}</span>` : ''}
+          ${items.length > 1 && item.unit_price ? `<span style="color:var(--gray-muted)">(${money(item.unit_price)})</span>` : ''}
+        </div>
+      </div>
+    `).join('');
   }
 
   function renderSalesTable(sales) {
@@ -3196,6 +3234,7 @@
         <td><code>${escapeHtml(s.reference)}</code></td>
         <td style="font-weight:600">${escapeHtml(s.name)}</td>
         <td>${escapeHtml(s.email)}</td>
+        <td style="min-width:180px">${formatProductBadge(s)}</td>
         <td style="color:var(--gold-light);font-weight:700">${money(s.amount)}</td>
         <td>${formatPaymentMethod(s.payment_method)}</td>
         <td style="text-transform:capitalize">${escapeHtml(s.gateway || 'Paystack')}</td>
@@ -3219,6 +3258,7 @@
           <span class="record-card__primary">${escapeHtml(s.name)}</span>
           <span class="record-card__amount">${money(s.amount)}</span>
         </div>
+        <div style="margin:4px 0 6px 0">${formatProductBadge(s)}</div>
         <div class="record-card__row2">
           <span class="record-card__secondary">${escapeHtml(s.email)} · ${formatPaymentMethod(s.payment_method)}</span>
           <span class="record-card__meta"><span class="record-card__dot record-card__dot--${statusClass}"></span>${escapeHtml(s.status)}</span>
@@ -3259,11 +3299,47 @@
         </div>
       </div>
 
+      <!-- Purchased Products Breakdown -->
+      <div class="tx-card" style="margin-bottom:12px; border:1px solid rgba(255,255,255,0.12)">
+        <div class="tx-card-title"><i class="bi bi-box-seam"></i> Purchased Products / Order Items</div>
+        <div style="margin-top:6px">
+          ${(p.items && p.items.length ? p.items : [{
+            name: p.product_name || p.book_title || 'The Academic Comeback Package',
+            product_sku: p.product_sku || 'ACP-BUNDLE',
+            quantity: 1,
+            unit_price: p.amount || 0,
+            total_price: p.amount || 0
+          }]).map(item => `
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.06)">
+              <div>
+                <div style="font-weight:700; color:#fff; font-size:0.88rem">${escapeHtml(item.name || 'The Academic Comeback Package')}</div>
+                <div style="font-size:0.73rem; color:var(--gray-l); margin-top:2px">
+                  <span>SKU: <code>${escapeHtml(item.product_sku || 'ACP-BUNDLE')}</code></span>
+                  <span style="margin-left:8px; color:#93c5fd">Qty: ${item.quantity || 1}</span>
+                </div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-weight:700; color:var(--gold-light); font-size:0.9rem">${money(item.total_price || item.unit_price || p.amount)}</div>
+                ${item.quantity > 1 ? `<div style="font-size:0.7rem; color:var(--gray-muted)">(${money(item.unit_price)} each)</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
       <!-- 2. Dense 2-Column Grid: Payment & Customer -->
       <div class="tx-dual-grid">
         <!-- Left: Payment Details -->
         <div class="tx-card">
           <div class="tx-card-title"><i class="bi bi-credit-card-2-front"></i> Payment Details</div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Product Name</span>
+            <span class="tx-kv-val" style="font-weight:600; color:#fff">${escapeHtml(p.product_name || 'The Academic Comeback Package')}</span>
+          </div>
+          <div class="tx-kv-row">
+            <span class="tx-kv-label">Product SKU</span>
+            <span class="tx-kv-val"><code>${escapeHtml(p.product_sku || 'ACP-BUNDLE')}</code></span>
+          </div>
           <div class="tx-kv-row">
             <span class="tx-kv-label">Base Price</span>
             <span class="tx-kv-val">${money(p.base_price || p.amount || 0)}</span>
@@ -3391,9 +3467,27 @@
   }
 
   function exportSalesCSV() {
-    let csv = 'Date,Reference,Name,Email,Amount,Status,Method,Gateway\n';
+    let csv = 'Date,Reference,Customer Name,Email,Product Name,Product SKU,Quantity,Amount,Status,Method,Gateway\n';
     allSalesData.forEach(s => {
-      csv += `"${s.verified_at || ''}","${s.reference}","${s.name}","${s.email}",${s.amount},"${s.status}","${formatPaymentMethod(s.payment_method)}","${s.gateway || 'paystack'}"\n`;
+      const items = s.items && s.items.length ? s.items : [{
+        name: s.product_name || s.book_title || 'The Academic Comeback Package',
+        product_sku: s.product_sku || 'ACP-BUNDLE',
+        quantity: 1,
+        unit_price: s.amount
+      }];
+      items.forEach(it => {
+        const prodName = (it.name || 'The Academic Comeback Package').replace(/"/g, '""');
+        const prodSku = (it.product_sku || 'ACP-BUNDLE').replace(/"/g, '""');
+        const custName = (s.name || '').replace(/"/g, '""');
+        const custEmail = (s.email || '').replace(/"/g, '""');
+        const ref = (s.reference || '').replace(/"/g, '""');
+        const status = (s.status || '').replace(/"/g, '""');
+        const method = (formatPaymentMethod(s.payment_method) || '').replace(/"/g, '""');
+        const gateway = (s.gateway || 'paystack').replace(/"/g, '""');
+        const qty = it.quantity || 1;
+        const itemAmt = it.total_price !== undefined ? it.total_price : (it.unit_price !== undefined ? it.unit_price * qty : s.amount);
+        csv += `"${s.verified_at || ''}","${ref}","${custName}","${custEmail}","${prodName}","${prodSku}",${qty},${itemAmt},"${status}","${method}","${gateway}"\n`;
+      });
     });
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);

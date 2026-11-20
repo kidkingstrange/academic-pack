@@ -37,8 +37,13 @@ class Settings(BaseSettings):
     PRODUCT_PRICE_LATE_NAIRA: int = 5000  # ₦5,000 after 24 hrs
     PRODUCT_PRICE_USD: float = 15.0     # $15 early-bird
     PRODUCT_PRICE_LATE_USD: float = 30.0 # $30 after 24 hrs
-    PRODUCT_PRICE_RETAIL_NAIRA: int = 20000  # ₦20,000 standard retail / after 48h affiliate expiry
-    PRODUCT_PRICE_RETAIL_USD: float = 100.0  # $100 standard retail / after 48h affiliate expiry
+    PRODUCT_PRICE_RETAIL_NAIRA: int = 20000  # ₦20,000 standard regular price
+    PRODUCT_PRICE_RETAIL_USD: float = 100.0  # $100 standard retail
+    ACADEMIC_COMEBACK_PROMO_END_DATE: str = "2027-01-01T00:00:00+01:00" # Promotional price ends Jan 1, 2027
+    PACKAGE_PROMO_PRICE_NAIRA: int = 5000
+    PACKAGE_REGULAR_PRICE_NAIRA: int = 20000
+    PACKAGE_PROMO_PRICE_USD: float = 15.0
+    PACKAGE_REGULAR_PRICE_USD: float = 40.0
     USD_TO_NGN_RATE: float = 1600.0     # Exchange rate for Paystack NGN fallback (1 USD = 1600 NGN)
     PREORDER_BOOK_PRICE_NAIRA: int = 5000       # Single Masterclass book price
     PREORDER_BUNDLE_3_PRICE_NAIRA: int = 12000  # 3-Book Masterclass bundle price (₦12,000)

@@ -22,7 +22,14 @@ from ..services.paystack import (
 from ..services.payment_completion import complete_payment, is_valid_paid_amount
 from ..services.email_service import send_email
 from ..utils.security import create_access_token
-from ..utils.canonical_products import get_canonical_product, get_canonical_price
+from ..utils.canonical_products import (
+    get_canonical_product,
+    get_canonical_price,
+    is_academic_comeback_promo_active,
+    get_package_price,
+    build_order_items,
+    resolve_payment_items,
+)
 from ..database import get_db
 from ..config import get_settings
 from ..utils.rate_limit import limiter, get_real_client_ip
@@ -50,48 +57,20 @@ async def compute_price_and_referral(
             if affiliate:
                 referred_by = candidate
 
-    # ── If an explicit tier was chosen (specifically from recovery flow):
+    # ── If an explicit special tier was chosen (specifically from recovery flow):
     tier_clean = (tier or "").strip().lower()
-    if tier_clean in ("starter", "complete", "vip"):
+    if tier_clean in ("starter", "vip"):
         if tier_clean == "starter":
             amount = float(settings.TIER_STARTER_PRICE_USD if is_usd else settings.TIER_STARTER_PRICE_NAIRA)
-        elif tier_clean == "vip":
-            amount = float(settings.TIER_VIP_PRICE_USD if is_usd else settings.TIER_VIP_PRICE_NAIRA)
         else:
-            amount = float(settings.TIER_COMPLETE_PRICE_USD if is_usd else settings.TIER_COMPLETE_PRICE_NAIRA)
+            amount = float(settings.TIER_VIP_PRICE_USD if is_usd else settings.TIER_VIP_PRICE_NAIRA)
         return amount, referred_by
 
-    if referred_by:
-        # ── Affiliate Referral Pathway: 48-Hour Urgency Window (₦5,000 -> ₦20,000) ──
-        aff_expired = False
-        existing_lead = await db.leads.find_one({"email": email.lower()})
-        if existing_lead and existing_lead.get("referred_by") == referred_by:
-            created_at = existing_lead.get("created_at")
-            if created_at:
-                if isinstance(created_at, str):
-                    created_at = datetime.fromisoformat(created_at)
-                if created_at.tzinfo is None:
-                    created_at = created_at.replace(tzinfo=timezone.utc)
-                if (now - created_at).total_seconds() > 48 * 3600:
-                    aff_expired = True
-        elif client_expiry and client_expiry < now.timestamp() * 1000:
-            aff_expired = True
-
-        amount = (
-            float(settings.PRODUCT_PRICE_RETAIL_USD if is_usd else settings.PRODUCT_PRICE_RETAIL_NAIRA)
-            if aff_expired
-            else float(settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA)
-        )
-        return amount, referred_by
-    else:
-        # ── Direct / Organic Pathway: ₦5,000 Base Student Price ──
-        direct_expired = bool(client_expiry and client_expiry < now.timestamp() * 1000)
-        base_price = (
-            float(settings.PRODUCT_PRICE_LATE_USD if is_usd else settings.PRODUCT_PRICE_LATE_NAIRA)
-            if direct_expired
-            else float(settings.PRODUCT_PRICE_USD if is_usd else max(5000, settings.PRODUCT_PRICE_NAIRA))
-        )
-        return base_price, referred_by
+    # ── The Academic Comeback Package (Flagship Bundle) ────────────────
+    # Promotional price ₦5,000 (USD $15.0) active through 1st of January 2027.
+    # Regular price ₦20,000 (USD $40.0) automatically applies thereafter.
+    amount = get_package_price(currency=currency, now_dt=now)
+    return amount, referred_by
 
 
 @router.post("/initialize", response_model=PaymentInitResponse)
@@ -132,6 +111,7 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             product_title = canonical_prod.get("title")
     else:
         reference = f"ACP-{uuid.uuid4().hex[:12].upper()}"
+        product_title = "The Academic Comeback Package"
     now = datetime.now(timezone.utc)
 
     currency = (body.currency or ("USD" if (body.country or "").upper() == "US" else "NGN")).strip().upper()
@@ -307,6 +287,16 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
         channels = ["bank_transfer", "bank", "card", "ussd", "qr"]
 
     callback_url = f"{settings.APP_URL}/api/payments/callback"
+    order_items = build_order_items(
+        product_slug=product_slug,
+        product_title=product_title,
+        tier=tier,
+        unit_price=amount,
+        quantity=1,
+    )
+    primary_product_name = order_items[0]["name"] if order_items else (product_title or "The Academic Comeback Package")
+    primary_product_sku = order_items[0]["product_sku"] if order_items else "ACP-BUNDLE"
+
     try:
         meta = {
             "name": body.name,
@@ -316,6 +306,9 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "friend_emails": valid_friend_emails,
             "commission_base_price": base_price_before_discount,
             "amount_paid": amount,
+            "product_name": primary_product_name,
+            "product_sku": primary_product_sku,
+            "items": order_items,
         }
         if product_slug:
             meta["product_slug"] = product_slug
@@ -386,6 +379,9 @@ async def init_payment(body: PaymentInitRequest, request: Request, db=Depends(ge
             "product_slug":               product_slug or None,
             "product_title":              product_title or None,
             "book_title":                 product_title or None,
+            "product_name":               primary_product_name,
+            "product_sku":                primary_product_sku,
+            "items":                      order_items,
             "base_price":                 amount,
             "commission_base_price":      base_price_before_discount,
             "amount":                     amount,
@@ -1041,6 +1037,23 @@ async def recovery_unsubscribe(
 @router.get("/product-info")
 async def get_product_info(slug: Optional[str] = None, title: Optional[str] = None, db=Depends(get_db)):
     """Return public product information, dynamic price in NGN and USD."""
+    clean_slug = (slug or "").strip().lower()
+    if clean_slug in ("academic-comeback-package", "academic-comeback", "acp"):
+        now_dt = datetime.now(timezone.utc)
+        promo_active = is_academic_comeback_promo_active(now_dt)
+        p_naira = get_package_price("NGN", now_dt)
+        p_usd = get_package_price("USD", now_dt)
+        return {
+            "id": "academic-comeback-package",
+            "title": "The Academic Comeback Package",
+            "slug": "academic-comeback-package",
+            "description": "The complete 7-part academic recovery and high-performance study system.",
+            "price_naira": p_naira,
+            "price_usd": p_usd,
+            "promo_active": promo_active,
+            "promo_end_date": getattr(settings, "ACADEMIC_COMEBACK_PROMO_END_DATE", "2027-01-01T00:00:00+01:00"),
+        }
+
     canonical = get_canonical_product(slug=slug, title=title)
     query_parts = []
     if slug:

@@ -21,6 +21,7 @@ from typing import Optional, List
 from pydantic import BaseModel, EmailStr
 from ..schemas.schemas import AdminLoginRequest, TokenResponse
 from ..services.affiliate_health_service import compute_affiliate_health
+from ..utils.canonical_products import resolve_payment_items
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 settings = get_settings()
@@ -316,6 +317,7 @@ async def get_analytics_overview(
         amt = float(t.get("amount") if t.get("amount") is not None else (t.get("amount_paid") or 0.0))
         vt = t.get("verified_at") or t.get("created_at")
         vt_iso = vt.isoformat() if hasattr(vt, "isoformat") else str(vt or "")
+        items = resolve_payment_items(t)
         recent_transactions.append({
             "name": t.get("name") or "Student",
             "email": t.get("email") or "",
@@ -323,6 +325,9 @@ async def get_analytics_overview(
             "verified_at": vt_iso,
             "reference": t.get("reference") or "",
             "status": t.get("status") or "success",
+            "product_name": items[0]["name"] if items else "The Academic Comeback Package",
+            "product_sku": items[0]["product_sku"] if items else "ACP-BUNDLE",
+            "items": items,
         })
 
     return {
@@ -388,6 +393,10 @@ async def get_analytics_sales(
         t["id"] = str(t.pop("_id"))
         if "user_id" in t and t["user_id"]:
             t["user_id"] = str(t["user_id"])
+        items = resolve_payment_items(t)
+        t["items"] = items
+        t["product_name"] = items[0]["name"] if items else "The Academic Comeback Package"
+        t["product_sku"] = items[0]["product_sku"] if items else "ACP-BUNDLE"
 
     return {"transactions": transactions}
 
@@ -626,6 +635,10 @@ async def list_payments(
         p["id"] = str(p.pop("_id"))
         if "user_id" in p and p["user_id"]:
             p["user_id"] = str(p["user_id"])
+        items = resolve_payment_items(p)
+        p["items"] = items
+        p["product_name"] = items[0]["name"] if items else "The Academic Comeback Package"
+        p["product_sku"] = items[0]["product_sku"] if items else "ACP-BUNDLE"
     return {"payments": payments, "total": total, "page": page}
 
 
@@ -738,6 +751,9 @@ async def get_sale_details(reference: str, current_user=Depends(require_admin), 
     payment["id"] = str(payment.pop("_id"))
     if payment.get("user_id"):
         payment["user_id"] = str(payment["user_id"])
+    payment["items"] = resolve_payment_items(payment)
+    payment["product_name"] = payment["items"][0]["name"] if payment["items"] else "The Academic Comeback Package"
+    payment["product_sku"] = payment["items"][0]["product_sku"] if payment["items"] else "ACP-BUNDLE"
     email = payment.get("email", "").lower()
 
     # Customer Profile Info

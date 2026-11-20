@@ -14,9 +14,10 @@
 
   const bar = document.getElementById('urgency-bar');
   const el = document.getElementById('countdown');
+  const PROMO_END_MS = new Date('2027-01-01T00:00:00+01:00').getTime();
 
   if (isAffiliateRef) {
-    // ── AFFILIATE 48-HOUR URGENCY & PRICE JUMP ENGINE ──────────────────
+    // ── AFFILIATE 48-HOUR URGENCY & PROMOTIONAL ENGINE ─────────────────
     const AFF_KEY = 'ac_aff_expiry';
     let affExpiry = localStorage.getItem(AFF_KEY);
     if (!affExpiry || isNaN(Number(affExpiry))) {
@@ -28,7 +29,9 @@
     // Make sure urgency bar is visible and styled for the affiliate offer
     if (bar) {
       bar.style.display = 'block';
-      bar.classList.remove('urgency-bar--expired');
+      if (Date.now() < PROMO_END_MS) {
+        bar.classList.remove('urgency-bar--expired');
+      }
     }
 
     function applyAffiliateActiveState() {
@@ -106,14 +109,22 @@
 
     let affTimerId = null;
     function tickAffiliate() {
-      const diff = affExpiry - Date.now();
-      if (diff <= 0) {
+      const now = Date.now();
+      if (now >= PROMO_END_MS) {
         if (affTimerId) { clearInterval(affTimerId); affTimerId = null; }
         applyAffiliateExpiredState();
         return;
       }
 
       applyAffiliateActiveState();
+
+      let diff = affExpiry - now;
+      if (diff <= 0) {
+        // Refresh rolling 48h urgency window while promo is active
+        affExpiry = now + 48 * 60 * 60 * 1000;
+        try { localStorage.setItem(AFF_KEY, affExpiry); } catch (e) {}
+        diff = affExpiry - now;
+      }
 
       const totalSec = Math.floor(diff / 1000);
       const h = Math.floor(totalSec / 3600);
@@ -139,9 +150,7 @@
     }
 
     tickAffiliate();
-    if (affExpiry - Date.now() > 0) {
-      affTimerId = setInterval(tickAffiliate, 1000);
-    }
+    affTimerId = setInterval(tickAffiliate, 1000);
     return;
   }
 

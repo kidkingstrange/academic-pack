@@ -3,7 +3,9 @@ Canonical product catalog definitions and helpers for the Scale Group / Academic
 Ensures single-source-of-truth pricing, slugs, and PDF assets across database syncing,
 authoritative payment initialization, and delivery.
 """
+from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
+from ..config import get_settings
 
 CANONICAL_PRODUCTS: List[Dict[str, Any]] = [
     {
@@ -179,3 +181,224 @@ def get_canonical_price(slug: Optional[str] = None, title: Optional[str] = None,
     if prod:
         return float(prod["price_usd"] if is_usd else prod["price_naira"])
     return 15.0 if is_usd else 5000.0
+
+
+# Initialize default SKUs across canonical products catalog
+for _p in CANONICAL_PRODUCTS:
+    _p.setdefault("sku", f"BOOK-{_p['slug'].upper()}")
+
+
+def parse_iso_datetime(dt_str: Optional[str]) -> Optional[datetime]:
+    """Parse ISO timestamp or date string into a UTC-aware datetime."""
+    if not dt_str:
+        return None
+    try:
+        clean_str = dt_str.replace("Z", "+00:00")
+        dt = datetime.fromisoformat(clean_str)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt
+    except Exception:
+        return None
+
+
+def is_academic_comeback_promo_active(now_dt: Optional[datetime] = None) -> bool:
+    """
+    Returns True if the Academic Comeback Package promotional pricing (₦5,000)
+    is active. Ends strictly on 1st of January 2027 (or configured end date).
+    """
+    settings = get_settings()
+    promo_end = parse_iso_datetime(getattr(settings, "ACADEMIC_COMEBACK_PROMO_END_DATE", None))
+    if not promo_end:
+        promo_end = datetime(2027, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
+
+    if now_dt is None:
+        now_dt = datetime.now(timezone.utc)
+    elif now_dt.tzinfo is None:
+        now_dt = now_dt.replace(tzinfo=timezone.utc)
+
+    return now_dt < promo_end
+
+
+def get_package_price(currency: str = "NGN", now_dt: Optional[datetime] = None) -> float:
+    """Return authoritative Academic Comeback Package price (₦5,000 promo / ₦20,000 regular)."""
+    settings = get_settings()
+    is_usd = (currency or "").strip().upper() == "USD"
+    if is_academic_comeback_promo_active(now_dt):
+        return float(getattr(settings, "PACKAGE_PROMO_PRICE_USD", 15.0) if is_usd else getattr(settings, "PACKAGE_PROMO_PRICE_NAIRA", 5000))
+    else:
+        return float(getattr(settings, "PACKAGE_REGULAR_PRICE_USD", 40.0) if is_usd else getattr(settings, "PACKAGE_REGULAR_PRICE_NAIRA", 20000))
+
+
+def build_order_items(
+    product_slug: Optional[str] = None,
+    product_title: Optional[str] = None,
+    product_id: Optional[str] = None,
+    tier: Optional[str] = None,
+    unit_price: Optional[float] = None,
+    quantity: int = 1,
+    items: Optional[List[Dict[str, Any]]] = None,
+) -> List[Dict[str, Any]]:
+    """Build a structured list of purchased items snapshot for a transaction."""
+    if items and isinstance(items, list) and len(items) > 0:
+        cleaned = []
+        for it in items:
+            p_id = str(it.get("product_id") or it.get("slug") or "item")
+            p_sku = str(it.get("product_sku") or it.get("sku") or f"SKU-{p_id.upper()}")
+            p_name = str(it.get("name") or it.get("title") or "Product")
+            p_qty = int(it.get("quantity") or 1)
+            p_unit = float(it.get("unit_price") if it.get("unit_price") is not None else (it.get("price") or 0.0))
+            p_total = float(it.get("total_price") if it.get("total_price") is not None else (p_unit * p_qty))
+            cleaned.append({
+                "product_id": p_id,
+                "product_sku": p_sku,
+                "name": p_name,
+                "quantity": p_qty,
+                "unit_price": p_unit,
+                "total_price": p_total,
+            })
+        return cleaned
+
+    # Check if this is the Academic Comeback Package (flagship bundle)
+    is_bundle = (
+        not product_slug
+        or product_slug.strip().lower() in ("academic-comeback-package", "academic-comeback", "acp")
+        or (product_title and "academic comeback" in product_title.lower())
+    )
+
+    # Single canonical book resolution
+    if not is_bundle and (product_slug or product_title):
+        canonical = get_canonical_product(slug=product_slug, title=product_title)
+        if canonical:
+            price_val = float(unit_price if unit_price is not None else canonical.get("price_naira", 5000.0))
+            return [{
+                "product_id": str(product_id or canonical.get("slug")),
+                "product_sku": canonical.get("sku", f"BOOK-{canonical['slug'].upper()}"),
+                "name": canonical["title"],
+                "quantity": max(1, int(quantity or 1)),
+                "unit_price": price_val,
+                "total_price": price_val * max(1, int(quantity or 1)),
+            }]
+        elif product_title or product_slug:
+            name_val = product_title or product_slug.replace("-", " ").title()
+            slug_clean = (product_slug or "custom-product").strip().lower()
+            price_val = float(unit_price if unit_price is not None else 5000.0)
+            return [{
+                "product_id": str(product_id or slug_clean),
+                "product_sku": f"BOOK-{slug_clean.upper()}",
+                "name": name_val,
+                "quantity": max(1, int(quantity or 1)),
+                "unit_price": price_val,
+                "total_price": price_val * max(1, int(quantity or 1)),
+            }]
+
+    # Bundle / Academic Comeback Package
+    tier_clean = (tier or "complete").strip().lower()
+    sku = "ACP-BUNDLE" if tier_clean == "complete" else f"ACP-{tier_clean.upper()}"
+    bundle_name = "The Academic Comeback Package"
+    if tier_clean == "starter":
+        bundle_name = "The Academic Comeback Package (Starter Tier)"
+    elif tier_clean == "vip":
+        bundle_name = "The Academic Comeback Package (VIP Mentorship Tier)"
+    price_val = float(unit_price if unit_price is not None else 5000.0)
+    return [{
+        "product_id": "academic-comeback-package",
+        "product_sku": sku,
+        "name": bundle_name,
+        "quantity": max(1, int(quantity or 1)),
+        "unit_price": price_val,
+        "total_price": price_val * max(1, int(quantity or 1)),
+    }]
+
+
+def resolve_payment_items(payment_doc: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """
+    Safely resolve structured item list for any payment document.
+    Ensures both new payments (with existing 'items') and historical records
+    (with only reference, product_slug, book_title, or tier) return exact,
+    accurate product name, SKU, quantity, and price.
+    """
+    if not payment_doc or not isinstance(payment_doc, dict):
+        return []
+
+    existing_items = payment_doc.get("items")
+    if existing_items and isinstance(existing_items, list) and len(existing_items) > 0:
+        return [
+            {
+                "product_id": str(it.get("product_id") or it.get("slug") or "item"),
+                "product_sku": str(it.get("product_sku") or it.get("sku") or "SKU-PROD"),
+                "name": str(it.get("name") or it.get("title") or "The Academic Comeback Package"),
+                "quantity": int(it.get("quantity") or 1),
+                "unit_price": float(it.get("unit_price") if it.get("unit_price") is not None else (it.get("price") or payment_doc.get("amount") or 0.0)),
+                "total_price": float(it.get("total_price") if it.get("total_price") is not None else (payment_doc.get("amount") or 0.0)),
+            }
+            for it in existing_items
+        ]
+
+    amt = float(payment_doc.get("amount") if payment_doc.get("amount") is not None else (payment_doc.get("amount_paid") or payment_doc.get("base_price") or 5000.0))
+    ref = (payment_doc.get("reference") or "").strip().upper()
+    slug = (payment_doc.get("product_slug") or "").strip().lower()
+    title = (payment_doc.get("book_title") or payment_doc.get("product_title") or "").strip()
+
+    # Match by slug or title
+    if slug or title:
+        canon = get_canonical_product(slug=slug, title=title)
+        if canon:
+            return [{
+                "product_id": str(payment_doc.get("product_id") or canon["slug"]),
+                "product_sku": canon.get("sku", f"BOOK-{canon['slug'].upper()}"),
+                "name": canon["title"],
+                "quantity": 1,
+                "unit_price": amt,
+                "total_price": amt,
+            }]
+        elif title or slug:
+            clean_name = title or slug.replace("-", " ").title()
+            return [{
+                "product_id": slug or "product",
+                "product_sku": f"BOOK-{slug.upper()}" if slug else "BOOK-CUSTOM",
+                "name": clean_name,
+                "quantity": 1,
+                "unit_price": amt,
+                "total_price": amt,
+            }]
+
+    # Match by reference prefix
+    ref_prefix_map = {
+        "ACP-QTH-": "quitting-the-handjob",
+        "ACP-DMS-": "how-to-close-high-paying-clients-in-the-dms",
+        "ACP-IDEA-": "how-to-do-your-ideas",
+        "ACP-BRK-": "what-to-do-after-a-breakup",
+        "ACP-BOSS-": "what-to-do-when-your-boss-is-angry-with-you",
+    }
+    for pfx, mapped_slug in ref_prefix_map.items():
+        if ref.startswith(pfx):
+            canon = get_canonical_product(slug=mapped_slug)
+            if canon:
+                return [{
+                    "product_id": canon["slug"],
+                    "product_sku": canon.get("sku", f"BOOK-{canon['slug'].upper()}"),
+                    "name": canon["title"],
+                    "quantity": 1,
+                    "unit_price": amt,
+                    "total_price": amt,
+                }]
+
+    # Default / bundle purchase (Academic Comeback Package)
+    tier = (payment_doc.get("tier") or "complete").strip().lower()
+    bundle_sku = "ACP-BUNDLE" if tier == "complete" else f"ACP-{tier.upper()}"
+    bundle_name = "The Academic Comeback Package"
+    if tier == "starter":
+        bundle_name = "The Academic Comeback Package (Starter Tier)"
+    elif tier == "vip":
+        bundle_name = "The Academic Comeback Package (VIP Mentorship Tier)"
+
+    return [{
+        "product_id": "academic-comeback-package",
+        "product_sku": bundle_sku,
+        "name": bundle_name,
+        "quantity": 1,
+        "unit_price": amt,
+        "total_price": amt,
+    }]
+

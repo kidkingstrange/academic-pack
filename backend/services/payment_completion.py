@@ -16,6 +16,7 @@ from pymongo.errors import DuplicateKeyError
 
 from ..config import get_settings
 from ..utils.security import create_access_token
+from ..utils.canonical_products import build_order_items, resolve_payment_items
 from ..workers.email_scheduler import enqueue_sequence_for_subscriber, process_email_queue
 from .meta_capi import send_purchase_event
 
@@ -148,6 +149,18 @@ async def complete_payment(
         else:
             book_title = product_slug.replace("-", " ").title()
 
+    order_items = (pending.get("items") if pending else None)
+    if not order_items:
+        order_items = build_order_items(
+            product_slug=product_slug,
+            product_title=book_title,
+            tier=(pending.get("tier") if pending else "complete"),
+            unit_price=resolved_base_price,
+            quantity=1,
+        )
+    primary_product_name = order_items[0]["name"] if order_items else (book_title or "The Academic Comeback Package")
+    primary_product_sku = order_items[0]["product_sku"] if order_items else "ACP-BUNDLE"
+
     try:
         await db.payments.insert_one({
             "reference": reference,
@@ -155,7 +168,10 @@ async def complete_payment(
             "email": email,
             "name": name,
             "product_slug": product_slug,
-            "book_title": book_title,
+            "book_title": book_title or primary_product_name,
+            "product_name": primary_product_name,
+            "product_sku": primary_product_sku,
+            "items": order_items,
             "base_price": resolved_base_price,
             "commission_base_price": commission_base,
             "amount_charged": amount_charged,

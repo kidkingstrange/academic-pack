@@ -38,16 +38,16 @@ src="https://www.facebook.com/tr?id=1033231049261122&ev=PageView&noscript=1"
 <script>
 // ── Affiliate referral capture ──────────────────────────────────────────
 // /r/CODE (backend) redirects here as /?ref=CODE. Persist to localStorage
-// so it survives across the browsing session up to checkout, same pattern
-// as ac_expiry/ac_purchased elsewhere on this page.
+// so it survives across the browsing session up to checkout.
 (function() {
+  var promoEnd = new Date('2027-01-01T00:00:00+01:00').getTime();
+  if (Date.now() >= promoEnd) {
+    document.documentElement.classList.add('aff-expired');
+  }
   var ref = new URLSearchParams(window.location.search).get('ref');
   if (ref) {
     try { 
       localStorage.setItem('ac_referral_code', ref.trim().toUpperCase()); 
-      if (!localStorage.getItem('ac_aff_expiry')) {
-        localStorage.setItem('ac_aff_expiry', Date.now() + 48 * 60 * 60 * 1000);
-      }
     } catch (err) { /* ignore */ }
   }
 })();
