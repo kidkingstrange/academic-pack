@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 import '../repositories/product_repository.dart';
 import '../../checkout/views/checkout_bottom_sheet.dart';
+import 'widgets/quitting_the_handjob_mobile_view.dart';
 
 class ProductDetailView extends StatelessWidget {
   final String slug;
@@ -96,55 +97,62 @@ class ProductDetailView extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            const Text(
-              'Key Outcomes & Benefits',
-              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            ...product.benefits.map(
-              (b) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.check_circle_outline, size: 18, color: AppColors.gold),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        b,
-                        style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, height: 1.3),
+            // Specialized or Standard Product Content
+            if (product.slug == 'quitting-the-handjob') ...[
+              QuittingTheHandjobMobileView(
+                onCheckout: () => CheckoutBottomSheet.show(context, product),
+              ),
+            ] else ...[
+              const Text(
+                'Key Outcomes & Benefits',
+                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              ...product.benefits.map(
+                (b) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.check_circle_outline, size: 18, color: AppColors.gold),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          b,
+                          style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, height: 1.3),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            const Text(
-              'What Is Included In The PDF',
-              style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-            ...product.features.map(
-              (f) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(Icons.menu_book, size: 18, color: AppColors.textMuted),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        f,
-                        style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, height: 1.3),
+              const Text(
+                'What Is Included In The PDF',
+                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              ...product.features.map(
+                (f) => Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.menu_book, size: 18, color: AppColors.textMuted),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          f,
+                          style: const TextStyle(color: AppColors.textPrimary, fontSize: 13, height: 1.3),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 32),
+              const SizedBox(height: 32),
+            ],
 
             SizedBox(
               width: double.infinity,
