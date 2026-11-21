@@ -1,9 +1,28 @@
 # Testing Report & Cross-Platform QA Plan
 
 ## 1. Automated Test Suite Status
-The existing backend test suite contains **12 comprehensive tests** covering the marketing engine, payment verification, idempotency, and admin authorization.
+
+### A. Python Backend Test Suite (`tests/`)
+The backend test suite covers the marketing engine, payment verification, idempotency, admin authorization, and product detail endpoints.
 - Test runner: `pytest` with `pytest-asyncio`
-- Suite results: **12 passed in 1.06s**
+- Tests:
+  - `tests/test_marketing_engine.py`: **12/12 passed**
+  - `tests/test_quitting_the_handjob_product.py`: **8/8 passed**
+  - `tests/test_us_landing.py`: **4/4 passed**
+- Total Backend Results: **24 passed in 1.82s (100% clean)**
+
+### B. Next.js Production Build (`apps/website`)
+- Next.js 14.2 / React 18 production build (`npm run build`):
+  - **55 static pages generated** (SSG + ISR)
+  - Shared First Load JS: **87.3 kB**
+  - Exit Code: **0 (Compiled successfully)**
+
+### C. Flutter Cross-Platform Mobile Suite (`apps/mobile`)
+- Static Analysis (`flutter analyze`): **No issues found (0 errors, 0 warnings, 0 deprecation infos)**
+- Widget Test Suite (`flutter test`):
+  - `App smoke test loads catalog`: **Passed**
+  - `ProductDetailView renders Quitting The Handjob 4 pillars and chapters`: **Passed**
+  - Total Widget Tests: **2/2 passed in 3s (100% clean)**
 
 ---
 
