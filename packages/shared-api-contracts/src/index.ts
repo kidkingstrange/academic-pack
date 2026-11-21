@@ -19,6 +19,10 @@ export interface Product {
   coverImage: string;
   isDeliverable: boolean;
   isBundle?: boolean;
+  tagline?: string;
+  painPoints?: string[];
+  chapters?: Array<{ number: string; title: string; summary: string }>;
+  faqs?: Array<{ question: string; answer: string }>;
 }
 
 export interface PricingResponse {
