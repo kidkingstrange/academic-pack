@@ -147,6 +147,20 @@ async def get_campaign(campaign_id: str, current_user=Depends(require_admin), db
     return camp
 
 
+@router.get("/smtp-diagnostics")
+async def smtp_diagnostics():
+    """Diagnostic check to inspect active live SMTP host and sender without exposing credentials."""
+    from ..config import get_settings
+    s = get_settings()
+    return {
+        "smtp_host": s.SMTP_HOST,
+        "smtp_port": s.SMTP_PORT,
+        "smtp_user": s.SMTP_USER,
+        "from_email": s.FROM_EMAIL,
+        "has_password": bool(s.SMTP_PASS and s.SMTP_PASS not in ("your-app-password", "your-smtp-password", "")),
+    }
+
+
 @router.post("/dispatch-preview-test")
 async def dispatch_preview_test(payload: QuickTestRequest, db=Depends(get_db)):
     """Direct test dispatch to authorized admin email (strictly locked to daviditoyaa@gmail.com).
