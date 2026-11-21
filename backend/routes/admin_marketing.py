@@ -150,14 +150,28 @@ async def get_campaign(campaign_id: str, current_user=Depends(require_admin), db
 @router.get("/smtp-diagnostics")
 async def smtp_diagnostics():
     """Diagnostic check to inspect active live SMTP host and sender without exposing credentials."""
+    import ssl, smtplib, time
     from ..config import get_settings
     s = get_settings()
+    
+    t0 = time.time()
+    smtp_test = {}
+    try:
+        context = ssl.create_default_context()
+        conn = smtplib.SMTP_SSL(s.SMTP_HOST, s.SMTP_PORT, context=context, timeout=10)
+        conn.login(s.SMTP_USER, s.SMTP_PASS)
+        conn.quit()
+        smtp_test = {"login_ok": True, "elapsed": round(time.time() - t0, 2)}
+    except Exception as e:
+        smtp_test = {"login_ok": False, "elapsed": round(time.time() - t0, 2), "error": f"{type(e).__name__}: {e}"}
+
     return {
         "smtp_host": s.SMTP_HOST,
         "smtp_port": s.SMTP_PORT,
         "smtp_user": s.SMTP_USER,
         "from_email": s.FROM_EMAIL,
         "has_password": bool(s.SMTP_PASS and s.SMTP_PASS not in ("your-app-password", "your-smtp-password", "")),
+        "smtp_connection_test": smtp_test,
     }
 
 
