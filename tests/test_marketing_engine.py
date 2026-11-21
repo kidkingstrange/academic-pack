@@ -395,3 +395,30 @@ async def test_lifecycle_cross_sell_scan_enqueues_day7_email(test_db):
     # Verify second scan does not create duplicates (idempotency check)
     second_result = await run_lifecycle_cross_sell_scan()
     assert second_result["enqueued"] == 0
+
+
+@pytest.mark.asyncio
+async def test_dispatch_preview_test_locks_recipient(client, test_db, monkeypatch):
+    """Verify dispatch-preview-test restricts delivery strictly to daviditoyaa@gmail.com and mocks send."""
+    # 1. Non-admin recipient rejected
+    res_rejected = await client.post(
+        "/api/admin/marketing/dispatch-preview-test",
+        json={"recipient": "stranger@example.com", "product_slug": "quitting-the-handjob"}
+    )
+    assert res_rejected.status_code == 403
+
+    # 2. daviditoyaa@gmail.com accepted
+    async def mock_send(to_email, subject, body):
+        return (True, None)
+
+    import backend.services.marketing_service as ms
+    monkeypatch.setattr(ms, "send_email", mock_send)
+
+    res_ok = await client.post(
+        "/api/admin/marketing/dispatch-preview-test",
+        json={"recipient": "daviditoyaa@gmail.com", "product_slug": "quitting-the-handjob"}
+    )
+    assert res_ok.status_code == 200
+    data = res_ok.json()
+    assert data["success"] is True
+    assert "daviditoyaa@gmail.com" in data["message"]

@@ -46,6 +46,12 @@ class TestSendRequest(BaseModel):
     test_email: EmailStr
 
 
+class QuickTestRequest(BaseModel):
+    recipient: EmailStr = "daviditoyaa@gmail.com"
+    product_slug: Optional[str] = "quitting-the-handjob"
+    campaign_type: Optional[str] = "direct_response"
+
+
 # ── Endpoints ───────────────────────────────────────────────────────────────
 
 @router.get("/overview")
@@ -139,6 +145,50 @@ async def get_campaign(campaign_id: str, current_user=Depends(require_admin), db
         if camp.get(k) and isinstance(camp[k], datetime):
             camp[k] = camp[k].isoformat()
     return camp
+
+
+@router.post("/dispatch-preview-test")
+async def dispatch_preview_test(payload: QuickTestRequest, db=Depends(get_db)):
+    """Direct test dispatch to authorized admin email (strictly locked to daviditoyaa@gmail.com).
+    Uses production SMTP settings to deliver a real sample email.
+    """
+    clean_target = payload.recipient.strip().lower()
+    if clean_target != "daviditoyaa@gmail.com":
+        raise HTTPException(
+            status_code=403,
+            detail="Quick preview test is strictly locked to verified admin email daviditoyaa@gmail.com."
+        )
+
+    # Generate copy
+    copy_data = generate_ai_campaign_copy(
+        product_slug=payload.product_slug or "quitting-the-handjob",
+        campaign_type=payload.campaign_type or "direct_response",
+        target_segment="all_consented",
+    )
+
+    # Save draft campaign in db
+    camp = await create_campaign(
+        db,
+        title=f"Live Test Preview - {payload.product_slug}",
+        product_slug=payload.product_slug or "quitting-the-handjob",
+        target_segment="all_consented",
+        subject=copy_data["recommended_subject"],
+        preview_text=copy_data["preview_text"],
+        html_body=copy_data["html_body"],
+        plain_text=copy_data["plain_text"],
+    )
+
+    # Send test
+    success, err = await send_test_campaign_email(db, camp["campaign_id"], clean_target)
+    if not success:
+        raise HTTPException(status_code=500, detail=f"Live SMTP dispatch failed: {err}")
+
+    return {
+        "success": True,
+        "message": f"Real test email successfully dispatched to {clean_target} via live production SMTP!",
+        "subject": copy_data["recommended_subject"],
+        "campaign_id": camp["campaign_id"],
+    }
 
 
 @router.post("/campaigns/{campaign_id}/test")
