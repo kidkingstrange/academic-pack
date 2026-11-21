@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Product } from '@repo/api-contracts';
 import CheckoutModal from '@/components/checkout/CheckoutModal';
+import QuittingTheHandjobLanding from '@/components/products/QuittingTheHandjobLanding';
 import {
   CheckCircle,
   ShieldCheck,
@@ -121,79 +122,86 @@ export default function ProductClientView({ product }: { product: Product }) {
         </div>
       </div>
 
-      {/* Pain Agitation Section (if defined) */}
-      {product.painPoints && product.painPoints.length > 0 && (
-        <section className="bg-[#131b2e]/60 border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-6">
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full">
-              Sound Familiar?
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              The Invisible Cycle Holding You Back
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              If you have experienced two or more of these symptoms, you are not lazy or broken — you are trapped in an unengineered behavioral loop.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
-            {product.painPoints.map((pain, idx) => (
-              <div key={idx} className="bg-[#0b0f19] border border-slate-800/80 rounded-xl p-4 flex items-start gap-3">
-                <XCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
-                <span className="text-xs sm:text-sm text-slate-300 leading-relaxed">{pain}</span>
+      {/* Specialized or Standard Curriculum & Social Proof Section */}
+      {product.slug === 'quitting-the-handjob' ? (
+        <QuittingTheHandjobLanding onOpenCheckout={() => setIsModalOpen(true)} />
+      ) : (
+        <>
+          {/* Pain Agitation Section (if defined) */}
+          {product.painPoints && product.painPoints.length > 0 && (
+            <section className="bg-[#131b2e]/60 border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-6">
+              <div className="text-center space-y-2 max-w-2xl mx-auto">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-rose-400 bg-rose-500/10 px-2.5 py-1 rounded-full">
+                  Sound Familiar?
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                  The Invisible Cycle Holding You Back
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  If you have experienced two or more of these symptoms, you are not lazy or broken — you are trapped in an unengineered behavioral loop.
+                </p>
               </div>
-            ))}
-          </div>
-        </section>
-      )}
 
-      {/* Detailed Chapters Breakdown (if defined) */}
-      {product.chapters && product.chapters.length > 0 && (
-        <section className="space-y-8">
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-[#d4af37] bg-[#d4af37]/10 px-2.5 py-1 rounded-full">
-              Full Masterclass Curriculum
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              Inside The Complete Operating Manual
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {product.chapters.map((ch, idx) => (
-              <div
-                key={idx}
-                className="bg-[#131b2e] border border-slate-800 rounded-2xl p-6 space-y-3"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-[#d4af37] bg-[#d4af37]/10 px-2 py-0.5 rounded">
-                    Chapter {ch.number}
-                  </span>
-                </div>
-                <h3 className="text-base font-bold text-white">{ch.title}</h3>
-                <p className="text-xs text-slate-400 leading-relaxed">{ch.summary}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
+                {product.painPoints.map((pain, idx) => (
+                  <div key={idx} className="bg-[#0b0f19] border border-slate-800/80 rounded-xl p-4 flex items-start gap-3">
+                    <XCircle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+                    <span className="text-xs sm:text-sm text-slate-300 leading-relaxed">{pain}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
-      )}
+            </section>
+          )}
 
-      {/* FAQ Section (if defined) */}
-      {product.faqs && product.faqs.length > 0 && (
-        <section className="bg-[#131b2e] border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-6">
-          <h3 className="text-xl font-bold text-white flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-[#d4af37]" />
-            Frequently Asked Questions
-          </h3>
-          <div className="space-y-4">
-            {product.faqs.map((faq, idx) => (
-              <div key={idx} className="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-2">
-                <h4 className="text-sm font-semibold text-white">{faq.question}</h4>
-                <p className="text-xs text-slate-300 leading-relaxed">{faq.answer}</p>
+          {/* Detailed Chapters Breakdown (if defined) */}
+          {product.chapters && product.chapters.length > 0 && (
+            <section className="space-y-8">
+              <div className="text-center space-y-2 max-w-2xl mx-auto">
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#d4af37] bg-[#d4af37]/10 px-2.5 py-1 rounded-full">
+                  Full Masterclass Curriculum
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                  Inside The Complete Operating Manual
+                </h2>
               </div>
-            ))}
-          </div>
-        </section>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {product.chapters.map((ch, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#131b2e] border border-slate-800 rounded-2xl p-6 space-y-3"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-bold text-[#d4af37] bg-[#d4af37]/10 px-2 py-0.5 rounded">
+                        Chapter {ch.number}
+                      </span>
+                    </div>
+                    <h3 className="text-base font-bold text-white">{ch.title}</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">{ch.summary}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* FAQ Section (if defined) */}
+          {product.faqs && product.faqs.length > 0 && (
+            <section className="bg-[#131b2e] border border-slate-800 rounded-3xl p-6 sm:p-10 space-y-6">
+              <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-[#d4af37]" />
+                Frequently Asked Questions
+              </h3>
+              <div className="space-y-4">
+                {product.faqs.map((faq, idx) => (
+                  <div key={idx} className="bg-[#0b0f19] border border-slate-800 rounded-xl p-5 space-y-2">
+                    <h4 className="text-sm font-semibold text-white">{faq.question}</h4>
+                    <p className="text-xs text-slate-300 leading-relaxed">{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </>
       )}
 
       {/* Final Bottom Call to Action */}
