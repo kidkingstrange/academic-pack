@@ -30,6 +30,7 @@ from .routes import (
     admin_payouts, sales as sales_router, admin_email_delivery,
     admin_abandoned, preorders, lead_magnet, reviews,
     blog, blog_community, blog_admin, affiliate_auth,
+    admin_marketing,
 )
 from .workers.email_scheduler import start_scheduler, stop_scheduler
 from .workers.payout_scheduler import start_payout_scheduler, stop_payout_scheduler
@@ -37,6 +38,7 @@ from .workers.affiliate_nudge_scheduler import start_nudge_scheduler, stop_nudge
 from .workers.subscription_scheduler import start_subscription_scheduler, stop_subscription_scheduler
 from .workers.email_delivery_alert_scheduler import start_alert_scheduler, stop_alert_scheduler
 from .workers.abandoned_recovery_scheduler import start_abandoned_recovery_scheduler, stop_abandoned_recovery_scheduler
+from .workers.lifecycle_marketing_scheduler import start_lifecycle_scheduler, stop_lifecycle_scheduler
 from .workers.payment_reconciliation_scheduler import (
     start_reconciliation_scheduler,
     stop_reconciliation_scheduler,
@@ -117,6 +119,7 @@ app.include_router(blog.router)
 app.include_router(blog_community.router)
 app.include_router(blog_admin.router)
 app.include_router(affiliate_auth.router)
+app.include_router(admin_marketing.router)
 
 # admin_analytics.router intentionally NOT wired up — it duplicates the
 # /api/admin/analytics/* endpoints now built directly in routes/admin.py,
@@ -593,6 +596,7 @@ async def startup():
         start_alert_scheduler()
         start_abandoned_recovery_scheduler()
         start_reconciliation_scheduler()
+        start_lifecycle_scheduler()
         from .database import db as main_db
         app.state.review_scheduler_task = asyncio.create_task(start_review_scheduler(main_db))
         # Immediately auto-reconcile any flagged/unresolved transactions on boot
@@ -612,6 +616,7 @@ async def shutdown():
         stop_alert_scheduler()
         stop_abandoned_recovery_scheduler()
         stop_reconciliation_scheduler()
+        stop_lifecycle_scheduler()
         if hasattr(app.state, "review_scheduler_task"):
             app.state.review_scheduler_task.cancel()
     await disconnect_db()

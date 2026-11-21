@@ -393,6 +393,31 @@ async def process_email_queue():
                         ref_code=ctx.get("ref_code", ""),
                         referral_link=ctx.get("referral_link", ""),
                     )
+                elif kind in ("marketing", "campaign"):
+                    # Strict opt-in check: verify recipient is not unsubscribed
+                    unsub_token = item.get("unsubscribe_token", "")
+                    if unsub_token:
+                        sub = await db.subscribers.find_one({"unsubscribe_token": unsub_token})
+                        if sub and not sub.get("is_active", True):
+                            await db.email_queue.update_one(
+                                {"_id": item["_id"]},
+                                {"$set": {"status": "skipped", "error": "unsubscribed_before_send"}}
+                            )
+                            continue
+                    html_content = item.get("html_body") or item.get("body", "")
+                    subject_line = item.get("subject", "Scale Group Update")
+                    success, error_msg = await send_email(item["email"], subject_line, html_content)
+                    if item.get("campaign_id"):
+                        now_utc = datetime.now(timezone.utc)
+                        await db.marketing_logs.update_one(
+                            {"campaign_id": item["campaign_id"], "email": item["email"]},
+                            {"$set": {
+                                "status": "sent" if success else "failed",
+                                "sent_at": now_utc if success else None,
+                                "error": error_msg,
+                            }},
+                            upsert=True
+                        )
                 else:
                     subscriber = await db.subscribers.find_one({"_id": item["subscriber_id"]})
                     if not subscriber or not subscriber.get("is_active"):
@@ -418,7 +443,8 @@ async def process_email_queue():
                     if item.get("subscriber_id") and kind not in (
                         "welcome", "affiliate_welcome", "affiliate_nudge",
                         "affiliate_activation", "affiliate_password_reset",
-                        "affiliate_direct_milestone", "affiliate_parent_referral_bonus"
+                        "affiliate_direct_milestone", "affiliate_parent_referral_bonus",
+                        "marketing", "campaign"
                     ):
                         # Advance subscriber position for sequence drip emails only
                         await db.subscribers.update_one(

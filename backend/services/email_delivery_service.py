@@ -25,6 +25,8 @@ def _kind_label(item: dict) -> str:
         return "Affiliate Nudge"
     if kind == "checkout_recovery":
         return "Checkout Recovery"
+    if kind in ("marketing", "campaign"):
+        return item.get("subject") or "Marketing Campaign"
     if kind == "sequence":
         return item.get("subject") or "Sequence Email"
     return kind

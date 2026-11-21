@@ -126,6 +126,12 @@ async def connect_db():
             db.pending_subscription_payments.create_index("reference", unique=True),
             db.lead_subscribers.create_index([("email", 1), ("lead_magnet_id", 1)]),
             db.webhook_logs.create_index([("received_at", -1)]),
+            # Marketing & revenue engine indexes
+            db.marketing_campaigns.create_index("campaign_id", unique=True),
+            db.marketing_campaigns.create_index([("status", 1), ("created_at", -1)]),
+            db.marketing_logs.create_index([("campaign_id", 1), ("email", 1)]),
+            db.marketing_logs.create_index([("status", 1), ("queued_at", -1)]),
+            db.marketing_templates.create_index("template_id", unique=True, sparse=True),
             return_exceptions=True,
         )
         for res in index_results:

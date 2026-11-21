@@ -1548,6 +1548,10 @@
     <button class="nav-item" onclick="switchSection('abandoned')">
       <div class="nav-item-content"><i class="bi bi-cart-x"></i> <span>Cart Recovery</span></div>
     </button>
+    <button class="nav-item" onclick="switchSection('marketing')">
+      <div class="nav-item-content"><i class="bi bi-rocket-takeoff-fill"></i> <span>Marketing & Revenue Engine</span></div>
+      <span class="nav-badge gold" id="nav-badge-marketing">AI</span>
+    </button>
   </div>
 
   <div class="nav-group">
@@ -2238,6 +2242,187 @@
       <div class="record-card-list" id="cards-abandoned"></div>
     </div>
 
+    <!-- ── VIEW: AI EMAIL MARKETING & REVENUE ENGINE ──────────────── -->
+    <div id="view-marketing" class="section">
+      <!-- Top KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">Active Consented Audience</div>
+          <div class="kpi-val green" id="mkt-kpi-audience">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Total Paying Customers</div>
+          <div class="kpi-val" id="mkt-kpi-buyers">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Campaigns Dispatched</div>
+          <div class="kpi-val gold" id="mkt-kpi-campaigns">0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Attributed Revenue</div>
+          <div class="kpi-val green" id="mkt-kpi-revenue">₦0</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Compliance Engine</div>
+          <div class="kpi-val" style="font-size:1.05rem; padding-top:4px; color:var(--gold-l)"><i class="bi bi-shield-lock-fill"></i> CAN-SPAM / NDPA</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">Cadence Active</div>
+          <div class="kpi-val" style="font-size:1.05rem; padding-top:4px; color:#fff">2x / Week (Tue/Fri)</div>
+        </div>
+      </div>
+
+      <!-- Sub-Tab Navigation Bar -->
+      <div style="padding:14px 20px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg)">
+        <div style="display:flex; gap:10px; flex-wrap:wrap">
+          <button class="btn-action btn-primary" id="btn-mkt-tab-campaigns" onclick="switchMarketingSubTab('campaigns')">
+            <i class="bi bi-broadcast"></i> Campaigns &amp; Broadcasts
+          </button>
+          <button class="btn-action btn-secondary" id="btn-mkt-tab-copywriter" onclick="switchMarketingSubTab('copywriter')">
+            <i class="bi bi-magic"></i> AI Direct-Response Copywriter
+          </button>
+          <button class="btn-action btn-secondary" id="btn-mkt-tab-segments" onclick="switchMarketingSubTab('segments')">
+            <i class="bi bi-pie-chart-fill"></i> Audience &amp; Consent Segments
+          </button>
+          <button class="btn-action btn-secondary" id="btn-mkt-tab-products" onclick="switchMarketingSubTab('products')">
+            <i class="bi bi-book-half"></i> Product Knowledge Base
+          </button>
+        </div>
+        <div>
+          <button class="btn-action" style="background:linear-gradient(135deg, #d4af37, #f3e5ab); color:#0b0f19; font-weight:700" onclick="switchMarketingSubTab('copywriter')">
+            <i class="bi bi-plus-circle-fill"></i> + Create New Campaign
+          </button>
+        </div>
+      </div>
+
+      <!-- PANEL 1: CAMPAIGNS & BROADCASTS -->
+      <div id="panel-mkt-campaigns">
+        <div class="data-table-container has-mobile-cards">
+          <table class="data-table" id="table-mkt-campaigns">
+            <thead>
+              <tr>
+                <th>Campaign Title</th>
+                <th>Product</th>
+                <th>Target Segment</th>
+                <th>Subject Line</th>
+                <th>Status</th>
+                <th>Recipients</th>
+                <th>Created / Sent</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANEL 2: AI COPYWRITER & LAUNCH COCKPIT -->
+      <div id="panel-mkt-copywriter" style="display:none">
+        <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:24px; align-items:start">
+          
+          <!-- Generator Form -->
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:24px">
+            <div style="font-family:'Clash Display',sans-serif; font-size:1.15rem; font-weight:600; color:#fff; margin-bottom:4px">
+              <i class="bi bi-stars" style="color:var(--gold-l)"></i> AI Direct-Response Campaign Architect
+            </div>
+            <div style="font-size:0.82rem; color:var(--gray-l); margin-bottom:18px">
+              Synthesize high-converting copy using proven Hormozi, Suby, and Kennedy frameworks with zero hallucinated pricing.
+            </div>
+
+            <div style="margin-bottom:14px">
+              <label style="font-size:0.8rem; font-weight:600; color:var(--gray-l); display:block; margin-bottom:6px">Campaign Internal Title</label>
+              <input type="text" class="input-control" id="mkt-input-title" placeholder="e.g. Friday DM Sales Push - Cluster C" style="width:100%">
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:14px">
+              <div>
+                <label style="font-size:0.8rem; font-weight:600; color:var(--gray-l); display:block; margin-bottom:6px">Select Product</label>
+                <select class="input-control" id="mkt-select-product" style="width:100%" onchange="onMarketingProductChange()">
+                  <!-- Populated dynamically -->
+                </select>
+              </div>
+              <div>
+                <label style="font-size:0.8rem; font-weight:600; color:var(--gray-l); display:block; margin-bottom:6px">Strategy / Cadence</label>
+                <select class="input-control" id="mkt-select-strategy" style="width:100%">
+                  <option value="direct_response">Friday Direct Response Offer (Hormozi / Suby)</option>
+                  <option value="educational_value">Tuesday Mindset Masterclass (HVCO / Value First)</option>
+                  <option value="cross_sell">Customer Ascension / Cross-Sell Bridge</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-bottom:18px">
+              <label style="font-size:0.8rem; font-weight:600; color:var(--gray-l); display:block; margin-bottom:6px">Target Audience Segment</label>
+              <select class="input-control" id="mkt-select-segment" style="width:100%">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+
+            <button class="btn-action" style="width:100%; padding:12px; background:linear-gradient(135deg, #d4af37, #f3e5ab); color:#0b0f19; font-weight:700; font-size:0.95rem; justify-content:center" onclick="triggerAIGeneration()">
+              <i class="bi bi-lightning-charge-fill"></i> Synthesize High-Converting Copy
+            </button>
+
+            <!-- Test Send & Action Box -->
+            <div style="margin-top:24px; padding-top:18px; border-top:1px solid var(--border-color)">
+              <div style="font-size:0.85rem; font-weight:600; color:#fff; margin-bottom:8px">Dispatch &amp; Testing Controls</div>
+              <div style="display:flex; gap:8px; margin-bottom:12px">
+                <input type="email" class="input-control" id="mkt-test-email" value="daviditoyaa@gmail.com" placeholder="daviditoyaa@gmail.com" style="flex:1">
+                <button class="btn-action btn-secondary" style="white-space:nowrap" onclick="sendCampaignTestEmail()"><i class="bi bi-send-check"></i> Send Test</button>
+              </div>
+              <div style="display:flex; gap:10px">
+                <button class="btn-action btn-secondary" style="flex:1; justify-content:center" onclick="saveMarketingDraft()"><i class="bi bi-file-earmark-check"></i> Save as Draft</button>
+                <button class="btn-action" style="flex:1; justify-content:center; background:linear-gradient(135deg, #22c55e, #16a34a); color:#fff; font-weight:700" onclick="launchMarketingBroadcast()"><i class="bi bi-rocket-takeoff-fill"></i> Launch Broadcast</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Preview & Editor Panel -->
+          <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:24px">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px">
+              <div style="font-family:'Clash Display',sans-serif; font-size:1.15rem; font-weight:600; color:#fff">
+                Email Content &amp; Live Preview
+              </div>
+              <div style="display:flex; gap:6px">
+                <button class="btn-action btn-secondary" style="padding:4px 10px; font-size:0.75rem" id="btn-mkt-preview-visual" onclick="toggleMktPreviewMode('visual')">Visual Preview</button>
+                <button class="btn-action btn-secondary" style="padding:4px 10px; font-size:0.75rem" id="btn-mkt-preview-html" onclick="toggleMktPreviewMode('html')">HTML Code</button>
+                <button class="btn-action btn-secondary" style="padding:4px 10px; font-size:0.75rem" id="btn-mkt-preview-text" onclick="toggleMktPreviewMode('text')">Plain Text</button>
+              </div>
+            </div>
+
+            <!-- Subject Line with Variant Selectors -->
+            <div style="margin-bottom:12px">
+              <label style="font-size:0.8rem; font-weight:600; color:var(--gray-l); display:block; margin-bottom:4px">Subject Line (Click variants below to test):</label>
+              <input type="text" class="input-control" id="mkt-input-subject" style="width:100%; font-weight:600">
+              <div id="mkt-subject-variants" style="display:flex; flex-direction:column; gap:4px; margin-top:6px"></div>
+            </div>
+
+            <div style="margin-bottom:14px">
+              <label style="font-size:0.8rem; font-weight:600; color:var(--gray-l); display:block; margin-bottom:4px">Preview / Preheader Text</label>
+              <input type="text" class="input-control" id="mkt-input-preview-text" style="width:100%">
+            </div>
+
+            <!-- Live Preview Container -->
+            <div id="mkt-container-visual" style="background:#0b0f19; border:1px solid rgba(255,255,255,0.1); border-radius:8px; overflow:hidden; min-height:450px">
+              <iframe id="mkt-preview-frame" style="width:100%; min-height:450px; border:none; display:block"></iframe>
+            </div>
+            <textarea id="mkt-container-html" class="input-control" style="width:100%; height:450px; font-family:monospace; font-size:0.8rem; display:none"></textarea>
+            <textarea id="mkt-container-text" class="input-control" style="width:100%; height:450px; font-family:monospace; font-size:0.85rem; display:none"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PANEL 3: AUDIENCE & CONSENT SEGMENTS -->
+      <div id="panel-mkt-segments" style="display:none">
+        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:18px" id="grid-mkt-segments"></div>
+      </div>
+
+      <!-- PANEL 4: PRODUCT KNOWLEDGE BASE -->
+      <div id="panel-mkt-products" style="display:none">
+        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:18px" id="grid-mkt-products"></div>
+      </div>
+    </div>
+
     <!-- ── VIEW: PRE-ORDERS FULFILLMENT ──────────────── -->
     <div id="view-preorders" class="section">
       <div class="kpi-grid">
@@ -2480,6 +2665,7 @@
       sequence: { title: '52-Email Curriculum Sequence', sub: "Track each subscriber's position in the automated email journey — see who is on-track, behind, or needs a manual resend", group: 'System & Funnels' },
       'email-delivery': { title: 'Email Delivery', sub: 'Every welcome and sequence email, tracked proactively — search a customer’s full history or spot systemic failures before they go unnoticed for weeks', group: 'System & Funnels' },
       abandoned: { title: 'Abandoned Cart Recovery Engine', sub: 'Track uncompleted checkouts, monitor recovery rates, and control automated follow-up sequences', group: 'System & Funnels' },
+      marketing: { title: 'AI Email Marketing & Revenue Engine', sub: 'Customer retention, repeat-purchase ascension, automated lifecycle flows, and AI direct-response campaigns', group: 'System & Funnels' },
       preorders: { title: 'Pre-Orders Fulfillment Tracking', sub: 'Track multi-book pre-orders, days since purchase, customer refund requests, and mark orders as delivered', group: 'Money & Orders' },
       blog: { title: 'Blog & Content CMS', sub: 'Manage, edit, publish study guides, and sync SEO rankings across 5 Nigerian university pillars', group: 'Content & Growth' }
     };
@@ -2506,6 +2692,7 @@
     if(currentView === 'sequence') loadSequenceView();
     if(currentView === 'email-delivery') loadEmailDeliveryView();
     if(currentView === 'abandoned') loadAbandonedView();
+    if(currentView === 'marketing') loadMarketingView();
     if(currentView === 'preorders') loadPreordersView();
     if(currentView === 'blog') loadBlogView();
   }
@@ -5106,6 +5293,480 @@
     loadAbandonedView();
   }
 
+  // ── AI EMAIL MARKETING & REVENUE ENGINE ─────────────────────────────────────
+  let marketingOverviewData = null;
+  let marketingCampaignsData = [];
+  let marketingSegmentsData = [];
+  let marketingProductsData = [];
+  let currentMarketingSubTab = 'campaigns';
+  let generatedCopyData = null;
+  let activeCampaignDraftId = null;
+  let currentMktPreviewMode = 'visual';
+
+  function switchMarketingSubTab(subTab) {
+    currentMarketingSubTab = subTab;
+    ['campaigns', 'copywriter', 'segments', 'products'].forEach(t => {
+      const btn = document.getElementById('btn-mkt-tab-' + t);
+      const panel = document.getElementById('panel-mkt-' + t);
+      if (btn) btn.className = (t === subTab) ? 'btn-action btn-primary' : 'btn-action btn-secondary';
+      if (panel) panel.style.display = (t === subTab) ? 'block' : 'none';
+    });
+    if (subTab === 'copywriter' && marketingProductsData.length === 0) {
+      loadMarketingView();
+    }
+  }
+
+  async function loadMarketingView() {
+    try {
+      const [overview, segments, campaigns, products] = await Promise.all([
+        apiCall('/api/admin/marketing/overview', 'GET'),
+        apiCall('/api/admin/marketing/segments', 'GET'),
+        apiCall('/api/admin/marketing/campaigns', 'GET'),
+        apiCall('/api/admin/marketing/products', 'GET'),
+      ]);
+
+      marketingOverviewData = overview || {};
+      marketingSegmentsData = segments || [];
+      marketingCampaignsData = campaigns || [];
+      marketingProductsData = products || [];
+
+      // Update KPI cards
+      const audEl = document.getElementById('mkt-kpi-audience');
+      if (audEl) audEl.textContent = (marketingOverviewData.active_consented_audience || 0).toLocaleString();
+
+      const buyEl = document.getElementById('mkt-kpi-buyers');
+      if (buyEl) buyEl.textContent = (marketingOverviewData.total_buyers || 0).toLocaleString();
+
+      const campEl = document.getElementById('mkt-kpi-campaigns');
+      if (campEl) campEl.textContent = (marketingOverviewData.campaigns_sent || 0).toLocaleString();
+
+      const revEl = document.getElementById('mkt-kpi-revenue');
+      if (revEl) revEl.textContent = '₦' + (marketingOverviewData.total_attributed_revenue || 0).toLocaleString();
+
+      renderMarketingCampaigns(marketingCampaignsData);
+      renderMarketingSegments(marketingSegmentsData);
+      populateMarketingProductDropdown(marketingProductsData);
+      populateMarketingSegmentDropdown(marketingSegmentsData);
+      renderMarketingProductsGrid(marketingProductsData);
+    } catch (err) {
+      console.error('Error loading marketing dashboard:', err);
+    }
+  }
+
+  function renderMarketingCampaigns(campaigns) {
+    const tbody = document.querySelector('#table-mkt-campaigns tbody');
+    if (!tbody) return;
+
+    if (!campaigns || campaigns.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:32px; color:var(--gray-l)">
+        <i class="bi bi-broadcast" style="font-size:1.8rem; display:block; margin-bottom:8px; opacity:0.4"></i>
+        No marketing campaigns created yet. Click <strong>+ Create New Campaign</strong> to synthesize your first direct-response broadcast.
+      </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = campaigns.map(c => {
+      let badgeClass = 'badge-gray';
+      if (c.status === 'sent') badgeClass = 'badge-green';
+      else if (c.status === 'sending') badgeClass = 'badge-gold';
+      else if (c.status === 'scheduled') badgeClass = 'badge-gold';
+
+      const sentDate = c.sent_at || c.created_at || '';
+      const formattedDate = sentDate ? new Date(sentDate).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '-';
+
+      const isDraftOrScheduled = c.status === 'draft' || c.status === 'scheduled';
+
+      return `
+        <tr>
+          <td>
+            <div style="font-weight:600; color:#fff">${escapeHtml(c.title || 'Untitled Campaign')}</div>
+            <div style="font-size:0.75rem; color:var(--gray-l); font-family:monospace">${escapeHtml(c.campaign_id || '')}</div>
+          </td>
+          <td>
+            <span style="font-size:0.82rem; color:var(--gold-l); font-weight:600">${escapeHtml(c.product_name || c.product_slug || '')}</span>
+          </td>
+          <td>
+            <span style="font-size:0.78rem; background:rgba(255,255,255,0.06); padding:2px 8px; border-radius:4px; color:#cbd5e1">${escapeHtml(c.target_segment || 'All')}</span>
+          </td>
+          <td style="max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap" title="${escapeHtml(c.subject || '')}">
+            ${escapeHtml(c.subject || '')}
+          </td>
+          <td>
+            <span class="badge ${badgeClass}" style="text-transform:uppercase; font-size:0.72rem">${escapeHtml(c.status || 'draft')}</span>
+          </td>
+          <td style="font-weight:600">
+            ${(c.recipients_count || 0).toLocaleString()}
+          </td>
+          <td style="font-size:0.78rem; color:var(--gray-l)">
+            ${formattedDate}
+          </td>
+          <td>
+            <div style="display:flex; gap:6px">
+              ${isDraftOrScheduled ? `
+                <button class="btn-action" style="padding:4px 8px; font-size:0.75rem; background:var(--green); color:#fff" onclick="launchMarketingBroadcast('${c.campaign_id}')" title="Launch to Target Segment">
+                  <i class="bi bi-rocket-takeoff"></i> Launch
+                </button>
+                <button class="btn-action btn-secondary" style="padding:4px 8px; font-size:0.75rem" onclick="openTestModalForCampaign('${c.campaign_id}')" title="Send Test Email">
+                  <i class="bi bi-send"></i>
+                </button>
+                <button class="btn-action btn-secondary" style="padding:4px 8px; font-size:0.75rem; color:var(--red)" onclick="deleteMarketingCampaign('${c.campaign_id}')" title="Delete Draft">
+                  <i class="bi bi-trash"></i>
+                </button>
+              ` : `
+                <button class="btn-action btn-secondary" style="padding:4px 8px; font-size:0.75rem" onclick="openCampaignPreviewModal('${c.campaign_id}')" title="Preview Sent Email">
+                  <i class="bi bi-eye"></i> View
+                </button>
+              `}
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function populateMarketingProductDropdown(products) {
+    const sel = document.getElementById('mkt-select-product');
+    if (!sel || !products) return;
+    sel.innerHTML = products.map(p => {
+      const priceFmt = '₦' + (p.price_naira || 5000).toLocaleString();
+      return `<option value="${escapeHtml(p.slug)}">${escapeHtml(p.title)} (${priceFmt})</option>`;
+    }).join('');
+  }
+
+  function populateMarketingSegmentDropdown(segments) {
+    const sel = document.getElementById('mkt-select-segment');
+    if (!sel || !segments) return;
+    sel.innerHTML = segments.map(s => {
+      return `<option value="${escapeHtml(s.key)}">${escapeHtml(s.name)} (${(s.eligible_count || 0).toLocaleString()} recipients)</option>`;
+    }).join('');
+  }
+
+  function renderMarketingSegments(segments) {
+    const grid = document.getElementById('grid-mkt-segments');
+    if (!grid || !segments) return;
+
+    grid.innerHTML = segments.map(s => `
+      <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:20px; display:flex; flex-direction:column; justify-content:space-between">
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:8px">
+            <h4 style="margin:0; font-size:1rem; font-weight:700; color:#fff">${escapeHtml(s.name)}</h4>
+            <span class="badge badge-gold" style="font-size:0.75rem; font-family:monospace">${escapeHtml(s.key)}</span>
+          </div>
+          <p style="font-size:0.82rem; color:var(--gray-l); margin-bottom:14px; line-height:1.5">${escapeHtml(s.description || '')}</p>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; pt-3; border-top:1px solid var(--border-color); padding-top:12px">
+          <div>
+            <span style="font-size:1.3rem; font-weight:700; color:var(--gold-l); font-variant-numeric:tabular-nums">${(s.eligible_count || 0).toLocaleString()}</span>
+            <span style="font-size:0.75rem; color:var(--gray-l); margin-left:4px">consented</span>
+          </div>
+          <button class="btn-action btn-secondary" style="font-size:0.75rem; padding:4px 10px" onclick="selectSegmentAndGoToCopywriter('${s.key}')">
+            Target Segment &rarr;
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function renderMarketingProductsGrid(products) {
+    const grid = document.getElementById('grid-mkt-products');
+    if (!grid || !products) return;
+
+    grid.innerHTML = products.map(p => {
+      const priceFmt = '₦' + (p.price_naira || 5000).toLocaleString();
+      return `
+        <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:20px; display:flex; flex-direction:column; justify-content:space-between">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:6px">
+              <span style="font-size:0.72rem; text-transform:uppercase; font-weight:700; color:var(--gold-l); background:rgba(212,175,55,0.15); padding:2px 8px; border-radius:4px">
+                ${escapeHtml(p.category || 'Masterclass')}
+              </span>
+              <span style="font-size:0.75rem; color:var(--gray-l); font-family:monospace">${escapeHtml(p.sku || '')}</span>
+            </div>
+            <h4 style="margin:6px 0 8px 0; font-size:1.05rem; font-weight:700; color:#fff; line-height:1.3">${escapeHtml(p.title)}</h4>
+            <div style="font-size:1.2rem; font-weight:800; color:var(--gold-l); margin-bottom:10px">${priceFmt}</div>
+            
+            <div style="background:#0f172a; padding:10px 12px; border-radius:6px; margin-bottom:12px; border-left:3px solid var(--gold-l)">
+              <div style="font-size:0.75rem; font-weight:700; color:var(--gold-l)">Core Pain Solved:</div>
+              <div style="font-size:0.8rem; color:#cbd5e1; line-height:1.4">${escapeHtml(p.core_problem || '')}</div>
+            </div>
+
+            <p style="font-size:0.8rem; color:var(--gray-l); margin-bottom:14px; line-height:1.4">
+              <strong>Dream Outcome:</strong> ${escapeHtml(p.dream_outcome || '')}
+            </p>
+          </div>
+          <div>
+            <button class="btn-action" style="width:100%; justify-content:center; font-size:0.8rem; padding:8px 12px" onclick="selectProductAndGoToCopywriter('${p.slug}')">
+              <i class="bi bi-magic"></i> Generate Campaign for This Book
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function selectSegmentAndGoToCopywriter(segKey) {
+    switchMarketingSubTab('copywriter');
+    const sel = document.getElementById('mkt-select-segment');
+    if (sel) sel.value = segKey;
+  }
+
+  function selectProductAndGoToCopywriter(prodSlug) {
+    switchMarketingSubTab('copywriter');
+    const sel = document.getElementById('mkt-select-product');
+    if (sel) {
+      sel.value = prodSlug;
+      onMarketingProductChange();
+    }
+  }
+
+  function onMarketingProductChange() {
+    const sel = document.getElementById('mkt-select-product');
+    const titleInput = document.getElementById('mkt-input-title');
+    if (sel && titleInput && !titleInput.value) {
+      const selectedText = sel.options[sel.selectedIndex]?.text || '';
+      const prodName = selectedText.split('(')[0].trim();
+      titleInput.value = `${prodName} - Direct Response Campaign`;
+    }
+  }
+
+  async function triggerAIGeneration() {
+    const prodSlug = document.getElementById('mkt-select-product')?.value;
+    const strategy = document.getElementById('mkt-select-strategy')?.value || 'direct_response';
+    const segment = document.getElementById('mkt-select-segment')?.value || 'all_consented';
+
+    if (!prodSlug) {
+      alert('Please select a product first.');
+      return;
+    }
+
+    const btn = event?.currentTarget;
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Synthesizing Direct Response Copy...`;
+    }
+
+    try {
+      const copyData = await apiCall('/api/admin/marketing/generate-copy', 'POST', {
+        product_slug: prodSlug,
+        campaign_type: strategy,
+        target_segment: segment,
+      });
+
+      generatedCopyData = copyData;
+
+      // Populate Inputs
+      const subjInput = document.getElementById('mkt-input-subject');
+      if (subjInput) subjInput.value = copyData.recommended_subject || '';
+
+      const prevInput = document.getElementById('mkt-input-preview-text');
+      if (prevInput) prevInput.value = copyData.preview_text || '';
+
+      const htmlArea = document.getElementById('mkt-container-html');
+      if (htmlArea) htmlArea.value = copyData.html_body || '';
+
+      const textArea = document.getElementById('mkt-container-text');
+      if (textArea) textArea.value = copyData.plain_text || '';
+
+      // Render Subject Line Variant Pills
+      const variantsDiv = document.getElementById('mkt-subject-variants');
+      if (variantsDiv && copyData.subject_options) {
+        variantsDiv.innerHTML = copyData.subject_options.map((opt, i) => `
+          <button type="button" style="text-align:left; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.25); color:#f3e5ab; font-size:0.75rem; padding:4px 8px; border-radius:4px; cursor:pointer" onclick="document.getElementById('mkt-input-subject').value = '${escapeHtml(opt)}'">
+            <strong>Option ${i+1}:</strong> ${escapeHtml(opt)}
+          </button>
+        `).join('');
+      }
+
+      // Update Visual Iframe
+      updateIframePreview(copyData.html_body);
+
+    } catch (err) {
+      alert('Failed to generate copy: ' + err.message);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="bi bi-lightning-charge-fill"></i> Synthesize High-Converting Copy`;
+      }
+    }
+  }
+
+  function updateIframePreview(htmlContent) {
+    const frame = document.getElementById('mkt-preview-frame');
+    if (!frame) return;
+
+    // Replace preview tokens
+    const previewRendered = (htmlContent || '')
+      .replace(/\{\{\s*name\s*\}\}/g, 'Valued Scholar')
+      .replace(/\{\{\s*app_url\s*\}\}/g, window.location.origin)
+      .replace(/\{\{\s*unsubscribe_token\s*\}\}/g, 'preview_token_123');
+
+    frame.srcdoc = previewRendered;
+  }
+
+  function toggleMktPreviewMode(mode) {
+    currentMktPreviewMode = mode;
+    ['visual', 'html', 'text'].forEach(m => {
+      const btn = document.getElementById('btn-mkt-preview-' + m);
+      const container = document.getElementById('mkt-container-' + m);
+      if (btn) btn.className = (m === mode) ? 'btn-action btn-primary' : 'btn-action btn-secondary';
+      if (container) container.style.display = (m === mode) ? 'block' : 'none';
+    });
+
+    // If switching to visual, sync edits from HTML area
+    if (mode === 'visual') {
+      const htmlCode = document.getElementById('mkt-container-html')?.value || '';
+      updateIframePreview(htmlCode);
+    }
+  }
+
+  async function saveMarketingDraft() {
+    const title = document.getElementById('mkt-input-title')?.value;
+    const prodSlug = document.getElementById('mkt-select-product')?.value;
+    const segment = document.getElementById('mkt-select-segment')?.value;
+    const subject = document.getElementById('mkt-input-subject')?.value;
+    const previewText = document.getElementById('mkt-input-preview-text')?.value;
+    const htmlBody = document.getElementById('mkt-container-html')?.value;
+    const plainText = document.getElementById('mkt-container-text')?.value;
+
+    if (!title || !subject || !htmlBody) {
+      alert('Please generate or enter campaign title, subject, and body before saving.');
+      return;
+    }
+
+    try {
+      const res = await apiCall('/api/admin/marketing/campaigns', 'POST', {
+        title: title,
+        product_slug: prodSlug,
+        target_segment: segment,
+        subject: subject,
+        preview_text: previewText || '',
+        html_body: htmlBody,
+        plain_text: plainText || '',
+      });
+
+      activeCampaignDraftId = res.campaign_id;
+      alert(`Campaign '${title}' saved as draft (ID: ${res.campaign_id}).`);
+      loadMarketingView();
+      switchMarketingSubTab('campaigns');
+    } catch (err) {
+      alert('Failed to save draft: ' + err.message);
+    }
+  }
+
+  async function sendCampaignTestEmail() {
+    const testEmail = document.getElementById('mkt-test-email')?.value;
+    if (!testEmail) {
+      alert('Please enter a recipient email address for the test send.');
+      return;
+    }
+
+    // Save draft first if not yet created
+    if (!activeCampaignDraftId) {
+      const title = document.getElementById('mkt-input-title')?.value || 'Test Campaign Draft';
+      const prodSlug = document.getElementById('mkt-select-product')?.value;
+      const segment = document.getElementById('mkt-select-segment')?.value;
+      const subject = document.getElementById('mkt-input-subject')?.value;
+      const previewText = document.getElementById('mkt-input-preview-text')?.value;
+      const htmlBody = document.getElementById('mkt-container-html')?.value;
+      const plainText = document.getElementById('mkt-container-text')?.value;
+
+      if (!subject || !htmlBody) {
+        alert('Please generate copy before sending a test.');
+        return;
+      }
+
+      try {
+        const res = await apiCall('/api/admin/marketing/campaigns', 'POST', {
+          title: title,
+          product_slug: prodSlug,
+          target_segment: segment,
+          subject: subject,
+          preview_text: previewText || '',
+          html_body: htmlBody,
+          plain_text: plainText || '',
+        });
+        activeCampaignDraftId = res.campaign_id;
+      } catch (err) {
+        alert('Could not initialize test draft: ' + err.message);
+        return;
+      }
+    }
+
+    try {
+      const testRes = await apiCall(`/api/admin/marketing/campaigns/${activeCampaignDraftId}/test`, 'POST', {
+        test_email: testEmail,
+      });
+      alert(testRes.message || `Test email dispatched to ${testEmail}!`);
+    } catch (err) {
+      alert('Test send failed: ' + err.message);
+    }
+  }
+
+  async function launchMarketingBroadcast(campaignId) {
+    const campId = campaignId || activeCampaignDraftId;
+    if (!campId) {
+      // Save draft first
+      await saveMarketingDraft();
+      return;
+    }
+
+    if (!confirm('Are you sure you want to broadcast this campaign to the target audience segment? All emails will be safely enqueued and rate-limited with CAN-SPAM / NDPA suppression.')) {
+      return;
+    }
+
+    try {
+      const res = await apiCall(`/api/admin/marketing/campaigns/${campId}/launch`, 'POST');
+      alert(`🚀 Campaign launched successfully! Enqueued ${res.enqueued_count} emails for segment '${res.target_segment}'.`);
+      activeCampaignDraftId = null;
+      loadMarketingView();
+      switchMarketingSubTab('campaigns');
+    } catch (err) {
+      alert('Launch failed: ' + err.message);
+    }
+  }
+
+  async function openTestModalForCampaign(campaignId) {
+    const testEmail = prompt('Enter recipient email for test preview:');
+    if (!testEmail) return;
+
+    try {
+      const res = await apiCall(`/api/admin/marketing/campaigns/${campaignId}/test`, 'POST', {
+        test_email: testEmail,
+      });
+      alert(res.message || 'Test sent!');
+    } catch (err) {
+      alert('Test send failed: ' + err.message);
+    }
+  }
+
+  async function deleteMarketingCampaign(campaignId) {
+    if (!confirm(`Are you sure you want to delete campaign ${campaignId}? This cannot be undone.`)) {
+      return;
+    }
+
+    try {
+      await apiCall(`/api/admin/marketing/campaigns/${campaignId}`, 'DELETE');
+      loadMarketingView();
+    } catch (err) {
+      alert('Failed to delete campaign: ' + err.message);
+    }
+  }
+
+  async function openCampaignPreviewModal(campaignId) {
+    try {
+      const camp = await apiCall(`/api/admin/marketing/campaigns/${campaignId}`, 'GET');
+      if (!camp) return;
+
+      const previewWin = window.open('', '_blank', 'width=650,height=800');
+      if (previewWin) {
+        previewWin.document.write(camp.html_body || '<p>No content</p>');
+        previewWin.document.close();
+      }
+    } catch (err) {
+      alert('Failed to load campaign preview: ' + err.message);
+    }
+  }
+
   // ── PRE-ORDERS FULFILLMENT ──────────────────────────────────────────────────
   let allPreordersData = [];
 
@@ -5404,6 +6065,7 @@
     { title: "52-Day Curriculum Email Sequence", group: "Navigation", icon: "bi-envelope-check", action: () => switchSection('sequence') },
     { title: "Email Delivery Infrastructure Monitor", group: "Navigation", icon: "bi-shield-check", action: () => switchSection('email-delivery') },
     { title: "Abandoned Cart Recovery Pipeline", group: "Navigation", icon: "bi-cart-x", action: () => switchSection('abandoned') },
+    { title: "AI Email Marketing & Revenue Engine", group: "Navigation", icon: "bi-rocket-takeoff-fill", action: () => switchSection('marketing') },
     { title: "Pre-Orders & Waitlists", group: "Navigation", icon: "bi-box-seam", action: () => switchSection('preorders') },
     { title: "Blog & Content CMS", group: "Navigation", icon: "bi-journal-richtext", action: () => switchSection('blog') },
     
@@ -5560,6 +6222,7 @@
       else if (k === 's') switchSection('sales');
       else if (k === 'c') switchSection('customers');
       else if (k === 'a' || k === 'p') switchSection('affiliates');
+      else if (k === 'm') switchSection('marketing');
       else if (k === 'b') switchSection('blog');
     }
   });
