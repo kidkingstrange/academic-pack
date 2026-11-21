@@ -2,19 +2,29 @@
 
 import React, { useState } from 'react';
 import { Product } from '@repo/api-contracts';
+import { CANONICAL_PRODUCTS } from '@/lib/products';
 import { X, ShieldCheck, CreditCard, Lock, CheckCircle2 } from 'lucide-react';
 
 interface CheckoutModalProps {
-  product: Product;
+  product?: Product;
+  productSlug?: string;
+  initialCurrency?: 'NGN' | 'USD';
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function CheckoutModal({ product, isOpen, onClose }: CheckoutModalProps) {
+export default function CheckoutModal({
+  product: propProduct,
+  productSlug,
+  initialCurrency = 'NGN',
+  isOpen,
+  onClose,
+}: CheckoutModalProps) {
+  const product = propProduct || CANONICAL_PRODUCTS.find((p) => p.slug === productSlug) || CANONICAL_PRODUCTS[0];
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [affiliateCode, setAffiliateCode] = useState('');
-  const [currency, setCurrency] = useState<'NGN' | 'USD'>('NGN');
+  const [currency, setCurrency] = useState<'NGN' | 'USD'>(initialCurrency);
   const [gateway, setGateway] = useState<'paystack' | 'flutterwave'>('paystack');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

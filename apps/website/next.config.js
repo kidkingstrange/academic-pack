@@ -64,12 +64,37 @@ const nextConfig = {
       },
       {
         source: '/affiliate-dashboard.html',
-        destination: '/affiliates/dashboard',
+        destination: '/affiliate/dashboard',
+        permanent: true,
+      },
+      {
+        source: '/affiliates/dashboard',
+        destination: '/affiliate/dashboard',
         permanent: true,
       },
       {
         source: '/affiliate-register.html',
-        destination: '/affiliates/register',
+        destination: '/affiliate',
+        permanent: true,
+      },
+      {
+        source: '/affiliate-activate.html',
+        destination: '/affiliate/activate',
+        permanent: true,
+      },
+      {
+        source: '/us.html',
+        destination: '/us',
+        permanent: true,
+      },
+      {
+        source: '/usa',
+        destination: '/us',
+        permanent: true,
+      },
+      {
+        source: '/united-states',
+        destination: '/us',
         permanent: true,
       },
     ];
