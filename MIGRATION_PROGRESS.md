@@ -11,11 +11,12 @@
 | **Student Digital Library & Reader** | Implemented & Built | Implemented & Tested | Implemented & Tested | Verified | Validates access token and streams PDF securely. |
 | **52-Week Curriculum Drip Engine** | N/A (Server Engine)| N/A | N/A | Verified | Background worker claims queue atomically. |
 | **AI Marketing & Campaign Engine** | N/A (Server Engine)| N/A | N/A | Verified | Copywriter, segment filters, and preview test live. |
-| **Affiliate Network & Commissions** | Implemented (Contract)| Implemented (Contract)| Implemented (Contract)| Verified | 60% commission ledger, sub-affiliates, milestones. |
+| **Affiliate Network & Commissions** | Implemented & Built | Implemented & Tested | Implemented & Tested | Verified | 60% commission ledger, earnings calculator, link sharing. |
 | **Biweekly Payout Engine** | N/A (Server Engine)| N/A | N/A | Verified | Payout batch builder & Flutterwave transfers. |
 | **Abandoned Cart Auto-Recovery** | Verified & Live | Planned | Planned | Verified | 1h and 24h automatic re-engagement emails. |
-| **Verified Customer Reviews** | Implemented & Built | Implemented (Model) | Implemented (Model) | Verified | Token-hashed reviews with admin approval. |
-| **201+ SEO Academic Blog Posts** | SSG + ISR (Built) | N/A (Web SEO Focus) | N/A (Web SEO Focus) | Verified | Pre-rendered static pages + 24h ISR with Schema.org. |
+| **Verified Customer Reviews** | Implemented & Built | Implemented (Model) | Implemented (Model) | Verified | Token-hashed reviews with admin approval & 20% coupon. |
+| **201+ SEO Academic Blog Posts** | SSG + ISR (Built) | N/A (Web SEO Focus) | N/A (Web SEO Focus) | Verified | Master directory (/blog), 5 category hubs, 201 JSON datasets. |
+| **Dynamic XML Sitemap & Robots** | Verified & Built | N/A | N/A | Verified | /sitemap.xml indexing all products, hubs, and 201 articles. |
 | **Admin Operations Dashboard** | Verified & Live | Planned (Phase 8) | Planned (Phase 8) | Verified | Sales ledger, affiliate health, marketing console. |
 
 ---
