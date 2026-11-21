@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 226, 232, 240;
+  --background-start-rgb: 11, 15, 25;
+  --background-end-rgb: 15, 23, 42;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: #0b0f19;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Gold Gradient Utility */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #d4af37, #f3e5ab, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-btn {
+  background: linear-gradient(135deg, #d4af37, #f3e5ab);
+  color: #0b0f19;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+
+.gold-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+}
