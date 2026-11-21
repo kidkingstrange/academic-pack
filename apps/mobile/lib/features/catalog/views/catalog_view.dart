@@ -43,6 +43,11 @@ class _CatalogViewState extends State<CatalogView> {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.monetization_on_outlined, color: AppColors.gold),
+            tooltip: 'Affiliate Portal (60%)',
+            onPressed: () => context.push('/affiliate'),
+          ),
+          IconButton(
             icon: const Icon(Icons.menu_book, color: AppColors.gold),
             tooltip: 'My Library',
             onPressed: () => context.push('/library'),

@@ -27,11 +27,14 @@ export default function Navbar() {
               <span className="bg-[#d4af37]/20 text-[#d4af37] text-xs px-2 py-0.5 rounded-full font-bold">₦5,000 PROMO</span>
               Academic Comeback
             </Link>
+            <Link href="/blog" className="text-sm font-medium text-slate-300 hover:text-[#d4af37] transition flex items-center gap-1">
+              <BookOpen className="w-4 h-4" /> 201+ Free Guides
+            </Link>
             <Link href="/library" className="text-sm font-medium text-slate-300 hover:text-[#d4af37] transition flex items-center gap-1">
               <Library className="w-4 h-4" /> Student Library
             </Link>
-            <Link href="/affiliates/dashboard" className="text-sm font-medium text-slate-300 hover:text-[#d4af37] transition flex items-center gap-1">
-              <Award className="w-4 h-4" /> Affiliate Portal (60%)
+            <Link href="/affiliate" className="text-sm font-medium text-slate-300 hover:text-[#d4af37] transition flex items-center gap-1">
+              <Award className="w-4 h-4" /> Affiliates (60%)
             </Link>
             <Link
               href="/products/academic-comeback-package"
@@ -72,6 +75,13 @@ export default function Navbar() {
             Academic Comeback Package (₦5,000)
           </Link>
           <Link
+            href="/blog"
+            onClick={() => setIsOpen(false)}
+            className="block text-slate-300 hover:text-[#d4af37] font-medium py-2"
+          >
+            201+ Free Campus Guides
+          </Link>
+          <Link
             href="/library"
             onClick={() => setIsOpen(false)}
             className="block text-slate-300 hover:text-[#d4af37] font-medium py-2"
@@ -79,7 +89,7 @@ export default function Navbar() {
             Student Library
           </Link>
           <Link
-            href="/affiliates/dashboard"
+            href="/affiliate"
             onClick={() => setIsOpen(false)}
             className="block text-slate-300 hover:text-[#d4af37] font-medium py-2"
           >

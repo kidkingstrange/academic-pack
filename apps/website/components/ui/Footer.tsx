@@ -30,8 +30,10 @@ export default function Footer() {
         <div>
           <h4 className="text-white font-semibold mb-3 uppercase tracking-wider text-xs">Student Portal</h4>
           <ul className="space-y-2">
+            <li><Link href="/blog" className="hover:text-[#d4af37] transition">201+ Free Guides</Link></li>
             <li><Link href="/library" className="hover:text-[#d4af37] transition">Access Your Library</Link></li>
-            <li><Link href="/affiliates/dashboard" className="hover:text-[#d4af37] transition">Affiliate Program (60%)</Link></li>
+            <li><Link href="/affiliate" className="hover:text-[#d4af37] transition">Affiliate Program (60%)</Link></li>
+            <li><Link href="/review" className="hover:text-[#d4af37] transition">Submit Verified Review</Link></li>
             <li><a href="https://chat.whatsapp.com/Ia7VkMigSlq2NIRQt7A3yj" target="_blank" rel="noopener noreferrer" className="hover:text-[#d4af37] transition">WhatsApp Community</a></li>
           </ul>
         </div>
