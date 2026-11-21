@@ -49,3 +49,45 @@ jobs:
 
       - name: Run tests
         run: pytest -v
+
+  nextjs-website:
+    name: Next.js Website CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: apps/website/package.json
+
+      - name: Install dependencies
+        run: cd apps/website && npm install
+
+      - name: Build Next.js website
+        run: cd apps/website && npm run build
+        env:
+          NEXT_PUBLIC_APP_URL: https://academiccomeback.com
+          NEXT_PUBLIC_API_URL: https://edgepack.thescaleconference.com
+
+  flutter-mobile:
+    name: Flutter Mobile Cross-Platform CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Install Flutter dependencies
+        run: cd apps/mobile && flutter pub get
+
+      - name: Analyze code
+        run: cd apps/mobile && flutter analyze
+
+      - name: Run Flutter widget tests
+        run: cd apps/mobile && flutter test
