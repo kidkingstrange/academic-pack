@@ -166,19 +166,18 @@ async def smtp_diagnostics():
     except Exception as e:
         results["port_465_ssl"] = {"ok": False, "elapsed": round(time.time() - t0, 2), "error": f"{type(e).__name__}: {e}"}
 
-    # Test 2: Port 587 STARTTLS
-    t1 = time.time()
+    # Test 3: Gmail port 587
+    t2 = time.time()
     try:
         context = ssl.create_default_context()
-        conn = smtplib.SMTP(s.SMTP_HOST, 587, timeout=5)
+        conn = smtplib.SMTP("smtp.gmail.com", 587, timeout=4)
         conn.ehlo()
         conn.starttls(context=context)
         conn.ehlo()
-        conn.login(s.SMTP_USER, s.SMTP_PASS)
         conn.quit()
-        results["port_587_starttls"] = {"ok": True, "elapsed": round(time.time() - t1, 2)}
+        results["gmail_587"] = {"ok": True, "elapsed": round(time.time() - t2, 2)}
     except Exception as e:
-        results["port_587_starttls"] = {"ok": False, "elapsed": round(time.time() - t1, 2), "error": f"{type(e).__name__}: {e}"}
+        results["gmail_587"] = {"ok": False, "elapsed": round(time.time() - t2, 2), "error": f"{type(e).__name__}: {e}"}
 
     return {
         "smtp_host": s.SMTP_HOST,
