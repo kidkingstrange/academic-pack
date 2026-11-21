@@ -125,7 +125,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
-                            color: AppColors.gold.withOpacity(0.15),
+                            color: AppColors.gold.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: const Text(
@@ -165,9 +165,9 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   padding: const EdgeInsets.all(12),
                   margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: AppColors.error.withOpacity(0.1),
+                    color: AppColors.error.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.error.withOpacity(0.3)),
+                    border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
                   ),
                   child: Text(
                     _errorMessage!,
@@ -181,7 +181,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                 decoration: BoxDecoration(
                   color: AppColors.background,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -212,7 +212,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+                    borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -236,7 +236,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+                    borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -257,7 +257,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: _currency == 'NGN' ? AppColors.gold.withOpacity(0.15) : AppColors.background,
+                        backgroundColor: _currency == 'NGN' ? AppColors.gold.withValues(alpha: 0.15) : AppColors.background,
                         side: BorderSide(color: _currency == 'NGN' ? AppColors.gold : Colors.white10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
@@ -276,7 +276,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   Expanded(
                     child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: _currency == 'USD' ? AppColors.gold.withOpacity(0.15) : AppColors.background,
+                        backgroundColor: _currency == 'USD' ? AppColors.gold.withValues(alpha: 0.15) : AppColors.background,
                         side: BorderSide(color: _currency == 'USD' ? AppColors.gold : Colors.white10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),

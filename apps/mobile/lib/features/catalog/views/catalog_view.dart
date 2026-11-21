@@ -67,10 +67,10 @@ class _CatalogViewState extends State<CatalogView> {
                 end: Alignment.bottomCenter,
               ),
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: AppColors.gold.withOpacity(0.4), width: 1.5),
+              border: Border.all(color: AppColors.gold.withValues(alpha: 0.4), width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.gold.withOpacity(0.1),
+                  color: AppColors.gold.withValues(alpha: 0.1),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 ),
@@ -82,7 +82,7 @@ class _CatalogViewState extends State<CatalogView> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.gold.withOpacity(0.15),
+                    color: AppColors.gold.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: const Text(
@@ -175,7 +175,7 @@ class _CatalogViewState extends State<CatalogView> {
               decoration: BoxDecoration(
                 color: AppColors.card,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.white.withOpacity(0.06)),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.06)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,7 +186,7 @@ class _CatalogViewState extends State<CatalogView> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.05),
+                          color: Colors.white.withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -218,7 +218,7 @@ class _CatalogViewState extends State<CatalogView> {
                       Expanded(
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: Colors.white.withOpacity(0.15)),
+                            side: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                           ),
                           onPressed: () => context.push('/product/${p.slug}'),
